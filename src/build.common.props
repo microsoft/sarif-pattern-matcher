@@ -1,0 +1,34 @@
+<Project>
+
+  <PropertyGroup>
+    <LibraryFrameworks>netstandard2.1</LibraryFrameworks>
+    <ExecutableFrameworks>netcoreapp3.1</ExecutableFrameworks>
+    <LangVersion>8.0</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    
+    <RootNamespaceBase>Microsoft.CodeAnalysis</RootNamespaceBase>
+    <!--root namespace for projects that contains SarifPatternMatcher in the project name-->
+    <RootNamespace Condition="$(MSBuildProjectName.Contains('SarifPatternMatcher'))">$(RootNamespaceBase).$(MSBuildProjectName)</RootNamespace>
+    <!--root namespace for projects that does not contains SarifPatternMatcher in the project name-->
+    <RootNamespace Condition="!$(MSBuildProjectName.Contains('SarifPatternMatcher'))">$(RootNamespaceBase).SarifPatternMatcher.$(MSBuildProjectName)</RootNamespace>
+    <!--root namespace for test projects-->
+    <RootNamespace Condition="$(MSBuildProjectName.Contains('Test.UnitTests'))">$(RootNamespaceBase).$(MSBuildProjectName.Replace('Test.UnitTests.', ''))</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Label="AssemblyAttributes">
+    <Company Condition=" '$(Company)' == '' ">Microsoft</Company>
+    <Product Condition=" '$(Product)' == '' ">Microsoft SARIF SDK</Product>
+    <Copyright Condition=" '$(Copyright)' == '' ">© Microsoft Corporation. All rights reserved.</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Build">
+    <OutputSubDir>$(Platform)_$(Configuration)</OutputSubDir>
+    <IntermediateOutputPath>$(MsBuildThisFileDirectory)..\bld\obj\$(OutputSubDir)\$(MSBuildProjectName)\</IntermediateOutputPath>
+    <OutputPath>$(MsBuildThisFileDirectory)..\bld\bin\$(OutputSubDir)\$(MSBuildProjectName)\</OutputPath>
+    <PublishDir>$(OutputPath)\Publish\$(TargetFramework)\</PublishDir>
+    <PublishDir Condition=" '$(RuntimeIdentifier)' != '' ">$(PublishDir)\$(RuntimeIdentifier)\</PublishDir>
+    <SolutionDir Condition=" '$(SolutionDir)' == '' ">$(MsBuildThisFileDirectory)</SolutionDir>
+    <PackageOutputPath>$(MsBuildThisFileDirectory)..\bld\nupkg\$(OutputSubDir)\$(MSBuildProjectName)\</PackageOutputPath>
+  </PropertyGroup>
+
+</Project>

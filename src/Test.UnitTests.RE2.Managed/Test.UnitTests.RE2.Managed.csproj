@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'SarifPatternMatcher.sln'))\build.test.props" />
+
+  <PropertyGroup>
+    <TargetFramework>$(ExecutableFrameworks)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RE2.Managed\RE2.Managed.csproj" />
+  </ItemGroup>
+
+</Project>

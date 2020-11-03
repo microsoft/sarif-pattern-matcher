@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'SarifPatternMatcher.sln'))\build.product.props" />
+  
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <PackAsTool>true</PackAsTool>
+    <TargetFramework>$(ExecutableFrameworks)</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Label="AssemblyAttributes">
+    <AssemblyTitle>Sarif Pattern Matcher Cli</AssemblyTitle>
+    <Description>TODO: add description</Description>
+  </PropertyGroup>
+</Project>
