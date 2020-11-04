@@ -7,4 +7,24 @@
     <Description>TODO: add description</Description>
   </PropertyGroup>
 
+  <ItemGroup>
+    <!-- Copy native outputs to the correct platform-specific folder in the NuGet Package output -->
+    <Content Include="$(SolutionDir)..\bld\bin\$(Configuration)\x86\RE2.Native.x86.dll" Pack="true" Link="runtimes/win-x86/native/RE2.Native.x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes/win-x86/native</PackagePath>
+    </Content>
+    <Content Include="$(SolutionDir)..\bld\bin\$(Configuration)\x86\RE2.Native.x86.pdb" Pack="true" Link="runtimes/win-x86/native/RE2.Native.x86.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes/win-x86/native</PackagePath>
+    </Content>
+    <Content Include="$(SolutionDir)..\bld\bin\$(Configuration)\x64\RE2.Native.x64.dll" Pack="true" Link="runtimes/win-x64/native/RE2.Native.x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes/win-x64/native</PackagePath>
+    </Content>
+    <Content Include="$(SolutionDir)..\bld\bin\$(Configuration)\x64\RE2.Native.x64.pdb" Pack="true" Link="runtimes/win-x64/native/RE2.Native.x64.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes/win-x64/native</PackagePath>
+    </Content>
+  </ItemGroup>
+
 </Project>
