@@ -1,10 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'SarifPatternMatcher.sln'))\build.app.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'SarifPatternMatcher.sln'))\build.test.props" />
-
-  <PropertyGroup>
-    <TargetFramework>$(ExecutableFrameworks)</TargetFramework>
-  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SarifPatternMatcher.Cli\SarifPatternMatcher.Cli.csproj" />

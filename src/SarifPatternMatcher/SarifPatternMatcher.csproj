@@ -1,10 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'SarifPatternMatcher.sln'))\build.lib.props" />
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'SarifPatternMatcher.sln'))\build.product.props" />
-  
-  <PropertyGroup>
-    <TargetFramework>$(LibraryFrameworks)</TargetFramework>
-  </PropertyGroup>
 
   <PropertyGroup Label="AssemblyAttributes">
     <AssemblyTitle>Sarif Pattern Matcher Library</AssemblyTitle>

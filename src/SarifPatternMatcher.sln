@@ -34,7 +34,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{B599D6C7-9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{822FEF72-5955-4580-8780-B10D1D003394}"
 	ProjectSection(SolutionItems) = preProject
+		build.app.props = build.app.props
 		build.common.props = build.common.props
+		build.lib.props = build.lib.props
 		build.product.props = build.product.props
 		build.test.props = build.test.props
 		BuildAndTest.cmd = BuildAndTest.cmd
