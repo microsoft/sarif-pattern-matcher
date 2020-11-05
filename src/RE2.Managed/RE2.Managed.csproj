@@ -6,6 +6,14 @@
     <AssemblyTitle>RE2 Managed Library</AssemblyTitle>
     <Description>TODO: add description</Description>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
 
   <ItemGroup>
     <!-- Copy native outputs to the correct platform-specific folder in the NuGet Package output -->
@@ -25,6 +33,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x64/native</PackagePath>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\String8\String8.csproj" />
   </ItemGroup>
 
 </Project>
