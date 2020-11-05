@@ -22,7 +22,7 @@ appsettings.local.json
 [Rr]eleases/
 x64/
 x86/
-bld/
+Bld/
 [Bb]in/
 [Oo]bj/
 

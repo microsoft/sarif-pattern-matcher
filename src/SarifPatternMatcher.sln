@@ -30,7 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{50216597-BDEE-4A04-B737-D9C7CD753653}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{50216597-BDEE-4A04-B737-D9C7CD753653}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BannedApi", "plugins\BannedApi\BannedApi.csproj", "{EFA9C8AC-549D-4919-BE3B-B58386947908}"
 EndProject
@@ -40,11 +40,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{B599D6C7-9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{822FEF72-5955-4580-8780-B10D1D003394}"
 	ProjectSection(SolutionItems) = preProject
-		build.app.props = build.app.props
-		build.common.props = build.common.props
-		build.lib.props = build.lib.props
-		build.product.props = build.product.props
-		build.test.props = build.test.props
 		BuildAndTest.cmd = BuildAndTest.cmd
 		BuildAndTest.sh = BuildAndTest.sh
 	EndProjectSection
@@ -58,6 +53,15 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "re2.x64", "RE2.Native\re2.x64.vcxproj", "{F0D53C69-F483-3ABA-8EB9-E41CF742CAB4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "re2.x86", "RE2.Native\re2.x86.vcxproj", "{F0D53C69-F483-3ABA-8EB9-E41CF742CAB5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{26CBD8AF-04D5-4E52-8FDE-134AE810BE88}"
+	ProjectSection(SolutionItems) = preProject
+		..\Targets\build.app.props = ..\Targets\build.app.props
+		..\Targets\build.common.props = ..\Targets\build.common.props
+		..\Targets\build.lib.props = ..\Targets\build.lib.props
+		..\Targets\build.product.props = ..\Targets\build.product.props
+		..\Targets\build.test.props = ..\Targets\build.test.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -241,6 +245,7 @@ Global
 		{70AC46A2-605B-4E9A-8414-D510A479742C} = {477C6C12-22A8-4447-8822-982F26A4F424}
 		{F0D53C69-F483-3ABA-8EB9-E41CF742CAB4} = {477C6C12-22A8-4447-8822-982F26A4F424}
 		{F0D53C69-F483-3ABA-8EB9-E41CF742CAB5} = {477C6C12-22A8-4447-8822-982F26A4F424}
+		{26CBD8AF-04D5-4E52-8FDE-134AE810BE88} = {B599D6C7-953C-4080-AFF9-37BF98FD9C20}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31BD334C-6711-44FF-B3E4-FAAC3A5D2F3A}
