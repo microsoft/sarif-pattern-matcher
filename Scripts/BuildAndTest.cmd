@@ -2,7 +2,6 @@
 SET ExitCode=-1
 
 PUSHD "%~dp0"
-CALL "FindTools.cmd"
 IF NOT "%ERRORLEVEL%"=="0" (
   ECHO - Error. Couldn't find tools. Build stopping.
   GOTO :End
@@ -26,7 +25,7 @@ IF EXIST "..\bld" (
 )
 
 ECHO - Building RE2.Native.sln (MSBuild)...
-"%MSBuildPath%" "..\Src\RE2.Native.sln" /p:Configuration=Release /p:Platform="Any CPU"
+MSBuild "..\Src\RE2.Native.sln" /p:Configuration=Release /p:Platform="Any CPU"
 
 ECHO - Building SarifPatternMatcher.sln (dotnet)...
 dotnet build ..\Src\SarifPatternMatcher.sln -c Release
