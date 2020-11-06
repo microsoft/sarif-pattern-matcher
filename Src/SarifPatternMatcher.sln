@@ -31,11 +31,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.UnitTests.BannedApi", "plugins\Test.UnitTests.BannedApi\Test.UnitTests.BannedApi.csproj", "{CF76D2FF-2C62-4151-93D3-7715E9EF6A5D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{B599D6C7-953C-4080-AFF9-37BF98FD9C20}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{822FEF72-5955-4580-8780-B10D1D003394}"
 	ProjectSection(SolutionItems) = preProject
-		BuildAndTest.cmd = BuildAndTest.cmd
-		BuildAndTest.sh = BuildAndTest.sh
+		..\BuildAndTest.cmd = ..\BuildAndTest.cmd
+		..\version.json = ..\version.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{26CBD8AF-04D5-4E52-8FDE-134AE810BE88}"
@@ -189,7 +187,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{EFA9C8AC-549D-4919-BE3B-B58386947908} = {50216597-BDEE-4A04-B737-D9C7CD753653}
 		{CF76D2FF-2C62-4151-93D3-7715E9EF6A5D} = {50216597-BDEE-4A04-B737-D9C7CD753653}
-		{822FEF72-5955-4580-8780-B10D1D003394} = {B599D6C7-953C-4080-AFF9-37BF98FD9C20}
 		{26CBD8AF-04D5-4E52-8FDE-134AE810BE88} = {B599D6C7-953C-4080-AFF9-37BF98FD9C20}
 		{04D51365-5125-4231-BE2A-C00016DA96C6} = {B599D6C7-953C-4080-AFF9-37BF98FD9C20}
 	EndGlobalSection
