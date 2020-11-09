@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(SolutionDir)..\Targets\build.lib.props" />
+  <Import Project="$(SolutionDir)..\Targets\build.product.props" />
+
+  <ItemGroup>
+    <Content Include="BannedApiRegex.json">
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="tools\Init.ps1">
+      <PackagePath>tools\</PackagePath>
+    </Content>
+  </ItemGroup>
+  
+</Project>

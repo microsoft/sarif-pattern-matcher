@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(SolutionDir)..\Targets\build.lib.props" />
+  
+  <PropertyGroup Label="AssemblyAttributes">
+    <AssemblyTitle>String8 Library</AssemblyTitle>
+    <Description>TODO: add description</Description>
+  </PropertyGroup>
+</Project>

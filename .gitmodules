@@ -1,0 +1,3 @@
+[submodule "src/RE2.Native/re2"]
+	path = src/RE2.Native/re2
+	url = git://github.com/google/re2.git

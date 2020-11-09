@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(SolutionDir)..\Targets\build.app.props" />
+  <Import Project="$(SolutionDir)..\Targets\build.test.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\String8\String8.csproj" />
+  </ItemGroup>
+
+</Project>

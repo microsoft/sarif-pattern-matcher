@@ -1,0 +1,9 @@
+<Project>
+
+  <Import Project=".\build.common.props" />
+  
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  
+</Project>

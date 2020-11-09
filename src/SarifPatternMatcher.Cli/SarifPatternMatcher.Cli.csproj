@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(SolutionDir)..\Targets\build.app.props" />
+  <Import Project="$(SolutionDir)..\Targets\build.product.props" />
+  
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <PackAsTool>true</PackAsTool>
+  </PropertyGroup>
+
+  <PropertyGroup Label="AssemblyAttributes">
+    <AssemblyTitle>Sarif Pattern Matcher Cli</AssemblyTitle>
+    <Description>TODO: add description</Description>
+  </PropertyGroup>
+</Project>
