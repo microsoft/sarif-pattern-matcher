@@ -26,4 +26,5 @@ steps:
 
 - task: PublishCodeCoverageResults@1
   inputs:
+    codeCoverageTool: 'cobertura'
     summaryFileLocation: 'TestResults/Cobertura.xml'
