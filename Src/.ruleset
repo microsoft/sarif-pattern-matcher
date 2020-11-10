@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="OpenTelemetry SDK Rules" Description="OpenTelemetry SDK ruleset for product code." ToolsVersion="15.0">
-  <Localization ResourceAssembly="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.dll" ResourceBaseName="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.Localized">
-    <Name Resource="OpenTelemetrySDKRules_Name" />
-    <Description Resource="OpenTelemetrySDKRules_Description" />
-  </Localization>
+<RuleSet Name="Rules" Description="Ruleset for product code." ToolsVersion="15.0">
+  <Localization ResourceAssembly="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.dll" ResourceBaseName="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.Localized"></Localization>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA1200" Action="None" />
     <Rule Id="SA1401" Action="None" />
