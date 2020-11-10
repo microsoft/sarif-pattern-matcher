@@ -29,4 +29,10 @@
     <PackageOutputPath>$(MsBuildThisFileDirectory)..\Bld\nupkg\$(OutputSubDir)\$(MSBuildProjectName)\</PackageOutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Include="$(SolutionDir)..\Src\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+  </ItemGroup>
+
 </Project>
