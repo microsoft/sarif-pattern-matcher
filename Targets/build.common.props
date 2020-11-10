@@ -10,7 +10,7 @@
     <!--root namespace for projects that does not contains SarifPatternMatcher in the project name-->
     <RootNamespace Condition="!$(MSBuildProjectName.Contains('SarifPatternMatcher'))">$(RootNamespaceBase).SarifPatternMatcher.$(MSBuildProjectName)</RootNamespace>
     <!--root namespace for test projects-->
-    <RootNamespace Condition="$(MSBuildProjectName.Contains('Test.UnitTests'))">$(RootNamespaceBase).$(MSBuildProjectName.Replace('Test.UnitTests.', ''))</RootNamespace>
+    <RootNamespace Condition="$(MSBuildProjectName.Contains('Test.UnitTests'))">$(RootNamespaceBase).SarifPatternMatcher.$(MSBuildProjectName.Replace('Test.UnitTests.', ''))</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Label="AssemblyAttributes">
