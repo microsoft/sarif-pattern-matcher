@@ -15,3 +15,7 @@ steps:
   displayName: 'Run BuildAndTest.cmd'
   inputs:
     filename: 'BuildAndTest.cmd'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    summaryFileLocation: **/coverage.cobertura.xml

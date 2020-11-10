@@ -44,7 +44,7 @@ IF NOT "%ERRORLEVEL%"=="0" (
 
 ECHO.
 ECHO - Running tests...
-dotnet test ..\Src\SarifPatternMatcher.sln -c Release --no-build
+dotnet test ..\Src\SarifPatternMatcher.sln -c Release --no-build --collect:"XPlat Code Coverage"
 IF NOT "%ERRORLEVEL%"=="0" (
   ECHO Error. Tests failed. Build stopping.
   GOTO :End
