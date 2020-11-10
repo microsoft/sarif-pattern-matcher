@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Xunit;
 
 namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
@@ -158,12 +159,12 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
 
         private static void Run()
         {
-            string content = @"
+            const string content = @"
 {
     ""title"": ""Interesting"",
     ""message"": ""Nothing Found""
 }";
-            for(int i = 0; i < 100; ++i)
+            for (int i = 0; i < 100; ++i)
             {
                 int count = 0;
 
