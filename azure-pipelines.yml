@@ -15,3 +15,16 @@ steps:
   displayName: 'Run BuildAndTest.cmd'
   inputs:
     filename: 'BuildAndTest.cmd'
+
+- task: PowerShell@2
+  displayName: 'Merging TestResults'
+  inputs:
+    targetType: 'inline'
+    script: |
+      dotnet tool install -g dotnet-reportgenerator-globaltool      
+      reportgenerator -reports:**/coverage.cobertura.xml -targetdir:TestResults -reporttypes:Cobertura
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'cobertura'
+    summaryFileLocation: 'TestResults/Cobertura.xml'

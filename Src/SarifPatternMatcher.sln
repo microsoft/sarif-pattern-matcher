@@ -32,6 +32,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.UnitTests.BannedApi", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{B599D6C7-953C-4080-AFF9-37BF98FD9C20}"
 	ProjectSection(SolutionItems) = preProject
+		..\.gitmodules = ..\.gitmodules
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
 		..\BuildAndTest.cmd = ..\BuildAndTest.cmd
 		..\version.json = ..\version.json
 	EndProjectSection
@@ -48,6 +50,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{04D51365-5125-4231-BE2A-C00016DA96C6}"
 	ProjectSection(SolutionItems) = preProject
 		..\Scripts\BuildAndTest.cmd = ..\Scripts\BuildAndTest.cmd
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{BB9FC0F2-57ED-498F-90B3-8819A9315779}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.ruleset = .ruleset
+		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
 Global
@@ -189,6 +198,7 @@ Global
 		{CF76D2FF-2C62-4151-93D3-7715E9EF6A5D} = {50216597-BDEE-4A04-B737-D9C7CD753653}
 		{26CBD8AF-04D5-4E52-8FDE-134AE810BE88} = {B599D6C7-953C-4080-AFF9-37BF98FD9C20}
 		{04D51365-5125-4231-BE2A-C00016DA96C6} = {B599D6C7-953C-4080-AFF9-37BF98FD9C20}
+		{BB9FC0F2-57ED-498F-90B3-8819A9315779} = {B599D6C7-953C-4080-AFF9-37BF98FD9C20}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31BD334C-6711-44FF-B3E4-FAAC3A5D2F3A}
