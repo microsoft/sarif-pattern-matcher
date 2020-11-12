@@ -4,6 +4,6 @@
     <Message Text="Copying files" />
     <Copy 
       SourceFiles="$(MSBuildThisFileDirectory)..\content\BannedApiRegex.json" 
-      DestinationFiles="$(SolutionDir)..\.spam\BannedApiRegex.json" />
+      DestinationFiles="$(SolutionDir)\.spam\BannedApiRegex.json" />
   </Target>
 </Project>
