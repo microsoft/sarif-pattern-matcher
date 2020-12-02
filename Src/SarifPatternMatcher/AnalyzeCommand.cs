@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 using Microsoft.CodeAnalysis.Sarif;
@@ -15,7 +14,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
-        internal static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem, IEnumerable<string> searchDefinitionsPaths)
+        public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem, IEnumerable<string> searchDefinitionsPaths)
         {
             var validators = new ValidatorsCache(searchDefinitionsPaths);
 
@@ -46,7 +45,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                             defaultMessageString: definition.Message,
                             matchExpressions: definition.MatchExpressions));
 
-                    string singleSpace = " ";
+                    const string singleSpace = " ";
 
                     // Send no-op match operations through engine in order to drive caching of all regexes.
                     if (definition.DefaultNameRegex != null)
@@ -79,8 +78,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy, filePath);
 
             context.Traces =
-                options.Traces.Count() > 0 ?
-                    Enum.Parse<DefaultTraces>(string.Join("|", options.Traces)) :
+                options.Traces.Any() ?
+                    (DefaultTraces)Enum.Parse(typeof(DefaultTraces), string.Join("|", options.Traces)) :
                     DefaultTraces.None;
 
             return context;

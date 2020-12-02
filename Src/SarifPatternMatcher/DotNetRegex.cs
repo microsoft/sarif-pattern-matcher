@@ -58,6 +58,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                     length = group.Length;
                 }
             }
+
             return new FlexMatch() { Success = match.Success, Index = index, Length = length, Value = value };
         }
     }

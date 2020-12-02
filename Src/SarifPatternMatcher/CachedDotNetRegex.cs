@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -18,24 +19,24 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
     {
         public static IRegex Instance = new CachedDotNetRegex();
 
-        internal static TimeSpan DefaultTimeout = TimeSpan.FromMilliseconds(Int32.MaxValue - 1);
-
-        private CachedDotNetRegex() { }
+        internal static TimeSpan DefaultTimeout = TimeSpan.FromMilliseconds(int.MaxValue - 1);
 
         static CachedDotNetRegex()
         {
             RegexCache = new ConcurrentDictionary<Tuple<string, RegexOptions>, Regex>();
         }
 
-        private static ConcurrentDictionary<Tuple<string, RegexOptions>, Regex> RegexCache { get; set; }
+        private CachedDotNetRegex() { }
+
+        private static ConcurrentDictionary<Tuple<string, RegexOptions>, Regex> RegexCache { get; }
 
         public static Regex GetOrCreateRegex(string expression, RegexOptions options)
         {
-            Tuple<string, RegexOptions> key = Tuple.Create(expression, options);
-            return RegexCache.GetOrAdd(key, k => new Regex(expression, options | RegexOptions.Compiled));
+            var key = Tuple.Create(expression, options);
+            return RegexCache.GetOrAdd(key, _ => new Regex(expression, options | RegexOptions.Compiled));
         }
 
-        public bool IsMatch(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null)
+        public bool IsMatch(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
             // Note: Instance Regex.IsMatch has no timeout overload.
             Regex regex = GetOrCreateRegex(pattern, options);
@@ -43,17 +44,17 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             return match.Success && (captureGroup == null || match.Groups[captureGroup].Success);
         }
 
-        public FlexMatch Match(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null)
+        public FlexMatch Match(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
             // Note: Instance Regex.Match has no timeout overload.
             Regex regex = GetOrCreateRegex(pattern, options);
             return DotNetRegex.ToFlex(regex.Match(input), captureGroup);
         }
 
-        public IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null)
+        public IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
-            if (timeout == default(TimeSpan)) { timeout = DefaultTimeout; }
-            Stopwatch w = Stopwatch.StartNew();
+            if (timeout == default) { timeout = DefaultTimeout; }
+            var w = Stopwatch.StartNew();
 
             Regex regex = GetOrCreateRegex(pattern, options);
             foreach (Match m in regex.Matches(input))

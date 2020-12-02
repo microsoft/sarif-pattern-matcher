@@ -7,7 +7,7 @@ using CommandLine;
 
 namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
-    internal class Program
+    internal static class Program
     {
         private static int Main(string[] args)
         {
@@ -15,7 +15,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                 AnalyzeOptions>(args)
               .MapResult(
                 (AnalyzeOptions analyzeOptions) => new AnalyzeCommand().Run(analyzeOptions),
-                errs => 1);
+                _ => 1);
         }
     }
 }

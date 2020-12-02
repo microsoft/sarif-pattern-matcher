@@ -16,7 +16,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
     /// </summary>
     public struct Timeout
     {
-        private Stopwatch Watch { get; set; }
+        private Stopwatch Watch { get; }
+
         public TimeSpan Limit { get; }
 
         /// <summary>

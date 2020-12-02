@@ -60,7 +60,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                     }
                     catch (ReflectionTypeLoadException)
                     {
-                        // TODO log                    
+                        // TODO log something here.
                     }
 
                     if (assembly == null) { continue; }

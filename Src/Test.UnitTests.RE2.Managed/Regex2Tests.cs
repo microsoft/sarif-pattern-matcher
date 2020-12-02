@@ -26,7 +26,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         public void Regex2_Basics()
         {
             byte[] buffer = null, buffer2 = null;
-            String8 sample = String8.Convert("using Microsoft.VisualStudio.TestTools.UnitTesting;", ref buffer2);
+            var sample = String8.Convert("using Microsoft.VisualStudio.TestTools.UnitTesting;", ref buffer2);
 
             // Null and Empty
             Assert.Throws<ArgumentException>(() => Regex2.IsMatch(sample, null));
@@ -65,12 +65,12 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
             Assert.True(Regex2.IsMatch(sample, @"[^\.]+TOOLS", RegexOptions.IgnoreCase));
 
             // Singleline option
-            String8 moreLines = String8.Convert("using Microsoft\r\n\t.VisualStudio\r\n\t.TestTools\r\n\t.UnitTesting;", ref buffer);
-            Assert.False(Regex2.IsMatch(moreLines, @"using (.+)VisualStudio"));
-            Assert.True(Regex2.IsMatch(moreLines, @"using (.+)VisualStudio", RegexOptions.Singleline));
+            var moreLines = String8.Convert("using Microsoft\r\n\t.VisualStudio\r\n\t.TestTools\r\n\t.UnitTesting;", ref buffer);
+            Assert.False(Regex2.IsMatch(moreLines, "using (.+)VisualStudio"));
+            Assert.True(Regex2.IsMatch(moreLines, "using (.+)VisualStudio", RegexOptions.Singleline));
 
             // Multiple options
-            Assert.True(Regex2.IsMatch(moreLines, @"using (.+)VISUALSTUDIO", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline));
+            Assert.True(Regex2.IsMatch(moreLines, "using (.+)VISUALSTUDIO", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline));
 
             // Ignored options don't throw and work with other options
             Assert.False(Regex2.IsMatch(sample, @"[^\.]+TOOLS", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture));
@@ -92,12 +92,10 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         public void Regex2_Timeout()
         {
             byte[] buffer = null;
-            String8 sample = String8.Convert("using Microsoft.VisualStudio.TestTools.UnitTesting;", ref buffer);
-
-            Timeout timeout;
+            var sample = String8.Convert("using Microsoft.VisualStudio.TestTools.UnitTesting;", ref buffer);
 
             // Long timeout: Verify all matches returned
-            timeout = Timeout.Start(TimeSpan.FromSeconds(10));
+            var timeout = Timeout.Start(TimeSpan.FromSeconds(10));
             Assert.Equal(51, Regex2.Matches(sample, ".", RegexOptions.None, timeout).Count());
             Assert.False(timeout.IsExpired);
 
@@ -110,17 +108,17 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         [Fact]
         public void Regex2_MultiThreaded()
         {
-            string content = @"
+            const string content = @"
 {
     ""title"": ""Interesting"",
     ""message"": ""Nothing Found""
 }";
-            Parallel.For(0, 1000, (i) =>
+            Parallel.For(0, 1000, (_) =>
             {
                 int count = 0;
 
                 byte[] buffer = null;
-                String8 content8 = String8.Convert(content, ref buffer);
+                var content8 = String8.Convert(content, ref buffer);
                 foreach (Match2 match in Regex2.Matches(content8, "\\\"message\\\": ?\\\"[^\\\"]*\\\""))
                 {
                     count++;
@@ -132,14 +130,16 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         public void Regex2_ThreadCycling()
         {
             int threadCount = Environment.ProcessorCount;
-            Thread[] threads = new Thread[threadCount];
+            var threads = new Thread[threadCount];
 
             for (int iteration = 0; iteration < 50; ++iteration)
             {
                 for (int index = 0; index < threads.Length; ++index)
                 {
-                    Thread t = new Thread(new ThreadStart(Run));
-                    t.IsBackground = true;
+                    var t = new Thread(new ThreadStart(Run))
+                    {
+                        IsBackground = true
+                    };
                     t.Start();
                     threads[index] = t;
                 }
@@ -171,7 +171,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
                 int count = 0;
 
                 byte[] buffer = null;
-                String8 content8 = String8.Convert(content, ref buffer);
+                var content8 = String8.Convert(content, ref buffer);
                 foreach (Match2 match in Regex2.Matches(content8, "\\\"message\\\": ?\\\"[^\\\"]*\\\""))
                 {
                     count++;
