@@ -30,14 +30,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="$(SolutionDir)..\Src\stylecop.json">
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)..\src\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(SolutionDir)Shared\CommonAssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\src\Shared\CommonAssemblyInfo.cs" />
   </ItemGroup>
-
 
 </Project>

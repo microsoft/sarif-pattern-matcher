@@ -55,6 +55,10 @@ IF NOT "%ERRORLEVEL%"=="0" (
   ECHO Error. Tests failed. Build stopping.
   GOTO :End
 )
+
+dotnet tool update --global dotnet-format --version 4.1.131201
+dotnet-format --folder
+
 set ExitCode=0
 :End
 POPD
