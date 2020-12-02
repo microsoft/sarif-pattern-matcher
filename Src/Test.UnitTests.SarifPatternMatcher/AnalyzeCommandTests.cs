@@ -27,7 +27,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
         {
             var definitions = new SearchDefinitions()
             {
-                Definitions = new List<SearchDefinition>(new []
+                Definitions = new List<SearchDefinition>(new[]
                 {
                     new SearchDefinition()
                     {
@@ -41,7 +41,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
                                 ContentsRegex = "foo",
                                 Fixes = new Dictionary<string, SimpleFix>()
                                 {
-                                    { 
+                                    {
                                         "convertToPublic", new SimpleFix()
                                         {
                                             Description = "Make class public.",
@@ -69,7 +69,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
             // Acquire skimmers for searchers
             ISet<Skimmer<AnalyzeContext>> skimmers =
                 AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
-                    mockFileSystem.Object, 
+                    mockFileSystem.Object,
                     new string[] { searchDefinitionsPath });
 
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
@@ -83,7 +83,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
                 Logger = testLogger
             };
 
-            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers;            
+            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers;
             applicableSkimmers = AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
 
             AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
@@ -91,7 +91,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
             testLogger.Results.Should().NotBeNull();
             testLogger.Results.Count.Should().Be(2);
 
-            foreach(Result result in testLogger.Results)
+            foreach (Result result in testLogger.Results)
             {
                 result.Level.Should().Be(FailureLevel.Error);
             }

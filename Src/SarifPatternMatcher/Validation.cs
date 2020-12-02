@@ -9,7 +9,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
     {
         None = 0,
         ValidatorNotFound = None,
-        Valid, 
+        Valid,
         Invalid
     }
 }
