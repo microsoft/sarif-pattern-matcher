@@ -9,13 +9,15 @@ using Microsoft.CodeAnalysis.SarifPatternMatcher.Strings;
 namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
     /// <summary>
-    ///  IRegex is a generic subset of System.Text.RegularExpressions.Regex, 
+    ///  IRegex is a generic subset of System.Text.RegularExpressions.Regex,
     ///  allowing callers to generically use different Regex engines.
     /// </summary>
     public interface IRegex
     {
         bool IsMatch(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null);
+
         FlexMatch Match(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null);
+
         IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null);
     }
 }

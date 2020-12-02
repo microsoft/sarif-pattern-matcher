@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 using Microsoft.CodeAnalysis.Sarif;
@@ -80,7 +79,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
             context.Traces =
                 options.Traces.Count() > 0 ?
-                    Enum.Parse<DefaultTraces>(string.Join("|", options.Traces)) :
+                    (DefaultTraces)Enum.Parse(typeof(DefaultTraces), string.Join("|", options.Traces)) :
                     DefaultTraces.None;
 
             return context;

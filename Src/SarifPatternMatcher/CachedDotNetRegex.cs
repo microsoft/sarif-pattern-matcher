@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
     {
         public static IRegex Instance = new CachedDotNetRegex();
 
-        internal static TimeSpan DefaultTimeout = TimeSpan.FromMilliseconds(Int32.MaxValue - 1);
+        internal static TimeSpan DefaultTimeout = TimeSpan.FromMilliseconds(int.MaxValue - 1);
 
         private CachedDotNetRegex() { }
 

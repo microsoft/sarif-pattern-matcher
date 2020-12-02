@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
-// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -228,6 +227,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             {
                 text = text.Replace(kv.Key, kv.Value);
             }
+
             return text;
         }
 
@@ -311,7 +311,6 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                 value = kv.Key == "encoding" ?
                     "plaintext" :
                     value;
-
 
                 arguments[kv.Value] = value;
             }

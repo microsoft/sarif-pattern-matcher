@@ -8,16 +8,17 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.PlaintextSecrets
     internal static class AzureDevOpsPersonalAccessTokenValidator
     {
         /// <summary>
-        /// Magic number to validate PAT checksum
+        /// Magic number to validate PAT checksum.
         /// </summary>
         private const uint ChecksumPAT = 0xE0B9692D;
 
         /// <summary>
-        /// Magic number to validate ADO application secret checksum
+        /// Magic number to validate ADO application secret checksum.
         /// </summary>
         private const uint ChecksumADOAppSecret = 0x1019F92E;
 
-        private static readonly uint[] Crc32Table = new uint[256] {
+        private static readonly uint[] Crc32Table = new uint[256]
+        {
                 0x00000000u, 0x77073096u, 0xee0e612cu, 0x990951bau, 0x076dc419u,
                 0x706af48fu, 0xe963a535u, 0x9e6495a3u, 0x0edb8832u, 0x79dcb8a4u,
                 0xe0d5e91eu, 0x97d2d988u, 0x09b64c2bu, 0x7eb17cbdu, 0xe7b82d07u,
@@ -69,14 +70,14 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.PlaintextSecrets
                 0xbdbdf21cu, 0xcabac28au, 0x53b39330u, 0x24b4a3a6u, 0xbad03605u,
                 0xcdd70693u, 0x54de5729u, 0x23d967bfu, 0xb3667a2eu, 0xc4614ab8u,
                 0x5d681b02u, 0x2a6f2b94u, 0xb40bbe37u, 0xc30c8ea1u, 0x5a05df1bu,
-                0x2d02ef8du
-            };
+                0x2d02ef8du,
+        };
 
         /// <summary>
-        /// Validate if the match is an AzureDevOps personal access token
+        /// Validate if the match is an AzureDevOps personal access token.
         /// </summary>
         /// <param name="matchedPattern">The matched text to validate as an ADO PAT (or not).</param>
-        /// <returns>True if the match is an unencoded ADO personal access token, otherwise return false</returns>
+        /// <returns>True if the match is an unencoded ADO personal access token, otherwise return false.</returns>
         public static bool IsValid(string matchedPattern)
         {
             return
@@ -85,11 +86,11 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.PlaintextSecrets
         }
 
         /// <summary>
-        /// Given a string, validate that it has a valid checksum
+        /// Given a string, validate that it has a valid checksum.
         /// </summary>
-        /// <param name="input">String to checksum validate</param>
-        /// <param name="magicNumber">Magic number to use to validating checksum</param>
-        /// <returns>True if checksum is valid</returns>
+        /// <param name="input">String to checksum validate.</param>
+        /// <param name="magicNumber">Magic number to use to validating checksum.</param>
+        /// <returns>True if checksum is valid.</returns>
         private static bool IsChecksumValid(string input, uint magicNumber)
         {
             byte[] inputBytes = ConvertFromBase32(input);
@@ -105,6 +106,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.PlaintextSecrets
             uint newChecksum;
             {
                 uint crc32 = CalculateChecksum(0, tokenBytes, 0, tokenBytes.Length);
+
                 // XOR the calculated checksum with a magic number.
                 newChecksum = crc32 ^ magicNumber;
             }
@@ -197,10 +199,10 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.PlaintextSecrets
             {
                 checksum = Crc32Table[(checksum ^ buffer[offset++]) & 0xFF] ^ (checksum >> 8);
             }
+
             checksum ^= 0xffffffffU;
 
             return checksum;
         }
-
     }
 }
