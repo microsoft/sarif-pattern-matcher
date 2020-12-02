@@ -4,6 +4,12 @@
   
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>  
-  
+  </PropertyGroup>
+
+  <PropertyGroup Label="Signing">
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>$(MsBuildThisFileDirectory)Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
 </Project>
