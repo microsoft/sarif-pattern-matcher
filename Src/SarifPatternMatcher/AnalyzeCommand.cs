@@ -24,7 +24,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             foreach (string searchDefinitionsPath in searchDefinitionsPaths)
             {
                 string searchDefinitionsText =
-                    fileSystem.FileReadAllText(searchDefinitionsPath);
+                    fileSystem.ReadAllText(searchDefinitionsPath);
 
                 SearchDefinitions definitions =
                     JsonConvert.DeserializeObject<SearchDefinitions>(searchDefinitionsText);
@@ -45,7 +45,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                             defaultMessageString: definition.Message,
                             matchExpressions: definition.MatchExpressions));
 
-                    string singleSpace = " ";
+                    const string singleSpace = " ";
 
                     // Send no-op match operations through engine in order to drive caching of all regexes.
                     if (definition.DefaultNameRegex != null)
@@ -78,7 +78,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy, filePath);
 
             context.Traces =
-                options.Traces.Count() > 0 ?
+                options.Traces.Any() ?
                     (DefaultTraces)Enum.Parse(typeof(DefaultTraces), string.Join("|", options.Traces)) :
                     DefaultTraces.None;
 
