@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             return RegexCache.GetOrAdd(key, _ => new Regex(expression, options | RegexOptions.Compiled));
         }
 
-        public bool IsMatch(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null)
+        public bool IsMatch(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
             // Note: Instance Regex.IsMatch has no timeout overload.
             Regex regex = GetOrCreateRegex(pattern, options);
@@ -44,14 +44,14 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             return match.Success && (captureGroup == null || match.Groups[captureGroup].Success);
         }
 
-        public FlexMatch Match(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null)
+        public FlexMatch Match(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
             // Note: Instance Regex.Match has no timeout overload.
             Regex regex = GetOrCreateRegex(pattern, options);
             return DotNetRegex.ToFlex(regex.Match(input), captureGroup);
         }
 
-        public IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null)
+        public IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
             if (timeout == default) { timeout = DefaultTimeout; }
             var w = Stopwatch.StartNew();

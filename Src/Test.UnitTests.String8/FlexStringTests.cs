@@ -60,7 +60,6 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
             Assert.Equal(0, sampleF.CompareTo(sampleF2));
             sampleF2 = "different";
             Assert.NotEqual(0, sampleF.CompareTo(sampleF2));
-
         }
     }
 }

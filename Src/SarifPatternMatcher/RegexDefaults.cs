@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
-    public class RegexDefaults
+    public static class RegexDefaults
     {
         public const RegexOptions DefaultOptionsCaseInsensitive = RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase;
         public const RegexOptions DefaultOptionsCaseSensitive = RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture;

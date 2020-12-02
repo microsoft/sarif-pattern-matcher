@@ -138,7 +138,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.PlaintextSecrets
             int outputSize = inputString.Length * OutputPerByteSize / InputPerByteSize;
             if (outputSize == 0)
             {
-                throw new ArgumentException($"Input string invalid base32. Empty output array.");
+                throw new ArgumentException("Input string invalid base32. Empty output array.");
             }
 
             int inputOffset = 0;
@@ -157,22 +157,13 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.PlaintextSecrets
 
                         if (currentByte < 0)
                         {
-                            throw new ArgumentException($"Invalid base32 character \"inputString[inputPosition]\"");
+                            throw new ArgumentException("Invalid base32 character \"inputString[inputPosition]\"");
                         }
                     }
 
                     int size1 = OutputPerByteSize - inputOffset;
                     int size2 = InputPerByteSize - outputOffset;
-                    int bitsRemaining;
-                    if (size1 < size2)
-                    {
-                        bitsRemaining = size1;
-                    }
-                    else
-                    {
-                        bitsRemaining = size2;
-                    }
-
+                    int bitsRemaining = size1 < size2 ? size1 : size2;
                     inputOffset += bitsRemaining;
                     outputOffset += bitsRemaining;
                     output[outputPosition] <<= bitsRemaining;

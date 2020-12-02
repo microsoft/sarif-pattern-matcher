@@ -76,15 +76,14 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
-            AnalyzeContext context = new AnalyzeContext()
+            var context = new AnalyzeContext()
             {
                 TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
                 FileContents = fileContents,
                 Logger = testLogger
             };
 
-            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers;
-            applicableSkimmers = AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
+            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
 
             AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
 
