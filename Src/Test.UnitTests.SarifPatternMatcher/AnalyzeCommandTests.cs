@@ -64,7 +64,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
             var testLogger = new TestLogger();
 
             var mockFileSystem = new Mock<IFileSystem>();
-            mockFileSystem.Setup(x => x.ReadAllText(searchDefinitionsPath)).Returns(definitionsText);
+            mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
             // Acquire skimmers for searchers
             ISet<Skimmer<AnalyzeContext>> skimmers =

@@ -24,7 +24,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             foreach (string searchDefinitionsPath in searchDefinitionsPaths)
             {
                 string searchDefinitionsText =
-                    fileSystem.ReadAllText(searchDefinitionsPath);
+                    fileSystem.FileReadAllText(searchDefinitionsPath);
 
                 SearchDefinitions definitions =
                     JsonConvert.DeserializeObject<SearchDefinitions>(searchDefinitionsText);
