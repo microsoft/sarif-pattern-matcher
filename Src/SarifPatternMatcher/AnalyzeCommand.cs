@@ -14,7 +14,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
-        internal static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem, IEnumerable<string> searchDefinitionsPaths)
+        public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem, IEnumerable<string> searchDefinitionsPaths)
         {
             var validators = new ValidatorsCache(searchDefinitionsPaths);
 
