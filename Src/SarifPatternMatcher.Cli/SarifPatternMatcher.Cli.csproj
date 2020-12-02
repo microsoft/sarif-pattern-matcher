@@ -6,10 +6,19 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <PackAsTool>true</PackAsTool>
+    <AssemblyName>spam</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Label="AssemblyAttributes">
     <AssemblyTitle>Sarif Pattern Matcher Cli</AssemblyTitle>
-    <Description>TODO: add description</Description>
+    <Description>A general pattern matcher that persists results to the SARIF format.</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SarifPatternMatcher\SarifPatternMatcher.csproj" />
+  </ItemGroup>
 </Project>

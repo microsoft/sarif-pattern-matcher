@@ -10,6 +10,9 @@
     "documentationRules": {
       "copyrightText": "Copyright (c) Microsoft. All rights reserved.\nLicensed under the MIT license. See LICENSE file in the project root for full license information.",
       "xmlHeader": false
+    },
+    "readabilityRules": {
+
     }
   }
 }

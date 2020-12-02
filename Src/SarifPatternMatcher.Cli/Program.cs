@@ -3,13 +3,19 @@
 
 using System;
 
-namespace SarifPatternMatcher.Cli
+using CommandLine;
+
+namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static int Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            return Parser.Default.ParseArguments<
+                AnalyzeOptions>(args)
+              .MapResult(
+                (AnalyzeOptions analyzeOptions) => new AnalyzeCommand().Run(analyzeOptions),
+                errs => 1);
         }
     }
 }

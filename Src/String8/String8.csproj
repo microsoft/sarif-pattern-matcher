@@ -4,6 +4,6 @@
   
   <PropertyGroup Label="AssemblyAttributes">
     <AssemblyTitle>String8 Library</AssemblyTitle>
-    <Description>TODO: add description</Description>
+    <Description>Specialized types for seamless handling of UTF8 and UTF16 strings.</Description>
   </PropertyGroup>
 </Project>

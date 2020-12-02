@@ -13,6 +13,12 @@ IF NOT EXIST "..\Src\RE2.Native\re2\re2" (
   git submodule update
 )
 
+IF NOT EXIST "..\Src\Sarif-Sdk" (
+  ECHO - Retrieving Sarif-Sdk submodule...
+  git submodule init
+  git submodule update
+)
+
 :: IF NOT EXIST "Spam\Searchers" (
 ::   ECHO Retrieving Searchers submodule...
 ::   git submodule init

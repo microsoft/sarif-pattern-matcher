@@ -8,6 +8,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft.CodeAnalysis.SarifPatternMatcher.Strings;
+
 using Xunit;
 
 namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
@@ -24,18 +26,18 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         public void Regex2_Basics()
         {
             byte[] buffer = null, buffer2 = null;
-            String8.String8 sample = String8.String8.Convert("using Microsoft.VisualStudio.TestTools.UnitTesting;", ref buffer2);
+            String8 sample = String8.Convert("using Microsoft.VisualStudio.TestTools.UnitTesting;", ref buffer2);
 
             // Null and Empty
             Assert.Throws<ArgumentException>(() => Regex2.IsMatch(sample, null));
             Assert.Throws<ArgumentException>(() => Regex2.IsMatch(sample, ""));
-            Assert.False(Regex2.IsMatch(String8.String8.Empty, "[A-Z]"));
+            Assert.False(Regex2.IsMatch(String8.Empty, "[A-Z]"));
             Assert.Throws<ArgumentException>(() => Regex2.Matches(sample, null).FirstOrDefault());
             Assert.Throws<ArgumentException>(() => Regex2.Matches(sample, "").FirstOrDefault());
 
             // Basic Expressions
-            Assert.True(Regex2.IsMatch(String8.String8.Convert("Interesting", ref buffer), "[A-Z]"));
-            Assert.False(Regex2.IsMatch(String8.String8.Convert("1234567890", ref buffer), "[A-Z]"));
+            Assert.True(Regex2.IsMatch(String8.Convert("Interesting", ref buffer), "[A-Z]"));
+            Assert.False(Regex2.IsMatch(String8.Convert("1234567890", ref buffer), "[A-Z]"));
 
             // Regex Parse Errors
             Assert.Throws<ArgumentException>(() => Regex2.IsMatch(sample, "(unclosedParen"));
@@ -52,10 +54,10 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
             Assert.Equal("(5, 46: ' Microsoft.VisualStudio.TestTools.UnitTesting;'), (15, 36: '.VisualStudio.TestTools.UnitTesting;'), (28, 23: '.TestTools.UnitTesting;'), (38, 13: '.UnitTesting;')", string.Join(", ", Regex2.Matches(sample, "[ \\.].+[\\.;]").Select((m) => MatchToString(m, sample))));
 
             // Internal String8.String8 range checks
-            Assert.Throws<ArgumentNullException>(() => Regex2.IsMatch(new String8.String8(null, sample.Index, sample.Length), "[A-Z]"));
-            Assert.Throws<ArgumentOutOfRangeException>(() => Regex2.IsMatch(new String8.String8(sample.Array, -1, sample.Length), "[A-Z]"));
-            Assert.Throws<ArgumentOutOfRangeException>(() => Regex2.IsMatch(new String8.String8(sample.Array, 0, sample.Length + 1), "[A-Z]"));
-            Assert.Throws<ArgumentOutOfRangeException>(() => Regex2.IsMatch(new String8.String8(sample.Array, sample.Length - 2, 3), "[A-Z]"));
+            Assert.Throws<ArgumentNullException>(() => Regex2.IsMatch(new String8(null, sample.Index, sample.Length), "[A-Z]"));
+            Assert.Throws<ArgumentOutOfRangeException>(() => Regex2.IsMatch(new String8(sample.Array, -1, sample.Length), "[A-Z]"));
+            Assert.Throws<ArgumentOutOfRangeException>(() => Regex2.IsMatch(new String8(sample.Array, 0, sample.Length + 1), "[A-Z]"));
+            Assert.Throws<ArgumentOutOfRangeException>(() => Regex2.IsMatch(new String8(sample.Array, sample.Length - 2, 3), "[A-Z]"));
 
             // IgnoreCase option
             Assert.True(Regex2.IsMatch(sample, @"[^\.]+Tools"));
@@ -63,7 +65,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
             Assert.True(Regex2.IsMatch(sample, @"[^\.]+TOOLS", RegexOptions.IgnoreCase));
 
             // Singleline option
-            String8.String8 moreLines = String8.String8.Convert("using Microsoft\r\n\t.VisualStudio\r\n\t.TestTools\r\n\t.UnitTesting;", ref buffer);
+            String8 moreLines = String8.Convert("using Microsoft\r\n\t.VisualStudio\r\n\t.TestTools\r\n\t.UnitTesting;", ref buffer);
             Assert.False(Regex2.IsMatch(moreLines, @"using (.+)VisualStudio"));
             Assert.True(Regex2.IsMatch(moreLines, @"using (.+)VisualStudio", RegexOptions.Singleline));
 
@@ -81,7 +83,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
             Assert.Throws<ArgumentException>(() => Regex2.IsMatch(sample, @"[^\.]+Tools", RegexOptions.ECMAScript));
         }
 
-        private string MatchToString(Match2 match, String8.String8 content)
+        private string MatchToString(Match2 match, String8 content)
         {
             return $"({match.Index}, {match.Length}: '{content.Substring(match.Index, match.Length)}')";
         }
@@ -90,7 +92,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         public void Regex2_Timeout()
         {
             byte[] buffer = null;
-            String8.String8 sample = String8.String8.Convert("using Microsoft.VisualStudio.TestTools.UnitTesting;", ref buffer);
+            String8 sample = String8.Convert("using Microsoft.VisualStudio.TestTools.UnitTesting;", ref buffer);
 
             Timeout timeout;
 
@@ -118,7 +120,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
                 int count = 0;
 
                 byte[] buffer = null;
-                String8.String8 content8 = String8.String8.Convert(content, ref buffer);
+                String8 content8 = String8.Convert(content, ref buffer);
                 foreach (Match2 match in Regex2.Matches(content8, "\\\"message\\\": ?\\\"[^\\\"]*\\\""))
                 {
                     count++;
@@ -169,7 +171,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
                 int count = 0;
 
                 byte[] buffer = null;
-                String8.String8 content8 = String8.String8.Convert(content, ref buffer);
+                String8 content8 = String8.Convert(content, ref buffer);
                 foreach (Match2 match in Regex2.Matches(content8, "\\\"message\\\": ?\\\"[^\\\"]*\\\""))
                 {
                     count++;

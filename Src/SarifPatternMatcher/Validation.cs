@@ -3,9 +3,13 @@
 
 using System;
 
-namespace SarifPatternMatcher
+namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
-    public class Class1
+    public enum Validation
     {
+        None = 0,
+        ValidatorNotFound = None,
+        Valid, 
+        Invalid
     }
 }

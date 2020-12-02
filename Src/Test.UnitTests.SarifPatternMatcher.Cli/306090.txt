@@ -1,0 +1,39 @@
+principles:
+ * focus in on valid items
+ * build per-rule features
+ * two mechanism strategy: high confidence/pri, the remainder
+
+Can we know that a finding is in history, not tip?
+What's our git signaling mechanism today (and how can we evolve it)?
+New Merlin feature: you must squash merge (enforce by policy)
+Jeff Wilcox understands the process
+Best practice integration with ADO cred discovery/ownership/remediation services
+Explore in-memory/Reddis style solutions for search?
+Can CodeQL help?
+
+30 
+ Drop CredScan v2ish into 'stay clean' (high pri 0)
+ Comprehensive incremental scan of 'all the things' in 1ES (CredScan v2ish into get clean)
+ Prototype validation within our Cosmos processing (CredChecker)
+ Review/refine/update user-facing reporting text and docs.
+ Spec high-friction for bypass (one-off, web-based requests)
+ Implement service support in stay clean for one-off bypass tokens
+ Validate A/B mechanism is functioning, that we can assess actual impact on end-to-end disposition
+ Tool owner false positive reduction triage process/tooling plan
+
+60
+ Company 'state of the world' creds report + executive review
+ Drop CredScan v2ish into 'stay clean' (remainder)
+ Implement it high-friction browser-based one-off bypass acquisition mechanism
+ Dev spec for integrating CredChecker in get-clean
+ Credential-centered reporting
+ AzSec: drive remediation
+ Customer triage tools
+
+90
+ Credentials in global store are annotated as 'valid' or not (productize CredChecker in get clean)
+ Finished plan on left-shifting analysis (pre-commit, IDE support, etc.)
+ Advanced data warehousing/search for exposed credential store
+ File -> binary -> code owner store
+
+

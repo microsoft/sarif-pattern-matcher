@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 
+using Microsoft.CodeAnalysis.SarifPatternMatcher.Strings;
+
 namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
 {
     /// <summary>
@@ -95,7 +97,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
                     expression = RemoveNamedGroups(expression);
 
                     byte[] buffer = null;
-                    var expression8 = String8.String8.Convert(expression, ref buffer);
+                    var expression8 = String8.Convert(expression, ref buffer);
 
                     // The native BuildRegex code is thread-safe for creating compiled expressions.
                     fixed (byte* expressionPtr = expression8.Array)
@@ -155,7 +157,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         /// <param name="fromIndex">Index in text to start searching from (used to resume matching)</param>
         /// <param name="matches">MatchPosition array to fill with matches found</param>
         /// <returns>Count of matches found in array</returns>
-        private static unsafe int Matches(int expressionIndex, String8.String8 text, int fromIndex, Match2[] matches, int timeoutMs)
+        private static unsafe int Matches(int expressionIndex, String8 text, int fromIndex, Match2[] matches, int timeoutMs)
         {
             // Validate String8 text is allocated and in range
             if (text.Length == 0) { return 0; }
@@ -198,7 +200,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         /// <param name="timeout">Timeout for runtime (checked between matches only)</param>
         /// <param name="fromIndex">Index in text to start searching from (used to resume matching)</param>
         /// <returns>IEnumerable of matches found</returns>
-        public static IEnumerable<Match2> Matches(String8.String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default, int fromIndex = 0)
+        public static IEnumerable<Match2> Matches(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default, int fromIndex = 0)
         {
             ParsedRegexCache cache = null;
             try
@@ -248,7 +250,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         /// <param name="expression">Regular Expression to match</param>
         /// <param name="options">RegexOptions to use</param>
         /// <returns>True if expression match found in text, False otherwise</returns>
-        public static bool IsMatch(String8.String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default)
+        public static bool IsMatch(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default)
         {
             return Match(text, expression, options, timeout).Index != -1;
         }
@@ -260,7 +262,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         /// <param name="expression">Regular Expression to match</param>
         /// <param name="options">RegexOptions to use</param>
         /// <returns>First Match found in text; index will be -1 if no matches found</returns>
-        public static Match2 Match(String8.String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default)
+        public static Match2 Match(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default)
         {
             ParsedRegexCache cache = null;
             try

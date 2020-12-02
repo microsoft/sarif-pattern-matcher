@@ -1,0 +1,15 @@
+{
+  "Definitions": [
+    {
+      "Id": "SPM1000/COMPREHENSIVE_EXAMPLE",
+      "Name": "Comprehensive Example Friendly Name",
+      "DefaultNameRegex": "(?i)\\.unlikelyfileextension$",
+      "MatchExpressions": [
+        {
+          "Notes": ["This is a simple comprehensive example of the JSON search patterns format."]
+          "ContentsRegex": "Prefix(?<refine>MatchThis)Suffix"
+        }
+      ]
+    }
+  ]
+}

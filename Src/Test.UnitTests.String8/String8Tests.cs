@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.String8
+namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
 {
     public class String8Tests
     {

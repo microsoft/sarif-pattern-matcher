@@ -35,4 +35,9 @@
     </AdditionalFiles>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="$(SolutionDir)Shared\CommonAssemblyInfo.cs" />
+  </ItemGroup>
+
+
 </Project>
