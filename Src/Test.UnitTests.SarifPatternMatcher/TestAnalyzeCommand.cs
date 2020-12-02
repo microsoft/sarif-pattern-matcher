@@ -11,9 +11,9 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
     public class TestAnalyzeCommand : AnalyzeCommand
     {
         protected override AnalyzeContext CreateContext(
-            AnalyzeOptions options, 
-            IAnalysisLogger logger, 
-            RuntimeConditions runtimeErrors, 
+            AnalyzeOptions options,
+            IAnalysisLogger logger,
+            RuntimeConditions runtimeErrors,
             PropertiesDictionary policy = null, string filePath = null)
         {
             AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy, filePath);
