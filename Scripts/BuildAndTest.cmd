@@ -33,6 +33,9 @@ IF EXIST "..\bld" (
 ECHO - Building RE2.Native.sln (MSBuild)...
 MSBuild "..\Src\RE2.Native.sln" /p:Configuration=Release /p:Platform="Any CPU"
 
+ECHO - Building Sarif.Sdk
+..\Src\sarif-sdk\BuildAndTest.cmd -NoTest
+
 ECHO - Building SarifPatternMatcher.sln (dotnet)...
 dotnet build ..\Src\SarifPatternMatcher.sln -c Release -p:Deterministic=true
 IF NOT "%ERRORLEVEL%"=="0" (
