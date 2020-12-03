@@ -1,2 +1,2 @@
-@ECHO OFF
-CALL %~dp0Scripts\BuildAndTest.cmd
+@echo off
+powershell -ExecutionPolicy RemoteSigned -File %~dp0\scripts\BuildAndTest.ps1 %*
