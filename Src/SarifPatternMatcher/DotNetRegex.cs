@@ -20,22 +20,22 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
         private DotNetRegex() { }
 
-        public bool IsMatch(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null)
+        public bool IsMatch(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
-            if (timeout == default(TimeSpan)) { timeout = DefaultTimeout; }
+            if (timeout == default) { timeout = DefaultTimeout; }
             Match match = Regex.Match(input, pattern, options, timeout);
             return match.Success && (captureGroup == null || match.Groups[captureGroup].Success);
         }
 
-        public FlexMatch Match(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null)
+        public FlexMatch Match(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
-            if (timeout == default(TimeSpan)) { timeout = DefaultTimeout; }
+            if (timeout == default) { timeout = DefaultTimeout; }
             return ToFlex(Regex.Match(input, pattern, options, timeout), captureGroup);
         }
 
-        public IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null)
+        public IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
-            if (timeout == default(TimeSpan)) { timeout = DefaultTimeout; }
+            if (timeout == default) { timeout = DefaultTimeout; }
             foreach (Match m in Regex.Matches(input, pattern, options, timeout))
             {
                 yield return ToFlex(m, captureGroup);

@@ -17,12 +17,12 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
         private RE2Regex() { }
 
-        public bool IsMatch(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null)
+        public bool IsMatch(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
             return Regex2.IsMatch(input, pattern, options);
         }
 
-        public FlexMatch Match(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null)
+        public FlexMatch Match(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
             int lastUtf8Index = 0;
             int lastUtf16Index = 0;
@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             return ToFlex(Regex2.Match(input, pattern, options), input, ref lastUtf8Index, ref lastUtf16Index);
         }
 
-        public IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default(TimeSpan), string captureGroup = null)
+        public IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
             Timeout t =
                 timeout == default
