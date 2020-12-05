@@ -3,18 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.IO;
 using System.Resources;
-using System.Text;
 using System.Text.RegularExpressions;
 
 using Microsoft.CodeAnalysis.Sarif;
 using Microsoft.CodeAnalysis.Sarif.Driver;
-using Microsoft.CodeAnalysis.Sarif.Visitors;
-
-using Newtonsoft.Json.Schema;
 
 namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
@@ -295,7 +289,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
         {
             int argsCount = namedArgumentToIndexMap.Count;
 
-            List<string> arguments = new List<string>(new string[argsCount]);
+            var arguments = new List<string>(new string[argsCount]);
 
             foreach (KeyValuePair<string, int> kv in namedArgumentToIndexMap)
             {
