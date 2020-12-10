@@ -1,6 +1,7 @@
 <Project>
 
   <PropertyGroup Label="Package">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
     <Title>$(AssemblyTitle)</Title>
     <Authors>$(Company)</Authors>
