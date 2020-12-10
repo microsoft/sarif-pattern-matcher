@@ -26,7 +26,7 @@
     <PublishDir>$(OutputPath)\Publish\$(TargetFramework)\</PublishDir>
     <PublishDir Condition=" '$(RuntimeIdentifier)' != '' ">$(PublishDir)\$(RuntimeIdentifier)\</PublishDir>
     <SolutionDir Condition=" '$(SolutionDir)' == '' ">$(MsBuildThisFileDirectory)</SolutionDir>
-    <PackageOutputPath>$(MsBuildThisFileDirectory)..\Bld\nupkg\$(OutputSubDir)\$(MSBuildProjectName)\</PackageOutputPath>
+    <PackageOutputPath>$(MsBuildThisFileDirectory)..\Bld\nupkg\$(OutputSubDir)\</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>

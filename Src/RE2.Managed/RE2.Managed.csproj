@@ -1,16 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.lib.props" />
-  
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
+
   <PropertyGroup Label="AssemblyAttributes">
     <AssemblyTitle>RE2 Managed Library</AssemblyTitle>
     <Description>TODO: add description</Description>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>

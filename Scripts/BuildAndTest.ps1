@@ -10,8 +10,6 @@
     Do not build.
 .PARAMETER NoTest
     Do not run tests.
-.PARAMETER NoPackage
-    Do not create NuGet packages.
 .PARAMETER NoFormat
     Do not format files based on dotnet-format tool
 #>
@@ -27,9 +25,6 @@ param(
 
     [switch]
     $NoTest,
-
-    [switch]
-    $NoPackage,
     
     [switch]
     $NoFormat
@@ -82,14 +77,6 @@ if (-not $NoBuild) {
     }
 }
 
-if (-not $NoPackage) {
-    Write-Information "Packing SarifPatternMatcher.sln (dotnet)..."
-    dotnet pack $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration --no-build
-    if ($LASTEXITCODE -ne 0) {
-        Exit-WithFailureMessage $ScriptName "Pack of SarifPatternMatcher failed."
-    }
-}
-
 if (-not $NoTest) {
     Write-Information "Running tests..."
     dotnet test $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration --no-build --collect:"XPlat Code Coverage"
@@ -97,7 +84,6 @@ if (-not $NoTest) {
         Exit-WithFailureMessage $ScriptName "Test of SarifPatternMatcher failed."
     }
 }
-
 
 if (-not $NoFormat) {
     dotnet tool update --global dotnet-format --version 4.1.131201
