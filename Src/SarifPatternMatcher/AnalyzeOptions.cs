@@ -18,5 +18,11 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             "search-definitions",
             HelpText = "A path to a file containing one or more search definitions to drive analysis.")]
         public IEnumerable<string> SearchDefinitionsPaths { get; internal set; }
+
+        [Option(
+            "dynamic-validation",
+            HelpText = "Enable dynamic validations, if any (may compromise " +
+                       "performance and/or result in calls across the network).")]
+        public bool DynamicValidation { get; internal set; }
     }
 }

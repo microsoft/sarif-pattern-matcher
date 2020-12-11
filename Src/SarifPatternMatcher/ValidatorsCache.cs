@@ -18,17 +18,18 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             _searchDefinitionsPaths = searchDefinitionsPaths;
         }
 
-        public Validation Validate(string ruleId, string matchedPattern)
+        public Validation Validate(string ruleId, string matchedPattern, bool dynamicValidation)
         {
             _ruleIdToMethodMap ??= LoadValidationAssemblies(_searchDefinitionsPaths);
 
-            return ValidateHelper(_ruleIdToMethodMap, ruleId, matchedPattern);
+            return ValidateHelper(_ruleIdToMethodMap, ruleId, matchedPattern, dynamicValidation);
         }
 
         internal static Validation ValidateHelper(
             Dictionary<string, MethodInfo> ruleIdToMethodMap,
             string ruleId,
-            string matchedPattern)
+            string matchedPattern,
+            bool dynamicValidation)
         {
             string validatorName = ruleId + "Validator";
 
@@ -37,9 +38,17 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                 return Validation.ValidatorNotFound;
             }
 
-            return (bool)methodInfo.Invoke(obj: null, new object[] { matchedPattern }) ?
-                Validation.Valid :
-                Validation.Invalid;
+            string validationText =
+                (string)methodInfo.Invoke(obj: null, new object[] { matchedPattern, dynamicValidation });
+
+            if (!Enum.TryParse<Validation>(validationText, out Validation result))
+            {
+                // TODO: raise an exception and disable this validator, which
+                // is returning illegal values.
+                return Validation.ValidatorNotFound;
+            }
+
+            return result;
         }
 
         private static Dictionary<string, MethodInfo> LoadValidationAssemblies(IEnumerable<string> searchDefinitionsPaths)
@@ -74,8 +83,12 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                             continue;
                         }
 
-                        MethodInfo mi = type.GetMethod("IsValid", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-                        if (mi == null || mi.ReturnType != typeof(bool)) { continue; }
+                        MethodInfo mi = type.GetMethod(
+                            "IsValid",
+                            new[] { typeof(string), typeof(bool) },
+                            null);
+
+                        if (mi == null || mi.ReturnType != typeof(string)) { continue; }
 
                         ruleToMethodMap[typeName] = mi;
                     }

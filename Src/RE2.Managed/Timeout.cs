@@ -16,57 +16,57 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
     /// </summary>
     public struct Timeout
     {
-        private Stopwatch Watch { get; }
-
-        public TimeSpan Limit { get; }
-
         /// <summary>
-        ///  Timeout.Unlimited is a timeout instance which won't expire
+        ///  Timeout.Unlimited is a timeout instance which won't expire.
         /// </summary>
         public static Timeout Unlimited = default;
 
         /// <summary>
-        ///  Start a new timeout with the given time limit.
-        /// </summary>
-        /// <param name="limit">TimeSpan of time limit for this activity</param>
-        /// <returns>Timeout to track the limit, starting now.</returns>
-        public static Timeout Start(TimeSpan limit)
-        {
-            return new Timeout(limit);
-        }
-
-        /// <summary>
-        ///  Construct a Timeout with the given time limit; pass zero for no limit.
+        /// Initializes a new instance of the <see cref="Timeout"/> struct.
         ///  Measuring against the timeout begins when the constructor is called.
         /// </summary>
-        /// <param name="limit">TimeSpan for time limit or TimeSpan.Zero for no limit</param>
+        /// <param name="limit">TimeSpan for time limit or TimeSpan.Zero for no limit.</param>
         private Timeout(TimeSpan limit)
         {
             Limit = limit;
             Watch = Stopwatch.StartNew();
         }
 
+        private Stopwatch Watch { get; }
+
+        public TimeSpan Limit { get; }
+
         public bool IsUnlimited => Limit == TimeSpan.Zero;
 
         /// <summary>
-        ///  Returns true if the timeout has expired, false otherwise
+        ///  Gets a value indicating whether timeout has expired.
         /// </summary>
         public bool IsExpired => !this.IsUnlimited && Watch.Elapsed > Limit;
 
         /// <summary>
-        ///  Return the TimeSpan of time elapsed since the timeout started, if known.
+        ///  Gets the TimeSpan of time elapsed since the timeout started, if known.
         ///  Will return TimeSpan.Zero for unlimited timeouts.
         /// </summary>
         public TimeSpan Elapsed => Watch == null ? TimeSpan.Zero : Watch.Elapsed;
 
         /// <summary>
-        ///  Return the TimeSpan of time remaining before the time limit, or TimeSpan.Zero if no limit.
+        ///  Gets the TimeSpan of time remaining before the time limit, or TimeSpan.Zero if no limit.
         /// </summary>
         public TimeSpan Remaining => IsUnlimited ? TimeSpan.Zero : Limit - Watch.Elapsed;
 
         /// <summary>
-        ///  Returns the number of milliseconds remaining before the time limit is reached, or zero if no limit.
+        ///  Gets a value indicating the milliseconds remaining before the time limit is reached (or zero if no limit).
         /// </summary>
-        public int RemainingMilliseconds => IsUnlimited ? 0 : (int)((Limit - Watch.Elapsed).TotalMilliseconds);
+        public int RemainingMilliseconds => IsUnlimited ? 0 : (int)(Limit - Watch.Elapsed).TotalMilliseconds;
+
+        /// <summary>
+        ///  Start a new timeout with the given time limit.
+        /// </summary>
+        /// <param name="limit">TimeSpan of time limit for this activity.</param>
+        /// <returns>Timeout to track the limit, starting now.</returns>
+        public static Timeout Start(TimeSpan limit)
+        {
+            return new Timeout(limit);
+        }
     }
 }

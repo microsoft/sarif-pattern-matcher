@@ -15,7 +15,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         {
             if (Regex2.NativeLibraryFolderPath != null)
             {
-                string dllName = (Environment.Is64BitProcess ? "RE2.Native.x64.dll" : "RE2.Native.x86.dll");
+                string dllName = Environment.Is64BitProcess ? "RE2.Native.x64.dll" : "RE2.Native.x86.dll";
                 string filePath = Path.Combine(Regex2.NativeLibraryFolderPath, dllName);
 
                 if (File.Exists(filePath))
@@ -28,7 +28,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
                 string driverDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
                 // Load if next to this binary
-                string dllName = (Environment.Is64BitProcess ? "RE2.Native.x64.dll" : "RE2.Native.x86.dll");
+                string dllName = Environment.Is64BitProcess ? "RE2.Native.x64.dll" : "RE2.Native.x86.dll";
                 string dllAdjacent = Path.Combine(driverDirectory, dllName);
                 if (File.Exists(dllAdjacent))
                 {
@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
                 }
 
                 // Load if in runtimes subdirectory
-                string runtimeFolder = (Environment.Is64BitProcess ? @"runtimes\win-x64\native" : @"runtimes\win-x86\native");
+                string runtimeFolder = Environment.Is64BitProcess ? @"runtimes\win-x64\native" : @"runtimes\win-x86\native";
                 string dllInRuntime = Path.Combine(driverDirectory, runtimeFolder, dllName);
                 if (File.Exists(dllInRuntime))
                 {
@@ -69,7 +69,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
             }
         }
 
-        public unsafe static int Matches(int regexIndex, String8Interop text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds)
+        public static unsafe int Matches(int regexIndex, String8Interop text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds)
         {
             return Environment.Is64BitProcess
                 ? NativeMethodsX64.Matches(regexIndex, text, fromTextIndex, matches, matchesLength, timeoutMilliseconds)
@@ -77,39 +77,39 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
-        public unsafe static extern IntPtr LoadLibrary(string libraryPath);
+        public static unsafe extern IntPtr LoadLibrary(string libraryPath);
 
         [DllImport("kernel32.dll")]
-        public unsafe static extern void FreeLibrary(IntPtr address);
+        public static unsafe extern void FreeLibrary(IntPtr address);
 
         private static class NativeMethodsX86
         {
             [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            public unsafe static extern int Test();
+            public static unsafe extern int Test();
 
             [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            public unsafe static extern int BuildRegex(String8Interop regex, int regexOptions);
+            public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions);
 
             [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            public unsafe static extern void ClearRegexes();
+            public static unsafe extern void ClearRegexes();
 
             [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            public unsafe static extern int Matches(int regexIndex, String8Interop text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds);
+            public static unsafe extern int Matches(int regexIndex, String8Interop text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds);
         }
 
         private static class NativeMethodsX64
         {
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            public unsafe static extern int Test();
+            public static unsafe extern int Test();
 
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            public unsafe static extern int BuildRegex(String8Interop regex, int regexOptions);
+            public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions);
 
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            public unsafe static extern void ClearRegexes();
+            public static unsafe extern void ClearRegexes();
 
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            public unsafe static extern int Matches(int regexIndex, String8Interop text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds);
+            public static unsafe extern int Matches(int regexIndex, String8Interop text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds);
         }
     }
 }

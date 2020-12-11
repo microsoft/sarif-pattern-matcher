@@ -77,12 +77,17 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.PlaintextSecrets
         /// Validate if the match is an AzureDevOps personal access token.
         /// </summary>
         /// <param name="matchedPattern">The matched text to validate as an ADO PAT (or not).</param>
+        /// <param name="performDynamicValidation">Execute dynamic validation of matched pattern, if available.</param>
         /// <returns>True if the match is an unencoded ADO personal access token, otherwise return false.</returns>
-        public static bool IsValid(string matchedPattern)
+#pragma warning disable IDE0060 // Remove unused parameter
+        public static string IsValid(string matchedPattern, bool performDynamicValidation)
+#pragma warning restore IDE0060
         {
             return
                 IsChecksumValid(matchedPattern, ChecksumPAT) ||
-                IsChecksumValid(matchedPattern, ChecksumADOAppSecret);
+                IsChecksumValid(matchedPattern, ChecksumADOAppSecret) ?
+                    ValidationState.Unknown.ToString() :
+                    ValidationState.NoMatch.ToString();
         }
 
         /// <summary>

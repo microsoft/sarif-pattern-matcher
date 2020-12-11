@@ -43,6 +43,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
         public DefaultTraces Traces { get; set; }
 
+        public bool DynamicValidation { get; set; }
+
         public void Dispose()
         {
         }

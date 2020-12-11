@@ -25,7 +25,6 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
         private readonly IRegex _engine;
         private readonly Regex _defaultNameRegex;
         private readonly ValidatorsCache _validators;
-        private readonly string _defaultMessageString;
         private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
         private readonly Dictionary<string, int> _argumentNameToIndex;
@@ -48,7 +47,6 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             _name = name;
             _engine = engine;
             _validators = validators;
-            _defaultMessageString = defaultMessageString;
 
             this.DefaultConfiguration.Level = defaultLevel;
 
@@ -127,8 +125,10 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                         fingerprint = flexMatch.Value;
                     }
 
-                    if (_validators.Validate(matchExpression.SubId, fingerprint) == Validation.Invalid ||
-                        _validators.Validate(this.Id, fingerprint) == Validation.Invalid)
+                    bool dynamic = context.DynamicValidation;
+
+                    if (_validators.Validate(matchExpression.SubId, fingerprint, dynamic) == Validation.Invalid ||
+                        _validators.Validate(this.Id, fingerprint, dynamic) == Validation.Invalid)
                     {
                         // TODO add a trace for this condition.
                         continue;
