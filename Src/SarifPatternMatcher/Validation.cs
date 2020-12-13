@@ -15,7 +15,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
         /// A validator for the current matched pattern
         /// could not be found.
         /// </summary>
-        ValidatorNotFound = None,
+        ValidatorNotFound,
 
         /// <summary>
         /// A validator for the current matched pattern returned
