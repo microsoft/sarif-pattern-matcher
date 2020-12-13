@@ -82,6 +82,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                     (DefaultTraces)Enum.Parse(typeof(DefaultTraces), string.Join("|", options.Traces)) :
                     DefaultTraces.None;
 
+            context.DynamicValidation = options.DynamicValidation;
+
             return context;
         }
 

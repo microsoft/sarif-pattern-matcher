@@ -26,7 +26,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
     /// <para>
     ///  RE2 supports most of the same constructs as .NET Regular Expressions, but not:
     ///    - Named Groups ["(?&lt;groupName&gt;...)"]
-    ///    - Backreferences [ "\k(...)"]
+    ///    - Backreferences [ "\k(...)"].
     /// </para>
     /// </summary>
     /// <remarks>
@@ -152,11 +152,11 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         /// <summary>
         ///  Match a Regular Expression against a UTF-8 converted body of text, starting at the desired index.
         /// </summary>
-        /// <param name="expressionIndex">Cached Index of Regular Expression to match; must not contain named groups or backreferences</param>
-        /// <param name="text">UTF-8 converted text to match</param>
-        /// <param name="fromIndex">Index in text to start searching from (used to resume matching)</param>
-        /// <param name="matches">MatchPosition array to fill with matches found</param>
-        /// <returns>Count of matches found in array</returns>
+        /// <param name="expressionIndex">Cached Index of Regular Expression to match; must not contain named groups or backreferences.</param>
+        /// <param name="text">UTF-8 converted text to match.</param>
+        /// <param name="fromIndex">Index in text to start searching from (used to resume matching).</param>
+        /// <param name="matches">MatchPosition array to fill with matches found.</param>
+        /// <returns>Count of matches found in array.</returns>
         private static unsafe int Matches(int expressionIndex, String8 text, int fromIndex, Match2[] matches, int timeoutMs)
         {
             // Validate String8 text is allocated and in range
@@ -194,12 +194,12 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         /// <summary>
         ///  Match a Regular Expression against a UTF-8 converted body of text, starting at the desired index.
         /// </summary>
-        /// <param name="text">UTF-8 converted text to match</param>
-        /// <param name="expression">Regular Expression to match; must not contain named groups or backreferences</param>
-        /// <param name="options">RegexOptions to use</param>
-        /// <param name="timeout">Timeout for runtime (checked between matches only)</param>
-        /// <param name="fromIndex">Index in text to start searching from (used to resume matching)</param>
-        /// <returns>IEnumerable of matches found</returns>
+        /// <param name="text">UTF-8 converted text to match.</param>
+        /// <param name="expression">Regular Expression to match; must not contain named groups or backreferences.</param>
+        /// <param name="options">RegexOptions to use.</param>
+        /// <param name="timeout">Timeout for runtime (checked between matches only).</param>
+        /// <param name="fromIndex">Index in text to start searching from (used to resume matching).</param>
+        /// <returns>IEnumerable of matches found.</returns>
         public static IEnumerable<Match2> Matches(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default, int fromIndex = 0)
         {
             ParsedRegexCache cache = null;
@@ -244,12 +244,12 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         }
 
         /// <summary>
-        ///  Return whether text contains a match for the given Regular Expression
+        ///  Return whether text contains a match for the given Regular Expression.
         /// </summary>
-        /// <param name="text">UTF8 text to search within</param>
-        /// <param name="expression">Regular Expression to match</param>
-        /// <param name="options">RegexOptions to use</param>
-        /// <returns>True if expression match found in text, False otherwise</returns>
+        /// <param name="text">UTF8 text to search within.</param>
+        /// <param name="expression">Regular Expression to match.</param>
+        /// <param name="options">RegexOptions to use.</param>
+        /// <returns>True if expression match found in text, False otherwise.</returns>
         public static bool IsMatch(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default)
         {
             return Match(text, expression, options, timeout).Index != -1;
@@ -258,10 +258,10 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         /// <summary>
         ///  Return the first match for the given Regular Expression, index -1 if no matches.
         /// </summary>
-        /// <param name="text">UTF8 text to search within</param>
-        /// <param name="expression">Regular Expression to match</param>
-        /// <param name="options">RegexOptions to use</param>
-        /// <returns>First Match found in text; index will be -1 if no matches found</returns>
+        /// <param name="text">UTF8 text to search within.</param>
+        /// <param name="expression">Regular Expression to match.</param>
+        /// <param name="options">RegexOptions to use.</param>
+        /// <returns>First Match found in text; index will be -1 if no matches found.</returns>
         public static Match2 Match(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default)
         {
             ParsedRegexCache cache = null;
