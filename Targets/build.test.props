@@ -6,4 +6,9 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
     <PackageReference Include="coverlet.collector" Version="1.3.0" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <RunSettingsFilePath>$(MsBuildThisFileDirectory)..\src\SarifPatternMatcher.runsettings</RunSettingsFilePath>
+  </PropertyGroup>
+  
 </Project>
