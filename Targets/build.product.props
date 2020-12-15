@@ -1,6 +1,7 @@
 <Project>
 
   <PropertyGroup Label="Package">
+    <PackageId>$(RootNamespace)</PackageId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
     <Title>$(AssemblyTitle)</Title>
@@ -29,11 +30,11 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(Deterministic)'=='true'">
+  <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
     <SourceRoot Include="$(MSBuildThisFileDirectory)/" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Deterministic)'=='true'">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
