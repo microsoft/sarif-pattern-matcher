@@ -1,0 +1,176 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC1002",
+              "name": "SearchSkimmer",
+              "fullDescription": {
+                "text": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc."
+              },
+              "messageStrings": {
+                "Default": {
+                  "text": "'{0}' contains an apparent {1}."
+                }
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC1002/SocialSecurityNumber",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SocialSecurityNumbers.txt",
+              "social security number"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "spam/src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PotentiallySensitiveData/Inputs/SocialSecurityNumbers.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 1,
+                  "endLine": 2,
+                  "endColumn": 12,
+                  "charOffset": 30,
+                  "charLength": 11,
+                  "snippet": {
+                    "text": "123-45-6789"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC1002/SocialSecurityNumber",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SocialSecurityNumbers.txt",
+              "social security number"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "spam/src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PotentiallySensitiveData/Inputs/SocialSecurityNumbers.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1,
+                  "endLine": 5,
+                  "endColumn": 12,
+                  "charOffset": 64,
+                  "charLength": 11,
+                  "snippet": {
+                    "text": "111-45-6789"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC1002/SocialSecurityNumber",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SocialSecurityNumbers.txt",
+              "social security number"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "spam/src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PotentiallySensitiveData/Inputs/SocialSecurityNumbers.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 1,
+                  "endLine": 6,
+                  "endColumn": 12,
+                  "charOffset": 77,
+                  "charLength": 11,
+                  "snippet": {
+                    "text": "123-44-6789"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC1002/SocialSecurityNumber",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SocialSecurityNumbers.txt",
+              "social security number"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "spam/src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PotentiallySensitiveData/Inputs/SocialSecurityNumbers.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 1,
+                  "endLine": 7,
+                  "endColumn": 12,
+                  "charOffset": 90,
+                  "charLength": 11,
+                  "snippet": {
+                    "text": "123-45-6666"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}
