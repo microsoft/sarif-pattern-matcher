@@ -25,35 +25,9 @@ function Exit-WithFailureMessage($scriptName, $message) {
     exit 1
 }
 
-dotnet pack "$RepoRoot\src\Plugins\BannedApi\BannedApi.csproj" --no-build --configuration $Configuration --force --include-symbols
+dotnet pack "$RepoRoot\src\SarifPatternMatcher.sln"  --no-build --configuration $Configuration --force 
 if ($LASTEXITCODE -ne 0) {
-    Exit-WithFailureMessage $ScriptName "Pack of BannedApi failed."
+    Exit-WithFailureMessage $ScriptName "Pack of SarifPatternMatcher.sln failed."
 }
-
-dotnet pack "$RepoRoot\src\Plugins\PlaintextSecrets\PlaintextSecrets.csproj" --no-build --configuration $Configuration --force --include-symbols
-if ($LASTEXITCODE -ne 0) {
-    Exit-WithFailureMessage $ScriptName "Pack of PlaintextSecrets failed."
-}
-
-dotnet pack "$RepoRoot\src\RE2.Managed\RE2.Managed.csproj" --no-build --configuration $Configuration --force --include-symbols
-if ($LASTEXITCODE -ne 0) {
-    Exit-WithFailureMessage $ScriptName "Pack of RE2.Managed failed."
-}
-
-dotnet pack "$RepoRoot\src\String8\String8.csproj" --no-build --configuration $Configuration --force --include-symbols
-if ($LASTEXITCODE -ne 0) {
-    Exit-WithFailureMessage $ScriptName "Pack of String8 failed."
-}
-
-dotnet pack "$RepoRoot\src\SarifPatternMatcher\SarifPatternMatcher.csproj" --no-build --configuration $Configuration --force --include-symbols
-if ($LASTEXITCODE -ne 0) {
-    Exit-WithFailureMessage $ScriptName "Pack of SarifPatternMatcher failed."
-}
-
-dotnet pack "$RepoRoot\src\SarifPatternMatcher.Cli\SarifPatternMatcher.Cli.csproj" --no-build --configuration $Configuration --force --include-symbols
-if ($LASTEXITCODE -ne 0) {
-    Exit-WithFailureMessage $ScriptName "Pack of SarifPatternMatcher.Cli failed."
-}
-
 
 Write-Information "$ScriptName SUCCEEDED."
