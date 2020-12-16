@@ -45,6 +45,74 @@
             "id": "Default",
             "arguments": [
               "VariousPats.txt",
+              "base64-encoded",
+              "Azure DevOps personal access token"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PlaintextSecrets/Inputs/VariousPats.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 1,
+                  "endLine": 6,
+                  "endColumn": 73,
+                  "charOffset": 202,
+                  "charLength": 72,
+                  "snippet": {
+                    "text": "ZGVhZGJlZWZkZWFkYmVlZmRlYWRiZWVmZGVhZGJlZWZkZWFkYmVlZmRlYWRiZWVmZGVhZA=="
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC1001/AzureDevOpsPersonalAccessToken",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "VariousPats.txt",
+              "base64-encoded",
+              "Azure DevOps personal access token"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PlaintextSecrets/Inputs/VariousPats.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 1,
+                  "endLine": 12,
+                  "endColumn": 73,
+                  "charOffset": 442,
+                  "charLength": 72,
+                  "snippet": {
+                    "text": "aDVseGVxa3o0enVqa3l2emc1ZW1rZWpnZWx4ajR4NjR0dnl6Y2xwcmVrdWxvYXdiYno1cQ=="
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC1001/AzureDevOpsPersonalAccessToken",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "VariousPats.txt",
               "plaintext",
               "Azure DevOps personal access token"
             ]
@@ -65,6 +133,40 @@
                   "charLength": 52,
                   "snippet": {
                     "text": "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC1001/AzureDevOpsPersonalAccessToken",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "VariousPats.txt",
+              "plaintext",
+              "Azure DevOps personal access token"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PlaintextSecrets/Inputs/VariousPats.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 1,
+                  "endLine": 9,
+                  "endColumn": 53,
+                  "charOffset": 326,
+                  "charLength": 52,
+                  "snippet": {
+                    "text": "h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q"
                   }
                 }
               }
