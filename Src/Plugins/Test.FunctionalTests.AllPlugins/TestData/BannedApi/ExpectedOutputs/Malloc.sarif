@@ -53,7 +53,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "sarif-pattern-matcher/src/Plugins/Test.FunctionalTests.AllPlugins/TestData/BannedApi/Inputs/Malloc.c",
+                  "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/BannedApi/Inputs/Malloc.c",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -78,7 +78,7 @@
               "artifactChanges": [
                 {
                   "artifactLocation": {
-                    "uri": "sarif-pattern-matcher/src/Plugins/Test.FunctionalTests.AllPlugins/TestData/BannedApi/Inputs/Malloc.c",
+                    "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/BannedApi/Inputs/Malloc.c",
                     "uriBaseId": "SRC_ROOT"
                   },
                   "replacements": [

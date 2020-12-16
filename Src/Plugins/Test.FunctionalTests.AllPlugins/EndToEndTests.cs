@@ -95,7 +95,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Test.FunctionalTests.AllPlu
 
             SarifLog sarifLog = JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
 
-            string sourceRoot = GitHelper.Default.GetTopLevel(Path.GetDirectoryName(filePath));
+            string sourceRoot = GitHelper.Default.GetTopLevel(Path.GetDirectoryName(filePath)) + @"\";
 
             var rebaseUriVisitor = new RebaseUriVisitor("SRC_ROOT", new Uri(sourceRoot));
             rebaseUriVisitor.Visit(sarifLog);
@@ -105,10 +105,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Test.FunctionalTests.AllPlu
             // is data that is non-deterministic machine-over-machine).
             // https://github.com/microsoft/sarif-sdk/issues/2185
             sarifLog.Runs[0].OriginalUriBaseIds = null;
-
-            throw new InvalidOperationException(JsonConvert.SerializeObject(sarifLog, Formatting.Indented));
-
-            //return JsonConvert.SerializeObject(sarifLog, Formatting.Indented);
+            
+            return JsonConvert.SerializeObject(sarifLog, Formatting.Indented);
         }
 
         protected void RunAllTests()
