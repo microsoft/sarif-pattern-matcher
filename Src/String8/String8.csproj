@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.lib.props" />
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
+  <Import Project="$(SolutionDir)..\Targets\build.lib.props" />
+  <Import Project="$(SolutionDir)..\Targets\build.product.props" />
   
   <PropertyGroup Label="AssemblyAttributes">
     <AssemblyTitle>String8 Library</AssemblyTitle>

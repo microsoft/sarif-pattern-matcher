@@ -6,7 +6,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <PackAsTool>true</PackAsTool>
-    <AssemblyName>spam</AssemblyName>
+    <ToolCommandName>spam</ToolCommandName>
   </PropertyGroup>
 
   <PropertyGroup Label="AssemblyAttributes">

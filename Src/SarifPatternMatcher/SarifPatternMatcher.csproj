@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.lib.props" />
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
+  <Import Project="$(SolutionDir)..\Targets\build.lib.props" />
+  <Import Project="$(SolutionDir)..\Targets\build.product.props" />
 
   <PropertyGroup Label="AssemblyAttributes">
     <AssemblyTitle>Sarif Pattern Matcher Library</AssemblyTitle>
@@ -13,7 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 

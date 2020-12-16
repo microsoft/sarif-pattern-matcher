@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup Label="Package">
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>$(RootNamespace)</PackageId>
     <IsPackable>true</IsPackable>
     <Title>$(AssemblyTitle)</Title>
     <Authors>$(Company)</Authors>
@@ -29,17 +29,23 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(Deterministic)'=='true'">
+  <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
     <SourceRoot Include="$(MSBuildThisFileDirectory)/" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Deterministic)'=='true'">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)..\src\.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)..\src\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+  </ItemGroup>
 
   <ItemGroup Label="Common Packages">
     <PackageReference Include="Nerdbank.GitVersioning" Version="3.3.37">
