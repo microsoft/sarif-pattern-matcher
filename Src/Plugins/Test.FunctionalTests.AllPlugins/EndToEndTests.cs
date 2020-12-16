@@ -105,7 +105,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Test.FunctionalTests.AllPlu
             // is data that is non-deterministic machine-over-machine).
             // https://github.com/microsoft/sarif-sdk/issues/2185
             sarifLog.Runs[0].OriginalUriBaseIds = null;
-            
+
             return JsonConvert.SerializeObject(sarifLog, Formatting.Indented);
         }
 
