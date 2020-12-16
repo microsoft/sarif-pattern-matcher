@@ -28,8 +28,3 @@ steps:
   inputs:
     codeCoverageTool: 'cobertura'
     summaryFileLocation: 'TestResults/Cobertura.xml'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathToPublish: 'bld'
-    artifactName: 'bld'
