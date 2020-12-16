@@ -37,20 +37,6 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
     {
         private const string NamedGroupExpression = @"\(\?<[^>]+>";
 
-        /// <summary>
-        ///  NativeLibraryFolderPath may be set before using Regex2 to change the path
-        ///  from which the native library is loaded.
-        /// </summary>
-        public static string NativeLibraryFolderPath { get; set; }
-
-        /// <summary>
-        ///  RE2 Parsed Regex instances need to be cached, as they're slow to parse.
-        ///  RE2.Native returns an integer index to refer to the cached regexes.
-        ///  This class tracks Regexes we've had RE2 parse before to reuse them.
-        /// </summary>
-        private class ParsedRegexCache : Dictionary<Tuple<string, RegexOptions>, int>
-        { }
-
         // We keep RE2 parsed Regexes for reuse. They can only be used by one thread at a time (they track match state),
         // so we want one copy per concurrent thread to avoid contention. This ConcurrentBag allows us to keep a set of
         // these caches which threads 'check out' and 'check in' so that they are reused as threads are discarded.
@@ -59,7 +45,133 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         // Track how many RegexCaches (the Dictionaries) we build; it should be bounded at the number of concurrent threads,
         // even if threads are destroyed and created.
         private static int _regexThreadCacheCount;
+
         public static int RegexThreadCacheCount => _regexThreadCacheCount;
+
+        /// <summary>
+        /// Gets or sets NativeLibraryFolderPath.
+        /// </summary>
+        /// <remarks>
+        /// NativeLibraryFolderPath may be set before using Regex2 to change the path
+        /// from which the native library is loaded.
+        /// </remarks>
+        public static string NativeLibraryFolderPath { get; set; }
+
+        public static string RemoveNamedGroups(string expression)
+        {
+            if (string.IsNullOrEmpty(expression)) { return string.Empty; }
+
+            // If regex has no named groups, return it as-is
+            if (expression.IndexOf("(?<") == -1) { return expression; }
+
+            // Replace any '(?<groupName>' with '(' and return
+            return Regex.Replace(expression, NamedGroupExpression, "(");
+        }
+
+        /// <summary>
+        ///  Run the C++ side test method. Use to quickly test native interop or behavior.
+        /// </summary>
+        public static unsafe void Test()
+        {
+            NativeMethods.Test();
+        }
+
+        /// <summary>
+        ///  Match a Regular Expression against a UTF-8 converted body of text, starting at the desired index.
+        /// </summary>
+        /// <param name="text">UTF-8 converted text to match.</param>
+        /// <param name="expression">Regular Expression to match; must not contain named groups or backreferences.</param>
+        /// <param name="options">RegexOptions to use.</param>
+        /// <param name="timeout">Timeout for runtime (checked between matches only).</param>
+        /// <param name="fromIndex">Index in text to start searching from (used to resume matching).</param>
+        /// <returns>IEnumerable of matches found.</returns>
+        public static IEnumerable<Match2> Matches(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default, int fromIndex = 0)
+        {
+            ParsedRegexCache cache = null;
+            try
+            {
+                cache = CheckoutCache();
+
+                // Allocate an array to contain matches
+                var matches = new Match2[32];
+
+                // Get or Cache the Regex on the native side and retrieve an index to it
+                int expressionIndex = BuildRegex(cache, expression, options);
+
+                while (true)
+                {
+                    // Find the next batch of matches
+                    int matchCount = Matches(expressionIndex, text, fromIndex, matches, timeout.RemainingMilliseconds);
+
+                    // Return found matches
+                    for (int i = 0; i < matchCount; ++i)
+                    {
+                        yield return matches[i];
+                    }
+
+                    // If match array wasn't filled, we're done
+                    if (matchCount < matches.Length) { break; }
+
+                    // If the timeout expired, we're done
+                    if (timeout.IsExpired)
+                    {
+                        break;
+                    }
+
+                    // Otherwise, resume just after the last match
+                    fromIndex = matches[matchCount - 1].Index + 1;
+                }
+            }
+            finally
+            {
+                CheckinCache(cache);
+            }
+        }
+
+        /// <summary>
+        ///  Return whether text contains a match for the given Regular Expression.
+        /// </summary>
+        /// <param name="text">UTF8 text to search within.</param>
+        /// <param name="expression">Regular Expression to match.</param>
+        /// <param name="options">RegexOptions to use.</param>
+        /// <param name="timeout">Timeout in ms.</param>
+        /// <returns>True if expression match found in text, False otherwise.</returns>
+        public static bool IsMatch(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default)
+        {
+            return Match(text, expression, options, timeout).Index != -1;
+        }
+
+        /// <summary>
+        ///  Return the first match for the given Regular Expression, index -1 if no matches.
+        /// </summary>
+        /// <param name="text">UTF8 text to search within.</param>
+        /// <param name="expression">Regular Expression to match.</param>
+        /// <param name="options">RegexOptions to use.</param>
+        /// <param name="timeout">Timeout in ms.</param>
+        /// <returns>First Match found in text; index will be -1 if no matches found.</returns>
+        public static Match2 Match(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default)
+        {
+            ParsedRegexCache cache = null;
+            try
+            {
+                cache = CheckoutCache();
+                var matches = new Match2[1];
+                int expressionIndex = BuildRegex(cache, expression, options);
+
+                int countFound = Matches(expressionIndex, text, 0, matches, timeout.RemainingMilliseconds);
+                if (countFound == 0)
+                {
+                    matches[0].Index = -1;
+                    matches[0].Length = -1;
+                }
+
+                return matches[0];
+            }
+            finally
+            {
+                CheckinCache(cache);
+            }
+        }
 
         // Retrieve a Regex Cache before each match to reuse parsed Regex objects.
         // We don't keep a threadlocal one so that they aren't leaked if threads are discarded.
@@ -130,25 +242,6 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
             }
         }
 
-        public static string RemoveNamedGroups(string expression)
-        {
-            if (string.IsNullOrEmpty(expression)) { return ""; }
-
-            // If regex has no named groups, return it as-is
-            if (expression.IndexOf("(?<") == -1) { return expression; }
-
-            // Replace any '(?<groupName>' with '(' and return
-            return Regex.Replace(expression, NamedGroupExpression, "(");
-        }
-
-        /// <summary>
-        ///  Run the C++ side test method. Use to quickly test native interop or behavior.
-        /// </summary>
-        public static unsafe void Test()
-        {
-            NativeMethods.Test();
-        }
-
         /// <summary>
         ///  Match a Regular Expression against a UTF-8 converted body of text, starting at the desired index.
         /// </summary>
@@ -156,6 +249,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         /// <param name="text">UTF-8 converted text to match.</param>
         /// <param name="fromIndex">Index in text to start searching from (used to resume matching).</param>
         /// <param name="matches">MatchPosition array to fill with matches found.</param>
+        /// <param name="timeoutMs">Timeout in ms.</param>
         /// <returns>Count of matches found in array.</returns>
         private static unsafe int Matches(int expressionIndex, String8 text, int fromIndex, Match2[] matches, int timeoutMs)
         {
@@ -192,98 +286,11 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         }
 
         /// <summary>
-        ///  Match a Regular Expression against a UTF-8 converted body of text, starting at the desired index.
+        ///  RE2 Parsed Regex instances need to be cached, as they're slow to parse.
+        ///  RE2.Native returns an integer index to refer to the cached regexes.
+        ///  This class tracks Regexes we've had RE2 parse before to reuse them.
         /// </summary>
-        /// <param name="text">UTF-8 converted text to match.</param>
-        /// <param name="expression">Regular Expression to match; must not contain named groups or backreferences.</param>
-        /// <param name="options">RegexOptions to use.</param>
-        /// <param name="timeout">Timeout for runtime (checked between matches only).</param>
-        /// <param name="fromIndex">Index in text to start searching from (used to resume matching).</param>
-        /// <returns>IEnumerable of matches found.</returns>
-        public static IEnumerable<Match2> Matches(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default, int fromIndex = 0)
-        {
-            ParsedRegexCache cache = null;
-            try
-            {
-                cache = CheckoutCache();
-
-                // Allocate an array to contain matches
-                var matches = new Match2[32];
-
-                // Get or Cache the Regex on the native side and retrieve an index to it
-                int expressionIndex = BuildRegex(cache, expression, options);
-
-                while (true)
-                {
-                    // Find the next batch of matches
-                    int matchCount = Matches(expressionIndex, text, fromIndex, matches, timeout.RemainingMilliseconds);
-
-                    // Return found matches
-                    for (int i = 0; i < matchCount; ++i)
-                    {
-                        yield return matches[i];
-                    }
-
-                    // If match array wasn't filled, we're done
-                    if (matchCount < matches.Length) { break; }
-
-                    // If the timeout expired, we're done
-                    if (timeout.IsExpired)
-                    {
-                        break;
-                    }
-
-                    // Otherwise, resume just after the last match
-                    fromIndex = matches[matchCount - 1].Index + 1;
-                }
-            }
-            finally
-            {
-                CheckinCache(cache);
-            }
-        }
-
-        /// <summary>
-        ///  Return whether text contains a match for the given Regular Expression.
-        /// </summary>
-        /// <param name="text">UTF8 text to search within.</param>
-        /// <param name="expression">Regular Expression to match.</param>
-        /// <param name="options">RegexOptions to use.</param>
-        /// <returns>True if expression match found in text, False otherwise.</returns>
-        public static bool IsMatch(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default)
-        {
-            return Match(text, expression, options, timeout).Index != -1;
-        }
-
-        /// <summary>
-        ///  Return the first match for the given Regular Expression, index -1 if no matches.
-        /// </summary>
-        /// <param name="text">UTF8 text to search within.</param>
-        /// <param name="expression">Regular Expression to match.</param>
-        /// <param name="options">RegexOptions to use.</param>
-        /// <returns>First Match found in text; index will be -1 if no matches found.</returns>
-        public static Match2 Match(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default)
-        {
-            ParsedRegexCache cache = null;
-            try
-            {
-                cache = CheckoutCache();
-                var matches = new Match2[1];
-                int expressionIndex = BuildRegex(cache, expression, options);
-
-                int countFound = Matches(expressionIndex, text, 0, matches, timeout.RemainingMilliseconds);
-                if (countFound == 0)
-                {
-                    matches[0].Index = -1;
-                    matches[0].Length = -1;
-                }
-
-                return matches[0];
-            }
-            finally
-            {
-                CheckinCache(cache);
-            }
-        }
+        private class ParsedRegexCache : Dictionary<Tuple<string, RegexOptions>, int>
+        { }
     }
 }

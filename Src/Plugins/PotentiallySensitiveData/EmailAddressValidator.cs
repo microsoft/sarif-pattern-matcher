@@ -7,6 +7,5 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.PotentiallySensitiveData
 {
     internal static class EmailAddressValidator
     {
-
     }
 }

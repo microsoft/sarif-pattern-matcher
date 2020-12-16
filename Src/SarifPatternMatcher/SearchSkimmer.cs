@@ -163,8 +163,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                     region = _regionsCache.PopulateTextRegionProperties(
                         region,
                         context.TargetUri,
-                        fileText: context.FileContents,
-                        populateSnippet: true);
+                        populateSnippet: true,
+                        fileText: context.FileContents);
 
                     var location = new Location()
                     {

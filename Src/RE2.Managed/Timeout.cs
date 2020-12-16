@@ -32,8 +32,6 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
             Watch = Stopwatch.StartNew();
         }
 
-        private Stopwatch Watch { get; }
-
         public TimeSpan Limit { get; }
 
         public bool IsUnlimited => Limit == TimeSpan.Zero;
@@ -58,6 +56,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
         ///  Gets a value indicating the milliseconds remaining before the time limit is reached (or zero if no limit).
         /// </summary>
         public int RemainingMilliseconds => IsUnlimited ? 0 : (int)(Limit - Watch.Elapsed).TotalMilliseconds;
+
+        private Stopwatch Watch { get; }
 
         /// <summary>
         ///  Start a new timeout with the given time limit.

@@ -12,9 +12,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
     /// </summary>
     public struct String8 : IComparable<string>, IComparable<String8>, IEquatable<string>, IEquatable<String8>
     {
-        public byte[] Array { get; }
-        public int Index { get; }
-        public int Length { get; }
+        public static String8 Empty = new String8(null, 0, 0);
 
         public String8(byte[] array, int index, int length)
         {
@@ -23,7 +21,13 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
             Length = length;
         }
 
-        public static String8 Empty = new String8(null, 0, 0);
+        public byte[] Array { get; }
+
+        public int Index { get; }
+
+        public int Length { get; }
+
+        public bool IsEmpty => Length == 0;
 
         public static String8 ConvertExpensively(string value)
         {
@@ -31,17 +35,15 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
             return String8.Convert(value, ref buffer);
         }
 
-        public bool IsEmpty => Length == 0;
-
         /// <summary>
         ///  Convert a .NET string [UTF-16] to a UTF-8 String8, using an existing byte[].
         ///  This method will allocate or expand the byte[] if needed.
         ///  Declare the array outside a loop or method so that it can be used many times.
         /// </summary>
-        /// <param name="value">.NET string to convert</param>
-        /// <param name="buffer">byte[] to convert into</param>
-        /// <param name="fromBufferIndex">Index in byte[] to start writing value to, if not the beginning</param>
-        /// <returns>String8 instance for the UTF-8 converted copy of 'value'</returns>
+        /// <param name="value">.NET string to convert.</param>
+        /// <param name="buffer">byte[] to convert into.</param>
+        /// <param name="fromBufferIndex">Index in byte[] to start writing value to, if not the beginning.</param>
+        /// <returns>String8 instance for the UTF-8 converted copy of 'value'.</returns>
         public static String8 Convert(string value, ref byte[] buffer, int fromBufferIndex = 0)
         {
             if (string.IsNullOrEmpty(value)) { return String8.Empty; }
@@ -60,10 +62,10 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
         ///  This method will allocate or expand the byte[] if needed.
         ///  Declare the array outside a loop or method so that it can be used many times.
         /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="buffer"></param>
-        /// <param name="fromBufferIndex"></param>
-        /// <returns></returns>
+        /// <param name="filePath">File path that will be read to convert.</param>
+        /// <param name="buffer">byte[] to convert into.</param>
+        /// <param name="fromBufferIndex">Index in byte[] to start writing value to, if not the beginning.</param>
+        /// <returns>String8 instance for the UTF-8 converted copy of 'value'.</returns>
         public static String8 ReadFile(string filePath, ref byte[] buffer, int fromBufferIndex = 0)
         {
             using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
@@ -77,31 +79,6 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
         }
 
         /// <summary>
-        ///  Convert a String8 to the .NET string representation. Causes allocation and isn't cached.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return Length == 0 ? string.Empty : Encoding.UTF8.GetString(Array, Index, Length);
-        }
-
-        /// <summary>
-        ///  Get a String8 for the given substring of the overall string.
-        /// </summary>
-        /// <param name="index">0-based index from which to start substring</param>
-        /// <param name="length">Number of UTF8 bytes to include in substring</param>
-        /// <returns>String8 instance for substring</returns>
-        public String8 Substring(int index, int length)
-        {
-            // Verify in bounds
-            if (index < 0) { throw new ArgumentOutOfRangeException(nameof(index)); }
-            if (length < 0 || index + length > Length) { throw new ArgumentOutOfRangeException(nameof(length)); }
-
-            // Build a substring tied to the same buffer
-            return new String8(Array, Index + index, length);
-        }
-
-        /// <summary>
         ///  Translate a UTF-8 index (from an RE2 match) to a UTF-16 match (safe for indexing into a .NET string).
         ///  Takes an optional previous mapping, so it doesn't have to rescan from the beginning of the file each time.
         /// </summary>
@@ -112,7 +89,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
         ///    10xxxxxx [lt 0xC0] - Non-first byte of any multi-byte character
         ///    110xxxxx [lt 0xE0] - First byte of two byte character
         ///    1110xxxx [lt 0xF0] - First byte of three byte character
-        ///    11110xxx [lt 0xF8] - First byte of four byte character
+        ///    11110xxx [lt 0xF8] - First byte of four byte character.
         /// </para>
         /// <para>
         ///    All Unicode codepoints up to U+FFFF fit in one UTF-16 char.
@@ -120,10 +97,11 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
         ///    so all UTF-8 three byte and smaller characters will be one UTF-16 character.
         /// </para>
         /// </remarks>
-        /// <param name="index">UTF-8 index to translate</param>
-        /// <param name="previousUtf8Index">A previous UTF8 index translated, if available</param>
-        /// <param name="previousUtf16Index">The UTF-16 equivalent of the previous index, if available</param>
-        /// <returns>UTF-16 index corresponding to the UTF-8 index passed in</returns>
+        /// <param name="index">UTF-8 index to translate.</param>
+        /// <param name="text8">String8 value.</param>
+        /// <param name="previousUtf8Index">A previous UTF8 index translated, if available.</param>
+        /// <param name="previousUtf16Index">The UTF-16 equivalent of the previous index, if available.</param>
+        /// <returns>UTF-16 index corresponding to the UTF-8 index passed in.</returns>
         public static int Utf8ToUtf16(int index, String8 text8, int previousUtf8Index = 0, int previousUtf16Index = 0)
         {
             if (index < 0 || index > text8.Length) { throw new ArgumentOutOfRangeException(nameof(index)); }
@@ -159,23 +137,47 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
                     utf16Index += currentLength;
 
                     // This character will be one UTF-16 char if it's 1-3 bytes, and two if it's 4 bytes (0xF0+)
-                    currentLength = (c < 0xF0 ? 1 : 2);
+                    currentLength = c < 0xF0 ? 1 : 2;
                 }
             }
 
             // If the character being pointed to isn't a continuation character, it's a new index
-            byte last = (index < text8.Length ? text8.Array[index + text8.Index] : (byte)0);
+            byte last = index < text8.Length ? text8.Array[index + text8.Index] : (byte)0;
             if (!(last >= 0x80 && last < 0xC0)) { utf16Index += currentLength; }
 
             return utf16Index;
         }
 
-        #region IComparable, IEquatable
+        /// <summary>
+        ///  Convert a String8 to the .NET string representation. Causes allocation and isn't cached.
+        /// </summary>
+        /// <returns>string instance.</returns>
+        public override string ToString()
+        {
+            return Length == 0 ? string.Empty : Encoding.UTF8.GetString(Array, Index, Length);
+        }
+
+        /// <summary>
+        ///  Get a String8 for the given substring of the overall string.
+        /// </summary>
+        /// <param name="index">0-based index from which to start substring.</param>
+        /// <param name="length">Number of UTF8 bytes to include in substring.</param>
+        /// <returns>String8 instance for substring.</returns>
+        public String8 Substring(int index, int length)
+        {
+            // Verify in bounds
+            if (index < 0) { throw new ArgumentOutOfRangeException(nameof(index)); }
+            if (length < 0 || index + length > Length) { throw new ArgumentOutOfRangeException(nameof(length)); }
+
+            // Build a substring tied to the same buffer
+            return new String8(Array, Index + index, length);
+        }
+
         /// <summary>
         ///  Compare this String8 to a .NET string. Will not allocate if the other string is ASCII only.
         /// </summary>
-        /// <param name="other">string to compare to</param>
-        /// <returns>Negative if this String8 sorts earlier, zero if equal, positive if this String8 sorts later</returns>
+        /// <param name="other">string to compare to.</param>
+        /// <returns>Negative if this String8 sorts earlier, zero if equal, positive if this String8 sorts later.</returns>
         public int CompareTo(string other)
         {
             int commonLength = Math.Min(this.Length, other.Length);
@@ -202,8 +204,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
         /// <summary>
         ///  Compare this String8 to another one. Returns which String8 sorts earlier.
         /// </summary>
-        /// <param name="other">String8 to compare to</param>
-        /// <returns>Negative if this String8 sorts earlier, zero if equal, positive if this String8 sorts later</returns>
+        /// <param name="other">String8 to compare to.</param>
+        /// <returns>Negative if this String8 sorts earlier, zero if equal, positive if this String8 sorts later.</returns>
         public int CompareTo(String8 other)
         {
             // If String8s point to the same thing, return the same
@@ -227,6 +229,16 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
             return Length.CompareTo(other.Length);
         }
 
+        public bool Equals(string other)
+        {
+            return CompareTo(other) == 0;
+        }
+
+        public bool Equals(String8 other)
+        {
+            return CompareTo(other) == 0;
+        }
+
         private int CompareToCommonLength(String8 other)
         {
             int commonLength = Math.Min(this.Length, other.Length);
@@ -238,16 +250,5 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
 
             return 0;
         }
-
-        public bool Equals(string other)
-        {
-            return CompareTo(other) == 0;
-        }
-
-        public bool Equals(String8 other)
-        {
-            return CompareTo(other) == 0;
-        }
-        #endregion
     }
 }

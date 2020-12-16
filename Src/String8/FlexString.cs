@@ -17,9 +17,9 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
         private String8 _string8;
 
         /// <summary>
-        ///  Construct a FlexString from a string value
+        /// Initializes a new instance of the <see cref="FlexString"/> class.
         /// </summary>
-        /// <param name="value">string value to wrap</param>
+        /// <param name="value">string value to wrap.</param>
         public FlexString(string value)
         {
             _string = value;
@@ -27,13 +27,47 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
         }
 
         /// <summary>
-        ///  Construct a FlexString from a String8 value
+        /// Initializes a new instance of the <see cref="FlexString"/> class.
         /// </summary>
-        /// <param name="value">String8 value to wrap</param>
+        /// <param name="value">String8 value to wrap.</param>
         public FlexString(String8 value)
         {
             _string8 = value;
             _isString8Available = true;
+        }
+
+        /// <summary>
+        ///  Gets the String8 (UTF-8 string) representation of this FlexString.
+        /// </summary>
+        public String8 String8
+        {
+            get
+            {
+                if (!_isString8Available)
+                {
+                    _string8 = String8.ConvertExpensively(_string);
+                    _isString8Available = true;
+                }
+
+                return _string8;
+            }
+        }
+
+        /// <summary>
+        ///  Gets the .NET String (UTF-16 string) representation of this FlexString.
+        /// </summary>
+        public string String
+        {
+            get
+            {
+                if (!_isStringAvailable)
+                {
+                    _string = _string8.ToString();
+                    _isStringAvailable = true;
+                }
+
+                return _string;
+            }
         }
 
         public static implicit operator FlexString(string value)
@@ -67,45 +101,11 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
         }
 
         /// <summary>
-        ///  Get the .NET String (UTF-16 string) representation of this FlexString.
-        /// </summary>
-        public string String
-        {
-            get
-            {
-                if (!_isStringAvailable)
-                {
-                    _string = _string8.ToString();
-                    _isStringAvailable = true;
-                }
-
-                return _string;
-            }
-        }
-
-        /// <summary>
-        ///  Get the String8 (UTF-8 string) representation of this FlexString.
-        /// </summary>
-        public String8 String8
-        {
-            get
-            {
-                if (!_isString8Available)
-                {
-                    _string8 = String8.ConvertExpensively(_string);
-                    _isString8Available = true;
-                }
-
-                return _string8;
-            }
-        }
-
-        /// <summary>
         ///  Compare two FlexStrings and return which should sort first,
         ///  using Ordinal comparison.
         /// </summary>
-        /// <param name="other">FlexString to compare to</param>
-        /// <returns>Negative if this instance sorts first, positive if this instance sorts later</returns>
+        /// <param name="other">FlexString to compare to.</param>
+        /// <returns>Negative if this instance sorts first, positive if this instance sorts later.</returns>
         public int CompareTo(FlexString other)
         {
             return this._isString8Available && other._isString8Available
@@ -114,10 +114,10 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
         }
 
         /// <summary>
-        ///  Return whether two FlexStrings are equal (Ordinal)
+        ///  Return whether two FlexStrings are equal (Ordinal).
         /// </summary>
-        /// <param name="other">FlexString to compare to</param>
-        /// <returns>True if strings Equal; False otherwise</returns>
+        /// <param name="other">FlexString to compare to.</param>
+        /// <returns>True if strings Equal; False otherwise.</returns>
         public bool Equals(FlexString other)
         {
             return this.CompareTo(other) == 0;
@@ -126,7 +126,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
         /// <summary>
         ///  Get the .NET string representation of this FlexString.
         /// </summary>
-        /// <returns>String value of this FlexString</returns>
+        /// <returns>String value of this FlexString.</returns>
         public override string ToString()
         {
             return this.String;
