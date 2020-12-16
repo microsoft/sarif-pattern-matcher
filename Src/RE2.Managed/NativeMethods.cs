@@ -84,31 +84,39 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
 
         private static class NativeMethodsX86
         {
-            [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int Test();
 
-            [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions);
 
-            [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern void ClearRegexes();
 
-            [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int Matches(int regexIndex, String8Interop text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds);
         }
 
         private static class NativeMethodsX64
         {
-            [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int Test();
 
-            [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions);
 
-            [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern void ClearRegexes();
 
-            [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int Matches(int regexIndex, String8Interop text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds);
         }
     }

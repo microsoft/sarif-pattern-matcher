@@ -4,7 +4,7 @@
   <Import Project="$(SolutionDir)..\Targets\build.test.props" />
 
   <ItemGroup>
-    <ProjectReference Include="..\BannedApi\BannedApi.csproj" />
+    <ProjectReference Include="..\PotentiallySensitiveData\PotentiallySensitiveData.csproj" />
   </ItemGroup>
 
 </Project>

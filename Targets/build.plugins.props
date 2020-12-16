@@ -1,0 +1,7 @@
+<Project>
+
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\src\Plugins\ValidationState.cs" />
+  </ItemGroup>
+
+</Project>

@@ -10,7 +10,7 @@
       "MatchExpressions": [
         {
           "SubId": "_alloca",
-          "ContentsRegex": "\\b(?<insecureApi>_alloca)\\s*\\(",
+          "ContentsRegex": "\\b(?<insecureApi>[_]?alloca)\\s*\\(",
           "MessageArguments": { "secureApi": "_malloca" },
           "Fixes": {
             "directReplacement": {
