@@ -16,6 +16,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {
+        private const string Base64DecodingFormatString = @"\b(?i)[0-9a-z\/+]{{{0}}}==";
+
         private static readonly Uri s_helpUri =
             new Uri("https://github.com/microsoft/sarif-pattern-matcher");
 
@@ -98,8 +100,6 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             return AnalysisApplicability.ApplicableToSpecifiedTarget;
         }
 
-        private const string base64DecodingFormatString = @"\b(?i)[0-9a-z\/+]{{{0}}}==";
-
         public override void Analyze(AnalyzeContext context)
         {
             if (context.FileContents == null)
@@ -117,7 +117,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             {
                 if (matchExpression.Base64DecodedContentLength > 0)
                 {
-                    string base64DecodingRegexText = string.Format(base64DecodingFormatString, matchExpression.Base64DecodedContentLength);
+                    string base64DecodingRegexText = string.Format(Base64DecodingFormatString, matchExpression.Base64DecodedContentLength);
 
                     foreach (FlexMatch flexMatch in _engine.Matches(context.FileContents, base64DecodingRegexText))
                     {
@@ -132,7 +132,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                 // This runs the match expression against the entire, unencoded file.
                 RunMatchExpression(
                     binary64DecodedMatch: null,
-                    context, 
+                    context,
                     matchExpression);
             }
         }
