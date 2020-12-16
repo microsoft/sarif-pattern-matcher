@@ -28,8 +28,7 @@ steps:
   inputs:
     codeCoverageTool: 'cobertura'
     summaryFileLocation: 'TestResults/Cobertura.xml'
-      filePath: ./scripts/BuildAndTest.ps1
-  
+
 - task: PublishBuildArtifacts@1
   inputs:
     pathToPublish: 'bld'
