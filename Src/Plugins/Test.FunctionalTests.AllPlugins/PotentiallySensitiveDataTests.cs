@@ -14,7 +14,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Test.FunctionalTests.AllPlu
     {
         public PotentiallySensitiveDataTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
-        [Fact]
+        [Fact(Skip = "No tests for now.")]
         public void EndToEndFunctionalTests_PotentiallySensitiveData()
             => RunAllTests();
     }
