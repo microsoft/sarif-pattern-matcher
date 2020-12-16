@@ -30,7 +30,7 @@ steps:
     summaryFileLocation: 'TestResults/Cobertura.xml'
       filePath: ./scripts/BuildAndTest.ps1
   
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: 'bld'
-      artifactName: 'bld'
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: 'bld'
+    artifactName: 'bld'
