@@ -106,7 +106,9 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Test.FunctionalTests.AllPlu
             // https://github.com/microsoft/sarif-sdk/issues/2185
             sarifLog.Runs[0].OriginalUriBaseIds = null;
 
-            return JsonConvert.SerializeObject(sarifLog, Formatting.Indented);
+            throw new InvalidOperationException(JsonConvert.SerializeObject(sarifLog, Formatting.Indented));
+
+            //return JsonConvert.SerializeObject(sarifLog, Formatting.Indented);
         }
 
         protected void RunAllTests()
