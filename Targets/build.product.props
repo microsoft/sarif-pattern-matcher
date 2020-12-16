@@ -2,7 +2,6 @@
 
   <PropertyGroup Label="Package">
     <PackageId>$(RootNamespace)</PackageId>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
     <Title>$(AssemblyTitle)</Title>
     <Authors>$(Company)</Authors>
