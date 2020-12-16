@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(SolutionDir)..\Targets\build.app.props" />
+  <Import Project="$(SolutionDir)..\Targets\build.test.props" />
+  <ItemGroup>
+    <None Remove="TestData\BannedApi\ExpectedOutputs\Malloc.sarif" />
+    <None Remove="TestData\BannedApi\Inputs\Malloc.c" />
+    <None Remove="TestData\PlaintextSecrets\ExpectedOutputs\VariousPats.sarif" />
+    <None Remove="TestData\PlaintextSecrets\Inputs\VariousPats.txt" />
+    <None Remove="TestData\PlaintextSecrets\VariousPats.txt" />
+    <None Remove="TestData\PotentiallySensitiveData\ExpectedOutputs\EmailAddresses.sarif" />
+    <None Remove="TestData\PotentiallySensitiveData\ExpectedOutputs\EmailAddresses.txt" />
+    <None Remove="TestData\PotentiallySensitiveData\ExpectedOutputs\SocialSecurityNumbers.sarif" />
+    <None Remove="TestData\PotentiallySensitiveData\ExpectedOutputs\SocialSecurityNumbers.txt" />
+    <None Remove="TestData\PotentiallySensitiveData\Inputs\EmailAddresses.txt" />
+    <None Remove="TestData\PotentiallySensitiveData\Inputs\SocialSecurityNumbers.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\BannedApi\ExpectedOutputs\Malloc.sarif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestData\BannedApi\Inputs\Malloc.c">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestData\PlaintextSecrets\ExpectedOutputs\VariousPats.sarif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestData\PlaintextSecrets\Inputs\VariousPats.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestData\PotentiallySensitiveData\ExpectedOutputs\EmailAddresses.sarif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestData\PotentiallySensitiveData\ExpectedOutputs\SocialSecurityNumbers.sarif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestData\PotentiallySensitiveData\Inputs\EmailAddresses.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestData\PotentiallySensitiveData\Inputs\SocialSecurityNumbers.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
+    <ProjectReference Include="..\..\sarif-sdk\src\Sarif\Sarif.csproj" />
+    <ProjectReference Include="..\..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
+    <ProjectReference Include="..\..\SarifPatternMatcher\SarifPatternMatcher.csproj" />
+    <ProjectReference Include="..\BannedApi\BannedApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="TestData\BannedApi\ExpectedOutputs\Malloc.sarif" />
+    <Resource Include="TestData\BannedApi\Inputs\Malloc.c" />
+  </ItemGroup>
+
+</Project>
