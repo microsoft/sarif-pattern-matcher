@@ -27,7 +27,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
         private readonly string _id;
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
         private readonly IRegex _engine;
-        private readonly Regex _nameAllowRegex;
+        private readonly Regex _fileNameAllowRegex;
         private readonly ValidatorsCache _validators;
         private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
@@ -48,7 +48,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             string name,
             FailureLevel defaultLevel,
             string description,
-            string nameAllowRegex,
+            string fileNameAllowRegex,
             string defaultMessageString,
             IList<MatchExpression> matchExpressions)
         {
@@ -59,8 +59,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
             this.DefaultConfiguration.Level = defaultLevel;
 
-            _nameAllowRegex = new Regex(
-                nameAllowRegex ?? string.Empty,
+            _fileNameAllowRegex = new Regex(
+                fileNameAllowRegex ?? string.Empty,
                 RegexDefaults.DefaultOptionsCaseSensitive);
 
             _matchExpressions = matchExpressions;
@@ -96,7 +96,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
         {
             reasonIfNotApplicable = SpamResources.TargetDoesNotMeetFileNameCriteria;
 
-            if (!_nameAllowRegex.IsMatch(context.TargetUri.LocalPath))
+            if (!_fileNameAllowRegex.IsMatch(context.TargetUri.LocalPath))
             {
                 return AnalysisApplicability.NotApplicableToSpecifiedTarget;
             }
