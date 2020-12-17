@@ -4,16 +4,111 @@
       "Name": "ReviewPotentiallySensitiveFiles",
       "Id": "SEC1003",
       "Level": "Error",
-      "FileNameAllowRegex": "(?i)\\.(pem|pkcs12|p12|pfx|asc|ovpn|rdp|mdf|sdf|sqlite|sqlite3|bek|tpm|fve|jks|psafe3|agilekeychain|kwallet|tblk|ppk)$",
+      "FileNameAllowRegex": "(?i)\\.(agilekeychain|asc|bek|fve|jks|kwallet|mdf|ovpn|p12|pem|pfx|pkcs12|ppk|psafe3|rdp|sdf|sqlite|sqlite3|tblk|tpm)$",
       "Description": "Review potentially sensitive files in versioned engineering content and other locations for security risk.",
       "Message": "'{0:scanTarget}' is {1:fileKind} that may compromise security if visible to attackers.",
-
       "MatchExpressions": [
+        {
+          "SubId": "1PasswordFile",
+          "NameAllowList": "(?i)\\.agilekeychain$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a 1Password manager database file" }
+        },
         {
           "SubId": "ASCIIArmoredFile",
           "NameAllowList": "(?i)\\.asc$",
           "ContentsRegex": ".",
           "MessageArguments": { "fileKind": "an ASCII armored file" }
+        },
+        {
+          "SubId": "MicrosoftBitLockerRecoveryKeyFile",
+          "NameAllowList": "(?i)\\.bek$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a Microsoft BitLocker recovery key file" }
+        },
+        {
+          "SubId": "WindowsBitlockerDataFile",
+          "NameAllowList": "(?i)\\.fve$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a Windows BitLocker full volume encrypted data file" }
+        },
+        {
+          "SubId": "JavaKeystoreFile",
+          "NameAllowList": "(?i)\\.jks$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a Java keystore file" }
+        },
+        {
+          "SubId": "KDEWalletManagerDatabaseFile",
+          "NameAllowList": "(?i)\\.kwallet$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a KDE Wallet Manager database file" }
+        },
+        {
+          "SubId": "MicrosoftSQLDatabaseFile",
+          "NameAllowList": "(?i)\\.mdf$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a Microsoft SQL database file" }
+        },
+        {
+          "SubId": "OpenVPNClientConfigurationFile",
+          "NameAllowList": "(?i)\\.ovpn$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "an OpenVPN client configuration file" }
+        },
+        {
+          "SubId": "P12CryptographicKeyFile",
+          "NameAllowList": "(?i)\\.p12$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a cryptographic key bundle" }
+        },
+        {
+          "SubId": "PEMCryptographicPrivateKeyFile",
+          "NameAllowList": "(?i)\\.pem$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a cryptographic private key" }
+        },
+        {
+          "SubId": "PFXCryptographicKeyFile",
+          "NameAllowList": "(?i)\\.pfx$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a cryptographic key bundle" }
+        },
+        {
+          "SubId": "PKCS12CryptographicKeyFile",
+          "NameAllowList": "(?i)\\.pkcs12$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a cryptographic key bundle" }
+        },
+        {
+          "SubId": "PuTTygenPrivateKeyFile",
+          "NameAllowList": "(?i)\\.ppk$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a PuTTYgen private key" }
+        },
+        {
+          "SubId": "PasswordSafeDatabaseFile",
+          "NameAllowList": "(?i)\\.psafe3$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a password Safe database file" }
+        },
+        {
+          "SubId": "RemoteDesktopConnectionFile",
+          "NameAllowList": "(?i)\\.rdp$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a Remote Desktop connection file" }
+        },
+        {
+          "SubId": "SQLiteDatabaseFile",
+          "NameAllowList": "(?i)\\.(sqlite|sqlite3)$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a SQLite database file" }
+        },
+        {
+          "SubId": "TunnelblickVPNConfigurationFile",
+          "NameAllowList": "(?i)\\.tblk$",
+          "ContentsRegex": ".",
+          "MessageArguments": { "fileKind": "a Tunnelblick VPN configuration file" }
         }
       ]
     }
