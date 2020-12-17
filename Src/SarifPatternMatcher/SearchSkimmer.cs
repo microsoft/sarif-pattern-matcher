@@ -16,13 +16,13 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {
-        private const string Base64DecodingFormatString = @"\b(?i)[0-9a-z\/+]{{{0}}}==";
+        private const string Base64DecodingFormatString = "\\b(?i)[0-9a-z\\/+]{0}";
 
         private static readonly Uri s_helpUri =
             new Uri("https://github.com/microsoft/sarif-pattern-matcher");
 
         private static readonly Regex namedArgumentsRegex =
-            new Regex(@"[^}]?{(?<index>\d+):(?<name>[a-zA-Z]+)}[\}]*", RegexDefaults.DefaultOptionsCaseSensitive);
+            new Regex(@"[^}]?{(?<index>\d+):(?i)(?<name>[a-z]+)}[\}]*", RegexDefaults.DefaultOptionsCaseSensitive);
 
         private readonly string _id;
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
@@ -35,6 +35,11 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
         private readonly Dictionary<string, MultiformatMessageString> _messageStrings;
 
         private FileRegionsCache _regionsCache;
+
+        public SearchSkimmer(IRegex engine, ValidatorsCache validators, SearchDefinition definition)
+            : this(engine, validators, definition.Id, definition.Name, definition.Level, definition.Description, definition.DefaultNameRegex, definition.Message, definition.MatchExpressions)
+        {
+        }
 
         public SearchSkimmer(
             IRegex engine,
@@ -115,9 +120,18 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
-                if (matchExpression.Base64DecodedContentLength > 0)
+                if (matchExpression.MatchLengthToDecode > 0)
                 {
-                    string base64DecodingRegexText = string.Format(Base64DecodingFormatString, matchExpression.Base64DecodedContentLength);
+                    decimal unencodedLength = matchExpression.MatchLengthToDecode;
+
+                    // Every 3 bytes of a base64-encoded string produces 4 bytes of data.
+                    int unpaddedLength = (int)Math.Ceiling(decimal.Divide(unencodedLength * 8M, 6M));
+                    int paddedLength = 4 * (int)Math.Ceiling(decimal.Divide(unencodedLength, 3M));
+
+                    // Create proper regex for base64-encoded string which includes padding characters.
+                    string base64DecodingRegexText =
+                        string.Format(Base64DecodingFormatString, "{" + unpaddedLength + "}") +
+                        new string('=', paddedLength - unpaddedLength);
 
                     foreach (FlexMatch flexMatch in _engine.Matches(context.FileContents, base64DecodingRegexText))
                     {
@@ -159,15 +173,42 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
                 bool dynamic = context.DynamicValidation;
 
-                if (_validators.Validate(matchExpression.SubId, fingerprint, dynamic) == Validation.Invalid ||
-                    _validators.Validate(this.Id, fingerprint, dynamic) == Validation.Invalid)
+                Validation state = 0;
+
+                if (_validators != null)
                 {
-                    // TODO add a trace for this condition.
-                    continue;
+                    state = _validators.Validate(matchExpression.SubId, fingerprint, dynamic);
+
+                    switch (state)
+                    {
+                        case Validation.NoMatch:
+                        {
+                            // The validator determined the match is a false positive.
+                            // i.e., it is not the kind of artifact we're looking for.
+                            continue;
+                        }
+
+                        case Validation.None:
+                        case Validation.ValidatorReturnedIllegalValue:
+                        {
+                            // The validator returned a bad value.
+                            // TODO logging
+                            break;
+                        }
+
+                        case Validation.Valid:
+                        case Validation.Invalid:
+                        case Validation.Unknown:
+                        {
+                            // We will log all these cases.
+                            // TODO: update result kind/level for
+                            // as appropriate for these cases.
+                            break;
+                        }
+                    }
                 }
 
-                // TODO need to emit proper SARIF if a match expression overrides the default format string.
-                string messageFormatString = matchExpression.Message ?? this._messageStrings["Default"].Text;
+                string messageFormatString = this._messageStrings["Default"].Text;
 
                 IList<string> arguments = GetMessageArguments(
                     match,

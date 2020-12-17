@@ -87,7 +87,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.PlaintextSecrets/TestData/PlaintextSecrets/Inputs/VariousPats.txt",
+                  "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PlaintextSecrets/Inputs/VariousPats.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -155,7 +155,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.PlaintextSecrets/TestData/PlaintextSecrets/Inputs/VariousPats.txt",
+                  "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PlaintextSecrets/Inputs/VariousPats.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
