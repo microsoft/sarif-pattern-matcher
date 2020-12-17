@@ -2,12 +2,7 @@
 
   <Import Project="$(SolutionDir)..\Targets\build.app.props" />
   <Import Project="$(SolutionDir)..\Targets\build.test.props" />
-  <ItemGroup>
-    <None Remove="TestData\PotentiallySensitiveData\ExpectedOutputs\EmailAddresses.sarif" />
-    <None Remove="TestData\PotentiallySensitiveData\ExpectedOutputs\SocialSecurityNumbers.sarif" />
-    <None Remove="TestData\PotentiallySensitiveData\Inputs\EmailAddresses.txt" />
-    <None Remove="TestData\PotentiallySensitiveData\Inputs\SocialSecurityNumbers.txt" />
-  </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="TestData\PotentiallySensitiveData\ExpectedOutputs\EmailAddresses.sarif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

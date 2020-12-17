@@ -2,16 +2,7 @@
 
   <Import Project="$(SolutionDir)..\Targets\build.app.props" />
   <Import Project="$(SolutionDir)..\Targets\build.test.props" />
-  <ItemGroup>
-    <Compile Remove="TestData\BannedApi\Inputs\UnitTestOutput.BannedApi\**" />
-    <Compile Remove="TestData\BannedApi\Inputs\UnitTestOutput.PlaintextSecrets\**" />
-    <EmbeddedResource Remove="TestData\BannedApi\Inputs\UnitTestOutput.BannedApi\**" />
-    <EmbeddedResource Remove="TestData\BannedApi\Inputs\UnitTestOutput.PlaintextSecrets\**" />
-    <None Remove="TestData\BannedApi\Inputs\UnitTestOutput.BannedApi\**" />
-    <None Remove="TestData\BannedApi\Inputs\UnitTestOutput.PlaintextSecrets\**" />
-  </ItemGroup>
-
- 
+  
   <ItemGroup>
     <EmbeddedResource Include="TestData\BannedApi\ExpectedOutputs\Malloc.sarif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
