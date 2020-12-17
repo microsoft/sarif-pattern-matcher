@@ -16,7 +16,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {
-        private const string Base64DecodingFormatString = @"\b(?i)[0-9a-z\/+]{{{0}}}";
+        private const string Base64DecodingFormatString = "\\b(?i)[0-9a-z\\/+]{0}";
 
         private static readonly Uri s_helpUri =
             new Uri("https://github.com/microsoft/sarif-pattern-matcher");
@@ -125,12 +125,12 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                     decimal unencodedLength = matchExpression.MatchLengthToDecode;
 
                     // Every 3 bytes of a base64-encoded string produces 4 bytes of data.
-                    int paddedLength = (int)Math.Ceiling(decimal.Divide(unencodedLength * 8M, 6M));
-                    int unpaddedLength = 4 * (int)Math.Ceiling(decimal.Divide(unencodedLength, 3M));
+                    int unpaddedLength = (int)Math.Ceiling(decimal.Divide(unencodedLength * 8M, 6M));
+                    int paddedLength = 4 * (int)Math.Ceiling(decimal.Divide(unencodedLength, 3M));
 
                     // Create proper regex for base64-encoded string which includes padding characters.
                     string base64DecodingRegexText =
-                        string.Format(Base64DecodingFormatString, unpaddedLength) +
+                        string.Format(Base64DecodingFormatString, "{" + unpaddedLength +"}") +
                         new string('=', paddedLength - unpaddedLength);
 
                     foreach (FlexMatch flexMatch in _engine.Matches(context.FileContents, base64DecodingRegexText))
