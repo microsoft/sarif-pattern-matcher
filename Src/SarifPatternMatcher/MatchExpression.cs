@@ -12,15 +12,21 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
     {
         public string SubId { get; set; }
 
-        public string Message { get; set; }
-
         public string NameRegex { get; set; }
 
         public FailureLevel Level { get; set; }
 
         public string ContentsRegex { get; set; }
 
-        public int Base64DecodedContentLength { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating the length of a typical match.
+        /// If this value is non-zero, the scanner will first attempt
+        /// to detect a base64-encoded value that decodes to this length.
+        /// On detection, it will next decode this value and provide the
+        /// decoded string to the match expression. No base64-decoding
+        /// occurs when this property is 0 or less.
+        /// </summary>
+        public int MatchLengthToDecode { get; set; }
 
         public Dictionary<string, string> MessageArguments { get; set; }
 

@@ -86,8 +86,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.PlaintextSecrets
             return
                 IsChecksumValid(matchedPattern, ChecksumPAT) ||
                 IsChecksumValid(matchedPattern, ChecksumADOAppSecret) ?
-                    ValidationState.Unknown.ToString() :
-                    ValidationState.NoMatch.ToString();
+                    nameof(ValidationState.Unknown) :
+                    nameof(ValidationState.NoMatch);
         }
 
         /// <summary>
