@@ -4,13 +4,13 @@
       "Name": "ReviewPotentiallySensitiveFiles",
       "Id": "SEC1003",
       "Level": "Error",
-      "FileNameAllowRegex": "(?i)\\.(agilekeychain|asc|bek|fve|jks|kwallet|mdf|ovpn|p12|pem|pfx|pkcs12|ppk|psafe3|rdp|sdf|sqlite|sqlite3|tblk|tpm)$",
+      "FileNameAllowRegex": "(?i)\\.(agilekeychain|agilekeychain_zip|asc|bek|fve|jks|kwallet|mdf|ovpn|p12|pem|pfx|pkcs12|ppk|psafe3|rdp|sdf|sqlite|sqlite3|tblk|tpm)$",
       "Description": "Review potentially sensitive files in versioned engineering content and other locations for security risk.",
       "Message": "'{0:scanTarget}' is {1:fileKind} that may compromise security if visible to attackers.",
       "MatchExpressions": [
         {
-          "SubId": "1PasswordFile",
-          "FileNameAllowRegex": "(?i)\\.agilekeychain$",
+          "SubId": "OnePasswordFile",
+          "FileNameAllowRegex": "(?i)\\.(agilekeychain|agilekeychain_zip)$",
           "ContentsRegex": ".",
           "MessageArguments": { "fileKind": "a 1Password manager database file" }
         },
@@ -45,7 +45,7 @@
           "MessageArguments": { "fileKind": "a KDE Wallet Manager database file" }
         },
         {
-          "SubId": "MicrosoftSQLDatabaseFile",
+          "SubId": "MicrosoftSqlDatabaseFile",
           "FileNameAllowRegex": "(?i)\\.mdf$",
           "ContentsRegex": ".",
           "MessageArguments": { "fileKind": "a Microsoft SQL database file" }
@@ -57,16 +57,10 @@
           "MessageArguments": { "fileKind": "an OpenVPN client configuration file" }
         },
         {
-          "SubId": "P12CryptographicKeyFile",
-          "FileNameAllowRegex": "(?i)\\.p12$",
-          "ContentsRegex": ".",
-          "MessageArguments": { "fileKind": "a cryptographic key bundle" }
-        },
-        {
           "SubId": "PEMCryptographicPrivateKeyFile",
           "FileNameAllowRegex": "(?i)\\.pem$",
           "ContentsRegex": ".",
-          "MessageArguments": { "fileKind": "a cryptographic private key" }
+          "MessageArguments": { "fileKind": "a PEM cryptographic private key" }
         },
         {
           "SubId": "PFXCryptographicKeyFile",
@@ -76,9 +70,9 @@
         },
         {
           "SubId": "PKCS12CryptographicKeyFile",
-          "FileNameAllowRegex": "(?i)\\.pkcs12$",
+          "FileNameAllowRegex": "(?i)\\.(p12|pkcs12)$",
           "ContentsRegex": ".",
-          "MessageArguments": { "fileKind": "a cryptographic key bundle" }
+          "MessageArguments": { "fileKind": "a PKCS#12 cryptographic key bundle" }
         },
         {
           "SubId": "PuTTygenPrivateKeyFile",
@@ -90,13 +84,13 @@
           "SubId": "PasswordSafeDatabaseFile",
           "FileNameAllowRegex": "(?i)\\.psafe3$",
           "ContentsRegex": ".",
-          "MessageArguments": { "fileKind": "a password Safe database file" }
+          "MessageArguments": { "fileKind": "a 'Password Safe' database file" }
         },
         {
-          "SubId": "RemoteDesktopConnectionFile",
+          "SubId": "RemoteDesktopConnectionSettingsFile",
           "FileNameAllowRegex": "(?i)\\.rdp$",
           "ContentsRegex": ".",
-          "MessageArguments": { "fileKind": "a Remote Desktop connection file" }
+          "MessageArguments": { "fileKind": "a Remote Desktop connection settings file" }
         },
         {
           "SubId": "SQLiteDatabaseFile",
