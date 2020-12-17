@@ -48,7 +48,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
 
             var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.DefaultNameRegex}"),
+                TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
                 FileContents = base64Encoded,
                 Logger = logger
             };
@@ -97,7 +97,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
         {
             return new SearchDefinition()
             {
-                DefaultNameRegex = Guid.NewGuid().ToString(),
+                FileNameAllowRegex = Guid.NewGuid().ToString(),
                 Description = Guid.NewGuid().ToString(),
                 Id = Guid.NewGuid().ToString(),
                 Level = FailureLevel.Error,

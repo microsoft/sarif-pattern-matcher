@@ -9,6 +9,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
     public class SearchDefinition
     {
+        public Dictionary<string, string> Strings { get; set; }
+
         public string Id { get; set; }
 
         public string Name { get; set; }
@@ -19,7 +21,9 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
         public FailureLevel Level { get; set; }
 
-        public string DefaultNameRegex { get; set; }
+        public string FileNameDenyRegex { get; set; }
+
+        public string FileNameAllowRegex { get; set; }
 
         public List<MatchExpression> MatchExpressions { get; set; }
     }

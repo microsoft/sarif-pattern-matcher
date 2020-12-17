@@ -27,7 +27,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
         private readonly string _id;
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
         private readonly IRegex _engine;
-        private readonly Regex _defaultNameRegex;
+        private readonly Regex _nameAllowRegex;
         private readonly ValidatorsCache _validators;
         private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
@@ -37,7 +37,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
         private FileRegionsCache _regionsCache;
 
         public SearchSkimmer(IRegex engine, ValidatorsCache validators, SearchDefinition definition)
-            : this(engine, validators, definition.Id, definition.Name, definition.Level, definition.Description, definition.DefaultNameRegex, definition.Message, definition.MatchExpressions)
+            : this(engine, validators, definition.Id, definition.Name, definition.Level, definition.Description, definition.FileNameAllowRegex, definition.Message, definition.MatchExpressions)
         {
         }
 
@@ -48,7 +48,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             string name,
             FailureLevel defaultLevel,
             string description,
-            string defaultNameRegex,
+            string nameAllowRegex,
             string defaultMessageString,
             IList<MatchExpression> matchExpressions)
         {
@@ -59,8 +59,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
             this.DefaultConfiguration.Level = defaultLevel;
 
-            _defaultNameRegex = new Regex(
-                defaultNameRegex ?? string.Empty,
+            _nameAllowRegex = new Regex(
+                nameAllowRegex ?? string.Empty,
                 RegexDefaults.DefaultOptionsCaseSensitive);
 
             _matchExpressions = matchExpressions;
@@ -96,7 +96,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
         {
             reasonIfNotApplicable = SpamResources.TargetDoesNotMeetFileNameCriteria;
 
-            if (!_defaultNameRegex.IsMatch(context.TargetUri.LocalPath))
+            if (!_nameAllowRegex.IsMatch(context.TargetUri.LocalPath))
             {
                 return AnalysisApplicability.NotApplicableToSpecifiedTarget;
             }

@@ -10,9 +10,13 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
     public class MatchExpression
     {
+        public Dictionary<string, string> Strings { get; set; }
+
         public string SubId { get; set; }
 
-        public string NameRegex { get; set; }
+        public string FileNameDenyRegex { get; set; }
+
+        public string FileNameAllowRegex { get; set; }
 
         public FailureLevel Level { get; set; }
 

@@ -5,10 +5,10 @@
   <Import Project="$(SolutionDir)..\Targets\build.plugins.props" />
 
   <ItemGroup>
-    <Content Include="BannedApi.json">
+    <Content Include="SEC1003.ReviewPotentiallySensitiveFiles.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="build\BannedApi.targets">
+    <Content Include="build\SEC1003.ReviewPotentiallySensitiveFiles.targets">
       <PackagePath>build\</PackagePath>
     </Content>
   </ItemGroup>

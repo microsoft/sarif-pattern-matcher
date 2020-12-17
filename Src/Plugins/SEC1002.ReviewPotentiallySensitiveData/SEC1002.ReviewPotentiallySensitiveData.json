@@ -4,7 +4,7 @@
       "Name": "ReviewPotentiallySensitiveData",
       "Id": "SEC1002",
       "Level": "Note",
-      "DefaultNameRegex": "(?i)\\.(azure|bat|c|cmd|config|cpp|cs|cscfg|definitions|dtsx|h|hxx|hpp|ini|java|jsx?|json|keys|kt|loadtest|m|md|php|properties|ps1|psm1|pubxml|py|resx|sample|sql|ste|swift|test|tsx?|txt|waz|xml)$",
+      "FileNameAllowRegex": "(?i)\\.(azure|bat|c|cmd|config|cpp|cs|cscfg|definitions|dtsx|h|hxx|hpp|ini|java|jsx?|json|keys|kt|loadtest|m|md|php|properties|ps1|psm1|pubxml|py|resx|sample|sql|ste|swift|test|tsx?|txt|waz|xml)$",
       "Description": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc.",
       "Message": "'{0:scanTarget}' contains an apparent {1:dataKind}.",
       "MatchExpressions": [

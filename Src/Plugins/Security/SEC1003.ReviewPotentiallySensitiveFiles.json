@@ -1,0 +1,21 @@
+{
+  "Definitions": [
+    {
+      "Name": "ReviewPotentiallySensitiveFiles",
+      "Id": "SEC1003",
+      "Level": "Error",
+      "FileNameAllowRegex": "(?i)\\.(pem|pkcs12|p12|pfx|asc|ovpn|rdp|mdf|sdf|sqlite|sqlite3|bek|tpm|fve|jks|psafe3|agilekeychain|kwallet|tblk|ppk)$",
+      "Description": "Review potentially sensitive files in versioned engineering content and other locations for security risk.",
+      "Message": "'{0:scanTarget}' is {1:fileKind} that may compromise security if visible to attackers.",
+
+      "MatchExpressions": [
+        {
+          "SubId": "ASCIIArmoredFile",
+          "NameAllowList": "(?i)\\.asc$",
+          "ContentsRegex": "*",
+          "MessageArguments": { "fileKind": "an ASCII armored file" }
+        }
+      ]
+    }
+  ]
+}

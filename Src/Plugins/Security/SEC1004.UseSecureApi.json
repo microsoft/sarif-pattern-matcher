@@ -1,0 +1,26 @@
+{
+  "Definitions": [
+    {
+      "Name": "DoNotUseBannedApi",
+      "Id": "SEC1004/Memory/Allocation",
+      "Level": "Error",
+      "FileNameAllowRegex": "(?i)\\.(c|cpp|cxx)$",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "MatchExpressions": [
+        {
+          "SubId": "_alloca",
+          "ContentsRegex": "\\b(?<insecureApi>[_]?alloca)\\s*\\(",
+          "MessageArguments": { "secureApi": "_malloca" },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -3,7 +3,7 @@
   <Target Name="CopyUtilityScriptToProject" BeforeTargets="Build">
     <Message Text="Copying files" />
     <Copy 
-      SourceFiles="$(MSBuildThisFileDirectory)..\content\PlaintextSecrets.json" 
-      DestinationFiles="$(SolutionDir)\.spam\PlaintextSecrets.json" />
+      SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC1003.ReviewPotentiallySensitiveFiles.json" 
+      DestinationFiles="$(SolutionDir)\.spam\SEC1003.ReviewPotentiallySensitiveFiles.json" />
   </Target>
 </Project>
