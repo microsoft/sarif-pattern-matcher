@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(SolutionDir)..\Targets\build.app.props" />
+  <Import Project="$(SolutionDir)..\Targets\build.test.props" />
+  <ItemGroup>
+    <None Remove="TestData\ExpectedOutputs\EmailAddresses.sarif" />
+    <None Remove="TestData\ExpectedOutputs\SocialSecurityNumbers.sarif" />
+    <None Remove="TestData\Inputs\EmailAddresses.txt" />
+    <None Remove="TestData\Inputs\SocialSecurityNumbers.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\ExpectedOutputs\EmailAddresses.sarif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestData\ExpectedOutputs\SocialSecurityNumbers.sarif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestData\Inputs\EmailAddresses.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestData\Inputs\SocialSecurityNumbers.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
+    <ProjectReference Include="..\..\sarif-sdk\src\Sarif\Sarif.csproj" />
+    <ProjectReference Include="..\..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
+    <ProjectReference Include="..\..\SarifPatternMatcher\SarifPatternMatcher.csproj" />
+    <ProjectReference Include="..\PotentiallySensitiveData\PotentiallySensitiveData.csproj" />
+
+    <Compile Include="$(SolutionDir)..\src\Plugins\EndToEndTests.cs" />
+  </ItemGroup>
+
+</Project>

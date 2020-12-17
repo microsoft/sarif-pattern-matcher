@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 
 using Xunit.Abstractions;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Test.FunctionalTests.AllPlugins
+namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Test.AllPlugins
 {
     public abstract class EndToEndTests : FileDiffingUnitTests
     {
@@ -36,9 +36,6 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Test.FunctionalTests.AllPlu
         public EndToEndTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
         protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @"Plugins\Test.FunctionalTests.AllPlugins\");
-
-        protected override string TestLogResourceNameRoot
-            => $"Microsoft.CodeAnalysis.SarifPatternMatcher.Test.FunctionalTests.AllPlugins.TestData.{TypeUnderTest}";
 
         protected override string ConstructTestOutputFromInputResource(string inputResourceName, object parameter)
         {
@@ -124,4 +121,3 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Test.FunctionalTests.AllPlu
         }
     }
 }
-

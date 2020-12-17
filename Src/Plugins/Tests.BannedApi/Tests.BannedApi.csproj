@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(SolutionDir)..\Targets\build.app.props" />
+  <Import Project="$(SolutionDir)..\Targets\build.test.props" />
+
+ 
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\ExpectedOutputs\Malloc.sarif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestData\Inputs\Malloc.c">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
+    <ProjectReference Include="..\..\sarif-sdk\src\Sarif\Sarif.csproj" />
+    <ProjectReference Include="..\..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
+    <ProjectReference Include="..\..\SarifPatternMatcher\SarifPatternMatcher.csproj" />
+    <ProjectReference Include="..\BannedApi\BannedApi.csproj" />
+    
+    <Compile Include="$(SolutionDir)..\src\Plugins\EndToEndTests.cs" />
+  </ItemGroup>
+
+</Project>
