@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(SolutionDir)..\Targets\build.lib.props" />
-  <Import Project="$(SolutionDir)..\Targets\build.product.props" />
-  <Import Project="$(SolutionDir)..\Targets\build.plugins.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.lib.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.product.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.plugins.props" />
 
   <ItemGroup>
     <Content Include="*.json">
