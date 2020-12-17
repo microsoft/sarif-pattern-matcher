@@ -120,6 +120,28 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
+                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
+                {
+                    var fileNameRegex = new Regex(matchExpression.FileNameAllowRegex, RegexOptions.IgnoreCase);
+
+                    // If file is not a match, skip.
+                    if (!fileNameRegex.IsMatch(context.TargetUri.LocalPath))
+                    {
+                        continue;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex))
+                {
+                    var fileNameRegex = new Regex(matchExpression.FileNameDenyRegex, RegexOptions.IgnoreCase);
+
+                    // If file is a match, skip.
+                    if (fileNameRegex.IsMatch(context.TargetUri.LocalPath))
+                    {
+                        continue;
+                    }
+                }
+
                 if (matchExpression.MatchLengthToDecode > 0)
                 {
                     decimal unencodedLength = matchExpression.MatchLengthToDecode;
