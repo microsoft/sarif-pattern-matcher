@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Target Name="CopyUtilityScriptToProject" BeforeTargets="Build">
-    <Message Text="Copying files" />
-    <Copy 
-      SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC1002.ReviewPotentiallySensitiveData.json" 
-      DestinationFiles="$(SolutionDir)\.spam\SEC1002.ReviewPotentiallySensitiveData.json" />
-  </Target>
-</Project>

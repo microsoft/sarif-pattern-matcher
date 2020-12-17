@@ -12,7 +12,7 @@
         {
           "SubId": "ASCIIArmoredFile",
           "NameAllowList": "(?i)\\.asc$",
-          "ContentsRegex": "*",
+          "ContentsRegex": ".",
           "MessageArguments": { "fileKind": "an ASCII armored file" }
         }
       ]

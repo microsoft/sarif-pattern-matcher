@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(SolutionDir)..\Targets\build.app.props" />
+  <Import Project="$(SolutionDir)..\Targets\build.test.props" />
+  
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Security\Security.csproj" />
+    <ProjectReference Include="..\..\SarifPatternMatcher\SarifPatternMatcher.csproj" />
+    <ProjectReference Include="..\..\sarif-sdk\src\Sarif\Sarif.csproj" />
+    <ProjectReference Include="..\..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
+    <ProjectReference Include="..\..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
+  </ItemGroup>
+
+</Project>
