@@ -130,7 +130,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
                     // Create proper regex for base64-encoded string which includes padding characters.
                     string base64DecodingRegexText =
-                        string.Format(Base64DecodingFormatString, "{" + unpaddedLength +"}") +
+                        string.Format(Base64DecodingFormatString, "{" + unpaddedLength + "}") +
                         new string('=', paddedLength - unpaddedLength);
 
                     foreach (FlexMatch flexMatch in _engine.Matches(context.FileContents, base64DecodingRegexText))
