@@ -125,7 +125,6 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                     decimal unencodedLength = matchExpression.MatchLengthToDecode;
 
                     // Every 3 bytes of a base64-encoded string produces 4 bytes of data.
-
                     int paddedLength = (int)Math.Ceiling(decimal.Divide(unencodedLength * 8M, 6M));
                     int unpaddedLength = 4 * (int)Math.Ceiling(decimal.Divide(unencodedLength, 3M));
 
