@@ -41,23 +41,23 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                             name: definition.Name,
                             defaultLevel: definition.Level,
                             description: definition.Description ?? string.Empty,
-                            defaultNameRegex: definition.DefaultNameRegex,
+                            fileNameAllowRegex: definition.FileNameAllowRegex,
                             defaultMessageString: definition.Message,
                             matchExpressions: definition.MatchExpressions));
 
                     const string singleSpace = " ";
 
                     // Send no-op match operations through engine in order to drive caching of all regexes.
-                    if (definition.DefaultNameRegex != null)
+                    if (definition.FileNameAllowRegex != null)
                     {
-                        engine.Match(singleSpace, definition.DefaultNameRegex, RegexDefaults.DefaultOptionsCaseSensitive);
+                        engine.Match(singleSpace, definition.FileNameAllowRegex, RegexDefaults.DefaultOptionsCaseSensitive);
                     }
 
                     foreach (MatchExpression matchExpression in definition.MatchExpressions)
                     {
-                        if (matchExpression.NameRegex != null)
+                        if (matchExpression.FileNameAllowRegex != null)
                         {
-                            engine.Match(singleSpace, matchExpression.NameRegex, RegexDefaults.DefaultOptionsCaseSensitive);
+                            engine.Match(singleSpace, matchExpression.FileNameAllowRegex, RegexDefaults.DefaultOptionsCaseSensitive);
                         }
 
                         engine.Match(singleSpace, matchExpression.ContentsRegex, RegexDefaults.DefaultOptionsCaseSensitive);

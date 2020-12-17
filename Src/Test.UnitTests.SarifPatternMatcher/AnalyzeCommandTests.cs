@@ -32,7 +32,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
                     new SearchDefinition()
                     {
                         Name = "MinimalRule", Id = "Test1002",
-                        Level = FailureLevel.Error, DefaultNameRegex = "(?i)\\.test$",
+                        Level = FailureLevel.Error, FileNameAllowRegex = "(?i)\\.test$",
                         Message = "A problem occurred in '{0:scanTarget}'.",
                         MatchExpressions = new List<MatchExpression>(new[]
                         {
