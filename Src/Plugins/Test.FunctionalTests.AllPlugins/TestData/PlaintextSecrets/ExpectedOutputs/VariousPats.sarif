@@ -10,66 +10,90 @@
           "product": "Microsoft.TestHost",
           "fullName": "testhost 15.0.0.0",
           "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
-          "rules": [
-            {
-              "id": "SEC1001",
-              "name": "SearchSkimmer",
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "Default": {
-                  "text": "'{0}' contains an apparent {1} {2}."
-                }
-              },
-              "defaultConfiguration": {
-                "level": "error"
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            }
-          ]
+          "semanticVersion": "15.0.0"
         }
       },
       "invocations": [
         {
-          "executionSuccessful": true
-        }
-      ],
-      "results": [
-        {
-          "ruleId": "SEC1001/AzureDevOpsPersonalAccessToken",
-          "ruleIndex": 0,
-          "level": "error",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "VariousPats.txt",
-              "plaintext",
-              "Azure DevOps personal access token"
-            ]
-          },
-          "locations": [
+          "toolExecutionNotifications": [
             {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PlaintextSecrets/Inputs/VariousPats.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 1,
-                  "endLine": 9,
-                  "endColumn": 53,
-                  "charOffset": 326,
-                  "charLength": 52,
-                  "snippet": {
-                    "text": "h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q"
+              "locations": [
+                {
+                  "physicalLocation": {
+                    "artifactLocation": {
+                      "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PlaintextSecrets/Inputs/VariousPats.txt",
+                      "uriBaseId": "SRC_ROOT"
+                    }
                   }
                 }
+              ],
+              "message": {
+                "text": "An exception of type 'ArgumentOutOfRangeException' was raised analyzing 'VariousPats.txt' for check 'SearchSkimmer' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
+              },
+              "level": "error",
+              "exception": {
+                "kind": "ArgumentOutOfRangeException",
+                "message": "Count cannot be less than zero. (Parameter 'count')",
+                "stack": {
+                  "frames": [
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "System.String.Ctor(Char c, Int32 count)"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "Src/SarifPatternMatcher/SearchSkimmer.cs",
+                            "uriBaseId": "SRC_ROOT"
+                          },
+                          "region": {
+                            "startLine": 133
+                          }
+                        },
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "Microsoft.CodeAnalysis.SarifPatternMatcher.SearchSkimmer.Analyze(AnalyzeContext context)"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "Src/sarif-sdk/src/Sarif.Driver/Sdk/MultithreadedAnalyzeCommandBase.cs",
+                            "uriBaseId": "SRC_ROOT"
+                          },
+                          "region": {
+                            "startLine": 903
+                          }
+                        },
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.Driver.MultithreadedAnalyzeCommandBase`2.AnalyzeTargetHelper(TContext context, IEnumerable`1 skimmers, ISet`1 disabledSkimmers)"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "innerExceptions": []
+              },
+              "descriptor": {
+                "id": "ERR998.ExceptionInAnalyze"
+              },
+              "associatedRule": {
+                "id": "SEC1001"
               }
             }
-          ]
+          ],
+          "executionSuccessful": false
         }
       ],
       "columnKind": "utf16CodeUnits"
