@@ -35,8 +35,4 @@
     <PackageOutputPath>$(MsBuildThisFileDirectory)..\Bld\nupkg\$(OutputSubDir)\</PackageOutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)..\src\Shared\CommonAssemblyInfo.cs" />
-  </ItemGroup>
-
 </Project>

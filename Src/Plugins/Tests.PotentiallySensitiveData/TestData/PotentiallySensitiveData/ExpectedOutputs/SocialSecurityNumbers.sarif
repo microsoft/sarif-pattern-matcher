@@ -52,7 +52,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PotentiallySensitiveData/Inputs/SocialSecurityNumbers.txt",
+                  "uri": "src/Plugins/Tests.PotentiallySensitiveData/TestData/PotentiallySensitiveData/Inputs/SocialSecurityNumbers.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -85,7 +85,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PotentiallySensitiveData/Inputs/SocialSecurityNumbers.txt",
+                  "uri": "src/Plugins/Tests.PotentiallySensitiveData/TestData/PotentiallySensitiveData/Inputs/SocialSecurityNumbers.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -118,7 +118,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PotentiallySensitiveData/Inputs/SocialSecurityNumbers.txt",
+                  "uri": "src/Plugins/Tests.PotentiallySensitiveData/TestData/PotentiallySensitiveData/Inputs/SocialSecurityNumbers.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -151,7 +151,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Test.FunctionalTests.AllPlugins/TestData/PotentiallySensitiveData/Inputs/SocialSecurityNumbers.txt",
+                  "uri": "src/Plugins/Tests.PotentiallySensitiveData/TestData/PotentiallySensitiveData/Inputs/SocialSecurityNumbers.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

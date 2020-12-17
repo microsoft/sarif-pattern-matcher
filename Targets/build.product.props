@@ -45,6 +45,8 @@
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)..\src\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
+    
+    <Compile Include="$(MSBuildThisFileDirectory)..\src\Shared\CommonAssemblyInfo.cs" />
   </ItemGroup>
 
   <ItemGroup Label="Common Packages">
