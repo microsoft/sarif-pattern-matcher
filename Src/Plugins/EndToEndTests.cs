@@ -35,7 +35,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Test.AllPlugins
 
         public EndToEndTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
-        protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @"Plugins\Test.FunctionalTests.AllPlugins\");
+        protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @$"Plugins\Tests.{TypeUnderTest}\");
 
         protected override string ConstructTestOutputFromInputResource(string inputResourceName, object parameter)
         {

@@ -11,7 +11,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Tests.PlaintextSecrets
     public class PlaintextSecretsTests : EndToEndTests
     {
         protected override string TestLogResourceNameRoot
-            => "Microsoft.CodeAnalysis.SarifPatternMatcher.Tests.PlaintextSecrets.TestData";
+            => "Microsoft.CodeAnalysis.SarifPatternMatcher.Tests.PlaintextSecrets.TestData.PlaintextSecrets";
 
         public PlaintextSecretsTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 

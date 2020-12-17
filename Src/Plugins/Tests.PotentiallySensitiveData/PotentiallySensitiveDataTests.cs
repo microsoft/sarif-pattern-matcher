@@ -11,7 +11,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Tests.PotentiallySensitiveD
     public class PotentiallySensitiveDataTests : EndToEndTests
     {
         protected override string TestLogResourceNameRoot
-            => "Microsoft.CodeAnalysis.SarifPatternMatcher.Tests.PotentiallySensitiveData.TestData";
+            => "Microsoft.CodeAnalysis.SarifPatternMatcher.Tests.PotentiallySensitiveData.TestData.PotentiallySensitiveData";
 
         public PotentiallySensitiveDataTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 

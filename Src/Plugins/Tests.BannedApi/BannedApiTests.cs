@@ -12,7 +12,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Tests.BannedApi
     public class BannedApiTests : EndToEndTests
     {
         protected override string TestLogResourceNameRoot
-            => "Microsoft.CodeAnalysis.SarifPatternMatcher.Tests.BannedApi.TestData";
+            => "Microsoft.CodeAnalysis.SarifPatternMatcher.Tests.BannedApi.TestData.BannedApi";
 
         public BannedApiTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 

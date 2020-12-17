@@ -3,22 +3,22 @@
   <Import Project="$(SolutionDir)..\Targets\build.app.props" />
   <Import Project="$(SolutionDir)..\Targets\build.test.props" />
   <ItemGroup>
-    <None Remove="TestData\ExpectedOutputs\EmailAddresses.sarif" />
-    <None Remove="TestData\ExpectedOutputs\SocialSecurityNumbers.sarif" />
-    <None Remove="TestData\Inputs\EmailAddresses.txt" />
-    <None Remove="TestData\Inputs\SocialSecurityNumbers.txt" />
+    <None Remove="TestData\PotentiallySensitiveData\ExpectedOutputs\EmailAddresses.sarif" />
+    <None Remove="TestData\PotentiallySensitiveData\ExpectedOutputs\SocialSecurityNumbers.sarif" />
+    <None Remove="TestData\PotentiallySensitiveData\Inputs\EmailAddresses.txt" />
+    <None Remove="TestData\PotentiallySensitiveData\Inputs\SocialSecurityNumbers.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestData\ExpectedOutputs\EmailAddresses.sarif">
+    <EmbeddedResource Include="TestData\PotentiallySensitiveData\ExpectedOutputs\EmailAddresses.sarif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestData\ExpectedOutputs\SocialSecurityNumbers.sarif">
+    <EmbeddedResource Include="TestData\PotentiallySensitiveData\ExpectedOutputs\SocialSecurityNumbers.sarif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestData\Inputs\EmailAddresses.txt">
+    <EmbeddedResource Include="TestData\PotentiallySensitiveData\Inputs\EmailAddresses.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestData\Inputs\SocialSecurityNumbers.txt">
+    <EmbeddedResource Include="TestData\PotentiallySensitiveData\Inputs\SocialSecurityNumbers.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
