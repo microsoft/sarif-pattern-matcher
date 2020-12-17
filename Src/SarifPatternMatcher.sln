@@ -80,6 +80,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Utilities.Sarif", "sar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sarif.Converters", "sarif-sdk\src\Sarif.Converters\Sarif.Converters.csproj", "{8878661F-F229-4DB1-A769-B63294C63826}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensitiveFiles", "Plugins\SensitiveFiles\SensitiveFiles.csproj", "{CE61C911-D4D8-4311-A38D-1371F4CAF687}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -318,6 +320,18 @@ Global
 		{8878661F-F229-4DB1-A769-B63294C63826}.Release|x64.Build.0 = Release|Any CPU
 		{8878661F-F229-4DB1-A769-B63294C63826}.Release|x86.ActiveCfg = Release|Any CPU
 		{8878661F-F229-4DB1-A769-B63294C63826}.Release|x86.Build.0 = Release|Any CPU
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687}.Debug|x64.Build.0 = Debug|Any CPU
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687}.Debug|x86.Build.0 = Debug|Any CPU
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687}.Release|x64.ActiveCfg = Release|Any CPU
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687}.Release|x64.Build.0 = Release|Any CPU
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687}.Release|x86.ActiveCfg = Release|Any CPU
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -333,6 +347,7 @@ Global
 		{DCD4C841-992D-4560-80FE-2686F6596893} = {50216597-BDEE-4A04-B737-D9C7CD753653}
 		{8C5AA820-AF63-41FD-9DF1-0685B615400D} = {50216597-BDEE-4A04-B737-D9C7CD753653}
 		{136844A1-59AA-4927-A47B-29F72D6C6FBD} = {50216597-BDEE-4A04-B737-D9C7CD753653}
+		{CE61C911-D4D8-4311-A38D-1371F4CAF687} = {50216597-BDEE-4A04-B737-D9C7CD753653}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31BD334C-6711-44FF-B3E4-FAAC3A5D2F3A}
