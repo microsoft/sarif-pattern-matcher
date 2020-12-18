@@ -37,9 +37,9 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Plugins.Security
 
         protected abstract string RuleId { get; }
 
-        protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.SarifPatternMatcher.Tests.Security.TestData.{TypeUnderTest}";
+        protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.SarifPatternMatcher.Plugins.Security.TestData.{TypeUnderTest}";
 
-        protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @$"Plugins\Tests.Security");
+        protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @"Plugins\Tests.Security");
 
         protected override string ConstructTestOutputFromInputResource(string inputResourceName, object parameter)
         {
