@@ -10,17 +10,21 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
     public class ValidatorsCache
     {
-        private readonly IEnumerable<string> _searchDefinitionsPaths;
         private Dictionary<string, MethodInfo> _ruleIdToMethodMap;
 
-        public ValidatorsCache(IEnumerable<string> searchDefinitionsPaths)
+        public ValidatorsCache(IEnumerable<string> validatorBinaryPaths = null)
         {
-            _searchDefinitionsPaths = searchDefinitionsPaths;
+            ValidatorPaths =
+                validatorBinaryPaths != null
+                    ? new HashSet<string>(validatorBinaryPaths, StringComparer.OrdinalIgnoreCase)
+                    : new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
+
+        public ISet<string> ValidatorPaths { get; }
 
         public Validation Validate(string ruleId, string matchedPattern, bool dynamicValidation)
         {
-            _ruleIdToMethodMap ??= LoadValidationAssemblies(_searchDefinitionsPaths);
+            _ruleIdToMethodMap ??= LoadValidationAssemblies(ValidatorPaths);
 
             return ValidateHelper(_ruleIdToMethodMap, ruleId, matchedPattern, dynamicValidation);
         }
@@ -51,21 +55,19 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             return result;
         }
 
-        private static Dictionary<string, MethodInfo> LoadValidationAssemblies(IEnumerable<string> searchDefinitionsPaths)
+        private static Dictionary<string, MethodInfo> LoadValidationAssemblies(IEnumerable<string> validatorPaths)
         {
             var ruleToMethodMap = new Dictionary<string, MethodInfo>();
 
-            foreach (string searchDefinitionPath in searchDefinitionsPaths)
+            foreach (string validatorPath in validatorPaths)
             {
                 Assembly assembly = null;
-                string assemblyPath = Path.GetDirectoryName(searchDefinitionPath);
-                assemblyPath = Path.Combine(assemblyPath, Path.GetFileNameWithoutExtension(searchDefinitionPath) + ".dll");
 
-                if (File.Exists(assemblyPath))
+                if (File.Exists(validatorPath))
                 {
                     try
                     {
-                        assembly = Assembly.LoadFrom(assemblyPath);
+                        assembly = Assembly.LoadFrom(validatorPath);
                     }
                     catch (ReflectionTypeLoadException)
                     {

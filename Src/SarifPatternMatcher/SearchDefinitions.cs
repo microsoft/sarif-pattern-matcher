@@ -8,6 +8,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 {
     public class SearchDefinitions
     {
+        public string ValidatorsAssemblyName { get; set; }
+
         public Dictionary<string, string> Strings { get; set; }
 
         public List<SearchDefinition> Definitions { get; set; }
