@@ -28,7 +28,7 @@ steps:
     targetType: 'inline'
     script: |
       dotnet tool install -g dotnet-reportgenerator-globaltool      
-      reportgenerator -reports:**/coverage.cobertura.xml -targetdir:TestResults -reporttypes:Cobertura
+      reportgenerator -reports:**/*.coverage.xml -targetdir:TestResults -reporttypes:Cobertura
 
 - task: PublishCodeCoverageResults@1
   inputs:
