@@ -79,7 +79,7 @@ if (-not $NoBuild) {
 
 if (-not $NoTest) {
     Write-Information "Running tests..."
-    dotnet test $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration --no-build --collect:"XPlat Code Coverage"
+    dotnet test $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration --no-build --collect:"Code Coverage"
     if ($LASTEXITCODE -ne 0) {
         Exit-WithFailureMessage $ScriptName "Test of SarifPatternMatcher failed."
     }

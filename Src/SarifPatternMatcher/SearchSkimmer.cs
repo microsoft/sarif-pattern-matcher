@@ -175,9 +175,34 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
+            string ruleId = this.Id +
+                (!string.IsNullOrEmpty(matchExpression.SubId) ?
+                    "/" + matchExpression.SubId :
+                    string.Empty);
+
+            FailureLevel level = matchExpression.Level != 0 ?
+                matchExpression.Level :
+                DefaultConfiguration.Level;
+
+            if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
+            {
+                RunMatchExpressionForContentsRegex(binary64DecodedMatch, context, matchExpression, ruleId, level);
+            }
+            else if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
+            {
+                RunMatchExpressionForFileNameRegex(context, matchExpression, ruleId, level);
+            }
+            else
+            {
+                // Both FileNameAllowRegex and ContentRegex are null or empty.
+            }
+        }
+
+        private void RunMatchExpressionForContentsRegex(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression, string ruleId, FailureLevel level)
+        {
             string searchText = binary64DecodedMatch != null
-                                   ? Decode(binary64DecodedMatch.Value)
-                                   : context.FileContents;
+                                                   ? Decode(binary64DecodedMatch.Value)
+                                                   : context.FileContents;
 
             foreach (FlexMatch flexMatch in _engine.Matches(searchText, matchExpression.ContentsRegex))
             {
@@ -230,23 +255,12 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                     }
                 }
 
-                string messageFormatString = this._messageStrings["Default"].Text;
-
                 IList<string> arguments = GetMessageArguments(
                     match,
                     _argumentNameToIndex,
                     context.TargetUri.LocalPath,
                     base64Encoded: binary64DecodedMatch != null,
                     matchExpression.MessageArguments);
-
-                string ruleId = this.Id +
-                    (!string.IsNullOrEmpty(matchExpression.SubId) ?
-                        "/" + matchExpression.SubId :
-                        string.Empty);
-
-                FailureLevel level = matchExpression.Level != 0 ?
-                    matchExpression.Level :
-                    DefaultConfiguration.Level;
 
                 // If we're matching against decoded contents, the region should
                 // relate to the base64-encoded scan target content. We do use
@@ -310,6 +324,40 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
                 context.Logger.Log(this, result);
             }
+        }
+
+        private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, string ruleId, FailureLevel level)
+        {
+            IList<string> arguments = GetMessageArguments(
+                _argumentNameToIndex,
+                context.TargetUri.LocalPath,
+                base64Encoded: false,
+                matchExpression.MessageArguments);
+
+            var location = new Location()
+            {
+                PhysicalLocation = new PhysicalLocation
+                {
+                    ArtifactLocation = new ArtifactLocation
+                    {
+                        Uri = context.TargetUri,
+                    },
+                },
+            };
+
+            var result = new Result()
+            {
+                RuleId = ruleId,
+                Level = level,
+                Message = new Message()
+                {
+                    Id = "Default",
+                    Arguments = arguments,
+                },
+                Locations = new List<Location>(new[] { location }),
+            };
+
+            context.Logger.Log(this, result);
         }
 
         private FlexString Decode(string value)
@@ -407,6 +455,46 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                 string value = kv.Key == "scanTarget" ?
                     Path.GetFileName(scanTargetPath) :
                     match.Groups[kv.Key]?.Value;
+
+                value = kv.Key == nameof(scanTargetPath) ?
+                    scanTargetPath :
+                    value;
+
+                // TODO add support for base64 decoding
+                value = kv.Key == "encoding"
+                    ? (base64Encoded ? "base64-encoded" : "plaintext")
+                    : value;
+
+                arguments[kv.Value] = value;
+            }
+
+            if (additionalArguments != null)
+            {
+                foreach (KeyValuePair<string, string> kv in additionalArguments)
+                {
+                    int index = namedArgumentToIndexMap[kv.Key];
+                    arguments[index] = kv.Value;
+                }
+            }
+
+            return arguments;
+        }
+
+        private IList<string> GetMessageArguments(
+            Dictionary<string, int> namedArgumentToIndexMap,
+            string scanTargetPath,
+            bool base64Encoded,
+            Dictionary<string, string> additionalArguments)
+        {
+            int argsCount = namedArgumentToIndexMap.Count;
+
+            var arguments = new List<string>(new string[argsCount]);
+
+            foreach (KeyValuePair<string, int> kv in namedArgumentToIndexMap)
+            {
+                string value = kv.Key == "scanTarget" ?
+                    Path.GetFileName(scanTargetPath) :
+                    string.Empty;
 
                 value = kv.Key == nameof(scanTargetPath) ?
                     scanTargetPath :
