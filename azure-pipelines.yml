@@ -17,6 +17,12 @@ steps:
     filename: 'BuildAndTest.cmd'
 
 - task: PowerShell@2
+  displayName: Run ProcessCodeCoverage.ps1
+  inputs:
+    targetType: filePath
+    filePath: ./scripts/ProcessCodeCoverage.ps1
+
+- task: PowerShell@2
   displayName: 'Merging TestResults'
   inputs:
     targetType: 'inline'
