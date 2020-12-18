@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using Microsoft.CodeAnalysis.Sarif;
@@ -16,7 +17,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
     {
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem, IEnumerable<string> searchDefinitionsPaths)
         {
-            var validators = new ValidatorsCache(searchDefinitionsPaths);
+            var validators = new ValidatorsCache();
 
             var skimmers = new HashSet<Skimmer<AnalyzeContext>>();
 
@@ -28,6 +29,28 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
                 SearchDefinitions definitions =
                     JsonConvert.DeserializeObject<SearchDefinitions>(searchDefinitionsText);
+
+                string validatorPath = null;
+                string definitionsDirectory = Path.GetDirectoryName(searchDefinitionsPath);
+
+                if (!string.IsNullOrEmpty(definitions.ValidatorsAssemblyName))
+                {
+                    // TODO File.Exists check? Logging if not locatable?
+                    validatorPath = Path.Combine(definitionsDirectory, definitions.ValidatorsAssemblyName);
+                    validators.ValidatorPaths.Add(validatorPath);
+                }
+                else
+                {
+                    // If no explicit name of a validator binary was provided,
+                    // we look for one that lives alongside the definitions file.
+                    validatorPath = Path.GetFileNameWithoutExtension(searchDefinitionsPath) + ".dll";
+                    validatorPath = Path.Combine(definitionsDirectory, validatorPath);
+
+                    if (File.Exists(validatorPath))
+                    {
+                        validators.ValidatorPaths.Add(validatorPath);
+                    }
+                }
 
                 foreach (SearchDefinition definition in definitions.Definitions)
                 {
