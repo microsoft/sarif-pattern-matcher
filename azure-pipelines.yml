@@ -15,6 +15,7 @@ steps:
   displayName: 'Run BuildAndTest.cmd'
   inputs:
     filename: 'BuildAndTest.cmd'
+    arguments: -Configuration Debug
 
 - task: PowerShell@2
   displayName: Run ProcessCodeCoverage.ps1
@@ -28,7 +29,7 @@ steps:
     targetType: 'inline'
     script: |
       dotnet tool install -g dotnet-reportgenerator-globaltool      
-      reportgenerator -reports:**/*.coverage.xml -targetdir:TestResults -reporttypes:Cobertura
+      reportgenerator -reports:**/*.coverage.xml -targetdir:TestResults -reporttypes:Cobertura -assemblyFilters:"-xunit*;-moq*;-sarif.driver*;-sarif.converters*"
 
 - task: PublishCodeCoverageResults@1
   inputs:
