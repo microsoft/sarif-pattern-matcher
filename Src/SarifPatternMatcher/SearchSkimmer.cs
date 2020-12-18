@@ -175,97 +175,149 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
-            string searchText = binary64DecodedMatch != null
-                                   ? Decode(binary64DecodedMatch.Value)
-                                   : context.FileContents;
+            string ruleId = this.Id +
+                (!string.IsNullOrEmpty(matchExpression.SubId) ?
+                    "/" + matchExpression.SubId :
+                    string.Empty);
 
-            foreach (FlexMatch flexMatch in _engine.Matches(searchText, matchExpression.ContentsRegex))
+            FailureLevel level = matchExpression.Level != 0 ?
+                matchExpression.Level :
+                DefaultConfiguration.Level;
+
+            if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
             {
-                if (!flexMatch.Success) { continue; }
+                string searchText = binary64DecodedMatch != null
+                                       ? Decode(binary64DecodedMatch.Value)
+                                       : context.FileContents;
 
-                var regex = new Regex(matchExpression.ContentsRegex, RegexDefaults.DefaultOptionsCaseInsensitive);
-                Match match = regex.Match(flexMatch.Value);
-
-                string fingerprint = match.Groups["fingerprint"].Value;
-
-                if (string.IsNullOrEmpty(fingerprint))
+                foreach (FlexMatch flexMatch in _engine.Matches(searchText, matchExpression.ContentsRegex))
                 {
-                    fingerprint = flexMatch.Value;
-                }
+                    if (!flexMatch.Success) { continue; }
 
-                bool dynamic = context.DynamicValidation;
+                    var regex = new Regex(matchExpression.ContentsRegex, RegexDefaults.DefaultOptionsCaseInsensitive);
+                    Match match = regex.Match(flexMatch.Value);
 
-                Validation state = 0;
+                    string fingerprint = match.Groups["fingerprint"].Value;
 
-                if (_validators != null)
-                {
-                    state = _validators.Validate(matchExpression.SubId, fingerprint, dynamic);
-
-                    switch (state)
+                    if (string.IsNullOrEmpty(fingerprint))
                     {
-                        case Validation.NoMatch:
-                        {
-                            // The validator determined the match is a false positive.
-                            // i.e., it is not the kind of artifact we're looking for.
-                            continue;
-                        }
+                        fingerprint = flexMatch.Value;
+                    }
 
-                        case Validation.None:
-                        case Validation.ValidatorReturnedIllegalValue:
-                        {
-                            // The validator returned a bad value.
-                            // TODO logging
-                            break;
-                        }
+                    bool dynamic = context.DynamicValidation;
 
-                        case Validation.Valid:
-                        case Validation.Invalid:
-                        case Validation.Unknown:
+                    Validation state = 0;
+
+                    if (_validators != null)
+                    {
+                        state = _validators.Validate(matchExpression.SubId, fingerprint, dynamic);
+
+                        switch (state)
                         {
-                            // We will log all these cases.
-                            // TODO: update result kind/level for
-                            // as appropriate for these cases.
-                            break;
+                            case Validation.NoMatch:
+                            {
+                                // The validator determined the match is a false positive.
+                                // i.e., it is not the kind of artifact we're looking for.
+                                continue;
+                            }
+
+                            case Validation.None:
+                            case Validation.ValidatorReturnedIllegalValue:
+                            {
+                                // The validator returned a bad value.
+                                // TODO logging
+                                break;
+                            }
+
+                            case Validation.Valid:
+                            case Validation.Invalid:
+                            case Validation.Unknown:
+                            {
+                                // We will log all these cases.
+                                // TODO: update result kind/level for
+                                // as appropriate for these cases.
+                                break;
+                            }
                         }
                     }
+
+                    IList<string> arguments = GetMessageArguments(
+                        match,
+                        _argumentNameToIndex,
+                        context.TargetUri.LocalPath,
+                        base64Encoded: binary64DecodedMatch != null,
+                        matchExpression.MessageArguments);
+
+                    // If we're matching against decoded contents, the region should
+                    // relate to the base64-encoded scan target content. We do use
+                    // the decoded content for the fingerprint, however.
+                    FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch;
+
+                    var region = new Region
+                    {
+                        CharOffset = regionFlexMatch.Index,
+                        CharLength = regionFlexMatch.Length,
+                    };
+
+                    _regionsCache ??= new FileRegionsCache();
+
+                    region = _regionsCache.PopulateTextRegionProperties(
+                        region,
+                        context.TargetUri,
+                        populateSnippet: true,
+                        fileText: context.FileContents);
+
+                    var location = new Location()
+                    {
+                        PhysicalLocation = new PhysicalLocation
+                        {
+                            ArtifactLocation = new ArtifactLocation
+                            {
+                                Uri = context.TargetUri,
+                            },
+                            Region = region,
+                        },
+                    };
+
+                    var result = new Result()
+                    {
+                        RuleId = ruleId,
+                        Level = level,
+                        Message = new Message()
+                        {
+                            Id = "Default",
+                            Arguments = arguments,
+                        },
+                        Locations = new List<Location>(new[] { location }),
+                    };
+
+                    if (matchExpression.Fixes?.Count > 0)
+                    {
+                        // Build arguments
+                        var argumentNameToValueMap = new Dictionary<string, string>();
+
+                        foreach (KeyValuePair<string, int> kv in _argumentNameToIndex)
+                        {
+                            argumentNameToValueMap["{" + kv.Key + "}"] = arguments[kv.Value];
+                        }
+
+                        foreach (SimpleFix fix in matchExpression.Fixes.Values)
+                        {
+                            ExpandArguments(fix, argumentNameToValueMap);
+                            AddFixToResult(flexMatch, fix, result);
+                        }
+                    }
+
+                    context.Logger.Log(this, result);
                 }
-
-                string messageFormatString = this._messageStrings["Default"].Text;
-
+            }
+            else if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
+            {
                 IList<string> arguments = GetMessageArguments(
-                    match,
                     _argumentNameToIndex,
                     context.TargetUri.LocalPath,
-                    base64Encoded: binary64DecodedMatch != null,
+                    base64Encoded: false,
                     matchExpression.MessageArguments);
-
-                string ruleId = this.Id +
-                    (!string.IsNullOrEmpty(matchExpression.SubId) ?
-                        "/" + matchExpression.SubId :
-                        string.Empty);
-
-                FailureLevel level = matchExpression.Level != 0 ?
-                    matchExpression.Level :
-                    DefaultConfiguration.Level;
-
-                // If we're matching against decoded contents, the region should
-                // relate to the base64-encoded scan target content. We do use
-                // the decoded content for the fingerprint, however.
-                FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch;
-
-                var region = new Region
-                {
-                    CharOffset = regionFlexMatch.Index,
-                    CharLength = regionFlexMatch.Length,
-                };
-
-                _regionsCache ??= new FileRegionsCache();
-
-                region = _regionsCache.PopulateTextRegionProperties(
-                    region,
-                    context.TargetUri,
-                    populateSnippet: true,
-                    fileText: context.FileContents);
 
                 var location = new Location()
                 {
@@ -275,7 +327,6 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                         {
                             Uri = context.TargetUri,
                         },
-                        Region = region,
                     },
                 };
 
@@ -291,24 +342,11 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                     Locations = new List<Location>(new[] { location }),
                 };
 
-                if (matchExpression.Fixes?.Count > 0)
-                {
-                    // Build arguments
-                    var argumentNameToValueMap = new Dictionary<string, string>();
-
-                    foreach (KeyValuePair<string, int> kv in _argumentNameToIndex)
-                    {
-                        argumentNameToValueMap["{" + kv.Key + "}"] = arguments[kv.Value];
-                    }
-
-                    foreach (SimpleFix fix in matchExpression.Fixes.Values)
-                    {
-                        ExpandArguments(fix, argumentNameToValueMap);
-                        AddFixToResult(flexMatch, fix, result);
-                    }
-                }
-
                 context.Logger.Log(this, result);
+            }
+            else
+            {
+                // Both FileNameAllowRegex and ContentRegex are null or empty.
             }
         }
 
@@ -407,6 +445,46 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                 string value = kv.Key == "scanTarget" ?
                     Path.GetFileName(scanTargetPath) :
                     match.Groups[kv.Key]?.Value;
+
+                value = kv.Key == nameof(scanTargetPath) ?
+                    scanTargetPath :
+                    value;
+
+                // TODO add support for base64 decoding
+                value = kv.Key == "encoding"
+                    ? (base64Encoded ? "base64-encoded" : "plaintext")
+                    : value;
+
+                arguments[kv.Value] = value;
+            }
+
+            if (additionalArguments != null)
+            {
+                foreach (KeyValuePair<string, string> kv in additionalArguments)
+                {
+                    int index = namedArgumentToIndexMap[kv.Key];
+                    arguments[index] = kv.Value;
+                }
+            }
+
+            return arguments;
+        }
+
+        private IList<string> GetMessageArguments(
+            Dictionary<string, int> namedArgumentToIndexMap,
+            string scanTargetPath,
+            bool base64Encoded,
+            Dictionary<string, string> additionalArguments)
+        {
+            int argsCount = namedArgumentToIndexMap.Count;
+
+            var arguments = new List<string>(new string[argsCount]);
+
+            foreach (KeyValuePair<string, int> kv in namedArgumentToIndexMap)
+            {
+                string value = kv.Key == "scanTarget" ?
+                    Path.GetFileName(scanTargetPath) :
+                    string.Empty;
 
                 value = kv.Key == nameof(scanTargetPath) ?
                     scanTargetPath :

@@ -55,12 +55,15 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
                     foreach (MatchExpression matchExpression in definition.MatchExpressions)
                     {
-                        if (matchExpression.FileNameAllowRegex != null)
+                        if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
                         {
                             engine.Match(singleSpace, matchExpression.FileNameAllowRegex, RegexDefaults.DefaultOptionsCaseSensitive);
                         }
 
-                        engine.Match(singleSpace, matchExpression.ContentsRegex, RegexDefaults.DefaultOptionsCaseSensitive);
+                        if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
+                        {
+                            engine.Match(singleSpace, matchExpression.ContentsRegex, RegexDefaults.DefaultOptionsCaseSensitive);
+                        }
                     }
                 }
             }
