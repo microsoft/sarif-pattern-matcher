@@ -4,7 +4,7 @@
       "Name": "ReviewPotentiallySensitiveFiles",
       "Id": "SEC1003",
       "Level": "Error",
-      "FileNameAllowRegex": "(?i)\\.(agilekeychain|agilekeychain_zip|asc|bek|fve|gnucash|jks|kdb|keychain|kwallet|mdf|ovpn|p12|pem|pfx|pkcs12|ppk|psafe3|rdp|sdf|sqlite|sqlite3|tblk|tpm)$",
+      "FileNameAllowRegex": "(?i)\\.(agilekeychain|agilekeychain_zip|asc|bek|cscfg|dayone|fve|gnucash|jks|kdb|keychain|kwallet|mdf|ovpn|p12|pcap|pem|pfx|pkcs12|ppk|psafe3|rdp|sdf|sqlite|sqlite3|tblk|tpm)$",
       "Description": "Review potentially sensitive files in versioned engineering content and other locations for security risk.",
       "Message": "'{0:scanTarget}' is {1:fileKind} that may compromise security if visible to attackers.",
       "MatchExpressions": [
@@ -22,6 +22,16 @@
           "SubId": "MicrosoftBitLockerRecoveryKeyFile",
           "FileNameAllowRegex": "(?i)\\.bek$",
           "MessageArguments": { "fileKind": "a Microsoft BitLocker recovery key file" }
+        },
+        {
+          "SubId": "AzureServiceConfigurationSchemaFile",
+          "FileNameAllowRegex": "(?i)\\.cscfg$",
+          "MessageArguments": { "fileKind": "an Azure service configuration schema file" }
+        },
+        {
+          "SubId": "DayOneJournalFile",
+          "FileNameAllowRegex": "(?i)\\.dayone$",
+          "MessageArguments": { "fileKind": "a Day One journal file" }
         },
         {
           "SubId": "WindowsBitlockerDataFile",
@@ -77,6 +87,11 @@
           "SubId": "PKCS12CryptographicKeyFile",
           "FileNameAllowRegex": "(?i)\\.(p12|pkcs12)$",
           "MessageArguments": { "fileKind": "a PKCS#12 cryptographic key bundle" }
+        },
+        {
+          "SubId": "NetworkTrafficCaptureFile",
+          "FileNameAllowRegex": "(?i)\\.pcap$",
+          "MessageArguments": { "fileKind": "a Network traffic capture file" }
         },
         {
           "SubId": "PuTTygenPrivateKeyFile",
