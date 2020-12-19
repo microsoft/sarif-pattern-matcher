@@ -3,7 +3,6 @@
 
 # Dev machine files
 appsettings.local.json
-msbuild.binlog
 
 # User-specific files
 *.suo
@@ -224,3 +223,6 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 *.binlog
+
+# SPAM configuration
+.spam/
