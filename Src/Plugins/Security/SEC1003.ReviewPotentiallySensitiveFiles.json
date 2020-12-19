@@ -4,7 +4,7 @@
       "Name": "ReviewPotentiallySensitiveFiles",
       "Id": "SEC1003",
       "Level": "Error",
-      "FileNameAllowRegex": "(?i)\\.(agilekeychain|agilekeychain_zip|asc|bek|fve|jks|kwallet|mdf|ovpn|p12|pem|pfx|pkcs12|ppk|psafe3|rdp|sdf|sqlite|sqlite3|tblk|tpm)$",
+      "FileNameAllowRegex": "(?i)\\.(agilekeychain|agilekeychain_zip|asc|bek|fve|gnucash|jks|kdb|keychain|kwallet|mdf|ovpn|p12|pem|pfx|pkcs12|ppk|psafe3|rdp|sdf|sqlite|sqlite3|tblk|tpm)$",
       "Description": "Review potentially sensitive files in versioned engineering content and other locations for security risk.",
       "Message": "'{0:scanTarget}' is {1:fileKind} that may compromise security if visible to attackers.",
       "MatchExpressions": [
@@ -29,9 +29,24 @@
           "MessageArguments": { "fileKind": "a Windows BitLocker full volume encrypted data file" }
         },
         {
+          "SubId": "GnuCashDatabaseFile",
+          "FileNameAllowRegex": "(?i)\\.gnucash$",
+          "MessageArguments": { "fileKind": "a GnuCash database file" }
+        },
+        {
           "SubId": "JavaKeystoreFile",
           "FileNameAllowRegex": "(?i)\\.jks$",
           "MessageArguments": { "fileKind": "a Java keystore file" }
+        },
+        {
+          "SubId": "KeePassPasswordManagerDatabaseFile",
+          "FileNameAllowRegex": "(?i)\\.kdb$",
+          "MessageArguments": { "fileKind": "a KeePass password manager database file" }
+        },
+        {
+          "SubId": "AppleKeychainDatabaseFile",
+          "FileNameAllowRegex": "(?i)\\.keychain$",
+          "MessageArguments": { "fileKind": "an Apple Keychain database file" }
         },
         {
           "SubId": "KDEWalletManagerDatabaseFile",
