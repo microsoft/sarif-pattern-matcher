@@ -13,8 +13,15 @@
     </Content>
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y /R &quot;$(MSBuildThisFileDirectory)\*.json&quot; &quot;$(SolutionDir).spam\*.json&quot;" />
+  <ItemGroup>
+    <SpamFiles Include="$(MSBuildThisFileDirectory)*.json" />
+  </ItemGroup>
+
+  <Target Name="CopyingSpam" AfterTargets="Build">
+    <Copy SourceFiles="@(SpamFiles)"
+      DestinationFolder="$(SolutionDir).spam\"
+      OverwriteReadOnlyFiles="true"
+      SkipUnchangedFiles="false" />
   </Target>
   
 </Project>
