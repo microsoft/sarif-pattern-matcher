@@ -3,6 +3,10 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.app.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.test.props" />
 
+  <PropertyGroup>
+    <RootNamespace>Sarif.PatternMatcher.Cli</RootNamespace>
+  </PropertyGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\SarifPatternMatcher.Cli\SarifPatternMatcher.Cli.csproj" />
   </ItemGroup>

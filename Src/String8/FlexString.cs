@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
+namespace Strings.Interop
 {
     /// <summary>
     ///  FlexString can contain a String (UTF-16), String8 (UTF-8), or both.

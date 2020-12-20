@@ -4,10 +4,10 @@
 using System;
 
 using Microsoft.CodeAnalysis.Sarif;
-using Microsoft.CodeAnalysis.Sarif.Driver.Sdk;
-using Microsoft.CodeAnalysis.SarifPatternMatcher.Strings;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher
+using Strings.Interop;
+
+namespace Sarif.PatternMatcher
 {
     public class AnalyzeContext : IAnalysisContext
     {

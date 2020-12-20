@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
+namespace Strings.Interop
 {
     /// <summary>
     ///  Represents a block of UTF8 text in a slice of a byte array.

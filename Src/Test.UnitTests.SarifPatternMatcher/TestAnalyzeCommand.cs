@@ -6,7 +6,7 @@ using System;
 using Microsoft.CodeAnalysis.Sarif;
 using Microsoft.CodeAnalysis.Sarif.Driver;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
+namespace Sarif.PatternMatcher
 {
     public class TestAnalyzeCommand : AnalyzeCommand
     {

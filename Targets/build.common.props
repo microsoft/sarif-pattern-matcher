@@ -4,13 +4,6 @@
     <LangVersion>8.0</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsPackable>false</IsPackable>
-    <RootNamespaceBase>Microsoft.CodeAnalysis</RootNamespaceBase>
-    <!--root namespace for projects that contains SarifPatternMatcher in the project name-->
-    <RootNamespace Condition="$(MSBuildProjectName.Contains('SarifPatternMatcher'))">$(RootNamespaceBase).$(MSBuildProjectName)</RootNamespace>
-    <!--root namespace for projects that does not contains SarifPatternMatcher in the project name-->
-    <RootNamespace Condition="!$(MSBuildProjectName.Contains('SarifPatternMatcher'))">$(RootNamespaceBase).SarifPatternMatcher.$(MSBuildProjectName)</RootNamespace>
-    <!--root namespace for test projects-->
-    <RootNamespace Condition="$(MSBuildProjectName.Contains('Test.UnitTests'))">$(RootNamespaceBase).SarifPatternMatcher.$(MSBuildProjectName.Replace('Test.UnitTests.', ''))</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Label="AssemblyAttributes">

@@ -4,6 +4,11 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.product.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.plugins.props" />
 
+  <PropertyGroup Label="AssemblyAttributes">
+    <RootNamespace>Sarif.PatternMatcher.Security</RootNamespace>
+    <PackageId>Sarif.PatternMatcher.Security</PackageId>
+  </PropertyGroup>
+  
   <ItemGroup>
     <Content Include="*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

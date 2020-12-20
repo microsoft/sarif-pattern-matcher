@@ -8,17 +8,17 @@ using System.IO;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif;
-using Microsoft.CodeAnalysis.Sarif.Baseline.ResultMatching;
 using Microsoft.CodeAnalysis.Sarif.Driver;
-using Microsoft.CodeAnalysis.SarifPatternMatcher.Strings;
 
 using Moq;
 
 using Newtonsoft.Json;
 
+using Strings.Interop;
+
 using Xunit;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
+namespace Sarif.PatternMatcher
 {
     public class AnalyzeCommandTests
     {

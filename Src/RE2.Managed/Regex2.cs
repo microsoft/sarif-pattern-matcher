@@ -8,9 +8,9 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-using Microsoft.CodeAnalysis.SarifPatternMatcher.Strings;
+using Strings.Interop;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
+namespace RE2.Managed
 {
     /// <summary>
     /// <para>

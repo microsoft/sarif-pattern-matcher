@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher
+namespace Sarif.PatternMatcher
 {
     public class SearchDefinition
     {

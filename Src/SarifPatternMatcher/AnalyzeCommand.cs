@@ -11,7 +11,7 @@ using Microsoft.CodeAnalysis.Sarif.Driver;
 
 using Newtonsoft.Json;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher
+namespace Sarif.PatternMatcher
 {
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {

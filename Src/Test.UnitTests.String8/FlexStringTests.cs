@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Strings
+namespace Strings.Interop
 {
     public class FlexStringTests
     {

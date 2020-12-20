@@ -6,6 +6,8 @@
   <PropertyGroup Label="AssemblyAttributes">
     <AssemblyTitle>RE2 Managed Library</AssemblyTitle>
     <Description>TODO: add description</Description>
+    <RootNamespace>RE2.Managed</RootNamespace>
+    <PackageId>RE2.Managed</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

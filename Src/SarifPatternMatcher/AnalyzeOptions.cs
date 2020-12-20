@@ -8,7 +8,7 @@ using CommandLine;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher
+namespace Sarif.PatternMatcher
 {
     [Verb("analyze")]
     public class AnalyzeOptions : MultithreadedAnalyzeOptionsBase

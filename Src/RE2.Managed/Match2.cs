@@ -3,7 +3,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
+namespace RE2.Managed
 {
     /// <summary>
     ///  Represents the UTF8 position and length of a Regular Expression match within text.

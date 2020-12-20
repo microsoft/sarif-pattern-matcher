@@ -3,7 +3,9 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.Plugins.Security
+using Sarif.PatternMatcher.Plugins;
+
+namespace Sarif.PatternMatcher.Security
 {
     internal static class AzureDevOpsPersonalAccessTokenValidator
     {

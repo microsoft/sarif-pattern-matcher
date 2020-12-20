@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-using Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed;
-using Microsoft.CodeAnalysis.SarifPatternMatcher.Strings;
+using RE2.Managed;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher
+using Strings.Interop;
+
+namespace Sarif.PatternMatcher
 {
     public class RE2Regex : IRegex
     {

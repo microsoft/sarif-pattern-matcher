@@ -10,9 +10,10 @@ using System.Text.RegularExpressions;
 
 using Microsoft.CodeAnalysis.Sarif;
 using Microsoft.CodeAnalysis.Sarif.Driver;
-using Microsoft.CodeAnalysis.SarifPatternMatcher.Strings;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher
+using Strings.Interop;
+
+namespace Sarif.PatternMatcher
 {
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {

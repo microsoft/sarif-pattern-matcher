@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher
+namespace Sarif.PatternMatcher
 {
     public class SimpleFix
     {

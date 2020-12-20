@@ -11,7 +11,7 @@ using Microsoft.CodeAnalysis.Sarif;
 
 using Xunit;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.SarifPatternMatcher
+namespace Sarif.PatternMatcher
 {
     public class SearchSkimmerTests
     {

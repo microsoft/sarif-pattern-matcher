@@ -8,6 +8,8 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>spam</ToolCommandName>
     <AssemblyName>spam</AssemblyName>
+    <RootNamespace>Sarif.PatternMatcher.Cli</RootNamespace>
+    <PackageId>Sarif.PatternMatcher.Cli</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Label="AssemblyAttributes">
