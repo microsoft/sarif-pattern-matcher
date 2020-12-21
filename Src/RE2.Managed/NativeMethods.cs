@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
+namespace Microsoft.RE2.Managed
 {
     internal static class NativeMethods
     {

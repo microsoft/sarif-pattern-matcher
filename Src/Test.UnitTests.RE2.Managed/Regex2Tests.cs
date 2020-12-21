@@ -8,11 +8,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Microsoft.CodeAnalysis.SarifPatternMatcher.Strings;
+using Microsoft.Strings.Interop;
 
 using Xunit;
 
-namespace Microsoft.CodeAnalysis.SarifPatternMatcher.RE2.Managed
+namespace Microsoft.RE2.Managed
 {
     public class Regex2Tests
     {
