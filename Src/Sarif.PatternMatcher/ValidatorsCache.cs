@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatorsCache
     {

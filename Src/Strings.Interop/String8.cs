@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Strings.Interop
+namespace Microsoft.Strings.Interop
 {
     /// <summary>
     ///  Represents a block of UTF8 text in a slice of a byte array.

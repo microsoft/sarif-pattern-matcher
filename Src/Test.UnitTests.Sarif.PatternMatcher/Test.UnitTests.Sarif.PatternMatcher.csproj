@@ -4,7 +4,7 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.test.props" />
 
   <PropertyGroup Label="AssemblyAttributes">
-    <RootNamespace>Sarif.PatternMatcher</RootNamespace>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>

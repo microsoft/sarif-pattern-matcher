@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Sarif.PatternMatcher.Cli
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
     public class UnitTest1
     {

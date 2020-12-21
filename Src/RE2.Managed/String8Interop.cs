@@ -3,7 +3,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace RE2.Managed
+namespace Microsoft.RE2.Managed
 {
     /// <summary>
     ///  Represents a block of UTF8 text in a slice of a byte array.

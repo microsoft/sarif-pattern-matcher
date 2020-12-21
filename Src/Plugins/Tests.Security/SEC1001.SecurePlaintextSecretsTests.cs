@@ -4,7 +4,7 @@
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Sarif.PatternMatcher.Security
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security
 {
     public class SecurePlaintextSecretsTests : EndToEndTests
     {

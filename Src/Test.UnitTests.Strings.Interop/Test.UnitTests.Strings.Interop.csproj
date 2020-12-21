@@ -4,7 +4,7 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.test.props" />
 
   <PropertyGroup Label="AssemblyAttributes">
-    <RootNamespace>Strings.Interop</RootNamespace>
+    <RootNamespace>Microsoft.Strings.Interop</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>

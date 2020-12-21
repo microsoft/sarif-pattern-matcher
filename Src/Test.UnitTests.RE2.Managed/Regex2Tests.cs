@@ -8,11 +8,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Strings.Interop;
+using Microsoft.Strings.Interop;
 
 using Xunit;
 
-namespace RE2.Managed
+namespace Microsoft.RE2.Managed
 {
     public class Regex2Tests
     {

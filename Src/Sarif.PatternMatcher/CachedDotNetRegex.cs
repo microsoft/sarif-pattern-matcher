@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
-using Strings.Interop;
+using Microsoft.Strings.Interop;
 
-namespace Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     /// <summary>
     ///  CachedDotNetRegex is an IRegex implementation which pre-compiles all Regexes and then

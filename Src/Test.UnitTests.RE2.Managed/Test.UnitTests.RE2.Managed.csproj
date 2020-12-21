@@ -4,7 +4,7 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.test.props" />
 
   <PropertyGroup Label="AssemblyAttributes">
-    <RootNamespace>RE2.Managed</RootNamespace>
+    <RootNamespace>Microsoft.RE2.Managed</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>

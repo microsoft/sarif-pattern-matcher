@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sarif.PatternMatcher {
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Sarif.PatternMatcher {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sarif.PatternMatcher.SpamResources", typeof(SpamResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.CodeAnalysis.Sarif.PatternMatcher.SpamResources", typeof(SpamResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

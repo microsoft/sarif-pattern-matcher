@@ -4,6 +4,7 @@
     <LangVersion>8.0</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsPackable>false</IsPackable>
+    <RootNamespaceBase>Microsoft.CodeAnalysis</RootNamespaceBase>
   </PropertyGroup>
 
   <PropertyGroup Label="AssemblyAttributes">

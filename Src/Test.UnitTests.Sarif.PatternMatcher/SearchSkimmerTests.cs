@@ -7,11 +7,9 @@ using System.Text;
 
 using FluentAssertions;
 
-using Microsoft.CodeAnalysis.Sarif;
-
 using Xunit;
 
-namespace Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmerTests
     {

@@ -8,9 +8,9 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-using Strings.Interop;
+using Microsoft.Strings.Interop;
 
-namespace RE2.Managed
+namespace Microsoft.RE2.Managed
 {
     /// <summary>
     /// <para>

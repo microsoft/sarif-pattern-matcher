@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Strings.Interop
+namespace Microsoft.Strings.Interop
 {
     public class String8Tests
     {

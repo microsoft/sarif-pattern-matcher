@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-using Strings.Interop;
+using Microsoft.Strings.Interop;
 
-namespace Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     /// <summary>
     ///  DotNetRegex is an IRegex implementation calling through to .NET's System.Text.RegularExpressions.Regex.

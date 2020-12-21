@@ -8,7 +8,6 @@ using System.Text;
 
 using FluentAssertions;
 
-using Microsoft.CodeAnalysis.Sarif;
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Visitors;
 using Microsoft.CodeAnalysis.Sarif.Writers;
@@ -17,7 +16,7 @@ using Newtonsoft.Json;
 
 using Xunit.Abstractions;
 
-namespace Sarif.PatternMatcher.Security
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security
 {
     public abstract class EndToEndTests : FileDiffingUnitTests
     {
@@ -37,9 +36,9 @@ namespace Sarif.PatternMatcher.Security
 
         protected abstract string RuleId { get; }
 
-        protected override string TestLogResourceNameRoot => $"Sarif.PatternMatcher.Security.TestData.{TypeUnderTest}";
+        protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security.TestData.{TypeUnderTest}";
 
-        protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @$"Plugins\Tests.Security");
+        protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @"Plugins\Tests.Security");
 
         protected override string ConstructTestOutputFromInputResource(string inputResourceName, object parameter)
         {

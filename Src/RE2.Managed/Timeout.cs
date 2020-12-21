@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics;
 
-namespace RE2.Managed
+namespace Microsoft.RE2.Managed
 {
     /// <summary>
     /// <para>

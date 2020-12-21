@@ -3,7 +3,7 @@
 
 using CommandLine;
 
-namespace Sarif.PatternMatcher.Cli
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
     internal static class Program
     {

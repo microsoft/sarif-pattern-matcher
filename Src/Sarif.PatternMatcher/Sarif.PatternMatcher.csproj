@@ -6,6 +6,7 @@
   <PropertyGroup Label="AssemblyAttributes">
     <AssemblyTitle>Sarif Pattern Matcher Library</AssemblyTitle>
     <Description>A general pattern matching engine that persist results to SARIF.</Description>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>

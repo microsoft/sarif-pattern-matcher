@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-using Strings.Interop;
+using Microsoft.Strings.Interop;
 
-namespace Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     /// <summary>
     ///  IRegex is a generic subset of System.Text.RegularExpressions.Regex,

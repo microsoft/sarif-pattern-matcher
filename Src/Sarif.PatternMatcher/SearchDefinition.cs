@@ -3,9 +3,7 @@
 
 using System.Collections.Generic;
 
-using Microsoft.CodeAnalysis.Sarif;
-
-namespace Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchDefinition
     {

@@ -8,12 +8,10 @@ using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using Microsoft.CodeAnalysis.Sarif;
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.Strings.Interop;
 
-using Strings.Interop;
-
-namespace Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {

@@ -3,11 +3,9 @@
 
 using System;
 
-using Microsoft.CodeAnalysis.Sarif;
+using Microsoft.Strings.Interop;
 
-using Strings.Interop;
-
-namespace Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeContext : IAnalysisContext
     {

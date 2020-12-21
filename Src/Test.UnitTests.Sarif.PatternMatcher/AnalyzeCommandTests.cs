@@ -7,18 +7,16 @@ using System.IO;
 
 using FluentAssertions;
 
-using Microsoft.CodeAnalysis.Sarif;
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.Strings.Interop;
 
 using Moq;
 
 using Newtonsoft.Json;
 
-using Strings.Interop;
-
 using Xunit;
 
-namespace Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeCommandTests
     {
