@@ -27,7 +27,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
         private readonly string _id;
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
         private readonly IRegex _engine;
-        private readonly Regex _fileNameAllowRegex;
+        private readonly string _fileNameDenyRegex;
+        private readonly string _fileNameAllowRegex;
         private readonly ValidatorsCache _validators;
         private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
@@ -37,7 +38,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
         private FileRegionsCache _regionsCache;
 
         public SearchSkimmer(IRegex engine, ValidatorsCache validators, SearchDefinition definition)
-            : this(engine, validators, definition.Id, definition.Name, definition.Level, definition.Description, definition.FileNameAllowRegex, definition.Message, definition.MatchExpressions)
+            : this(engine, validators, definition.Id, definition.Name, definition.Level, definition.Description, definition.FileNameDenyRegex, definition.FileNameAllowRegex, definition.Message, definition.MatchExpressions)
         {
         }
 
@@ -48,6 +49,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             string name,
             FailureLevel defaultLevel,
             string description,
+            string fileNameDenyRegex,
             string fileNameAllowRegex,
             string defaultMessageString,
             IList<MatchExpression> matchExpressions)
@@ -59,9 +61,8 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
             this.DefaultConfiguration.Level = defaultLevel;
 
-            _fileNameAllowRegex = new Regex(
-                fileNameAllowRegex ?? string.Empty,
-                RegexDefaults.DefaultOptionsCaseSensitive);
+            _fileNameDenyRegex = fileNameDenyRegex;
+            _fileNameAllowRegex = fileNameAllowRegex;
 
             _matchExpressions = matchExpressions;
 
@@ -94,15 +95,31 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
         public override AnalysisApplicability CanAnalyze(AnalyzeContext context, out string reasonIfNotApplicable)
         {
-            reasonIfNotApplicable = SpamResources.TargetDoesNotMeetFileNameCriteria;
+            string path = context.TargetUri.LocalPath;
+            reasonIfNotApplicable = null;
 
-            if (!_fileNameAllowRegex.IsMatch(context.TargetUri.LocalPath))
+            foreach (MatchExpression matchExpression in _matchExpressions)
             {
-                return AnalysisApplicability.NotApplicableToSpecifiedTarget;
+                string regex = matchExpression.FileNameDenyRegex ?? _fileNameDenyRegex;
+
+                if (!string.IsNullOrEmpty(regex) && _engine.IsMatch(path, regex))
+                {
+                    continue;
+                }
+
+                regex = matchExpression.FileNameAllowRegex ?? _fileNameAllowRegex;
+
+                if (!string.IsNullOrEmpty(regex) && !_engine.IsMatch(path, regex))
+                {
+                    continue;
+                }
+
+                reasonIfNotApplicable = null;
+                return AnalysisApplicability.ApplicableToSpecifiedTarget;
             }
 
-            reasonIfNotApplicable = null;
-            return AnalysisApplicability.ApplicableToSpecifiedTarget;
+            reasonIfNotApplicable = SpamResources.TargetDoesNotMeetFileNameCriteria;
+            return AnalysisApplicability.NotApplicableToSpecifiedTarget;
         }
 
         public override void Analyze(AnalyzeContext context)
