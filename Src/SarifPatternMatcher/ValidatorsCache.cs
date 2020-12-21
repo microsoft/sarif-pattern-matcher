@@ -22,19 +22,29 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
         public ISet<string> ValidatorPaths { get; }
 
-        public Validation Validate(string ruleId, string matchedPattern, bool dynamicValidation)
+        public Validation Validate(
+            string ruleId,
+            string matchedPattern,
+            bool dynamicValidation,
+            out string validatorMessage)
         {
             _ruleIdToMethodMap ??= LoadValidationAssemblies(ValidatorPaths);
 
-            return ValidateHelper(_ruleIdToMethodMap, ruleId, matchedPattern, dynamicValidation);
+            return ValidateHelper(_ruleIdToMethodMap,
+                                  ruleId,
+                                  matchedPattern,
+                                  dynamicValidation,
+                                  out validatorMessage);
         }
 
         internal static Validation ValidateHelper(
             Dictionary<string, MethodInfo> ruleIdToMethodMap,
             string ruleId,
             string matchedPattern,
-            bool dynamicValidation)
+            bool dynamicValidation,
+            out string validatorMessage)
         {
+            validatorMessage = null;
             string validatorName = ruleId + "Validator";
 
             if (!ruleIdToMethodMap.TryGetValue(validatorName, out MethodInfo methodInfo))
@@ -45,11 +55,18 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             string validationText =
                 (string)methodInfo.Invoke(obj: null, new object[] { matchedPattern, dynamicValidation });
 
-            if (!Enum.TryParse<Validation>(validationText, out Validation result))
+            string[] tokens = validationText.Split('#');
+
+            if (!Enum.TryParse<Validation>(tokens[0], out Validation result))
             {
                 // TODO: raise an exception and disable this validator, which
                 // is returning illegal values.
                 return Validation.ValidatorNotFound;
+            }
+
+            if (tokens.Length > 1)
+            {
+                validatorMessage = tokens[1];
             }
 
             return result;

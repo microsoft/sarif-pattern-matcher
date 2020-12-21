@@ -221,10 +221,15 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                 bool dynamic = context.DynamicValidation;
 
                 Validation state = 0;
+                string validatorMessage = null;
 
                 if (_validators != null)
                 {
-                    state = _validators.Validate(matchExpression.SubId, fingerprint, dynamic);
+                    state = _validators.Validate(
+                        matchExpression.SubId,
+                        fingerprint,
+                        dynamic,
+                        out validatorMessage);
 
                     switch (state)
                     {
@@ -260,6 +265,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
                     _argumentNameToIndex,
                     context.TargetUri.LocalPath,
                     base64Encoded: binary64DecodedMatch != null,
+                    validatorMessage: validatorMessage,
                     matchExpression.MessageArguments);
 
                 // If we're matching against decoded contents, the region should
@@ -444,6 +450,7 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
             Dictionary<string, int> namedArgumentToIndexMap,
             string scanTargetPath,
             bool base64Encoded,
+            string validatorMessage,
             Dictionary<string, string> additionalArguments)
         {
             int argsCount = namedArgumentToIndexMap.Count;
@@ -452,17 +459,20 @@ namespace Microsoft.CodeAnalysis.SarifPatternMatcher
 
             foreach (KeyValuePair<string, int> kv in namedArgumentToIndexMap)
             {
-                string value = kv.Key == "scanTarget" ?
-                    Path.GetFileName(scanTargetPath) :
-                    match.Groups[kv.Key]?.Value;
+                string value = kv.Key == "scanTarget"
+                    ? Path.GetFileName(scanTargetPath)
+                    : match.Groups[kv.Key]?.Value;
 
-                value = kv.Key == nameof(scanTargetPath) ?
-                    scanTargetPath :
-                    value;
+                value = kv.Key == nameof(scanTargetPath)
+                    ? scanTargetPath
+                    : value;
 
-                // TODO add support for base64 decoding
                 value = kv.Key == "encoding"
                     ? (base64Encoded ? "base64-encoded" : "plaintext")
+                    : value;
+
+                value = kv.Key == "validatorMessage"
+                    ? validatorMessage
                     : value;
 
                 arguments[kv.Value] = value;
