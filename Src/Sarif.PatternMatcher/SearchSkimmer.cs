@@ -26,7 +26,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly string _id;
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
         private readonly IRegex _engine;
-        private readonly Regex _fileNameAllowRegex;
+        private readonly string _fileNameDenyRegex;
+        private readonly string _fileNameAllowRegex;
         private readonly ValidatorsCache _validators;
         private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
@@ -36,7 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private FileRegionsCache _regionsCache;
 
         public SearchSkimmer(IRegex engine, ValidatorsCache validators, SearchDefinition definition)
-            : this(engine, validators, definition.Id, definition.Name, definition.Level, definition.Description, definition.FileNameAllowRegex, definition.Message, definition.MatchExpressions)
+            : this(engine, validators, definition.Id, definition.Name, definition.Level, definition.Description, definition.FileNameDenyRegex, definition.FileNameAllowRegex, definition.Message, definition.MatchExpressions)
         {
         }
 
@@ -47,6 +48,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string name,
             FailureLevel defaultLevel,
             string description,
+            string fileNameDenyRegex,
             string fileNameAllowRegex,
             string defaultMessageString,
             IList<MatchExpression> matchExpressions)
@@ -58,9 +60,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             this.DefaultConfiguration.Level = defaultLevel;
 
-            _fileNameAllowRegex = new Regex(
-                fileNameAllowRegex ?? string.Empty,
-                RegexDefaults.DefaultOptionsCaseSensitive);
+            _fileNameDenyRegex = fileNameDenyRegex;
+            _fileNameAllowRegex = fileNameAllowRegex;
 
             _matchExpressions = matchExpressions;
 
@@ -93,15 +94,31 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override AnalysisApplicability CanAnalyze(AnalyzeContext context, out string reasonIfNotApplicable)
         {
-            reasonIfNotApplicable = SpamResources.TargetDoesNotMeetFileNameCriteria;
+            string path = context.TargetUri.LocalPath;
+            reasonIfNotApplicable = null;
 
-            if (!_fileNameAllowRegex.IsMatch(context.TargetUri.LocalPath))
+            foreach (MatchExpression matchExpression in _matchExpressions)
             {
-                return AnalysisApplicability.NotApplicableToSpecifiedTarget;
+                string regex = matchExpression.FileNameDenyRegex ?? _fileNameDenyRegex;
+
+                if (!string.IsNullOrEmpty(regex) && _engine.IsMatch(path, regex))
+                {
+                    continue;
+                }
+
+                regex = matchExpression.FileNameAllowRegex ?? _fileNameAllowRegex;
+
+                if (!string.IsNullOrEmpty(regex) && !_engine.IsMatch(path, regex))
+                {
+                    continue;
+                }
+
+                reasonIfNotApplicable = null;
+                return AnalysisApplicability.ApplicableToSpecifiedTarget;
             }
 
-            reasonIfNotApplicable = null;
-            return AnalysisApplicability.ApplicableToSpecifiedTarget;
+            reasonIfNotApplicable = SpamResources.TargetDoesNotMeetFileNameCriteria;
+            return AnalysisApplicability.NotApplicableToSpecifiedTarget;
         }
 
         public override void Analyze(AnalyzeContext context)
@@ -220,10 +237,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 bool dynamic = context.DynamicValidation;
 
                 Validation state = 0;
+                string validatorMessage = null;
 
                 if (_validators != null)
                 {
-                    state = _validators.Validate(matchExpression.SubId, fingerprint, dynamic);
+                    state = _validators.Validate(
+                        matchExpression.SubId,
+                        fingerprint,
+                        dynamic,
+                        out validatorMessage);
 
                     switch (state)
                     {
@@ -259,6 +281,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     _argumentNameToIndex,
                     context.TargetUri.LocalPath,
                     base64Encoded: binary64DecodedMatch != null,
+                    validatorMessage: validatorMessage,
                     matchExpression.MessageArguments);
 
                 // If we're matching against decoded contents, the region should
@@ -443,6 +466,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Dictionary<string, int> namedArgumentToIndexMap,
             string scanTargetPath,
             bool base64Encoded,
+            string validatorMessage,
             Dictionary<string, string> additionalArguments)
         {
             int argsCount = namedArgumentToIndexMap.Count;
@@ -451,17 +475,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (KeyValuePair<string, int> kv in namedArgumentToIndexMap)
             {
-                string value = kv.Key == "scanTarget" ?
-                    Path.GetFileName(scanTargetPath) :
-                    match.Groups[kv.Key]?.Value;
+                string value = kv.Key == "scanTarget"
+                    ? Path.GetFileName(scanTargetPath)
+                    : match.Groups[kv.Key]?.Value;
 
-                value = kv.Key == nameof(scanTargetPath) ?
-                    scanTargetPath :
-                    value;
+                value = kv.Key == nameof(scanTargetPath)
+                    ? scanTargetPath
+                    : value;
 
-                // TODO add support for base64 decoding
                 value = kv.Key == "encoding"
                     ? (base64Encoded ? "base64-encoded" : "plaintext")
+                    : value;
+
+                value = kv.Key == "validatorMessage"
+                    ? validatorMessage
                     : value;
 
                 arguments[kv.Value] = value;

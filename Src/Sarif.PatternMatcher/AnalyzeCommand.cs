@@ -63,6 +63,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             name: definition.Name,
                             defaultLevel: definition.Level,
                             description: definition.Description ?? string.Empty,
+                            fileNameDenyRegex: definition.FileNameDenyRegex,
                             fileNameAllowRegex: definition.FileNameAllowRegex,
                             defaultMessageString: definition.Message,
                             matchExpressions: definition.MatchExpressions));
