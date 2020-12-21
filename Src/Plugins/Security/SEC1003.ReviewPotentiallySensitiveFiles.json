@@ -23,6 +23,11 @@
           "MessageArguments": { "fileKind": "a Microsoft BitLocker recovery key file" }
         },
         {
+          "SubId": "CertificateFile",
+          "FileNameAllowRegex": "(?i)\\.cer$",
+          "MessageArguments": { "fileKind": "an encoded binary x.509" }
+        },
+        {
           "SubId": "AzureServiceConfigurationSchemaFile",
           "FileNameAllowRegex": "(?i)\\.cscfg$",
           "MessageArguments": { "fileKind": "an Azure service configuration schema file" }
@@ -78,6 +83,11 @@
           "MessageArguments": { "fileKind": "a PEM cryptographic private key" }
         },
         {
+          "SubId": "PKCS7CryptographicKeyFile",
+          "FileNameAllowRegex": "(?i)\\.p7b$",
+          "MessageArguments": { "fileKind": "a PKCS#7 cryptographic key bundle" }
+        },
+        {
           "SubId": "PFXCryptographicKeyFile",
           "FileNameAllowRegex": "(?i)\\.pfx$",
           "MessageArguments": { "fileKind": "a cryptographic key bundle" }
@@ -111,6 +121,11 @@
           "SubId": "SQLiteDatabaseFile",
           "FileNameAllowRegex": "(?i)\\.(sqlite|sqlite3)$",
           "MessageArguments": { "fileKind": "a SQLite database file" }
+        },
+        {
+          "SubId": "MicrosoftSerializedCertificateStoreFile",
+          "FileNameAllowRegex": "(?i)\\.sst$",
+          "MessageArguments": { "fileKind": "a Microsoft Serialized Certificate Store" }
         },
         {
           "SubId": "TunnelblickVPNConfigurationFile",
