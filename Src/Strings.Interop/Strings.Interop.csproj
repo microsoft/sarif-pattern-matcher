@@ -6,7 +6,5 @@
   <PropertyGroup Label="AssemblyAttributes">
     <AssemblyTitle>String8 Library</AssemblyTitle>
     <Description>Specialized types for seamless handling of UTF8 and UTF16 strings.</Description>
-    <RootNamespace>Strings.Interop</RootNamespace>
-    <PackageId>Strings.Interop</PackageId>
   </PropertyGroup>
 </Project>

@@ -22,7 +22,7 @@
     <ProjectReference Include="..\RE2.Managed\RE2.Managed.csproj" />
     <ProjectReference Include="..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
     <ProjectReference Include="..\sarif-sdk\src\Sarif\Sarif.csproj" />
-    <ProjectReference Include="..\String8\String8.csproj" />
+    <ProjectReference Include="..\Strings.Interop\Strings.Interop.csproj" />
   </ItemGroup>
 
   <ItemGroup>

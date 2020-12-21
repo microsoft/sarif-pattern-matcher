@@ -8,7 +8,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\String8\String8.csproj" />
+    <ProjectReference Include="..\Strings.Interop\Strings.Interop.csproj" />
   </ItemGroup>
 
 </Project>
