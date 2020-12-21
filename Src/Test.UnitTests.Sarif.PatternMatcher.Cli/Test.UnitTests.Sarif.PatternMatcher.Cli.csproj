@@ -4,7 +4,7 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.test.props" />
 
   <PropertyGroup>
-    <RootNamespace>$(RootNamespaceBase).Microsoft.CodeAnalysisSarif.PatternMatcher.Cli</RootNamespace>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Cli</RootNamespace>
   </PropertyGroup>
 
 </Project>
