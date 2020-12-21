@@ -3,12 +3,8 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.app.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.test.props" />
 
-  <PropertyGroup Label="AssemblyAttributes">
-    <RootNamespace>Microsoft.RE2.Managed</RootNamespace>
+  <PropertyGroup>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Cli</RootNamespace>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\RE2.Managed\RE2.Managed.csproj" />
-  </ItemGroup>
 
 </Project>

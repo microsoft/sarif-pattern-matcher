@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.app.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
+  
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>spam</ToolCommandName>
+    <AssemblyName>spam</AssemblyName>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Cli</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Label="AssemblyAttributes">
+    <AssemblyTitle>Sarif Pattern Matcher Cli</AssemblyTitle>
+    <Description>A general pattern matcher that persists results to the SARIF format.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
+  </ItemGroup>
+</Project>

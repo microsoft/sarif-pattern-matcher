@@ -4,6 +4,11 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.product.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.plugins.props" />
 
+  <PropertyGroup Label="AssemblyAttributes">
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Security</RootNamespace>
+    <PackageId>Sarif.PatternMatcher.Security</PackageId>
+  </PropertyGroup>
+  
   <ItemGroup>
     <Content Include="*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -18,10 +23,7 @@
   </ItemGroup>
 
   <Target Name="CopyingSpam" AfterTargets="Build">
-    <Copy SourceFiles="@(SpamFiles)"
-      DestinationFolder="$(SolutionDir).spam\"
-      OverwriteReadOnlyFiles="true"
-      SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
   </Target>
   
 </Project>
