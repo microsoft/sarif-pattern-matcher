@@ -8,8 +8,6 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>spam</ToolCommandName>
     <AssemblyName>spam</AssemblyName>
-    <RootNamespace>Sarif.PatternMatcher.Cli</RootNamespace>
-    <PackageId>Sarif.PatternMatcher.Cli</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Label="AssemblyAttributes">
@@ -22,6 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SarifPatternMatcher\SarifPatternMatcher.csproj" />
+    <ProjectReference Include="..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
   </ItemGroup>
 </Project>

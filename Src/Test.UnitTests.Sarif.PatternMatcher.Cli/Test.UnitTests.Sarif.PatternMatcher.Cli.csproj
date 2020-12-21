@@ -6,9 +6,5 @@
   <PropertyGroup>
     <RootNamespace>Sarif.PatternMatcher.Cli</RootNamespace>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\SarifPatternMatcher.Cli\SarifPatternMatcher.Cli.csproj" />
-  </ItemGroup>
 
 </Project>
