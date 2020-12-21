@@ -4,7 +4,6 @@
       "Name": "ReviewPotentiallySensitiveFiles",
       "Id": "SEC1003",
       "Level": "Error",
-      "FileNameAllowRegex": "(?i)\\.(agilekeychain|agilekeychain_zip|asc|bek|cscfg|dayone|fve|gnucash|jks|kdb|keychain|kwallet|mdf|ovpn|p12|pcap|pem|pfx|pkcs12|ppk|psafe3|rdp|sdf|sqlite|sqlite3|tblk|tpm)$",
       "Description": "Review potentially sensitive files in versioned engineering content and other locations for security risk.",
       "Message": "'{0:scanTarget}' is {1:fileKind} that may compromise security if visible to attackers.",
       "MatchExpressions": [
