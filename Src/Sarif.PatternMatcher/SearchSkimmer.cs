@@ -488,7 +488,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     : value;
 
                 value = kv.Key == "validatorMessage"
-                    ? validatorMessage
+                    ? validatorMessage ?? string.Empty
                     : value;
 
                 arguments[kv.Value] = value;
