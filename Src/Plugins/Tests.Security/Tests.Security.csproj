@@ -2,8 +2,9 @@
 
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.app.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.test.props" />
-  <PropertyGroup>
-    <RootNamespace>Microsoft.CodeAnalysis.SarifPatternMatcher.Plugins.Security</RootNamespace>
+
+  <PropertyGroup Label="AssemblyAttributes">
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Security</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>
@@ -13,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
     <ProjectReference Include="..\Security\Security.csproj" />
-    <ProjectReference Include="..\..\SarifPatternMatcher\SarifPatternMatcher.csproj" />
     <ProjectReference Include="..\..\sarif-sdk\src\Sarif\Sarif.csproj" />
     <ProjectReference Include="..\..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
     <ProjectReference Include="..\..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
