@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <!-- Copy the two RE2.Native architecture-specific references and the RE2 License to the output directory. -->
+    <None Include="$(MSBuildThisFileDirectory)../runtimes/win-x86/native/RE2.Native.x86.dll" Link="RE2.Native.x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)../runtimes/win-x64/native/RE2.Native.x64.dll" Link="RE2.Native.x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)../content/RE2.LICENSE.txt" Link="RE2.LICENSE.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

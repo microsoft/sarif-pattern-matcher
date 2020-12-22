@@ -36,6 +36,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x64/native</PackagePath>
     </Content>
+    
+    <None Include="RE2.Managed.targets" Pack="true" PackagePath="build\" />
+    <None Include="RE2.LICENSE.txt" Pack="true" PackagePath="content\" />
   </ItemGroup>
 
   <ItemGroup>
