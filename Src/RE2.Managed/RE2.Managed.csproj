@@ -5,8 +5,9 @@
 
   <PropertyGroup Label="AssemblyAttributes">
     <AssemblyTitle>RE2 Managed Library</AssemblyTitle>
-    <Description>TODO: add description</Description>
+    <Description>A .NET wrapper around the RE2 regular expression library.</Description>
     <RootNamespace>Microsoft.RE2.Managed</RootNamespace>
+    <Product>Microsoft Managed RE2</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
