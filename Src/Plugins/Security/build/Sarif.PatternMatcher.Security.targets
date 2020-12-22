@@ -4,15 +4,18 @@
     <Message Text="Copying files" />
     <Copy
       SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC1001.SecurePlaintextSecrets.json"
-      DestinationFiles="$(SolutionDir)\.spam\SEC1001.SecurePlaintextSecrets.json" />
+      DestinationFiles="$(SolutionDir)\.spam\Security\SEC1001.SecurePlaintextSecrets.json" />
     <Copy
       SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC1002.ReviewPotentiallySensitiveData.json"
-      DestinationFiles="$(SolutionDir)\.spam\SEC1002.ReviewPotentiallySensitiveData.json" />
+      DestinationFiles="$(SolutionDir)\.spam\Security\SEC1002.ReviewPotentiallySensitiveData.json" />
     <Copy
       SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC1003.ReviewPotentiallySensitiveFiles.json"
-      DestinationFiles="$(SolutionDir)\.spam\SEC1003.ReviewPotentiallySensitiveFiles.json" />
+      DestinationFiles="$(SolutionDir)\.spam\Security\SEC1003.ReviewPotentiallySensitiveFiles.json" />
     <Copy
       SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC1004.UseSecureApi.json"
-      DestinationFiles="$(SolutionDir)\.spam\SEC1004.UseSecureApi.json" />
+      DestinationFiles="$(SolutionDir)\.spam\Security\SEC1004.UseSecureApi.json" />
+  <Copy
+      SourceFiles="$(MSBuildThisFileDirectory)..\lib\netstandard2.0\Security.dll"
+      DestinationFiles="$(SolutionDir)\.spam\Security\Security.dll" />
   </Target>
 </Project>
