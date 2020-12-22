@@ -7,5 +7,6 @@
     <AssemblyTitle>String8 Library</AssemblyTitle>
     <Description>Specialized types for seamless handling of UTF8 and UTF16 strings.</Description>
     <RootNamespace>Microsoft.Strings.Interop</RootNamespace>
+    <Product>Microsoft Strings Interop</Product>
   </PropertyGroup>
 </Project>
