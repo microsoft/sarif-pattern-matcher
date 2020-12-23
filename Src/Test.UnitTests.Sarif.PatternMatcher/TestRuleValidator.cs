@@ -9,7 +9,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     {
         public static string IsValid(
             string matchedPattern,
-            ref bool performDynamicValidation, 
+            ref bool performDynamicValidation,
             ref string failureLevel)
         {
             performDynamicValidation = false;

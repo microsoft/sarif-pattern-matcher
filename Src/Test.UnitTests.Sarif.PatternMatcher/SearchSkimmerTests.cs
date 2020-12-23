@@ -282,11 +282,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string denyFileExtension = null,
             ValidatorsCache validators = null)
         {
-            MatchExpression expression = 
+            MatchExpression expression =
                 CreateGuidDetectingMatchExpression(
                     allowFileExtension: allowFileExtension,
                     denyFileExtension: denyFileExtension);
-            
+
             definition ??= CreateDefaultSearchDefinition(expression);
 
             var logger = new TestLogger();
@@ -302,7 +302,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             mockFileSystem.Setup(x => x.FileReadAllText(context.TargetUri.LocalPath)).Returns(definition.Id);
 
             skimmer = CreateSkimmer(
-                definition, 
+                definition,
                 validators: validators,
                 fileSystem: mockFileSystem.Object);
 
