@@ -14,8 +14,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
-        public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem, IEnumerable<string> searchDefinitionsPaths)
+        public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(
+            IFileSystem fileSystem,
+            IEnumerable<string> searchDefinitionsPaths,
+            IRegex engine = null)
         {
+            engine ??= RE2Regex.Instance;
+
             var validators = new ValidatorsCache();
 
             var skimmers = new HashSet<Skimmer<AnalyzeContext>>();
@@ -53,8 +58,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 foreach (SearchDefinition definition in definitions.Definitions)
                 {
-                    IRegex engine = RE2Regex.Instance;
-
                     skimmers.Add(
                         new SearchSkimmer(
                             engine: engine,

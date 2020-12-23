@@ -102,5 +102,45 @@ namespace Microsoft.Strings.Interop
                 }
             }
         }
+
+        [Fact]
+        public void CheckEquality_Strings8AndString()
+        {
+            string text = "abc    def";
+            byte[] buffer = null;
+            String8 value = String8.Convert(text, ref buffer);
+            Assert.Equal(0, value.CompareTo(text));
+            Assert.True(value.Equals(text));
+            Assert.True(value.Equals(value));
+            Assert.Equal(0, value.CompareTo(value));
+
+            text = "abc    defg";
+            Assert.Equal(-1, value.CompareTo(text));
+            Assert.False(value.Equals(text));
+
+            text = "abc    de";
+            Assert.Equal(1, value.CompareTo(text));
+            Assert.False(value.Equals(text));
+
+            String8 empty = String8.Convert(string.Empty, ref buffer);
+            Assert.Equal(-1, empty.CompareTo(value));
+            Assert.Equal(1, value.CompareTo(empty));
+            Assert.False(value.Equals(empty));
+
+            text = "def    abc";
+            String8 value2 = String8.Convert(text, ref buffer);
+            Assert.Equal(0, value.CompareTo(value2));
+            Assert.True(value.Equals(value2));
+
+            text = "abc    defg";
+            value2 = String8.Convert(text, ref buffer);
+            Assert.Equal(3, value.CompareTo(value2));
+            Assert.False(value.Equals(value2));
+
+            text = "abc    de";
+            value2 = String8.Convert(text, ref buffer);
+            Assert.Equal(3, value.CompareTo(value2));
+            Assert.False(value.Equals(value2));
+        }
     }
 }
