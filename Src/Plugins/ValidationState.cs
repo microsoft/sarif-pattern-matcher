@@ -17,10 +17,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         Unknown,
 
         /// <summary>
-        /// Pattern is a match and the secret is invalid
-        /// (e.g., it is expired).
+        /// Pattern is a match and the secret is conclusively
+        /// determined to be invalid (e.g., it is expired).
         /// </summary>
         Invalid,
+
+        /// <summary>
+        /// Pattern is a match and the secret is invalid for all
+        /// all authorities configured for validation (e.g., it
+        /// is expired). The secret may be valid for an authority
+        /// that wasn't consulted.
+        /// </summary>
+        InvalidForConsultedAuthorities,
 
         /// <summary>
         /// Pattern is a match and the secret is valid.

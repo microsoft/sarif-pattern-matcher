@@ -43,6 +43,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         Invalid,
 
         /// <summary>
+        /// Pattern is a match and the secret is invalid for all
+        /// all authorities configured for validation (e.g., it
+        /// is expired). The secret may be valid for an authority
+        /// that wasn't consulted.
+        /// </summary>
+        InvalidForConsultedAuthorities,
+
+        /// <summary>
         /// The current matched pattern is a secret and it is valid.
         /// </summary>
         Valid,

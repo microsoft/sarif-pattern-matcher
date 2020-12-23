@@ -3,9 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 using FluentAssertions;
+
+using Microsoft.CodeAnalysis.Sarif.Driver;
+
+using Moq;
 
 using Xunit;
 
@@ -13,7 +18,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmerTests
     {
-        private static MatchExpression CreateGuidDetectingMatchExpression(bool denyRegexEnabled = false)
+        private static MatchExpression CreateGuidDetectingMatchExpression(
+            string denyFileExtension = null,
+            string allowFileExtension = null)
         {
             const string guidRegexText = "(?i)[0-9a-f]{8}[-]?([0-9a-f]{4}[-]?){3}[0-9a-f]{12}";
 
@@ -21,13 +28,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 MatchLengthToDecode = Guid.NewGuid().ToString().Length,
                 ContentsRegex = guidRegexText,
-                FileNameDenyRegex = denyRegexEnabled ? "(?i)\\.asc$" : ""
+                FileNameDenyRegex = denyFileExtension != null ? $"(?i)\\.{denyFileExtension}$" : null,
+                FileNameAllowRegex = allowFileExtension != null ? $"(?i)\\.{allowFileExtension}$" : null,
             };
         }
 
-        private static MatchExpression CreateFileDetectingMatchExpression()
+        private static MatchExpression CreateFileDetectingMatchExpression(string fileExtension)
         {
-            const string fileNameRegexText = "(?i)\\.asc$";
+            string fileNameRegexText = $"(?i)\\.{fileExtension}$";
 
             return new MatchExpression
             {
@@ -35,13 +43,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             };
         }
 
-        private static MatchExpression CreateEmptyMatchExpression()
-        {
-            return new MatchExpression();
-        }
-
         [Fact]
-        public void DetectsBase64EncodedPattern()
+        public void SearchSkimmer_DetectsBase64EncodedPattern()
         {
             MatchExpression expr = CreateGuidDetectingMatchExpression();
             SearchDefinition definition = CreateDefaultSearchDefinition(expr);
@@ -100,66 +103,43 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
-        public void DetectsFilePatternOnly()
+        public void SearchSkimmer_DetectsFilePatternOnly()
         {
-            MatchExpression expr = CreateFileDetectingMatchExpression();
+            string fileExtension = Guid.NewGuid().ToString();
+            MatchExpression expr = CreateFileDetectingMatchExpression(fileExtension: fileExtension);
             SearchDefinition definition = CreateDefaultSearchDefinition(expr);
 
-            string originalMessage = definition.Message;
-
-            // We inject the well-known encoding name that reports with
-            // 'plaintext' or 'base64-encoded' depending on how a match
-            // was made.
-            definition.Message = $"{{0:encoding}}:{definition.Message}";
-
             string scanTargetContents = definition.Id;
-
-            byte[] bytes = Encoding.UTF8.GetBytes(scanTargetContents);
-            string base64Encoded = Convert.ToBase64String(bytes);
 
             var logger = new TestLogger();
 
             var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.Fake.asc"),
-                FileContents = base64Encoded,
+                TargetUri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
+                FileContents = definition.Id,
                 Logger = logger
             };
 
             SearchSkimmer skimmer = CreateSkimmer(definition);
             skimmer.Analyze(context);
 
-            // Analyzing base64-encoded values with MatchLengthToDecode > 0 succeeds
-            logger.Results.Count.Should().Be(1);
-            logger.Results[0].RuleId.Should().Be(definition.Id);
-            logger.Results[0].Level.Should().Be(definition.Level);
-            logger.Results[0].GetMessageText(skimmer).Should().Be($"plaintext:{originalMessage}");
+            ValidateResultsAgainstDefinition(logger.Results, definition, skimmer);
         }
 
         [Fact]
-        public void NoDetectionWhenMatchIsEmpty()
+        public void SearchSkimmer_NoDetectionWhenMatchIsEmpty()
         {
-            MatchExpression expr = CreateEmptyMatchExpression();
-            SearchDefinition definition = CreateDefaultSearchDefinition(expr);
-
-            string originalMessage = definition.Message;
-
-            // We inject the well-known encoding name that reports with
-            // 'plaintext' or 'base64-encoded' depending on how a match
-            // was made.
-            definition.Message = $"{{0:encoding}}:{definition.Message}";
+            MatchExpression expression = new MatchExpression();
+            SearchDefinition definition = CreateDefaultSearchDefinition(expression);
 
             string scanTargetContents = definition.Id;
-
-            byte[] bytes = Encoding.UTF8.GetBytes(scanTargetContents);
-            string base64Encoded = Convert.ToBase64String(bytes);
 
             var logger = new TestLogger();
 
             var context = new AnalyzeContext
             {
                 TargetUri = new Uri($"file:///c:/{definition.Name}.Fake.asc"),
-                FileContents = base64Encoded,
+                FileContents = $"{ definition.Id}",
                 Logger = logger
             };
 
@@ -170,45 +150,176 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
-        public void NoDetectionWhenFileIsInDeny()
+        public void SearchSkimmer_DenyFileNameRegexFiltersProperly()
         {
-            MatchExpression expr = CreateGuidDetectingMatchExpression(denyRegexEnabled: true);
-            SearchDefinition definition = CreateDefaultSearchDefinition(expr);
+            string scanTargetExtension = Guid.NewGuid().ToString();
 
-            string originalMessage = definition.Message;
+            SearchDefinition definition = null;
 
-            // We inject the well-known encoding name that reports with
-            // 'plaintext' or 'base64-encoded' depending on how a match
-            // was made.
-            definition.Message = $"{{0:encoding}}:{definition.Message}";
+            AnalyzeContext context =
+                CreateGuidMatchingSkimmer(
+                    scanTargetExtension: scanTargetExtension,
+                    ref definition,
+                    out SearchSkimmer skimmer,
+                    allowFileExtension: null,
+                    denyFileExtension: scanTargetExtension);
 
-            string scanTargetContents = definition.Id;
+            AnalysisApplicability applicability = skimmer.CanAnalyze(context, out string reasonIfNotApplicable);
+            applicability.Should().Be(AnalysisApplicability.NotApplicableToSpecifiedTarget);
+            reasonIfNotApplicable.Should().Be(SpamResources.TargetDoesNotMeetFileNameCriteria);
 
-            byte[] bytes = Encoding.UTF8.GetBytes(scanTargetContents);
-            string base64Encoded = Convert.ToBase64String(bytes);
+            skimmer.Analyze(context);
+            ((TestLogger)context.Logger).Results.Should().BeNull();
+        }
+
+        [Fact]
+        public void SearchSkimmer_AllowFileNameRegexMatchesProperly()
+        {
+            string scanTargetExtension = Guid.NewGuid().ToString();
+
+            SearchDefinition definition = null;
+
+            AnalyzeContext context =
+                CreateGuidMatchingSkimmer(
+                    scanTargetExtension: scanTargetExtension,
+                    ref definition,
+                    out SearchSkimmer skimmer,
+                    allowFileExtension: scanTargetExtension,
+                    denyFileExtension: null);
+
+            AnalysisApplicability applicability = skimmer.CanAnalyze(context, out string reasonIfNotApplicable);
+            applicability.Should().Be(AnalysisApplicability.ApplicableToSpecifiedTarget);
+            reasonIfNotApplicable.Should().BeNull();
+
+            skimmer.Analyze(context);
+            ValidateResultsAgainstDefinition(((TestLogger)context.Logger).Results, definition, skimmer);
+
+            context.FileContents = null;
+            ((TestLogger)context.Logger).Results.Clear();
+
+            skimmer.Analyze(context);
+            ValidateResultsAgainstDefinition(((TestLogger)context.Logger).Results, definition, skimmer);
+        }
+
+        private void ValidateResultsAgainstDefinition(IList<Result> results, SearchDefinition definition, SearchSkimmer skimmer)
+        {
+            results.Should().NotBeNull();
+            results.Count.Should().Be(1);
+            results[0].RuleId.Should().Be(definition.Id);
+            results[0].Level.Should().Be(definition.Level);
+            results[0].GetMessageText(skimmer).Should().Be($"{definition.Message}");
+        }
+
+        [Fact]
+        public void SearchSkimmer_BothAllowAndDenyFileNameRegexFiltersProperly()
+        {
+            string scanTargetExtension = Guid.NewGuid().ToString();
+
+            // Analysis should not occur unless the file name both matches
+            // the allow regex, if present, and does not match the deny
+            // regex, if present. So, if the file name matches both the
+            // allow and deny regex, we should not analyze.
+
+            SearchDefinition definition = null;
+
+            AnalyzeContext context =
+                CreateGuidMatchingSkimmer(
+                    scanTargetExtension: scanTargetExtension,
+                    ref definition,
+                    out SearchSkimmer skimmer,
+                    allowFileExtension: scanTargetExtension,
+                    denyFileExtension: scanTargetExtension);
+
+            skimmer.Analyze(context);
+
+            ((TestLogger)context.Logger).Results.Should().BeNull();
+        }
+
+
+        [Fact]
+        public void SearchSkimmer_ValidatorResultsAreProperlyPrioritized()
+        {
+            string validatorAssemblyPath = $@"c:\{Guid.NewGuid()}.dll";
+            string scanTargetExtension = Guid.NewGuid().ToString();
+
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileExists(validatorAssemblyPath)).Returns(true);
+            mockFileSystem.Setup(x => x.AssemblyLoadFrom(validatorAssemblyPath)).Returns(this.GetType().Assembly);
+
+            var validators = new ValidatorsCache(
+                new string[] { validatorAssemblyPath },
+                fileSystem: mockFileSystem.Object);
+
+            MatchExpression expression =
+                CreateGuidDetectingMatchExpression(
+                    allowFileExtension: scanTargetExtension);
+
+            expression.ContentsRegex = "TestRule";
+
+            SearchDefinition definition = CreateDefaultSearchDefinition(expression);
+
+            // This Id will match us up with the TestRuleValidator type.
+            definition.Id = "TestRule";
+
+            AnalyzeContext context =
+                CreateGuidMatchingSkimmer(
+                    scanTargetExtension: scanTargetExtension,
+                    ref definition,
+                    out SearchSkimmer skimmer,
+                    validators: validators);
+
+            skimmer.Analyze(context);
+
+            ((TestLogger)context.Logger).Results.Should().BeNull();
+        }
+
+
+        private AnalyzeContext CreateGuidMatchingSkimmer(
+            string scanTargetExtension,
+            ref SearchDefinition definition,
+            out SearchSkimmer skimmer,
+            string allowFileExtension = null,
+            string denyFileExtension = null,
+            ValidatorsCache validators = null)
+        {
+            MatchExpression expression = 
+                CreateGuidDetectingMatchExpression(
+                    allowFileExtension: allowFileExtension,
+                    denyFileExtension: denyFileExtension);
+            
+            definition ??= CreateDefaultSearchDefinition(expression);
 
             var logger = new TestLogger();
 
             var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}.asc"),
-                FileContents = base64Encoded,
+                TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}.{scanTargetExtension}"),
+                FileContents = definition.Id,
                 Logger = logger
             };
 
-            SearchSkimmer skimmer = CreateSkimmer(definition);
-            skimmer.Analyze(context);
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileReadAllText(context.TargetUri.LocalPath)).Returns(definition.Id);
 
-            // Analyzing base64-encoded values with MatchLengthToDecode > 0 succeeds
-            logger.Results.Should().BeNull();
+            skimmer = CreateSkimmer(
+                definition, 
+                validators: validators,
+                fileSystem: mockFileSystem.Object);
+
+            return context;
         }
 
-        private SearchSkimmer CreateSkimmer(SearchDefinition definition, IRegex engine = null, ValidatorsCache validators = null)
+        private SearchSkimmer CreateSkimmer(
+            SearchDefinition definition,
+            IRegex engine = null,
+            ValidatorsCache validators = null,
+            IFileSystem fileSystem = null)
         {
             return new SearchSkimmer(
                 engine: engine ?? RE2Regex.Instance,
                 validators: validators,
-                definition);
+                definition: definition,
+                fileSystem: fileSystem);
         }
 
         private SearchDefinition CreateDefaultSearchDefinition(MatchExpression matchExpression)
