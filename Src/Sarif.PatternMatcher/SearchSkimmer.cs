@@ -26,6 +26,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly string _id;
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
         private readonly IRegex _engine;
+        private readonly IFileSystem _fileSystem;
         private readonly string _fileNameDenyRegex;
         private readonly string _fileNameAllowRegex;
         private readonly ValidatorsCache _validators;
@@ -36,8 +37,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private FileRegionsCache _regionsCache;
 
-        public SearchSkimmer(IRegex engine, ValidatorsCache validators, SearchDefinition definition)
-            : this(engine, validators, definition.Id, definition.Name, definition.Level, definition.Description, definition.FileNameDenyRegex, definition.FileNameAllowRegex, definition.Message, definition.MatchExpressions)
+        public SearchSkimmer(IRegex engine, ValidatorsCache validators, SearchDefinition definition, IFileSystem fileSystem = null)
+            : this(
+                  engine,
+                  validators,
+                  definition.Id,
+                  definition.Name,
+                  definition.Level,
+                  definition.Description,
+                  definition.FileNameDenyRegex,
+                  definition.FileNameAllowRegex,
+                  definition.Message,
+                  definition.MatchExpressions,
+                  fileSystem)
         {
         }
 
@@ -51,7 +63,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string fileNameDenyRegex,
             string fileNameAllowRegex,
             string defaultMessageString,
-            IList<MatchExpression> matchExpressions)
+            IList<MatchExpression> matchExpressions,
+            IFileSystem fileSystem = null)
         {
             _id = id;
             _name = name;
@@ -76,6 +89,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 { "Default", new MultiformatMessageString() { Text = defaultMessageString, } },
             };
+
+            _fileSystem = fileSystem ?? FileSystem.Instance;
         }
 
         public override Uri HelpUri => s_helpUri;
@@ -129,7 +144,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     if (context.FileContents == null)
                     {
-                        context.FileContents = File.ReadAllText(context.TargetUri.LocalPath);
+                        context.FileContents = _fileSystem.FileReadAllText(context.TargetUri.LocalPath);
                     }
                 }
             }
@@ -214,7 +229,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private void RunMatchExpressionForContentsRegex(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression, string ruleId, FailureLevel level)
+        private void RunMatchExpressionForContentsRegex(
+            FlexMatch binary64DecodedMatch,
+            AnalyzeContext context,
+            MatchExpression matchExpression,
+            string ruleId,
+            FailureLevel level)
         {
             string searchText = binary64DecodedMatch != null
                                                    ? Decode(binary64DecodedMatch.Value)
@@ -235,6 +255,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
 
                 bool dynamic = context.DynamicValidation;
+                string levelText = level.ToString();
 
                 Validation state = 0;
                 string validatorMessage = null;
@@ -242,10 +263,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (_validators != null)
                 {
                     state = _validators.Validate(
-                        matchExpression.SubId,
+                        matchExpression.SubId ?? ruleId,
                         fingerprint,
-                        dynamic,
+                        ref dynamic,
+                        ref levelText,
                         out validatorMessage);
+
+                    level = (FailureLevel)Enum.Parse(typeof(FailureLevel), levelText);
 
                     switch (state)
                     {

@@ -56,7 +56,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security
                 @"Inputs\",
                 inputResourceName.Substring("inputs.".Length));
 
-            var fileSystem = new FileSystem();
+            IFileSystem fileSystem = FileSystem.Instance;
 
             // Load all rules from JSON. This also automatically loads any validations file that 
             // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the 

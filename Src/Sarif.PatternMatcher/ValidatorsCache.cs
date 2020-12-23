@@ -10,14 +10,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatorsCache
     {
+        private IFileSystem _fileSystem;
         private Dictionary<string, MethodInfo> _ruleIdToMethodMap;
 
-        public ValidatorsCache(IEnumerable<string> validatorBinaryPaths = null)
+        public ValidatorsCache(IEnumerable<string> validatorBinaryPaths = null, IFileSystem fileSystem = null)
         {
             ValidatorPaths =
                 validatorBinaryPaths != null
                     ? new HashSet<string>(validatorBinaryPaths, StringComparer.OrdinalIgnoreCase)
                     : new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            _fileSystem = fileSystem ?? FileSystem.Instance;
         }
 
         public ISet<string> ValidatorPaths { get; }
@@ -25,7 +28,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public Validation Validate(
             string ruleId,
             string matchedPattern,
-            bool dynamicValidation,
+            ref bool dynamicValidation,
+            ref string failureLevel,
             out string validatorMessage)
         {
             _ruleIdToMethodMap ??= LoadValidationAssemblies(ValidatorPaths);
@@ -33,7 +37,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return ValidateHelper(_ruleIdToMethodMap,
                                   ruleId,
                                   matchedPattern,
-                                  dynamicValidation,
+                                  ref dynamicValidation,
+                                  ref failureLevel,
                                   out validatorMessage);
         }
 
@@ -41,7 +46,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Dictionary<string, MethodInfo> ruleIdToMethodMap,
             string ruleId,
             string matchedPattern,
-            bool dynamicValidation,
+            ref bool dynamicValidation,
+            ref string failureLevel,
             out string validatorMessage)
         {
             validatorMessage = null;
@@ -52,8 +58,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return Validation.ValidatorNotFound;
             }
 
+            object[] arguments = new object[] { matchedPattern, dynamicValidation, failureLevel };
+
             string validationText =
-                (string)methodInfo.Invoke(obj: null, new object[] { matchedPattern, dynamicValidation });
+                (string)methodInfo.Invoke(
+                    obj: null, arguments);
+
+            dynamicValidation = (bool)arguments[1];
+            failureLevel = (string)arguments[2];
 
             string[] tokens = validationText.Split('#');
 
@@ -72,7 +84,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        private static Dictionary<string, MethodInfo> LoadValidationAssemblies(IEnumerable<string> validatorPaths)
+        private Dictionary<string, MethodInfo> LoadValidationAssemblies(IEnumerable<string> validatorPaths)
         {
             var ruleToMethodMap = new Dictionary<string, MethodInfo>();
 
@@ -80,11 +92,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 Assembly assembly = null;
 
-                if (File.Exists(validatorPath))
+                if (_fileSystem.FileExists(validatorPath))
                 {
                     try
                     {
-                        assembly = Assembly.LoadFrom(validatorPath);
+                        assembly = _fileSystem.AssemblyLoadFrom(validatorPath);
                     }
                     catch (ReflectionTypeLoadException)
                     {
@@ -104,7 +116,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                         MethodInfo mi = type.GetMethod(
                             "IsValid",
-                            new[] { typeof(string), typeof(bool) },
+                            new[] { typeof(string), typeof(bool).MakeByRefType(), typeof(string).MakeByRefType() },
                             null);
 
                         if (mi == null || mi.ReturnType != typeof(string)) { continue; }

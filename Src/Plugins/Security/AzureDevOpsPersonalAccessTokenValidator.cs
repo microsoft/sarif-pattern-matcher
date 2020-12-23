@@ -79,10 +79,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security
         /// Validate if the match is an AzureDevOps personal access token.
         /// </summary>
         /// <param name="matchedPattern">The matched text to validate as an ADO PAT (or not).</param>
-        /// <param name="performDynamicValidation">Execute dynamic validation of matched pattern, if available.</param>
+        /// <param name="performDynamicValidation">Execute dynamic validation of matched pattern, if available.
+        /// This parameter should be set to 'false' on exit if it was received as 'true' but the validator
+        /// cannot actually perform any dynamic validation.
+        /// </param>
+        /// <param name="failureLevel">
+        /// The current failure level associated with the match (if a match occurs). This parameter can be
+        /// set to a different failure level by the callee, if appropriate.
+        /// </param>
         /// <returns>True if the match is an unencoded ADO personal access token, otherwise return false.</returns>
 #pragma warning disable IDE0060 // Remove unused parameter
-        public static string IsValid(string matchedPattern, bool performDynamicValidation)
+        public static string IsValid(
+            string matchedPattern,
+            ref bool performDynamicValidation,
+            ref string failureLevel)
 #pragma warning restore IDE0060
         {
             return
