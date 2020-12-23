@@ -13,7 +13,7 @@
     <Content Include="*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="build\Security.targets">
+    <Content Include="build\Sarif.PatternMatcher.Security.targets">
       <PackagePath>build\</PackagePath>
     </Content>
   </ItemGroup>
