@@ -2,6 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
+
+using FluentAssertions;
 
 using Xunit;
 
@@ -9,24 +13,36 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security
 {
     public class AzureDevOpsPersonalAccessTokenValidatorTests
     {
-        [Theory]
-        [InlineData("deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead", "NoMatch")]
-        public void CheckIsValid(string input, string expected)
+        [Fact]
+        public void CheckIsValid()
         {
+            const string input = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead";
+
             bool performDynamicValidation = false;
             string failureLevel = "error";
             string result = AzureDevOpsPersonalAccessTokenValidator.IsValid(input, ref performDynamicValidation, ref failureLevel);
-            Assert.Equal(expected, result);
+            Assert.Equal("NoMatch", result);
         }
 
-        [Theory]
-        [InlineData("a")]
-        [InlineData("")]
-        public void CheckInvalidInput(string input)
+        [Fact]
+        public void CheckInvalidInput()
         {
+            var tests = new List<string> { "", "a" };
+            var stringBuilder = new StringBuilder();
+
             bool performDynamicValidation = false;
             string failureLevel = "error";
-            Assert.Throws<ArgumentException>(() => AzureDevOpsPersonalAccessTokenValidator.IsValid(input, ref performDynamicValidation, ref failureLevel));
+            foreach (string test in tests)
+            {
+                try
+                {
+                    AzureDevOpsPersonalAccessTokenValidator.IsValid(test, ref performDynamicValidation, ref failureLevel);
+                    stringBuilder.Append(test).AppendLine(" failed");
+                }
+                catch (ArgumentException) { }
+            }
+
+            stringBuilder.Length.Should().Be(0);
         }
     }
 }
