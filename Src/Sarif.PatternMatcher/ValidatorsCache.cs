@@ -35,11 +35,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             _ruleIdToMethodMap ??= LoadValidationAssemblies(ValidatorPaths);
 
             return ValidateHelper(_ruleIdToMethodMap,
-                                  ruleId,
-                                  matchedPattern,
-                                  ref dynamicValidation,
-                                  ref failureLevel,
-                                  out validatorMessage);
+                ruleId,
+                matchedPattern,
+                ref dynamicValidation,
+                ref failureLevel,
+                out validatorMessage);
         }
 
         internal static Validation ValidateHelper(

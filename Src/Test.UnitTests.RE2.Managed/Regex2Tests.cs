@@ -81,11 +81,12 @@ namespace Microsoft.RE2.Managed
             Assert.Throws<ArgumentException>(() => Regex2.IsMatch(sample, @"[^\.]+Tools", RegexOptions.IgnorePatternWhitespace));
             Assert.Throws<ArgumentException>(() => Regex2.IsMatch(sample, @"[^\.]+Tools", RegexOptions.RightToLeft));
             Assert.Throws<ArgumentException>(() => Regex2.IsMatch(sample, @"[^\.]+Tools", RegexOptions.ECMAScript));
-        }
 
-        private string MatchToString(Match2 match, String8 content)
-        {
-            return $"({match.Index}, {match.Length}: '{content.Substring(match.Index, match.Length)}')";
+            // Insensitive case
+            Assert.True(Regex2.IsMatch(String8.Convert("aA", ref buffer), "(?i)A(?-i)A"));
+            Assert.True(Regex2.IsMatch(String8.Convert("AA", ref buffer), "(?i)A(?-i)A"));
+            Assert.False(Regex2.IsMatch(String8.Convert("aa", ref buffer), "(?i)A(?-i)A"));
+            Assert.False(Regex2.IsMatch(String8.Convert("Aa", ref buffer), "(?i)A(?-i)A"));
         }
 
         [Fact]
@@ -157,6 +158,33 @@ namespace Microsoft.RE2.Managed
             // And so we'll loosen this assert in order to account for the possibility that other test
             // threads have retrieved a cahce and been preempted while this test is executing.
             Assert.True(Regex2.RegexThreadCacheCount <= threadCount * 2);
+        }
+
+        [Fact]
+        public void Regex2_MatchAndClear()
+        {
+            byte[] buffer = null;
+
+            // Matching should create one parsed regex
+            Assert.True(Regex2.IsMatch(String8.Convert("aA", ref buffer), "(?i)A(?-i)A"));
+            Assert.Single(Regex2.ParsedRegexes);
+
+            // Same match should re-use
+            Assert.True(Regex2.IsMatch(String8.Convert("AA", ref buffer), "(?i)A(?-i)A"));
+            Assert.Single(Regex2.ParsedRegexes);
+
+            // Clear should remove parsed regex
+            Regex2.ClearRegexes();
+            Assert.Empty(Regex2.ParsedRegexes);
+
+            // Matching should work again
+            Assert.True(Regex2.IsMatch(String8.Convert("AA", ref buffer), "(?i)A(?-i)A"));
+            Assert.Single(Regex2.ParsedRegexes);
+        }
+
+        private string MatchToString(Match2 match, String8 content)
+        {
+            return $"({match.Index}, {match.Length}: '{content.Substring(match.Index, match.Length)}')";
         }
 
         private static void Run()
