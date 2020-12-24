@@ -35,12 +35,12 @@ namespace Microsoft.RE2.Managed
     /// </remarks>
     public static class Regex2
     {
-        private const string NamedGroupExpression = @"\(\?<[^>]+>";
-
         // We keep RE2 parsed Regexes for reuse. They can only be used by one thread at a time (they track match state),
         // so we want one copy per concurrent thread to avoid contention. This ConcurrentBag allows us to keep a set of
         // these caches which threads 'check out' and 'check in' so that they are reused as threads are discarded.
-        private static readonly ConcurrentBag<ParsedRegexCache> s_parsedRegexes = new ConcurrentBag<ParsedRegexCache>();
+        internal static readonly ConcurrentBag<ParsedRegexCache> ParsedRegexes = new ConcurrentBag<ParsedRegexCache>();
+
+        private const string NamedGroupExpression = @"\(\?<[^>]+>";
 
         // Track how many RegexCaches (the Dictionaries) we build; it should be bounded at the number of concurrent threads,
         // even if threads are destroyed and created.
@@ -173,12 +173,25 @@ namespace Microsoft.RE2.Managed
             }
         }
 
+        /// <summary>
+        /// Release all cached Regular Expressions.
+        /// </summary>
+        public static void ClearRegexes()
+        {
+            NativeMethods.ClearRegexes();
+            while (!ParsedRegexes.IsEmpty)
+            {
+                ParsedRegexes.TryTake(out ParsedRegexCache _);
+                Interlocked.Decrement(ref _regexThreadCacheCount);
+            }
+        }
+
         // Retrieve a Regex Cache before each match to reuse parsed Regex objects.
         // We don't keep a threadlocal one so that they aren't leaked if threads are discarded.
         private static ParsedRegexCache CheckoutCache()
         {
             ParsedRegexCache cache;
-            if (!s_parsedRegexes.TryTake(out cache))
+            if (!ParsedRegexes.TryTake(out cache))
             {
                 Interlocked.Increment(ref _regexThreadCacheCount);
                 cache = new ParsedRegexCache();
@@ -190,7 +203,7 @@ namespace Microsoft.RE2.Managed
         // Return the Regex Cache after use via a finally block.
         private static void CheckinCache(ParsedRegexCache cache)
         {
-            if (cache != null) { s_parsedRegexes.Add(cache); }
+            if (cache != null) { ParsedRegexes.Add(cache); }
         }
 
         // Get the integer ID of the cached copy of the Regex from the native side; cache it if it hasn't been parsed.
@@ -290,7 +303,7 @@ namespace Microsoft.RE2.Managed
         ///  RE2.Native returns an integer index to refer to the cached regexes.
         ///  This class tracks Regexes we've had RE2 parse before to reuse them.
         /// </summary>
-        private class ParsedRegexCache : Dictionary<Tuple<string, RegexOptions>, int>
+        internal class ParsedRegexCache : Dictionary<Tuple<string, RegexOptions>, int>
         { }
     }
 }

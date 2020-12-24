@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-using FluentAssertions;
+using BenchmarkDotNet.Attributes;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.Strings.Interop;
@@ -14,25 +14,24 @@ using Moq;
 
 using Newtonsoft.Json;
 
-using Xunit;
-
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks
 {
-    public class AnalyzeCommandTests
+    [MemoryDiagnoser]
+    public class AnalyzeCommandBenchmarks
     {
-        [Fact]
+        [Benchmark]
         public void AnalyzeCommand_SimpleAnalysisDotNetRegex()
         {
             AnalyzeCommand(DotNetRegex.Instance);
         }
 
-        [Fact]
+        [Benchmark]
         public void AnalyzeCommand_SimpleAnalysisCachedDotNetRegex()
         {
             AnalyzeCommand(CachedDotNetRegex.Instance);
         }
 
-        [Fact]
+        [Benchmark]
         public void AnalyzeCommand_SimpleAnalysisRegex2()
         {
             AnalyzeCommand(RE2Regex.Instance);
@@ -102,14 +101,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
 
             PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
-
-            testLogger.Results.Should().NotBeNull();
-            testLogger.Results.Count.Should().Be(2);
-
-            foreach (Result result in testLogger.Results)
-            {
-                result.Level.Should().Be(FailureLevel.Error);
-            }
         }
     }
 }
