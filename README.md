@@ -24,7 +24,7 @@
 
 ## How To Contribute
 
-TypeScript-Handbook is accepting contributions. If you've submitted a PR for an existing issue, please post a comment in the issue to avoid duplication of effort. See our [CONTRIBUTING](/CONTRIBUTING.md) file for more information - it also contains guidelines for how to submit a PR.
+sarif-pattern-matcher is accepting contributions. If you've submitted a PR for an existing issue, please post a comment in the issue to avoid duplication of effort. See our [CONTRIBUTING](/CONTRIBUTING.md) file for more information - it also contains guidelines for how to submit a PR.
 
 
 ## License
