@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC1003",
-              "name": "SearchSkimmer",
+              "id": "SEC1003/ASCIIArmoredFile",
+              "name": "SEC1003/ASCIIArmoredFile",
               "fullDescription": {
                 "text": "Review potentially sensitive files in versioned engineering content and other locations for security risk."
               },

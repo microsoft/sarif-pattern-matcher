@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC1004/Memory/Allocation",
-              "name": "SearchSkimmer",
+              "id": "SEC1004/Memory/Allocation/_alloca",
+              "name": "SEC1004/Memory/Allocation/_alloca",
               "fullDescription": {
                 "text": "Developers should use secure API in preferance of insecure alternates."
               },

@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC1001",
-              "name": "SearchSkimmer",
+              "id": "SEC1001/AzureDevOpsPersonalAccessToken",
+              "name": "SEC1001/AzureDevOpsPersonalAccessToken",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
