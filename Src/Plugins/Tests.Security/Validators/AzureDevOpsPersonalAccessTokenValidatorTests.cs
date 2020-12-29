@@ -3,46 +3,91 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 using FluentAssertions;
 
 using Xunit;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class AzureDevOpsPersonalAccessTokenValidatorTests
     {
-        [Fact]
-        public void CheckIsValid()
+        internal class TestCase
         {
-            const string input = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead";
+            public string Title;
+            public string Input;
+            public string ExpectedValidationState;
+            public bool PerformDynamicValidation;
+            public string FailureLevel;
+        }
 
-            bool performDynamicValidation = false;
-            string failureLevel = "error";
-            string result = AzureDevOpsPersonalAccessTokenValidator.IsValid(input, ref performDynamicValidation, ref failureLevel);
-            Assert.Equal("NoMatch", result);
+        internal static TestCase[] s_coreTestCases = new[]
+        {
+            new TestCase
+            {
+                Title = "NoMatch due to invalid PAT CRC, no dynamic validation requested.",
+                Input = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead",
+                ExpectedValidationState = "NoMatch",
+                FailureLevel = "Error",
+            },
+            new TestCase
+            {
+                Title = "NoMatch due to invalid PAT CRC, dynamic validation requested.",
+                Input = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead",
+                ExpectedValidationState = "NoMatch",
+                FailureLevel = "Warning",
+                PerformDynamicValidation = true
+            }
+        };
+
+        [Fact]
+        public void AzureDevOpsPersonalAccessTokenValidator_IsValidBasic()
+        {
+            var failedTestCases = new List<string>();
+
+            foreach (TestCase testCase in s_coreTestCases)
+            {
+                bool performDynamicValidation = testCase.PerformDynamicValidation;
+                string failureLevel = testCase.FailureLevel;
+
+                string state = AzureDevOpsPersonalAccessTokenValidator.IsValid(
+                    testCase.Input,
+                    null,
+                    ref performDynamicValidation,
+                    ref failureLevel);
+
+                string title = testCase.Title;
+
+                Verify(state == testCase.ExpectedValidationState, title, failedTestCases);
+
+                // The core ADO PAT validator does not perform any dynamic checking
+                Verify(performDynamicValidation == false, title, failedTestCases);
+
+                Verify(failureLevel == testCase.FailureLevel, title, failedTestCases);
+            }
+
+            failedTestCases.Should().BeEmpty();
+        }
+
+        private void Verify(bool condition, string title, List<string> failedTestCases)
+        {
+            if (!condition)
+            {
+                failedTestCases.Add(title);
+            }
         }
 
         [Fact]
-        public void CheckInvalidInput()
+        public void AzureDevOpsPersonalAccessTokenValidator_CheckInvalidInput()
         {
-            var tests = new List<string> { "", "a" };
-            var stringBuilder = new StringBuilder();
+            string[] invalidInputs = new[] { "a", string.Empty };
 
-            bool performDynamicValidation = false;
-            string failureLevel = "error";
-            foreach (string test in tests)
+            foreach (string input in invalidInputs)
             {
-                try
-                {
-                    AzureDevOpsPersonalAccessTokenValidator.IsValid(test, ref performDynamicValidation, ref failureLevel);
-                    stringBuilder.Append(test).AppendLine(" failed");
-                }
-                catch (ArgumentException) { }
+                bool performDynamicValidation = false;
+                string failureLevel = "error";
+                Assert.Throws<ArgumentException>(() => AzureDevOpsPersonalAccessTokenValidator.IsValid(input, null, ref performDynamicValidation, ref failureLevel));
             }
-
-            stringBuilder.Length.Should().Be(0);
         }
     }
 }

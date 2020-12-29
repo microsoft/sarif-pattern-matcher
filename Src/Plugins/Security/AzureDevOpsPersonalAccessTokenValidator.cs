@@ -2,10 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins;
-
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     internal static class AzureDevOpsPersonalAccessTokenValidator
     {
@@ -79,6 +78,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security
         /// Validate if the match is an AzureDevOps personal access token.
         /// </summary>
         /// <param name="matchedPattern">The matched text to validate as an ADO PAT (or not).</param>
+        /// <param name="groups">Capture groups from the regex match.</param>
         /// <param name="performDynamicValidation">Execute dynamic validation of matched pattern, if available.
         /// This parameter should be set to 'false' on exit if it was received as 'true' but the validator
         /// cannot actually perform any dynamic validation.
@@ -91,10 +91,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security
 #pragma warning disable IDE0060 // Remove unused parameter
         public static string IsValid(
             string matchedPattern,
+            Dictionary<string, string> groups,
             ref bool performDynamicValidation,
             ref string failureLevel)
-#pragma warning restore IDE0060
         {
+#pragma warning restore IDE0060
+
+            // This plugin does not perform any dynamic validation.
+            // We therefore set this setting to false. This is a
+            // clue to the caller not to warn the user that, e.g.,
+            // dynamic analysis was available but not exercised.
+            performDynamicValidation = false;
+
             return
                 IsChecksumValid(matchedPattern, ChecksumPAT) ||
                 IsChecksumValid(matchedPattern, ChecksumADOAppSecret) ?

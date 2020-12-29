@@ -16,7 +16,7 @@ using Newtonsoft.Json;
 
 using Xunit.Abstractions;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public abstract class EndToEndTests : FileDiffingUnitTests
     {
@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security
 
         protected abstract string RuleId { get; }
 
-        protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security.TestData.{TypeUnderTest}";
+        protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.TestData.{TypeUnderTest}";
 
         protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @"Plugins\Tests.Security");
 

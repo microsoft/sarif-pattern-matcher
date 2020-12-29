@@ -28,15 +28,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public Validation Validate(
             string ruleId,
             string matchedPattern,
+            Dictionary<string, string> groups,
             ref bool dynamicValidation,
             ref string failureLevel,
             out string validatorMessage)
         {
             _ruleIdToMethodMap ??= LoadValidationAssemblies(ValidatorPaths);
 
-            return ValidateHelper(_ruleIdToMethodMap,
+            return ValidateHelper(
+                _ruleIdToMethodMap,
                 ruleId,
                 matchedPattern,
+                groups,
                 ref dynamicValidation,
                 ref failureLevel,
                 out validatorMessage);
@@ -46,6 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Dictionary<string, MethodInfo> ruleIdToMethodMap,
             string ruleId,
             string matchedPattern,
+            IDictionary<string, string> groups,
             ref bool dynamicValidation,
             ref string failureLevel,
             out string validatorMessage)
@@ -58,14 +62,33 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return Validation.ValidatorNotFound;
             }
 
-            object[] arguments = new object[] { matchedPattern, dynamicValidation, failureLevel };
+            object[] arguments = new object[]
+            {
+                matchedPattern,
+                groups,
+                dynamicValidation,
+                failureLevel,
+            };
 
-            string validationText =
-                (string)methodInfo.Invoke(
-                    obj: null, arguments);
+            string validationText = null;
 
-            dynamicValidation = (bool)arguments[1];
-            failureLevel = (string)arguments[2];
+            string currentDirectory = Environment.CurrentDirectory;
+            try
+            {
+                Environment.CurrentDirectory =
+                    Path.GetDirectoryName(methodInfo.ReflectedType.Assembly.Location);
+
+                validationText =
+                    (string)methodInfo.Invoke(
+                        obj: null, arguments);
+            }
+            finally
+            {
+                Environment.CurrentDirectory = currentDirectory;
+            }
+
+            dynamicValidation = (bool)arguments[2];
+            failureLevel = (string)arguments[3];
 
             string[] tokens = validationText.Split('#');
 
@@ -73,12 +96,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 // TODO: raise an exception and disable this validator, which
                 // is returning illegal values.
-                return Validation.ValidatorNotFound;
+                return Validation.ValidatorReturnedIllegalValue;
             }
 
             if (tokens.Length > 1)
             {
-                validatorMessage = tokens[1];
+                validatorMessage = " " + tokens[1].Trim();
             }
 
             return result;
@@ -116,7 +139,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                         MethodInfo mi = type.GetMethod(
                             "IsValid",
-                            new[] { typeof(string), typeof(bool).MakeByRefType(), typeof(string).MakeByRefType() },
+                            new[]
+                            {
+                                typeof(string),
+                                typeof(Dictionary<string, string>),
+                                typeof(bool).MakeByRefType(),
+                                typeof(string).MakeByRefType(),
+                            },
                             null);
 
                         if (mi == null || mi.ReturnType != typeof(string)) { continue; }

@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC1002",
-              "name": "SearchSkimmer",
+              "id": "SEC1002/SocialSecurityNumber",
+              "name": "SEC1002/SocialSecurityNumber",
               "fullDescription": {
                 "text": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc."
               },
