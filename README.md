@@ -1,4 +1,4 @@
-<p align="center"><img src="Src/img/header_img.png" width="440" /></p>
+<h1 align="center"> sarif-pattern-matcher </h1>
 
 <p align="center">
 
