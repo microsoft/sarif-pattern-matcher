@@ -369,7 +369,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Region region = ConstructRegion(context, regionFlexMatch);
 
-                var messageArguments = new Dictionary<string, string>(matchExpression.MessageArguments);
+                var messageArguments = matchExpression.MessageArguments != null ?
+                    new Dictionary<string, string>(matchExpression.MessageArguments) :
+                    new Dictionary<string, string>();
+
                 messageArguments["encoding"] = binary64DecodedMatch != null ?
                     "base64-encoded" :
                     "plaintext";
@@ -616,8 +619,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 foreach (KeyValuePair<string, string> kv in additionalArguments)
                 {
-                    int index = namedArgumentToIndexMap[kv.Key];
-                    arguments[index] = kv.Value;
+                    if (namedArgumentToIndexMap.TryGetValue(kv.Key, out int index))
+                    {
+                        arguments[index] = kv.Value;
+                    }
                 }
             }
 
