@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\src\Plugins\ValidationState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\src\Plugins\Utilities.cs" />
   </ItemGroup>
 
 </Project>
