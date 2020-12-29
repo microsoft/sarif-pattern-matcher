@@ -5,7 +5,7 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.plugins.props" />
 
   <PropertyGroup Label="AssemblyAttributes">
-    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Security</RootNamespace>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.Security</RootNamespace>
     <PackageId>Sarif.PatternMatcher.Security</PackageId>
   </PropertyGroup>
   

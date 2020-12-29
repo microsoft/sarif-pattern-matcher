@@ -4,7 +4,7 @@
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Security
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class ReviewPotentiallySensitiveFilesTests : EndToEndTests
     {

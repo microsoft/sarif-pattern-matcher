@@ -23,7 +23,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private static readonly Regex namedArgumentsRegex =
             new Regex(@"[^}]?{(?<index>\d+):(?i)(?<name>[a-z]+)}[\}]*", RegexDefaults.DefaultOptionsCaseSensitive);
 
-        private string _subId;
         private readonly string _id;
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
         private readonly IRegex _engine;
@@ -35,6 +34,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly MultiformatMessageString _fullDescription;
         private readonly Dictionary<string, int> _argumentNameToIndex;
         private readonly Dictionary<string, MultiformatMessageString> _messageStrings;
+        private string _subId;
 
         private FileRegionsCache _regionsCache;
 
@@ -331,26 +331,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                     validationState = string.Empty;
                                 }
                             }
+                            else if (dynamic)
+                            {
+                                validationState = ", the validity of which could not be determined";
+                            }
                             else
                             {
-                                if (dynamic)
-                                {
-                                    validationState = ", the validity of which could not be determined";
-                                }
-                                else
-                                {
-                                    // Validation was requested. But the plugin indicated
-                                    // that it can't perform this work in any case.
-                                    validationState = string.Empty;
-                                }
+                                // Validation was requested. But the plugin indicated
+                                // that it can't perform this work in any case.
+                                validationState = string.Empty;
                             }
+
                             break;
                         }
 
                         case Validation.ValidatorNotFound:
                         {
                             // TODO: should we have an explicit indicator in
-                            // all cases that tells us whether this is an 
+                            // all cases that tells us whether this is an
                             // expected condition or not?
                             break;
                         }
@@ -369,7 +367,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Region region = ConstructRegion(context, regionFlexMatch);
 
-                var messageArguments = matchExpression.MessageArguments != null ?
+                Dictionary<string, string> messageArguments = matchExpression.MessageArguments != null ?
                     new Dictionary<string, string>(matchExpression.MessageArguments) :
                     new Dictionary<string, string>();
 
@@ -413,12 +411,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             _regionsCache ??= new FileRegionsCache();
 
-            region = _regionsCache.PopulateTextRegionProperties(
+            return _regionsCache.PopulateTextRegionProperties(
                 region,
                 context.TargetUri,
                 populateSnippet: true,
                 fileText: context.FileContents);
-            return region;
         }
 
         private Result ConstructResult(
