@@ -53,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string state = AzureDevOpsPersonalAccessTokenValidator.IsValid(
                     testCase.Input,
                     null,
-                    ref performDynamicValidation, 
+                    ref performDynamicValidation,
                     ref failureLevel);
 
                 string title = testCase.Title;
@@ -63,7 +63,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 // The core ADO PAT validator does not perform any dynamic checking
                 Verify(performDynamicValidation == false, title, failedTestCases);
 
-                Verify(failureLevel == testCase.FailureLevel, title, failedTestCases);                
+                Verify(failureLevel == testCase.FailureLevel, title, failedTestCases);
             }
 
             failedTestCases.Should().BeEmpty();
@@ -80,7 +80,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         [Fact]
         public void AzureDevOpsPersonalAccessTokenValidator_CheckInvalidInput()
         {
-            string[] invalidInputs = new[] { "a", string.Empty};
+            string[] invalidInputs = new[] { "a", string.Empty };
 
             foreach (string input in invalidInputs)
             {
