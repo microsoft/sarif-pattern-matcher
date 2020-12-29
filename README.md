@@ -2,12 +2,12 @@
 
 <p align="center">
 
-  <a href="https://github.com/microsoft/sarif-pattern-matcher">
+  <a href="https://github.com/microsoft/sarif-pattern-matcher/releases/latest">
     <img src="https://img.shields.io/github/v/release/microsoft/sarif-pattern-matcher"
       alt="release" />
   </a>
   
-  <a href="https://github.com/microsoft/sarif-pattern-matcher">
+  <a href="https://github.com/microsoft/sarif-pattern-matcher/releases">
     <img src="https://img.shields.io/github/v/release/microsoft/sarif-pattern-matcher?include_prereleases&label=pre-release"
       alt="pre-release" />
   </a>
