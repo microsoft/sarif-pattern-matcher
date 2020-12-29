@@ -23,6 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private static readonly Regex namedArgumentsRegex =
             new Regex(@"[^}]?{(?<index>\d+):(?i)(?<name>[a-z]+)}[\}]*", RegexDefaults.DefaultOptionsCaseSensitive);
 
+        private string _subId;
         private readonly string _id;
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
         private readonly IRegex _engine;
@@ -95,9 +96,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override Uri HelpUri => s_helpUri;
 
-        public override string Id => _id;
+        public override string Id => !string.IsNullOrEmpty(_subId) ?
+                    _id + "/" + _subId :
+                    _id;
 
-        public override string Name => base.Name;
+        public override string Name => Id;
 
         public override MultiformatMessageString FullDescription => _fullDescription;
 
@@ -153,10 +156,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
                 {
-                    var fileNameRegex = new Regex(matchExpression.FileNameAllowRegex, RegexOptions.IgnoreCase);
-
-                    // If file is not a match, skip.
-                    if (!fileNameRegex.IsMatch(context.TargetUri.LocalPath))
+                    if (!_engine.IsMatch(context.TargetUri.LocalPath,
+                                         matchExpression.FileNameAllowRegex,
+                                         RegexDefaults.DefaultOptionsCaseInsensitive))
                     {
                         continue;
                     }
@@ -164,10 +166,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex))
                 {
-                    var fileNameRegex = new Regex(matchExpression.FileNameDenyRegex, RegexOptions.IgnoreCase);
-
-                    // If file is a match, skip.
-                    if (fileNameRegex.IsMatch(context.TargetUri.LocalPath))
+                    if (_engine.IsMatch(context.TargetUri.LocalPath,
+                                        matchExpression.FileNameDenyRegex,
+                                        RegexDefaults.DefaultOptionsCaseInsensitive))
                     {
                         continue;
                     }
@@ -206,10 +207,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
-            string ruleId = this.Id +
-                (!string.IsNullOrEmpty(matchExpression.SubId) ?
-                    "/" + matchExpression.SubId :
-                    string.Empty);
+            _subId = matchExpression.SubId;
 
             FailureLevel level = matchExpression.Level != 0 ?
                 matchExpression.Level :
@@ -217,11 +215,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
             {
-                RunMatchExpressionForContentsRegex(binary64DecodedMatch, context, matchExpression, ruleId, level);
+                RunMatchExpressionForContentsRegex(binary64DecodedMatch, context, matchExpression, level);
             }
             else if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
             {
-                RunMatchExpressionForFileNameRegex(context, matchExpression, ruleId, level);
+                RunMatchExpressionForFileNameRegex(context, matchExpression, level);
             }
             else
             {
@@ -233,7 +231,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FlexMatch binary64DecodedMatch,
             AnalyzeContext context,
             MatchExpression matchExpression,
-            string ruleId,
             FailureLevel level)
         {
             string searchText = binary64DecodedMatch != null
@@ -244,10 +241,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 if (!flexMatch.Success) { continue; }
 
-                var regex = new Regex(matchExpression.ContentsRegex, RegexDefaults.DefaultOptionsCaseInsensitive);
+                Regex regex = CachedDotNetRegex.GetOrCreateRegex(
+                                matchExpression.ContentsRegex,
+                                RegexDefaults.DefaultOptionsCaseInsensitive);
+
                 Match match = regex.Match(flexMatch.Value);
 
                 string fingerprint = match.Groups["fingerprint"].Value;
+
+                Dictionary<string, string> groups = match.Groups.CopyToDictionary(regex.GetGroupNames());
 
                 if (string.IsNullOrEmpty(fingerprint))
                 {
@@ -260,11 +262,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Validation state = 0;
                 string validatorMessage = null;
 
+                string validationState = string.Empty;
+
                 if (_validators != null)
                 {
                     state = _validators.Validate(
-                        matchExpression.SubId ?? ruleId,
+                        matchExpression.SubId ?? _id,
                         fingerprint,
+                        groups,
                         ref dynamic,
                         ref levelText,
                         out validatorMessage);
@@ -277,6 +282,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         {
                             // The validator determined the match is a false positive.
                             // i.e., it is not the kind of artifact we're looking for.
+                            // We should suspend processing and move to the next match.
                             continue;
                         }
 
@@ -284,95 +290,188 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         case Validation.ValidatorReturnedIllegalValue:
                         {
                             // The validator returned a bad value.
-                            // TODO logging
+                            // TODO: we should log this condition
+                            // and then continue processing.
                             break;
                         }
 
                         case Validation.Valid:
+                        {
+                            validationState = " which was determined to be valid";
+                            break;
+                        }
+
                         case Validation.Invalid:
+                        {
+                            validationState = " which was determined to be invalid";
+                            break;
+                        }
+
+                        case Validation.InvalidForConsultedAuthorities:
+                        {
+                            validationState = " which was determined to be invalid for all consulted authorities";
+                            break;
+                        }
+
                         case Validation.Unknown:
                         {
-                            // We will log all these cases.
-                            // TODO: update result kind/level for
-                            // as appropriate for these cases.
+                            if (!context.DynamicValidation)
+                            {
+                                if (dynamic)
+                                {
+                                    // This indicates that dynamic validation was disabled but we
+                                    // passed this result to a validator that could have performed
+                                    // this work.
+                                    validationState = ". No validation occurred for this match as it was not enabled. Pass '--dynamic-validation' on the command-line to enable it";
+                                }
+                                else
+                                {
+                                    // No validation was requested. The plugin indicated
+                                    // that is can't perform this work in any case.
+                                    validationState = string.Empty;
+                                }
+                            }
+                            else
+                            {
+                                if (dynamic)
+                                {
+                                    validationState = ", the validity of which could not be determined";
+                                }
+                                else
+                                {
+                                    // Validation was requested. But the plugin indicated
+                                    // that it can't perform this work in any case.
+                                    validationState = string.Empty;
+                                }
+                            }
                             break;
+                        }
+
+                        case Validation.ValidatorNotFound:
+                        {
+                            // TODO: should we have an explicit indicator in
+                            // all cases that tells us whether this is an 
+                            // expected condition or not?
+                            break;
+                        }
+
+                        default:
+                        {
+                            throw new InvalidOperationException($"Unrecognized validation value '{state}'.");
                         }
                     }
                 }
-
-                IList<string> arguments = GetMessageArguments(
-                    match,
-                    _argumentNameToIndex,
-                    context.TargetUri.LocalPath,
-                    base64Encoded: binary64DecodedMatch != null,
-                    validatorMessage: validatorMessage,
-                    matchExpression.MessageArguments);
 
                 // If we're matching against decoded contents, the region should
                 // relate to the base64-encoded scan target content. We do use
                 // the decoded content for the fingerprint, however.
                 FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch;
 
-                var region = new Region
-                {
-                    CharOffset = regionFlexMatch.Index,
-                    CharLength = regionFlexMatch.Length,
-                };
+                Region region = ConstructRegion(context, regionFlexMatch);
 
-                _regionsCache ??= new FileRegionsCache();
+                var messageArguments = new Dictionary<string, string>(matchExpression.MessageArguments);
+                messageArguments["encoding"] = binary64DecodedMatch != null ?
+                    "base64-encoded" :
+                    "plaintext";
 
-                region = _regionsCache.PopulateTextRegionProperties(
-                    region,
+                messageArguments["validationState"] = validationState;
+
+                IList<string> arguments = GetMessageArguments(
+                    match,
+                    _argumentNameToIndex,
+                    context.TargetUri.LocalPath,
+                    validatorMessage: validatorMessage,
+                    messageArguments);
+
+                Result result = ConstructResult(
                     context.TargetUri,
-                    populateSnippet: true,
-                    fileText: context.FileContents);
+                    Id,
+                    level,
+                    region,
+                    flexMatch,
+                    matchExpression.Fixes,
+                    arguments);
 
-                var location = new Location()
-                {
-                    PhysicalLocation = new PhysicalLocation
-                    {
-                        ArtifactLocation = new ArtifactLocation
-                        {
-                            Uri = context.TargetUri,
-                        },
-                        Region = region,
-                    },
-                };
-
-                var result = new Result()
-                {
-                    RuleId = ruleId,
-                    Level = level,
-                    Message = new Message()
-                    {
-                        Id = "Default",
-                        Arguments = arguments,
-                    },
-                    Locations = new List<Location>(new[] { location }),
-                };
-
-                if (matchExpression.Fixes?.Count > 0)
-                {
-                    // Build arguments
-                    var argumentNameToValueMap = new Dictionary<string, string>();
-
-                    foreach (KeyValuePair<string, int> kv in _argumentNameToIndex)
-                    {
-                        argumentNameToValueMap["{" + kv.Key + "}"] = arguments[kv.Value];
-                    }
-
-                    foreach (SimpleFix fix in matchExpression.Fixes.Values)
-                    {
-                        ExpandArguments(fix, argumentNameToValueMap);
-                        AddFixToResult(flexMatch, fix, result);
-                    }
-                }
-
-                context.Logger.Log(this, result);
+                // This skimmer instance mutates its reporting descriptor state,
+                // for example, the sub-id may change for every match
+                // expression. We will therefore generate a snapshot of
+                // current ReportingDescriptor state when logging.
+                context.Logger.Log(this.DeepClone(), result);
             }
         }
 
-        private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, string ruleId, FailureLevel level)
+        private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch)
+        {
+            var region = new Region
+            {
+                CharOffset = regionFlexMatch.Index,
+                CharLength = regionFlexMatch.Length,
+            };
+
+            _regionsCache ??= new FileRegionsCache();
+
+            region = _regionsCache.PopulateTextRegionProperties(
+                region,
+                context.TargetUri,
+                populateSnippet: true,
+                fileText: context.FileContents);
+            return region;
+        }
+
+        private Result ConstructResult(
+            Uri targetUri,
+            string ruleId,
+            FailureLevel level,
+            Region region,
+            FlexMatch flexMatch,
+            IDictionary<string, SimpleFix> fixes,
+            IList<string> arguments)
+        {
+            var location = new Location()
+            {
+                PhysicalLocation = new PhysicalLocation
+                {
+                    ArtifactLocation = new ArtifactLocation
+                    {
+                        Uri = targetUri,
+                    },
+                    Region = region,
+                },
+            };
+
+            var result = new Result()
+            {
+                RuleId = ruleId,
+                Level = level,
+                Message = new Message()
+                {
+                    Id = "Default",
+                    Arguments = arguments,
+                },
+                Locations = new List<Location>(new[] { location }),
+            };
+
+            if (fixes?.Count > 0)
+            {
+                // Build arguments that may be required for fix text.
+                var argumentNameToValueMap = new Dictionary<string, string>();
+
+                foreach (KeyValuePair<string, int> kv in _argumentNameToIndex)
+                {
+                    argumentNameToValueMap["{" + kv.Key + "}"] = arguments[kv.Value];
+                }
+
+                foreach (SimpleFix fix in fixes.Values)
+                {
+                    ExpandArguments(fix, argumentNameToValueMap);
+                    AddFixToResult(flexMatch, fix, result);
+                }
+            }
+
+            return result;
+        }
+
+        private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level)
         {
             IList<string> arguments = GetMessageArguments(
                 _argumentNameToIndex,
@@ -393,7 +492,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var result = new Result()
             {
-                RuleId = ruleId,
+                RuleId = Id,
                 Level = level,
                 Message = new Message()
                 {
@@ -489,7 +588,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Match match,
             Dictionary<string, int> namedArgumentToIndexMap,
             string scanTargetPath,
-            bool base64Encoded,
             string validatorMessage,
             Dictionary<string, string> additionalArguments)
         {
@@ -505,10 +603,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 value = kv.Key == nameof(scanTargetPath)
                     ? scanTargetPath
-                    : value;
-
-                value = kv.Key == "encoding"
-                    ? (base64Encoded ? "base64-encoded" : "plaintext")
                     : value;
 
                 value = kv.Key == "validatorMessage"
