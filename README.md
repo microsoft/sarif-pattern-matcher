@@ -1,7 +1,7 @@
 # sarif-pattern-matcher
 
-[![release](https://img.shields.io/github/v/release/microsoft/sarif-pattern-matcher)](https://github.com/microsoft/sarif-pattern-matcher/releases/latest)
-[![pre-release](https://img.shields.io/github/v/release/microsoft/sarif-pattern-matcher?include_prereleases)](https://github.com/microsoft/sarif-pattern-matcher/releases)
+[![release](https://img.shields.io/github/v/release/microsoft/sarif-pattern-matcher?label=release)](https://github.com/microsoft/sarif-pattern-matcher/releases/latest)
+[![releases](https://img.shields.io/github/v/release/microsoft/sarif-pattern-matcher?include_prereleases&label=pre-release)](https://github.com/microsoft/sarif-pattern-matcher/releases)
 [![license](https://img.shields.io/github/license/microsoft/sarif-pattern-matcher)](https://github.com/microsoft/sarif-pattern-matcher/blob/master/LICENSE)
 
 
