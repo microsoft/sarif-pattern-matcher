@@ -1,26 +1,11 @@
-<h1 align="center"> sarif-pattern-matcher </h1>
+# sarif-pattern-matcher
 
-<p align="center">
+[![release](https://img.shields.io/github/v/release/microsoft/sarif-pattern-matcher)](https://github.com/microsoft/sarif-pattern-matcher/releases/latest)
+[![pre-release](https://img.shields.io/github/v/release/microsoft/sarif-pattern-matcher?include_prereleases)](https://github.com/microsoft/sarif-pattern-matcher/releases)
+[![license](https://img.shields.io/github/license/microsoft/sarif-pattern-matcher)](https://github.com/microsoft/sarif-pattern-matcher/blob/master/LICENSE)
 
-  <a href="https://github.com/microsoft/sarif-pattern-matcher/releases/latest">
-    <img src="https://img.shields.io/github/v/release/microsoft/sarif-pattern-matcher"
-      alt="release" />
-  </a>
-  
-  <a href="https://github.com/microsoft/sarif-pattern-matcher/releases">
-    <img src="https://img.shields.io/github/v/release/microsoft/sarif-pattern-matcher?include_prereleases&label=pre-release"
-      alt="pre-release" />
-  </a>
-  	
- <a href="https://github.com/microsoft/sarif-pattern-matcher/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/microsoft/sarif-pattern-matcher"
-      alt="License: MIT" />
-  </a>
-  
-  
-</p>
 
-<p align="center">Quality domain agnostic regular expression pattern matcher that persists results to SARIF</p>
+Quality domain agnostic regular expression pattern matcher that persists results to SARIF
 
 ## How To Contribute
 
