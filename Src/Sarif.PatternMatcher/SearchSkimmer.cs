@@ -292,23 +292,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             // The validator returned a bad value.
                             // TODO: we should log this condition
                             // and then continue processing.
+                            level = FailureLevel.Error;
                             break;
                         }
 
                         case Validation.Valid:
                         {
+                            level = FailureLevel.Error;
                             validationState = " which was determined to be valid";
                             break;
                         }
 
                         case Validation.Invalid:
                         {
+                            level = FailureLevel.Warning;
                             validationState = " which was determined to be invalid";
                             break;
                         }
 
                         case Validation.InvalidForConsultedAuthorities:
                         {
+                            level = FailureLevel.Warning;
                             validationState = " which was determined to be invalid for all consulted authorities";
                             break;
                         }
