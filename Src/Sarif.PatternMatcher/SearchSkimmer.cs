@@ -27,6 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
         private readonly IRegex _engine;
         private readonly IFileSystem _fileSystem;
+        private readonly FileRegionsCache _fileRegionsCache;
         private readonly ValidatorsCache _validators;
         private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
@@ -34,12 +35,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly Dictionary<string, MultiformatMessageString> _messageStrings;
         private string _subId;
 
-        private FileRegionsCache _regionsCache;
-
-        public SearchSkimmer(IRegex engine, ValidatorsCache validators, SearchDefinition definition, IFileSystem fileSystem = null)
+        public SearchSkimmer(IRegex engine, ValidatorsCache validators, FileRegionsCache fileRegionsCache, SearchDefinition definition, IFileSystem fileSystem = null)
             : this(
                   engine,
                   validators,
+                  fileRegionsCache,
                   definition.Id,
                   definition.Name,
                   definition.Level,
@@ -55,6 +55,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public SearchSkimmer(
             IRegex engine,
             ValidatorsCache validators,
+            FileRegionsCache fileRegionsCache,
             string id,
             string name,
             FailureLevel defaultLevel,
@@ -70,6 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             _name = name;
             _engine = engine;
             _validators = validators;
+            _fileRegionsCache = fileRegionsCache;
 
             this.DefaultConfiguration.Level = defaultLevel;
 
@@ -428,9 +430,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 CharLength = regionFlexMatch.Length + lengthOffset,
             };
 
-            _regionsCache ??= new FileRegionsCache();
-
-            return _regionsCache.PopulateTextRegionProperties(
+            return _fileRegionsCache.PopulateTextRegionProperties(
                 region,
                 context.TargetUri,
                 populateSnippet: true,
