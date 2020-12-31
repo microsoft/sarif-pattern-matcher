@@ -241,6 +241,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 if (!flexMatch.Success) { continue; }
 
+                string currentId = !string.IsNullOrEmpty(matchExpression.SubId) ? _id + "/" + matchExpression.SubId : _id;
                 Regex regex = CachedDotNetRegex.GetOrCreateRegex(
                                 matchExpression.ContentsRegex,
                                 RegexDefaults.DefaultOptionsCaseInsensitive);
@@ -390,7 +391,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Result result = ConstructResult(
                     context.TargetUri,
-                    Id,
+                    currentId,
                     level,
                     region,
                     flexMatch,
@@ -399,9 +400,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 // This skimmer instance mutates its reporting descriptor state,
                 // for example, the sub-id may change for every match
-                // expression. We will therefore generate a snapshot of
-                // current ReportingDescriptor state when logging.
-                context.Logger.Log(this.DeepClone(), result);
+                // expression. So, before inserting, we should clone and update
+                // the Id to be the correct one.
+                ReportingDescriptor rule = this.DeepClone();
+                rule.Id = currentId;
+
+                context.Logger.Log(rule, result);
             }
         }
 
