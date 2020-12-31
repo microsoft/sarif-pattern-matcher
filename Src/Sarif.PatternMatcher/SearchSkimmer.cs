@@ -27,8 +27,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
         private readonly IRegex _engine;
         private readonly IFileSystem _fileSystem;
-        private readonly string _fileNameDenyRegex;
-        private readonly string _fileNameAllowRegex;
         private readonly ValidatorsCache _validators;
         private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
@@ -65,7 +63,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string fileNameAllowRegex,
             string defaultMessageString,
             IList<MatchExpression> matchExpressions,
-            IFileSystem fileSystem = null)
+            IFileSystem fileSystem = null,
+            Dictionary<string, string> strings = null)
         {
             _id = id;
             _name = name;
@@ -74,8 +73,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             this.DefaultConfiguration.Level = defaultLevel;
 
-            _fileNameDenyRegex = fileNameDenyRegex;
-            _fileNameAllowRegex = fileNameAllowRegex;
+            foreach (MatchExpression matchExpression in matchExpressions)
+            {
+                matchExpression.FileNameDenyRegex ??= fileNameDenyRegex;
+                matchExpression.FileNameAllowRegex ??= fileNameAllowRegex;
+
+                // Replacing common strings for real value.
+                if (matchExpression.FileNameAllowRegex?.StartsWith("$") == true && strings.ContainsKey(matchExpression.FileNameAllowRegex.Substring(1)))
+                {
+                    matchExpression.FileNameAllowRegex = strings[matchExpression.FileNameAllowRegex.Substring(1)];
+                }
+
+                // Replacing common strings for real value.
+                if (matchExpression.FileNameDenyRegex?.StartsWith("$") == true && strings.ContainsKey(matchExpression.FileNameDenyRegex.Substring(1)))
+                {
+                    matchExpression.FileNameDenyRegex = strings[matchExpression.FileNameDenyRegex.Substring(1)];
+                }
+            }
 
             _matchExpressions = matchExpressions;
 
@@ -117,16 +131,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
-                string regex = matchExpression.FileNameDenyRegex ?? _fileNameDenyRegex;
-
-                if (!string.IsNullOrEmpty(regex) && _engine.IsMatch(path, regex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(path, matchExpression.FileNameDenyRegex))
                 {
                     continue;
                 }
 
-                regex = matchExpression.FileNameAllowRegex ?? _fileNameAllowRegex;
-
-                if (!string.IsNullOrEmpty(regex) && !_engine.IsMatch(path, regex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex) && !_engine.IsMatch(path, matchExpression.FileNameAllowRegex))
                 {
                     continue;
                 }

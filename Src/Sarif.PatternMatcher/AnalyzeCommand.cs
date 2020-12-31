@@ -69,7 +69,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             fileNameDenyRegex: definition.FileNameDenyRegex,
                             fileNameAllowRegex: definition.FileNameAllowRegex,
                             defaultMessageString: definition.Message,
-                            matchExpressions: definition.MatchExpressions));
+                            matchExpressions: definition.MatchExpressions,
+                            strings: definition.Strings));
 
                     const string singleSpace = " ";
 
