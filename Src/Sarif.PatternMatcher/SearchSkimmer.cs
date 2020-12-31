@@ -369,7 +369,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // the decoded content for the fingerprint, however.
                 FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch;
 
-                Region region = ConstructRegion(context, regionFlexMatch);
+                Region region = ConstructRegion(context, regionFlexMatch, fingerprint);
 
                 Dictionary<string, string> messageArguments = matchExpression.MessageArguments != null ?
                     new Dictionary<string, string>(matchExpression.MessageArguments) :
@@ -405,12 +405,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch)
+        private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch, string fingerprint)
         {
+            int indexOffset = regionFlexMatch.Value.String.IndexOf(fingerprint);
+            int lengthOffset = fingerprint.Length - regionFlexMatch.Length;
+
+            if (indexOffset == -1)
+            {
+                // If we can't find the fingerprint in the match, that means we matched against
+                // base64-decoded content (and therefore there is no region refinement to make).
+                indexOffset = 0;
+                lengthOffset = 0;
+            }
+
             var region = new Region
             {
-                CharOffset = regionFlexMatch.Index,
-                CharLength = regionFlexMatch.Length,
+                CharOffset = regionFlexMatch.Index + indexOffset,
+                CharLength = regionFlexMatch.Length + lengthOffset,
             };
 
             _regionsCache ??= new FileRegionsCache();
