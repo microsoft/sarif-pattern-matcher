@@ -153,13 +153,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             if (context.FileContents == null)
             {
-                lock (context)
-                {
-                    if (context.FileContents == null)
-                    {
-                        context.FileContents = _fileSystem.FileReadAllText(context.TargetUri.LocalPath);
-                    }
-                }
+                context.FileContents = _fileSystem.FileReadAllText(context.TargetUri.LocalPath);
             }
 
             foreach (MatchExpression matchExpression in _matchExpressions)
