@@ -28,8 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
         private readonly IRegex _engine;
         private readonly IFileSystem _fileSystem;
-        private readonly string _fileNameDenyRegex;
-        private readonly string _fileNameAllowRegex;
+        private readonly FileRegionsCache _fileRegionsCache;
         private readonly ValidatorsCache _validators;
         private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
@@ -37,12 +36,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly Dictionary<string, MultiformatMessageString> _messageStrings;
         private string _subId;
 
-        private FileRegionsCache _regionsCache;
-
-        public SearchSkimmer(IRegex engine, ValidatorsCache validators, SearchDefinition definition, IFileSystem fileSystem = null)
+        public SearchSkimmer(IRegex engine, ValidatorsCache validators, FileRegionsCache fileRegionsCache, SearchDefinition definition, IFileSystem fileSystem = null)
             : this(
                   engine,
                   validators,
+                  fileRegionsCache,
                   definition.Id,
                   definition.Name,
                   definition.Level,
@@ -58,6 +56,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public SearchSkimmer(
             IRegex engine,
             ValidatorsCache validators,
+            FileRegionsCache fileRegionsCache,
             string id,
             string name,
             FailureLevel defaultLevel,
@@ -66,17 +65,34 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string fileNameAllowRegex,
             string defaultMessageString,
             IList<MatchExpression> matchExpressions,
-            IFileSystem fileSystem = null)
+            IFileSystem fileSystem = null,
+            Dictionary<string, string> strings = null)
         {
             _id = id;
             _name = name;
             _engine = engine;
             _validators = validators;
+            _fileRegionsCache = fileRegionsCache;
 
             this.DefaultConfiguration.Level = defaultLevel;
 
-            _fileNameDenyRegex = fileNameDenyRegex;
-            _fileNameAllowRegex = fileNameAllowRegex;
+            foreach (MatchExpression matchExpression in matchExpressions)
+            {
+                matchExpression.FileNameDenyRegex ??= fileNameDenyRegex;
+                matchExpression.FileNameAllowRegex ??= fileNameAllowRegex;
+
+                // Replacing common strings for real value.
+                if (matchExpression.FileNameAllowRegex?.StartsWith("$") == true && strings.ContainsKey(matchExpression.FileNameAllowRegex.Substring(1)))
+                {
+                    matchExpression.FileNameAllowRegex = strings[matchExpression.FileNameAllowRegex.Substring(1)];
+                }
+
+                // Replacing common strings for real value.
+                if (matchExpression.FileNameDenyRegex?.StartsWith("$") == true && strings.ContainsKey(matchExpression.FileNameDenyRegex.Substring(1)))
+                {
+                    matchExpression.FileNameDenyRegex = strings[matchExpression.FileNameDenyRegex.Substring(1)];
+                }
+            }
 
             _matchExpressions = matchExpressions;
 
@@ -118,16 +134,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
-                string regex = matchExpression.FileNameDenyRegex ?? _fileNameDenyRegex;
-
-                if (!string.IsNullOrEmpty(regex) && _engine.IsMatch(path, regex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(path, matchExpression.FileNameDenyRegex))
                 {
                     continue;
                 }
 
-                regex = matchExpression.FileNameAllowRegex ?? _fileNameAllowRegex;
-
-                if (!string.IsNullOrEmpty(regex) && !_engine.IsMatch(path, regex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex) && !_engine.IsMatch(path, matchExpression.FileNameAllowRegex))
                 {
                     continue;
                 }
@@ -144,13 +156,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             if (context.FileContents == null)
             {
-                lock (context)
-                {
-                    if (context.FileContents == null)
-                    {
-                        context.FileContents = _fileSystem.FileReadAllText(context.TargetUri.LocalPath);
-                    }
-                }
+                context.FileContents = _fileSystem.FileReadAllText(context.TargetUri.LocalPath);
             }
 
             foreach (MatchExpression matchExpression in _matchExpressions)
@@ -425,9 +431,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 CharLength = regionFlexMatch.Length + lengthOffset,
             };
 
-            _regionsCache ??= new FileRegionsCache();
-
-            return _regionsCache.PopulateTextRegionProperties(
+            return _fileRegionsCache.PopulateTextRegionProperties(
                 region,
                 context.TargetUri,
                 populateSnippet: true,

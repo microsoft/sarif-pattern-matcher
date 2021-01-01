@@ -10,7 +10,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatorsCache
     {
-        private IFileSystem _fileSystem;
+        private static readonly object sync = new object();
+        private readonly IFileSystem _fileSystem;
         private Dictionary<string, MethodInfo> _ruleIdToMethodMap;
 
         public ValidatorsCache(IEnumerable<string> validatorBinaryPaths = null, IFileSystem fileSystem = null)
@@ -33,7 +34,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ref string failureLevel,
             out string validatorMessage)
         {
-            _ruleIdToMethodMap ??= LoadValidationAssemblies(ValidatorPaths);
+            if (_ruleIdToMethodMap == null)
+            {
+                lock (sync)
+                {
+                    if (_ruleIdToMethodMap == null)
+                    {
+                        _ruleIdToMethodMap ??= LoadValidationAssemblies(ValidatorPaths);
+                    }
+                }
+            }
 
             return ValidateHelper(
                 _ruleIdToMethodMap,

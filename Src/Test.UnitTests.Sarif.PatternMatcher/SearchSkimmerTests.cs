@@ -314,11 +314,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             SearchDefinition definition,
             IRegex engine = null,
             ValidatorsCache validators = null,
+            FileRegionsCache fileRegionsCache = null,
             IFileSystem fileSystem = null)
         {
             return new SearchSkimmer(
                 engine: engine ?? RE2Regex.Instance,
                 validators: validators,
+                fileRegionsCache: fileRegionsCache ?? new FileRegionsCache(),
                 definition: definition,
                 fileSystem: fileSystem);
         }
