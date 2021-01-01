@@ -22,6 +22,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             engine ??= RE2Regex.Instance;
 
             var validators = new ValidatorsCache();
+            var fileRegionsCache = new FileRegionsCache();
 
             var skimmers = new HashSet<Skimmer<AnalyzeContext>>();
 
@@ -62,6 +63,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         new SearchSkimmer(
                             engine: engine,
                             validators: validators,
+                            fileRegionsCache: fileRegionsCache,
                             id: definition.Id,
                             name: definition.Name,
                             defaultLevel: definition.Level,
@@ -69,7 +71,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             fileNameDenyRegex: definition.FileNameDenyRegex,
                             fileNameAllowRegex: definition.FileNameAllowRegex,
                             defaultMessageString: definition.Message,
-                            matchExpressions: definition.MatchExpressions));
+                            matchExpressions: definition.MatchExpressions,
+                            strings: definition.Strings));
 
                     const string singleSpace = " ";
 
