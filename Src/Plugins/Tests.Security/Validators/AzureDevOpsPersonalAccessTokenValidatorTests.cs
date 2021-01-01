@@ -90,9 +90,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 var groups = new Dictionary<string, string>();
                 bool performDynamicValidation = false;
                 string failureLevel = "error";
-                Assert.Throws<ArgumentException>(() 
+                Assert.Throws<ArgumentException>(()
                     => AzureDevOpsPersonalAccessTokenValidator.IsValid(
-                        ref matchedPattern, 
+                        ref matchedPattern,
                         ref groups,
                         ref performDynamicValidation,
                         ref failureLevel));
