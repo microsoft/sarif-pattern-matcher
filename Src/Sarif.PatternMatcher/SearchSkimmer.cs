@@ -87,6 +87,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 { "Default", new MultiformatMessageString() { Text = defaultMessageString, } },
             };
 
+            this.DefaultConfiguration.Level = defaultLevel;
+
             var reportingConfiguration = new ReportingConfiguration { Level = defaultLevel };
 
             foreach (MatchExpression matchExpression in matchExpressions)
@@ -109,12 +111,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 _matchExpressionToRule[matchExpression] = new ReportingDescriptor
                 {
                     Id = $"{id}/{matchExpression.SubId}",
-                    DefaultConfiguration = reportingConfiguration,
+                    DefaultConfiguration = this.DefaultConfiguration,
                     FullDescription = _fullDescription,
                     Help = null,
                     HelpUri = s_helpUri,
                     MessageStrings = _messageStrings,
-                    Name = Id,
+                    Name = $"{id}/{matchExpression.SubId}",
                 };
             }
 
@@ -500,6 +502,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level)
         {
+            ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
             IList<string> arguments = GetMessageArguments(
                 _argumentNameToIndex,
                 context.TargetUri.LocalPath,
@@ -519,7 +522,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var result = new Result()
             {
-                RuleId = Id,
+                RuleId = reportingDescriptor.Id,
                 Level = level,
                 Message = new Message()
                 {
@@ -529,7 +532,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Locations = new List<Location>(new[] { location }),
             };
 
-            context.Logger.Log(this, result);
+            context.Logger.Log(reportingDescriptor, result);
         }
 
         private FlexString Decode(string value)
