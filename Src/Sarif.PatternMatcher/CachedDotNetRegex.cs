@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
+using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher

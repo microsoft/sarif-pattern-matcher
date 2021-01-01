@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
@@ -247,13 +248,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Match match = regex.Match(flexMatch.Value);
 
-                string fingerprint = match.Groups["fingerprint"].Value;
+                string refinedMatchedPattern = match.Groups["refine"].Value;
 
-                Dictionary<string, string> groups = match.Groups.CopyToDictionary(regex.GetGroupNames());
+                IDictionary<string, string> groups = match.Groups.CopyToDictionary(regex.GetGroupNames());
 
-                if (string.IsNullOrEmpty(fingerprint))
+                if (string.IsNullOrEmpty(refinedMatchedPattern))
                 {
-                    fingerprint = flexMatch.Value;
+                    refinedMatchedPattern = flexMatch.Value;
                 }
 
                 bool dynamic = context.DynamicValidation;
@@ -268,8 +269,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     state = _validators.Validate(
                         matchExpression.SubId ?? _id,
-                        fingerprint,
-                        groups,
+                        ref refinedMatchedPattern,
+                        ref groups,
                         ref dynamic,
                         ref levelText,
                         out validatorMessage);
@@ -369,7 +370,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // the decoded content for the fingerprint, however.
                 FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch;
 
-                Region region = ConstructRegion(context, regionFlexMatch, fingerprint);
+                Region region = ConstructRegion(context, regionFlexMatch, refinedMatchedPattern);
 
                 Dictionary<string, string> messageArguments = matchExpression.MessageArguments != null ?
                     new Dictionary<string, string>(matchExpression.MessageArguments) :

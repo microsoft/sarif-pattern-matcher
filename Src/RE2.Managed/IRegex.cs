@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 using Microsoft.Strings.Interop;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
+namespace Microsoft.RE2.Managed
 {
     /// <summary>
     ///  IRegex is a generic subset of System.Text.RegularExpressions.Regex,

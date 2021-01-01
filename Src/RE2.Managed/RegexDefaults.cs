@@ -3,7 +3,7 @@
 
 using System.Text.RegularExpressions;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
+namespace Microsoft.RE2.Managed
 {
     public static class RegexDefaults
     {

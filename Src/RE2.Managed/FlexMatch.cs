@@ -3,7 +3,7 @@
 
 using Microsoft.Strings.Interop;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
+namespace Microsoft.RE2.Managed
 {
     /// <summary>
     ///  FlexMatch is a generic subset of System.Text.RegularExpressions.Match.

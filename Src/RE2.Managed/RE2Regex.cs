@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
+namespace Microsoft.RE2.Managed
 {
     public class RE2Regex : IRegex
     {
