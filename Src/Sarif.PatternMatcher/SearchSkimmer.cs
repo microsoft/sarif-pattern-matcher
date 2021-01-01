@@ -110,7 +110,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 _matchExpressionToRule[matchExpression] = new ReportingDescriptor
                 {
-                    Id = $"{id}/{matchExpression.SubId}",
+                    Id = string.IsNullOrEmpty(matchExpression.SubId) ? id : $"{id}/{matchExpression.SubId}",
                     DefaultConfiguration = this.DefaultConfiguration,
                     FullDescription = _fullDescription,
                     Help = null,
