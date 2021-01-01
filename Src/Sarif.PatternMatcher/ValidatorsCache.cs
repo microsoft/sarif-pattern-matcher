@@ -28,8 +28,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public Validation Validate(
             string ruleId,
-            string matchedPattern,
-            Dictionary<string, string> groups,
+            ref string matchedPattern,
+            ref IDictionary<string, string> groups,
             ref bool dynamicValidation,
             ref string failureLevel,
             out string validatorMessage)
@@ -48,8 +48,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return ValidateHelper(
                 _ruleIdToMethodMap,
                 ruleId,
-                matchedPattern,
-                groups,
+                ref matchedPattern,
+                ref groups,
                 ref dynamicValidation,
                 ref failureLevel,
                 out validatorMessage);
@@ -58,8 +58,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         internal static Validation ValidateHelper(
             Dictionary<string, MethodInfo> ruleIdToMethodMap,
             string ruleId,
-            string matchedPattern,
-            IDictionary<string, string> groups,
+            ref string matchedPattern,
+            ref IDictionary<string, string> groups,
             ref bool dynamicValidation,
             ref string failureLevel,
             out string validatorMessage)
@@ -97,6 +97,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Environment.CurrentDirectory = currentDirectory;
             }
 
+            matchedPattern = (string)arguments[0];
+            groups = (Dictionary<string, string>)arguments[1];
             dynamicValidation = (bool)arguments[2];
             failureLevel = (string)arguments[3];
 
@@ -151,8 +153,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             "IsValid",
                             new[]
                             {
-                                typeof(string),
-                                typeof(Dictionary<string, string>),
+                                typeof(string).MakeByRefType(),
+                                typeof(Dictionary<string, string>).MakeByRefType(),
                                 typeof(bool).MakeByRefType(),
                                 typeof(string).MakeByRefType(),
                             },

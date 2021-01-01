@@ -77,21 +77,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         /// <summary>
         /// Validate if the match is an AzureDevOps personal access token.
         /// </summary>
-        /// <param name="matchedPattern">The matched text to validate as an ADO PAT (or not).</param>
-        /// <param name="groups">Capture groups from the regex match.</param>
-        /// <param name="performDynamicValidation">Execute dynamic validation of matched pattern, if available.
-        /// This parameter should be set to 'false' on exit if it was received as 'true' but the validator
-        /// cannot actually perform any dynamic validation.
+        /// <param name="matchedPattern">
+        /// The matched text to be validated. This pattern can be further refined
+        /// to a substring of the original parameter value, with the result that
+        /// the refined matched pattern will be used as the code region associated
+        /// with the match.
+        /// </param>
+        /// <param name="groups">
+        /// Capture groups from the regex match. Dictionary entries can be modified or new entries
+        /// added in order to refine or add argument values that will be used in result messages.
+        /// </param>
+        /// <param name="performDynamicValidation">
+        /// Execute dynamic validation of matched pattern, if available.
         /// </param>
         /// <param name="failureLevel">
         /// The current failure level associated with the match (if a match occurs). This parameter can be
         /// set to a different failure level by the callee, if appropriate.
         /// </param>
-        /// <returns>True if the match is an unencoded ADO personal access token, otherwise return false.</returns>
+        /// <returns>Return the validation state.</returns>
 #pragma warning disable IDE0060 // Remove unused parameter
         public static string IsValid(
-            string matchedPattern,
-            Dictionary<string, string> groups,
+            ref string matchedPattern,
+            ref Dictionary<string, string> groups,
             ref bool performDynamicValidation,
             ref string failureLevel)
         {

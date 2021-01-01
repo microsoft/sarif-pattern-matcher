@@ -9,6 +9,7 @@ using System.Text;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.RE2.Managed;
 
 using Moq;
 

@@ -8,6 +8,7 @@ using System.IO;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 
 using Moq;

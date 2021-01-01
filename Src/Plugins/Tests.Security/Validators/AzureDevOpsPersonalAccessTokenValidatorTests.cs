@@ -49,10 +49,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 bool performDynamicValidation = testCase.PerformDynamicValidation;
                 string failureLevel = testCase.FailureLevel;
+                var groups = new Dictionary<string, string>();
 
                 string state = AzureDevOpsPersonalAccessTokenValidator.IsValid(
-                    testCase.Input,
-                    null,
+                    ref testCase.Input,
+                    ref groups,
                     ref performDynamicValidation,
                     ref failureLevel);
 
@@ -84,9 +85,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             foreach (string input in invalidInputs)
             {
+                string matchedPattern = input;
+
+                var groups = new Dictionary<string, string>();
                 bool performDynamicValidation = false;
                 string failureLevel = "error";
-                Assert.Throws<ArgumentException>(() => AzureDevOpsPersonalAccessTokenValidator.IsValid(input, null, ref performDynamicValidation, ref failureLevel));
+                Assert.Throws<ArgumentException>(()
+                    => AzureDevOpsPersonalAccessTokenValidator.IsValid(
+                        ref matchedPattern,
+                        ref groups,
+                        ref performDynamicValidation,
+                        ref failureLevel));
             }
         }
     }
