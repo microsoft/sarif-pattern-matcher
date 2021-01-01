@@ -124,7 +124,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public override Uri HelpUri => s_helpUri;
 
         public override string Id => _id;
-        
+
         public override string Name => Id;
 
         public override MultiformatMessageString FullDescription => _fullDescription;
