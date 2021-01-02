@@ -69,6 +69,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             fingerprint = null;
             validatorMessage = null;
+
+            if (ruleId.Contains("/")) { ruleId = ruleId.Substring(ruleId.IndexOf("/") + 1); }
+
             string validatorName = ruleId + "Validator";
 
             if (!ruleIdToMethodMap.TryGetValue(validatorName, out MethodInfo methodInfo))
