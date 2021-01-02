@@ -87,8 +87,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 { "Default", new MultiformatMessageString() { Text = defaultMessageString, } },
             };
 
-            this.DefaultConfiguration.Level = defaultLevel;
-
             var reportingConfiguration = new ReportingConfiguration { Level = defaultLevel };
 
             foreach (MatchExpression matchExpression in matchExpressions)
