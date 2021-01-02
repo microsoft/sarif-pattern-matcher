@@ -11,16 +11,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         NoMatch = 0,
 
         /// <summary>
-        /// Pattern is a match but the validity of the secret
-        /// can't be determined.
+        /// The validity of the secret can't be determined.
         /// </summary>
         Unknown,
 
         /// <summary>
-        /// Pattern is a match and the secret is conclusively
-        /// determined to be invalid (e.g., it is expired).
+        /// The secret is not authorized for access.
         /// </summary>
-        Invalid,
+        Unauthorized,
+
+        /// <summary>
+        /// The secret is expired.
+        /// </summary>
+        Expired,
+
+        /// <summary>
+        /// The host is unknown.
+        /// </summary>
+        HostUnknown,
 
         /// <summary>
         /// Pattern is a match and the secret is invalid for all
@@ -33,6 +41,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         /// <summary>
         /// Pattern is a match and the secret is valid.
         /// </summary>
-        Valid,
+        Authorized,
     }
 }

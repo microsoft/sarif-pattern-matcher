@@ -87,12 +87,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 { "Default", new MultiformatMessageString() { Text = defaultMessageString, } },
             };
 
-            this.DefaultConfiguration.Level = defaultLevel;
-
             var reportingConfiguration = new ReportingConfiguration { Level = defaultLevel };
 
             foreach (MatchExpression matchExpression in matchExpressions)
             {
+                if (matchExpression.Level == 0)
+                {
+                    matchExpression.Level = defaultLevel;
+                }
+
                 matchExpression.FileNameDenyRegex ??= fileNameDenyRegex;
                 matchExpression.FileNameAllowRegex ??= fileNameAllowRegex;
 
@@ -224,9 +227,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
-            FailureLevel level = matchExpression.Level != 0 ?
-                matchExpression.Level :
-                DefaultConfiguration.Level;
+            FailureLevel level = matchExpression.Level;
 
             if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
             {
@@ -276,8 +277,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string levelText = level.ToString();
 
                 Validation state = 0;
+                string fingerprint = null;
                 string validatorMessage = null;
-
                 string validationState = string.Empty;
 
                 if (_validators != null)
@@ -288,6 +289,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         ref groups,
                         ref dynamic,
                         ref levelText,
+                        ref fingerprint,
                         out validatorMessage);
 
                     level = (FailureLevel)Enum.Parse(typeof(FailureLevel), levelText);
@@ -312,29 +314,44 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             break;
                         }
 
-                        case Validation.Valid:
+                        case Validation.Authorized:
                         {
                             level = FailureLevel.Error;
-                            validationState = " which was determined to be valid";
+                            validationState = " which is authorized for access";
                             break;
                         }
 
-                        case Validation.Invalid:
+                        case Validation.Unauthorized:
                         {
                             level = FailureLevel.Warning;
-                            validationState = " which was determined to be invalid";
+                            validationState = " which is unauthorized for access";
+                            break;
+                        }
+
+                        case Validation.Expired:
+                        {
+                            level = FailureLevel.Warning;
+                            validationState = " which is expired";
+                            break;
+                        }
+
+                        case Validation.HostUnknown:
+                        {
+                            level = FailureLevel.Warning;
+                            validationState = " which references an unknown host";
                             break;
                         }
 
                         case Validation.InvalidForConsultedAuthorities:
                         {
                             level = FailureLevel.Warning;
-                            validationState = " which was determined to be invalid for all consulted authorities";
+                            validationState = " which is unauthorized for all consulted authorities";
                             break;
                         }
 
                         case Validation.Unknown:
                         {
+                            level = FailureLevel.Warning;
                             if (!context.DynamicValidation)
                             {
                                 if (dynamic)
@@ -342,7 +359,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                     // This indicates that dynamic validation was disabled but we
                                     // passed this result to a validator that could have performed
                                     // this work.
-                                    validationState = ". No validation occurred for this match as it was not enabled. Pass '--dynamic-validation' on the command-line to enable it";
+                                    validationState = ". No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
                                 }
                                 else
                                 {
@@ -393,7 +410,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 messageArguments["encoding"] = binary64DecodedMatch != null ?
                     "base64-encoded" :
-                    "plaintext";
+                    string.Empty; // We don't bother to report a value for plaintext content
 
                 messageArguments["validationState"] = validationState;
 
@@ -401,7 +418,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     match,
                     _argumentNameToIndex,
                     context.TargetUri.LocalPath,
-                    validatorMessage: validatorMessage,
+                    validatorMessage: NormalizeValiadator(validatorMessage),
                     messageArguments);
 
                 Result result = ConstructResult(
@@ -410,6 +427,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     level,
                     region,
                     flexMatch,
+                    fingerprint,
                     matchExpression.Fixes,
                     arguments);
 
@@ -419,6 +437,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // current ReportingDescriptor state when logging.
                 context.Logger.Log(reportingDescriptor, result);
             }
+        }
+
+        private string NormalizeValiadator(string validatorMessage)
+        {
+            if (string.IsNullOrEmpty(validatorMessage)) { return string.Empty; }
+
+            validatorMessage = validatorMessage.Trim(new char[] { ' ', '.' });
+
+            return " (" + validatorMessage[0].ToString().ToLowerInvariant() + validatorMessage.Substring(1) + ")";
         }
 
         private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch, string fingerprint)
@@ -453,6 +480,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FailureLevel level,
             Region region,
             FlexMatch flexMatch,
+            string fingerprint,
             IDictionary<string, SimpleFix> fixes,
             IList<string> arguments)
         {
@@ -468,6 +496,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 },
             };
 
+            Dictionary<string, string> fingerprints = BuildFingerprints(fingerprint);
+
             var result = new Result()
             {
                 RuleId = ruleId,
@@ -478,6 +508,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Arguments = arguments,
                 },
                 Locations = new List<Location>(new[] { location }),
+                Fingerprints = fingerprints,
             };
 
             if (fixes?.Count > 0)
@@ -498,6 +529,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return result;
+        }
+
+        private Dictionary<string, string> BuildFingerprints(string fingerprint)
+        {
+            if (fingerprint == null) { return null; }
+
+            string[] tokens = fingerprint.Split('#');
+            return new Dictionary<string, string>()
+            {
+                { tokens[0], tokens[1] },
+            };
         }
 
         private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level)

@@ -32,6 +32,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ref IDictionary<string, string> groups,
             ref bool dynamicValidation,
             ref string failureLevel,
+            ref string fingerprint,
             out string validatorMessage)
         {
             if (_ruleIdToMethodMap == null)
@@ -52,6 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 ref groups,
                 ref dynamicValidation,
                 ref failureLevel,
+                ref fingerprint,
                 out validatorMessage);
         }
 
@@ -62,9 +64,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ref IDictionary<string, string> groups,
             ref bool dynamicValidation,
             ref string failureLevel,
+            ref string fingerprint,
             out string validatorMessage)
         {
+            fingerprint = null;
             validatorMessage = null;
+
+            if (ruleId.Contains("/")) { ruleId = ruleId.Substring(ruleId.IndexOf("/") + 1); }
+
             string validatorName = ruleId + "Validator";
 
             if (!ruleIdToMethodMap.TryGetValue(validatorName, out MethodInfo methodInfo))
@@ -78,6 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 groups,
                 dynamicValidation,
                 failureLevel,
+                fingerprint,
             };
 
             string validationText = null;
@@ -101,6 +109,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             groups = (Dictionary<string, string>)arguments[1];
             dynamicValidation = (bool)arguments[2];
             failureLevel = (string)arguments[3];
+            fingerprint = (string)arguments[4];
 
             string[] tokens = validationText.Split('#');
 
@@ -156,6 +165,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 typeof(string).MakeByRefType(),
                                 typeof(Dictionary<string, string>).MakeByRefType(),
                                 typeof(bool).MakeByRefType(),
+                                typeof(string).MakeByRefType(),
                                 typeof(string).MakeByRefType(),
                             },
                             null);

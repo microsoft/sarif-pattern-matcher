@@ -23,9 +23,6 @@
                   "text": "'{0}' contains a call to '{1}', a potentially insecure API that could be replaced with a more secure alternative: '{2}'."
                 }
               },
-              "defaultConfiguration": {
-                "level": "error"
-              },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             }
           ]

@@ -23,9 +23,6 @@
                   "text": "'{0}' contains an apparent {1}."
                 }
               },
-              "defaultConfiguration": {
-                "level": "note"
-              },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             }
           ]

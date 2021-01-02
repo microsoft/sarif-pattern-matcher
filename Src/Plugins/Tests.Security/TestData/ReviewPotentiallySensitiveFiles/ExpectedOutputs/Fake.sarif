@@ -23,9 +23,6 @@
                   "text": "'{0}' is {1} that may compromise security if visible to attackers."
                 }
               },
-              "defaultConfiguration": {
-                "level": "error"
-              },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             }
           ]
