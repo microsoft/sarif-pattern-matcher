@@ -20,7 +20,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                 return CreateReturnValueForUnknownHost(asset);
             }
 
-            return nameof(ValidationState.Unknown) +
+            return nameof(ValidationState.HostUnknown) +
                        $"#An unexpected exception was caught attempting to validate '{asset}': " +
                        e.ToString();
         }
@@ -34,14 +34,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         public static string CreateReturnValueForUnauthorizedAccess(string asset)
         {
             return nameof(ValidationState.Unauthorized) +
-                $"#The provided key was not authorized to access'{asset}'.";
+                $"to '{asset}'.";
         }
 
         public static string CreateReturnValueForCompromisedAsset(string asset, string user = null)
         {
             return user == null ?
                 nameof(ValidationState.Authorized) + $"#The compromised asset is '{asset}'." :
-                nameof(ValidationState.Authorized) + $"#The {user} account is compromised for '{asset}'.";
+                nameof(ValidationState.Authorized) + $"#The '{user}' account is compromised for '{asset}'.";
         }
 
         protected ValidatorBase()

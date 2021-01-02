@@ -96,11 +96,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             skimmer = CreateSkimmer(definition);
             skimmer.Analyze(context);
 
-            // But we should see a change in encoding information in message.
+            // But we should see a change in encoding information in message. Note
+            // that when emitting plaintext matches, we elide this information 
+            // entirely (i.e., we only explicitly report 'base64-encoded' and
+            // report nothing for plaintext).
             logger.Results.Count.Should().Be(1);
             logger.Results[0].RuleId.Should().Be(definition.Id);
             logger.Results[0].Level.Should().Be(definition.Level);
-            logger.Results[0].GetMessageText(skimmer).Should().Be($"plaintext:{originalMessage}");
+            logger.Results[0].GetMessageText(skimmer).Should().Be($":{originalMessage}");
         }
 
         [Fact]

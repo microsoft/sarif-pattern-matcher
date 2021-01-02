@@ -74,17 +74,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             _validators = validators;
             _fileRegionsCache = fileRegionsCache;
 
-            // TODO: we have a serious problem here. If we set default level
-            // to any value other than Warning, then no rule can override this
-            // default. The reason is that Warning is treated as a default value
-            // and elided in various contexts. We need a more granular way of
-            // representing a result level, such as 'null' meaning that no value
-            // has ever been set (indicating that it is a warning).
-            //
-            //this.DefaultConfiguration.Level = defaultLevel;
-
             foreach (MatchExpression matchExpression in matchExpressions)
             {
+                if (matchExpression.Level == 0)
+                {
+                    matchExpression.Level = defaultLevel;
+                }
+
                 matchExpression.FileNameDenyRegex ??= fileNameDenyRegex;
                 matchExpression.FileNameAllowRegex ??= fileNameAllowRegex;
 
@@ -223,9 +219,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             _subId = matchExpression.SubId;
 
-            FailureLevel level = matchExpression.Level != 0 ?
-                matchExpression.Level :
-                DefaultConfiguration.Level;
+            FailureLevel level = matchExpression.Level;
 
             if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
             {
@@ -348,6 +342,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                         case Validation.Unknown:
                         {
+                            level = FailureLevel.Warning;
                             if (!context.DynamicValidation)
                             {
                                 if (dynamic)

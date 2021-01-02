@@ -23,9 +23,6 @@
                   "text": "'{0}' contains an apparent {1} {2}."
                 }
               },
-              "defaultConfiguration": {
-                "level": "error"
-              },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             }
           ]
@@ -113,7 +110,7 @@
             "id": "Default",
             "arguments": [
               "VariousPats.txt",
-              "plaintext",
+              "",
               "Azure DevOps personal access token"
             ]
           },
@@ -147,7 +144,7 @@
             "id": "Default",
             "arguments": [
               "VariousPats.txt",
-              "plaintext",
+              "",
               "Azure DevOps personal access token"
             ]
           },
