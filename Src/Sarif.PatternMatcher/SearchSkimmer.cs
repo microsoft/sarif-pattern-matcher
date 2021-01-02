@@ -226,7 +226,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
-        {            
+        {
             FailureLevel level = matchExpression.Level;
 
             if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
