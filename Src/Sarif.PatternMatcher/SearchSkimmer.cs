@@ -311,24 +311,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             break;
                         }
 
-                        case Validation.Valid:
+                        case Validation.Authorized:
                         {
                             level = FailureLevel.Error;
-                            validationState = " which was determined to be valid";
+                            validationState = " which is authorized for access";
                             break;
                         }
 
-                        case Validation.Invalid:
+                        case Validation.Unauthorized:
                         {
                             level = FailureLevel.Warning;
-                            validationState = " which was determined to be invalid";
+                            validationState = " which is unauthorized for access";
+                            break;
+                        }
+
+                        case Validation.Expired:
+                        {
+                            level = FailureLevel.Warning;
+                            validationState = " which is expired";
+                            break;
+                        }
+
+                        case Validation.HostUnknown:
+                        {
+                            level = FailureLevel.Warning;
+                            validationState = " which references an unknown host";
                             break;
                         }
 
                         case Validation.InvalidForConsultedAuthorities:
                         {
                             level = FailureLevel.Warning;
-                            validationState = " which was determined to be invalid for all consulted authorities";
+                            validationState = " which is unauthorized for all consulted authorities";
                             break;
                         }
 
@@ -341,7 +355,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                     // This indicates that dynamic validation was disabled but we
                                     // passed this result to a validator that could have performed
                                     // this work.
-                                    validationState = ". No validation occurred for this match as it was not enabled. Pass '--dynamic-validation' on the command-line to enable it";
+                                    validationState = ". No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
                                 }
                                 else
                                 {
@@ -426,8 +440,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (string.IsNullOrEmpty(validatorMessage)) { return string.Empty; }
 
             validatorMessage = validatorMessage.Trim(new char[] { ' ', '.' });
-            
-            return ": " + validatorMessage[0].ToString().ToLowerInvariant() + validatorMessage.Substring(1);
+
+            return " (" + validatorMessage[0].ToString().ToLowerInvariant() + validatorMessage.Substring(1) + ")";
         }
 
         private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch, string fingerprint)

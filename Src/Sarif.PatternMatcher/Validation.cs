@@ -24,23 +24,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         ValidatorReturnedIllegalValue,
 
         /// <summary>
-        /// The current matched pattern is not actually a match
-        /// (i.e., the additional validation has revealed that
-        /// the match is a false positive).
+        /// Pattern isn't actually a match for secret type.
         /// </summary>
         NoMatch,
 
         /// <summary>
-        /// The current matched pattern is a secret but its
-        /// validity could not be determined.
+        /// The validity of the secret can't be determined.
         /// </summary>
         Unknown,
 
         /// <summary>
-        /// The current matched pattern is a secret and it was
-        /// determined to be invalid (e.g., it is expired).
+        /// The secret is not authorized for access.
         /// </summary>
-        Invalid,
+        Unauthorized,
+
+        /// <summary>
+        /// The secret is expired.
+        /// </summary>
+        Expired,
+
+        /// <summary>
+        /// The host is unknown.
+        /// </summary>
+        HostUnknown,
 
         /// <summary>
         /// Pattern is a match and the secret is invalid for all
@@ -51,8 +57,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         InvalidForConsultedAuthorities,
 
         /// <summary>
-        /// The current matched pattern is a secret and it is valid.
+        /// Pattern is a match and the secret is valid.
         /// </summary>
-        Valid,
+        Authorized,
     }
 }
