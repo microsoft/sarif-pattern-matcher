@@ -74,7 +74,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             _validators = validators;
             _fileRegionsCache = fileRegionsCache;
 
-            this.DefaultConfiguration.Level = defaultLevel;
+            // TODO: we have a serious problem here. If we set default level
+            // to any value other than Warning, then no rule can override this
+            // default. The reason is that Warning is treated as a default value
+            // and elided in various contexts. We need a more granular way of
+            // representing a result level, such as 'null' meaning that no value
+            // has ever been set (indicating that it is a warning).
+            //
+            //this.DefaultConfiguration.Level = defaultLevel;
 
             foreach (MatchExpression matchExpression in matchExpressions)
             {
@@ -267,8 +274,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string levelText = level.ToString();
 
                 Validation state = 0;
+                string fingerprint = null;
                 string validatorMessage = null;
-
                 string validationState = string.Empty;
 
                 if (_validators != null)
@@ -279,6 +286,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         ref groups,
                         ref dynamic,
                         ref levelText,
+                        ref fingerprint,
                         out validatorMessage);
 
                     level = (FailureLevel)Enum.Parse(typeof(FailureLevel), levelText);
@@ -384,7 +392,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 messageArguments["encoding"] = binary64DecodedMatch != null ?
                     "base64-encoded" :
-                    "plaintext";
+                    string.Empty; // We don't bother to report a value for plaintext content
 
                 messageArguments["validationState"] = validationState;
 
@@ -392,7 +400,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     match,
                     _argumentNameToIndex,
                     context.TargetUri.LocalPath,
-                    validatorMessage: validatorMessage,
+                    validatorMessage: NormalizeValiadator(validatorMessage),
                     messageArguments);
 
                 Result result = ConstructResult(
@@ -401,6 +409,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     level,
                     region,
                     flexMatch,
+                    fingerprint,
                     matchExpression.Fixes,
                     arguments);
 
@@ -410,6 +419,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // current ReportingDescriptor state when logging.
                 context.Logger.Log(this.DeepClone(), result);
             }
+        }
+
+        private string NormalizeValiadator(string validatorMessage)
+        {
+            if (string.IsNullOrEmpty(validatorMessage)) { return string.Empty; }
+
+            validatorMessage = validatorMessage.Trim(new char[] { ' ', '.' });
+            
+            return ": " + validatorMessage[0].ToString().ToLowerInvariant() + validatorMessage.Substring(1);
         }
 
         private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch, string fingerprint)
@@ -444,6 +462,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FailureLevel level,
             Region region,
             FlexMatch flexMatch,
+            string fingerprint,
             IDictionary<string, SimpleFix> fixes,
             IList<string> arguments)
         {
@@ -459,6 +478,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 },
             };
 
+            Dictionary<string, string> fingerprints = BuildFingerprints(fingerprint);
+
             var result = new Result()
             {
                 RuleId = ruleId,
@@ -469,6 +490,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Arguments = arguments,
                 },
                 Locations = new List<Location>(new[] { location }),
+                Fingerprints = fingerprints,
             };
 
             if (fixes?.Count > 0)
@@ -489,6 +511,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return result;
+        }
+
+        private Dictionary<string, string> BuildFingerprints(string fingerprint)
+        {
+            if (fingerprint == null) { return null; }
+
+            string[] tokens = fingerprint.Split('#');
+            return new Dictionary<string, string>()
+            {
+                { tokens[0], tokens[1] },
+            };
         }
 
         private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level)

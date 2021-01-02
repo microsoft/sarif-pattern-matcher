@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.Sarif.Driver;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     [Verb("analyze")]
-    public class AnalyzeOptions : MultithreadedAnalyzeOptionsBase
+    public class AnalyzeOptions : AnalyzeOptionsBase
     {
         [Option(
             'd',
@@ -23,5 +23,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             HelpText = "Enable dynamic validations, if any (may compromise " +
                        "performance and/or result in calls across the network).")]
         public bool DynamicValidation { get; internal set; }
+
+        [Option(
+            'm',
+            "multiline",
+            HelpText = "Enable multiline regular expression search.")]
+        public bool Multiline { get; internal set; }
     }
 }
