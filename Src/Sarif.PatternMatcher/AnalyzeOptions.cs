@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.Sarif.Driver;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     [Verb("analyze")]
-    public class AnalyzeOptions : MultithreadedAnalyzeOptionsBase
+    public class AnalyzeOptions : AnalyzeOptionsBase
     {
         [Option(
             'd',
