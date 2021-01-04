@@ -122,7 +122,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (tokens.Length > 1)
             {
-                validatorMessage = " " + tokens[1].Trim();
+                validatorMessage = $" {tokens[1]}".Trim();
             }
 
             return result;
