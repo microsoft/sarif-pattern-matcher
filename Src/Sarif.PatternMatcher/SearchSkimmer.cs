@@ -535,10 +535,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             if (fingerprint == null) { return null; }
 
-            string[] tokens = fingerprint.Split('#');
             return new Dictionary<string, string>()
             {
-                { tokens[0], tokens[1] },
+                { "SecretFingerprint/v1", fingerprint },
             };
         }
 
