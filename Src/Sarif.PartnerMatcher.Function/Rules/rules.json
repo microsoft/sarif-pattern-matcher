@@ -1,0 +1,25 @@
+{
+  "Definitions": [
+    {
+      "Name": "DoNotUseInternalClass",
+      "Id": "TEST1001",
+      "Level": "Warning",
+      "FileNameAllowRegex": "(?i)\\.(c|cpp|cxx)$",
+      "Description": "Make class public.",
+      "Message": "'{0:scanTarget}' contains an internal class could be public.",
+      "MatchExpressions": [
+        {
+          "SubId": "_class",
+          "ContentsRegex": "internal class",
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace 'internal class' with 'public class'.",
+              "Find": "internal class",
+              "ReplaceWith": "public class"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

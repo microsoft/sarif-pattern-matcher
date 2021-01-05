@@ -71,7 +71,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.UnitTests.Sarif.Patter
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.UnitTests.Sarif.PatternMatcher.Cli", "Test.UnitTests.Sarif.PatternMatcher.Cli\Test.UnitTests.Sarif.PatternMatcher.Cli.csproj", "{1AB0961C-3C1D-4515-8FD5-E4A42BB3C425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sarif.PatternMatcher.Benchmark", "Sarif.PatternMatcher.Benchmark\Sarif.PatternMatcher.Benchmark.csproj", "{FAACB4CC-5311-4E4D-8C49-D335EF660059}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sarif.PatternMatcher.Benchmark", "Sarif.PatternMatcher.Benchmark\Sarif.PatternMatcher.Benchmark.csproj", "{FAACB4CC-5311-4E4D-8C49-D335EF660059}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sarif.PatternMatcher.Function", "Sarif.PartnerMatcher.Function\Sarif.PatternMatcher.Function.csproj", "{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -263,6 +265,18 @@ Global
 		{FAACB4CC-5311-4E4D-8C49-D335EF660059}.Release|x64.Build.0 = Release|Any CPU
 		{FAACB4CC-5311-4E4D-8C49-D335EF660059}.Release|x86.ActiveCfg = Release|Any CPU
 		{FAACB4CC-5311-4E4D-8C49-D335EF660059}.Release|x86.Build.0 = Release|Any CPU
+		{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}.Debug|x64.Build.0 = Debug|Any CPU
+		{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}.Debug|x86.Build.0 = Debug|Any CPU
+		{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}.Release|x64.ActiveCfg = Release|Any CPU
+		{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}.Release|x64.Build.0 = Release|Any CPU
+		{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}.Release|x86.ActiveCfg = Release|Any CPU
+		{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
