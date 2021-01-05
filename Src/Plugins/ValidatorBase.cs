@@ -34,7 +34,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         public static string CreateReturnValueForUnauthorizedAccess(string asset)
         {
             return nameof(ValidationState.Unauthorized) +
-                $"to '{asset}'.";
+                $"#to '{asset}'.";
         }
 
         public static string CreateReturnValueForCompromisedAsset(string asset, string user = null)
