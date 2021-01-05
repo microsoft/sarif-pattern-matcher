@@ -338,7 +338,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         case Validation.HostUnknown:
                         {
                             level = FailureLevel.Warning;
-                            validationState = " which references an unknown host";
+                            validationState = " which references an unknown host or resource";
                             break;
                         }
 
