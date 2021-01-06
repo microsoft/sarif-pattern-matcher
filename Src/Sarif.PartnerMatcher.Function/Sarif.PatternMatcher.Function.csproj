@@ -23,9 +23,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
-    <None Update="Rules\rules.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Rules\SEC1001.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
