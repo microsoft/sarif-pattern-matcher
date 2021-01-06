@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -12,15 +14,34 @@ using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 {
-    public class SpamAnalyzer
+    internal static class SpamAnalyzer
     {
+        private static IFileSystem fileSystem;
+
+        static SpamAnalyzer()
+        {
+            FileSystem = Sarif.FileSystem.Instance;
+        }
+
+        internal static IFileSystem FileSystem
+        {
+            get
+            {
+                fileSystem ??= Sarif.FileSystem.Instance;
+                return fileSystem;
+            }
+
+            set
+            {
+                fileSystem = value;
+            }
+        }
+
         public static SarifLog Analyze(string filePath, string text, string rulePath)
         {
             string logContents = text;
 
             string regexDefinitions = Path.Combine(rulePath, @"..\Rules\SEC1001.json");
-
-            var fileSystem = new FileSystem();
 
             // Load all rules from JSON. This also automatically loads any validations file that 
             // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the 
