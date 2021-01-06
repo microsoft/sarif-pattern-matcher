@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.lib.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.plugins.props" />
   
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
