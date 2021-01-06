@@ -1,4 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.lib.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.plugins.props" />
+  
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
@@ -23,8 +27,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
-    <None Update="Rules\SEC1001.json">
+    <None Update="Rules\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  
+  <ItemGroup>
+    <SpamFiles Include="$(MSBuildThisFileDirectory)..\Plugins\Security\*.json" />
+  </ItemGroup>
+  <Target Name="CopyingSpamRules" BeforeTargets="Build">
+    <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(MSBuildThisFileDirectory)\Rules\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+  </Target>
 </Project>
