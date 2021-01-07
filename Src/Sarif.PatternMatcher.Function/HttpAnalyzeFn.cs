@@ -15,8 +15,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 {
     public static class HttpAnalyzeFn
     {
-        [FunctionName("SpamCheck")]
-        public static async Task<IActionResult> SpamCheck(
+        [FunctionName("analyze-file")]
+        public static async Task<IActionResult> AnalyzeFile(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log,
             ExecutionContext context)
@@ -48,8 +48,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             }
         }
 
-        [FunctionName("analyze")]
-        public static async Task<IActionResult> Analyze(
+        [FunctionName("analyze-text")]
+        public static async Task<IActionResult> AnalyzeText(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log,
             ExecutionContext context)
