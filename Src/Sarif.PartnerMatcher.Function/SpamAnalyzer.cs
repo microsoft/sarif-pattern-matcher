@@ -39,16 +39,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
         public static SarifLog Analyze(string filePath, string text, string rulePath)
         {
-            string logContents = text;
-
-            string regexDefinitions = Path.Combine(rulePath, @"..\Rules\SEC1001.json");
+            IEnumerable<string> regexDefinitions = FileSystem.DirectoryGetFiles(Path.Combine(rulePath, @"..\Rules"), "*.json");
 
             // Load all rules from JSON. This also automatically loads any validations file that 
             // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the 
             // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
             // extension name changes from .json to .dll).
             ISet<Skimmer<AnalyzeContext>> skimmers =
-                AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, new string[] { regexDefinitions });
+                AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, regexDefinitions);
 
             var sb = new StringBuilder();
 
@@ -66,8 +64,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 var context = new AnalyzeContext
                 {
                     TargetUri = new Uri(filePath, UriKind.RelativeOrAbsolute),
-                    FileContents = logContents,
-                    Logger = logger
+                    FileContents = text,
+                    Logger = logger,
                 };
 
                 using (context)
