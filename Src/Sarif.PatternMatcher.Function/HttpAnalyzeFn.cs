@@ -31,12 +31,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                     string text = await reader.ReadToEndAsync();
                     string rulefolder = context.FunctionDirectory;
 
-                    log.LogInformation($"Start to analyze file");
+                    log.LogInformation("Start to analyze file");
 
                     string sourceFilePath = Path.Combine(@"X:\Temp", file.FileName);
                     SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, text, rulefolder));
 
-                    log.LogInformation($"Completed analyzing file");
+                    log.LogInformation("Completed analyzing file");
                     return new JsonResult(sariflog);
                 }
             }
@@ -61,13 +61,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 string fileContent = req.Form["filecontent"].ToString();
 
                 string rulefolder = context.FunctionDirectory;
-                log.LogInformation($"Start to analyze text");
+                log.LogInformation("Start to analyze text");
 
                 // AnalyzeContext requires URI to file
                 string sourceFilePath = Path.Combine(@"X:\Temp", fileName);
                 SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, fileContent, rulefolder));
 
-                log.LogInformation($"Completed analyzing text");
+                log.LogInformation("Completed analyzing text");
 
                 return new JsonResult(sariflog);
             }
