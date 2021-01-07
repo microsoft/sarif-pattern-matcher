@@ -5,9 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using Microsoft.CodeAnalysis.Sarif;
 using Microsoft.CodeAnalysis.Sarif.Driver;
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 
 using Newtonsoft.Json;
@@ -39,8 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             using (var outputTextWriter = new StringWriter(sb))
             using (var logger = new SarifLogger(
                 outputTextWriter,
-                LoggingOptions.PrettyPrint | LoggingOptions.Verbose,
-                dataToRemove: OptionallyEmittedData.NondeterministicProperties))
+                LoggingOptions.PrettyPrint | LoggingOptions.Verbose))
             {
                 // The analysis will disable skimmers that raise an exception. This
                 // hash set stores the disabled skimmers. When a skimmer is disabled,
