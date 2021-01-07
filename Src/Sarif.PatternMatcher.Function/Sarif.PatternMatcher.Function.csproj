@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.lib.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.app.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
   
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
     <UserSecretsId>8ef13409-22dd-404a-bc8a-f1a0f11e8f3e</UserSecretsId>
   </PropertyGroup>
@@ -16,7 +16,6 @@
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="3.0.10" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.2" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.11" />
-    <PackageReference Include="Sarif.PatternMatcher" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
@@ -33,6 +32,10 @@
   
   <ItemGroup>
     <SpamFiles Include="$(MSBuildThisFileDirectory)..\Plugins\Security\*.json" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
   </ItemGroup>
   <Target Name="CopyingSpamRules" BeforeTargets="Build">
     <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(MSBuildThisFileDirectory)\Rules\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />

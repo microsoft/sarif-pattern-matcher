@@ -16,25 +16,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 {
     internal static class SpamAnalyzer
     {
-        private static IFileSystem fileSystem;
+        internal static readonly IFileSystem FileSystem;
 
         static SpamAnalyzer()
         {
             FileSystem = Sarif.FileSystem.Instance;
-        }
-
-        internal static IFileSystem FileSystem
-        {
-            get
-            {
-                fileSystem ??= Sarif.FileSystem.Instance;
-                return fileSystem;
-            }
-
-            set
-            {
-                fileSystem = value;
-            }
         }
 
         public static SarifLog Analyze(string filePath, string text, string rulePath)
@@ -46,7 +32,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
             // extension name changes from .json to .dll).
             ISet<Skimmer<AnalyzeContext>> skimmers =
-                AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, regexDefinitions);
+                AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, regexDefinitions);
 
             var sb = new StringBuilder();
 
@@ -70,7 +56,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
                 using (context)
                 {
-                    AnalyzeCommand.AnalyzeTargetHelper(context, skimmers, disabledSkimmers);
+                    IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
+                    AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
                 }
             }
 
