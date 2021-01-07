@@ -41,8 +41,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         {
             IEnumerable<string> regexDefinitions = FileSystem.DirectoryGetFiles(Path.Combine(rulePath, @"..\Rules"), "*.json");
 
-            // Load all rules from JSON. This also automatically loads any validations file that 
-            // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the 
+            // Load all rules from JSON. This also automatically loads any validations file that
+            // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
             // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
             // extension name changes from .json to .dll).
             ISet<Skimmer<AnalyzeContext>> skimmers =
@@ -56,9 +56,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 LoggingOptions.PrettyPrint | LoggingOptions.Verbose,
                 dataToRemove: OptionallyEmittedData.NondeterministicProperties))
             {
-                // The analysis will disable skimmers that raise an exception. This 
-                // hash set stores the disabled skimmers. When a skimmer is disabled, 
-                // that catastrophic event is logged as a SARIF notification. 
+                // The analysis will disable skimmers that raise an exception. This
+                // hash set stores the disabled skimmers. When a skimmer is disabled,
+                // that catastrophic event is logged as a SARIF notification.
                 var disabledSkimmers = new HashSet<string>();
 
                 var context = new AnalyzeContext
@@ -73,10 +73,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                     AnalyzeCommand.AnalyzeTargetHelper(context, skimmers, disabledSkimmers);
                 }
             }
-
-            // Now we'll rewrite the log file in order to convert non-deterministic
-            // absolute URLs to some stable relative reference (built off the source
-            // root.
 
             SarifLog sarifLog = JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
             return sarifLog;

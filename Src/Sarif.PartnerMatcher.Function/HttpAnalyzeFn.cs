@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 using System;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Http;
@@ -17,7 +18,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         [FunctionName("SpamCheck")]
         public static async Task<IActionResult> SpamCheck(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
-            //[Queue("outqueue"), StorageAccount("AzureWebJobsStorage")] ICollector<SarifLog> msg,
             ILogger log,
             ExecutionContext context)
         {
@@ -25,29 +25,31 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
             try
             {
-                var file = req.Form.Files["file"];
+                IFormFile file = req.Form.Files["file"];
 
-                StreamReader reader = new StreamReader(file.OpenReadStream());
-                var text = reader.ReadToEnd();
+                using (var reader = new StreamReader(file.OpenReadStream()))
+                {
+                    string text = reader.ReadToEnd();
+                    string rulefolder = context.FunctionDirectory;
 
+                    log.LogInformation($"Start to analyze file");
 
+                    string sourceFilePath = Path.Combine(@"X:\Temp", file.FileName);
+                    SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, text, rulefolder));
 
-                log.LogInformation($"Function Dir: {context.FunctionDirectory}, App Dir: {context.FunctionDirectory}");
-                string rulefolder = context.FunctionDirectory;
-                log.LogInformation($"Analyze file");
-                var sourceFilePath = Path.Combine(@"X:\Temp", file.FileName);
-                var sariflog = SpamAnalyzer.Analyze(sourceFilePath, text, rulefolder);
-                return new JsonResult(sariflog);
+                    log.LogInformation($"Completed analyzing file");
+                    return new JsonResult(sariflog);
+                }
             }
             catch (Exception ex)
             {
                 log.LogError(ex.ToString());
-                return new JsonResult(new { ErrorMessage = ex.Message });
+                return new BadRequestResult();
             }
         }
 
         [FunctionName("analyze")]
-        public static async Task<IActionResult> analyze(
+        public static async Task<IActionResult> Analyze(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log,
             ExecutionContext context)
@@ -56,24 +58,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
             try
             {
-                var fileName = req.Form["filename"];
-                var fileContent = req.Form["filecontent"];
+                string fileName = req.Form["filename"].ToString();
+                string fileContent = req.Form["filecontent"].ToString();
 
-                log.LogInformation($"Function Dir: {context.FunctionDirectory}, App Dir: {context.FunctionDirectory}");
                 string rulefolder = context.FunctionDirectory;
-                log.LogInformation($"Analyze file");
+                log.LogInformation($"Start to analyze file");
 
                 // AnalyzeContext requires URI to file
-                var sourceFilePath = Path.Combine(@"X:\Temp", fileName);
-                var sariflog = SpamAnalyzer.Analyze(sourceFilePath, fileContent, rulefolder);
+                string sourceFilePath = Path.Combine(@"X:\Temp", fileName);
+                SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, fileContent, rulefolder));
+
+                log.LogInformation($"Completed analyzing file");
+
                 return new JsonResult(sariflog);
             }
             catch (Exception ex)
             {
                 log.LogError(ex.ToString());
-                return new JsonResult(new { ErrorMessage = ex.Message });
+                return new BadRequestResult();
             }
         }
-
     }
 }
