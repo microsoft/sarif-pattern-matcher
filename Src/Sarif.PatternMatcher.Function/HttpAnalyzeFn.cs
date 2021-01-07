@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 using System;
 using System.IO;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Http;
@@ -29,7 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
                 using (var reader = new StreamReader(file.OpenReadStream()))
                 {
-                    string text = reader.ReadToEnd();
+                    string text = await reader.ReadToEndAsync();
                     string rulefolder = context.FunctionDirectory;
 
                     log.LogInformation($"Start to analyze file");
@@ -43,7 +42,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             }
             catch (Exception ex)
             {
-                log.LogError(ex.ToString());
+                log.LogError(ex, ex.Message);
                 return new BadRequestResult();
             }
         }
@@ -62,19 +61,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 string fileContent = req.Form["filecontent"].ToString();
 
                 string rulefolder = context.FunctionDirectory;
-                log.LogInformation($"Start to analyze file");
+                log.LogInformation($"Start to analyze text");
 
                 // AnalyzeContext requires URI to file
                 string sourceFilePath = Path.Combine(@"X:\Temp", fileName);
                 SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, fileContent, rulefolder));
 
-                log.LogInformation($"Completed analyzing file");
+                log.LogInformation($"Completed analyzing text");
 
                 return new JsonResult(sariflog);
             }
             catch (Exception ex)
             {
-                log.LogError(ex.ToString());
+                log.LogError(ex, ex.Message);
                 return new BadRequestResult();
             }
         }
