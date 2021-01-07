@@ -73,7 +73,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.UnitTests.Sarif.Patter
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sarif.PatternMatcher.Benchmark", "Sarif.PatternMatcher.Benchmark\Sarif.PatternMatcher.Benchmark.csproj", "{FAACB4CC-5311-4E4D-8C49-D335EF660059}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sarif.PatternMatcher.Function", "Sarif.PartnerMatcher.Function\Sarif.PatternMatcher.Function.csproj", "{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sarif.PatternMatcher.Function", "Sarif.PatternMatcher.Function\Sarif.PatternMatcher.Function.csproj", "{C6B9FA18-81AE-4ECC-971B-9F5112E733BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
