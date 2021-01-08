@@ -110,27 +110,35 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             foreach (SearchDefinition definition in definitions.Definitions)
             {
-                definition.FileNameDenyRegex = PushData(definition.FileNameDenyRegex, sharedStrings);
-                definition.FileNameAllowRegex = PushData(definition.FileNameAllowRegex, sharedStrings);
+                PushInheritedData(definition, sharedStrings);
+            }
+        }
 
-                foreach (MatchExpression matchExpression in definition.MatchExpressions)
-                {
-                    matchExpression.FileNameDenyRegex = PushData(matchExpression.FileNameDenyRegex, sharedStrings);
-                    matchExpression.FileNameDenyRegex ??= definition.FileNameDenyRegex;
+        internal static void PushInheritedData(SearchDefinition definition, Dictionary<string, string> sharedStrings)
+        {
+            definition.FileNameDenyRegex = PushData(definition.FileNameDenyRegex, sharedStrings);
+            definition.FileNameAllowRegex = PushData(definition.FileNameAllowRegex, sharedStrings);
 
-                    matchExpression.FileNameAllowRegex = PushData(matchExpression.FileNameAllowRegex, sharedStrings);
-                    matchExpression.FileNameAllowRegex ??= definition.FileNameDenyRegex;
+            foreach (MatchExpression matchExpression in definition.MatchExpressions)
+            {
+                matchExpression.FileNameDenyRegex = PushData(matchExpression.FileNameDenyRegex, sharedStrings);
+                matchExpression.FileNameDenyRegex ??= definition.FileNameDenyRegex;
 
-                    matchExpression.ContentsRegex = PushData(matchExpression.ContentsRegex, sharedStrings);
+                matchExpression.FileNameAllowRegex = PushData(matchExpression.FileNameAllowRegex, sharedStrings);
+                matchExpression.FileNameAllowRegex ??= definition.FileNameDenyRegex;
 
-                    if (matchExpression.Level == 0) { matchExpression.Level = definition.Level; }
-                }
+                matchExpression.ContentsRegex = PushData(matchExpression.ContentsRegex, sharedStrings);
+
+                if (matchExpression.Level == 0) { matchExpression.Level = definition.Level; }
             }
         }
 
         private static string PushData(string text, Dictionary<string, string> sharedStrings)
         {
-            if (text?.Contains("$") != true) { return text; }
+            if (sharedStrings == null || text?.Contains("$") != true)
+            { 
+                return text; 
+            }
 
             foreach (string key in sharedStrings.Keys)
             {
