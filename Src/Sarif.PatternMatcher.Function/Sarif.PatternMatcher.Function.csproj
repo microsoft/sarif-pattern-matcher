@@ -31,13 +31,11 @@
   </ItemGroup>
   
   <ItemGroup>
-    <SpamFiles Include="$(MSBuildThisFileDirectory)..\Plugins\Security\*.json" />
+    <ProjectReference Include="..\Plugins\Security\Security.csproj" />
+    <ProjectReference Include="..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
+    <Folder Include="Rules\" />
   </ItemGroup>
-  <Target Name="CopyingSpamRules" BeforeTargets="Build">
-    <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(MSBuildThisFileDirectory)\Rules\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
-  </Target>
 </Project>

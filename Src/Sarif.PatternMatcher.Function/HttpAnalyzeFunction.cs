@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                     SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, text, definitionsFolder));
 
                     log.LogInformation($"Completed analyzing file {file.FileName}");
-                    return new JsonResult(sariflog);
+                    return new OkObjectResult(sariflog);
                 }
             }
             catch (Exception ex)
@@ -65,7 +66,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
                 log.LogInformation($"Completed analyzing text of {fileName}");
 
-                return new JsonResult(sariflog);
+                return new OkObjectResult(sariflog);
             }
             catch (Exception ex)
             {
