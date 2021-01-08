@@ -78,6 +78,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             _messageStrings = new Dictionary<string, MultiformatMessageString>
             {
                 { "Default", new MultiformatMessageString() { Text = defaultMessageString, } },
+                { nameof(SdkResources.NotApplicable_InvalidMetadata), new MultiformatMessageString() { Text = SdkResources.NotApplicable_InvalidMetadata, } },
             };
 
             foreach (MatchExpression matchExpression in matchExpressions)
