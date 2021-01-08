@@ -85,9 +85,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             _messageStrings = new Dictionary<string, MultiformatMessageString>
             {
                 { "Default", new MultiformatMessageString() { Text = defaultMessageString, } },
+                { nameof(SdkResources.NotApplicable_InvalidMetadata), new MultiformatMessageString() { Text = SdkResources.NotApplicable_InvalidMetadata, } },
             };
-
-            var reportingConfiguration = new ReportingConfiguration { Level = defaultLevel };
 
             foreach (MatchExpression matchExpression in matchExpressions)
             {
@@ -338,7 +337,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         case Validation.HostUnknown:
                         {
                             level = FailureLevel.Warning;
-                            validationState = " which references an unknown host";
+                            validationState = " which references an unknown host or resource";
                             break;
                         }
 
@@ -535,10 +534,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             if (fingerprint == null) { return null; }
 
-            string[] tokens = fingerprint.Split('#');
             return new Dictionary<string, string>()
             {
-                { tokens[0], tokens[1] },
+                { "SecretFingerprint/v1", fingerprint },
             };
         }
 
