@@ -20,8 +20,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             ILogger log,
             ExecutionContext context)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
             try
             {
                 IFormFile file = request.Form.Files["file"];
@@ -31,12 +29,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                     string text = await reader.ReadToEndAsync();
                     string definitionsFolder = context.FunctionDirectory;
 
-                    log.LogInformation("Start to analyze file");
+                    log.LogInformation($"Start to analyze file {file.FileName}");
 
                     string sourceFilePath = $"file://{file.FileName}";
                     SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, text, definitionsFolder));
 
-                    log.LogInformation("Completed analyzing file");
+                    log.LogInformation($"Completed analyzing file {file.FileName}");
                     return new JsonResult(sariflog);
                 }
             }
@@ -53,21 +51,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             ILogger log,
             ExecutionContext context)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
             try
             {
                 string fileName = request.Form["filename"].ToString();
                 string fileContent = request.Form["filecontent"].ToString();
 
                 string definitionsFolder = context.FunctionDirectory;
-                log.LogInformation("Start to analyze text");
+                log.LogInformation($"Start to analyze text of {fileName}");
 
                 // AnalyzeContext requires URI to file
                 string sourceFilePath = $"file://{fileName}";
                 SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, fileContent, definitionsFolder));
 
-                log.LogInformation("Completed analyzing text");
+                log.LogInformation($"Completed analyzing text of {fileName}");
 
                 return new JsonResult(sariflog);
             }
