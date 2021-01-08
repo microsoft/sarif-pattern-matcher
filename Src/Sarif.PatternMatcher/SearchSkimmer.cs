@@ -45,8 +45,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                   definition.Name,
                   definition.Level,
                   definition.Description,
-                  definition.FileNameDenyRegex,
-                  definition.FileNameAllowRegex,
                   definition.Message,
                   definition.MatchExpressions,
                   fileSystem)
@@ -61,12 +59,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string name,
             FailureLevel defaultLevel,
             string description,
-            string fileNameDenyRegex,
-            string fileNameAllowRegex,
             string defaultMessageString,
             IList<MatchExpression> matchExpressions,
-            IFileSystem fileSystem = null,
-            Dictionary<string, string> strings = null)
+            IFileSystem fileSystem = null)
         {
             _id = id;
             _name = name;
@@ -94,21 +89,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (matchExpression.Level == 0)
                 {
                     matchExpression.Level = defaultLevel;
-                }
-
-                matchExpression.FileNameDenyRegex ??= fileNameDenyRegex;
-                matchExpression.FileNameAllowRegex ??= fileNameAllowRegex;
-
-                // Replacing common strings for real value.
-                if (matchExpression.FileNameAllowRegex?.StartsWith("$") == true && strings.ContainsKey(matchExpression.FileNameAllowRegex.Substring(1)))
-                {
-                    matchExpression.FileNameAllowRegex = strings[matchExpression.FileNameAllowRegex.Substring(1)];
-                }
-
-                // Replacing common strings for real value.
-                if (matchExpression.FileNameDenyRegex?.StartsWith("$") == true && strings.ContainsKey(matchExpression.FileNameDenyRegex.Substring(1)))
-                {
-                    matchExpression.FileNameDenyRegex = strings[matchExpression.FileNameDenyRegex.Substring(1)];
                 }
 
                 _matchExpressionToRule[matchExpression] = new ReportingDescriptor
