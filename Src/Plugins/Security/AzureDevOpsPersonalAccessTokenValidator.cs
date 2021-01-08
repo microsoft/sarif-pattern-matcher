@@ -93,6 +93,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         /// <param name="failureLevel">
         /// The current failure level associated with the match (if a match occurs). This parameter can be
         /// set to a different failure level by the callee, if appropriate.
+        /// </param
+        /// <param name="fingerprint">
+        /// The matched pattern in the fingerprint format.
         /// </param>
         /// <returns>Return the validation state.</returns>
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -100,9 +103,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             ref string matchedPattern,
             ref Dictionary<string, string> groups,
             ref bool performDynamicValidation,
-            ref string failureLevel)
+            ref string failureLevel,
+            ref string fingerprint)
         {
 #pragma warning restore IDE0060
+            fingerprint = $"[pat/vs={matchedPattern}]";
 
             // This plugin does not perform any dynamic validation.
             // We therefore set this setting to false. This is a

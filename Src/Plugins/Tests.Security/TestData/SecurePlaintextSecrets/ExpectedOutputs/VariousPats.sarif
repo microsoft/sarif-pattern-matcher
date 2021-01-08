@@ -40,41 +40,6 @@
         {
           "ruleId": "SEC1001/AzureDevOpsPersonalAccessToken",
           "ruleIndex": 0,
-          "level": "error",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "VariousPats.txt",
-              "base64-encoded",
-              "Azure DevOps personal access token"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/VariousPats.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 1,
-                  "endLine": 6,
-                  "endColumn": 73,
-                  "charOffset": 202,
-                  "charLength": 72,
-                  "snippet": {
-                    "text": "ZGVhZGJlZWZkZWFkYmVlZmRlYWRiZWVmZGVhZGJlZWZkZWFkYmVlZmRlYWRiZWVmZGVhZA=="
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "SEC1001/AzureDevOpsPersonalAccessToken",
-          "ruleIndex": 0,
-          "level": "error",
           "message": {
             "id": "Default",
             "arguments": [
@@ -103,46 +68,14 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "SecretFingerprint/v1": "[pat/vs=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
+          }
         },
         {
           "ruleId": "SEC1001/AzureDevOpsPersonalAccessToken",
           "ruleIndex": 0,
-          "level": "error",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "VariousPats.txt",
-              "",
-              "Azure DevOps personal access token"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/VariousPats.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 1,
-                  "endLine": 3,
-                  "endColumn": 53,
-                  "charOffset": 86,
-                  "charLength": 52,
-                  "snippet": {
-                    "text": "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "SEC1001/AzureDevOpsPersonalAccessToken",
-          "ruleIndex": 0,
-          "level": "error",
           "message": {
             "id": "Default",
             "arguments": [
@@ -171,7 +104,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "SecretFingerprint/v1": "[pat/vs=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
+          }
         }
       ],
       "columnKind": "utf16CodeUnits"

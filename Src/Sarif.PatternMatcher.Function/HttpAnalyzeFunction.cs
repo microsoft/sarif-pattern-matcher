@@ -15,39 +15,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 {
     public static class HttpAnalyzeFunction
     {
-        [FunctionName("analyze-file")]
-        public static async Task<IActionResult> AnalyzeFile(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest request,
-            ILogger log,
-            ExecutionContext context)
-        {
-            try
-            {
-                IFormFile file = request.Form.Files["file"];
-
-                using (var reader = new StreamReader(file.OpenReadStream()))
-                {
-                    string text = await reader.ReadToEndAsync();
-                    string definitionsFolder = context.FunctionDirectory;
-
-                    log.LogInformation($"Start to analyze file {file.FileName}");
-
-                    string sourceFilePath = $"file://{file.FileName}";
-                    SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, text, definitionsFolder));
-
-                    log.LogInformation($"Completed analyzing file {file.FileName}");
-                    return new JsonResult(sariflog);
-                }
-            }
-            catch (Exception ex)
-            {
-                log.LogError(ex, ex.Message);
-                return new BadRequestResult();
-            }
-        }
-
-        [FunctionName("analyze-text")]
-        public static async Task<IActionResult> AnalyzeText(
+        [FunctionName("analyze")]
+        public static async Task<IActionResult> Analyze(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest request,
             ILogger log,
             ExecutionContext context)
@@ -66,7 +35,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
                 log.LogInformation($"Completed analyzing text of {fileName}");
 
-                return new JsonResult(sariflog);
+                return new OkObjectResult(sariflog);
             }
             catch (Exception ex)
             {

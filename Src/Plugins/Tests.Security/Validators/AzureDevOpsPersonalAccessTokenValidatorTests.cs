@@ -49,13 +49,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 bool performDynamicValidation = testCase.PerformDynamicValidation;
                 string failureLevel = testCase.FailureLevel;
+                string fingerprint = "";
                 var groups = new Dictionary<string, string>();
 
                 string state = AzureDevOpsPersonalAccessTokenValidator.IsValid(
                     ref testCase.Input,
                     ref groups,
                     ref performDynamicValidation,
-                    ref failureLevel);
+                    ref failureLevel,
+                    ref fingerprint);
 
                 string title = testCase.Title;
 
@@ -65,6 +67,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Verify(!performDynamicValidation, title, failedTestCases);
 
                 Verify(failureLevel == testCase.FailureLevel, title, failedTestCases);
+                Verify(fingerprint == $"[pat/vs={testCase.Input}]", title, failedTestCases);
             }
 
             failedTestCases.Should().BeEmpty();
@@ -90,12 +93,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 var groups = new Dictionary<string, string>();
                 bool performDynamicValidation = false;
                 string failureLevel = "error";
+                string fingerprint = "";
                 Assert.Throws<ArgumentException>(()
                     => AzureDevOpsPersonalAccessTokenValidator.IsValid(
                         ref matchedPattern,
                         ref groups,
                         ref performDynamicValidation,
-                        ref failureLevel));
+                        ref failureLevel,
+                        ref fingerprint));
             }
         }
     }
