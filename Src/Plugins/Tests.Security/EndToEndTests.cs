@@ -32,7 +32,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         // as 'true' at the end of RunAllTests execution.
         protected override bool VerifyRebaselineExpectedResultsIsFalse => false;
 
-        public EndToEndTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
+        protected EndToEndTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
         protected abstract string RuleId { get; }
 

@@ -7,6 +7,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 {
     internal abstract class ValidatorBase
     {
+        protected ValidatorBase()
+        {
+            FingerprintToResultCache = new Dictionary<string, string>();
+        }
+
+        /// <summary>
+        /// Gets a cache of fingerprint to previously generated validation
+        /// results. Useful to avoid repeating expensive dynamic validations
+        /// of logically unique secrets.
+        /// </summary>
+        protected IDictionary<string, string> FingerprintToResultCache { get; }
+
         public static string CreateReturnValueForException(Exception e, string asset)
         {
             if (e.Message.Equals("No such host is known."))
@@ -44,18 +56,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                 nameof(ValidationState.Authorized) + $"#The '{user}' account is compromised for '{asset}'.";
         }
 
-        protected ValidatorBase()
-        {
-            FingerprintToResultCache = new Dictionary<string, string>();
-        }
-
-        /// <summary>
-        /// Gets a cache of fingerprint to previously generated validation
-        /// results. Useful to avoid repeating expensive dynamic validations
-        /// of logically unique secrets.
-        /// </summary>
-        protected IDictionary<string, string> FingerprintToResultCache { get; }
-
         /// <summary>
         /// Validate if the match is a secret or credential.
         /// </summary>
@@ -87,6 +87,5 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             ref bool performDynamicValidation,
             ref string failureLevel,
             ref string fingerprint);
-
     }
 }
