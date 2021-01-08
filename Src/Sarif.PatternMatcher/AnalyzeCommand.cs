@@ -136,8 +136,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private static string PushData(string text, Dictionary<string, string> sharedStrings)
         {
             if (sharedStrings == null || text?.Contains("$") != true)
-            { 
-                return text; 
+            {
+                return text;
             }
 
             foreach (string key in sharedStrings.Keys)
