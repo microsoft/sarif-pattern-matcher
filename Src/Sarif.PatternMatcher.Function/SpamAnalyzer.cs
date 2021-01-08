@@ -53,6 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                     TargetUri = new Uri(filePath, UriKind.RelativeOrAbsolute),
                     FileContents = text,
                     Logger = logger,
+                    DynamicValidation = true,
                 };
 
                 using (context)
