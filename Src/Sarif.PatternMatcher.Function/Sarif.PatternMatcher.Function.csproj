@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.app.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
   
@@ -25,17 +25,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
-    <None Update="Rules\*.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\Plugins\Security\Security.csproj" />
     <ProjectReference Include="..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Rules\" />
   </ItemGroup>
 </Project>
