@@ -27,7 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         {
             if (Skimmers == null)
             {
-                IEnumerable<string> regexDefinitions = FileSystem.DirectoryGetFiles(Path.Combine(rulePath, @"..\"), "*.json");
+                IEnumerable<string> regexDefinitions = FileSystem.DirectoryGetFiles(Path.Combine(rulePath, @"..\bin\"), "*.json");
 
                 // Load all rules from JSON. This also automatically loads any validations file that
                 // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
