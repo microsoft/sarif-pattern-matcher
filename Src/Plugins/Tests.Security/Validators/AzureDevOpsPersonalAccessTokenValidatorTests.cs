@@ -62,7 +62,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Verify(state == testCase.ExpectedValidationState, title, failedTestCases);
 
                 // The core ADO PAT validator does not perform any dynamic checking
-                Verify(performDynamicValidation == false, title, failedTestCases);
+                Verify(!performDynamicValidation, title, failedTestCases);
 
                 Verify(failureLevel == testCase.FailureLevel, title, failedTestCases);
             }

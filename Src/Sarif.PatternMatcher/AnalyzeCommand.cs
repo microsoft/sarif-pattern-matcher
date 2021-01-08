@@ -133,21 +133,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private static string PushData(string text, Dictionary<string, string> sharedStrings)
-        {
-            if (sharedStrings == null || text?.Contains("$") != true)
-            {
-                return text;
-            }
-
-            foreach (string key in sharedStrings.Keys)
-            {
-                text = text.Replace(key, sharedStrings[key]);
-            }
-
-            return text;
-        }
-
         internal static Dictionary<string, string> LoadSharedStrings(string sharedStringsFullPath, IFileSystem fileSystem)
         {
             var result = new Dictionary<string, string>();
@@ -160,8 +145,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string key = line.Substring(0, index);
                 if (!key.StartsWith("$")) { ThrowInvalidSharedStringsEntry(line); }
 
-                string value = line.Substring(key.Length + "=".Length);
-                result[key] = value;
+                result[key] = line.Substring(key.Length + "=".Length);
             }
 
             return result;
@@ -191,11 +175,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
         }
 
+        private static string PushData(string text, Dictionary<string, string> sharedStrings)
+        {
+            if (sharedStrings == null || text?.Contains("$") != true)
+            {
+                return text;
+            }
+
+            foreach (string key in sharedStrings.Keys)
+            {
+                text = text.Replace(key, sharedStrings[key]);
+            }
+
+            return text;
+        }
+
         private static void ThrowInvalidSharedStringsEntry(string line)
         {
             throw new InvalidOperationException(
-                $"Malformed shared strings entry. Every shared string should consist of a " +
-                $"key name (prefixed with $) followed by an equals sign and the string value " +
+                "Malformed shared strings entry. Every shared string should consist of a " +
+                "key name (prefixed with $) followed by an equals sign and the string value " +
                 $"(e.g., $MyKey=MyValue). The malformed line was: {line}");
         }
     }
