@@ -125,7 +125,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 matchExpression.FileNameDenyRegex ??= definition.FileNameDenyRegex;
 
                 matchExpression.FileNameAllowRegex = PushData(matchExpression.FileNameAllowRegex, sharedStrings);
-                matchExpression.FileNameAllowRegex ??= definition.FileNameDenyRegex;
+                matchExpression.FileNameAllowRegex ??= definition.FileNameAllowRegex;
 
                 matchExpression.ContentsRegex = PushData(matchExpression.ContentsRegex, sharedStrings);
 
