@@ -12,11 +12,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 {
-    public static class HttpAnalyzeFn
+    public static class HttpAnalyzeFunction
     {
         [FunctionName("analyze-file")]
         public static async Task<IActionResult> AnalyzeFile(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest request,
             ILogger log,
             ExecutionContext context)
         {
@@ -24,17 +24,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
             try
             {
-                IFormFile file = req.Form.Files["file"];
+                IFormFile file = request.Form.Files["file"];
 
                 using (var reader = new StreamReader(file.OpenReadStream()))
                 {
                     string text = await reader.ReadToEndAsync();
-                    string rulefolder = context.FunctionDirectory;
+                    string definitionsFolder = context.FunctionDirectory;
 
                     log.LogInformation("Start to analyze file");
 
                     string sourceFilePath = Path.Combine(@"X:\Temp", file.FileName);
-                    SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, text, rulefolder));
+                    SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, text, definitionsFolder));
 
                     log.LogInformation("Completed analyzing file");
                     return new JsonResult(sariflog);
@@ -49,7 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
         [FunctionName("analyze-text")]
         public static async Task<IActionResult> AnalyzeText(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest request,
             ILogger log,
             ExecutionContext context)
         {
@@ -57,15 +57,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
             try
             {
-                string fileName = req.Form["filename"].ToString();
-                string fileContent = req.Form["filecontent"].ToString();
+                string fileName = request.Form["filename"].ToString();
+                string fileContent = request.Form["filecontent"].ToString();
 
-                string rulefolder = context.FunctionDirectory;
+                string definitionsFolder = context.FunctionDirectory;
                 log.LogInformation("Start to analyze text");
 
                 // AnalyzeContext requires URI to file
                 string sourceFilePath = Path.Combine(@"X:\Temp", fileName);
-                SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, fileContent, rulefolder));
+                SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, fileContent, definitionsFolder));
 
                 log.LogInformation("Completed analyzing text");
 
