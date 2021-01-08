@@ -43,10 +43,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                   fileRegionsCache,
                   definition.Id,
                   definition.Name,
-                  definition.Level,
                   definition.Description,
-                  definition.FileNameDenyRegex,
-                  definition.FileNameAllowRegex,
                   definition.Message,
                   definition.MatchExpressions,
                   fileSystem)
@@ -59,14 +56,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FileRegionsCache fileRegionsCache,
             string id,
             string name,
-            FailureLevel defaultLevel,
             string description,
-            string fileNameDenyRegex,
-            string fileNameAllowRegex,
             string defaultMessageString,
             IList<MatchExpression> matchExpressions,
-            IFileSystem fileSystem = null,
-            Dictionary<string, string> strings = null)
+            IFileSystem fileSystem = null)
         {
             _id = id;
             _name = name;
@@ -90,26 +83,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (MatchExpression matchExpression in matchExpressions)
             {
-                if (matchExpression.Level == 0)
-                {
-                    matchExpression.Level = defaultLevel;
-                }
-
-                matchExpression.FileNameDenyRegex ??= fileNameDenyRegex;
-                matchExpression.FileNameAllowRegex ??= fileNameAllowRegex;
-
-                // Replacing common strings for real value.
-                if (matchExpression.FileNameAllowRegex?.StartsWith("$") == true && strings.ContainsKey(matchExpression.FileNameAllowRegex.Substring(1)))
-                {
-                    matchExpression.FileNameAllowRegex = strings[matchExpression.FileNameAllowRegex.Substring(1)];
-                }
-
-                // Replacing common strings for real value.
-                if (matchExpression.FileNameDenyRegex?.StartsWith("$") == true && strings.ContainsKey(matchExpression.FileNameDenyRegex.Substring(1)))
-                {
-                    matchExpression.FileNameDenyRegex = strings[matchExpression.FileNameDenyRegex.Substring(1)];
-                }
-
                 _matchExpressionToRule[matchExpression] = new ReportingDescriptor
                 {
                     Id = string.IsNullOrEmpty(matchExpression.SubId) ? id : $"{id}/{matchExpression.SubId}",

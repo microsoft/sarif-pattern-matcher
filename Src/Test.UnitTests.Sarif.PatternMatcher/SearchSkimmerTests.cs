@@ -320,6 +320,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FileRegionsCache fileRegionsCache = null,
             IFileSystem fileSystem = null)
         {
+            AnalyzeCommand.PushInheritedData(definition, sharedStrings: null);
+
             return new SearchSkimmer(
                 engine: engine ?? RE2Regex.Instance,
                 validators: validators,

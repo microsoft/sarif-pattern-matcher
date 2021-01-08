@@ -16,10 +16,17 @@
     <Content Include="build\Sarif.PatternMatcher.Security.targets">
       <PackagePath>build\</PackagePath>
     </Content>
+    <Content Include="Security.SharedStrings.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <SpamFiles Include="$(MSBuildThisFileDirectory)*.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Security.SharedStrings.txt" />
   </ItemGroup>
 
   <Target Name="CopyingSpam" AfterTargets="Build">
