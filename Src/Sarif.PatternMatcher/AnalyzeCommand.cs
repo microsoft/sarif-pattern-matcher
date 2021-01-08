@@ -76,7 +76,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             fileRegionsCache: fileRegionsCache,
                             id: definition.Id,
                             name: definition.Name,
-                            defaultLevel: definition.Level,
                             description: definition.Description ?? string.Empty,
                             defaultMessageString: definition.Message,
                             matchExpressions: definition.MatchExpressions));
@@ -109,20 +108,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         internal static void PushInheritedData(SearchDefinitions definitions, Dictionary<string, string> sharedStrings)
         {
-            foreach (SearchDefinition searchDefinition in definitions.Definitions)
+            foreach (SearchDefinition definition in definitions.Definitions)
             {
-                searchDefinition.FileNameDenyRegex = PushData(searchDefinition.FileNameDenyRegex, sharedStrings);
-                searchDefinition.FileNameAllowRegex = PushData(searchDefinition.FileNameAllowRegex, sharedStrings);
+                definition.FileNameDenyRegex = PushData(definition.FileNameDenyRegex, sharedStrings);
+                definition.FileNameAllowRegex = PushData(definition.FileNameAllowRegex, sharedStrings);
 
-                foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
+                foreach (MatchExpression matchExpression in definition.MatchExpressions)
                 {
                     matchExpression.FileNameDenyRegex = PushData(matchExpression.FileNameDenyRegex, sharedStrings);
-                    matchExpression.FileNameDenyRegex ??= searchDefinition.FileNameDenyRegex;
+                    matchExpression.FileNameDenyRegex ??= definition.FileNameDenyRegex;
 
                     matchExpression.FileNameAllowRegex = PushData(matchExpression.FileNameAllowRegex, sharedStrings);
-                    matchExpression.FileNameAllowRegex ??= searchDefinition.FileNameDenyRegex;
+                    matchExpression.FileNameAllowRegex ??= definition.FileNameDenyRegex;
 
                     matchExpression.ContentsRegex = PushData(matchExpression.ContentsRegex, sharedStrings);
+
+                    if (matchExpression.Level == 0) { matchExpression.Level = definition.Level; }
                 }
             }
         }

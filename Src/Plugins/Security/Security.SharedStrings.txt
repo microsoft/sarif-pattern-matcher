@@ -1,0 +1,1 @@
+﻿$CSourceFiles=(?i)\.(c|cpp|cxx)$

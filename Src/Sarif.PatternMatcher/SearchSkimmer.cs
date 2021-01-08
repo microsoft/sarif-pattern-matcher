@@ -43,7 +43,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                   fileRegionsCache,
                   definition.Id,
                   definition.Name,
-                  definition.Level,
                   definition.Description,
                   definition.Message,
                   definition.MatchExpressions,
@@ -57,7 +56,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FileRegionsCache fileRegionsCache,
             string id,
             string name,
-            FailureLevel defaultLevel,
             string description,
             string defaultMessageString,
             IList<MatchExpression> matchExpressions,
@@ -82,15 +80,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 { "Default", new MultiformatMessageString() { Text = defaultMessageString, } },
             };
 
-            var reportingConfiguration = new ReportingConfiguration { Level = defaultLevel };
-
             foreach (MatchExpression matchExpression in matchExpressions)
             {
-                if (matchExpression.Level == 0)
-                {
-                    matchExpression.Level = defaultLevel;
-                }
-
                 _matchExpressionToRule[matchExpression] = new ReportingDescriptor
                 {
                     Id = string.IsNullOrEmpty(matchExpression.SubId) ? id : $"{id}/{matchExpression.SubId}",
