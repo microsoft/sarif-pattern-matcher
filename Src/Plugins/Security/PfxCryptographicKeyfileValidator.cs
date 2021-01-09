@@ -26,27 +26,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // dynamic analysis was available but not exercised.
             performDynamicValidation = false;
 
-            string publickey = string.Empty;
-            string validationState = TryLoadCertificate(matchedPattern, ref publickey);
-            fingerprint = $"[cert={publickey}]";
+            string thumprint = string.Empty;
+            string validationState = TryLoadCertificate(matchedPattern, ref thumprint);
+            fingerprint = $"[thumbprint={thumprint}]";
             return validationState;
         }
 
-        private static string TryLoadCertificate(string certificatePath, ref string publickey)
+        private static string TryLoadCertificate(string certificatePath, ref string thumprint)
         {
             X509Certificate2 certificate = null;
             try
             {
                 // If this certificate needs a password or it is a bundle, it will throw an exception.
                 certificate = new X509Certificate2(certificatePath);
-                publickey = certificate.PublicKey.EncodedKeyValue.Format(false);
+                thumprint = certificate.Thumbprint;
                 return certificate.PrivateKey != null ? nameof(ValidationState.Authorized) : nameof(ValidationState.NoMatch);
             }
             catch (Exception e)
             {
                 return e.Message switch
                 {
-                    "Cannot find the original signer." => TryLoadCertificateCollection(certificatePath, ref publickey),
+                    "Cannot find the original signer." => TryLoadCertificateCollection(certificatePath, ref thumprint),
                     _ => ValidatorBase.CreateReturnValueForFileException(e, certificatePath),
                 };
             }
@@ -56,7 +56,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
         }
 
-        private static string TryLoadCertificateCollection(string certificatePath, ref string publickey)
+        private static string TryLoadCertificateCollection(string certificatePath, ref string thumprint)
         {
             var certificates = new X509Certificate2Collection();
             try
@@ -67,7 +67,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string state = nameof(ValidationState.NoMatch);
                 foreach (X509Certificate2 certificate in certificates)
                 {
-                    sb.Append(certificate.PublicKey.EncodedKeyValue.Format(false));
+                    sb.Append(certificate.Thumbprint);
                     sb.Append(";");
                     if (certificate.PrivateKey != null)
                     {
@@ -81,7 +81,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     sb.Remove(sb.Length - 1, 1);
                 }
 
-                publickey = sb.ToString();
+                thumprint = sb.ToString();
                 return state;
             }
             catch (Exception e)
