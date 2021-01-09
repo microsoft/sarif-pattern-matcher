@@ -1,4 +1,5 @@
 {
+  "ValidatorsAssemblyName": "Security.dll",
   "Definitions": [
     {
       "Name": "ReviewPotentiallySensitiveFiles",

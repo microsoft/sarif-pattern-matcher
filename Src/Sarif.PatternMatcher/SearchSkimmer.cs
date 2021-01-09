@@ -390,7 +390,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     match,
                     _argumentNameToIndex,
                     context.TargetUri.LocalPath,
-                    validatorMessage: NormalizeValiadator(validatorMessage),
+                    validatorMessage: NormalizeValidator(validatorMessage),
                     messageArguments);
 
                 Result result = ConstructResult(
@@ -411,7 +411,119 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private string NormalizeValiadator(string validatorMessage)
+        private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level)
+        {
+            ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
+
+            bool dynamic = context.DynamicValidation;
+            string levelText = level.ToString();
+            string fingerprint = null;
+            IDictionary<string, string> groups = new Dictionary<string, string>();
+
+            string matched = context.TargetUri.LocalPath;
+
+            if (_validators != null)
+            {
+                string validatorMessage;
+                Validation state = _validators.Validate(
+                    reportingDescriptor.Id,
+                    ref matched,
+                    ref groups,
+                    ref dynamic,
+                    ref levelText,
+                    ref fingerprint,
+                    out validatorMessage);
+
+                level = (FailureLevel)Enum.Parse(typeof(FailureLevel), levelText);
+
+                switch (state)
+                {
+                    case Validation.NoMatch:
+                    {
+                        // The validator determined the match is a false positive.
+                        // i.e., it is not the kind of artifact we're looking for.
+                        // We should suspend processing and move to the next match.
+                        return;
+                    }
+
+                    case Validation.None:
+                    case Validation.ValidatorReturnedIllegalValue:
+                    {
+                        // The validator returned a bad value.
+                        // TODO: we should log this condition
+                        // and then continue processing.
+                        level = FailureLevel.Error;
+                        break;
+                    }
+
+                    case Validation.Authorized:
+                    {
+                        level = FailureLevel.Error;
+                        break;
+                    }
+
+                    case Validation.Unauthorized:
+                    {
+                        level = FailureLevel.Warning;
+                        break;
+                    }
+
+                    case Validation.Expired:
+                    {
+                        level = FailureLevel.Warning;
+                        break;
+                    }
+
+                    case Validation.HostUnknown:
+                    {
+                        level = FailureLevel.Warning;
+                        break;
+                    }
+
+                    case Validation.InvalidForConsultedAuthorities:
+                    {
+                        level = FailureLevel.Warning;
+                        break;
+                    }
+
+                    case Validation.Unknown:
+                    {
+                        level = FailureLevel.Warning;
+                        break;
+                    }
+
+                    case Validation.ValidatorNotFound:
+                    {
+                        break;
+                    }
+
+                    default:
+                    {
+                        throw new InvalidOperationException($"Unrecognized validation value '{state}'.");
+                    }
+                }
+            }
+
+            IList<string> arguments = GetMessageArguments(
+                _argumentNameToIndex,
+                context.TargetUri.LocalPath,
+                base64Encoded: false,
+                matchExpression.MessageArguments);
+
+            Result result = this.ConstructResult(
+                    context.TargetUri,
+                    reportingDescriptor.Id,
+                    level,
+                    region: null,
+                    flexMatch: null,
+                    null,
+                    matchExpression.Fixes,
+                    arguments);
+
+            context.Logger.Log(reportingDescriptor, result);
+        }
+
+        private string NormalizeValidator(string validatorMessage)
         {
             if (string.IsNullOrEmpty(validatorMessage)) { return string.Empty; }
 
@@ -511,41 +623,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 { "SecretFingerprint/v1", fingerprint },
             };
-        }
-
-        private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level)
-        {
-            ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
-            IList<string> arguments = GetMessageArguments(
-                _argumentNameToIndex,
-                context.TargetUri.LocalPath,
-                base64Encoded: false,
-                matchExpression.MessageArguments);
-
-            var location = new Location()
-            {
-                PhysicalLocation = new PhysicalLocation
-                {
-                    ArtifactLocation = new ArtifactLocation
-                    {
-                        Uri = context.TargetUri,
-                    },
-                },
-            };
-
-            var result = new Result()
-            {
-                RuleId = reportingDescriptor.Id,
-                Level = level,
-                Message = new Message()
-                {
-                    Id = "Default",
-                    Arguments = arguments,
-                },
-                Locations = new List<Location>(new[] { location }),
-            };
-
-            context.Logger.Log(reportingDescriptor, result);
         }
 
         private FlexString Decode(string value)
