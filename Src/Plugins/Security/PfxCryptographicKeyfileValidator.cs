@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -40,15 +41,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 // If this certificate needs a password or it is a bundle, it will throw an exception.
                 certificate = new X509Certificate2(certificatePath);
                 thumprint = certificate.Thumbprint;
-                return certificate.PrivateKey != null ? nameof(ValidationState.Authorized) : nameof(ValidationState.NoMatch);
+                return certificate.PrivateKey != null
+                    ? nameof(ValidationState.Authorized)
+                    : nameof(ValidationState.NoMatch);
             }
-            catch (Exception e)
+            catch (CryptographicException e)
             {
                 return e.Message switch
                 {
                     "Cannot find the original signer." => TryLoadCertificateCollection(certificatePath, ref thumprint),
-                    _ => ValidatorBase.CreateReturnValueForFileException(e, certificatePath),
+                    _ => ValidatorBase.CreateReturnValueForUnknownException(e, certificatePath),
                 };
+            }
+            catch (Exception e)
+            {
+                return ValidatorBase.CreateReturnValueForUnknownException(e, certificatePath);
             }
             finally
             {
@@ -86,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ValidatorBase.CreateReturnValueForFileException(e, certificatePath);
+                return ValidatorBase.CreateReturnValueForUnknownException(e, certificatePath);
             }
         }
     }
