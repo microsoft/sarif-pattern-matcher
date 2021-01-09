@@ -56,6 +56,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                 nameof(ValidationState.Authorized) + $"#The '{user}' account is compromised for '{asset}'.";
         }
 
+        public static string CreateReturnValueForFileException(Exception e, string asset)
+        {
+            if (e.Message.Equals("The specified network password is not correct."))
+            {
+                return nameof(ValidationState.Unknown) + $"#The file '{asset}' is secure and we could not validate.";
+            }
+
+            return nameof(ValidationState.Unknown) +
+                       $"#An unexpected exception was caught attempting to validate '{asset}': " +
+                       e.ToString();
+        }
+
         /// <summary>
         /// Validate if the match is a secret or credential.
         /// </summary>
@@ -81,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         /// set to null if no fingerprint can be computed that definitively identifies the secret.
         /// </param>
         /// <returns>Return the validation state.</returns>
-        protected abstract string IsValidHelper(
+        protected abstract string IsValid(
             ref string matchedPattern,
             ref Dictionary<string, string> groups,
             ref bool performDynamicValidation,

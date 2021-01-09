@@ -421,10 +421,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IDictionary<string, string> groups = new Dictionary<string, string>();
 
             string matched = context.TargetUri.LocalPath;
+            string validatorMessage = string.Empty;
 
             if (_validators != null)
             {
-                string validatorMessage;
                 Validation state = _validators.Validate(
                     reportingDescriptor.Id,
                     ref matched,
@@ -505,9 +505,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             IList<string> arguments = GetMessageArguments(
+                match: null,
                 _argumentNameToIndex,
                 context.TargetUri.LocalPath,
-                base64Encoded: false,
+                validatorMessage: NormalizeValidatorMessage(validatorMessage),
                 matchExpression.MessageArguments);
 
             Result result = this.ConstructResult(
@@ -516,7 +517,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     level,
                     region: null,
                     flexMatch: null,
-                    null,
+                    fingerprint,
                     matchExpression.Fixes,
                     arguments);
 
@@ -719,7 +720,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 string value = kv.Key == "scanTarget"
                     ? Path.GetFileName(scanTargetPath)
-                    : match.Groups[kv.Key]?.Value;
+                    : match?.Groups[kv.Key]?.Value;
 
                 value = kv.Key == nameof(scanTargetPath)
                     ? scanTargetPath

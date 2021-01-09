@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -28,12 +27,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             performDynamicValidation = false;
 
             string publickey = string.Empty;
-            string validationState = TryLoadCertificate(matchedPattern, ref publickey).ToString();
+            string validationState = TryLoadCertificate(matchedPattern, ref publickey);
             fingerprint = $"[cert={publickey}]";
             return validationState;
         }
 
-        private static ValidationState TryLoadCertificate(string certificatePath, ref string publickey)
+        private static string TryLoadCertificate(string certificatePath, ref string publickey)
         {
             X509Certificate2 certificate = null;
             try
@@ -41,20 +40,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 // If this certificate needs a password or it is a bundle, it will throw an exception.
                 certificate = new X509Certificate2(certificatePath);
                 publickey = certificate.PublicKey.EncodedKeyValue.Format(false);
-                return certificate.PrivateKey != null ? ValidationState.Authorized : ValidationState.NoMatch;
+                return certificate.PrivateKey != null ? nameof(ValidationState.Authorized) : nameof(ValidationState.NoMatch);
             }
-            catch (CryptographicException ex)
+            catch (Exception e)
             {
-                return ex.Message switch
+                return e.Message switch
                 {
                     "Cannot find the original signer." => TryLoadCertificateCollection(certificatePath, ref publickey),
-                    "The specified network password is not correct." => ValidationState.Unknown,
-                    _ => ValidationState.Unknown,
+                    _ => ValidatorBase.CreateReturnValueForFileException(e, certificatePath),
                 };
-            }
-            catch (Exception)
-            {
-                return ValidationState.Unknown;
             }
             finally
             {
@@ -62,7 +56,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
         }
 
-        private static ValidationState TryLoadCertificateCollection(string certificatePath, ref string publickey)
+        private static string TryLoadCertificateCollection(string certificatePath, ref string publickey)
         {
             var certificates = new X509Certificate2Collection();
             try
@@ -70,7 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 // If this certificate needs a password, it will throw an exception.
                 certificates.Import(certificatePath);
                 var sb = new StringBuilder();
-                ValidationState state = ValidationState.NoMatch;
+                string state = nameof(ValidationState.NoMatch);
                 foreach (X509Certificate2 certificate in certificates)
                 {
                     sb.Append(certificate.PublicKey.EncodedKeyValue.Format(false));
@@ -78,7 +72,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     if (certificate.PrivateKey != null)
                     {
                         // Private key detected.
-                        state = ValidationState.Authorized;
+                        state = nameof(ValidationState.Authorized);
                     }
                 }
 
@@ -90,9 +84,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 publickey = sb.ToString();
                 return state;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return ValidationState.Unknown;
+                return ValidatorBase.CreateReturnValueForFileException(e, certificatePath);
             }
         }
     }
