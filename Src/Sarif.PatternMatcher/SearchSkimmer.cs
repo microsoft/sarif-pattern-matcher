@@ -390,7 +390,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     match,
                     _argumentNameToIndex,
                     context.TargetUri.LocalPath,
-                    validatorMessage: NormalizeValidator(validatorMessage),
+                    validatorMessage: NormalizeValidatorMessage(validatorMessage),
                     messageArguments);
 
                 Result result = ConstructResult(
@@ -523,7 +523,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.Logger.Log(reportingDescriptor, result);
         }
 
-        private string NormalizeValidator(string validatorMessage)
+        private string NormalizeValidatorMessage(string validatorMessage)
         {
             if (string.IsNullOrEmpty(validatorMessage)) { return string.Empty; }
 

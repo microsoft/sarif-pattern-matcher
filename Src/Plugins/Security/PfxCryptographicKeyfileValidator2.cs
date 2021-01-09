@@ -8,7 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal static class PFXCryptographicKeyFileValidator
+    internal static class PfxCryptographicKeyfileValidator2
     {
 #pragma warning disable IDE0060 // Remove unused parameter
         public static string IsValid(
