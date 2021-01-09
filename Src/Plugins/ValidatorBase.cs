@@ -93,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         /// set to null if no fingerprint can be computed that definitively identifies the secret.
         /// </param>
         /// <returns>Return the validation state.</returns>
-        protected abstract string IsValid(
+        protected abstract string IsValidHelper(
             ref string matchedPattern,
             ref Dictionary<string, string> groups,
             ref bool performDynamicValidation,
