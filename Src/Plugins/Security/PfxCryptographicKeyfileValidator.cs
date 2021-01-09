@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -19,7 +20,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             ref string fingerprint)
         {
 #pragma warning restore IDE0060
-            fingerprint = $"[cert={matchedPattern}]";
 
             // This plugin does not perform any dynamic validation.
             // We therefore set this setting to false. This is a
@@ -27,24 +27,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // dynamic analysis was available but not exercised.
             performDynamicValidation = false;
 
-            return TryLoadCertificate(matchedPattern).ToString();
+            string publickey = string.Empty;
+            string validationState = TryLoadCertificate(matchedPattern, ref publickey).ToString();
+            fingerprint = $"[cert={publickey}]";
+            return validationState;
         }
 
-        private static ValidationState TryLoadCertificate(string certificatePath)
+        private static ValidationState TryLoadCertificate(string certificatePath, ref string publickey)
         {
             X509Certificate2 certificate = null;
             try
             {
                 // If this certificate needs a password or it is a bundle, it will throw an exception.
                 certificate = new X509Certificate2(certificatePath);
-
+                publickey = certificate.PublicKey.EncodedKeyValue.Format(false);
                 return certificate.PrivateKey != null ? ValidationState.Authorized : ValidationState.NoMatch;
             }
             catch (CryptographicException ex)
             {
                 return ex.Message switch
                 {
-                    "Cannot find the original signer." => TryLoadCertificateCollection(certificatePath),
+                    "Cannot find the original signer." => TryLoadCertificateCollection(certificatePath, ref publickey),
                     "The specified network password is not correct." => ValidationState.Unknown,
                     _ => ValidationState.Unknown,
                 };
@@ -59,23 +62,33 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
         }
 
-        private static ValidationState TryLoadCertificateCollection(string certificatePath)
+        private static ValidationState TryLoadCertificateCollection(string certificatePath, ref string publickey)
         {
             var certificates = new X509Certificate2Collection();
             try
             {
                 // If this certificate needs a password, it will throw an exception.
                 certificates.Import(certificatePath);
+                var sb = new StringBuilder();
+                ValidationState state = ValidationState.NoMatch;
                 foreach (X509Certificate2 certificate in certificates)
                 {
+                    sb.Append(certificate.PublicKey.EncodedKeyValue.Format(false));
+                    sb.Append(";");
                     if (certificate.PrivateKey != null)
                     {
                         // Private key detected.
-                        return ValidationState.Authorized;
+                        state = ValidationState.Authorized;
                     }
                 }
 
-                return ValidationState.NoMatch;
+                if (sb.Length > 0)
+                {
+                    sb.Remove(sb.Length - 1, 1);
+                }
+
+                publickey = sb.ToString();
+                return state;
             }
             catch (Exception)
             {

@@ -89,7 +89,7 @@
           "MessageArguments": { "fileKind": "a PKCS#7 cryptographic key bundle" }
         },
         {
-          "SubId": "PFXCryptographicKeyFile",
+          "SubId": "PfxCryptographicKeyfile",
           "FileNameAllowRegex": "(?i)\\.pfx$",
           "MessageArguments": { "fileKind": "a cryptographic key bundle" }
         },
