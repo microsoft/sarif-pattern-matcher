@@ -2,13 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Linq;
 
 using FluentAssertions;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -28,7 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         {
 
             IActionResult result = await HttpAnalyzeFunction.Analyze(
-                request: TestHelper.MockAnalyzeFunctionRequest("abc.cs", TestHelper.SampleCode), 
+                request: TestHelper.MockAnalyzeFunctionRequest("abc.cs", TestHelper.SampleCode),
                 log: logger,
                 context: TestHelper.ContextSetup());
 
