@@ -60,7 +60,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         {
             return nameof(ValidationState.Unknown) +
                        $"#An unexpected exception was caught attempting to validate '{asset}': " +
-                       e.ToString();
+                       e.Message;
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -27,12 +28,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
                 return e.Message switch
                 {
                     "Cannot find the original signer." => TryLoadCertificateCollection(certificatePath, ref thumprint),
-                    _ => ValidatorBase.CreateReturnValueForUnknownException(e, certificatePath),
+                    _ => ValidatorBase.CreateReturnValueForUnknownException(e, Path.GetFileName(certificatePath)),
                 };
             }
             catch (Exception e)
             {
-                return ValidatorBase.CreateReturnValueForUnknownException(e, certificatePath);
+                return ValidatorBase.CreateReturnValueForUnknownException(e, Path.GetFileName(certificatePath));
             }
             finally
             {
@@ -70,7 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
             }
             catch (Exception e)
             {
-                return ValidatorBase.CreateReturnValueForUnknownException(e, certificatePath);
+                return ValidatorBase.CreateReturnValueForUnknownException(e, Path.GetFileName(certificatePath));
             }
         }
     }
