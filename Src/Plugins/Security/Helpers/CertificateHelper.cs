@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
                 // If this certificate needs a password or it is a bundle, it will throw an exception.
                 certificate = new X509Certificate2(certificatePath);
                 thumprint = certificate.Thumbprint;
-                return certificate.PrivateKey != null
+                return certificate.HasPrivateKey
                     ? nameof(ValidationState.Authorized)
                     : nameof(ValidationState.NoMatch);
             }
@@ -53,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
                 {
                     sb.Append(certificate.Thumbprint);
                     sb.Append(";");
-                    if (certificate.PrivateKey != null)
+                    if (certificate.HasPrivateKey)
                     {
                         // Private key detected.
                         state = nameof(ValidationState.Authorized);
