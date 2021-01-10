@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal static class PfxCryptographicKeyfileValidator
+    internal static class CertificateFileValidator
     {
 #pragma warning disable IDE0060 // Remove unused parameter
         public static string IsValid(
