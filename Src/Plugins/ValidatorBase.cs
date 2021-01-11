@@ -56,6 +56,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                 nameof(ValidationState.Authorized) + $"#The '{user}' account is compromised for '{asset}'.";
         }
 
+        public static string CreateReturnValueForUnknownException(Exception e, string asset)
+        {
+            return nameof(ValidationState.Unknown) +
+                       $"#An unexpected exception was caught attempting to validate '{asset}': " +
+                       e.ToString();
+        }
+
         /// <summary>
         /// Validate if the match is a secret or credential.
         /// </summary>

@@ -63,9 +63,12 @@ If (Test-Path "..\bld") {
 if (-not $NoBuild) {
     Write-Information "Building RE2.Native.sln (MSBuild)..."
     MSBuild "$RepoRoot\Src\RE2.Native.sln" /p:Configuration=$Configuration /p:Platform="Any CPU"
+    
+    Write-Information "Restoring SarifPatternMatcher.sln (dotnet)..."
+    dotnet restore $RepoRoot\Src\SarifPatternMatcher.sln
 
     Write-Information "Building SarifPatternMatcher.sln (dotnet)..."
-    dotnet build $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true
+    dotnet build $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true --no-restore
     if ($LASTEXITCODE -ne 0) {
         Exit-WithFailureMessage $ScriptName "Build of SarifPatternMatcher failed."
     }
