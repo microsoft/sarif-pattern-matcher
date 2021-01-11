@@ -45,7 +45,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         [Fact]
         public async Task Function_HttpAnalyze_FileWithPAT_Should_Return_SarifLog()
         {
-            string patTextFile = "VariousPats.txt";
+            string patTextFile = "SEC1001.AzureDevOpsPersonalAccessToken_pats.txt";
             IActionResult result = await HttpAnalyzeFunction.Analyze(
                 request: TestHelper.MockAnalyzeFunctionRequest(patTextFile, TestHelper.GetTestResourceContent(patTextFile)),
                 log: logger,

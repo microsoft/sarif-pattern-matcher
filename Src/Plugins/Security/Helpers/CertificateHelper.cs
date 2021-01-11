@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -11,14 +12,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
 {
     internal static class CertificateHelper
     {
-        public static string TryLoadCertificate(string certificatePath, ref string thumprint)
+        public static string TryLoadCertificate(string certificatePath, ref string thumbprint)
         {
             X509Certificate2 certificate = null;
             try
             {
                 // If this certificate needs a password or it is a bundle, it will throw an exception.
                 certificate = new X509Certificate2(certificatePath);
-                thumprint = certificate.Thumbprint;
+                thumbprint = certificate.Thumbprint;
                 return certificate.HasPrivateKey
                     ? nameof(ValidationState.Authorized)
                     : nameof(ValidationState.NoMatch);
@@ -27,7 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
             {
                 return e.Message switch
                 {
-                    "Cannot find the original signer." => TryLoadCertificateCollection(certificatePath, ref thumprint),
+                    "Cannot find the original signer." => TryLoadCertificateCollection(certificatePath, ref thumbprint),
                     _ => ValidatorBase.CreateReturnValueForUnknownException(e, Path.GetFileName(certificatePath)),
                 };
             }
@@ -41,19 +42,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
             }
         }
 
-        public static string TryLoadCertificateCollection(string certificatePath, ref string thumprint)
+        public static string TryLoadCertificateCollection(string certificatePath, ref string thumbprint)
         {
             var certificates = new X509Certificate2Collection();
             try
             {
                 // If this certificate needs a password, it will throw an exception.
                 certificates.Import(certificatePath);
-                var sb = new StringBuilder();
+                var thumbprints = new List<string>();
                 string state = nameof(ValidationState.NoMatch);
                 foreach (X509Certificate2 certificate in certificates)
                 {
-                    sb.Append(certificate.Thumbprint);
-                    sb.Append(";");
+                    thumbprints.Add(certificate.Thumbprint);
                     if (certificate.HasPrivateKey)
                     {
                         // Private key detected.
@@ -61,12 +61,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
                     }
                 }
 
-                if (sb.Length > 0)
-                {
-                    sb.Remove(sb.Length - 1, 1);
-                }
-
-                thumprint = sb.ToString();
+                thumbprint = string.Join(";", thumbprints);
                 return state;
             }
             catch (Exception e)

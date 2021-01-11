@@ -25,11 +25,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // dynamic analysis was available but not exercised.
             performDynamicValidation = false;
 
-            string thumprint = string.Empty;
-            string validationState = CertificateHelper.TryLoadCertificateCollection(matchedPattern, ref thumprint);
-            if (!string.IsNullOrEmpty(thumprint))
+            string thumbprint = string.Empty;
+            string validationState = CertificateHelper.TryLoadCertificateCollection(matchedPattern, ref thumbprint);
+            if (!string.IsNullOrEmpty(thumbprint))
             {
-                fingerprint = $"[thumbprint={thumprint}]";
+                fingerprint = $"[thumbprint={thumbprint}]";
             }
 
             return validationState;
