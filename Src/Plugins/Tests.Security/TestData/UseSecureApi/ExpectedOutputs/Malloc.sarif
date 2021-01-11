@@ -58,10 +58,10 @@
                 },
                 "region": {
                   "startLine": 10,
-                  "startColumn": 14,
+                  "startColumn": 13,
                   "endLine": 10,
-                  "endColumn": 22,
-                  "charOffset": 182,
+                  "endColumn": 21,
+                  "charOffset": 187,
                   "charLength": 8,
                   "snippet": {
                     "text": "_alloca("
@@ -84,7 +84,7 @@
                   "replacements": [
                     {
                       "deletedRegion": {
-                        "charOffset": 182,
+                        "charOffset": 187,
                         "charLength": 8
                       },
                       "insertedContent": {
