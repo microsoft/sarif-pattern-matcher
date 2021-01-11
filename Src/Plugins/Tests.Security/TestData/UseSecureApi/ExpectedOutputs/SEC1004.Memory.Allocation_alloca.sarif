@@ -44,7 +44,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "Malloc.c",
+              "SEC1004.Memory.Allocation_alloca.c",
               "_alloca",
               "_malloca"
             ]
@@ -53,7 +53,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/Malloc.c",
+                  "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC1004.Memory.Allocation_alloca.c",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -78,7 +78,7 @@
               "artifactChanges": [
                 {
                   "artifactLocation": {
-                    "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/Malloc.c",
+                    "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC1004.Memory.Allocation_alloca.c",
                     "uriBaseId": "SRC_ROOT"
                   },
                   "replacements": [
