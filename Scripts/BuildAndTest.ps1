@@ -64,11 +64,14 @@ if (-not $NoBuild) {
     Write-Information "Building RE2.Native.sln (MSBuild)..."
     MSBuild "$RepoRoot\Src\RE2.Native.sln" /p:Configuration=$Configuration /p:Platform="Any CPU"
     
-    Write-Information "Restoring SarifPatternMatcher.sln (dotnet)..."
-    dotnet restore $RepoRoot\Src\SarifPatternMatcher.sln
+    Write-Information "Building Sarif.Sdk"	
+    & $RepoRoot\Src\sarif-sdk\BuildAndTest.cmd -NoTest -NoPublish -NoFormat -Configuration $Configuration	
+    if ($LASTEXITCODE -ne 0) {	
+        Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."	
+    }
 
     Write-Information "Building SarifPatternMatcher.sln (dotnet)..."
-    dotnet build $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true --no-restore
+    dotnet build $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true
     if ($LASTEXITCODE -ne 0) {
         Exit-WithFailureMessage $ScriptName "Build of SarifPatternMatcher failed."
     }

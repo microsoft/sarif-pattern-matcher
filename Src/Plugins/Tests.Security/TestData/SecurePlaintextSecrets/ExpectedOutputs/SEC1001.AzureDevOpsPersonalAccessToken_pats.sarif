@@ -43,7 +43,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "VariousPats.txt",
+              "SEC1001.AzureDevOpsPersonalAccessToken_pats.txt",
               "base64-encoded",
               "Azure DevOps personal access token"
             ]
@@ -52,7 +52,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/VariousPats.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC1001.AzureDevOpsPersonalAccessToken_pats.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -79,7 +79,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "VariousPats.txt",
+              "SEC1001.AzureDevOpsPersonalAccessToken_pats.txt",
               "",
               "Azure DevOps personal access token"
             ]
@@ -88,7 +88,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/VariousPats.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC1001.AzureDevOpsPersonalAccessToken_pats.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

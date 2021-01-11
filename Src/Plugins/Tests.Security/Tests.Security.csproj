@@ -6,7 +6,7 @@
   <PropertyGroup Label="AssemblyAttributes">
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.Security</RootNamespace>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <EmbeddedResource Include="TestData\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

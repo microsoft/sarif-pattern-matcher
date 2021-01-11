@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal static class PfxCryptographicKeyfileValidator
+    internal static class MicrosoftSerializedCertificateStoreFileValidator
     {
 #pragma warning disable IDE0060 // Remove unused parameter
         public static string IsValid(
@@ -26,7 +26,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             performDynamicValidation = false;
 
             string thumbprint = string.Empty;
-            string validationState = CertificateHelper.TryLoadCertificate(matchedPattern, ref thumbprint);
+            string validationState = CertificateHelper.TryLoadCertificateCollection(matchedPattern, ref thumbprint);
             if (!string.IsNullOrEmpty(thumbprint))
             {
                 fingerprint = $"[thumbprint={thumbprint}]";
