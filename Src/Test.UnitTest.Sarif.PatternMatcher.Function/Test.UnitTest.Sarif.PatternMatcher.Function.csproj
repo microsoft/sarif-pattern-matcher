@@ -1,12 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.app.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.test.props" />
-  
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
@@ -14,6 +8,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Plugins\Security\Security.csproj" />
     <ProjectReference Include="..\Sarif.PatternMatcher.Function\Sarif.PatternMatcher.Function.csproj" />
   </ItemGroup>
 
@@ -21,13 +16,10 @@
     <Content Include="..\Plugins\Tests.Security\TestData\SecurePlaintextSecrets\Inputs\VariousPats.txt" Link="TestData\VariousPats.txt" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   
-  <!--copy rule json files to bin folder, need to be in the same folder of security.dll-->
-  <ItemGroup>
-    <RuleFiles Include="$(OutDir)SEC*.json" />
-    <SecurityTextFile Include="$(OutDir)Security.*" />
-  </ItemGroup>
-  <Target Name="CopyFilesAfterBuild" AfterTargets="AfterBuild">
-    <Copy SourceFiles="@(RuleFiles)" DestinationFolder="$(OutDir)..\bin\" />
-    <Copy SourceFiles="@(SecurityTextFile)" DestinationFolder="$(OutDir)..\bin\" />
+  <Target Name="CopySecFilesAfterBuild" AfterTargets="AfterBuild">
+    <ItemGroup>
+      <SecurityFiles Include="$(OutDir)SEC*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SecurityFiles)" DestinationFolder="$(OutDir)\..\bin\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
   </Target>
 </Project>
