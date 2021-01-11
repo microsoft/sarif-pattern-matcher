@@ -29,7 +29,7 @@ steps:
     targetType: 'inline'
     script: |
       dotnet tool install -g dotnet-reportgenerator-globaltool      
-      reportgenerator -reports:**/*.coverage.xml -targetdir:TestResults -reporttypes:Cobertura -assemblyFilters:"-xunit*;-moq*;-sarif.driver*;-sarif.converters*;-sarif.dll;-test.utilities.sarif.dll"
+      reportgenerator -reports:**/*.coverage.xml -targetdir:TestResults -reporttypes:Cobertura -assemblyFilters:"-xunit*;-moq*;-sarif.driver*;-sarif.converters*;-sarif.dll;-test.utilities.sarif.dll;-*webjobs*"
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'cobertura'
