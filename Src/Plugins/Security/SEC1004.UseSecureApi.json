@@ -2,17 +2,1907 @@
   "SharedStringsFileName": "Security.SharedStrings.txt",
   "Definitions": [
     {
-      "Name": "DoNotUseBannedApi",
       "Id": "SEC1004/Memory/Allocation",
-      "Level": "Error",
-      "FileNameAllowRegex": "$CSourceFiles",
+      "Name": "DoNotUseBannedApi",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "_alloca",
           "ContentsRegex": "\\b(?<insecureApi>[_]?alloca)\\s*\\(",
-          "MessageArguments": { "secureApi": "_malloca" },
+          "MessageArguments": {
+            "secureApi": "_malloca"
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/String/Input",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "_getts",
+          "ContentsRegex": "\\b(?<insecureApi>_getts)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_gettws",
+          "ContentsRegex": "\\b(?<insecureApi>_gettws)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_getws",
+          "ContentsRegex": "\\b(?<insecureApi>_getws)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "gets",
+          "ContentsRegex": "\\b(?<insecureApi>gets)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/String/Conversion",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "_i64toa",
+          "ContentsRegex": "\\b(?<insecureApi>_i64toa)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_i64tow",
+          "ContentsRegex": "\\b(?<insecureApi>_i64tow)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_itoa",
+          "ContentsRegex": "\\b(?<insecureApi>_itoa)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_itow",
+          "ContentsRegex": "\\b(?<insecureApi>_itow)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_ui64toa",
+          "ContentsRegex": "\\b(?<insecureApi>_ui64toa)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_ui64tow",
+          "ContentsRegex": "\\b(?<insecureApi>_ui64tow)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_ultoa",
+          "ContentsRegex": "\\b(?<insecureApi>_ultoa)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_ultow",
+          "ContentsRegex": "\\b(?<insecureApi>_ultow)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "atof",
+          "ContentsRegex": "\\b(?<insecureApi>atof)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "atoi",
+          "ContentsRegex": "\\b(?<insecureApi>atoi)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "atoll",
+          "ContentsRegex": "\\b(?<insecureApi>atoll)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "mbsrtowcs",
+          "ContentsRegex": "\\b(?<insecureApi>mbsrtowcs)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "mbstowcs",
+          "ContentsRegex": "\\b(?<insecureApi>mbstowcs)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wcrtomb",
+          "ContentsRegex": "\\b(?<insecureApi>wcrtomb)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wcrtombs",
+          "ContentsRegex": "\\b(?<insecureApi>wcrtombs)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wcsrtombs",
+          "ContentsRegex": "\\b(?<insecureApi>wcsrtombs)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wctomb",
+          "ContentsRegex": "\\b(?<insecureApi>wctomb)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/Path/Manipulation",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "_makepath",
+          "ContentsRegex": "\\b(?<insecureApi>_makepath)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_splitpath",
+          "ContentsRegex": "\\b(?<insecureApi>_splitpath)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_wmakepath",
+          "ContentsRegex": "\\b(?<insecureApi>_wmakepath)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_wsplitpath",
+          "ContentsRegex": "\\b(?<insecureApi>_wsplitpath)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "getwd",
+          "ContentsRegex": "\\b(?<insecureApi>getwd)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "makepath",
+          "ContentsRegex": "\\b(?<insecureApi>makepath)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/String/Copy",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "_mbccpy",
+          "ContentsRegex": "\\b(?<insecureApi>_mbccpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_mbscpy",
+          "ContentsRegex": "\\b(?<insecureApi>_mbscpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_mbsnbcpy",
+          "ContentsRegex": "\\b(?<insecureApi>_mbsnbcpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_mbsncpy",
+          "ContentsRegex": "\\b(?<insecureApi>_mbsncpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_tcscpy",
+          "ContentsRegex": "\\b(?<insecureApi>_tcscpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_tcsncpy",
+          "ContentsRegex": "\\b(?<insecureApi>_tcsncpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "lstrcpy",
+          "ContentsRegex": "\\b(?<insecureApi>lstrcpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "lstrcpyA",
+          "ContentsRegex": "\\b(?<insecureApi>lstrcpyA)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "lstrcpynA",
+          "ContentsRegex": "\\b(?<insecureApi>lstrcpynA)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "lstrcpynW",
+          "ContentsRegex": "\\b(?<insecureApi>lstrcpynW)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "lstrcpyW",
+          "ContentsRegex": "\\b(?<insecureApi>lstrcpyW)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "strcpy",
+          "ContentsRegex": "\\b(?<insecureApi>strcpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "StrCpy",
+          "ContentsRegex": "\\b(?<insecureApi>StrCpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "strncpy",
+          "ContentsRegex": "\\b(?<insecureApi>strncpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wcscpy",
+          "ContentsRegex": "\\b(?<insecureApi>wcscpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wcsncpy",
+          "ContentsRegex": "\\b(?<insecureApi>wcsncpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/String/Concatenation",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "_mbscat",
+          "ContentsRegex": "\\b(?<insecureApi>_mbscat)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_mbsnbcat",
+          "ContentsRegex": "\\b(?<insecureApi>_mbsnbcat)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_mbsncat",
+          "ContentsRegex": "\\b(?<insecureApi>_mbsncat)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_tcscat",
+          "ContentsRegex": "\\b(?<insecureApi>_tcscat)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "lstrcat",
+          "ContentsRegex": "\\b(?<insecureApi>lstrcat)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "lstrcatA",
+          "ContentsRegex": "\\b(?<insecureApi>lstrcatA)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "lstrcatW",
+          "ContentsRegex": "\\b(?<insecureApi>lstrcatW)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "lstrncat",
+          "ContentsRegex": "\\b(?<insecureApi>lstrncat)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "strcat",
+          "ContentsRegex": "\\b(?<insecureApi>strcat)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "StrCat",
+          "ContentsRegex": "\\b(?<insecureApi>StrCat)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "StrCatBuff",
+          "ContentsRegex": "\\b(?<insecureApi>StrCatBuff)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wcscat",
+          "ContentsRegex": "\\b(?<insecureApi>wcscat)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wcsncat",
+          "ContentsRegex": "\\b(?<insecureApi>wcsncat)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/String/Length",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "_mbslen",
+          "ContentsRegex": "\\b(?<insecureApi>_mbslen)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_mbstrlen",
+          "ContentsRegex": "\\b(?<insecureApi>_mbstrlen)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_tcslen",
+          "ContentsRegex": "\\b(?<insecureApi>_tcslen)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "strlen",
+          "ContentsRegex": "\\b(?<insecureApi>strlen)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "strncat",
+          "ContentsRegex": "\\b(?<insecureApi>strncat)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "StrNCat",
+          "ContentsRegex": "\\b(?<insecureApi>StrNCat)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wcslen",
+          "ContentsRegex": "\\b(?<insecureApi>wcslen)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/String/Parsing",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "_mbstok",
+          "ContentsRegex": "\\b(?<insecureApi>_mbstok)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "fscanf",
+          "ContentsRegex": "\\b(?<insecureApi>fscanf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "fwscanf",
+          "ContentsRegex": "\\b(?<insecureApi>fwscanf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "scanf",
+          "ContentsRegex": "\\b(?<insecureApi>scanf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "sscanf",
+          "ContentsRegex": "\\b(?<insecureApi>sscanf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "strtok",
+          "ContentsRegex": "\\b(?<insecureApi>strtok)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "swscanf",
+          "ContentsRegex": "\\b(?<insecureApi>swscanf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "vfscanf",
+          "ContentsRegex": "\\b(?<insecureApi>vfscanf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "vfwscanf",
+          "ContentsRegex": "\\b(?<insecureApi>vfwscanf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "vscanf",
+          "ContentsRegex": "\\b(?<insecureApi>vscanf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "vsscanf",
+          "ContentsRegex": "\\b(?<insecureApi>vsscanf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "vswscanf",
+          "ContentsRegex": "\\b(?<insecureApi>vswscanf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "vwscanf",
+          "ContentsRegex": "\\b(?<insecureApi>vwscanf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wcstok",
+          "ContentsRegex": "\\b(?<insecureApi>wcstok)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wscanf",
+          "ContentsRegex": "\\b(?<insecureApi>wscanf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/String/Formatting",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "_snprintf",
+          "ContentsRegex": "\\b(?<insecureApi>_snprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_sntprintf",
+          "ContentsRegex": "\\b(?<insecureApi>_sntprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_snwprintf",
+          "ContentsRegex": "\\b(?<insecureApi>_snwprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_stprintf",
+          "ContentsRegex": "\\b(?<insecureApi>_stprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_vsnprintf",
+          "ContentsRegex": "\\b(?<insecureApi>_vsnprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_vsntprintf",
+          "ContentsRegex": "\\b(?<insecureApi>_vsntprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_vsnwprintf",
+          "ContentsRegex": "\\b(?<insecureApi>_vsnwprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "_vstprintf",
+          "ContentsRegex": "\\b(?<insecureApi>_vstprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "fprintf",
+          "ContentsRegex": "\\b(?<insecureApi>fprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "fwprintf",
+          "ContentsRegex": "\\b(?<insecureApi>fwprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "printf",
+          "ContentsRegex": "\\b(?<insecureApi>printf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "snprintf",
+          "ContentsRegex": "\\b(?<insecureApi>snprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "sprintf",
+          "ContentsRegex": "\\b(?<insecureApi>sprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "swprintf",
+          "ContentsRegex": "\\b(?<insecureApi>swprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "vfprintf",
+          "ContentsRegex": "\\b(?<insecureApi>vfprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "vprintf",
+          "ContentsRegex": "\\b(?<insecureApi>vprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "vsnprintf",
+          "ContentsRegex": "\\b(?<insecureApi>vsnprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "vsprintf",
+          "ContentsRegex": "\\b(?<insecureApi>vsprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "vswprintf",
+          "ContentsRegex": "\\b(?<insecureApi>vswprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "vwprintf",
+          "ContentsRegex": "\\b(?<insecureApi>vwprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wnsprintf",
+          "ContentsRegex": "\\b(?<insecureApi>wnsprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wprintf",
+          "ContentsRegex": "\\b(?<insecureApi>wprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wsprintf",
+          "ContentsRegex": "\\b(?<insecureApi>wsprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wvnsprintf",
+          "ContentsRegex": "\\b(?<insecureApi>wvnsprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wvsprintf",
+          "ContentsRegex": "\\b(?<insecureApi>wvsprintf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/TimeOperations",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "asctime",
+          "ContentsRegex": "\\b(?<insecureApi>asctime)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "ctime",
+          "ContentsRegex": "\\b(?<insecureApi>ctime)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "gmtime",
+          "ContentsRegex": "\\b(?<insecureApi>gmtime)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "localtime",
+          "ContentsRegex": "\\b(?<insecureApi>localtime)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/Search",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "bsearch",
+          "ContentsRegex": "\\b(?<insecureApi>bsearch)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/MessageHandling",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "ChangeWindowMessageFilter",
+          "ContentsRegex": "\\b(?<insecureApi>ChangeWindowMessageFilter)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/FileOperations",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "fopen",
+          "ContentsRegex": "\\b(?<insecureApi>fopen)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "freopen",
+          "ContentsRegex": "\\b(?<insecureApi>freopen)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "mktemp",
+          "ContentsRegex": "\\b(?<insecureApi>mktemp)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "tmpnam",
+          "ContentsRegex": "\\b(?<insecureApi>tmpnam)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/Environment/Variables",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "getenv",
+          "ContentsRegex": "\\b(?<insecureApi>getenv)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/Memory/Copy",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "memcpy",
+          "ContentsRegex": "\\b(?<insecureApi>memcpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "memmove",
+          "ContentsRegex": "\\b(?<insecureApi>memmove)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wmemcpy",
+          "ContentsRegex": "\\b(?<insecureApi>wmemcpy)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        },
+        {
+          "SubId": "wmemmove",
+          "ContentsRegex": "\\b(?<insecureApi>wmemmove)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/Sorting",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "qsort",
+          "ContentsRegex": "\\b(?<insecureApi>qsort)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/Stream/Navigation",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "rewind",
+          "ContentsRegex": "\\b(?<insecureApi>rewind)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/Stream/Buffering",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "setbuf",
+          "ContentsRegex": "\\b(?<insecureApi>setbuf)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
+          "Fixes": {
+            "directReplacement": {
+              "Description": "Replace '{insecureApi} with '{secureApi}'.",
+              "Find": "{insecureApi}",
+              "ReplaceWith": "{secureApi}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "SEC1004/ErrorHandling",
+      "Name": "DoNotUseBannedApi",
+      "Description": "Developers should use secure API in preferance of insecure alternates.",
+      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+      "Level": "Error",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "MatchExpressions": [
+        {
+          "SubId": "strerror",
+          "ContentsRegex": "\\b(?<insecureApi>strerror)\\s*\\(",
+          "MessageArguments": {
+            "secureApi": ""
+          },
           "Fixes": {
             "directReplacement": {
               "Description": "Replace '{insecureApi} with '{secureApi}'.",
