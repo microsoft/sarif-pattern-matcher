@@ -6,7 +6,7 @@
       "Id": "SEC1003",
       "Level": "Error",
       "Description": "Review potentially sensitive files in versioned engineering content and other locations for security risk.",
-      "Message": "'{0:scanTarget}' is {1:fileKind} that may compromise security if visible to attackers.{2:validatorMessage}",
+      "Message": "'{0:scanTarget}' is {1:fileKind} that may compromise security if visible to attackers{2:validatorMessage}.",
       "MatchExpressions": [
         {
           "SubId": "OnePasswordFile",
