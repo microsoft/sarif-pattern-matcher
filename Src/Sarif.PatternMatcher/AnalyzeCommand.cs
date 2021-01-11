@@ -125,7 +125,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 matchExpression.FileNameDenyRegex ??= definition.FileNameDenyRegex;
 
                 matchExpression.FileNameAllowRegex = PushData(matchExpression.FileNameAllowRegex, sharedStrings);
-                matchExpression.FileNameAllowRegex ??= definition.FileNameDenyRegex;
+                matchExpression.FileNameAllowRegex ??= definition.FileNameAllowRegex;
 
                 matchExpression.ContentsRegex = PushData(matchExpression.ContentsRegex, sharedStrings);
 
@@ -152,8 +152,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             var result = new Dictionary<string, string>();
 
-            foreach (string line in fileSystem.FileReadAllLines(sharedStringsFullPath))
+            foreach (string fileLine in fileSystem.FileReadAllLines(sharedStringsFullPath))
             {
+                string line = fileLine.Trim();
+                if (string.IsNullOrEmpty(line) || line.StartsWith("#")) { continue; }
+
                 int index = line.IndexOf('=');
                 if (index == -1) { ThrowInvalidSharedStringsEntry(line); }
 

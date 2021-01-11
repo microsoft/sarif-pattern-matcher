@@ -26,6 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="E:\src\spmi\src\sarif-pattern-matcher\Targets\..\src\Plugins\Fingerprint.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Security.SharedStrings.txt" />
   </ItemGroup>
 

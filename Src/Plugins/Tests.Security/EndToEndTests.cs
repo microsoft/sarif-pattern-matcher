@@ -40,6 +40,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @"Plugins\Tests.Security");
 
+        protected override IDictionary<string, string> ConstructTestOutputsFromInputResources(IEnumerable<string> inputResourceNames, object parameter)
+        {
+            var results = new Dictionary<string, string>();
+
+            foreach (string inputResourceName in inputResourceNames)
+            {
+                string key = inputResourceName.Substring("Inputs.".Length);
+                results[key] = ConstructTestOutputFromInputResource(inputResourceName, parameter);
+            }
+
+            return results;
+        }
+
         protected override string ConstructTestOutputFromInputResource(string inputResourceName, object parameter)
         {
             string logContents = GetResourceText(inputResourceName);
@@ -117,10 +130,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string testsDirectory = Path.Combine(ProductTestDataDirectory, @"Inputs\");
 
+            var inputFiles = new List<string>();
+            var expectedOutputResourceMap = new Dictionary<string, string>();
             foreach (string testFile in Directory.GetFiles(testsDirectory))
             {
-                RunTest(Path.GetFileName(testFile));
+                string testFileName = Path.GetFileName(testFile);
+                inputFiles.Add(testFileName);
+
+                expectedOutputResourceMap[testFileName] =
+                    Path.GetFileNameWithoutExtension(testFileName) + ".sarif";
+
             }
+            RunTest(inputFiles, expectedOutputResourceMap);
 
             RebaselineExpectedResults.Should().BeFalse();
         }

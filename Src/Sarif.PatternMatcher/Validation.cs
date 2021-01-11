@@ -19,9 +19,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         /// <summary>
         /// A validator for the current matched pattern returned
-        /// an unrecognized value when asked to validate.
+        /// an unrecognized state when asked to validate.
         /// </summary>
-        ValidatorReturnedIllegalValue,
+        ValidatorReturnedIllegalValidationState,
 
         /// <summary>
         /// Pattern isn't actually a match for secret type.

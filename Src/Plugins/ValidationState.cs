@@ -28,7 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         /// <summary>
         /// The host is unknown.
         /// </summary>
-        HostUnknown,
+        UnknownHost,
 
         /// <summary>
         /// Pattern is a match and the secret is invalid for all
