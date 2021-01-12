@@ -30,28 +30,28 @@
           "SubId": "_getts",
           "ContentsRegex": "\\b(?<insecureApi>_getts)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "gets_s, StringCbGets, StringCbGetsEx, StringCchGets or StringCchGetsEx"
           }
         },
         {
           "SubId": "_gettws",
           "ContentsRegex": "\\b(?<insecureApi>_gettws)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "gets_s"
           }
         },
         {
           "SubId": "_getws",
           "ContentsRegex": "\\b(?<insecureApi>_getws)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbGets, StringCbGetsEx, StringCchGets or StringCchGetsEx"
           }
         },
         {
           "SubId": "gets",
           "ContentsRegex": "\\b(?<insecureApi>gets)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "fgets, gets_s, StringCbGets, StringCbGetsEx, StringCchGets or StringCchGetsEx"
           }
         }
       ]
@@ -68,119 +68,119 @@
           "SubId": "_i64toa",
           "ContentsRegex": "\\b(?<insecureApi>_i64toa)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_i64toa_s"
           }
         },
         {
           "SubId": "_i64tow",
           "ContentsRegex": "\\b(?<insecureApi>_i64tow)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_i64tow_s"
           }
         },
         {
           "SubId": "_itoa",
           "ContentsRegex": "\\b(?<insecureApi>_itoa)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_itoa_s"
           }
         },
         {
           "SubId": "_itow",
           "ContentsRegex": "\\b(?<insecureApi>_itow)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_itow_s"
           }
         },
         {
           "SubId": "_ui64toa",
           "ContentsRegex": "\\b(?<insecureApi>_ui64toa)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_ui64toa_s"
           }
         },
         {
           "SubId": "_ui64tow",
           "ContentsRegex": "\\b(?<insecureApi>_ui64tow)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_ui64tow_s"
           }
         },
         {
           "SubId": "_ultoa",
           "ContentsRegex": "\\b(?<insecureApi>_ultoa)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_ultoa_s"
           }
         },
         {
           "SubId": "_ultow",
           "ContentsRegex": "\\b(?<insecureApi>_ultow)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_ultow_s"
           }
         },
         {
           "SubId": "atof",
           "ContentsRegex": "\\b(?<insecureApi>atof)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "strtod"
           }
         },
         {
           "SubId": "atoi",
           "ContentsRegex": "\\b(?<insecureApi>atoi)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "strtol"
           }
         },
         {
           "SubId": "atoll",
           "ContentsRegex": "\\b(?<insecureApi>atoll)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "strtoll"
           }
         },
         {
           "SubId": "mbsrtowcs",
           "ContentsRegex": "\\b(?<insecureApi>mbsrtowcs)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "mbsrtowcs_s"
           }
         },
         {
           "SubId": "mbstowcs",
           "ContentsRegex": "\\b(?<insecureApi>mbstowcs)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "mbstowcs_s"
           }
         },
         {
           "SubId": "wcrtomb",
           "ContentsRegex": "\\b(?<insecureApi>wcrtomb)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "wcrtomb_s"
           }
         },
         {
           "SubId": "wcrtombs",
           "ContentsRegex": "\\b(?<insecureApi>wcrtombs)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "wcrtombs_s"
           }
         },
         {
           "SubId": "wcsrtombs",
           "ContentsRegex": "\\b(?<insecureApi>wcsrtombs)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "wcsrtombs_s"
           }
         },
         {
           "SubId": "wctomb",
           "ContentsRegex": "\\b(?<insecureApi>wctomb)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "wctomb_s"
           }
         }
       ]
@@ -197,42 +197,42 @@
           "SubId": "_makepath",
           "ContentsRegex": "\\b(?<insecureApi>_makepath)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_makepath_s"
           }
         },
         {
           "SubId": "_splitpath",
           "ContentsRegex": "\\b(?<insecureApi>_splitpath)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_splitpath_s"
           }
         },
         {
           "SubId": "_wmakepath",
           "ContentsRegex": "\\b(?<insecureApi>_wmakepath)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_wmakepath_s"
           }
         },
         {
           "SubId": "_wsplitpath",
           "ContentsRegex": "\\b(?<insecureApi>_wsplitpath)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_wsplitpath_s"
           }
         },
         {
           "SubId": "getwd",
           "ContentsRegex": "\\b(?<insecureApi>getwd)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "getcwd"
           }
         },
         {
           "SubId": "makepath",
           "ContentsRegex": "\\b(?<insecureApi>makepath)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "makepath_s"
           }
         }
       ]
@@ -249,112 +249,112 @@
           "SubId": "_mbccpy",
           "ContentsRegex": "\\b(?<insecureApi>_mbccpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_mbccpy_s"
           }
         },
         {
           "SubId": "_mbscpy",
           "ContentsRegex": "\\b(?<insecureApi>_mbscpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_mbscpy_s"
           }
         },
         {
           "SubId": "_mbsnbcpy",
           "ContentsRegex": "\\b(?<insecureApi>_mbsnbcpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_mbsnbcpy_s"
           }
         },
         {
           "SubId": "_mbsncpy",
           "ContentsRegex": "\\b(?<insecureApi>_mbsncpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_mbsncpy_s"
           }
         },
         {
           "SubId": "_tcscpy",
           "ContentsRegex": "\\b(?<insecureApi>_tcscpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCopy, StringCbCopyEx, StringCchCopy or StringCchCopyEx"
           }
         },
         {
           "SubId": "_tcsncpy",
           "ContentsRegex": "\\b(?<insecureApi>_tcsncpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCopyN, StringCbCopyNEx, StringCchCopyN or StringCchCopyNEx"
           }
         },
         {
           "SubId": "lstrcpy",
           "ContentsRegex": "\\b(?<insecureApi>lstrcpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCopy, StringCbCopyEx, StringCchCopy or StringCchCopyEx"
           }
         },
         {
           "SubId": "lstrcpyA",
           "ContentsRegex": "\\b(?<insecureApi>lstrcpyA)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCchCopy"
           }
         },
         {
           "SubId": "lstrcpynA",
           "ContentsRegex": "\\b(?<insecureApi>lstrcpynA)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCchCopy"
           }
         },
         {
           "SubId": "lstrcpynW",
           "ContentsRegex": "\\b(?<insecureApi>lstrcpynW)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCchCopy"
           }
         },
         {
           "SubId": "lstrcpyW",
           "ContentsRegex": "\\b(?<insecureApi>lstrcpyW)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCchCopy"
           }
         },
         {
           "SubId": "strcpy",
           "ContentsRegex": "\\b(?<insecureApi>strcpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "strcpy_s, StringCbCopy, StringCbCopyEx, StringCchCopy, StringCchCopyEx or strlcpy"
           }
         },
         {
           "SubId": "StrCpy",
           "ContentsRegex": "\\b(?<insecureApi>StrCpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCopy, StringCbCopyEx, StringCchCopy or StringCchCopyEx"
           }
         },
         {
           "SubId": "strncpy",
           "ContentsRegex": "\\b(?<insecureApi>strncpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCopyN, StringCbCopyNEx, StringCchCopyN, StringCchCopyNEx, strlcpy or strncpy_s"
           }
         },
         {
           "SubId": "wcscpy",
           "ContentsRegex": "\\b(?<insecureApi>wcscpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCopy, StringCbCopyEx, StringCchCopy, StringCchCopyEx, wcscpy_s or wcslcpy"
           }
         },
         {
           "SubId": "wcsncpy",
           "ContentsRegex": "\\b(?<insecureApi>wcsncpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCopyN, StringCbCopyNEx, StringCchCopyN, StringCchCopyNEx, wcslcpy or wcsncpy_s"
           }
         }
       ]
@@ -371,91 +371,91 @@
           "SubId": "_mbscat",
           "ContentsRegex": "\\b(?<insecureApi>_mbscat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_mbscat_s"
           }
         },
         {
           "SubId": "_mbsnbcat",
           "ContentsRegex": "\\b(?<insecureApi>_mbsnbcat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_mbsnbcat_s"
           }
         },
         {
           "SubId": "_mbsncat",
           "ContentsRegex": "\\b(?<insecureApi>_mbsncat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_mbsncat_s"
           }
         },
         {
           "SubId": "_tcscat",
           "ContentsRegex": "\\b(?<insecureApi>_tcscat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCat, StringCbCatEx, StringCchCat or StringCchCatEx"
           }
         },
         {
           "SubId": "lstrcat",
           "ContentsRegex": "\\b(?<insecureApi>lstrcat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCat, StringCbCatEx, StringCchCat or StringCchCatEx"
           }
         },
         {
           "SubId": "lstrcatA",
           "ContentsRegex": "\\b(?<insecureApi>lstrcatA)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCchCat"
           }
         },
         {
           "SubId": "lstrcatW",
           "ContentsRegex": "\\b(?<insecureApi>lstrcatW)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCchCat"
           }
         },
         {
           "SubId": "lstrncat",
           "ContentsRegex": "\\b(?<insecureApi>lstrncat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "strcat_s"
           }
         },
         {
           "SubId": "strcat",
           "ContentsRegex": "\\b(?<insecureApi>strcat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "strcat_s, StringCbCat, StringCbCatEx, StringCchCat, StringCchCatEx, strlcat or strncat_s"
           }
         },
         {
           "SubId": "StrCat",
           "ContentsRegex": "\\b(?<insecureApi>StrCat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCat, StringCbCatEx, StringCchCat or StringCchCatEx"
           }
         },
         {
           "SubId": "StrCatBuff",
           "ContentsRegex": "\\b(?<insecureApi>StrCatBuff)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCat, StringCbCatEx, StringCchCat or StringCchCatEx"
           }
         },
         {
           "SubId": "wcscat",
           "ContentsRegex": "\\b(?<insecureApi>wcscat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCat, StringCbCatEx, StringCchCat, StringCchCatEx, wcscat_s or wcslcat"
           }
         },
         {
           "SubId": "wcsncat",
           "ContentsRegex": "\\b(?<insecureApi>wcsncat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "wcslcat or wcsncat_s"
           }
         }
       ]
@@ -472,49 +472,49 @@
           "SubId": "_mbslen",
           "ContentsRegex": "\\b(?<insecureApi>_mbslen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_mbsnlen"
           }
         },
         {
           "SubId": "_mbstrlen",
           "ContentsRegex": "\\b(?<insecureApi>_mbstrlen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_mbstrnlen"
           }
         },
         {
           "SubId": "_tcslen",
           "ContentsRegex": "\\b(?<insecureApi>_tcslen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbLength, StringCchLength, UnalignedStringCbLength or UnalignedStringCchLength"
           }
         },
         {
           "SubId": "strlen",
           "ContentsRegex": "\\b(?<insecureApi>strlen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbLength, StringCchLength, strlen_s, UnalignedStringCbLength or UnalignedStringCchLength"
           }
         },
         {
           "SubId": "strncat",
           "ContentsRegex": "\\b(?<insecureApi>strncat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCatN, StringCbCatNEx, StringCchCatN, StringCchCatNEx, strlcat or strncat_s"
           }
         },
         {
           "SubId": "StrNCat",
           "ContentsRegex": "\\b(?<insecureApi>StrNCat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbCatN, StringCbCatNEx, StringCchCatN or StringCchCatNEx"
           }
         },
         {
           "SubId": "wcslen",
           "ContentsRegex": "\\b(?<insecureApi>wcslen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbLength, StringCchLength, UnalignedStringCbLength, UnalignedStringCchLength or wcslen_s"
           }
         }
       ]
@@ -531,105 +531,105 @@
           "SubId": "_mbstok",
           "ContentsRegex": "\\b(?<insecureApi>_mbstok)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_mbstok_s"
           }
         },
         {
           "SubId": "fscanf",
           "ContentsRegex": "\\b(?<insecureApi>fscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "fscanf_s"
           }
         },
         {
           "SubId": "fwscanf",
           "ContentsRegex": "\\b(?<insecureApi>fwscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "fwscanf_s"
           }
         },
         {
           "SubId": "scanf",
           "ContentsRegex": "\\b(?<insecureApi>scanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "scanf_s"
           }
         },
         {
           "SubId": "sscanf",
           "ContentsRegex": "\\b(?<insecureApi>sscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "sscanf_s"
           }
         },
         {
           "SubId": "strtok",
           "ContentsRegex": "\\b(?<insecureApi>strtok)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "strsep, strtok_r or strtok_s"
           }
         },
         {
           "SubId": "swscanf",
           "ContentsRegex": "\\b(?<insecureApi>swscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "swscanf_s"
           }
         },
         {
           "SubId": "vfscanf",
           "ContentsRegex": "\\b(?<insecureApi>vfscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "vfscanf_s"
           }
         },
         {
           "SubId": "vfwscanf",
           "ContentsRegex": "\\b(?<insecureApi>vfwscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "vfwscanf_s"
           }
         },
         {
           "SubId": "vscanf",
           "ContentsRegex": "\\b(?<insecureApi>vscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "vscanf_s"
           }
         },
         {
           "SubId": "vsscanf",
           "ContentsRegex": "\\b(?<insecureApi>vsscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "vsscanf_s"
           }
         },
         {
           "SubId": "vswscanf",
           "ContentsRegex": "\\b(?<insecureApi>vswscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "vswscanf_s"
           }
         },
         {
           "SubId": "vwscanf",
           "ContentsRegex": "\\b(?<insecureApi>vwscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "vwscanf_s"
           }
         },
         {
           "SubId": "wcstok",
           "ContentsRegex": "\\b(?<insecureApi>wcstok)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "wcstok_s"
           }
         },
         {
           "SubId": "wscanf",
           "ContentsRegex": "\\b(?<insecureApi>wscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "wscanf_s"
           }
         }
       ]
@@ -646,175 +646,175 @@
           "SubId": "_snprintf",
           "ContentsRegex": "\\b(?<insecureApi>_snprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
           }
         },
         {
           "SubId": "_sntprintf",
           "ContentsRegex": "\\b(?<insecureApi>_sntprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
           }
         },
         {
           "SubId": "_snwprintf",
           "ContentsRegex": "\\b(?<insecureApi>_snwprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_snwprintf_s, StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
           }
         },
         {
           "SubId": "_stprintf",
           "ContentsRegex": "\\b(?<insecureApi>_stprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
           }
         },
         {
           "SubId": "_vsnprintf",
           "ContentsRegex": "\\b(?<insecureApi>_vsnprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_vsnprintf_s, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx or StringCchVPrintfEx"
           }
         },
         {
           "SubId": "_vsntprintf",
           "ContentsRegex": "\\b(?<insecureApi>_vsntprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx or StringCchVPrintfEx"
           }
         },
         {
           "SubId": "_vsnwprintf",
           "ContentsRegex": "\\b(?<insecureApi>_vsnwprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "_vsnwprintf_s, StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx or StringCbVPrintfEx"
           }
         },
         {
           "SubId": "_vstprintf",
           "ContentsRegex": "\\b(?<insecureApi>_vstprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx or StringCchVPrintfEx"
           }
         },
         {
           "SubId": "fprintf",
           "ContentsRegex": "\\b(?<insecureApi>fprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "fprintf_s"
           }
         },
         {
           "SubId": "fwprintf",
           "ContentsRegex": "\\b(?<insecureApi>fwprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "fwprintf_s"
           }
         },
         {
           "SubId": "printf",
           "ContentsRegex": "\\b(?<insecureApi>printf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "printf_s"
           }
         },
         {
           "SubId": "snprintf",
           "ContentsRegex": "\\b(?<insecureApi>snprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "snprintf_s"
           }
         },
         {
           "SubId": "sprintf",
           "ContentsRegex": "\\b(?<insecureApi>sprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "asprintf, sprintf_s, StringCbPrintf, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
           }
         },
         {
           "SubId": "swprintf",
           "ContentsRegex": "\\b(?<insecureApi>swprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf, StringCchPrintfEx or swprintf_s"
           }
         },
         {
           "SubId": "vfprintf",
           "ContentsRegex": "\\b(?<insecureApi>vfprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "vfprintf_s"
           }
         },
         {
           "SubId": "vprintf",
           "ContentsRegex": "\\b(?<insecureApi>vprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "vprintf_s"
           }
         },
         {
           "SubId": "vsnprintf",
           "ContentsRegex": "\\b(?<insecureApi>vsnprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx, StringCchVPrintfEx or vsnprintf_s"
           }
         },
         {
           "SubId": "vsprintf",
           "ContentsRegex": "\\b(?<insecureApi>vsprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx, StringCchVPrintfEx, vasprintf or vsprintf_s"
           }
         },
         {
           "SubId": "vswprintf",
           "ContentsRegex": "\\b(?<insecureApi>vswprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx, StringCchVPrintfEx or vswprintf_s"
           }
         },
         {
           "SubId": "vwprintf",
           "ContentsRegex": "\\b(?<insecureApi>vwprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "vwprintf_s"
           }
         },
         {
           "SubId": "wnsprintf",
           "ContentsRegex": "\\b(?<insecureApi>wnsprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
           }
         },
         {
           "SubId": "wprintf",
           "ContentsRegex": "\\b(?<insecureApi>wprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "wprintf_s"
           }
         },
         {
           "SubId": "wsprintf",
           "ContentsRegex": "\\b(?<insecureApi>wsprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
           }
         },
         {
           "SubId": "wvnsprintf",
           "ContentsRegex": "\\b(?<insecureApi>wvnsprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx or StringCchVPrintfEx"
           }
         },
         {
           "SubId": "wvsprintf",
           "ContentsRegex": "\\b(?<insecureApi>wvsprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx or StringCchVPrintfEx"
           }
         }
       ]
@@ -831,28 +831,28 @@
           "SubId": "asctime",
           "ContentsRegex": "\\b(?<insecureApi>asctime)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "asctime_s"
           }
         },
         {
           "SubId": "ctime",
           "ContentsRegex": "\\b(?<insecureApi>ctime)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "ctime_s"
           }
         },
         {
           "SubId": "gmtime",
           "ContentsRegex": "\\b(?<insecureApi>gmtime)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "gmtime_s"
           }
         },
         {
           "SubId": "localtime",
           "ContentsRegex": "\\b(?<insecureApi>localtime)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "localtime_s"
           }
         }
       ]
@@ -869,7 +869,7 @@
           "SubId": "bsearch",
           "ContentsRegex": "\\b(?<insecureApi>bsearch)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "bsearch_s"
           }
         }
       ]
@@ -886,7 +886,7 @@
           "SubId": "ChangeWindowMessageFilter",
           "ContentsRegex": "\\b(?<insecureApi>ChangeWindowMessageFilter)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "ChangeWindowMessageFilterEx"
           }
         }
       ]
@@ -903,28 +903,28 @@
           "SubId": "fopen",
           "ContentsRegex": "\\b(?<insecureApi>fopen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "fopen_s"
           }
         },
         {
           "SubId": "freopen",
           "ContentsRegex": "\\b(?<insecureApi>freopen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "freopen_s"
           }
         },
         {
           "SubId": "mktemp",
           "ContentsRegex": "\\b(?<insecureApi>mktemp)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "mkstemp"
           }
         },
         {
           "SubId": "tmpnam",
           "ContentsRegex": "\\b(?<insecureApi>tmpnam)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "tmpnam_s"
           }
         }
       ]
@@ -941,7 +941,7 @@
           "SubId": "getenv",
           "ContentsRegex": "\\b(?<insecureApi>getenv)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "getenv_s"
           }
         }
       ]
@@ -958,28 +958,28 @@
           "SubId": "memcpy",
           "ContentsRegex": "\\b(?<insecureApi>memcpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "memcpy_s"
           }
         },
         {
           "SubId": "memmove",
           "ContentsRegex": "\\b(?<insecureApi>memmove)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "memmove_s"
           }
         },
         {
           "SubId": "wmemcpy",
           "ContentsRegex": "\\b(?<insecureApi>wmemcpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "wmemcpy_s"
           }
         },
         {
           "SubId": "wmemmove",
           "ContentsRegex": "\\b(?<insecureApi>wmemmove)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "wmemcpy_s"
           }
         }
       ]
@@ -996,7 +996,7 @@
           "SubId": "qsort",
           "ContentsRegex": "\\b(?<insecureApi>qsort)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "qsort_s"
           }
         }
       ]
@@ -1013,7 +1013,7 @@
           "SubId": "rewind",
           "ContentsRegex": "\\b(?<insecureApi>rewind)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "fseek"
           }
         }
       ]
@@ -1030,7 +1030,7 @@
           "SubId": "setbuf",
           "ContentsRegex": "\\b(?<insecureApi>setbuf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "setvbuf"
           }
         }
       ]
@@ -1047,7 +1047,7 @@
           "SubId": "strerror",
           "ContentsRegex": "\\b(?<insecureApi>strerror)\\s*\\(",
           "MessageArguments": {
-            "secureApi": ""
+            "secureApi": "strerror_r or strerror_s"
           }
         }
       ]
