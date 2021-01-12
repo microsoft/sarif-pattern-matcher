@@ -1,11 +1,12 @@
 {
+  "ValidatorsAssemblyName": "Security.dll",
   "Definitions": [
     {
       "Name": "ReviewPotentiallySensitiveFiles",
       "Id": "SEC1003",
       "Level": "Error",
       "Description": "Review potentially sensitive files in versioned engineering content and other locations for security risk.",
-      "Message": "'{0:scanTarget}' is {1:fileKind} that may compromise security if visible to attackers.",
+      "Message": "'{0:scanTarget}' is {1:fileKind} that may compromise security if visible to attackers{2:validatorMessage}.",
       "MatchExpressions": [
         {
           "SubId": "OnePasswordFile",
@@ -78,22 +79,22 @@
           "MessageArguments": { "fileKind": "an OpenVPN client configuration file" }
         },
         {
-          "SubId": "PEMCryptographicPrivateKeyFile",
+          "SubId": "PEMCryptographicPrivateKeyfile",
           "FileNameAllowRegex": "(?i)\\.pem$",
           "MessageArguments": { "fileKind": "a PEM cryptographic private key" }
         },
         {
-          "SubId": "PKCS7CryptographicKeyFile",
+          "SubId": "PKCS7CryptographicKeyfile",
           "FileNameAllowRegex": "(?i)\\.p7b$",
           "MessageArguments": { "fileKind": "a PKCS#7 cryptographic key bundle" }
         },
         {
-          "SubId": "PFXCryptographicKeyFile",
+          "SubId": "PfxCryptographicKeyfile",
           "FileNameAllowRegex": "(?i)\\.pfx$",
           "MessageArguments": { "fileKind": "a cryptographic key bundle" }
         },
         {
-          "SubId": "PKCS12CryptographicKeyFile",
+          "SubId": "PKCS12CryptographicKeyfile",
           "FileNameAllowRegex": "(?i)\\.(p12|pkcs12)$",
           "MessageArguments": { "fileKind": "a PKCS#12 cryptographic key bundle" }
         },
@@ -103,7 +104,7 @@
           "MessageArguments": { "fileKind": "a Network traffic capture file" }
         },
         {
-          "SubId": "PuTTygenPrivateKeyFile",
+          "SubId": "PuTTygenPrivateKeyfile",
           "FileNameAllowRegex": "(?i)\\.ppk$",
           "MessageArguments": { "fileKind": "a PuTTYgen private key" }
         },

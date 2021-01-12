@@ -82,6 +82,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            ref string message)
         {
 #pragma warning restore IDE0060
+            fingerprint = $"[pat/vs={matchedPattern}]";
 
             string pat = matchedPattern;
 

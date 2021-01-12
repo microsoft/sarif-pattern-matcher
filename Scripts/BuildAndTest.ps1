@@ -63,11 +63,11 @@ If (Test-Path "..\bld") {
 if (-not $NoBuild) {
     Write-Information "Building RE2.Native.sln (MSBuild)..."
     MSBuild "$RepoRoot\Src\RE2.Native.sln" /p:Configuration=$Configuration /p:Platform="Any CPU"
-
-    Write-Information "Building Sarif.Sdk"
-    & $RepoRoot\Src\sarif-sdk\BuildAndTest.cmd -NoTest -NoPublish -NoFormat -Configuration $Configuration
-    if ($LASTEXITCODE -ne 0) {
-        Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."
+    
+    Write-Information "Building Sarif.Sdk"	
+    & $RepoRoot\Src\sarif-sdk\BuildAndTest.cmd -NoTest -NoPublish -NoFormat -Configuration $Configuration	
+    if ($LASTEXITCODE -ne 0) {	
+        Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."	
     }
 
     Write-Information "Building SarifPatternMatcher.sln (dotnet)..."

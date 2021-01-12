@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
     internal static class SpamAnalyzer
     {
         internal static readonly IFileSystem FileSystem;
+        internal static ISet<Skimmer<AnalyzeContext>> Skimmers;
 
         static SpamAnalyzer()
         {
@@ -23,14 +25,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
         public static SarifLog Analyze(string filePath, string text, string rulePath)
         {
-            IEnumerable<string> regexDefinitions = FileSystem.DirectoryGetFiles(Path.Combine(rulePath, @"..\Rules"), "*.json");
+            if (Skimmers == null)
+            {
+                IEnumerable<string> regexDefinitions = FileSystem.DirectoryGetFiles(Path.Combine(rulePath, @"..\bin\"), "*.json");
 
-            // Load all rules from JSON. This also automatically loads any validations file that
-            // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
-            // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
-            // extension name changes from .json to .dll).
-            ISet<Skimmer<AnalyzeContext>> skimmers =
-                AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, regexDefinitions);
+                // Load all rules from JSON. This also automatically loads any validations file that
+                // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
+                // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
+                // extension name changes from .json to .dll).
+                Skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, regexDefinitions);
+            }
 
             var sb = new StringBuilder();
 
@@ -49,17 +53,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                     TargetUri = new Uri(filePath, UriKind.RelativeOrAbsolute),
                     FileContents = text,
                     Logger = logger,
+                    DynamicValidation = true,
                 };
 
                 using (context)
                 {
-                    IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
+                    IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, Skimmers, disabledSkimmers);
                     AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
                 }
             }
 
-            SarifLog sarifLog = JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
-            return sarifLog;
+            return JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
         }
     }
 }

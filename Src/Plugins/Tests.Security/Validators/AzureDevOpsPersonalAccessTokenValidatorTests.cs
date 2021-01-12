@@ -64,7 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Verify(state == testCase.ExpectedValidationState, title, failedTestCases);
 
                 Verify(failureLevel == testCase.FailureLevel, title, failedTestCases);
-
+                Verify(fingerprint == $"[pat/vs={testCase.Input}]", title, failedTestCases);
                 Verify(state == testCase.ExpectedValidationState, title, failedTestCases);
 
                 if (state != nameof(Validation.Unknown))

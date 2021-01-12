@@ -13,14 +13,14 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC1001/AzureDevOpsPersonalAccessToken",
-              "name": "SEC1001/AzureDevOpsPersonalAccessToken",
+              "id": "SEC1002/SocialSecurityNumber",
+              "name": "SEC1002/SocialSecurityNumber",
               "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+                "text": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc."
               },
               "messageStrings": {
                 "Default": {
-                  "text": "'{0}' contains an apparent {1} {2}."
+                  "text": "'{0}' contains an apparent {1}."
                 },
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
@@ -38,33 +38,98 @@
       ],
       "results": [
         {
-          "ruleId": "SEC1001/AzureDevOpsPersonalAccessToken",
+          "ruleId": "SEC1002/SocialSecurityNumber",
           "ruleIndex": 0,
-          "level": "error",
+          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "VariousPats.txt",
-              "base64-encoded",
-              "Azure DevOps personal access token"
+              "SEC1002.SocialSecurityNumber_with_social_security_numbers.txt",
+              "social security number"
             ]
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/VariousPats.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.SocialSecurityNumber_with_social_security_numbers.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 1,
+                  "endLine": 2,
+                  "endColumn": 12,
+                  "charOffset": 30,
+                  "charLength": 11,
+                  "snippet": {
+                    "text": "123-45-6789"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC1002/SocialSecurityNumber",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC1002.SocialSecurityNumber_with_social_security_numbers.txt",
+              "social security number"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.SocialSecurityNumber_with_social_security_numbers.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1,
+                  "endLine": 5,
+                  "endColumn": 12,
+                  "charOffset": 64,
+                  "charLength": 11,
+                  "snippet": {
+                    "text": "111-45-6789"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC1002/SocialSecurityNumber",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC1002.SocialSecurityNumber_with_social_security_numbers.txt",
+              "social security number"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.SocialSecurityNumber_with_social_security_numbers.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 6,
                   "startColumn": 1,
                   "endLine": 6,
-                  "endColumn": 73,
-                  "charOffset": 202,
-                  "charLength": 72,
+                  "endColumn": 12,
+                  "charOffset": 77,
+                  "charLength": 11,
                   "snippet": {
-                    "text": "ZGVhZGJlZWZkZWFkYmVlZmRlYWRiZWVmZGVhZGJlZWZkZWFkYmVlZmRlYWRiZWVmZGVhZA=="
+                    "text": "123-44-6789"
                   }
                 }
               }
@@ -72,101 +137,32 @@
           ]
         },
         {
-          "ruleId": "SEC1001/AzureDevOpsPersonalAccessToken",
+          "ruleId": "SEC1002/SocialSecurityNumber",
           "ruleIndex": 0,
-          "level": "error",
+          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "VariousPats.txt",
-              "base64-encoded",
-              "Azure DevOps personal access token"
+              "SEC1002.SocialSecurityNumber_with_social_security_numbers.txt",
+              "social security number"
             ]
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/VariousPats.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.SocialSecurityNumber_with_social_security_numbers.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 12,
+                  "startLine": 7,
                   "startColumn": 1,
-                  "endLine": 12,
-                  "endColumn": 73,
-                  "charOffset": 442,
-                  "charLength": 72,
+                  "endLine": 7,
+                  "endColumn": 12,
+                  "charOffset": 90,
+                  "charLength": 11,
                   "snippet": {
-                    "text": "aDVseGVxa3o0enVqa3l2emc1ZW1rZWpnZWx4ajR4NjR0dnl6Y2xwcmVrdWxvYXdiYno1cQ=="
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "SEC1001/AzureDevOpsPersonalAccessToken",
-          "ruleIndex": 0,
-          "level": "error",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "VariousPats.txt",
-              "",
-              "Azure DevOps personal access token"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/VariousPats.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 1,
-                  "endLine": 3,
-                  "endColumn": 53,
-                  "charOffset": 86,
-                  "charLength": 52,
-                  "snippet": {
-                    "text": "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "SEC1001/AzureDevOpsPersonalAccessToken",
-          "ruleIndex": 0,
-          "level": "error",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "VariousPats.txt",
-              "",
-              "Azure DevOps personal access token"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/VariousPats.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 1,
-                  "endLine": 9,
-                  "endColumn": 53,
-                  "charOffset": 326,
-                  "charLength": 52,
-                  "snippet": {
-                    "text": "h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q"
+                    "text": "123-45-6666"
                   }
                 }
               }

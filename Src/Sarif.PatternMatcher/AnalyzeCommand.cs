@@ -36,6 +36,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 SearchDefinitions definitions =
                     JsonConvert.DeserializeObject<SearchDefinitions>(searchDefinitionsText);
 
+                // This would skip files that does not look like rules.
+                if (definitions == null || definitions.Definitions == null)
+                {
+                    continue;
+                }
+
                 string validatorPath = null;
                 string definitionsDirectory = Path.GetDirectoryName(searchDefinitionsPath);
 
