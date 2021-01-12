@@ -255,15 +255,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (_validators != null)
                 {
-                    state = _validators.Validate(
-                        reportingDescriptor.Id,
-                        context.DynamicValidation,
-                        ref refinedMatchedPattern,
-                        ref groups,
-                        ref levelText,
-                        ref fingerprint,
-                        ref validatorMessage,
-                        out bool pluginSupportsDynamicValidation);
+                    state = _validators.Validate(reportingDescriptor.Id,
+                                                context.DynamicValidation,
+                                                ref refinedMatchedPattern,
+                                                ref groups,
+                                                ref levelText,
+                                                ref fingerprint,
+                                                ref validatorMessage,
+                                                out bool pluginSupportsDynamicValidation);
 
                     if (!Enum.TryParse<FailureLevel>(levelText, out level))
                     {
@@ -464,6 +463,203 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
+        private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level)
+        {
+            ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
+
+            bool dynamic = context.DynamicValidation;
+            string levelText = level.ToString();
+            string fingerprint = null, message = null;
+            IDictionary<string, string> groups = new Dictionary<string, string>();
+
+            string filePath = context.TargetUri.LocalPath;
+
+            Validation state = 0;
+            string fingerprintText = null, validatorMessage = null;
+            string validationPrefix = string.Empty, validationSuffix = string.Empty;
+
+            if (_validators != null)
+            {
+                state = _validators.Validate(reportingDescriptor.Id,
+                                            context.DynamicValidation,
+                                            ref filePath,
+                                            ref groups,
+                                            ref levelText,
+                                            ref fingerprintText,
+                                            ref validatorMessage,
+                                            out bool pluginSupportsDynamicValidation);
+
+                if (!Enum.TryParse<FailureLevel>(levelText, out level))
+                {
+                    // An illegal failure level '{0}' was returned validating a result for check '{1}'.
+                    context.Logger.LogToolNotification(
+                        Errors.CreateNotification(
+                            context.TargetUri,
+                            "ERR998.ValidatorReturnedIllegalResultLevel",
+                            context.Rule.Id,
+                            FailureLevel.Error,
+                            exception: null,
+                            persistExceptionStack: false,
+                            messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
+                            context.TargetUri.GetFileName(),
+                            context.Rule.Id));
+
+                    // If we don't understand the failure level, elevate it to error.
+                    level = FailureLevel.Error;
+                }
+
+                switch (state)
+                {
+                    case Validation.NoMatch:
+                    {
+                        // The validator determined the match is a false positive.
+                        // i.e., it is not the kind of artifact we're looking for.
+                        // We should suspend processing and move to the next match.
+                        return;
+                    }
+
+                    case Validation.None:
+                    case Validation.ValidatorReturnedIllegalValidationState:
+                    {
+                        // An illegal state '{0}' was returned validating a result for check '{1}'.
+                        context.Logger.LogToolNotification(
+                            Errors.CreateNotification(
+                                context.TargetUri,
+                                "ERR998.ValidatorReturnedIllegalValidationState",
+                                context.Rule.Id,
+                                FailureLevel.Error,
+                                exception: null,
+                                persistExceptionStack: false,
+                                messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
+                                context.TargetUri.GetFileName(),
+                                context.Rule.Id));
+
+                        level = FailureLevel.Error;
+                        return;
+                    }
+
+                    case Validation.Authorized:
+                    {
+                        level = FailureLevel.Error;
+
+                        // Contributes to building a message fragment such as:
+                        // 'SomeFile.txt' is an exposed SomeSecret file [...].
+                        validationPrefix = "an exposed ";
+                        break;
+                    }
+
+                    case Validation.Expired:
+                    {
+                        level = FailureLevel.Warning;
+
+                        // Contributes to building a message fragment such as:
+                        // 'SomeFile.txt' contains an expired SomeApi token[...].
+                        validationPrefix = "an expired ";
+                        break;
+                    }
+
+                    case Validation.PasswordProtected:
+                    {
+                        level = FailureLevel.Warning;
+
+                        // Contributes to building a message fragment such as:
+                        // 'SomeFile.txt' contains a password-protected SomeSecret file
+                        // which could be exfiltrated and potentially brute-forced offline.
+                        validationPrefix = "a password-protected ";
+                        validationSuffix = " which could be exfiltrated and potentially brute-forced offline";
+                        break;
+                    }
+
+
+                    case Validation.HostUnknown:
+                    case Validation.Unauthorized:
+                    case Validation.InvalidForConsultedAuthorities:
+                    {
+                        throw new InvalidOperationException();
+                    }
+
+                    case Validation.Unknown:
+                    {
+                        level = FailureLevel.Warning;
+
+                        validationPrefix = "an apparent ";
+                        if (!context.DynamicValidation)
+                        {
+                            if (pluginSupportsDynamicValidation)
+                            {
+                                // This indicates that dynamic validation was disabled but we
+                                // passed this result to a validator that could have performed
+                                // this work.
+                                validationSuffix = ". No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
+                            }
+                            else
+                            {
+                                // No validation was requested. The plugin indicated
+                                // that is can't perform this work in any case.
+                                validationSuffix = string.Empty;
+                            }
+                        }
+                        else if (pluginSupportsDynamicValidation)
+                        {
+                            validationSuffix = ", the validity of which could not be determined by runtime analysis";
+                        }
+                        else
+                        {
+                            // Validation was requested. But the plugin indicated
+                            // that it can't perform this work in any case.
+                            validationSuffix = string.Empty;
+                        }
+
+                        break;
+                    }
+
+                    case Validation.ValidatorNotFound:
+                    {
+                        // TODO: should we have an explicit indicator in
+                        // all cases that tells us whether this is an
+                        // expected condition or not?
+                        validationPrefix = "an apparent ";
+
+                        break;
+                    }
+
+                    default:
+                    {
+                        throw new InvalidOperationException($"Unrecognized validation value '{state}'.");
+                    }
+                }
+            }
+
+            Dictionary<string, string> messageArguments =
+                matchExpression.MessageArguments != null ?
+                    new Dictionary<string, string>(matchExpression.MessageArguments) :
+                    new Dictionary<string, string>();
+
+            messageArguments["validationPrefix"] = validationPrefix;
+            messageArguments["validationSuffix"] = validationSuffix;
+
+            IList<string> arguments = GetMessageArguments(
+                match: null,
+                _argumentNameToIndex,
+                context.TargetUri.LocalPath,
+                validatorMessage: NormalizeValidatorMessage(validatorMessage),
+                messageArguments);
+
+
+            Result result = this.ConstructResult(
+                    context.TargetUri,
+                    reportingDescriptor.Id,
+                    level,
+                    region: null,
+                    flexMatch: null,
+                    fingerprint,
+                    matchExpression.Fixes,
+                    arguments);
+
+            context.Logger.Log(reportingDescriptor, result);
+        }
+
+
         private string GetValidationPrefix(Validation state)
         {
             string prefix = state switch
@@ -582,41 +778,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             };
         }
 
-        private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level)
-        {
-            ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
-            IList<string> arguments = GetMessageArguments(
-                _argumentNameToIndex,
-                context.TargetUri.LocalPath,
-                base64Encoded: false,
-                matchExpression.MessageArguments);
-
-            var location = new Location()
-            {
-                PhysicalLocation = new PhysicalLocation
-                {
-                    ArtifactLocation = new ArtifactLocation
-                    {
-                        Uri = context.TargetUri,
-                    },
-                },
-            };
-
-            var result = new Result()
-            {
-                RuleId = reportingDescriptor.Id,
-                Level = level,
-                Message = new Message()
-                {
-                    Id = "Default",
-                    Arguments = arguments,
-                },
-                Locations = new List<Location>(new[] { location }),
-            };
-
-            context.Logger.Log(reportingDescriptor, result);
-        }
-
         private FlexString Decode(string value)
         {
             byte[] bytes = Convert.FromBase64String(value);
@@ -711,7 +872,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 string value = kv.Key == "scanTarget"
                     ? Path.GetFileName(scanTargetPath)
-                    : match.Groups[kv.Key]?.Value;
+                    : match?.Groups[kv.Key]?.Value;
 
                 value = kv.Key == nameof(scanTargetPath)
                     ? scanTargetPath

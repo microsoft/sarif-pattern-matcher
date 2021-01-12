@@ -2,8 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Runtime.CompilerServices;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
@@ -14,6 +12,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public const string AccountKeyName = "acct";
         public const string PasswordKeyName = "pwd";
         public const string KeyNameKeyName = "keyName";
+        public const string ThumbprintKeyName = "thumbprint";
         public const string SymmetricKey128BitKeyName = "skey/128";
         public const string SymmetricKey256BitKeyName = "skey/256";
         public const string PersonalAccessTokenGitHubKeyName = "pat/gh";
@@ -23,7 +22,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public Fingerprint(string fingerprintText)
         {
-            Account = Host = KeyName = Password = null;
+            Account = Host = KeyName = Password = Thumbprint = null;
             SymmetricKey128Bit = SymmetricKey256Bit = Uri = null;
             PersonalAccessTokenGitHub = PersonalAccessTokenAzureDevOps = null;
 
@@ -70,6 +69,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string Password { get; internal set; }
 
+        public string Thumbprint { get; internal set; }
+
         public string SymmetricKey128Bit { get; internal set; }
 
         public string SymmetricKey256Bit { get; internal set; }
@@ -90,6 +91,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 case AccountKeyName: { Account = value; break; }
                 case KeyNameKeyName: { KeyName = value; break; }
                 case PasswordKeyName: { Password = value; break; }
+                case ThumbprintKeyName: { Thumbprint = value; break; }
                 case SymmetricKey128BitKeyName: { SymmetricKey128Bit = value; break; }
                 case SymmetricKey256BitKeyName: { SymmetricKey256Bit = value; break; }
                 case PersonalAccessTokenGitHubKeyName: { PersonalAccessTokenGitHub = value; break; }
@@ -142,6 +144,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (SymmetricKey256Bit != null)
             {
                 components.Add($"[{SymmetricKey256BitKeyName}={this.SymmetricKey256Bit}]");
+            }
+
+            if (Thumbprint != null)
+            {
+                components.Add($"[{ThumbprintKeyName}={this.Thumbprint}]");
             }
 
             if (Uri != null)

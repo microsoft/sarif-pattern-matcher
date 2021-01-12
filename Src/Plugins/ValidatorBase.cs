@@ -87,7 +87,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 
         public static string ReturnUnknownHost(ref string message, string host)
         {
-            message = $"#The host '{host}' is unknown.";
+            message = $"The host '{host}' is unknown.";
             return nameof(ValidationState.UnknownHost);
         }
 
@@ -97,8 +97,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                                                       string account = null)
         {
             message = (account == null) ?
-                $"#An unexpected exception was caught attempting to validate '{asset}': {e.Message}" :
-                $"#An unexpected exception was caught attempting to validate the '{account} account on '{asset}': {e.Message}";
+                $"An unexpected exception was caught attempting to validate '{asset}': {e.Message}" :
+                $"An unexpected exception was caught attempting to validate the '{account} account on '{asset}': {e.Message}";
 
             return nameof(ValidationState.Unknown);
         }

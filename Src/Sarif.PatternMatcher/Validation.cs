@@ -44,6 +44,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         Expired,
 
         /// <summary>
+        /// The file or resource is password-protected.
+        /// </summary>
+        PasswordProtected,
+
+        /// <summary>
         /// The host is unknown.
         /// </summary>
         HostUnknown,
