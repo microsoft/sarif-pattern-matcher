@@ -1,9 +1,9 @@
 <Project>
 
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)..\src\Plugins\Fingerprint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\src\Plugins\ValidatorBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\src\Plugins\ValidationState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\src\Sarif.PatternMatcher\Fingerprint.cs" />
   </ItemGroup>
 
 </Project>

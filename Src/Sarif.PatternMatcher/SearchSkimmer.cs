@@ -245,26 +245,43 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     refinedMatchedPattern = flexMatch.Value;
                 }
 
-                bool dynamic = context.DynamicValidation;
                 string levelText = level.ToString();
 
                 Validation state = 0;
                 string fingerprint = null;
                 string validatorMessage = null;
-                string validationState = string.Empty;
+                string validationPrefix = string.Empty;
+                string validationSuffix = string.Empty;
 
                 if (_validators != null)
                 {
-                    state = _validators.Validate(
-                        reportingDescriptor.Id,
-                        ref refinedMatchedPattern,
-                        ref groups,
-                        ref dynamic,
-                        ref levelText,
-                        ref fingerprint,
-                        out validatorMessage);
+                    state = _validators.Validate(reportingDescriptor.Id,
+                                                context.DynamicValidation,
+                                                ref refinedMatchedPattern,
+                                                ref groups,
+                                                ref levelText,
+                                                ref fingerprint,
+                                                ref validatorMessage,
+                                                out bool pluginSupportsDynamicValidation);
 
-                    level = (FailureLevel)Enum.Parse(typeof(FailureLevel), levelText);
+                    if (!Enum.TryParse<FailureLevel>(levelText, out level))
+                    {
+                        // An illegal failure level '{0}' was returned validating a result for check '{1}'.
+                        context.Logger.LogToolNotification(
+                            Errors.CreateNotification(
+                                context.TargetUri,
+                                "ERR998.ValidatorReturnedIllegalResultLevel",
+                                context.Rule.Id,
+                                FailureLevel.Error,
+                                exception: null,
+                                persistExceptionStack: false,
+                                messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
+                                context.TargetUri.GetFileName(),
+                                context.Rule.Id));
+
+                        // If we don't understand the failure level, elevate it to error.
+                        level = FailureLevel.Error;
+                    }
 
                     switch (state)
                     {
@@ -277,78 +294,110 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         }
 
                         case Validation.None:
-                        case Validation.ValidatorReturnedIllegalValue:
+                        case Validation.ValidatorReturnedIllegalValidationState:
                         {
-                            // The validator returned a bad value.
-                            // TODO: we should log this condition
-                            // and then continue processing.
+                            // An illegal state '{0}' was returned validating a result for check '{1}'.
+                            context.Logger.LogToolNotification(
+                                Errors.CreateNotification(
+                                    context.TargetUri,
+                                    "ERR998.ValidatorReturnedIllegalValidationState",
+                                    context.Rule.Id,
+                                    FailureLevel.Error,
+                                    exception: null,
+                                    persistExceptionStack: false,
+                                    messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
+                                    context.TargetUri.GetFileName(),
+                                    context.Rule.Id));
+
                             level = FailureLevel.Error;
-                            break;
+                            continue;
                         }
 
                         case Validation.Authorized:
                         {
                             level = FailureLevel.Error;
-                            validationState = " which is authorized for access";
+
+                            // Contributes to building a message fragment such as:
+                            // 'SomeFile.txt' contains a valid SomeApi token [...].
+                            validationPrefix = "a valid ";
                             break;
                         }
 
                         case Validation.Unauthorized:
                         {
                             level = FailureLevel.Warning;
-                            validationState = " which is unauthorized for access";
+
+                            // Contributes to building a message fragment such as:
+                            // 'SomeFile.txt' contains an invalid SomeApi token[...].
+                            validationPrefix = "an invalid ";
+                            validationSuffix = " which failed authentication";
                             break;
                         }
 
                         case Validation.Expired:
                         {
                             level = FailureLevel.Warning;
-                            validationState = " which is expired";
+
+                            // Contributes to building a message fragment such as:
+                            // 'SomeFile.txt' contains an expired SomeApi token[...].
+                            validationPrefix = "an expired ";
                             break;
                         }
 
                         case Validation.HostUnknown:
                         {
                             level = FailureLevel.Warning;
-                            validationState = " which references an unknown host or resource";
+
+                            // Contributes to building a message fragment such as:
+                            // 'SomeFile.txt' contains an apparent SomeApi token
+                            // which references an unknown host or resource[...].
+                            validationPrefix = "an apparent ";
+                            validationSuffix = " which references an unknown host or resource";
                             break;
                         }
 
                         case Validation.InvalidForConsultedAuthorities:
                         {
                             level = FailureLevel.Warning;
-                            validationState = " which is unauthorized for all consulted authorities";
+
+                            // Contributes to building a message fragment such as:
+                            // 'SomeFile.txt' contains an apparent SomeApi token
+                            // which references an unknown host or resource[...].
+                            validationPrefix = "an apparently invalid ";
+                            validationSuffix = " which was not authenticated by any consulted authority";
                             break;
                         }
 
                         case Validation.Unknown:
                         {
                             level = FailureLevel.Warning;
+
+                            validationPrefix = "an apparent ";
                             if (!context.DynamicValidation)
                             {
-                                if (dynamic)
+                                if (pluginSupportsDynamicValidation)
                                 {
                                     // This indicates that dynamic validation was disabled but we
                                     // passed this result to a validator that could have performed
                                     // this work.
-                                    validationState = ". No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
+                                    validationSuffix = ". No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
                                 }
                                 else
                                 {
                                     // No validation was requested. The plugin indicated
                                     // that is can't perform this work in any case.
-                                    validationState = string.Empty;
+                                    validationSuffix = string.Empty;
                                 }
                             }
-                            else if (dynamic)
+                            else if (pluginSupportsDynamicValidation)
                             {
-                                validationState = ", the validity of which could not be determined";
+                                validationSuffix = ", the validity of which could not be determined by runtime analysis";
                             }
                             else
                             {
                                 // Validation was requested. But the plugin indicated
                                 // that it can't perform this work in any case.
-                                validationState = string.Empty;
+                                validationSuffix = string.Empty;
                             }
 
                             break;
@@ -359,6 +408,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             // TODO: should we have an explicit indicator in
                             // all cases that tells us whether this is an
                             // expected condition or not?
+                            validationPrefix = "an apparent ";
+
                             break;
                         }
 
@@ -384,7 +435,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     "base64-encoded" :
                     string.Empty; // We don't bother to report a value for plaintext content
 
-                messageArguments["validationState"] = validationState;
+                messageArguments["validationPrefix"] = validationPrefix;
+                messageArguments["validationSuffix"] = validationSuffix;
 
                 IList<string> arguments = GetMessageArguments(
                     match,
@@ -417,24 +469,44 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             bool dynamic = context.DynamicValidation;
             string levelText = level.ToString();
-            string fingerprint = null;
+            string fingerprint = null, message = null;
             IDictionary<string, string> groups = new Dictionary<string, string>();
 
-            string matched = context.TargetUri.LocalPath;
-            string validatorMessage = string.Empty;
+            string filePath = context.TargetUri.LocalPath;
+
+            Validation state = 0;
+            string fingerprintText = null, validatorMessage = null;
+            string validationPrefix = string.Empty, validationSuffix = string.Empty;
 
             if (_validators != null)
             {
-                Validation state = _validators.Validate(
-                    reportingDescriptor.Id,
-                    ref matched,
-                    ref groups,
-                    ref dynamic,
-                    ref levelText,
-                    ref fingerprint,
-                    out validatorMessage);
+                state = _validators.Validate(reportingDescriptor.Id,
+                                            context.DynamicValidation,
+                                            ref filePath,
+                                            ref groups,
+                                            ref levelText,
+                                            ref fingerprintText,
+                                            ref validatorMessage,
+                                            out bool pluginSupportsDynamicValidation);
 
-                level = (FailureLevel)Enum.Parse(typeof(FailureLevel), levelText);
+                if (!Enum.TryParse<FailureLevel>(levelText, out level))
+                {
+                    // An illegal failure level '{0}' was returned validating a result for check '{1}'.
+                    context.Logger.LogToolNotification(
+                        Errors.CreateNotification(
+                            context.TargetUri,
+                            "ERR998.ValidatorReturnedIllegalResultLevel",
+                            context.Rule.Id,
+                            FailureLevel.Error,
+                            exception: null,
+                            persistExceptionStack: false,
+                            messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
+                            context.TargetUri.GetFileName(),
+                            context.Rule.Id));
+
+                    // If we don't understand the failure level, elevate it to error.
+                    level = FailureLevel.Error;
+                }
 
                 switch (state)
                 {
@@ -447,53 +519,107 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     }
 
                     case Validation.None:
-                    case Validation.ValidatorReturnedIllegalValue:
+                    case Validation.ValidatorReturnedIllegalValidationState:
                     {
-                        // The validator returned a bad value.
-                        // TODO: we should log this condition
-                        // and then continue processing.
+                        // An illegal state '{0}' was returned validating a result for check '{1}'.
+                        context.Logger.LogToolNotification(
+                            Errors.CreateNotification(
+                                context.TargetUri,
+                                "ERR998.ValidatorReturnedIllegalValidationState",
+                                context.Rule.Id,
+                                FailureLevel.Error,
+                                exception: null,
+                                persistExceptionStack: false,
+                                messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
+                                context.TargetUri.GetFileName(),
+                                context.Rule.Id));
+
                         level = FailureLevel.Error;
-                        break;
+                        return;
                     }
 
                     case Validation.Authorized:
                     {
                         level = FailureLevel.Error;
-                        break;
-                    }
 
-                    case Validation.Unauthorized:
-                    {
-                        level = FailureLevel.Warning;
+                        // Contributes to building a message fragment such as:
+                        // 'SomeFile.txt' is an exposed SomeSecret file [...].
+                        validationPrefix = "an exposed ";
                         break;
                     }
 
                     case Validation.Expired:
                     {
                         level = FailureLevel.Warning;
+
+                        // Contributes to building a message fragment such as:
+                        // 'SomeFile.txt' contains an expired SomeApi token[...].
+                        validationPrefix = "an expired ";
                         break;
                     }
+
+                    case Validation.PasswordProtected:
+                    {
+                        level = FailureLevel.Warning;
+
+                        // Contributes to building a message fragment such as:
+                        // 'SomeFile.txt' contains a password-protected SomeSecret file
+                        // which could be exfiltrated and potentially brute-forced offline.
+                        validationPrefix = "a password-protected ";
+                        validationSuffix = " which could be exfiltrated and potentially brute-forced offline";
+                        break;
+                    }
+
 
                     case Validation.HostUnknown:
-                    {
-                        level = FailureLevel.Warning;
-                        break;
-                    }
-
+                    case Validation.Unauthorized:
                     case Validation.InvalidForConsultedAuthorities:
                     {
-                        level = FailureLevel.Warning;
-                        break;
+                        throw new InvalidOperationException();
                     }
 
                     case Validation.Unknown:
                     {
                         level = FailureLevel.Warning;
+
+                        validationPrefix = "an apparent ";
+                        if (!context.DynamicValidation)
+                        {
+                            if (pluginSupportsDynamicValidation)
+                            {
+                                // This indicates that dynamic validation was disabled but we
+                                // passed this result to a validator that could have performed
+                                // this work.
+                                validationSuffix = ". No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
+                            }
+                            else
+                            {
+                                // No validation was requested. The plugin indicated
+                                // that is can't perform this work in any case.
+                                validationSuffix = string.Empty;
+                            }
+                        }
+                        else if (pluginSupportsDynamicValidation)
+                        {
+                            validationSuffix = ", the validity of which could not be determined by runtime analysis";
+                        }
+                        else
+                        {
+                            // Validation was requested. But the plugin indicated
+                            // that it can't perform this work in any case.
+                            validationSuffix = string.Empty;
+                        }
+
                         break;
                     }
 
                     case Validation.ValidatorNotFound:
                     {
+                        // TODO: should we have an explicit indicator in
+                        // all cases that tells us whether this is an
+                        // expected condition or not?
+                        validationPrefix = "an apparent ";
+
                         break;
                     }
 
@@ -504,12 +630,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
             }
 
+            Dictionary<string, string> messageArguments =
+                matchExpression.MessageArguments != null ?
+                    new Dictionary<string, string>(matchExpression.MessageArguments) :
+                    new Dictionary<string, string>();
+
+            messageArguments["validationPrefix"] = validationPrefix;
+            messageArguments["validationSuffix"] = validationSuffix;
+
             IList<string> arguments = GetMessageArguments(
                 match: null,
                 _argumentNameToIndex,
                 context.TargetUri.LocalPath,
                 validatorMessage: NormalizeValidatorMessage(validatorMessage),
-                matchExpression.MessageArguments);
+                messageArguments);
+
 
             Result result = this.ConstructResult(
                     context.TargetUri,
@@ -522,6 +657,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     arguments);
 
             context.Logger.Log(reportingDescriptor, result);
+        }
+
+
+        private string GetValidationPrefix(Validation state)
+        {
+            string prefix = state switch
+            {
+                Validation.Expired => "an expired",
+                Validation.Authorized => "a valid",
+                Validation.Unauthorized => "an invalid",
+                Validation.HostUnknown => "an unrecognized",
+                Validation.Unknown => "a potentially compromised",
+                Validation.InvalidForConsultedAuthorities => "an invalid",
+                _ => "an apparent",
+            };
+
+            return prefix + " ";
         }
 
         private string NormalizeValidatorMessage(string validatorMessage)

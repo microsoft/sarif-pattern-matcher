@@ -49,25 +49,31 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 bool performDynamicValidation = testCase.PerformDynamicValidation;
                 string failureLevel = testCase.FailureLevel;
-                string fingerprint = "";
+                string fingerprintText = null, message = null;
                 var groups = new Dictionary<string, string>();
 
-                string state = AzureDevOpsPersonalAccessTokenValidator.IsValid(
-                    ref testCase.Input,
-                    ref groups,
-                    ref performDynamicValidation,
-                    ref failureLevel,
-                    ref fingerprint);
+                string state =
+                    AzureDevOpsPersonalAccessTokenValidator.IsValidStatic(ref testCase.Input,
+                                                                          ref groups,
+                                                                          ref failureLevel,
+                                                                          ref fingerprintText,
+                                                                          ref message);
 
                 string title = testCase.Title;
 
                 Verify(state == testCase.ExpectedValidationState, title, failedTestCases);
 
-                // The core ADO PAT validator does not perform any dynamic checking
-                Verify(!performDynamicValidation, title, failedTestCases);
-
                 Verify(failureLevel == testCase.FailureLevel, title, failedTestCases);
-                Verify(fingerprint == $"[pat/vs={testCase.Input}]", title, failedTestCases);
+                Verify(state == testCase.ExpectedValidationState, title, failedTestCases);
+
+                if (state != "Unknown")
+                {
+                    Verify(fingerprintText == null, title, failedTestCases);
+                }
+                else
+                {
+                    Verify(fingerprintText == $"[pat/vs={testCase.Input}]", title, failedTestCases);
+                }
             }
 
             failedTestCases.Should().BeEmpty();
@@ -77,7 +83,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             if (!condition)
             {
-                failedTestCases.Add(title);
+                failedTestCases.Add($"{Environment.NewLine}{title}");
             }
         }
 
@@ -91,16 +97,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string matchedPattern = input;
 
                 var groups = new Dictionary<string, string>();
-                bool performDynamicValidation = false;
-                string failureLevel = "error";
-                string fingerprint = "";
-                Assert.Throws<ArgumentException>(()
-                    => AzureDevOpsPersonalAccessTokenValidator.IsValid(
-                        ref matchedPattern,
-                        ref groups,
-                        ref performDynamicValidation,
-                        ref failureLevel,
-                        ref fingerprint));
+                string failureLevel = "Error";
+                string fingerprintText = null, message = null;
+
+                Assert.Throws<ArgumentException>(() =>
+                    AzureDevOpsPersonalAccessTokenValidator.IsValidStatic(ref matchedPattern,
+                                                                    ref groups,
+                                                                    ref failureLevel,
+                                                                    ref fingerprintText,
+                                                                    ref message));
             }
         }
     }

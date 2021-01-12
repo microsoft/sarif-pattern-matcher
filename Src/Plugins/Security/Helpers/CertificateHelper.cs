@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -12,37 +13,51 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
 {
     internal static class CertificateHelper
     {
-        public static string TryLoadCertificate(string certificatePath, ref string thumbprint)
+        public static string TryLoadCertificate(string certificatePath,
+                                                ref string fingerprintText,
+                                                ref string message)
         {
-            X509Certificate2 certificate = null;
             try
             {
                 // If this certificate needs a password or it is a bundle, it will throw an exception.
-                certificate = new X509Certificate2(certificatePath);
-                thumbprint = certificate.Thumbprint;
-                return certificate.HasPrivateKey
-                    ? nameof(ValidationState.Authorized)
-                    : nameof(ValidationState.NoMatch);
-            }
-            catch (CryptographicException e)
-            {
-                return e.Message switch
+                using var certificate = new X509Certificate2(certificatePath);
+                fingerprintText = certificate.Thumbprint;
+
+                if (!certificate.HasPrivateKey)
                 {
-                    "Cannot find the original signer." => TryLoadCertificateCollection(certificatePath, ref thumbprint),
-                    _ => ValidatorBase.CreateReturnValueForUnknownException(e, Path.GetFileName(certificatePath)),
-                };
+                    return nameof(ValidationState.NoMatch);
+                }
+
+                message = "which contains private keys.";
+                return nameof(ValidationState.Authorized);
             }
             catch (Exception e)
             {
-                return ValidatorBase.CreateReturnValueForUnknownException(e, Path.GetFileName(certificatePath));
-            }
-            finally
-            {
-                certificate?.Dispose();
+                string fileName = Path.GetFileName(certificatePath);
+
+                if (e is CryptographicException cryptographicException)
+                {
+                    if (e.Message == "Cannot find the original signer.")
+                    {
+                        return TryLoadCertificateCollection(certificatePath,
+                                                            ref message,
+                                                            ref fingerprintText);
+                    }
+
+                    if (e.Message == "The specified network password is not correct.")
+                    {
+                        return nameof(ValidationState.PasswordProtected);
+                    }
+                }
+
+                ValidatorBase.ReturnUnhandledException(ref message, e, asset: fileName);
+                return message;
             }
         }
 
-        public static string TryLoadCertificateCollection(string certificatePath, ref string thumbprint)
+        public static string TryLoadCertificateCollection(string certificatePath,
+                                                          ref string fingerprintText,
+                                                          ref string message)
         {
             var certificates = new X509Certificate2Collection();
             try
@@ -61,12 +76,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
                     }
                 }
 
-                thumbprint = string.Join(";", thumbprints);
+                fingerprintText = string.Join(";", thumbprints);
+                message = "which contains private keys.";
                 return state;
             }
             catch (Exception e)
             {
-                return ValidatorBase.CreateReturnValueForUnknownException(e, Path.GetFileName(certificatePath));
+                string fileName = Path.GetFileName(certificatePath);
+                return ValidatorBase.ReturnUnhandledException(ref message, e, fileName);
             }
         }
     }

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ERR998_ValidatorReturnedIllegalResultLevel" xml:space="preserve">
+    <value>An illegal failure level '{0}' was returned validating a result for check '{1}'.</value>
+  </data>
+  <data name="ERR998_ValidatorReturnedIllegalValidationState" xml:space="preserve">
+    <value>An illegal state '{0}' was returned validating a result for check '{1}'.</value>
+  </data>
   <data name="TargetDoesNotMeetFileNameCriteria" xml:space="preserve">
     <value>file name does not meet search definition criteria.</value>
   </data>

@@ -61,6 +61,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An illegal failure level &apos;{0}&apos; was returned validating a result for check &apos;{1}&apos;..
+        /// </summary>
+        internal static string ERR998_ValidatorReturnedIllegalResultLevel {
+            get {
+                return ResourceManager.GetString("ERR998_ValidatorReturnedIllegalResultLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An illegal state &apos;{0}&apos; was returned validating a result for check &apos;{1}&apos;..
+        /// </summary>
+        internal static string ERR998_ValidatorReturnedIllegalValidationState {
+            get {
+                return ResourceManager.GetString("ERR998_ValidatorReturnedIllegalValidationState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to file name does not meet search definition criteria..
         /// </summary>
         internal static string TargetDoesNotMeetFileNameCriteria {

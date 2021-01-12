@@ -19,9 +19,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         /// <summary>
         /// A validator for the current matched pattern returned
-        /// an unrecognized value when asked to validate.
+        /// an unrecognized state when asked to validate.
         /// </summary>
-        ValidatorReturnedIllegalValue,
+        ValidatorReturnedIllegalValidationState,
 
         /// <summary>
         /// Pattern isn't actually a match for secret type.
@@ -42,6 +42,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// The secret is expired.
         /// </summary>
         Expired,
+
+        /// <summary>
+        /// The file or resource is password-protected.
+        /// </summary>
+        PasswordProtected,
 
         /// <summary>
         /// The host is unknown.

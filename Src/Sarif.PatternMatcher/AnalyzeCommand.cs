@@ -122,36 +122,79 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         internal static void PushInheritedData(SearchDefinition definition, Dictionary<string, string> sharedStrings)
         {
-            definition.FileNameDenyRegex = PushData(definition.FileNameDenyRegex, sharedStrings);
-            definition.FileNameAllowRegex = PushData(definition.FileNameAllowRegex, sharedStrings);
+            definition.FileNameDenyRegex = PushData(definition.FileNameDenyRegex,
+                                                    definition.SharedStrings,
+                                                    sharedStrings);
+
+            definition.FileNameAllowRegex = PushData(definition.FileNameAllowRegex,
+                                                     definition.SharedStrings,
+                                                     sharedStrings);
 
             foreach (MatchExpression matchExpression in definition.MatchExpressions)
             {
-                matchExpression.FileNameDenyRegex = PushData(matchExpression.FileNameDenyRegex, sharedStrings);
+                matchExpression.FileNameDenyRegex = PushData(matchExpression.FileNameDenyRegex,
+                                                             definition.SharedStrings,
+                                                             sharedStrings);
+
                 matchExpression.FileNameDenyRegex ??= definition.FileNameDenyRegex;
 
-                matchExpression.FileNameAllowRegex = PushData(matchExpression.FileNameAllowRegex, sharedStrings);
+                matchExpression.FileNameAllowRegex = PushData(matchExpression.FileNameAllowRegex,
+                                                             definition.SharedStrings,
+                                                             sharedStrings);
+
                 matchExpression.FileNameAllowRegex ??= definition.FileNameAllowRegex;
 
-                matchExpression.ContentsRegex = PushData(matchExpression.ContentsRegex, sharedStrings);
+                matchExpression.ContentsRegex = PushData(matchExpression.ContentsRegex,
+                                                         definition.SharedStrings,
+                                                         sharedStrings);
 
-                if (matchExpression.Level == 0) { matchExpression.Level = definition.Level; }
+                if (matchExpression.Level == 0)
+                {
+                    matchExpression.Level = definition.Level;
+                }
             }
+        }
+
+        private static string PushData(string text, params Dictionary<string, string>[] sharedStringsDictionaries)
+        {
+            if (text?.Contains("$") != true)
+            {
+                return text;
+            }
+
+            foreach (Dictionary<string, string> sharedStrings in sharedStringsDictionaries)
+            {
+                if (sharedStrings == null)
+                {
+                    continue;
+                }
+
+                foreach (string key in sharedStrings.Keys)
+                {
+                    text = text.Replace(key, sharedStrings[key]);
+                }
+            }
+
+            return text;
         }
 
         internal static Dictionary<string, string> LoadSharedStrings(string sharedStringsFullPath, IFileSystem fileSystem)
         {
             var result = new Dictionary<string, string>();
 
-            foreach (string line in fileSystem.FileReadAllLines(sharedStringsFullPath))
+            foreach (string fileLine in fileSystem.FileReadAllLines(sharedStringsFullPath))
             {
+                string line = fileLine.Trim();
+                if (string.IsNullOrEmpty(line) || line.StartsWith("#")) { continue; }
+
                 int index = line.IndexOf('=');
                 if (index == -1) { ThrowInvalidSharedStringsEntry(line); }
 
                 string key = line.Substring(0, index);
                 if (!key.StartsWith("$")) { ThrowInvalidSharedStringsEntry(line); }
 
-                result[key] = line.Substring(key.Length + "=".Length);
+                string value = line.Substring(key.Length + "=".Length);
+                result[key] = value;
             }
 
             return result;
@@ -181,26 +224,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
         }
 
-        private static string PushData(string text, Dictionary<string, string> sharedStrings)
-        {
-            if (sharedStrings == null || text?.Contains("$") != true)
-            {
-                return text;
-            }
-
-            foreach (string key in sharedStrings.Keys)
-            {
-                text = text.Replace(key, sharedStrings[key]);
-            }
-
-            return text;
-        }
-
         private static void ThrowInvalidSharedStringsEntry(string line)
         {
             throw new InvalidOperationException(
-                "Malformed shared strings entry. Every shared string should consist of a " +
-                "key name (prefixed with $) followed by an equals sign and the string value " +
+                $"Malformed shared strings entry. Every shared string should consist of a " +
+                $"key name (prefixed with $) followed by an equals sign and the string value " +
                 $"(e.g., $MyKey=MyValue). The malformed line was: {line}");
         }
     }
