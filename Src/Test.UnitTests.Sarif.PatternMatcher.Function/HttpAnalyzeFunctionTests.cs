@@ -71,16 +71,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         }
 
         [Fact]
-        public async Task Function_HttpAnalyze_WithoutFileName_Should_Return_BadRequest()
+        public async Task Function_HttpAnalyze_WithoutFileName_Should_Return_OK()
         {
             IActionResult result = await HttpAnalyzeFunction.Analyze(
                 request: TestHelper.HttpRequestSetup(new Dictionary<string, StringValues> { { FunctionConstants.FileContentPropertyName, TestHelper.SampleCode } }),
                 log: logger,
                 context: TestHelper.ContextSetup());
 
-            var resultObject = (BadRequestResult)result;
+            var resultObject = (OkObjectResult)result;
             resultObject.Should().NotBeNull();
-            resultObject.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
+            resultObject.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Fact]
@@ -97,16 +97,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         }
 
         [Fact]
-        public async Task Function_HttpAnalyze_WithEmptyFileName_Should_Return_BadRequest()
+        public async Task Function_HttpAnalyze_WithEmptyFileName_Should_Return_OK()
         {
             IActionResult result = await HttpAnalyzeFunction.Analyze(
                 request: TestHelper.MockAnalyzeFunctionRequest(string.Empty, TestHelper.SampleCode),
                 log: logger,
                 context: TestHelper.ContextSetup());
 
-            var resultObject = (BadRequestResult)result;
+            var resultObject = (OkObjectResult)result;
             resultObject.Should().NotBeNull();
-            resultObject.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
+            resultObject.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
     }
 }
