@@ -69,32 +69,6 @@
                 }
               }
             }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Replace '_alloca with '_malloca'."
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC1004.Memory.Allocation_alloca.c",
-                    "uriBaseId": "SRC_ROOT"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "charOffset": 187,
-                        "charLength": 8
-                      },
-                      "insertedContent": {
-                        "text": "_malloca("
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
           ]
         }
       ],

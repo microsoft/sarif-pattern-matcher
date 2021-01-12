@@ -3,7 +3,7 @@
   "Definitions": [
     {
       "Id": "SEC1004/Memory/Allocation",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/Memory/Allocation",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -20,7 +20,7 @@
     },
     {
       "Id": "SEC1004/String/Input",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/String/Input",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -58,7 +58,7 @@
     },
     {
       "Id": "SEC1004/String/Conversion",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/String/Conversion",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -187,7 +187,7 @@
     },
     {
       "Id": "SEC1004/Path/Manipulation",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/Path/Manipulation",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -239,7 +239,7 @@
     },
     {
       "Id": "SEC1004/String/Copy",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/String/Copy",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -361,7 +361,7 @@
     },
     {
       "Id": "SEC1004/String/Concatenation",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/String/Concatenation",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -462,7 +462,7 @@
     },
     {
       "Id": "SEC1004/String/Length",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/String/Length",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -521,7 +521,7 @@
     },
     {
       "Id": "SEC1004/String/Parsing",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/String/Parsing",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -636,7 +636,7 @@
     },
     {
       "Id": "SEC1004/String/Formatting",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/String/Formatting",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -821,7 +821,7 @@
     },
     {
       "Id": "SEC1004/TimeOperations",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/TimeOperations",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -859,7 +859,7 @@
     },
     {
       "Id": "SEC1004/Search",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/Search",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -876,7 +876,7 @@
     },
     {
       "Id": "SEC1004/MessageHandling",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApiMessageHandling/",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -893,7 +893,7 @@
     },
     {
       "Id": "SEC1004/FileOperations",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/FileOperations",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -931,7 +931,7 @@
     },
     {
       "Id": "SEC1004/Environment/Variables",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/Environment/Variables",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -948,7 +948,7 @@
     },
     {
       "Id": "SEC1004/Memory/Copy",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/Memory/Copy",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -986,7 +986,7 @@
     },
     {
       "Id": "SEC1004/Sorting",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/Sorting",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -1003,7 +1003,7 @@
     },
     {
       "Id": "SEC1004/Stream/Navigation",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/Stream/Navigation",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -1020,7 +1020,7 @@
     },
     {
       "Id": "SEC1004/Stream/Buffering",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/Stream/Buffering",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
@@ -1037,7 +1037,7 @@
     },
     {
       "Id": "SEC1004/ErrorHandling",
-      "Name": "DoNotUseBannedApi",
+      "Name": "DoNotUseBannedApi/ErrorHandling",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
       "Level": "Error",
