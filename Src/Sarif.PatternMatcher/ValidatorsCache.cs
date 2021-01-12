@@ -135,6 +135,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return result;
             }
 
+            if (result == Validation.NoMatch)
+            {
+                return result;
+            }
+
             arguments = new object[]
             {
                 fingerprint,
