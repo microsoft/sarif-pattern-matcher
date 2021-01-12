@@ -21,17 +21,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             ILogger log,
             ExecutionContext context)
         {
-            if (!request.Form.ContainsKey(FunctionConstants.FileNamePropertyName) ||
-                !request.Form.ContainsKey(FunctionConstants.FileContentPropertyName) ||
-                string.IsNullOrWhiteSpace(request.Form[FunctionConstants.FileNamePropertyName].ToString()))
+            if (!request.Form.ContainsKey(FunctionConstants.FileContentPropertyName))
             {
                 return new BadRequestResult();
             }
 
             try
             {
-                string fileName = request.Form[FunctionConstants.FileNamePropertyName].ToString();
+                string fileName = "temp.txt";
                 string fileContent = request.Form[FunctionConstants.FileContentPropertyName].ToString();
+                if (request.Form.ContainsKey(FunctionConstants.FileNamePropertyName)
+                    && !string.IsNullOrWhiteSpace(request.Form[FunctionConstants.FileNamePropertyName].ToString()))
+                {
+                    fileName = request.Form[FunctionConstants.FileNamePropertyName].ToString();
+                }
 
                 string definitionsFolder = context.FunctionDirectory;
                 log.LogInformation($"Start to analyze text of {fileName}");
