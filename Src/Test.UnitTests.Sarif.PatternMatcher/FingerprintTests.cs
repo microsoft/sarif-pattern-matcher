@@ -59,7 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var keyNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             Type type = typeof(Fingerprint);
-            foreach(FieldInfo fi in type.GetFields())
+            foreach (FieldInfo fi in type.GetFields())
             {
                 string fieldValue = (string)fi.GetValue(null);
                 if (keyNames.Contains(fieldValue))
@@ -153,7 +153,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string expectedFingerprint = fingerprint.ToString();
                 var roundtrippedFingerprint = new Fingerprint(expectedFingerprint);
                 string actualFingerprint = roundtrippedFingerprint.ToString();
-                
+
                 if (!actualFingerprint.Equals(expectedFingerprint))
                 {
                     roundTrippingUnexpectedConditions.Add(
@@ -178,7 +178,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var failedTestCases = new List<string>();
 
             Type type = typeof(Fingerprint);
-            foreach(PropertyInfo pi in type.GetProperties())
+            foreach (PropertyInfo pi in type.GetProperties())
             {
                 string expected = Guid.NewGuid().ToString();
                 var fingerprint = new Fingerprint();

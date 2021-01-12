@@ -93,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 string matchedPattern = input;
 
-                var groups = new Dictionary<string, string>();                
+                var groups = new Dictionary<string, string>();
                 string failureLevel = "Error";
                 string fingerprintText = null, message = null;
 
