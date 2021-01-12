@@ -8,10 +8,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     public struct Fingerprint
     {
         public const string UriKeyName = "uri";
+        public const string HmacKeyName = "hmac";
         public const string HostKeyName = "host";
         public const string AccountKeyName = "acct";
         public const string PasswordKeyName = "pwd";
         public const string KeyNameKeyName = "keyName";
+        public const string SasTokenKeyName = "sasToken";
         public const string ThumbprintKeyName = "thumbprint";
         public const string SymmetricKey128BitKeyName = "skey/128";
         public const string SymmetricKey256BitKeyName = "skey/256";
@@ -22,9 +24,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public Fingerprint(string fingerprintText)
         {
-            Account = Host = KeyName = Password = Thumbprint = null;
-            SymmetricKey128Bit = SymmetricKey256Bit = Uri = null;
+            Account = Hmac = Host = KeyName = Password = Uri = null;
             PersonalAccessTokenGitHub = PersonalAccessTokenAzureDevOps = null;
+            SasToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -61,13 +63,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string Uri { get; internal set; }
 
+        public string Hmac { get; internal set; }
+
         public string Host { get; internal set; }
 
         public string Account { get; internal set; }
 
         public string KeyName { get; internal set; }
 
+
         public string Password { get; internal set; }
+
+        public string SasToken { get; internal set; }
 
         public string Thumbprint { get; internal set; }
 
@@ -87,10 +94,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             switch (keyName)
             {
                 case UriKeyName: { Uri = value; break; }
+                case HmacKeyName: { Hmac = value; break; }
                 case HostKeyName: { Host = value; break; }
                 case AccountKeyName: { Account = value; break; }
                 case KeyNameKeyName: { KeyName = value; break; }
                 case PasswordKeyName: { Password = value; break; }
+                case SasTokenKeyName: { SasToken = value; break; }
                 case ThumbprintKeyName: { Thumbprint = value; break; }
                 case SymmetricKey128BitKeyName: { SymmetricKey128Bit = value; break; }
                 case SymmetricKey256BitKeyName: { SymmetricKey256Bit = value; break; }
@@ -109,6 +118,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (Account != null)
             {
                 components.Add($"[{AccountKeyName}={this.Account}]");
+            }
+
+            if (Hmac != null)
+            {
+                components.Add($"[{HmacKeyName}={this.Hmac}]");
             }
 
             if (Host != null)
@@ -134,6 +148,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (PersonalAccessTokenGitHub != null)
             {
                 components.Add($"[{PersonalAccessTokenGitHubKeyName}={this.PersonalAccessTokenGitHub}]");
+            }
+
+            if (SasToken != null)
+            {
+                components.Add($"[{SasTokenKeyName}={this.SasToken}]");
             }
 
             if (SymmetricKey128Bit != null)
