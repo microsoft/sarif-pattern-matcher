@@ -1,0 +1,138 @@
+{
+  "Definitions": [
+    {
+      "Name": "ReviewPotentiallySensitiveFiles",
+      "Id": "SEC1003",
+      "Level": "Error",
+      "Description": "Review potentially sensitive files in versioned engineering content and other locations for security risk.",
+      "Message": "'{0:scanTarget}' is {1:fileKind} that may compromise security if visible to attackers.",
+      "MatchExpressions": [
+        {
+          "SubId": "OnePasswordFile",
+          "FileNameAllowRegex": "(?i)\\.(agilekeychain|agilekeychain_zip)$",
+          "MessageArguments": { "fileKind": "a 1Password manager database file" }
+        },
+        {
+          "SubId": "ASCIIArmoredFile",
+          "FileNameAllowRegex": "(?i)\\.asc$",
+          "MessageArguments": { "fileKind": "an ASCII armored file" }
+        },
+        {
+          "SubId": "MicrosoftBitLockerRecoveryKeyFile",
+          "FileNameAllowRegex": "(?i)\\.bek$",
+          "MessageArguments": { "fileKind": "a Microsoft BitLocker recovery key file" }
+        },
+        {
+          "SubId": "CertificateFile",
+          "FileNameAllowRegex": "(?i)\\.cer$",
+          "MessageArguments": { "fileKind": "an encoded binary x.509" }
+        },
+        {
+          "SubId": "AzureServiceConfigurationSchemaFile",
+          "FileNameAllowRegex": "(?i)\\.cscfg$",
+          "MessageArguments": { "fileKind": "an Azure service configuration schema file" }
+        },
+        {
+          "SubId": "DayOneJournalFile",
+          "FileNameAllowRegex": "(?i)\\.dayone$",
+          "MessageArguments": { "fileKind": "a Day One journal file" }
+        },
+        {
+          "SubId": "WindowsBitlockerDataFile",
+          "FileNameAllowRegex": "(?i)\\.fve$",
+          "MessageArguments": { "fileKind": "a Windows BitLocker full volume encrypted data file" }
+        },
+        {
+          "SubId": "GnuCashDatabaseFile",
+          "FileNameAllowRegex": "(?i)\\.gnucash$",
+          "MessageArguments": { "fileKind": "a GnuCash database file" }
+        },
+        {
+          "SubId": "JavaKeystoreFile",
+          "FileNameAllowRegex": "(?i)\\.jks$",
+          "MessageArguments": { "fileKind": "a Java keystore file" }
+        },
+        {
+          "SubId": "KeePassPasswordManagerDatabaseFile",
+          "FileNameAllowRegex": "(?i)\\.kdb$",
+          "MessageArguments": { "fileKind": "a KeePass password manager database file" }
+        },
+        {
+          "SubId": "AppleKeychainDatabaseFile",
+          "FileNameAllowRegex": "(?i)\\.keychain$",
+          "MessageArguments": { "fileKind": "an Apple Keychain database file" }
+        },
+        {
+          "SubId": "KDEWalletManagerDatabaseFile",
+          "FileNameAllowRegex": "(?i)\\.kwallet$",
+          "MessageArguments": { "fileKind": "a KDE Wallet Manager database file" }
+        },
+        {
+          "SubId": "MicrosoftSqlDatabaseFile",
+          "FileNameAllowRegex": "(?i)\\.mdf$",
+          "MessageArguments": { "fileKind": "a Microsoft SQL database file" }
+        },
+        {
+          "SubId": "OpenVPNClientConfigurationFile",
+          "FileNameAllowRegex": "(?i)\\.ovpn$",
+          "MessageArguments": { "fileKind": "an OpenVPN client configuration file" }
+        },
+        {
+          "SubId": "PEMCryptographicPrivateKeyFile",
+          "FileNameAllowRegex": "(?i)\\.pem$",
+          "MessageArguments": { "fileKind": "a PEM cryptographic private key" }
+        },
+        {
+          "SubId": "PKCS7CryptographicKeyFile",
+          "FileNameAllowRegex": "(?i)\\.p7b$",
+          "MessageArguments": { "fileKind": "a PKCS#7 cryptographic key bundle" }
+        },
+        {
+          "SubId": "PFXCryptographicKeyFile",
+          "FileNameAllowRegex": "(?i)\\.pfx$",
+          "MessageArguments": { "fileKind": "a cryptographic key bundle" }
+        },
+        {
+          "SubId": "PKCS12CryptographicKeyFile",
+          "FileNameAllowRegex": "(?i)\\.(p12|pkcs12)$",
+          "MessageArguments": { "fileKind": "a PKCS#12 cryptographic key bundle" }
+        },
+        {
+          "SubId": "NetworkTrafficCaptureFile",
+          "FileNameAllowRegex": "(?i)\\.pcap$",
+          "MessageArguments": { "fileKind": "a Network traffic capture file" }
+        },
+        {
+          "SubId": "PuTTygenPrivateKeyFile",
+          "FileNameAllowRegex": "(?i)\\.ppk$",
+          "MessageArguments": { "fileKind": "a PuTTYgen private key" }
+        },
+        {
+          "SubId": "PasswordSafeDatabaseFile",
+          "FileNameAllowRegex": "(?i)\\.psafe3$",
+          "MessageArguments": { "fileKind": "a 'Password Safe' database file" }
+        },
+        {
+          "SubId": "RemoteDesktopConnectionSettingsFile",
+          "FileNameAllowRegex": "(?i)\\.rdp$",
+          "MessageArguments": { "fileKind": "a Remote Desktop connection settings file" }
+        },
+        {
+          "SubId": "SQLiteDatabaseFile",
+          "FileNameAllowRegex": "(?i)\\.(sqlite|sqlite3)$",
+          "MessageArguments": { "fileKind": "a SQLite database file" }
+        },
+        {
+          "SubId": "MicrosoftSerializedCertificateStoreFile",
+          "FileNameAllowRegex": "(?i)\\.sst$",
+          "MessageArguments": { "fileKind": "a Microsoft Serialized Certificate Store" }
+        },
+        {
+          "SubId": "TunnelblickVPNConfigurationFile",
+          "FileNameAllowRegex": "(?i)\\.tblk$",
+          "MessageArguments": { "fileKind": "a Tunnelblick VPN configuration file" }
+        }
+      ]
+    }
+  ]
+}

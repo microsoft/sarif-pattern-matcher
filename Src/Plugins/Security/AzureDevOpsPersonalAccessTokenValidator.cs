@@ -11,12 +11,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         /// <summary>
         /// Magic number to validate PAT checksum.
         /// </summary>
-        private const uint ChecksumPAT = 0xE0B9692D;
+        private const uint ChecksumPat = 0xE0B9692D;
 
         /// <summary>
         /// Magic number to validate ADO application secret checksum.
         /// </summary>
-        private const uint ChecksumADOAppSecret = 0x1019F92E;
+        private const uint ChecksumAdoAppSecret = 0x1019F92E;
 
         private static readonly uint[] Crc32Table = new uint[256]
         {
@@ -74,47 +74,32 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 0x2d02ef8du,
         };
 
-        /// <summary>
-        /// Validate if the match is an AzureDevOps personal access token.
-        /// </summary>
-        /// <param name="matchedPattern">
-        /// The matched text to be validated. This pattern can be further refined
-        /// to a substring of the original parameter value, with the result that
-        /// the refined matched pattern will be used as the code region associated
-        /// with the match.
-        /// </param>
-        /// <param name="groups">
-        /// Capture groups from the regex match. Dictionary entries can be modified or new entries
-        /// added in order to refine or add argument values that will be used in result messages.
-        /// </param>
-        /// <param name="performDynamicValidation">
-        /// Execute dynamic validation of matched pattern, if available.
-        /// </param>
-        /// <param name="failureLevel">
-        /// The current failure level associated with the match (if a match occurs). This parameter can be
-        /// set to a different failure level by the callee, if appropriate.
-        /// </param>
-        /// <returns>Return the validation state.</returns>
 #pragma warning disable IDE0060 // Remove unused parameter
-        public static string IsValid(
-            ref string matchedPattern,
-            ref Dictionary<string, string> groups,
-            ref bool performDynamicValidation,
-            ref string failureLevel)
+        public static string IsValidStatic(ref string matchedPattern,
+                                           ref Dictionary<string, string> groups,
+                                           ref string failureLevel,
+                                           ref string fingerprintText,
+                                           ref string message)
         {
 #pragma warning restore IDE0060
 
-            // This plugin does not perform any dynamic validation.
-            // We therefore set this setting to false. This is a
-            // clue to the caller not to warn the user that, e.g.,
-            // dynamic analysis was available but not exercised.
-            performDynamicValidation = false;
+            string pat = matchedPattern;
 
-            return
-                IsChecksumValid(matchedPattern, ChecksumPAT) ||
-                IsChecksumValid(matchedPattern, ChecksumADOAppSecret) ?
+            string state =
+                IsChecksumValid(pat, ChecksumPat) ||
+                IsChecksumValid(pat, ChecksumAdoAppSecret) ?
                     nameof(ValidationState.Unknown) :
                     nameof(ValidationState.NoMatch);
+
+            if (state != nameof(ValidationState.NoMatch))
+            {
+                fingerprintText = new Fingerprint()
+                {
+                    PersonalAccessTokenAzureDevOps = pat,
+                }.ToString();
+            }
+
+            return state;
         }
 
         /// <summary>

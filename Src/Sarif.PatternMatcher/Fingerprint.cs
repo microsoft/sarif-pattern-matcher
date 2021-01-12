@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Runtime.CompilerServices;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
@@ -15,6 +16,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public const string KeyNameKeyName = "keyName";
         public const string SymmetricKey128BitKeyName = "skey/128";
         public const string SymmetricKey256BitKeyName = "skey/256";
+        public const string PersonalAccessTokenGitHubKeyName = "pat/gh";
+        public const string PersonalAccessTokenAzureDevOpsKeyName = "pat/ado";
 
         private const char RightBracketReplacement = '\t';
 
@@ -22,6 +25,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             Account = Host = KeyName = Password = null;
             SymmetricKey128Bit = SymmetricKey256Bit = Uri = null;
+            PersonalAccessTokenGitHub = PersonalAccessTokenAzureDevOps = null;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -70,6 +74,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string SymmetricKey256Bit { get; internal set; }
 
+        public string PersonalAccessTokenGitHub { get; internal set; }
+
+        public string PersonalAccessTokenAzureDevOps { get; internal set; }
+
         public string GetFingerprintText() => this.ToString();
 
 #pragma warning disable SA1107 // Code should not contain multiple statements on one line
@@ -84,6 +92,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 case PasswordKeyName: { Password = value; break; }
                 case SymmetricKey128BitKeyName: { SymmetricKey128Bit = value; break; }
                 case SymmetricKey256BitKeyName: { SymmetricKey256Bit = value; break; }
+                case PersonalAccessTokenGitHubKeyName: { PersonalAccessTokenGitHub = value; break; }
+                case PersonalAccessTokenAzureDevOpsKeyName: { PersonalAccessTokenAzureDevOps = value; break; }
                 default: throw new ArgumentException(nameof(keyName));
             }
         }
@@ -91,17 +101,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override string ToString()
         {
-            if (string.IsNullOrEmpty(Uri) &&
-                string.IsNullOrEmpty(Host) &&
-                string.IsNullOrEmpty(Account) &&
-                string.IsNullOrEmpty(KeyName) &&
-                string.IsNullOrEmpty(Password) &&
-                string.IsNullOrEmpty(SymmetricKey128Bit) &&
-                string.IsNullOrEmpty(SymmetricKey256Bit))
-            {
-                return string.Empty;
-            }
-
             var components = new List<string>(3);
 
             // These need to remain in alphabetical order.
@@ -125,6 +124,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 components.Add($"[{PasswordKeyName}={this.Password}]");
             }
 
+            if (PersonalAccessTokenAzureDevOps != null)
+            {
+                components.Add($"[{PersonalAccessTokenAzureDevOpsKeyName}={this.PersonalAccessTokenAzureDevOps}]");
+            }
+
+            if (PersonalAccessTokenGitHub != null)
+            {
+                components.Add($"[{PersonalAccessTokenGitHubKeyName}={this.PersonalAccessTokenGitHub}]");
+            }
+
             if (SymmetricKey128Bit != null)
             {
                 components.Add($"[{SymmetricKey128BitKeyName}={this.SymmetricKey128Bit}]");
@@ -140,7 +149,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 components.Add($"[{UriKeyName}={this.Uri}]");
             }
 
-            return string.Join(string.Empty, components);
+            return components.Count > 0 ?
+                string.Join(string.Empty, components) :
+                string.Empty;
         }
 
         internal void Parse(string fingerprintText)

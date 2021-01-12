@@ -116,33 +116,57 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         internal static void PushInheritedData(SearchDefinition definition, Dictionary<string, string> sharedStrings)
         {
-            definition.FileNameDenyRegex = PushData(definition.FileNameDenyRegex, sharedStrings);
-            definition.FileNameAllowRegex = PushData(definition.FileNameAllowRegex, sharedStrings);
+            definition.FileNameDenyRegex = PushData(definition.FileNameDenyRegex,
+                                                    definition.SharedStrings,
+                                                    sharedStrings);
+
+            definition.FileNameAllowRegex = PushData(definition.FileNameAllowRegex,
+                                                     definition.SharedStrings,
+                                                     sharedStrings);
 
             foreach (MatchExpression matchExpression in definition.MatchExpressions)
             {
-                matchExpression.FileNameDenyRegex = PushData(matchExpression.FileNameDenyRegex, sharedStrings);
+                matchExpression.FileNameDenyRegex = PushData(matchExpression.FileNameDenyRegex,
+                                                             definition.SharedStrings,
+                                                             sharedStrings);
+
                 matchExpression.FileNameDenyRegex ??= definition.FileNameDenyRegex;
 
-                matchExpression.FileNameAllowRegex = PushData(matchExpression.FileNameAllowRegex, sharedStrings);
+                matchExpression.FileNameAllowRegex = PushData(matchExpression.FileNameAllowRegex,
+                                                             definition.SharedStrings,
+                                                             sharedStrings);
+
                 matchExpression.FileNameAllowRegex ??= definition.FileNameAllowRegex;
 
-                matchExpression.ContentsRegex = PushData(matchExpression.ContentsRegex, sharedStrings);
+                matchExpression.ContentsRegex = PushData(matchExpression.ContentsRegex,
+                                                         definition.SharedStrings,
+                                                         sharedStrings);
 
-                if (matchExpression.Level == 0) { matchExpression.Level = definition.Level; }
+                if (matchExpression.Level == 0)
+                {
+                    matchExpression.Level = definition.Level;
+                }
             }
         }
 
-        private static string PushData(string text, Dictionary<string, string> sharedStrings)
+        private static string PushData(string text, params Dictionary<string, string>[] sharedStringsDictionaries)
         {
-            if (sharedStrings == null || text?.Contains("$") != true)
+            if (text?.Contains("$") != true)
             {
                 return text;
             }
 
-            foreach (string key in sharedStrings.Keys)
+            foreach (Dictionary<string, string> sharedStrings in sharedStringsDictionaries)
             {
-                text = text.Replace(key, sharedStrings[key]);
+                if (sharedStrings == null)
+                {
+                    continue;
+                }
+
+                foreach (string key in sharedStrings.Keys)
+                {
+                    text = text.Replace(key, sharedStrings[key]);
+                }
             }
 
             return text;
