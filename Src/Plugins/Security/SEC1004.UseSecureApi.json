@@ -14,13 +14,6 @@
           "ContentsRegex": "\\b(?<insecureApi>[_]?alloca)\\s*\\(",
           "MessageArguments": {
             "secureApi": "_malloca"
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -38,13 +31,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_getts)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -52,13 +38,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_gettws)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -66,13 +45,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_getws)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -80,13 +52,6 @@
           "ContentsRegex": "\\b(?<insecureApi>gets)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -104,13 +69,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_i64toa)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -118,13 +76,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_i64tow)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -132,13 +83,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_itoa)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -146,13 +90,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_itow)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -160,13 +97,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_ui64toa)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -174,13 +104,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_ui64tow)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -188,13 +111,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_ultoa)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -202,13 +118,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_ultow)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -216,13 +125,6 @@
           "ContentsRegex": "\\b(?<insecureApi>atof)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -230,13 +132,6 @@
           "ContentsRegex": "\\b(?<insecureApi>atoi)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -244,13 +139,6 @@
           "ContentsRegex": "\\b(?<insecureApi>atoll)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -258,13 +146,6 @@
           "ContentsRegex": "\\b(?<insecureApi>mbsrtowcs)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -272,13 +153,6 @@
           "ContentsRegex": "\\b(?<insecureApi>mbstowcs)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -286,13 +160,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wcrtomb)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -300,13 +167,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wcrtombs)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -314,13 +174,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wcsrtombs)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -328,13 +181,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wctomb)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -352,13 +198,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_makepath)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -366,13 +205,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_splitpath)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -380,13 +212,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_wmakepath)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -394,13 +219,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_wsplitpath)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -408,13 +226,6 @@
           "ContentsRegex": "\\b(?<insecureApi>getwd)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -422,13 +233,6 @@
           "ContentsRegex": "\\b(?<insecureApi>makepath)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -446,13 +250,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_mbccpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -460,13 +257,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_mbscpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -474,13 +264,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_mbsnbcpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -488,13 +271,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_mbsncpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -502,13 +278,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_tcscpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -516,13 +285,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_tcsncpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -530,13 +292,6 @@
           "ContentsRegex": "\\b(?<insecureApi>lstrcpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -544,13 +299,6 @@
           "ContentsRegex": "\\b(?<insecureApi>lstrcpyA)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -558,13 +306,6 @@
           "ContentsRegex": "\\b(?<insecureApi>lstrcpynA)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -572,13 +313,6 @@
           "ContentsRegex": "\\b(?<insecureApi>lstrcpynW)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -586,13 +320,6 @@
           "ContentsRegex": "\\b(?<insecureApi>lstrcpyW)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -600,13 +327,6 @@
           "ContentsRegex": "\\b(?<insecureApi>strcpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -614,13 +334,6 @@
           "ContentsRegex": "\\b(?<insecureApi>StrCpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -628,13 +341,6 @@
           "ContentsRegex": "\\b(?<insecureApi>strncpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -642,13 +348,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wcscpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -656,13 +355,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wcsncpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -680,13 +372,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_mbscat)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -694,13 +379,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_mbsnbcat)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -708,13 +386,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_mbsncat)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -722,13 +393,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_tcscat)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -736,13 +400,6 @@
           "ContentsRegex": "\\b(?<insecureApi>lstrcat)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -750,13 +407,6 @@
           "ContentsRegex": "\\b(?<insecureApi>lstrcatA)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -764,13 +414,6 @@
           "ContentsRegex": "\\b(?<insecureApi>lstrcatW)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -778,13 +421,6 @@
           "ContentsRegex": "\\b(?<insecureApi>lstrncat)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -792,13 +428,6 @@
           "ContentsRegex": "\\b(?<insecureApi>strcat)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -806,13 +435,6 @@
           "ContentsRegex": "\\b(?<insecureApi>StrCat)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -820,13 +442,6 @@
           "ContentsRegex": "\\b(?<insecureApi>StrCatBuff)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -834,13 +449,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wcscat)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -848,13 +456,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wcsncat)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -872,13 +473,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_mbslen)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -886,13 +480,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_mbstrlen)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -900,13 +487,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_tcslen)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -914,13 +494,6 @@
           "ContentsRegex": "\\b(?<insecureApi>strlen)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -928,13 +501,6 @@
           "ContentsRegex": "\\b(?<insecureApi>strncat)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -942,13 +508,6 @@
           "ContentsRegex": "\\b(?<insecureApi>StrNCat)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -956,13 +515,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wcslen)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -980,13 +532,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_mbstok)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -994,13 +539,6 @@
           "ContentsRegex": "\\b(?<insecureApi>fscanf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1008,13 +546,6 @@
           "ContentsRegex": "\\b(?<insecureApi>fwscanf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1022,13 +553,6 @@
           "ContentsRegex": "\\b(?<insecureApi>scanf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1036,13 +560,6 @@
           "ContentsRegex": "\\b(?<insecureApi>sscanf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1050,13 +567,6 @@
           "ContentsRegex": "\\b(?<insecureApi>strtok)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1064,13 +574,6 @@
           "ContentsRegex": "\\b(?<insecureApi>swscanf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1078,13 +581,6 @@
           "ContentsRegex": "\\b(?<insecureApi>vfscanf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1092,13 +588,6 @@
           "ContentsRegex": "\\b(?<insecureApi>vfwscanf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1106,13 +595,6 @@
           "ContentsRegex": "\\b(?<insecureApi>vscanf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1120,13 +602,6 @@
           "ContentsRegex": "\\b(?<insecureApi>vsscanf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1134,13 +609,6 @@
           "ContentsRegex": "\\b(?<insecureApi>vswscanf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1148,13 +616,6 @@
           "ContentsRegex": "\\b(?<insecureApi>vwscanf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1162,13 +623,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wcstok)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1176,13 +630,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wscanf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -1200,13 +647,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_snprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1214,13 +654,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_sntprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1228,13 +661,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_snwprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1242,13 +668,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_stprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1256,13 +675,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_vsnprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1270,13 +682,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_vsntprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1284,13 +689,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_vsnwprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1298,13 +696,6 @@
           "ContentsRegex": "\\b(?<insecureApi>_vstprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1312,13 +703,6 @@
           "ContentsRegex": "\\b(?<insecureApi>fprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1326,13 +710,6 @@
           "ContentsRegex": "\\b(?<insecureApi>fwprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1340,13 +717,6 @@
           "ContentsRegex": "\\b(?<insecureApi>printf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1354,13 +724,6 @@
           "ContentsRegex": "\\b(?<insecureApi>snprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1368,13 +731,6 @@
           "ContentsRegex": "\\b(?<insecureApi>sprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1382,13 +738,6 @@
           "ContentsRegex": "\\b(?<insecureApi>swprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1396,13 +745,6 @@
           "ContentsRegex": "\\b(?<insecureApi>vfprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1410,13 +752,6 @@
           "ContentsRegex": "\\b(?<insecureApi>vprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1424,13 +759,6 @@
           "ContentsRegex": "\\b(?<insecureApi>vsnprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1438,13 +766,6 @@
           "ContentsRegex": "\\b(?<insecureApi>vsprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1452,13 +773,6 @@
           "ContentsRegex": "\\b(?<insecureApi>vswprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1466,13 +780,6 @@
           "ContentsRegex": "\\b(?<insecureApi>vwprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1480,13 +787,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wnsprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1494,13 +794,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1508,13 +801,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wsprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1522,13 +808,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wvnsprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1536,13 +815,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wvsprintf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -1560,13 +832,6 @@
           "ContentsRegex": "\\b(?<insecureApi>asctime)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1574,13 +839,6 @@
           "ContentsRegex": "\\b(?<insecureApi>ctime)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1588,13 +846,6 @@
           "ContentsRegex": "\\b(?<insecureApi>gmtime)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1602,13 +853,6 @@
           "ContentsRegex": "\\b(?<insecureApi>localtime)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -1626,13 +870,6 @@
           "ContentsRegex": "\\b(?<insecureApi>bsearch)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -1650,13 +887,6 @@
           "ContentsRegex": "\\b(?<insecureApi>ChangeWindowMessageFilter)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -1674,13 +904,6 @@
           "ContentsRegex": "\\b(?<insecureApi>fopen)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1688,13 +911,6 @@
           "ContentsRegex": "\\b(?<insecureApi>freopen)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1702,13 +918,6 @@
           "ContentsRegex": "\\b(?<insecureApi>mktemp)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1716,13 +925,6 @@
           "ContentsRegex": "\\b(?<insecureApi>tmpnam)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -1740,13 +942,6 @@
           "ContentsRegex": "\\b(?<insecureApi>getenv)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -1764,13 +959,6 @@
           "ContentsRegex": "\\b(?<insecureApi>memcpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1778,13 +966,6 @@
           "ContentsRegex": "\\b(?<insecureApi>memmove)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1792,13 +973,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wmemcpy)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         },
         {
@@ -1806,13 +980,6 @@
           "ContentsRegex": "\\b(?<insecureApi>wmemmove)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -1830,13 +997,6 @@
           "ContentsRegex": "\\b(?<insecureApi>qsort)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -1854,13 +1014,6 @@
           "ContentsRegex": "\\b(?<insecureApi>rewind)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -1878,13 +1031,6 @@
           "ContentsRegex": "\\b(?<insecureApi>setbuf)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
@@ -1902,13 +1048,6 @@
           "ContentsRegex": "\\b(?<insecureApi>strerror)\\s*\\(",
           "MessageArguments": {
             "secureApi": ""
-          },
-          "Fixes": {
-            "directReplacement": {
-              "Description": "Replace '{insecureApi} with '{secureApi}'.",
-              "Find": "{insecureApi}",
-              "ReplaceWith": "{secureApi}"
-            }
           }
         }
       ]
