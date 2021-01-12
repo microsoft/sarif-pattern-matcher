@@ -4,20 +4,16 @@
 
 int main()
 {
-    char* string;
+    void* pData = NULL;
 
     // Allocate space for a path name
-    string = _alloca(_MAX_PATH);
+    pData = _alloca(_MAX_PATH);
 
     // In a C++ file, explicitly cast malloc's return.  For example,
     // string = (char *)malloc( _MAX_PATH );
 
-    if (string == NULL)
-        printf("Insufficient memory available\n");
-    else
+    if (pData != NULL)
     {
-        printf("Memory space allocated for path name\n");
-        free(string);
-        printf("Memory freed\n");
+        free(pData);
     }
 }

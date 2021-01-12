@@ -58,42 +58,16 @@
                 },
                 "region": {
                   "startLine": 10,
-                  "startColumn": 14,
+                  "startColumn": 13,
                   "endLine": 10,
-                  "endColumn": 22,
-                  "charOffset": 182,
+                  "endColumn": 21,
+                  "charOffset": 187,
                   "charLength": 8,
                   "snippet": {
                     "text": "_alloca("
                   }
                 }
               }
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Replace '_alloca with '_malloca'."
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC1004.Memory.Allocation_alloca.c",
-                    "uriBaseId": "SRC_ROOT"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "charOffset": 182,
-                        "charLength": 8
-                      },
-                      "insertedContent": {
-                        "text": "_malloca("
-                      }
-                    }
-                  ]
-                }
-              ]
             }
           ]
         }
