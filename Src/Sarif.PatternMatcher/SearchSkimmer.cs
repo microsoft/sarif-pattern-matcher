@@ -114,17 +114,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override AnalysisApplicability CanAnalyze(AnalyzeContext context, out string reasonIfNotApplicable)
         {
-            string path = context.TargetUri.IsAbsoluteUri ? context.TargetUri.LocalPath : context.TargetUri.OriginalString;
+            string filePath = context.TargetUri.IsAbsoluteUri ? context.TargetUri.LocalPath : context.TargetUri.OriginalString;
             reasonIfNotApplicable = null;
 
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
-                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(path, matchExpression.FileNameDenyRegex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(filePath, matchExpression.FileNameDenyRegex))
                 {
                     continue;
                 }
 
-                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex) && !_engine.IsMatch(path, matchExpression.FileNameAllowRegex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex) && !_engine.IsMatch(filePath, matchExpression.FileNameAllowRegex))
                 {
                     continue;
                 }
@@ -144,12 +144,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 context.FileContents = _fileSystem.FileReadAllText(context.TargetUri.LocalPath);
             }
 
-            string path = context.TargetUri.IsAbsoluteUri ? context.TargetUri.LocalPath : context.TargetUri.OriginalString;
+            string filePath = context.TargetUri.IsAbsoluteUri ? context.TargetUri.LocalPath : context.TargetUri.OriginalString;
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
                 {
-                    if (!_engine.IsMatch(path,
+                    if (!_engine.IsMatch(filePath,
                                          matchExpression.FileNameAllowRegex,
                                          RegexDefaults.DefaultOptionsCaseInsensitive))
                     {
@@ -159,7 +159,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex))
                 {
-                    if (_engine.IsMatch(path,
+                    if (_engine.IsMatch(filePath,
                                         matchExpression.FileNameDenyRegex,
                                         RegexDefaults.DefaultOptionsCaseInsensitive))
                     {
@@ -222,6 +222,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             MatchExpression matchExpression,
             FailureLevel level)
         {
+            string filePath = context.TargetUri.IsAbsoluteUri ? context.TargetUri.LocalPath : context.TargetUri.OriginalString;
             string searchText = binary64DecodedMatch != null
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;
@@ -442,7 +443,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 IList<string> arguments = GetMessageArguments(
                     match,
                     _argumentNameToIndex,
-                    context.TargetUri.LocalPath,
+                    filePath,
                     validatorMessage: NormalizeValidatorMessage(validatorMessage),
                     messageArguments);
 
