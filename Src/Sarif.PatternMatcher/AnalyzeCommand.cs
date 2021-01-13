@@ -75,6 +75,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 foreach (SearchDefinition definition in definitions.Definitions)
                 {
+                    Skimmer<AnalyzeContext> skimmer = skimmers.FirstOrDefault(skimmer => skimmer.Id == definition.Id);
+
+                    if (skimmer != null)
+                    {
+                        skimmers.Remove(skimmer);
+                    }
+
                     skimmers.Add(
                         new SearchSkimmer(
                             engine: engine,
