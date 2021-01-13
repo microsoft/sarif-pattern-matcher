@@ -287,6 +287,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 try
                 {
+                    // If we use Assembly.LoadFrom, a FileLoadException
+                    // saying that it could not load the file.
                     resolved = Assembly.Load(_fileSystem.FileReadAllBytes(presumedAssemblyPath));
                 }
                 catch (IOException) { }
