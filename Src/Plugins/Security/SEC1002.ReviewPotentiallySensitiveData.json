@@ -1,4 +1,5 @@
 {
+  "ValidatorsAssemblyName": "Security.dll",
   "Definitions": [
     {
       "Name": "ReviewPotentiallySensitiveData",
@@ -10,9 +11,9 @@
       "MatchExpressions": [
         {
           "SubId": "EmailAddress",
-          "ContentsRegex": "(?i)0-9a-z._%+-]+@[0-9a-z.-]+\\.[a-z]{2,4}",
+          "ContentsRegex": "\\b(?i)[0-9a-z._%+-]*[0-9a-z]+@[0-9a-z]+[0-9a-z.-]*\\.[0-9a-z]{2,}",
           "MessageArguments": { "dataKind": "email address" },
-          "Notes": [ "We should look for a more complex/precise regex for this data kind." ]
+          "Notes": [ "This will not catch every possible email address.  According to https://www.regular-expressions.info/email.html it is not reasonable to expect to do so.  The formal RFC definition of an email address includes things which some systems can't support, such as double quotes, spaces, and other special characters.  What we have here should capture about 99% of email addresses in use today." ]
         },
         {
           "SubId": "SocialSecurityNumber",
