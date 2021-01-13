@@ -162,29 +162,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private static string PushData(string text, params Dictionary<string, string>[] sharedStringsDictionaries)
-        {
-            if (text?.Contains("$") != true)
-            {
-                return text;
-            }
-
-            foreach (Dictionary<string, string> sharedStrings in sharedStringsDictionaries)
-            {
-                if (sharedStrings == null)
-                {
-                    continue;
-                }
-
-                foreach (string key in sharedStrings.Keys)
-                {
-                    text = text.Replace(key, sharedStrings[key]);
-                }
-            }
-
-            return text;
-        }
-
         internal static Dictionary<string, string> LoadSharedStrings(string sharedStringsFullPath, IFileSystem fileSystem)
         {
             var result = new Dictionary<string, string>();
@@ -229,6 +206,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
         {
             return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
+        }
+
+        private static string PushData(string text, params Dictionary<string, string>[] sharedStringsDictionaries)
+        {
+            if (text?.Contains("$") != true)
+            {
+                return text;
+            }
+
+            foreach (Dictionary<string, string> sharedStrings in sharedStringsDictionaries)
+            {
+                if (sharedStrings == null)
+                {
+                    continue;
+                }
+
+                foreach (string key in sharedStrings.Keys)
+                {
+                    text = text.Replace(key, sharedStrings[key]);
+                }
+            }
+
+            return text;
         }
 
         private static void ThrowInvalidSharedStringsEntry(string line)

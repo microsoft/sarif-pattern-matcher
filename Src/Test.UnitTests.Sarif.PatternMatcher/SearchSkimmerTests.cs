@@ -239,7 +239,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ((TestLogger)context.Logger).Results.Should().BeNull();
         }
 
-
         [Fact]
         public void SearchSkimmer_ValidatorResultsAreProperlyPrioritized()
         {
@@ -276,7 +275,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             //((TestLogger)context.Logger).Results.Should().BeNull();
         }
-
 
         private AnalyzeContext CreateGuidMatchingSkimmer(
             string scanTargetExtension,

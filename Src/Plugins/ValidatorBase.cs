@@ -158,7 +158,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         /// set to null if no fingerprint can be computed that definitively identifies the secret.
         /// </param>
         /// <param name="message">
-        /// A message that can be be used to pass additional information back to the user.
+        /// A message that can be used to pass additional information back to the user.
         /// </param>
         /// <returns>Return the validation state.</returns>
         protected abstract string IsValidStaticHelper(ref string matchedPattern,

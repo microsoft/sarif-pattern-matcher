@@ -9,7 +9,7 @@ namespace Sarif.PatternMatcher.Benchmark
 {
     internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             BenchmarkRunner.Run<AnalyzeCommandBenchmarks>();
         }

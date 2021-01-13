@@ -114,17 +114,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override AnalysisApplicability CanAnalyze(AnalyzeContext context, out string reasonIfNotApplicable)
         {
-            string path = context.TargetUri.LocalPath;
+            string filePath = context.TargetUri.GetFilePath();
             reasonIfNotApplicable = null;
 
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
-                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(path, matchExpression.FileNameDenyRegex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(filePath, matchExpression.FileNameDenyRegex))
                 {
                     continue;
                 }
 
-                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex) && !_engine.IsMatch(path, matchExpression.FileNameAllowRegex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex) && !_engine.IsMatch(filePath, matchExpression.FileNameAllowRegex))
                 {
                     continue;
                 }
@@ -144,11 +144,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 context.FileContents = _fileSystem.FileReadAllText(context.TargetUri.LocalPath);
             }
 
+            string filePath = context.TargetUri.GetFilePath();
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
                 {
-                    if (!_engine.IsMatch(context.TargetUri.LocalPath,
+                    if (!_engine.IsMatch(filePath,
                                          matchExpression.FileNameAllowRegex,
                                          RegexDefaults.DefaultOptionsCaseInsensitive))
                     {
@@ -158,7 +159,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex))
                 {
-                    if (_engine.IsMatch(context.TargetUri.LocalPath,
+                    if (_engine.IsMatch(filePath,
                                         matchExpression.FileNameDenyRegex,
                                         RegexDefaults.DefaultOptionsCaseInsensitive))
                     {
@@ -221,6 +222,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             MatchExpression matchExpression,
             FailureLevel level)
         {
+            string filePath = context.TargetUri.GetFilePath();
             string searchText = binary64DecodedMatch != null
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;
@@ -441,7 +443,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 IList<string> arguments = GetMessageArguments(
                     match,
                     _argumentNameToIndex,
-                    context.TargetUri.LocalPath,
+                    filePath,
                     validatorMessage: NormalizeValidatorMessage(validatorMessage),
                     messageArguments);
 
@@ -469,7 +471,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             bool dynamic = context.DynamicValidation;
             string levelText = level.ToString();
-            string fingerprint = null, message = null;
+            string fingerprint = null;
             IDictionary<string, string> groups = new Dictionary<string, string>();
 
             string filePath = context.TargetUri.LocalPath;
@@ -570,7 +572,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         break;
                     }
 
-
                     case Validation.HostUnknown:
                     case Validation.Unauthorized:
                     case Validation.InvalidForConsultedAuthorities:
@@ -645,7 +646,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 validatorMessage: NormalizeValidatorMessage(validatorMessage),
                 messageArguments);
 
-
             Result result = this.ConstructResult(
                     context.TargetUri,
                     reportingDescriptor.Id,
@@ -658,7 +658,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             context.Logger.Log(reportingDescriptor, result);
         }
-
 
         private string GetValidationPrefix(Validation state)
         {

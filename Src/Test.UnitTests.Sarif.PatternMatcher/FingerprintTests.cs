@@ -73,7 +73,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             duplicatedFieldNames.Should().BeEmpty();
         }
 
-
         [Fact]
         public void Fingerprint_AllPropertiesPersistedInToString()
         {
@@ -201,9 +200,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
             }
 
-
             failedTestCases.Should().BeEmpty();
-
         }
 
         [Fact]
@@ -268,7 +265,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             failedTestCases.Should().BeEmpty();
         }
-
 
         [Fact]
         public void Fingerprint_MalformedValuesRaiseExceptions()
