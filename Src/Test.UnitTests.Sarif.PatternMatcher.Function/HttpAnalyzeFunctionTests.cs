@@ -25,7 +25,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         [Fact]
         public async Task Function_HttpAnalyze_NormalFileContent_Should_Return_SarifLog()
         {
-
             IActionResult result = await HttpAnalyzeFunction.Analyze(
                 request: TestHelper.MockAnalyzeFunctionRequest("abc.cs", TestHelper.SampleCode),
                 log: logger,
@@ -66,7 +65,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             // 4 results: 2 warning 2 not applicable
             results.Should().NotBeEmpty();
             results.Count(r => r.Level == FailureLevel.Warning).Should().Be(2);
-            results.FirstOrDefault(r => r.Level == FailureLevel.Warning).RuleId.Should().StartWith("SEC1001");
+            results.FirstOrDefault(r => r.Level == FailureLevel.Warning)?.RuleId.Should().StartWith("SEC1001");
         }
 
         [Fact]

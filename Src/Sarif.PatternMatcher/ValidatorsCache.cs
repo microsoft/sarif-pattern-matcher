@@ -11,6 +11,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     public class ValidatorsCache
     {
         private static readonly object sync = new object();
+        private static string assemblyBaseFolder;
         private readonly IFileSystem _fileSystem;
         private Dictionary<string, ValidationMethodPair> _ruleIdToValidationMethods;
 
@@ -175,6 +176,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private Dictionary<string, ValidationMethodPair> LoadValidationAssemblies(IEnumerable<string> validatorPaths)
         {
             var ruleToMethodMap = new Dictionary<string, ValidationMethodPair>();
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
             foreach (string validatorPath in validatorPaths)
             {
@@ -184,6 +186,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     try
                     {
+                        assemblyBaseFolder = Path.GetDirectoryName(validatorPath);
                         assembly = _fileSystem.AssemblyLoadFrom(validatorPath);
                     }
                     catch (ReflectionTypeLoadException)
@@ -243,6 +246,41 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return ruleToMethodMap;
+        }
+
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            // Retrieve the list of referenced assemblies in an array of AssemblyName.
+            string strTempAssmbPath = string.Empty;
+            Assembly objExecutingAssemblies = args.RequestingAssembly;
+            if (objExecutingAssemblies == null)
+            {
+                return null;
+            }
+
+            // Loop through the array of referenced assembly names.
+            foreach (AssemblyName strAssmbName in objExecutingAssemblies.GetReferencedAssemblies())
+            {
+                // Check for the assembly names that have raised the "AssemblyResolve" event.
+                if (strAssmbName.FullName.Substring(0, strAssmbName.FullName.IndexOf(",")) == args.Name.Substring(0, args.Name.IndexOf(",")))
+                {
+                    // Build the path of the assembly from where it has to be loaded.
+                    if (assemblyBaseFolder.EndsWith("analyze\\..\\bin"))
+                    {
+                        assemblyBaseFolder = assemblyBaseFolder.Replace("analyze\\..\\bin", string.Empty);
+                    }
+
+                    strTempAssmbPath = assemblyBaseFolder + "\\" + args.Name.Substring(0, args.Name.IndexOf(",")) + ".dll";
+                    break;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(strTempAssmbPath) || !_fileSystem.FileExists(strTempAssmbPath))
+            {
+                return null;
+            }
+
+            return Assembly.Load(_fileSystem.FileReadAllBytes(strTempAssmbPath));
         }
     }
 }

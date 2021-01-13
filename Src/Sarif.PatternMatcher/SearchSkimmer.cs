@@ -114,7 +114,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override AnalysisApplicability CanAnalyze(AnalyzeContext context, out string reasonIfNotApplicable)
         {
-            string path = context.TargetUri.LocalPath;
+            string path = context.TargetUri.IsAbsoluteUri ? context.TargetUri.LocalPath : context.TargetUri.OriginalString;
             reasonIfNotApplicable = null;
 
             foreach (MatchExpression matchExpression in _matchExpressions)
@@ -144,11 +144,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 context.FileContents = _fileSystem.FileReadAllText(context.TargetUri.LocalPath);
             }
 
+            string path = context.TargetUri.IsAbsoluteUri ? context.TargetUri.LocalPath : context.TargetUri.OriginalString;
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
                 {
-                    if (!_engine.IsMatch(context.TargetUri.LocalPath,
+                    if (!_engine.IsMatch(path,
                                          matchExpression.FileNameAllowRegex,
                                          RegexDefaults.DefaultOptionsCaseInsensitive))
                     {
@@ -158,7 +159,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex))
                 {
-                    if (_engine.IsMatch(context.TargetUri.LocalPath,
+                    if (_engine.IsMatch(path,
                                         matchExpression.FileNameDenyRegex,
                                         RegexDefaults.DefaultOptionsCaseInsensitive))
                     {
@@ -469,7 +470,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             bool dynamic = context.DynamicValidation;
             string levelText = level.ToString();
-            string fingerprint = null, message = null;
+            string fingerprint = null;
             IDictionary<string, string> groups = new Dictionary<string, string>();
 
             string filePath = context.TargetUri.LocalPath;
@@ -570,7 +571,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         break;
                     }
 
-
                     case Validation.HostUnknown:
                     case Validation.Unauthorized:
                     case Validation.InvalidForConsultedAuthorities:
@@ -645,7 +645,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 validatorMessage: NormalizeValidatorMessage(validatorMessage),
                 messageArguments);
 
-
             Result result = this.ConstructResult(
                     context.TargetUri,
                     reportingDescriptor.Id,
@@ -658,7 +657,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             context.Logger.Log(reportingDescriptor, result);
         }
-
 
         private string GetValidationPrefix(Validation state)
         {

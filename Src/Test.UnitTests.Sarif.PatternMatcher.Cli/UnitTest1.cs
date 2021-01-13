@@ -10,7 +10,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         [Fact]
         public void Test1()
         {
-
         }
     }
 }
