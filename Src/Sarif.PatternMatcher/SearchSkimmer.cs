@@ -114,7 +114,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override AnalysisApplicability CanAnalyze(AnalyzeContext context, out string reasonIfNotApplicable)
         {
-            string filePath = context.TargetUri.IsAbsoluteUri ? context.TargetUri.LocalPath : context.TargetUri.OriginalString;
+            string filePath = context.TargetUri.GetFilePath();
             reasonIfNotApplicable = null;
 
             foreach (MatchExpression matchExpression in _matchExpressions)
@@ -144,7 +144,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 context.FileContents = _fileSystem.FileReadAllText(context.TargetUri.LocalPath);
             }
 
-            string filePath = context.TargetUri.IsAbsoluteUri ? context.TargetUri.LocalPath : context.TargetUri.OriginalString;
+            string filePath = context.TargetUri.GetFilePath();
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
@@ -222,7 +222,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             MatchExpression matchExpression,
             FailureLevel level)
         {
-            string filePath = context.TargetUri.IsAbsoluteUri ? context.TargetUri.LocalPath : context.TargetUri.OriginalString;
+            string filePath = context.TargetUri.GetFilePath();
             string searchText = binary64DecodedMatch != null
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;

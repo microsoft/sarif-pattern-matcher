@@ -13,6 +13,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private static readonly object sync = new object();
         private static string assemblyBaseFolder;
         private readonly IFileSystem _fileSystem;
+        private readonly HashSet<string> _resolvedNames;
         private Dictionary<string, ValidationMethodPair> _ruleIdToValidationMethods;
 
         public ValidatorsCache(IEnumerable<string> validatorBinaryPaths = null, IFileSystem fileSystem = null)
@@ -23,6 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     : new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             _fileSystem = fileSystem ?? FileSystem.Instance;
+            _resolvedNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
         public ISet<string> ValidatorPaths { get; }
@@ -120,7 +122,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint = (string)arguments[3];
             message = (string)arguments[4];
 
-            if (!Enum.TryParse<Validation>(validationText, out Validation result))
+            if (!Enum.TryParse(validationText, out Validation result))
             {
                 return Validation.ValidatorReturnedIllegalValidationState;
             }
@@ -165,7 +167,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint = (string)arguments[0];
             message = (string)arguments[1];
 
-            if (!Enum.TryParse<Validation>(validationText, out result))
+            if (!Enum.TryParse(validationText, out result))
             {
                 return Validation.ValidatorReturnedIllegalValidationState;
             }
@@ -250,37 +252,50 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
-            // Retrieve the list of referenced assemblies in an array of AssemblyName.
-            string strTempAssmbPath = string.Empty;
-            Assembly objExecutingAssemblies = args.RequestingAssembly;
-            if (objExecutingAssemblies == null)
+            Assembly resolved = null;
+
+            // We will only attempt to resolve an assembly a single time
+            // to avoid re-entrance in cases where our logic below fails
+            string assemblyName = args.Name.Split(',')[0];
+            if (this._resolvedNames.Contains(assemblyName))
             {
                 return null;
             }
 
-            // Loop through the array of referenced assembly names.
-            foreach (AssemblyName strAssmbName in objExecutingAssemblies.GetReferencedAssemblies())
-            {
-                // Check for the assembly names that have raised the "AssemblyResolve" event.
-                if (strAssmbName.FullName.Substring(0, strAssmbName.FullName.IndexOf(",")) == args.Name.Substring(0, args.Name.IndexOf(",")))
-                {
-                    // Build the path of the assembly from where it has to be loaded.
-                    if (assemblyBaseFolder.EndsWith("analyze\\..\\bin"))
-                    {
-                        assemblyBaseFolder = assemblyBaseFolder.Replace("analyze\\..\\bin", string.Empty);
-                    }
+            this._resolvedNames.Add(assemblyName);
 
-                    strTempAssmbPath = assemblyBaseFolder + "\\" + args.Name.Substring(0, args.Name.IndexOf(",")) + ".dll";
-                    break;
+            if (assemblyBaseFolder.EndsWith("analyze\\..\\bin"))
+            {
+                assemblyBaseFolder = assemblyBaseFolder.Replace("analyze\\..\\bin", string.Empty);
+            }
+
+            string presumedAssemblyPath = Path.Combine(assemblyBaseFolder, Path.GetFileName(assemblyName));
+
+            if (!presumedAssemblyPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase) &&
+                !presumedAssemblyPath.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+            {
+                presumedAssemblyPath += ".dll";
+
+                if (!File.Exists(presumedAssemblyPath))
+                {
+                    // Strip .dll and give .exe a whirl
+                    presumedAssemblyPath = Path.Combine(assemblyBaseFolder, assemblyName) + ".exe";
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(strTempAssmbPath) || !_fileSystem.FileExists(strTempAssmbPath))
+            if (File.Exists(presumedAssemblyPath))
             {
-                return null;
+                try
+                {
+                    resolved = Assembly.Load(_fileSystem.FileReadAllBytes(presumedAssemblyPath));
+                }
+                catch (IOException) { }
+                catch (TypeLoadException) { }
+                catch (BadImageFormatException) { }
+                catch (UnauthorizedAccessException) { }
             }
 
-            return Assembly.Load(_fileSystem.FileReadAllBytes(strTempAssmbPath));
+            return resolved;
         }
     }
 }
