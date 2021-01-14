@@ -14,7 +14,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
             ServicePointManager.DefaultConnectionLimit = Debugger.IsAttached
                 ? ServicePointManager.DefaultConnectionLimit
-                : Environment.ProcessorCount;
+                : int.MaxValue;
         }
 
         protected ValidatorBase()
