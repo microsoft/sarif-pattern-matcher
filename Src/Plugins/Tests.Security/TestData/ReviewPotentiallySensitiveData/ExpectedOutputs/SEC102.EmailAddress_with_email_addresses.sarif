@@ -13,17 +13,17 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC1002/EmailAddress",
-              "name": "SEC1002/EmailAddress",
+              "id": "SEC102/001",
+              "name": "ReviewPotentiallySensitiveData/EmailAddress",
               "fullDescription": {
                 "text": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc."
               },
               "messageStrings": {
-                "Default": {
-                  "text": "'{0}' contains an apparent {1}."
-                },
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' contains an apparent {1}."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -38,12 +38,12 @@
       ],
       "results": [
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -51,7 +51,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -70,12 +70,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -83,7 +83,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -102,12 +102,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -115,7 +115,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -134,12 +134,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -147,7 +147,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -166,12 +166,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -179,7 +179,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -198,12 +198,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -211,7 +211,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -230,12 +230,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -243,7 +243,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -262,12 +262,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -275,7 +275,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -294,12 +294,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -307,7 +307,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -326,12 +326,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -339,7 +339,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -358,12 +358,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -371,7 +371,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -390,12 +390,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -403,7 +403,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -422,12 +422,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -435,7 +435,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -454,12 +454,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -467,7 +467,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -486,12 +486,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -499,7 +499,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -518,12 +518,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -531,7 +531,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -550,12 +550,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -563,7 +563,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -582,12 +582,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -595,7 +595,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -614,12 +614,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -627,7 +627,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -646,12 +646,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -659,7 +659,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -678,12 +678,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -691,7 +691,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -710,12 +710,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -723,7 +723,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -742,12 +742,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -755,7 +755,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -774,12 +774,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -787,7 +787,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -806,12 +806,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -819,7 +819,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -838,12 +838,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -851,7 +851,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -870,12 +870,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -883,7 +883,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -902,12 +902,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -915,7 +915,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -934,12 +934,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -947,7 +947,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -966,12 +966,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -979,7 +979,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -998,12 +998,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -1011,7 +1011,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1030,12 +1030,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -1043,7 +1043,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1062,12 +1062,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -1075,7 +1075,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1094,12 +1094,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -1107,7 +1107,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1126,12 +1126,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -1139,7 +1139,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1158,12 +1158,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -1171,7 +1171,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1190,12 +1190,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -1203,7 +1203,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1222,12 +1222,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -1235,7 +1235,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1254,12 +1254,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -1267,7 +1267,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1286,12 +1286,12 @@
           ]
         },
         {
-          "ruleId": "SEC1002/EmailAddress",
+          "ruleId": "SEC102/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1002.EmailAddress_with_email_addresses.txt",
+              "SEC102.EmailAddress_with_email_addresses.txt",
               "email address"
             ]
           },
@@ -1299,7 +1299,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC1002.EmailAddress_with_email_addresses.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102.EmailAddress_with_email_addresses.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

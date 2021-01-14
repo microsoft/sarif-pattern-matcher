@@ -13,17 +13,17 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC1004/Memory/Allocation/_alloca",
-              "name": "SEC1004/Memory/Allocation/_alloca",
+              "id": "SEC103/024",
+              "name": "ReviewPotentiallySensitiveFiles/MicrosoftSerializedCertificateStoreFile",
               "fullDescription": {
-                "text": "Developers should use secure API in preferance of insecure alternates."
+                "text": "Review potentially sensitive files in versioned engineering content and other locations for security risk."
               },
               "messageStrings": {
-                "Default": {
-                  "text": "'{0}' contains a call to '{1}', a potentially insecure API that could be replaced with a more secure alternative: '{2}'."
-                },
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -38,34 +38,25 @@
       ],
       "results": [
         {
-          "ruleId": "SEC1004/Memory/Allocation/_alloca",
+          "ruleId": "SEC103/024",
           "ruleIndex": 0,
           "level": "error",
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1004.Memory.Allocation_alloca.c",
-              "_alloca",
-              "_malloca"
+              "SEC103.MicrosoftSerializedCertificateStoreFile_default.sst",
+              "an exposed ",
+              "Microsoft Serialized Certificate Store",
+              "",
+              " (which contains private keys)"
             ]
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC1004.Memory.Allocation_alloca.c",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103.MicrosoftSerializedCertificateStoreFile_default.sst",
                   "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 10,
-                  "startColumn": 13,
-                  "endLine": 10,
-                  "endColumn": 21,
-                  "charOffset": 187,
-                  "charLength": 8,
-                  "snippet": {
-                    "text": "_alloca("
-                  }
                 }
               }
             }

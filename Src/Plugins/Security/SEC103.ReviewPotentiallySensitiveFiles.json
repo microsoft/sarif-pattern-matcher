@@ -3,133 +3,158 @@
   "Definitions": [
     {
       "Name": "ReviewPotentiallySensitiveFiles",
-      "Id": "SEC1003",
+      "Id": "SEC103",
       "Level": "Error",
       "Description": "Review potentially sensitive files in versioned engineering content and other locations for security risk.",
       "Message": "'{0:scanTarget}' is {1:validationPrefix}{2:fileKind}{3:validationSuffix}{4:validatorMessage}.",
       "MatchExpressions": [
         {
-          "SubId": "OnePasswordFile",
+          "Id":  "SEC103/001",
+          "Name": "ReviewPotentiallySensitiveFiles/OnePasswordFile",
           "FileNameAllowRegex": "(?i)\\.(agilekeychain|agilekeychain_zip)$",
           "MessageArguments": { "fileKind": "1Password manager database file" }
         },
         {
-          "SubId": "ASCIIArmoredFile",
+          "Id": "SEC103/002",
+          "Name": "ReviewPotentiallySensitiveFiles/ASCIIArmoredFile",
           "FileNameAllowRegex": "(?i)\\.asc$",
           "MessageArguments": { "fileKind": "ASCII armored file" }
         },
         {
-          "SubId": "MicrosoftBitLockerRecoveryKeyFile",
+          "Id": "SEC103/003",
+          "Name": "ReviewPotentiallySensitiveFiles/MicrosoftBitLockerRecoveryKeyFile",
           "FileNameAllowRegex": "(?i)\\.bek$",
           "MessageArguments": { "fileKind": "Microsoft BitLocker recovery key file" }
         },
         {
-          "SubId": "CertificateFile",
+          "Id": "SEC103/004",
+          "Name": "ReviewPotentiallySensitiveFiles/CertificateFile",
           "FileNameAllowRegex": "(?i)\\.cer$",
           "MessageArguments": { "fileKind": "encoded binary x.509 certificate" }
         },
         {
-          "SubId": "AzureServiceConfigurationSchemaFile",
+          "Id": "SEC103/005",
+          "Name": "ReviewPotentiallySensitiveFiles/AzureServiceConfigurationSchemaFile",
           "FileNameAllowRegex": "(?i)\\.cscfg$",
           "MessageArguments": { "fileKind": "Azure service configuration schema file" }
         },
         {
-          "SubId": "DayOneJournalFile",
+          "Id": "SEC103/006",
+          "Name": "ReviewPotentiallySensitiveFiles/DayOneJournalFile",
           "FileNameAllowRegex": "(?i)\\.dayone$",
           "MessageArguments": { "fileKind": "Day One journal file" }
         },
         {
-          "SubId": "WindowsBitlockerDataFile",
+          "Id": "SEC103/007",
+          "Name": "ReviewPotentiallySensitiveFiles/WindowsBitlockerDataFile",
           "FileNameAllowRegex": "(?i)\\.fve$",
           "MessageArguments": { "fileKind": "Windows BitLocker full volume encrypted data file" }
         },
         {
-          "SubId": "GnuCashDatabaseFile",
+          "Id": "SEC103/008",
+          "Name": "ReviewPotentiallySensitiveFiles/GnuCashDatabaseFile",
           "FileNameAllowRegex": "(?i)\\.gnucash$",
           "MessageArguments": { "fileKind": "GnuCash database file" }
         },
         {
-          "SubId": "JavaKeystoreFile",
+          "Id": "SEC103/009",
+          "Name": "ReviewPotentiallySensitiveFiles/JavaKeystoreFile",
           "FileNameAllowRegex": "(?i)\\.jks$",
           "MessageArguments": { "fileKind": "Java keystore file" }
         },
         {
-          "SubId": "KeePassPasswordManagerDatabaseFile",
+          "Id": "SEC103/010",
+          "Name": "ReviewPotentiallySensitiveFiles/KeePassPasswordManagerDatabaseFile",
           "FileNameAllowRegex": "(?i)\\.kdb$",
           "MessageArguments": { "fileKind": "KeePass password manager database file" }
         },
         {
-          "SubId": "AppleKeychainDatabaseFile",
+          "Id": "SEC103/011",
+          "Name": "ReviewPotentiallySensitiveFiles/AppleKeychainDatabaseFile",
           "FileNameAllowRegex": "(?i)\\.keychain$",
           "MessageArguments": { "fileKind": "Apple Keychain database file" }
         },
         {
-          "SubId": "KDEWalletManagerDatabaseFile",
+          "Id": "SEC103/012",
+          "Name": "ReviewPotentiallySensitiveFiles/KDEWalletManagerDatabaseFile",
           "FileNameAllowRegex": "(?i)\\.kwallet$",
           "MessageArguments": { "fileKind": "KDE Wallet Manager database file" }
         },
         {
-          "SubId": "MicrosoftSqlDatabaseFile",
+          "Id": "SEC103/013",
+          "Name": "ReviewPotentiallySensitiveFiles/MicrosoftSqlDatabaseFile",
           "FileNameAllowRegex": "(?i)\\.mdf$",
           "MessageArguments": { "fileKind": "Microsoft SQL database file" }
         },
         {
-          "SubId": "OpenVPNClientConfigurationFile",
+          "Id": "SEC103/014",
+          "Name": "ReviewPotentiallySensitiveFiles/OpenVPNClientConfigurationFile",
           "FileNameAllowRegex": "(?i)\\.ovpn$",
           "MessageArguments": { "fileKind": "OpenVPN client configuration file" }
         },
         {
-          "SubId": "PEMCryptographicPrivateKeyfile",
+          "Id": "SEC103/015",
+          "Name": "ReviewPotentiallySensitiveFiles/PEMCryptographicPrivateKeyfile",
           "FileNameAllowRegex": "(?i)\\.pem$",
           "MessageArguments": { "fileKind": "PEM cryptographic private key" }
         },
         {
-          "SubId": "PKCS7CryptographicKeyfile",
+          "Id": "SEC103/016",
+          "Name": "ReviewPotentiallySensitiveFiles/PKCS7CryptographicKeyfile",
           "FileNameAllowRegex": "(?i)\\.p7b$",
           "MessageArguments": { "fileKind": "PKCS#7 cryptographic key bundle" }
         },
         {
-          "SubId": "PfxCryptographicKeyfile",
+          "Id": "SEC103/017",
+          "Name": "ReviewPotentiallySensitiveFiles/PfxCryptographicKeyfile",
           "FileNameAllowRegex": "(?i)\\.pfx$",
           "MessageArguments": { "fileKind": "PFX cryptographic key bundle" }
         },
         {
-          "SubId": "PKCS12CryptographicKeyfile",
+          "Id": "SEC103/018",
+          "Name": "ReviewPotentiallySensitiveFiles/PKCS12CryptographicKeyfile",
           "FileNameAllowRegex": "(?i)\\.(p12|pkcs12)$",
           "MessageArguments": { "fileKind": "PKCS#12 cryptographic key bundle" }
         },
         {
-          "SubId": "NetworkTrafficCaptureFile",
+          "Id": "SEC103/019",
+          "Name": "ReviewPotentiallySensitiveFiles/NetworkTrafficCaptureFile",
           "FileNameAllowRegex": "(?i)\\.pcap$",
           "MessageArguments": { "fileKind": "Network traffic capture file" }
         },
         {
-          "SubId": "PuTTygenPrivateKeyfile",
+          "Id": "SEC103/020",
+          "Name": "ReviewPotentiallySensitiveFiles/PuTTygenPrivateKeyfile",
           "FileNameAllowRegex": "(?i)\\.ppk$",
           "MessageArguments": { "fileKind": "PuTTYgen private key" }
         },
         {
-          "SubId": "PasswordSafeDatabaseFile",
+          "Id": "SEC103/021",
+          "Name": "ReviewPotentiallySensitiveFiles/PasswordSafeDatabaseFile",
           "FileNameAllowRegex": "(?i)\\.psafe3$",
           "MessageArguments": { "fileKind": "'Password Safe' database file" }
         },
         {
-          "SubId": "RemoteDesktopConnectionSettingsFile",
+          "Id": "SEC103/022",
+          "Name": "ReviewPotentiallySensitiveFiles/RemoteDesktopConnectionSettingsFile",
           "FileNameAllowRegex": "(?i)\\.rdp$",
           "MessageArguments": { "fileKind": "Remote Desktop connection settings file" }
         },
         {
-          "SubId": "SQLiteDatabaseFile",
+          "Id": "SEC103/023",
+          "Name": "ReviewPotentiallySensitiveFiles/SQLiteDatabaseFile",
           "FileNameAllowRegex": "(?i)\\.(sqlite|sqlite3)$",
           "MessageArguments": { "fileKind": "SQLite database file" }
         },
         {
-          "SubId": "MicrosoftSerializedCertificateStoreFile",
+          "Id": "SEC103/024",
+          "Name": "ReviewPotentiallySensitiveFiles/MicrosoftSerializedCertificateStoreFile",
           "FileNameAllowRegex": "(?i)\\.sst$",
           "MessageArguments": { "fileKind": "Microsoft Serialized Certificate Store" }
         },
         {
-          "SubId": "TunnelblickVPNConfigurationFile",
+          "Id": "SEC103/025",
+          "Name": "ReviewPotentiallySensitiveFiles/TunnelblickVPNConfigurationFile",
           "FileNameAllowRegex": "(?i)\\.tblk$",
           "MessageArguments": { "fileKind": "Tunnelblick VPN configuration file" }
         }

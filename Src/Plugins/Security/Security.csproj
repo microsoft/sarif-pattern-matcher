@@ -29,6 +29,13 @@
     <None Remove="Security.SharedStrings.txt" />
   </ItemGroup>
 
+  <ItemGroup>
+    <SpamFiles Remove="SEC101.SecurePlaintextSecrets.json" />
+    <SpamFiles Remove="SEC102.ReviewPotentiallySensitiveData.json" />
+    <SpamFiles Remove="SEC103.ReviewPotentiallySensitiveFiles.json" />
+    <SpamFiles Remove="SEC104.UseSecureApi.json" />
+  </ItemGroup>
+
   <Target Name="CopyingSpam" AfterTargets="Build">
     <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
   </Target>

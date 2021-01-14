@@ -10,7 +10,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         public ReviewPotentiallySensitiveFilesTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
-        protected override string RuleId => "SEC1003";
+        protected override string RuleId => "SEC103";
 
         [Fact]
         public void ReviewPotentiallySensitiveFiles_EndToEndFunctionalTests()
