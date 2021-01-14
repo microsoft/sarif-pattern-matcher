@@ -32,9 +32,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly ValidatorsCache _validators;
         private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
-        private readonly Dictionary<string, int> _argumentNameToIndex;
         private readonly Dictionary<string, MultiformatMessageString> _messageStrings;
-        private readonly Dictionary<MatchExpression, ReportingDescriptor> _matchExpressionToRule;
 
         public SearchSkimmer(IRegex engine, ValidatorsCache validators, FileRegionsCache fileRegionsCache, SearchDefinition definition, IFileSystem fileSystem = null)
             : this(
@@ -44,7 +42,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                   definition.Id,
                   definition.Name,
                   definition.Description,
-                  definition.Message,
                   definition.MatchExpressions,
                   fileSystem)
         {
@@ -57,7 +54,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string id,
             string name,
             string description,
-            string defaultMessageString,
             IList<MatchExpression> matchExpressions,
             IFileSystem fileSystem = null)
         {
@@ -66,33 +62,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             _engine = engine;
             _validators = validators;
             _fileRegionsCache = fileRegionsCache;
-            _argumentNameToIndex = GenerateIndicesForNamedArguments(ref defaultMessageString);
+            _fullDescription = new MultiformatMessageString { Text = description };
             _fileSystem = fileSystem ?? FileSystem.Instance;
-            _matchExpressionToRule = new Dictionary<MatchExpression, ReportingDescriptor>(matchExpressions.Count);
-
-            _fullDescription = new MultiformatMessageString
-            {
-                Text = description,
-            };
 
             _messageStrings = new Dictionary<string, MultiformatMessageString>
             {
-                { "Default", new MultiformatMessageString() { Text = defaultMessageString, } },
                 { nameof(SdkResources.NotApplicable_InvalidMetadata), new MultiformatMessageString() { Text = SdkResources.NotApplicable_InvalidMetadata, } },
             };
 
             foreach (MatchExpression matchExpression in matchExpressions)
             {
-                _matchExpressionToRule[matchExpression] = new ReportingDescriptor
+                string matchExpressionMessage = matchExpression.Message;
+                matchExpression.ArgumentNameToIndexMap = GenerateIndicesForNamedArguments(ref matchExpressionMessage);
+
+                string messageId = matchExpression.SubId ?? "Default";
+                if (!_messageStrings.TryGetValue(messageId, out MultiformatMessageString mfString))
                 {
-                    Id = string.IsNullOrEmpty(matchExpression.SubId) ? id : $"{id}/{matchExpression.SubId}",
-                    DefaultConfiguration = this.DefaultConfiguration,
-                    FullDescription = _fullDescription,
-                    Help = null,
-                    HelpUri = s_helpUri,
-                    MessageStrings = _messageStrings,
-                    Name = $"{id}/{matchExpression.SubId}",
-                };
+                    _messageStrings[messageId] = new MultiformatMessageString
+                    {
+                        Text = matchExpressionMessage,
+                    };
+                }
             }
 
             _matchExpressions = matchExpressions;
@@ -102,7 +92,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override string Id => _id;
 
-        public override string Name => Id;
+        public override string Name => _name;
 
         public override MultiformatMessageString FullDescription => _fullDescription;
 
@@ -114,17 +104,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override AnalysisApplicability CanAnalyze(AnalyzeContext context, out string reasonIfNotApplicable)
         {
-            string path = context.TargetUri.LocalPath;
+            string filePath = context.TargetUri.GetFilePath();
             reasonIfNotApplicable = null;
 
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
-                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(path, matchExpression.FileNameDenyRegex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(filePath, matchExpression.FileNameDenyRegex))
                 {
                     continue;
                 }
 
-                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex) && !_engine.IsMatch(path, matchExpression.FileNameAllowRegex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex) && !_engine.IsMatch(filePath, matchExpression.FileNameAllowRegex))
                 {
                     continue;
                 }
@@ -144,11 +134,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 context.FileContents = _fileSystem.FileReadAllText(context.TargetUri.LocalPath);
             }
 
+            string filePath = context.TargetUri.GetFilePath();
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
                 {
-                    if (!_engine.IsMatch(context.TargetUri.LocalPath,
+                    if (!_engine.IsMatch(filePath,
                                          matchExpression.FileNameAllowRegex,
                                          RegexDefaults.DefaultOptionsCaseInsensitive))
                     {
@@ -158,7 +149,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex))
                 {
-                    if (_engine.IsMatch(context.TargetUri.LocalPath,
+                    if (_engine.IsMatch(filePath,
                                         matchExpression.FileNameDenyRegex,
                                         RegexDefaults.DefaultOptionsCaseInsensitive))
                     {
@@ -221,6 +212,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             MatchExpression matchExpression,
             FailureLevel level)
         {
+            string filePath = context.TargetUri.GetFilePath();
             string searchText = binary64DecodedMatch != null
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;
@@ -229,7 +221,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 if (!flexMatch.Success) { continue; }
 
-                ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
+                // ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
+                ReportingDescriptor reportingDescriptor = this;
                 Regex regex = CachedDotNetRegex.GetOrCreateRegex(
                                 matchExpression.ContentsRegex,
                                 RegexDefaults.DefaultOptionsCaseInsensitive);
@@ -255,7 +248,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (_validators != null)
                 {
-                    state = _validators.Validate(reportingDescriptor.Id,
+                    state = _validators.Validate(reportingDescriptor.Name,
                                                 context.DynamicValidation,
                                                 ref refinedMatchedPattern,
                                                 ref groups,
@@ -440,8 +433,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 IList<string> arguments = GetMessageArguments(
                     match,
-                    _argumentNameToIndex,
-                    context.TargetUri.LocalPath,
+                    matchExpression.ArgumentNameToIndexMap,
+                    filePath,
                     validatorMessage: NormalizeValidatorMessage(validatorMessage),
                     messageArguments);
 
@@ -452,7 +445,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     region,
                     flexMatch,
                     fingerprint,
-                    matchExpression.Fixes,
+                    matchExpression,
                     arguments);
 
                 // This skimmer instance mutates its reporting descriptor state,
@@ -465,29 +458,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level)
         {
-            ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
+            ReportingDescriptor reportingDescriptor = this;
 
-            bool dynamic = context.DynamicValidation;
             string levelText = level.ToString();
-            string fingerprint = null, message = null;
+            string fingerprint = null;
             IDictionary<string, string> groups = new Dictionary<string, string>();
 
             string filePath = context.TargetUri.LocalPath;
-
-            Validation state = 0;
             string fingerprintText = null, validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
 
             if (_validators != null)
             {
-                state = _validators.Validate(reportingDescriptor.Id,
-                                            context.DynamicValidation,
-                                            ref filePath,
-                                            ref groups,
-                                            ref levelText,
-                                            ref fingerprintText,
-                                            ref validatorMessage,
-                                            out bool pluginSupportsDynamicValidation);
+                Validation state = _validators.Validate(reportingDescriptor.Name,
+                                context.DynamicValidation,
+                                ref filePath,
+                                ref groups,
+                                ref levelText,
+                                ref fingerprintText,
+                                ref validatorMessage,
+                                out bool pluginSupportsDynamicValidation);
 
                 if (!Enum.TryParse<FailureLevel>(levelText, out level))
                 {
@@ -570,7 +560,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         break;
                     }
 
-
                     case Validation.HostUnknown:
                     case Validation.Unauthorized:
                     case Validation.InvalidForConsultedAuthorities:
@@ -640,11 +629,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             IList<string> arguments = GetMessageArguments(
                 match: null,
-                _argumentNameToIndex,
+                matchExpression.ArgumentNameToIndexMap,
                 context.TargetUri.LocalPath,
                 validatorMessage: NormalizeValidatorMessage(validatorMessage),
                 messageArguments);
-
 
             Result result = this.ConstructResult(
                     context.TargetUri,
@@ -653,12 +641,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     region: null,
                     flexMatch: null,
                     fingerprint,
-                    matchExpression.Fixes,
+                    matchExpression,
                     arguments);
 
             context.Logger.Log(reportingDescriptor, result);
         }
-
 
         private string GetValidationPrefix(Validation state)
         {
@@ -718,7 +705,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Region region,
             FlexMatch flexMatch,
             string fingerprint,
-            IDictionary<string, SimpleFix> fixes,
+            MatchExpression matchExpression,
             IList<string> arguments)
         {
             var location = new Location()
@@ -735,30 +722,32 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             Dictionary<string, string> fingerprints = BuildFingerprints(fingerprint);
 
+            string messageId = matchExpression.SubId ?? "Default";
+
             var result = new Result()
             {
                 RuleId = ruleId,
                 Level = level,
                 Message = new Message()
                 {
-                    Id = "Default",
+                    Id = messageId,
                     Arguments = arguments,
                 },
                 Locations = new List<Location>(new[] { location }),
                 Fingerprints = fingerprints,
             };
 
-            if (fixes?.Count > 0)
+            if (matchExpression.Fixes?.Count > 0)
             {
                 // Build arguments that may be required for fix text.
                 var argumentNameToValueMap = new Dictionary<string, string>();
 
-                foreach (KeyValuePair<string, int> kv in _argumentNameToIndex)
+                foreach (KeyValuePair<string, int> kv in matchExpression.ArgumentNameToIndexMap)
                 {
                     argumentNameToValueMap["{" + kv.Key + "}"] = arguments[kv.Value];
                 }
 
-                foreach (SimpleFix fix in fixes.Values)
+                foreach (SimpleFix fix in matchExpression.Fixes.Values)
                 {
                     ExpandArguments(fix, argumentNameToValueMap);
                     AddFixToResult(flexMatch, fix, result);

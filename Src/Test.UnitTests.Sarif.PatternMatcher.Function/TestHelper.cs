@@ -12,7 +12,7 @@ using Moq;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 {
-    public class TestHelper
+    public static class TestHelper
     {
         public static string SampleCode = @"
                 namespace AnalysisTestProject2
@@ -25,9 +25,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
         public static HttpRequest MockAnalyzeFunctionRequest(string fileName, string fileContent)
         {
-            var formData = new Dictionary<string, StringValues>();
-            formData.Add(FunctionConstants.FileNamePropertyName, fileName);
-            formData.Add(FunctionConstants.FileContentPropertyName, fileContent);
+            var formData = new Dictionary<string, StringValues>
+            {
+                { FunctionConstants.FileNamePropertyName, fileName },
+                { FunctionConstants.FileContentPropertyName, fileContent }
+            };
             return HttpRequestSetup(formData);
         }
 
@@ -41,13 +43,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         public static ExecutionContext ContextSetup()
         {
             // no need to mock 
-            ExecutionContext context = new ExecutionContext { FunctionDirectory = Path.GetFullPath(@".\") };
-            return context;
+            return new ExecutionContext { FunctionDirectory = Path.GetFullPath(@".\") };
         }
 
         public static string GetTestResourceContent(string fileName)
         {
-            var filePath = Path.Combine(@".\TestData\", fileName);
+            string filePath = Path.Combine(@".\TestData\", fileName);
             return File.ReadAllText(filePath);
         }
     }

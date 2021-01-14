@@ -2,12 +2,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
-
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
+using System.Net.Mail;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal static class PfxCryptographicKeyfileValidator
+    internal static class EmailAddressValidator
     {
         public static string IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
@@ -15,11 +14,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            ref string fingerprintText,
                                            ref string message)
         {
-            return CertificateFileValidator.IsValidStatic(ref matchedPattern,
-                                                          ref groups,
-                                                          ref failureLevel,
-                                                          ref fingerprintText,
-                                                          ref message);
+            try
+            {
+                var addr = new MailAddress(matchedPattern);
+                if (addr.Address == matchedPattern)
+                {
+                    return nameof(ValidationState.Unknown);
+                }
+            }
+            catch
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
+            return nameof(ValidationState.NoMatch);
         }
     }
 }

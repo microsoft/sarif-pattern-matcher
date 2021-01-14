@@ -139,7 +139,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 expectedOutputResourceMap[testFileName] =
                     Path.GetFileNameWithoutExtension(testFileName) + ".sarif";
-
             }
             RunTest(inputFiles, expectedOutputResourceMap);
 

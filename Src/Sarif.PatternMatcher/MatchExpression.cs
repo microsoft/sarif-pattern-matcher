@@ -9,15 +9,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     {
         public Dictionary<string, string> Strings { get; set; }
 
+        public string Id { get; set; }
+
         public string SubId { get; set; }
+
+        public string Name { get; set; }
+
+        public string Message { get; set; }
+
+        public FailureLevel Level { get; set; }
+
+        public string Description { get; set; }
+
+        public string ContentsRegex { get; set; }
 
         public string FileNameDenyRegex { get; set; }
 
         public string FileNameAllowRegex { get; set; }
-
-        public FailureLevel Level { get; set; }
-
-        public string ContentsRegex { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating the length of a typical match.
@@ -34,5 +42,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public IList<string> Notes { get; set; }
 
         public IDictionary<string, SimpleFix> Fixes { get; set; }
+
+        public Dictionary<string, int> ArgumentNameToIndexMap { get; set; }
     }
 }

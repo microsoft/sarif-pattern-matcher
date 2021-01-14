@@ -40,8 +40,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 log.LogInformation($"Start to analyze text of {fileName}");
 
                 // AnalyzeContext requires URI to file
-                string sourceFilePath = $"file://{fileName}";
+                string sourceFilePath = $"{fileName}";
                 SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, fileContent, definitionsFolder));
+                if (sariflog.Runs.Count > 0)
+                {
+                    sariflog.Runs[0].Tool.Driver.Name = "SPAM";
+                }
 
                 log.LogInformation($"Completed analyzing text of {fileName}");
 

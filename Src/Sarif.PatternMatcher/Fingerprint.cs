@@ -176,14 +176,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return components.Count > 0 ?
-                string.Join(string.Empty, components) :
+                string.Concat(components) :
                 string.Empty;
         }
 
         internal void Parse(string fingerprintText)
         {
             ParseState parseState = ParseState.GatherKeyOpen;
-            string currentKey = null, value = null;
+            string currentKey = null;
 
             var sortedKeys = new SortedList<string, string>();
 
@@ -219,7 +219,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     {
                         int valueStart = i;
                         while (fingerprintText[i] != ']') { i++; }
-                        value = fingerprintText.Substring(valueStart, i - valueStart);
+                        string value = fingerprintText.Substring(valueStart, i - valueStart);
                         parseState = ParseState.GatherKeyOpen;
                         SetProperty(currentKey, value);
                         break;

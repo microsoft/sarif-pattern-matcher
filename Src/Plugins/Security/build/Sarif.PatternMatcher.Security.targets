@@ -3,17 +3,17 @@
   <Target Name="CopyUtilityScriptToProject" BeforeTargets="Build">
     <Message Text="Copying files" />
     <Copy
-      SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC1001.SecurePlaintextSecrets.json"
-      DestinationFiles="$(SolutionDir)\.spam\Security\SEC1001.SecurePlaintextSecrets.json" />
+      SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC101.SecurePlaintextSecrets.json"
+      DestinationFiles="$(SolutionDir)\.spam\Security\SEC101.SecurePlaintextSecrets.json" />
     <Copy
-      SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC1002.ReviewPotentiallySensitiveData.json"
-      DestinationFiles="$(SolutionDir)\.spam\Security\SEC1002.ReviewPotentiallySensitiveData.json" />
+      SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC102.ReviewPotentiallySensitiveData.json"
+      DestinationFiles="$(SolutionDir)\.spam\Security\SEC102.ReviewPotentiallySensitiveData.json" />
     <Copy
-      SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC1003.ReviewPotentiallySensitiveFiles.json"
-      DestinationFiles="$(SolutionDir)\.spam\Security\SEC1003.ReviewPotentiallySensitiveFiles.json" />
+      SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC103.ReviewPotentiallySensitiveFiles.json"
+      DestinationFiles="$(SolutionDir)\.spam\Security\SEC103.ReviewPotentiallySensitiveFiles.json" />
     <Copy
-      SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC1004.UseSecureApi.json"
-      DestinationFiles="$(SolutionDir)\.spam\Security\SEC1004.UseSecureApi.json" />
+      SourceFiles="$(MSBuildThisFileDirectory)..\content\SEC104.UseSecureApi.json"
+      DestinationFiles="$(SolutionDir)\.spam\Security\SEC104.UseSecureApi.json" />
     <Copy
       SourceFiles="$(MSBuildThisFileDirectory)..\content\Security.SharedStrings.txt"
       DestinationFiles="$(SolutionDir)\.spam\Security\Security.SharedStrings.txt" />
