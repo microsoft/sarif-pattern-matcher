@@ -318,13 +318,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FileRegionsCache fileRegionsCache = null,
             IFileSystem fileSystem = null)
         {
-            AnalyzeCommand.PushInheritedData(definition, sharedStrings: null);
+            var definitions = new SearchDefinitions
+            {
+                Definitions = new List<SearchDefinition>(new[] { definition }),
+            };
+
+            definitions = AnalyzeCommand.PushInheritedData(definitions, sharedStrings: null);
 
             return new SearchSkimmer(
                 engine: engine ?? RE2Regex.Instance,
                 validators: validators,
                 fileRegionsCache: fileRegionsCache ?? new FileRegionsCache(),
-                definition: definition,
+                definition: definitions.Definitions[0],
                 fileSystem: fileSystem);
         }
 

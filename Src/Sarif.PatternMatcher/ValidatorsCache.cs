@@ -14,7 +14,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private static string assemblyBaseFolder;
         private readonly IFileSystem _fileSystem;
         private readonly HashSet<string> _resolvedNames;
-        private Dictionary<string, ValidationMethodPair> _ruleIdToValidationMethods;
+        private Dictionary<string, ValidationMethodPair> _ruleNameoValidationMethods;
 
         public ValidatorsCache(IEnumerable<string> validatorBinaryPaths = null, IFileSystem fileSystem = null)
         {
@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public ISet<string> ValidatorPaths { get; }
 
         public Validation Validate(
-            string ruleId,
+            string ruleName,
             bool dynamicValidation,
             ref string matchedPattern,
             ref IDictionary<string, string> groups,
@@ -41,20 +41,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             pluginCanPerformDynamicAnalysis = false;
 
-            if (_ruleIdToValidationMethods == null)
+            if (_ruleNameoValidationMethods == null)
             {
                 lock (sync)
                 {
-                    if (_ruleIdToValidationMethods == null)
+                    if (_ruleNameoValidationMethods == null)
                     {
-                        _ruleIdToValidationMethods ??= LoadValidationAssemblies(ValidatorPaths);
+                        _ruleNameoValidationMethods ??= LoadValidationAssemblies(ValidatorPaths);
                     }
                 }
             }
 
             return ValidateHelper(
-                _ruleIdToValidationMethods,
-                ruleId,
+                _ruleNameoValidationMethods,
+                ruleName,
                 dynamicValidation,
                 ref matchedPattern,
                 ref groups,
@@ -66,7 +66,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         internal static Validation ValidateHelper(
             Dictionary<string, ValidationMethodPair> ruleIdToMethodMap,
-            string ruleId,
+            string ruleName,
             bool dynamicValidation,
             ref string matchedPattern,
             ref IDictionary<string, string> groups,
@@ -79,9 +79,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint = null;
             message = null;
 
-            if (ruleId.Contains("/")) { ruleId = ruleId.Substring(ruleId.IndexOf("/") + 1); }
+            if (ruleName.Contains("/")) { ruleName = ruleName.Substring(ruleName.IndexOf("/") + 1); }
 
-            string validatorName = ruleId + "Validator";
+            string validatorName = ruleName + "Validator";
 
             if (!ruleIdToMethodMap.TryGetValue(validatorName, out ValidationMethodPair validationPair))
             {
