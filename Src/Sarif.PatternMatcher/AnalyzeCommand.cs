@@ -13,8 +13,34 @@ using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
-    public class ValidateCommand
+    public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
+        public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(
+            IFileSystem fileSystem,
+            IEnumerable<string> searchDefinitionsPaths,
+            IRegex engine = null)
+        {
+            engine ??= RE2Regex.Instance;
+
+            var validators = new ValidatorsCache();
+            var fileRegionsCache = new FileRegionsCache();
+
+            var skimmers = new HashSet<Skimmer<AnalyzeContext>>();
+
+            // TODO exception handling for bad search definitions files
+            foreach (string searchDefinitionsPath in searchDefinitionsPaths)
+            {
+                string searchDefinitionsText =
+                    fileSystem.FileReadAllText(searchDefinitionsPath);
+
+                SearchDefinitions definitions =
+                    JsonConvert.DeserializeObject<SearchDefinitions>(searchDefinitionsText);
+
+                // This would skip files that does not look like rules.
+                if (definitions == null || definitions.Definitions == null)
+                {
+                    continue;
+                }
 
                 string validatorPath = null;
                 string definitionsDirectory = Path.GetDirectoryName(searchDefinitionsPath);
