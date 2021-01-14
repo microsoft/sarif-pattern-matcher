@@ -221,7 +221,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 if (!flexMatch.Success) { continue; }
 
-//                ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
+                //                ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
                 ReportingDescriptor reportingDescriptor = this;
                 Regex regex = CachedDotNetRegex.GetOrCreateRegex(
                                 matchExpression.ContentsRegex,
