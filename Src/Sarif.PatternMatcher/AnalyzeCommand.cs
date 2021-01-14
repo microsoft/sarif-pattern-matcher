@@ -71,7 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     sharedStrings = LoadSharedStrings(sharedStringsFullPath, fileSystem);
                 }
 
-                PushInheritedData(definitions, sharedStrings);
+                definitions = PushInheritedData(definitions, sharedStrings);
 
                 foreach (SearchDefinition definition in definitions.Definitions)
                 {
@@ -87,11 +87,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             engine: engine,
                             validators: validators,
                             fileRegionsCache: fileRegionsCache,
-                            id: definition.Id,
-                            name: definition.Name,
-                            description: definition.Description ?? string.Empty,
-                            defaultMessageString: definition.Message,
-                            matchExpressions: definition.MatchExpressions));
+                            definition));
 
                     const string singleSpace = " ";
 
@@ -119,70 +115,79 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return skimmers;
         }
 
-        internal static void PushInheritedData(SearchDefinitions definitions, Dictionary<string, string> sharedStrings)
+        internal static SearchDefinitions PushInheritedData(SearchDefinitions definitions, Dictionary<string, string> sharedStrings)
         {
+            var idToExpressionsMap = new Dictionary<string, List<MatchExpression>>();
+
             foreach (SearchDefinition definition in definitions.Definitions)
             {
-                PushInheritedData(definition, sharedStrings);
-            }
-        }
+                definition.FileNameDenyRegex = PushData(definition.FileNameDenyRegex,
+                                                        definition.SharedStrings,
+                                                        sharedStrings);
 
-        internal static void PushInheritedData(SearchDefinition definition, Dictionary<string, string> sharedStrings)
-        {
-            definition.FileNameDenyRegex = PushData(definition.FileNameDenyRegex,
-                                                    definition.SharedStrings,
-                                                    sharedStrings);
-
-            definition.FileNameAllowRegex = PushData(definition.FileNameAllowRegex,
-                                                     definition.SharedStrings,
-                                                     sharedStrings);
-
-            foreach (MatchExpression matchExpression in definition.MatchExpressions)
-            {
-                matchExpression.FileNameDenyRegex = PushData(matchExpression.FileNameDenyRegex,
-                                                             definition.SharedStrings,
-                                                             sharedStrings);
-
-                matchExpression.FileNameDenyRegex ??= definition.FileNameDenyRegex;
-
-                matchExpression.FileNameAllowRegex = PushData(matchExpression.FileNameAllowRegex,
-                                                             definition.SharedStrings,
-                                                             sharedStrings);
-
-                matchExpression.FileNameAllowRegex ??= definition.FileNameAllowRegex;
-
-                matchExpression.ContentsRegex = PushData(matchExpression.ContentsRegex,
+                definition.FileNameAllowRegex = PushData(definition.FileNameAllowRegex,
                                                          definition.SharedStrings,
                                                          sharedStrings);
 
-                if (matchExpression.Level == 0)
+                foreach (MatchExpression matchExpression in definition.MatchExpressions)
                 {
-                    matchExpression.Level = definition.Level;
+                    matchExpression.FileNameDenyRegex = PushData(matchExpression.FileNameDenyRegex,
+                                                                 definition.SharedStrings,
+                                                                 sharedStrings);
+
+                    matchExpression.FileNameDenyRegex ??= definition.FileNameDenyRegex;
+
+                    matchExpression.FileNameAllowRegex = PushData(matchExpression.FileNameAllowRegex,
+                                                                 definition.SharedStrings,
+                                                                 sharedStrings);
+
+                    matchExpression.FileNameAllowRegex ??= definition.FileNameAllowRegex;
+
+                    matchExpression.ContentsRegex = PushData(matchExpression.ContentsRegex,
+                                                             definition.SharedStrings,
+                                                             sharedStrings);
+
+                    matchExpression.Id ??= definition.Id;
+                    matchExpression.Name ??= definition.Name;
+                    matchExpression.Message ??= definition.Message;
+                    matchExpression.Description ??= definition.Description;
+
+                    if (matchExpression.Level == 0)
+                    {
+                        matchExpression.Level = definition.Level;
+                    }
+
+                    if (!idToExpressionsMap.TryGetValue(matchExpression.Id, out List<MatchExpression> cachedMatchExpressions))
+                    {
+                        cachedMatchExpressions = idToExpressionsMap[matchExpression.Id] = new List<MatchExpression>();
+                    }
+
+                    cachedMatchExpressions.Add(matchExpression);
                 }
             }
-        }
 
-        private static string PushData(string text, params Dictionary<string, string>[] sharedStringsDictionaries)
-        {
-            if (text?.Contains("$") != true)
+            var searchDefinitions = new SearchDefinitions
             {
-                return text;
-            }
+                Definitions = new List<SearchDefinition>(),
+            };
 
-            foreach (Dictionary<string, string> sharedStrings in sharedStringsDictionaries)
+            foreach (KeyValuePair<string, List<MatchExpression>> kv in idToExpressionsMap)
             {
-                if (sharedStrings == null)
-                {
-                    continue;
-                }
+                string ruleId = kv.Key;
+                List<MatchExpression> matchExpressions = kv.Value;
 
-                foreach (string key in sharedStrings.Keys)
+                var definition = new SearchDefinition
                 {
-                    text = text.Replace(key, sharedStrings[key]);
-                }
+                    Id = matchExpressions[0].Id,
+                    Name = matchExpressions[0].Name,
+                    MatchExpressions = matchExpressions,
+                    Description = matchExpressions[0].Description,
+                };
+
+                searchDefinitions.Definitions.Add(definition);
             }
 
-            return text;
+            return searchDefinitions;
         }
 
         internal static Dictionary<string, string> LoadSharedStrings(string sharedStringsFullPath, IFileSystem fileSystem)
@@ -229,6 +234,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
         {
             return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
+        }
+
+        private static string PushData(string text, params Dictionary<string, string>[] sharedStringsDictionaries)
+        {
+            if (text?.Contains("$") != true)
+            {
+                return text;
+            }
+
+            foreach (Dictionary<string, string> sharedStrings in sharedStringsDictionaries)
+            {
+                if (sharedStrings == null)
+                {
+                    continue;
+                }
+
+                foreach (string key in sharedStrings.Keys)
+                {
+                    text = text.Replace(key, sharedStrings[key]);
+                }
+            }
+
+            return text;
         }
 
         private static void ThrowInvalidSharedStringsEntry(string line)

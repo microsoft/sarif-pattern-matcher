@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\Plugins\Tests.Security\TestData\SecurePlaintextSecrets\Inputs\SEC1001.AzureDevOpsPersonalAccessToken_pats.txt" Link="TestData\SEC1001.AzureDevOpsPersonalAccessToken_pats.txt" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\Plugins\Tests.Security\TestData\SecurePlaintextSecrets\Inputs\SEC101.AzureDevOpsPersonalAccessToken_pats.txt" Link="TestData\SEC101.AzureDevOpsPersonalAccessToken_pats.txt" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   
   <Target Name="CopySecFilesAfterBuild" AfterTargets="AfterBuild">

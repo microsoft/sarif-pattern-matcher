@@ -10,7 +10,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         public UseSecureApiTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
-        protected override string RuleId => "SEC1004";
+        protected override string RuleId => "SEC104";
 
         [Fact]
         public void UseSecureApi_EndToEndFunctionalTests()

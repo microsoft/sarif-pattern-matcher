@@ -13,17 +13,17 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC1003/PfxCryptographicKeyfile",
-              "name": "SEC1003/PfxCryptographicKeyfile",
+              "id": "SEC103/002",
+              "name": "ReviewPotentiallySensitiveFiles/ASCIIArmoredFile",
               "fullDescription": {
                 "text": "Review potentially sensitive files in versioned engineering content and other locations for security risk."
               },
               "messageStrings": {
-                "Default": {
-                  "text": "'{0}' is {1}{2}{3}{4}."
-                },
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -38,24 +38,24 @@
       ],
       "results": [
         {
-          "ruleId": "SEC1003/PfxCryptographicKeyfile",
+          "ruleId": "SEC103/002",
           "ruleIndex": 0,
           "level": "error",
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC1003.PfxCryptographicKeyfile_without_password.pfx",
-              "an exposed ",
-              "PFX cryptographic key bundle",
+              "SEC103.ASCIIArmoredFile_fake.asc",
+              "an apparent ",
+              "ASCII armored file",
               "",
-              " (which contains private keys)"
+              ""
             ]
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC1003.PfxCryptographicKeyfile_without_password.pfx",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103.ASCIIArmoredFile_fake.asc",
                   "uriBaseId": "SRC_ROOT"
                 }
               }

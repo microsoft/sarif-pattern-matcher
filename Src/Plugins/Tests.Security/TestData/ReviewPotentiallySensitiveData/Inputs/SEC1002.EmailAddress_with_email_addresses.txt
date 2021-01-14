@@ -1,5 +1,0 @@
-// These are valid patterns.
-sample_user@example.com
-
-// These are not.
-sample@user@example.com

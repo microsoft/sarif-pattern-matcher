@@ -3,7 +3,7 @@
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 {
-    public class FunctionConstants
+    public static class FunctionConstants
     {
         public static readonly string FileNamePropertyName = "filename";
         public static readonly string FileContentPropertyName = "filecontent";

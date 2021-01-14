@@ -10,7 +10,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         public SecurePlaintextSecretsTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
-        protected override string RuleId => "SEC1001";
+        protected override string RuleId => "SEC101";
 
         [Fact]
         public void SecurePlaintextSecrets_EndToEndFunctionalTests()
