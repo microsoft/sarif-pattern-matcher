@@ -221,7 +221,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 if (!flexMatch.Success) { continue; }
 
-                //                ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
+                // ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
                 ReportingDescriptor reportingDescriptor = this;
                 Regex regex = CachedDotNetRegex.GetOrCreateRegex(
                                 matchExpression.ContentsRegex,
@@ -460,27 +460,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             ReportingDescriptor reportingDescriptor = this;
 
-            bool dynamic = context.DynamicValidation;
             string levelText = level.ToString();
             string fingerprint = null;
             IDictionary<string, string> groups = new Dictionary<string, string>();
 
             string filePath = context.TargetUri.LocalPath;
-
-            Validation state = 0;
             string fingerprintText = null, validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
 
             if (_validators != null)
             {
-                state = _validators.Validate(reportingDescriptor.Name,
-                                            context.DynamicValidation,
-                                            ref filePath,
-                                            ref groups,
-                                            ref levelText,
-                                            ref fingerprintText,
-                                            ref validatorMessage,
-                                            out bool pluginSupportsDynamicValidation);
+                Validation state = _validators.Validate(reportingDescriptor.Name,
+                                context.DynamicValidation,
+                                ref filePath,
+                                ref groups,
+                                ref levelText,
+                                ref fingerprintText,
+                                ref validatorMessage,
+                                out bool pluginSupportsDynamicValidation);
 
                 if (!Enum.TryParse<FailureLevel>(levelText, out level))
                 {
