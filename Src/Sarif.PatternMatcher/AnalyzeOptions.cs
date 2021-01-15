@@ -15,6 +15,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Option(
             'd',
             "search-definitions",
+            Separator = ';',
             HelpText = "A path to a file containing one or more search definitions to drive analysis.")]
         public IEnumerable<string> SearchDefinitionsPaths { get; internal set; }
 
