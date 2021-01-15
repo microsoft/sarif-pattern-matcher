@@ -8,11 +8,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     internal static class EmailAddressValidator
     {
+#pragma warning disable IDE0060 // Unused parameter.
         public static string IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
                                            ref string fingerprintText,
                                            ref string message)
+#pragma warning restore IDE0060 // Unused parameter.
         {
             try
             {

@@ -48,67 +48,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-
-        public Validation Validate(
-            string ruleName,
-            bool dynamicValidation,
-            ref string matchedPattern,
-            ref IDictionary<string, string> groups,
-            ref string failureLevel,
-            ref string fingerprint,
-            ref string message,
-            out bool pluginCanPerformDynamicAnalysis)
-        {
-            pluginCanPerformDynamicAnalysis = false;
-
-            return ValidateHelper(
-                RuleNameToValidationMethods,
-                ruleName,
-                dynamicValidation,
-                ref matchedPattern,
-                ref groups,
-                ref failureLevel,
-                ref fingerprint,
-                ref message,
-                out pluginCanPerformDynamicAnalysis);
-        }
-
-        internal static Validation ValidateHelper(
-            Dictionary<string, ValidationMethodPair> ruleIdToMethodMap,
-            string ruleName,
-            bool dynamicValidation,
-            ref string matchedPattern,
-            ref IDictionary<string, string> groups,
-            ref string failureLevel,
-            ref string fingerprint,
-            ref string message,
-            out bool pluginCanPerformDynamicAnalysis)
-        {
-            pluginCanPerformDynamicAnalysis = false;
-            fingerprint = null;
-            message = null;
-
-            ValidationMethodPair validationPair = GetValidationMethodPair(ruleName, ruleIdToMethodMap);
-
-            if (validationPair == null)
-            {
-                return Validation.ValidatorNotFound;
-            }
-
-            Validation result = ValidateStaticHelper(validationPair.IsValidStatic,
-                                                     ref matchedPattern,
-                                                     ref groups,
-                                                     ref failureLevel,
-                                                     ref fingerprint,
-                                                     ref message);
-
-            pluginCanPerformDynamicAnalysis = validationPair.IsValidDynamic != null;
-
-            return (result != Validation.NoMatch && dynamicValidation && pluginCanPerformDynamicAnalysis) ?
-                ValidateDynamicHelper(validationPair.IsValidDynamic, ref fingerprint, ref message) :
-                result;
-        }
-
         public static ValidationMethodPair GetValidationMethodPair(string ruleName,
                                                                    Dictionary<string, ValidationMethodPair> ruleIdToMethodMap)
         {
@@ -206,6 +145,66 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return result;
+        }
+
+        public Validation Validate(
+            string ruleName,
+            bool dynamicValidation,
+            ref string matchedPattern,
+            ref IDictionary<string, string> groups,
+            ref string failureLevel,
+            ref string fingerprint,
+            ref string message,
+            out bool pluginCanPerformDynamicAnalysis)
+        {
+            pluginCanPerformDynamicAnalysis = false;
+
+            return ValidateHelper(
+                RuleNameToValidationMethods,
+                ruleName,
+                dynamicValidation,
+                ref matchedPattern,
+                ref groups,
+                ref failureLevel,
+                ref fingerprint,
+                ref message,
+                out pluginCanPerformDynamicAnalysis);
+        }
+
+        internal static Validation ValidateHelper(
+            Dictionary<string, ValidationMethodPair> ruleIdToMethodMap,
+            string ruleName,
+            bool dynamicValidation,
+            ref string matchedPattern,
+            ref IDictionary<string, string> groups,
+            ref string failureLevel,
+            ref string fingerprint,
+            ref string message,
+            out bool pluginCanPerformDynamicAnalysis)
+        {
+            pluginCanPerformDynamicAnalysis = false;
+            fingerprint = null;
+            message = null;
+
+            ValidationMethodPair validationPair = GetValidationMethodPair(ruleName, ruleIdToMethodMap);
+
+            if (validationPair == null)
+            {
+                return Validation.ValidatorNotFound;
+            }
+
+            Validation result = ValidateStaticHelper(validationPair.IsValidStatic,
+                                                     ref matchedPattern,
+                                                     ref groups,
+                                                     ref failureLevel,
+                                                     ref fingerprint,
+                                                     ref message);
+
+            pluginCanPerformDynamicAnalysis = validationPair.IsValidDynamic != null;
+
+            return (result != Validation.NoMatch && dynamicValidation && pluginCanPerformDynamicAnalysis) ?
+                ValidateDynamicHelper(validationPair.IsValidDynamic, ref fingerprint, ref message) :
+                result;
         }
 
         private Dictionary<string, ValidationMethodPair> LoadValidationAssemblies(IEnumerable<string> validatorPaths)

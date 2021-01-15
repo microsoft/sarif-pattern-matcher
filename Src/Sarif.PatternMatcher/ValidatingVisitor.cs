@@ -1,17 +1,14 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
-
-using Microsoft.Extensions.FileSystemGlobbing.Internal.PatternContexts;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatingVisitor : SarifRewritingVisitor
     {
-        private Run _run;
         private readonly ValidatorsCache _validators;
+        private Run _run;
 
         public ValidatingVisitor(ValidatorsCache validators)
         {

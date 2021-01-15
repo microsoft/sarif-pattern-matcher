@@ -44,7 +44,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         [Fact]
         public async Task Function_HttpAnalyze_FileWithPAT_Should_Return_SarifLog()
         {
-            string patTextFile = "SEC101.AzureDevOpsPersonalAccessToken_pats.txt";
+            const string patTextFile = "SEC101.AzureDevOpsPersonalAccessToken_pats.txt";
             IActionResult result = await HttpAnalyzeFunction.Analyze(
                 request: TestHelper.MockAnalyzeFunctionRequest(patTextFile, TestHelper.GetTestResourceContent(patTextFile)),
                 log: logger,
@@ -59,7 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             sarifLog.Should().NotBeNull();
             sarifLog.Runs.Count.Should().Be(1);
 
-            var results = sarifLog.Runs[0].Results;
+            IList<Result> results = sarifLog.Runs[0].Results;
             results.Should().NotBeNull();
 
             // 4 results: 2 warning 2 not applicable

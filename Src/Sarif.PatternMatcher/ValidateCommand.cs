@@ -15,6 +15,37 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     {
         protected override string ProcessingName => "validated";
 
+        public static IEnumerable<string> GetValidatorPaths(IEnumerable<string> searchDefinitionsPaths)
+        {
+            var validatorAssemblyPaths = new List<string>();
+
+            foreach (string searchDefinitionsPath in searchDefinitionsPaths)
+            {
+                var serializer = new JsonSerializer();
+
+                using var textReader = new StreamReader(searchDefinitionsPath);
+                using var jsonReader = new JsonTextReader(textReader);
+
+                SearchDefinitions definitions = serializer.Deserialize<SearchDefinitions>(jsonReader);
+
+                if (!string.IsNullOrEmpty(definitions.ValidatorsAssemblyName))
+                {
+                    string validatorAssemblyPath = Path.GetDirectoryName(searchDefinitionsPath);
+                    validatorAssemblyPath = Path.Combine(validatorAssemblyPath, definitions.ValidatorsAssemblyName);
+                    validatorAssemblyPaths.Add(validatorAssemblyPath);
+                }
+            }
+
+            if (validatorAssemblyPaths.Count == 0)
+            {
+                throw
+                    new InvalidOperationException(
+                        "No validator assembly paths could be retrieved from configured search definitions files.");
+            }
+
+            return validatorAssemblyPaths;
+        }
+
         public int Run(ValidateOptions options)
         {
             try
@@ -49,37 +80,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return SUCCESS;
-        }
-
-        public static IEnumerable<string> GetValidatorPaths(IEnumerable<string> searchDefinitionsPaths)
-        {
-            var validatorAssemblyPaths = new List<string>();
-
-            foreach (string searchDefinitionsPath in searchDefinitionsPaths)
-            {
-                JsonSerializer serializer = new JsonSerializer();
-
-                using var textReader = new StreamReader(searchDefinitionsPath);
-                using var jsonReader = new JsonTextReader(textReader);
-
-                SearchDefinitions definitions = serializer.Deserialize<SearchDefinitions>(jsonReader);
-
-                if (!string.IsNullOrEmpty(definitions.ValidatorsAssemblyName))
-                {
-                    string validatorAssemblyPath = Path.GetDirectoryName(searchDefinitionsPath);
-                    validatorAssemblyPath = Path.Combine(validatorAssemblyPath, definitions.ValidatorsAssemblyName);
-                    validatorAssemblyPaths.Add(validatorAssemblyPath);
-                }
-            }
-
-            if (validatorAssemblyPaths.Count == 0)
-            {
-                throw
-                    new InvalidOperationException(
-                        "No validator assembly paths could be retrieved from configured search definitions files.");
-            }
-
-            return validatorAssemblyPaths;
         }
     }
 }

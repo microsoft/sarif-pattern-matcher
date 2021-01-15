@@ -133,7 +133,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void SearchSkimmer_NoDetectionWhenMatchIsEmpty()
         {
-            MatchExpression expression = new MatchExpression();
+            var expression = new MatchExpression();
             SearchDefinition definition = CreateDefaultSearchDefinition(expression);
 
             string scanTargetContents = definition.Id;
@@ -286,8 +286,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             MatchExpression expression =
                 CreateGuidDetectingMatchExpression(
-                    allowFileExtension: allowFileExtension,
-                    denyFileExtension: denyFileExtension);
+                    denyFileExtension: denyFileExtension,
+                    allowFileExtension: allowFileExtension);
 
             definition ??= CreateDefaultSearchDefinition(expression);
 

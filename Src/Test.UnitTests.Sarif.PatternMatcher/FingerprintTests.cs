@@ -20,7 +20,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // Invariant: every string property on the fingerprint
             // should have a corresponding key name string constant.
 
-            List<string> unexpectedConditions = new List<string>();
+            var unexpectedConditions = new List<string>();
 
             var expectedKeyNames = new HashSet<string>();
 
@@ -95,7 +95,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             string fingerprintText = fingerprint.ToString();
 
-            List<string> unexpectedConditions = new List<string>();
+            var unexpectedConditions = new List<string>();
 
             foreach (string guidText in propertyValues.Keys)
             {
@@ -130,8 +130,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // render individual properties when set
 
             Type type = typeof(Fingerprint);
-            List<string> toStringUnexpectedConditions = new List<string>();
-            List<string> roundTrippingUnexpectedConditions = new List<string>();
+            var toStringUnexpectedConditions = new List<string>();
+            var roundTrippingUnexpectedConditions = new List<string>();
 
             foreach (PropertyInfo pi in type.GetProperties())
             {
