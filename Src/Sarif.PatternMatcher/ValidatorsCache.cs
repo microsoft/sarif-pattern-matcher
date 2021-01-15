@@ -14,7 +14,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private static string assemblyBaseFolder;
         private readonly IFileSystem _fileSystem;
         private readonly HashSet<string> _resolvedNames;
-        private Dictionary<string, ValidationMethodPair> _ruleNameoValidationMethods;
+        private Dictionary<string, ValidationMethodPair> _ruleNameToValidationMethods;
 
         public ValidatorsCache(IEnumerable<string> validatorBinaryPaths = null, IFileSystem fileSystem = null)
         {
@@ -29,6 +29,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public ISet<string> ValidatorPaths { get; }
 
+        public Dictionary<string, ValidationMethodPair> RuleNameToValidationMethods
+        {
+            get
+            {
+                if (_ruleNameToValidationMethods == null)
+                {
+                    lock (sync)
+                    {
+                        if (_ruleNameToValidationMethods == null)
+                        {
+                            _ruleNameToValidationMethods ??= LoadValidationAssemblies(ValidatorPaths);
+                        }
+                    }
+                }
+
+                return _ruleNameToValidationMethods;
+            }
+        }
+
+
         public Validation Validate(
             string ruleName,
             bool dynamicValidation,
@@ -41,19 +61,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             pluginCanPerformDynamicAnalysis = false;
 
-            if (_ruleNameoValidationMethods == null)
-            {
-                lock (sync)
-                {
-                    if (_ruleNameoValidationMethods == null)
-                    {
-                        _ruleNameoValidationMethods ??= LoadValidationAssemblies(ValidatorPaths);
-                    }
-                }
-            }
-
             return ValidateHelper(
-                _ruleNameoValidationMethods,
+                RuleNameToValidationMethods,
                 ruleName,
                 dynamicValidation,
                 ref matchedPattern,
@@ -79,16 +88,54 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint = null;
             message = null;
 
-            if (ruleName.Contains("/")) { ruleName = ruleName.Substring(ruleName.IndexOf("/") + 1); }
+            ValidationMethodPair validationPair = GetValidationMethodPair(ruleName, ruleIdToMethodMap);
 
-            string validatorName = ruleName + "Validator";
-
-            if (!ruleIdToMethodMap.TryGetValue(validatorName, out ValidationMethodPair validationPair))
+            if (validationPair == null)
             {
                 return Validation.ValidatorNotFound;
             }
 
+            Validation result = ValidateStaticHelper(validationPair.IsValidStatic,
+                                                     ref matchedPattern,
+                                                     ref groups,
+                                                     ref failureLevel,
+                                                     ref fingerprint,
+                                                     ref message);
+
+            if (result == Validation.NoMatch)
+            {
+                return result;
+            }
+
             pluginCanPerformDynamicAnalysis = validationPair.IsValidDynamic != null;
+
+            return (dynamicValidation && pluginCanPerformDynamicAnalysis) ?
+                ValidateDynamicHelper(validationPair.IsValidDynamic, ref fingerprint, ref message) :
+                result;
+        }
+
+        public static ValidationMethodPair GetValidationMethodPair(string ruleName,
+                                                                   Dictionary<string, ValidationMethodPair> ruleIdToMethodMap)
+        {
+            if (ruleName.Contains("/"))
+            {
+                ruleName = ruleName.Substring(ruleName.IndexOf("/") + 1); 
+            }
+
+            string validatorName = ruleName + "Validator";
+
+            ruleIdToMethodMap.TryGetValue(validatorName, out ValidationMethodPair validationPair);
+            return validationPair;
+        }
+
+        public static Validation ValidateStaticHelper(MethodInfo isValidStaticMethodInfo,
+                                                       ref string matchedPattern,
+                                                       ref IDictionary<string, string> groups,
+                                                       ref string failureLevel,
+                                                       ref string fingerprint,
+                                                       ref string message)
+        {
+            string validationText;
 
             object[] arguments = new object[]
             {
@@ -99,16 +146,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 message,
             };
 
-            string validationText = null;
-
             string currentDirectory = Environment.CurrentDirectory;
             try
             {
                 Environment.CurrentDirectory =
-                    Path.GetDirectoryName(validationPair.IsValidStatic.ReflectedType.Assembly.Location);
+                    Path.GetDirectoryName(isValidStaticMethodInfo.ReflectedType.Assembly.Location);
 
                 validationText =
-                    (string)validationPair.IsValidStatic.Invoke(
+                    (string)isValidStaticMethodInfo.Invoke(
                         obj: null, arguments);
             }
             finally
@@ -127,36 +172,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return Validation.ValidatorReturnedIllegalValidationState;
             }
 
-            if (!dynamicValidation || validationPair.IsValidDynamic == null)
-            {
-                if (validationPair.IsValidDynamic != null)
-                {
-                    // We could have validated but did not as it was not configured. Let the user know there is some functionality they can enable.
-                    message += " No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
-                }
+            return result;
+        }
 
-                return result;
-            }
+        public static Validation ValidateDynamicHelper(MethodInfo isValidDynamicMethodInfo,
+                                                        ref string fingerprint,
+                                                        ref string message)
+        {
+            string validationText;
 
-            if (result == Validation.NoMatch)
-            {
-                return result;
-            }
-
-            arguments = new object[]
+            object[] arguments = new object[]
             {
                 fingerprint,
                 message,
             };
 
-            currentDirectory = Environment.CurrentDirectory;
+            string currentDirectory = Environment.CurrentDirectory;
             try
             {
                 Environment.CurrentDirectory =
-                    Path.GetDirectoryName(validationPair.IsValidStatic.ReflectedType.Assembly.Location);
+                    Path.GetDirectoryName(isValidDynamicMethodInfo.ReflectedType.Assembly.Location);
 
                 validationText =
-                    (string)validationPair.IsValidDynamic.Invoke(
+                    (string)isValidDynamicMethodInfo.Invoke(
                         obj: null, arguments);
             }
             finally
@@ -167,7 +205,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint = (string)arguments[0];
             message = (string)arguments[1];
 
-            if (!Enum.TryParse(validationText, out result))
+            if (!Enum.TryParse(validationText, out Validation result))
             {
                 return Validation.ValidatorReturnedIllegalValidationState;
             }
