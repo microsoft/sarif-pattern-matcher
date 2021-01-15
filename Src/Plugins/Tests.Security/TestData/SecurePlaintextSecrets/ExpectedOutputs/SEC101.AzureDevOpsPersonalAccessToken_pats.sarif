@@ -23,7 +23,7 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains an apparent {1} {2}."
+                  "text": "'{0}' contains an apparent {1}{2}."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -70,7 +70,7 @@
             }
           ],
           "fingerprints": {
-            "SecretFingerprint/v1": "[pat/ado=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
+            "ValidationFingerprint/v1": "[pat/ado=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
           }
         },
         {
@@ -106,7 +106,7 @@
             }
           ],
           "fingerprints": {
-            "SecretFingerprint/v1": "[pat/ado=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
+            "ValidationFingerprint/v1": "[pat/ado=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
           }
         }
       ],
