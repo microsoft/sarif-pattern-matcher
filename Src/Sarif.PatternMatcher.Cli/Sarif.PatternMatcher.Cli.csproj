@@ -1,14 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.app.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.common.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
   
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <PackAsTool>true</PackAsTool>
+    <TargetFrameworks>netcoreapp3.1;net48</TargetFrameworks>
     <ToolCommandName>spam</ToolCommandName>
     <AssemblyName>spam</AssemblyName>
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Cli</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+    <PackAsTool>true</PackAsTool>    
   </PropertyGroup>
 
   <PropertyGroup Label="AssemblyAttributes">
