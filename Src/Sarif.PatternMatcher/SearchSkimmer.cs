@@ -287,6 +287,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                         ref validationSuffix,
                                                         ref validatorMessage,
                                                         pluginSupportsDynamicValidation);
+
+                    if (state == Validation.None ||
+                        state == Validation.NoMatch ||
+                        state == Validation.ValidatorReturnedIllegalValidationState)
+                    {
+                        continue;
+                    }
                 }
 
                 // If we're matching against decoded contents, the region should

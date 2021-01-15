@@ -102,14 +102,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                      ref fingerprint,
                                                      ref message);
 
-            if (result == Validation.NoMatch)
-            {
-                return result;
-            }
-
             pluginCanPerformDynamicAnalysis = validationPair.IsValidDynamic != null;
 
-            return (dynamicValidation && pluginCanPerformDynamicAnalysis) ?
+            return (result != Validation.NoMatch && dynamicValidation && pluginCanPerformDynamicAnalysis) ?
                 ValidateDynamicHelper(validationPair.IsValidDynamic, ref fingerprint, ref message) :
                 result;
         }
