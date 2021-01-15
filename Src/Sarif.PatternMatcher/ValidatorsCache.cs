@@ -114,7 +114,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             if (ruleName.Contains("/"))
             {
-                ruleName = ruleName.Substring(ruleName.IndexOf("/") + 1); 
+                ruleName = ruleName.Substring(ruleName.IndexOf("/") + 1);
             }
 
             string validatorName = ruleName + "Validator";

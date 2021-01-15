@@ -71,7 +71,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string KeyName { get; internal set; }
 
-
         public string Password { get; internal set; }
 
         public string SasToken { get; internal set; }
