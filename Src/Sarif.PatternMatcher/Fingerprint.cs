@@ -8,7 +8,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public struct Fingerprint
     {
-        public const string IdKeyName = "ud";
+        public const string IdKeyName = "id";
         public const string KeyKeyName = "key";
         public const string UriKeyName = "uri";
         public const string HmacKeyName = "hmac";
