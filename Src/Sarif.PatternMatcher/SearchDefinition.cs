@@ -24,5 +24,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public string FileNameAllowRegex { get; set; }
 
         public List<MatchExpression> MatchExpressions { get; set; }
+
+#if DEBUG
+        public override string ToString()
+        {
+            return $"{Id}.{Name}:{Level}";
+        }
+#endif
     }
 }
