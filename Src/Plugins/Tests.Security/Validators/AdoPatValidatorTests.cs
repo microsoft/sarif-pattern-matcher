@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class AzureDevOpsPersonalAccessTokenValidatorTests
+    public class AdoPatValidatorTests
     {
         internal class TestCase
         {
@@ -53,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 var groups = new Dictionary<string, string>();
 
                 string state =
-                    AzureDevOpsPersonalAccessTokenValidator.IsValidStatic(ref testCase.Input,
+                    AdoPatValidator.IsValidStatic(ref testCase.Input,
                                                                           ref groups,
                                                                           ref failureLevel,
                                                                           ref fingerprintText,
@@ -101,7 +101,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string fingerprintText = null, message = null;
 
                 Assert.Throws<ArgumentException>(() =>
-                    AzureDevOpsPersonalAccessTokenValidator.IsValidStatic(ref matchedPattern,
+                    AdoPatValidator.IsValidStatic(ref matchedPattern,
                                                                     ref groups,
                                                                     ref failureLevel,
                                                                     ref fingerprintText,

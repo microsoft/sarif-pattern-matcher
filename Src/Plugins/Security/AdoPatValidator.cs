@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal static class AzureDevOpsPersonalAccessTokenValidator
+    internal static class AdoPatValidator
     {
         /// <summary>
         /// Magic number to validate PAT checksum.
