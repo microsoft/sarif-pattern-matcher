@@ -7,7 +7,7 @@ using System.Net;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 {
-    internal abstract class ValidatorBase
+    public abstract class ValidatorBase
     {
         static ValidatorBase()
         {

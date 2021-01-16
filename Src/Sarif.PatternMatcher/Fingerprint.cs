@@ -8,6 +8,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public struct Fingerprint
     {
+        public const string IdKeyName = "id";
+        public const string KeyKeyName = "key";
         public const string UriKeyName = "uri";
         public const string HmacKeyName = "hmac";
         public const string HostKeyName = "host";
@@ -25,7 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public Fingerprint(string fingerprintText)
         {
-            Account = Hmac = Host = KeyName = Password = Uri = null;
+            Account = Hmac = Host = Id = Key = KeyName = Password = Uri = null;
             PersonalAccessTokenGitHub = PersonalAccessTokenAzureDevOps = null;
             SasToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
 
@@ -62,29 +64,33 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             GatherValue,
         }
 
-        public string Uri { get; internal set; }
+        public string Id { get; set; }
 
-        public string Hmac { get; internal set; }
+        public string Key { get; set; }
 
-        public string Host { get; internal set; }
+        public string Uri { get; set; }
 
-        public string Account { get; internal set; }
+        public string Hmac { get; set; }
 
-        public string KeyName { get; internal set; }
+        public string Host { get; set; }
 
-        public string Password { get; internal set; }
+        public string Account { get; set; }
 
-        public string SasToken { get; internal set; }
+        public string KeyName { get; set; }
 
-        public string Thumbprint { get; internal set; }
+        public string Password { get; set; }
 
-        public string SymmetricKey128Bit { get; internal set; }
+        public string SasToken { get; set; }
 
-        public string SymmetricKey256Bit { get; internal set; }
+        public string Thumbprint { get; set; }
 
-        public string PersonalAccessTokenGitHub { get; internal set; }
+        public string SymmetricKey128Bit { get; set; }
 
-        public string PersonalAccessTokenAzureDevOps { get; internal set; }
+        public string SymmetricKey256Bit { get; set; }
+
+        public string PersonalAccessTokenGitHub { get; set; }
+
+        public string PersonalAccessTokenAzureDevOps { get; set; }
 
         public string GetFingerprintText() => this.ToString();
 
@@ -93,6 +99,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             switch (keyName)
             {
+                case IdKeyName: { Id = value; break; }
+                case KeyKeyName: { Key = value; break; }
                 case UriKeyName: { Uri = value; break; }
                 case HmacKeyName: { Hmac = value; break; }
                 case HostKeyName: { Host = value; break; }
@@ -128,6 +136,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (Host != null)
             {
                 components.Add($"[{HostKeyName}={this.Host}]");
+            }
+
+            if (Id != null)
+            {
+                components.Add($"[{IdKeyName}={this.Id}]");
+            }
+
+            if (Key != null)
+            {
+                components.Add($"[{KeyKeyName}={this.Key}]");
             }
 
             if (KeyName != null)
