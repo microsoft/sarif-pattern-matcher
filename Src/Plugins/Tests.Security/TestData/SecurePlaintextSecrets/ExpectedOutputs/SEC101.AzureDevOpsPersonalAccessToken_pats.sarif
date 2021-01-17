@@ -23,7 +23,7 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains an apparent {1}{2}."
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -44,8 +44,11 @@
             "id": "Default",
             "arguments": [
               "SEC101.AzureDevOpsPersonalAccessToken_pats.txt",
+              "an apparent ",
               "base64-encoded",
-              "Azure DevOps personal access token"
+              "Azure DevOps personal access token",
+              "",
+              ""
             ]
           },
           "locations": [
@@ -80,8 +83,11 @@
             "id": "Default",
             "arguments": [
               "SEC101.AzureDevOpsPersonalAccessToken_pats.txt",
+              "an apparent ",
               "",
-              "Azure DevOps personal access token"
+              "Azure DevOps personal access token",
+              "",
+              ""
             ]
           },
           "locations": [
