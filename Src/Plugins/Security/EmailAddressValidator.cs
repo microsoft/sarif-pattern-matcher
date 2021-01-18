@@ -21,6 +21,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 var addr = new MailAddress(matchedPattern);
                 if (addr.Address == matchedPattern)
                 {
+                    string[] parts = matchedPattern.Split('@');
+                    if (parts.Length == 2)
+                    {
+                        fingerprintText = new Fingerprint()
+                        {
+                            Account = parts[0],
+                            Host = parts[1],
+                        }.ToString();
+                    }
+
                     return nameof(ValidationState.Unknown);
                 }
             }

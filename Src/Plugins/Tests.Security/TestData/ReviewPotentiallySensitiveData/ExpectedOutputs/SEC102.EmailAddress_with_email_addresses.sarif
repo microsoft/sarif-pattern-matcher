@@ -67,7 +67,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -99,7 +102,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=firstname.lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -131,7 +137,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -163,7 +172,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=subdomain.example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -195,7 +207,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=firstname+lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -227,7 +242,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=+lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -259,7 +277,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -291,7 +312,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=123.123.123.123]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -323,7 +347,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=1234567890][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -355,7 +382,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example-one.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -387,7 +417,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.co.jp]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -419,7 +452,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=firstname-lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -451,7 +487,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=-lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -483,7 +522,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -515,7 +557,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.name]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -547,7 +592,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.museum]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -579,7 +627,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressSurroundedBySpaces][host=fake.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -611,7 +662,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressSurroundedByTabs][host=fake.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -643,7 +697,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressSurroundedByPipes][host=fake.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -675,7 +732,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressSurroundedByDoubleQuotes][host=fake.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -707,7 +767,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressSurroundedBySingleQuotes][host=fake.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -739,7 +802,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=htmlAddress][host=fake.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -771,7 +837,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressInTags][host=fake.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -803,7 +872,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressPrecededByColon][host=fake.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -835,7 +907,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressPrecededByColonAndFollowedByPeriod][host=fake.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -867,7 +942,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=111.222.333.44444]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -899,7 +977,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email..email][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -931,7 +1012,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -963,7 +1047,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example..com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -995,7 +1082,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=Abc..123][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1027,7 +1117,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=123][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1059,7 +1152,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=unusual.com][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1091,7 +1187,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=com][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1123,7 +1222,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=unusual][host=strange.example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1155,7 +1257,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1187,7 +1292,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=example][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1219,7 +1327,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1251,7 +1362,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1283,7 +1397,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=user][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1315,7 +1432,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=endOfLineCheck][host=fake.com]"
+          }
         }
       ],
       "columnKind": "utf16CodeUnits"
