@@ -11,15 +11,15 @@ firstname-lastname@example.com //  Same issues as + symbol, 3 matches
 email@example.name //  Unusual top level domain
 email@example.museum //  Unusual and long top level domain (5 characters)
 //  We've so far tested the format of the email address itself.  Now examine the address's surroundings
- addressSurroundedBySpaces@fake.com 
-	addressSurroundedByTabs@fake.com	
-|addressSurroundedByPipes@fake.com|
-"addressSurroundedByDoubleQuotes@fake.com"
-'addressSurroundedBySingleQuotes@fake.com'
-<a href="mailto:htmlAddress@fake.com"
-<tag>addressInTags@fake.com</tag>
-contact me at the following email:addressPrecededByColon@fake.com
-contact me at the following email:addressPrecededByColonAndFollowedByPeriod@fake.com.  As I was saying...
+ addressSurroundedBySpaces@example.com 
+	addressSurroundedByTabs@example.com	
+|addressSurroundedByPipes@example.com|
+"addressSurroundedByDoubleQuotes@example.com"
+'addressSurroundedBySingleQuotes@example.com'
+<a href="mailto:htmlAddress@example.com"
+<tag>addressInTags@example.com</tag>
+contact me at the following email:addressPrecededByColon@example.com
+contact me at the following email:addressPrecededByColonAndFollowedByPeriod@example.com.  As I was saying...
 
 //  Above are valid emails (True positives) (commenting below so that a valid email is preceded by the beginning of the file)
 
@@ -55,4 +55,4 @@ email@-example.com
 sample@user@example.com //  Will create a partial match
 
 //  This last line is to ensure that an email address is followed by the end of the file:
-endOfLineCheck@fake.com
+endOfLineCheck@example.com

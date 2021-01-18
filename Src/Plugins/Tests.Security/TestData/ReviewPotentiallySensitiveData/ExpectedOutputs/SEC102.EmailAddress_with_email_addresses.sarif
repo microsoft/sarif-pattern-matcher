@@ -622,14 +622,14 @@
                   "charOffset": 897,
                   "charLength": 34,
                   "snippet": {
-                    "text": "addressSurroundedBySpaces@fake.com"
+                    "text": "addressSurroundedBySpaces@example.com"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=addressSurroundedBySpaces][host=fake.com]"
+            "ValidationFingerprint/v1": "[acct=addressSurroundedBySpaces][host=example.com]"
           }
         },
         {
@@ -657,14 +657,14 @@
                   "charOffset": 935,
                   "charLength": 32,
                   "snippet": {
-                    "text": "addressSurroundedByTabs@fake.com"
+                    "text": "addressSurroundedByTabs@example.com"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=addressSurroundedByTabs][host=fake.com]"
+            "ValidationFingerprint/v1": "[acct=addressSurroundedByTabs][host=example.com]"
           }
         },
         {
@@ -692,14 +692,14 @@
                   "charOffset": 971,
                   "charLength": 33,
                   "snippet": {
-                    "text": "addressSurroundedByPipes@fake.com"
+                    "text": "addressSurroundedByPipes@example.com"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=addressSurroundedByPipes][host=fake.com]"
+            "ValidationFingerprint/v1": "[acct=addressSurroundedByPipes][host=example.com]"
           }
         },
         {
@@ -727,14 +727,14 @@
                   "charOffset": 1008,
                   "charLength": 40,
                   "snippet": {
-                    "text": "addressSurroundedByDoubleQuotes@fake.com"
+                    "text": "addressSurroundedByDoubleQuotes@example.com"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=addressSurroundedByDoubleQuotes][host=fake.com]"
+            "ValidationFingerprint/v1": "[acct=addressSurroundedByDoubleQuotes][host=example.com]"
           }
         },
         {
@@ -762,14 +762,14 @@
                   "charOffset": 1052,
                   "charLength": 40,
                   "snippet": {
-                    "text": "addressSurroundedBySingleQuotes@fake.com"
+                    "text": "addressSurroundedBySingleQuotes@example.com"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=addressSurroundedBySingleQuotes][host=fake.com]"
+            "ValidationFingerprint/v1": "[acct=addressSurroundedBySingleQuotes][host=example.com]"
           }
         },
         {
@@ -797,14 +797,14 @@
                   "charOffset": 1111,
                   "charLength": 20,
                   "snippet": {
-                    "text": "htmlAddress@fake.com"
+                    "text": "htmlAddress@example.com"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=htmlAddress][host=fake.com]"
+            "ValidationFingerprint/v1": "[acct=htmlAddress][host=example.com]"
           }
         },
         {
@@ -832,14 +832,14 @@
                   "charOffset": 1139,
                   "charLength": 22,
                   "snippet": {
-                    "text": "addressInTags@fake.com"
+                    "text": "addressInTags@example.com"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=addressInTags][host=fake.com]"
+            "ValidationFingerprint/v1": "[acct=addressInTags][host=example.com]"
           }
         },
         {
@@ -867,14 +867,14 @@
                   "charOffset": 1203,
                   "charLength": 31,
                   "snippet": {
-                    "text": "addressPrecededByColon@fake.com"
+                    "text": "addressPrecededByColon@example.com"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=addressPrecededByColon][host=fake.com]"
+            "ValidationFingerprint/v1": "[acct=addressPrecededByColon][host=example.com]"
           }
         },
         {
@@ -902,14 +902,14 @@
                   "charOffset": 1270,
                   "charLength": 50,
                   "snippet": {
-                    "text": "addressPrecededByColonAndFollowedByPeriod@fake.com"
+                    "text": "addressPrecededByColonAndFollowedByPeriod@example.com"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=addressPrecededByColonAndFollowedByPeriod][host=fake.com]"
+            "ValidationFingerprint/v1": "[acct=addressPrecededByColonAndFollowedByPeriod][host=example.com]"
           }
         },
         {
@@ -1427,14 +1427,14 @@
                   "charOffset": 3161,
                   "charLength": 23,
                   "snippet": {
-                    "text": "endOfLineCheck@fake.com"
+                    "text": "endOfLineCheck@example.com"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=endOfLineCheck][host=fake.com]"
+            "ValidationFingerprint/v1": "[acct=endOfLineCheck][host=example.com]"
           }
         }
       ],
