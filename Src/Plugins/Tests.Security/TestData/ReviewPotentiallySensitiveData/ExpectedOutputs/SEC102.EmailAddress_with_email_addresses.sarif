@@ -67,7 +67,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -99,7 +102,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=firstname.lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -131,7 +137,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -163,7 +172,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=subdomain.example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -195,7 +207,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=firstname+lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -227,7 +242,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=+lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -259,7 +277,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -291,7 +312,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=123.123.123.123]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -323,7 +347,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=1234567890][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -355,7 +382,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example-one.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -387,7 +417,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.co.jp]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -419,7 +452,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=firstname-lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -451,7 +487,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=-lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -483,7 +522,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=lastname][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -515,7 +557,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.name]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -547,7 +592,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.museum]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -570,16 +618,19 @@
                   "startLine": 14,
                   "startColumn": 2,
                   "endLine": 14,
-                  "endColumn": 36,
+                  "endColumn": 39,
                   "charOffset": 897,
-                  "charLength": 34,
+                  "charLength": 37,
                   "snippet": {
-                    "text": "addressSurroundedBySpaces@fake.com"
+                    "text": "addressSurroundedBySpaces@example.com"
                   }
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressSurroundedBySpaces][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -602,16 +653,19 @@
                   "startLine": 15,
                   "startColumn": 2,
                   "endLine": 15,
-                  "endColumn": 34,
-                  "charOffset": 935,
-                  "charLength": 32,
+                  "endColumn": 37,
+                  "charOffset": 938,
+                  "charLength": 35,
                   "snippet": {
-                    "text": "addressSurroundedByTabs@fake.com"
+                    "text": "addressSurroundedByTabs@example.com"
                   }
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressSurroundedByTabs][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -634,16 +688,19 @@
                   "startLine": 16,
                   "startColumn": 2,
                   "endLine": 16,
-                  "endColumn": 35,
-                  "charOffset": 971,
-                  "charLength": 33,
+                  "endColumn": 38,
+                  "charOffset": 977,
+                  "charLength": 36,
                   "snippet": {
-                    "text": "addressSurroundedByPipes@fake.com"
+                    "text": "addressSurroundedByPipes@example.com"
                   }
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressSurroundedByPipes][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -666,16 +723,19 @@
                   "startLine": 17,
                   "startColumn": 2,
                   "endLine": 17,
-                  "endColumn": 42,
-                  "charOffset": 1008,
-                  "charLength": 40,
+                  "endColumn": 45,
+                  "charOffset": 1017,
+                  "charLength": 43,
                   "snippet": {
-                    "text": "addressSurroundedByDoubleQuotes@fake.com"
+                    "text": "addressSurroundedByDoubleQuotes@example.com"
                   }
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressSurroundedByDoubleQuotes][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -698,16 +758,19 @@
                   "startLine": 18,
                   "startColumn": 2,
                   "endLine": 18,
-                  "endColumn": 42,
-                  "charOffset": 1052,
-                  "charLength": 40,
+                  "endColumn": 45,
+                  "charOffset": 1064,
+                  "charLength": 43,
                   "snippet": {
-                    "text": "addressSurroundedBySingleQuotes@fake.com"
+                    "text": "addressSurroundedBySingleQuotes@example.com"
                   }
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressSurroundedBySingleQuotes][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -730,16 +793,19 @@
                   "startLine": 19,
                   "startColumn": 17,
                   "endLine": 19,
-                  "endColumn": 37,
-                  "charOffset": 1111,
-                  "charLength": 20,
+                  "endColumn": 40,
+                  "charOffset": 1126,
+                  "charLength": 23,
                   "snippet": {
-                    "text": "htmlAddress@fake.com"
+                    "text": "htmlAddress@example.com"
                   }
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=htmlAddress][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -762,16 +828,19 @@
                   "startLine": 20,
                   "startColumn": 6,
                   "endLine": 20,
-                  "endColumn": 28,
-                  "charOffset": 1139,
-                  "charLength": 22,
+                  "endColumn": 31,
+                  "charOffset": 1157,
+                  "charLength": 25,
                   "snippet": {
-                    "text": "addressInTags@fake.com"
+                    "text": "addressInTags@example.com"
                   }
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressInTags][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -794,16 +863,19 @@
                   "startLine": 21,
                   "startColumn": 35,
                   "endLine": 21,
-                  "endColumn": 66,
-                  "charOffset": 1203,
-                  "charLength": 31,
+                  "endColumn": 69,
+                  "charOffset": 1224,
+                  "charLength": 34,
                   "snippet": {
-                    "text": "addressPrecededByColon@fake.com"
+                    "text": "addressPrecededByColon@example.com"
                   }
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressPrecededByColon][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -826,16 +898,19 @@
                   "startLine": 22,
                   "startColumn": 35,
                   "endLine": 22,
-                  "endColumn": 85,
-                  "charOffset": 1270,
-                  "charLength": 50,
+                  "endColumn": 88,
+                  "charOffset": 1294,
+                  "charLength": 53,
                   "snippet": {
-                    "text": "addressPrecededByColonAndFollowedByPeriod@fake.com"
+                    "text": "addressPrecededByColonAndFollowedByPeriod@example.com"
                   }
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=addressPrecededByColonAndFollowedByPeriod][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -859,7 +934,7 @@
                   "startColumn": 1,
                   "endLine": 27,
                   "endColumn": 24,
-                  "charOffset": 1498,
+                  "charOffset": 1525,
                   "charLength": 23,
                   "snippet": {
                     "text": "email@111.222.333.44444"
@@ -867,7 +942,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=111.222.333.44444]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -891,7 +969,7 @@
                   "startColumn": 1,
                   "endLine": 28,
                   "endColumn": 25,
-                  "charOffset": 1682,
+                  "charOffset": 1709,
                   "charLength": 24,
                   "snippet": {
                     "text": "email..email@example.com"
@@ -899,7 +977,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email..email][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -923,7 +1004,7 @@
                   "startColumn": 8,
                   "endLine": 28,
                   "endColumn": 25,
-                  "charOffset": 1689,
+                  "charOffset": 1716,
                   "charLength": 17,
                   "snippet": {
                     "text": "email@example.com"
@@ -931,7 +1012,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -955,7 +1039,7 @@
                   "startColumn": 1,
                   "endLine": 29,
                   "endColumn": 19,
-                  "charOffset": 1868,
+                  "charOffset": 1895,
                   "charLength": 18,
                   "snippet": {
                     "text": "email@example..com"
@@ -963,7 +1047,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example..com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -987,7 +1074,7 @@
                   "startColumn": 1,
                   "endLine": 30,
                   "endColumn": 21,
-                  "charOffset": 1906,
+                  "charOffset": 1933,
                   "charLength": 20,
                   "snippet": {
                     "text": "Abc..123@example.com"
@@ -995,7 +1082,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=Abc..123][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1019,7 +1109,7 @@
                   "startColumn": 6,
                   "endLine": 30,
                   "endColumn": 21,
-                  "charOffset": 1911,
+                  "charOffset": 1938,
                   "charLength": 15,
                   "snippet": {
                     "text": "123@example.com"
@@ -1027,7 +1117,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=123][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1051,7 +1144,7 @@
                   "startColumn": 18,
                   "endLine": 38,
                   "endColumn": 41,
-                  "charOffset": 2343,
+                  "charOffset": 2370,
                   "charLength": 23,
                   "snippet": {
                     "text": "unusual.com@example.com"
@@ -1059,7 +1152,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=unusual.com][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1083,7 +1179,7 @@
                   "startColumn": 26,
                   "endLine": 38,
                   "endColumn": 41,
-                  "charOffset": 2351,
+                  "charOffset": 2378,
                   "charLength": 15,
                   "snippet": {
                     "text": "com@example.com"
@@ -1091,7 +1187,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=com][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1115,7 +1214,7 @@
                   "startColumn": 39,
                   "endLine": 39,
                   "endColumn": 66,
-                  "charOffset": 2462,
+                  "charOffset": 2489,
                   "charLength": 27,
                   "snippet": {
                     "text": "unusual@strange.example.com"
@@ -1123,7 +1222,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=unusual][host=strange.example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1147,7 +1249,7 @@
                   "startColumn": 12,
                   "endLine": 46,
                   "endColumn": 29,
-                  "charOffset": 2692,
+                  "charOffset": 2719,
                   "charLength": 17,
                   "snippet": {
                     "text": "email@example.com"
@@ -1155,7 +1257,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1179,7 +1284,7 @@
                   "startColumn": 7,
                   "endLine": 48,
                   "endColumn": 26,
-                  "charOffset": 2769,
+                  "charOffset": 2796,
                   "charLength": 19,
                   "snippet": {
                     "text": "example@example.com"
@@ -1187,7 +1292,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=example][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1211,7 +1319,7 @@
                   "startColumn": 2,
                   "endLine": 49,
                   "endColumn": 19,
-                  "charOffset": 2823,
+                  "charOffset": 2850,
                   "charLength": 17,
                   "snippet": {
                     "text": "email@example.com"
@@ -1219,7 +1327,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1243,7 +1354,7 @@
                   "startColumn": 1,
                   "endLine": 52,
                   "endColumn": 18,
-                  "charOffset": 2913,
+                  "charOffset": 2940,
                   "charLength": 17,
                   "snippet": {
                     "text": "email@example.com"
@@ -1251,7 +1362,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=email][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1275,7 +1389,7 @@
                   "startColumn": 8,
                   "endLine": 55,
                   "endColumn": 24,
-                  "charOffset": 3018,
+                  "charOffset": 3045,
                   "charLength": 16,
                   "snippet": {
                     "text": "user@example.com"
@@ -1283,7 +1397,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=user][host=example.com]"
+          }
         },
         {
           "ruleId": "SEC102/001",
@@ -1306,16 +1423,19 @@
                   "startLine": 58,
                   "startColumn": 1,
                   "endLine": 58,
-                  "endColumn": 24,
-                  "charOffset": 3161,
-                  "charLength": 23,
+                  "endColumn": 27,
+                  "charOffset": 3188,
+                  "charLength": 26,
                   "snippet": {
-                    "text": "endOfLineCheck@fake.com"
+                    "text": "endOfLineCheck@example.com"
                   }
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=endOfLineCheck][host=example.com]"
+          }
         }
       ],
       "columnKind": "utf16CodeUnits"
