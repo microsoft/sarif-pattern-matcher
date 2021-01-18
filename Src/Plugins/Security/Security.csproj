@@ -5,6 +5,7 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.plugins.props" />
 
   <PropertyGroup Label="AssemblyAttributes">
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.Security</RootNamespace>
     <PackageId>Sarif.PatternMatcher.Security</PackageId>
   </PropertyGroup>
@@ -34,6 +35,10 @@
     <SpamFiles Remove="SEC102.ReviewPotentiallySensitiveData.json" />
     <SpamFiles Remove="SEC103.ReviewPotentiallySensitiveFiles.json" />
     <SpamFiles Remove="SEC104.UseSecureApi.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="5.0.1" />
   </ItemGroup>
 
   <Target Name="CopyingSpam" AfterTargets="Build">
