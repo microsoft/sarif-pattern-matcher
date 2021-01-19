@@ -44,5 +44,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public IDictionary<string, SimpleFix> Fixes { get; set; }
 
         public Dictionary<string, int> ArgumentNameToIndexMap { get; set; }
+
+        public bool IsValidatorEnabled { get; set; } = true;
     }
 }
