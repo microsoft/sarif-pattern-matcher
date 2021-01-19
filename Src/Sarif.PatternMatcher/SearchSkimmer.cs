@@ -402,7 +402,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string validationPrefix = string.Empty;
                 string validationSuffix = string.Empty;
 
-                if (_validators != null)
+                if (_validators != null && matchExpression.IsValidatorEnabled)
                 {
                     state = _validators.Validate(reportingDescriptor.Name,
                                                 context.DynamicValidation,
@@ -503,7 +503,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string fingerprintText = null, validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
 
-            if (_validators != null)
+            if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 Validation state = _validators.Validate(reportingDescriptor.Name,
                                 context.DynamicValidation,
