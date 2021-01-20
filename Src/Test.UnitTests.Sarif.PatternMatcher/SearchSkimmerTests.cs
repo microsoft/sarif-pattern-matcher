@@ -45,6 +45,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
+        public void SearchSkimmer_RecoverValidatorMessage()
+        {
+            const string validationMessage = " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)";
+            string dynamicValidationMessage = SearchSkimmer.RecoverValidatorMessage(validationMessage);
+            dynamicValidationMessage.Should().Be(validationMessage.Replace(" (", string.Empty).Replace(")", string.Empty));
+        }
+
+        [Fact]
         public void SearchSkimmer_DetectsBase64EncodedPattern()
         {
             MatchExpression expr = CreateGuidDetectingMatchExpression();
