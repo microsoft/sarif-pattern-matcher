@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     {
         public const string GlobalFingerprint = "GlobalFingerprint/v1";
         public const string ValidationFingerprint = "ValidationFingerprint/v1";
-        public const string DynamicValidationNotEnabled = " No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
+        public const string DynamicValidationNotEnabled = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
 
         private const string Base64DecodingFormatString = "\\b(?i)[0-9a-z\\/+]{0}";
 
@@ -337,11 +337,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         internal static string RecoverValidatorMessage(string validatorMessage)
         {
-            int dynamicValidationMessageIndex = validatorMessage.IndexOf(DynamicValidationNotEnabled);
+            int dynamicValidationMessageIndex = validatorMessage.IndexOf(DynamicValidationNotEnabled, StringComparison.OrdinalIgnoreCase);
 
             if (dynamicValidationMessageIndex == -1) { return null; }
 
-            return validatorMessage.Substring(" (".Length, dynamicValidationMessageIndex - ".)".Length);
+            return validatorMessage.Substring(dynamicValidationMessageIndex, DynamicValidationNotEnabled.Length);
         }
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)

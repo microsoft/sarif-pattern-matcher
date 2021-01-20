@@ -195,45 +195,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return searchDefinitions;
         }
 
-#if DEBUG
-        private static void ValidateSharedStringsExpansion(SearchDefinitions searchDefinitions)
-        {
-            foreach (SearchDefinition definition in searchDefinitions.Definitions)
-            {
-                ValidateSharedStringsExpansion(definition.FileNameDenyRegex);
-                ValidateSharedStringsExpansion(definition.FileNameAllowRegex);
-
-                foreach (MatchExpression matchExpression in definition.MatchExpressions)
-                {
-                    ValidateSharedStringsExpansion(matchExpression.ContentsRegex);
-                    ValidateSharedStringsExpansion(matchExpression.FileNameDenyRegex);
-                    ValidateSharedStringsExpansion(matchExpression.FileNameAllowRegex);
-                }
-            }
-        }
-
-        private static void ValidateSharedStringsExpansion(string text)
-        {
-            if (string.IsNullOrEmpty(text)) { return; }
-
-            if (text.StartsWith("access_token"))
-            {
-                return;
-            }
-
-            // We failed to expand a pattern that is entirely rendered
-            // via a shared string.
-            Debug.Assert(!text.StartsWith("$"),
-                         "Failed to expand shared string.");
-
-            // We failed to expand a pattern within an expression. We
-            // trim a trailing '$' as it is commonly used to denote
-            // and end-of-line in search patterns.
-            Debug.Assert(!text.Substring(0, text.Length - 1).Contains("$"),
-                         "Failed to expand shared string.");
-        }
-#endif
-
         internal static Dictionary<string, string> LoadSharedStrings(string sharedStringsFullPath, IFileSystem fileSystem)
         {
             var result = new Dictionary<string, string>();
@@ -274,6 +235,45 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             return context;
         }
+
+#if DEBUG
+        private static void ValidateSharedStringsExpansion(SearchDefinitions searchDefinitions)
+        {
+            foreach (SearchDefinition definition in searchDefinitions.Definitions)
+            {
+                ValidateSharedStringsExpansion(definition.FileNameDenyRegex);
+                ValidateSharedStringsExpansion(definition.FileNameAllowRegex);
+
+                foreach (MatchExpression matchExpression in definition.MatchExpressions)
+                {
+                    ValidateSharedStringsExpansion(matchExpression.ContentsRegex);
+                    ValidateSharedStringsExpansion(matchExpression.FileNameDenyRegex);
+                    ValidateSharedStringsExpansion(matchExpression.FileNameAllowRegex);
+                }
+            }
+        }
+
+        private static void ValidateSharedStringsExpansion(string text)
+        {
+            if (string.IsNullOrEmpty(text)) { return; }
+
+            if (text.StartsWith("access_token"))
+            {
+                return;
+            }
+
+            // We failed to expand a pattern that is entirely rendered
+            // via a shared string.
+            Debug.Assert(!text.StartsWith("$"),
+                         "Failed to expand shared string.");
+
+            // We failed to expand a pattern within an expression. We
+            // trim a trailing '$' as it is commonly used to denote
+            // and end-of-line in search patterns.
+            Debug.Assert(!text.Substring(0, text.Length - 1).Contains("$"),
+                         "Failed to expand shared string.");
+        }
+#endif
 
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
         {
