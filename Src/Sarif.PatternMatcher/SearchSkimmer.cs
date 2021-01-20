@@ -213,18 +213,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 case Validation.None:
                 case Validation.ValidatorReturnedIllegalValidationState:
                 {
-                    // An illegal state '{0}' was returned validating a result for check '{1}'.
-                    context.Logger.LogToolNotification(
-                        Errors.CreateNotification(
-                            context.TargetUri,
-                            "ERR998.ValidatorReturnedIllegalValidationState",
-                            context.Rule.Id,
-                            FailureLevel.Error,
-                            exception: null,
-                            persistExceptionStack: false,
-                            messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
-                            context.TargetUri.GetFileName(),
-                            context.Rule.Id));
+                    if (context != null)
+                    {
+                        // An illegal state '{0}' was returned validating a result for check '{1}'.
+                        context.Logger.LogToolNotification(
+                            Errors.CreateNotification(
+                                context.TargetUri,
+                                "ERR998.ValidatorReturnedIllegalValidationState",
+                                context.Rule.Id,
+                                FailureLevel.Error,
+                                exception: null,
+                                persistExceptionStack: false,
+                                messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
+                                context.TargetUri.GetFileName(),
+                                context.Rule.Id));
+                    }
 
                     level = FailureLevel.Error;
                     return;
@@ -291,7 +294,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     validationSuffix = string.Empty;
 
                     validationPrefix = "an apparent ";
-                    if (!context.DynamicValidation)
+                    if (context?.DynamicValidation == false)
                     {
                         if (pluginSupportsDynamicValidation)
                         {
