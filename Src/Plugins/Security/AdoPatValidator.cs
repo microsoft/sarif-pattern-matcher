@@ -149,7 +149,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             if (string.IsNullOrEmpty(inputString))
             {
-                return new byte[0];
+                return Array.Empty<byte>();
             }
 
             int outputSize = inputString.Length * OutputPerByteSize / InputPerByteSize;

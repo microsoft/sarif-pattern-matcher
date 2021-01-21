@@ -29,11 +29,11 @@ namespace Microsoft.RE2.Managed
             var sample = String8.Convert("using Microsoft.VisualStudio.TestTools.UnitTesting;", ref buffer2);
 
             // Null and Empty
-            Assert.Throws<ArgumentException>(() => Regex2.IsMatch(sample, null));
-            Assert.Throws<ArgumentException>(() => Regex2.IsMatch(sample, ""));
+            Assert.Throws<ArgumentNullException>(() => Regex2.IsMatch(sample, null));
+            Assert.Throws<ArgumentNullException>(() => Regex2.IsMatch(sample, ""));
             Assert.False(Regex2.IsMatch(String8.Empty, "[A-Z]"));
-            Assert.Throws<ArgumentException>(() => Regex2.Matches(sample, null).FirstOrDefault());
-            Assert.Throws<ArgumentException>(() => Regex2.Matches(sample, "").FirstOrDefault());
+            Assert.Throws<ArgumentNullException>(() => Regex2.Matches(sample, null).FirstOrDefault());
+            Assert.Throws<ArgumentNullException>(() => Regex2.Matches(sample, "").FirstOrDefault());
 
             // Basic Expressions
             Assert.True(Regex2.IsMatch(String8.Convert("Interesting", ref buffer), "[A-Z]"));
