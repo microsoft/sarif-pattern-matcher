@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.app.props" />
   
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <OutputType>Exe</OutputType>
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Benchmark</RootNamespace>
   </PropertyGroup>
   

@@ -41,19 +41,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             catch (Exception e)
             {
                 throw new ArgumentException(
-                    nameof(fingerprintText),
                     $"'{e.GetType().Name}' exception raised parsing potentially malformed " +
-                    $"fingerprint: '{fingerprintText}'. Exception message: '{e.Message}'");
+                    $"fingerprint: '{fingerprintText}'. Exception message: '{e.Message}'",
+                    nameof(fingerprintText));
             }
 
             string computedFingerprint = this.GetFingerprintText();
             if (!computedFingerprint.Equals(fingerprintText))
             {
                 throw new ArgumentException(
-                    nameof(fingerprintText),
                     $"Fingerprint did not round-trip. Ensure properties are in sorted order, that " +
                     $"there are no spaces between components, etc. Initializer was '{fingerprintText}'. " +
-                    $"Valid computed fingerprint was '{computedFingerprint}'.");
+                    $"Valid computed fingerprint was '{computedFingerprint}'.",
+                    nameof(fingerprintText));
             }
         }
 
@@ -113,7 +113,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 case SymmetricKey256BitKeyName: { SymmetricKey256Bit = value; break; }
                 case PersonalAccessTokenGitHubKeyName: { PersonalAccessTokenGitHub = value; break; }
                 case PersonalAccessTokenAzureDevOpsKeyName: { PersonalAccessTokenAzureDevOps = value; break; }
-                default: throw new ArgumentException(nameof(keyName));
+                default: throw new ArgumentOutOfRangeException(nameof(keyName));
             }
         }
 #pragma warning restore SA1107

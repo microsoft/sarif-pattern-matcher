@@ -209,7 +209,7 @@ namespace Microsoft.RE2.Managed
         // Get the integer ID of the cached copy of the Regex from the native side; cache it if it hasn't been parsed.
         private static unsafe int BuildRegex(ParsedRegexCache cache, string expression, RegexOptions options)
         {
-            if (string.IsNullOrEmpty(expression)) { throw new ArgumentException("expression"); }
+            if (string.IsNullOrEmpty(expression)) { throw new ArgumentNullException(nameof(expression)); }
 
             try
             {
@@ -276,7 +276,7 @@ namespace Microsoft.RE2.Managed
 
             // Validate matches
             if (matches == null) { throw new ArgumentNullException(nameof(matches)); }
-            if (matches.Length == 0) { throw new ArgumentException("matches"); }
+            if (matches.Length == 0) { throw new ArgumentException("Matches length shoul be greater than zero", nameof(matches)); }
 
             // Validate timeout (just return immediately if timeout expired)
             if (timeoutMs < 0) { return 0; }
