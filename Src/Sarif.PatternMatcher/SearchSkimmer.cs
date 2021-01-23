@@ -301,7 +301,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             // This indicates that dynamic validation was disabled but we
                             // passed this result to a validator that could have performed
                             // this work.
-                            validatorMessage += DynamicValidationNotEnabled;
+                            validatorMessage += " " + DynamicValidationNotEnabled;
                         }
                     }
                     else if (pluginSupportsDynamicValidation)
