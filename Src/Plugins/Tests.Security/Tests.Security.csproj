@@ -28,6 +28,4 @@
     <ProjectReference Include="..\..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties testdata_4reviewpotentiallysensitivefiles_4expectedoutputs_4sec103_1certificatefile_3cer_3encoded_1sarif__JsonSchema="" /></VisualStudio></ProjectExtensions>
-
 </Project>
