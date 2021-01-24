@@ -14,6 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_007.AwsCredentials.sarif" />
+    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_007.AwsCredentials.txt" />
     <None Remove="TestData\UseSecureApi\ExpectedOutputs\SEC101_005.SlackTokens.sarif" />
     <None Remove="TestData\UseSecureApi\Inputs\SEC104.Memory.Allocation_alloca.c" />
   </ItemGroup>
@@ -25,7 +27,5 @@
     <ProjectReference Include="..\..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
     <ProjectReference Include="..\..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
   </ItemGroup>
-
-  <ProjectExtensions><VisualStudio><UserProperties testdata_4reviewpotentiallysensitivefiles_4expectedoutputs_4sec103_1certificatefile_3cer_3encoded_1sarif__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

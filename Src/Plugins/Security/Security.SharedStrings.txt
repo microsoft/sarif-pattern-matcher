@@ -21,5 +21,6 @@
   $BinaryFiles=(?i)\.(bmp|dll|exe|gif|jpe?g|lock|pack|png|psd|tar\.gz|tiff?|ttf|xcf|zip)$
   $SourceFiles=(?i)\.(azure|bat|c|cmd|config|cpp|cs|cscfg|definitions|dtsx|h|hxx|hpp|ini|java|jsx?|json|keys|kt|loadtest|m|md|php|properties|ps1|psm1|pubxml|py|resx|sample|sql|ste|swift|test|tsx?|txt|waz|xml)$
 
+  $AwsCredentials=(?s)\b(?<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}).+?\b(?i)(?<key>[0-9a-z\/+]{40})
   $SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
 
