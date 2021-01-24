@@ -4,7 +4,7 @@
     {
       "Name": "ReviewPotentiallySensitiveFiles",
       "Id": "SEC103",
-      "Level": "Error",
+      "Level": "Warning",
       "Description": "Review potentially sensitive files in versioned engineering content and other locations for security risk.",
       "Message": "'{0:scanTarget}' is {1:validationPrefix}{2:fileKind}{3:validationSuffix}{4:validatorMessage}.",
       "MatchExpressions": [
