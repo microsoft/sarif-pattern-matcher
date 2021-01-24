@@ -6,7 +6,7 @@
       "Name": "DoNotUseBannedApi/Memory/Allocation",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
+      "Level": "Warning",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {

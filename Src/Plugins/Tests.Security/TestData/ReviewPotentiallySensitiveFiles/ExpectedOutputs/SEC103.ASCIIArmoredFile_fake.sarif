@@ -40,7 +40,6 @@
         {
           "ruleId": "SEC103/002",
           "ruleIndex": 0,
-          "level": "error",
           "message": {
             "id": "Default",
             "arguments": [
