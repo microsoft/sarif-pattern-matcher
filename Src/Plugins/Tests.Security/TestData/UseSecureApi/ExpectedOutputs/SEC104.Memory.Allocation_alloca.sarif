@@ -40,7 +40,6 @@
         {
           "ruleId": "SEC104/001",
           "ruleIndex": 0,
-          "level": "error",
           "message": {
             "id": "_alloca",
             "arguments": [
