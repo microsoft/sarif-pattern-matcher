@@ -105,11 +105,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 
         public static string ReturnUnauthorizedAccess(ref string message,
                                                       string asset,
+                                                      string assetIdentifier = null,
                                                       string account = null)
         {
+            assetIdentifier += assetIdentifier != null ? " " : string.Empty;
             message = (account == null) ?
-                $"The provided secret is not authorized to access '{asset}'." :
-                $"The provided '{account}' account secret is not authorized to access '{asset}'.";
+                $"The provided secret is not authorized to access {assetIdentifier}'{asset}'." :
+                $"The provided '{account}' account secret is not authorized to access {assetIdentifier}'{asset}'.";
 
             return nameof(ValidationState.Unauthorized);
         }
