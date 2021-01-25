@@ -27,23 +27,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Security.SharedStrings.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <SpamFiles Remove="SEC101.SecurePlaintextSecrets.json" />
-    <SpamFiles Remove="SEC102.ReviewPotentiallySensitiveData.json" />
-    <SpamFiles Remove="SEC103.ReviewPotentiallySensitiveFiles.json" />
-    <SpamFiles Remove="SEC104.UseSecureApi.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AWSSDK.IdentityManagement" Version="3.5.0.61" />
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
   </ItemGroup>
 
   <Target Name="CopyingSpam" AfterTargets="Build">
-    <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="Security.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
   </Target>
   
 </Project>
