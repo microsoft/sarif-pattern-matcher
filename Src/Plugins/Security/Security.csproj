@@ -42,6 +42,10 @@
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\RE2.Managed\RE2.Managed.csproj" />
+  </ItemGroup>
+
   <Target Name="CopyingSpam" AfterTargets="Build">
     <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
   </Target>

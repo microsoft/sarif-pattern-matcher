@@ -3,23 +3,30 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 using Amazon.IdentityManagement;
 using Amazon.IdentityManagement.Model;
-using Amazon.IdentityManagement.Model.Internal.MarshallTransformations;
-using Amazon.Runtime;
+
+using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     internal class AwsCredentialsValidator : ValidatorBase
     {
-        internal static AwsCredentialsValidator Instance = new AwsCredentialsValidator();
+        internal static IRegex RegexEngine;
+        internal static AwsCredentialsValidator Instance;
+
+        private const string UserPrefix = "User: ";
+        private const string UserSuffix = " is not authorized";
+        private static readonly string AwsUserExpression = $"^{UserPrefix}.+?{UserSuffix}";
+
+        static AwsCredentialsValidator()
+        {
+            RegexEngine = RE2Regex.Instance;
+            Instance = new AwsCredentialsValidator();
+
+            RegexEngine.IsMatch(string.Empty, AwsUserExpression);
+        }
 
         public static string IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
@@ -75,9 +82,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 GetAccountAuthorizationDetailsRequest request;
                 GetAccountAuthorizationDetailsResponse response;
 
-                GetUserRequest userRequest = new GetUserRequest();
-                GetUserResponse userResponse = iamClient.GetUserAsync().GetAwaiter().GetResult();
-
                 request = new GetAccountAuthorizationDetailsRequest();
                 response = iamClient.GetAccountAuthorizationDetailsAsync(request).GetAwaiter().GetResult();
 
@@ -87,6 +91,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 switch (e.ErrorCode)
                 {
+                    case "AccessDenied":
+                    {
+                        FlexMatch match = RegexEngine.Match(e.Message, AwsUserExpression);
+
+                        // May return a message containing user id details such as:
+                        // User: arn:aws:iam::123456123456:user/example.com@@dead1234dead1234dead1234 is not
+                        // authorized to perform: iam:GetAccountAuthorizationDetails on resource: *
+
+                        if (match.Success)
+                        {
+                            int trimmedChars = "User: ".Length + "is not authorized ".Length;
+                            string iamUser = match.Value.String.Substring("User: ".Length, match.Value.String.Length - trimmedChars);
+                            message = $"the compromised AWS identity is '{iamUser}";
+                        }
+
+                        return nameof(ValidationState.Authorized);
+                    }
                     case "InvalidClientTokenId":
                     case "SignatureDoesNotMatch":
                     {
