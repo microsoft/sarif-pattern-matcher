@@ -71,8 +71,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 
         public static string ReturnValueForUnknownHostException(ref string message, Exception e, string asset)
         {
-            if (e.Message.Equals("No such host is known.") ||
-                e.InnerException?.Message.Equals("No such host is known.") == true)
+            if (e.Message.StartsWith("No such host is known") ||
+                e.InnerException?.Message.StartsWith("No such host is known") == true)
             {
                 return ReturnUnknownHost(ref message, asset);
             }
