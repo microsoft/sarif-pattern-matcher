@@ -61,7 +61,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An illegal failure level &apos;{0}&apos; was returned validating a result for check &apos;{1}&apos;..
+        ///   Looks up a localized string similar to An illegal failure level &apos;{0}&apos; was returned running check &apos;{1}&apos; against &apos;{2}&apos;..
         /// </summary>
         internal static string ERR998_ValidatorReturnedIllegalResultLevel {
             get {
@@ -70,7 +70,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An illegal state &apos;{0}&apos; was returned validating a result for check &apos;{1}&apos;..
+        ///   Looks up a localized string similar to An illegal state was returned running check &apos;{0}&apos; against &apos;{1}&apos; ({2})..
         /// </summary>
         internal static string ERR998_ValidatorReturnedIllegalValidationState {
             get {

@@ -141,6 +141,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (!Enum.TryParse(validationText, out Validation result))
             {
+                message = $"the unrecognized value was '{validationText}'";
                 return Validation.ValidatorReturnedIllegalValidationState;
             }
 

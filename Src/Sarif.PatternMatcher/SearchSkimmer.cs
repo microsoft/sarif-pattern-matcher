@@ -215,7 +215,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     if (context != null)
                     {
-                        // An illegal state '{0}' was returned validating a result for check '{1}'.
+                        // An illegal state was returned running check '{0}' against '{1}' ({2}).
                         context.Logger.LogToolNotification(
                             Errors.CreateNotification(
                                 context.TargetUri,
@@ -225,8 +225,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 exception: null,
                                 persistExceptionStack: false,
                                 messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
+                                context.Rule.Id,
                                 context.TargetUri.GetFileName(),
-                                context.Rule.Id));
+                                validatorMessage));
                     }
 
                     level = FailureLevel.Error;
@@ -264,7 +265,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
-                case Validation.HostUnknown:
+                case Validation.UnknownHost:
                 {
                     level = FailureLevel.Warning;
 
@@ -418,7 +419,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     if (!Enum.TryParse<FailureLevel>(levelText, out level))
                     {
-                        // An illegal failure level '{0}' was returned validating a result for check '{1}'.
+                        // An illegal failure level '{0}' was returned running check '{1}' against '{2}'.
                         context.Logger.LogToolNotification(
                             Errors.CreateNotification(
                                 context.TargetUri,
@@ -427,9 +428,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 FailureLevel.Error,
                                 exception: null,
                                 persistExceptionStack: false,
-                                messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
-                                context.TargetUri.GetFileName(),
-                                context.Rule.Id));
+                                messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalResultLevel,
+                                levelText,
+                                context.Rule.Id,
+                                context.TargetUri.GetFileName()));
 
                         // If we don't understand the failure level, elevate it to error.
                         level = FailureLevel.Error;
@@ -519,7 +521,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (!Enum.TryParse<FailureLevel>(levelText, out level))
                 {
-                    // An illegal failure level '{0}' was returned validating a result for check '{1}'.
+                    // An illegal failure level '{0}' was returned running check '{1}' against '{2}'.
                     context.Logger.LogToolNotification(
                         Errors.CreateNotification(
                             context.TargetUri,
@@ -528,9 +530,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             FailureLevel.Error,
                             exception: null,
                             persistExceptionStack: false,
-                            messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
-                            context.TargetUri.GetFileName(),
-                            context.Rule.Id));
+                            messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalResultLevel,
+                            levelText,
+                            context.Rule.Id,
+                            context.TargetUri.GetFileName()));
 
                     // If we don't understand the failure level, elevate it to error.
                     level = FailureLevel.Error;
@@ -549,7 +552,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     case Validation.None:
                     case Validation.ValidatorReturnedIllegalValidationState:
                     {
-                        // An illegal state '{0}' was returned validating a result for check '{1}'.
+                        // An illegal state was returned running check '{0}' against '{1}' ({2}).
                         context.Logger.LogToolNotification(
                             Errors.CreateNotification(
                                 context.TargetUri,
@@ -559,8 +562,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 exception: null,
                                 persistExceptionStack: false,
                                 messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
+                                context.Rule.Id,
                                 context.TargetUri.GetFileName(),
-                                context.Rule.Id));
+                                validatorMessage));
 
                         level = FailureLevel.Error;
                         return;
@@ -598,7 +602,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         break;
                     }
 
-                    case Validation.HostUnknown:
+                    case Validation.UnknownHost:
                     case Validation.Unauthorized:
                     case Validation.InvalidForConsultedAuthorities:
                     {
