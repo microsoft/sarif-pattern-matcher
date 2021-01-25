@@ -24,7 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             engine ??= RE2Regex.Instance;
 
             var validators = new ValidatorsCache();
-            var fileRegionsCache = new FileRegionsCache();
+            FileRegionsCache fileRegionsCache = FileRegionsCache.Instance;
 
             var skimmers = new HashSet<Skimmer<AnalyzeContext>>();
 
@@ -236,6 +236,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return context;
         }
 
+        protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
+        {
+            return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
+        }
+
 #if DEBUG
         private static void ValidateSharedStringsExpansion(SearchDefinitions searchDefinitions)
         {
@@ -274,11 +279,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                          "Failed to expand shared string.");
         }
 #endif
-
-        protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
-        {
-            return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
-        }
 
         private static string PushData(string text, params Dictionary<string, string>[] sharedStringsDictionaries)
         {
