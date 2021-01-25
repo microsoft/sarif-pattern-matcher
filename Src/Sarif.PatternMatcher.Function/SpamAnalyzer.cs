@@ -41,7 +41,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             using (var outputTextWriter = new StringWriter(sb))
             using (var logger = new SarifLogger(
                 outputTextWriter,
-                LoggingOptions.PrettyPrint | LoggingOptions.Verbose))
+                LoggingOptions.PrettyPrint | LoggingOptions.Verbose,
+                dataToInsert: OptionallyEmittedData.Hashes | OptionallyEmittedData.RegionSnippets | OptionallyEmittedData.ContextRegionSnippets | OptionallyEmittedData.ComprehensiveRegionProperties))
             {
                 // The analysis will disable skimmers that raise an exception. This
                 // hash set stores the disabled skimmers. When a skimmer is disabled,
