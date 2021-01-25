@@ -77,7 +77,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             }
 
             var aggregateException = e as AggregateException;
-            if ((aggregateException?.InnerExceptions[0].Message.Equals("No such host is known.")).Value)
+            if ((aggregateException?.InnerExceptions[0].Message.Equals("No such host is known.")) == true)
+            {
+                return ReturnUnknownHost(ref message, asset);
+            }
+
+            // Some AzureRequestFailed exceptions doubly nest relevant inner exceptions.
+            if (e.InnerException?.InnerException?.Message.StartsWith("The remote name could not be resolved:") == true)
             {
                 return ReturnUnknownHost(ref message, asset);
             }
