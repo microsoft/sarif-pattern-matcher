@@ -35,10 +35,6 @@
     <ProjectReference Include="..\..\RE2.Managed\RE2.Managed.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\RE2.Managed\RE2.Managed.csproj" />
-  </ItemGroup>
-
   <Target Name="CopyingSpam" AfterTargets="Build">
     <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
     <Copy SourceFiles="Security.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
