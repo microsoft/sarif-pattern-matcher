@@ -71,13 +71,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 
         public static string ReturnValueForUnknownHostException(ref string message, Exception e, string asset)
         {
-            if (e.Message.Equals("No such host is known."))
+            if (e.Message.Equals("No such host is known.") ||
+                e.InnerException?.Message.Equals("No such host is known.") == true)
             {
                 return ReturnUnknownHost(ref message, asset);
             }
 
             var aggregateException = e as AggregateException;
-            if ((aggregateException?.InnerExceptions[0].Message.Equals("No such host is known.")) == true)
+            if (aggregateException?.InnerExceptions[0].Message.Equals("No such host is known.") == true)
             {
                 return ReturnUnknownHost(ref message, asset);
             }
