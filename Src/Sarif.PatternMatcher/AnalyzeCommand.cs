@@ -272,6 +272,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Debug.Assert(!text.StartsWith("$"),
                          "Failed to expand shared string.");
 
+            if (text.EndsWith("$")) { text = text.Substring(0, text.Length - 1); }
+            if (text.EndsWith("$]")) { text = text.Substring(0, text.Length - 2); }
+            if (text.EndsWith("$)")) { text = text.Substring(0, text.Length - 2); }
+
             // We failed to expand a pattern within an expression. We
             // trim a trailing '$' as it is commonly used to denote
             // and end-of-line in search patterns.
