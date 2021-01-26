@@ -36,10 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\RE2.Managed\RE2.Managed.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="Octokit">
       <HintPath>..\..\..\refs\Octokit.dll</HintPath>
     </Reference>

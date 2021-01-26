@@ -108,6 +108,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                         return nameof(ValidationState.Authorized);
                     }
+
                     case "InvalidClientTokenId":
                     case "SignatureDoesNotMatch":
                     {
