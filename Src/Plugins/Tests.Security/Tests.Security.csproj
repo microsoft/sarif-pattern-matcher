@@ -14,7 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_006.GitHubPat.sarif" />
     <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_007.AwsCredentials.sarif" />
+    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_005_GitHubPat.txt" />
     <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_007.AwsCredentials.txt" />
     <None Remove="TestData\UseSecureApi\ExpectedOutputs\SEC101_005.SlackTokens.sarif" />
     <None Remove="TestData\UseSecureApi\Inputs\SEC104.Memory.Allocation_alloca.c" />
