@@ -125,72 +125,72 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // These need to remain in alphabetical order.
             if (!string.IsNullOrEmpty(Account))
             {
-                components.Add($"[{AccountKeyName}={this.Account}]");
+                components.Add($"[{AccountKeyName}={this.Account.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(Hmac))
             {
-                components.Add($"[{HmacKeyName}={this.Hmac}]");
+                components.Add($"[{HmacKeyName}={this.Hmac.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(Host))
             {
-                components.Add($"[{HostKeyName}={this.Host}]");
+                components.Add($"[{HostKeyName}={this.Host.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(Id))
             {
-                components.Add($"[{IdKeyName}={this.Id}]");
+                components.Add($"[{IdKeyName}={this.Id.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(Key))
             {
-                components.Add($"[{KeyKeyName}={this.Key}]");
+                components.Add($"[{KeyKeyName}={this.Key.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(KeyName))
             {
-                components.Add($"[{KeyNameKeyName}={this.KeyName}]");
+                components.Add($"[{KeyNameKeyName}={this.KeyName.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(Password))
             {
-                components.Add($"[{PasswordKeyName}={this.Password}]");
+                components.Add($"[{PasswordKeyName}={this.Password.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(PersonalAccessTokenAzureDevOps))
             {
-                components.Add($"[{PersonalAccessTokenAzureDevOpsKeyName}={this.PersonalAccessTokenAzureDevOps}]");
+                components.Add($"[{PersonalAccessTokenAzureDevOpsKeyName}={this.PersonalAccessTokenAzureDevOps.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(PersonalAccessTokenGitHub))
             {
-                components.Add($"[{PersonalAccessTokenGitHubKeyName}={this.PersonalAccessTokenGitHub}]");
+                components.Add($"[{PersonalAccessTokenGitHubKeyName}={this.PersonalAccessTokenGitHub.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(SasToken))
             {
-                components.Add($"[{SasTokenKeyName}={this.SasToken}]");
+                components.Add($"[{SasTokenKeyName}={this.SasToken.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(SymmetricKey128Bit))
             {
-                components.Add($"[{SymmetricKey128BitKeyName}={this.SymmetricKey128Bit}]");
+                components.Add($"[{SymmetricKey128BitKeyName}={this.SymmetricKey128Bit.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(SymmetricKey256Bit))
             {
-                components.Add($"[{SymmetricKey256BitKeyName}={this.SymmetricKey256Bit}]");
+                components.Add($"[{SymmetricKey256BitKeyName}={this.SymmetricKey256Bit.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(Thumbprint))
             {
-                components.Add($"[{ThumbprintKeyName}={this.Thumbprint}]");
+                components.Add($"[{ThumbprintKeyName}={this.Thumbprint.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(Uri))
             {
-                components.Add($"[{UriKeyName}={this.Uri}]");
+                components.Add($"[{UriKeyName}={this.Uri.Trim()}]");
             }
 
             return components.Count > 0 ?
