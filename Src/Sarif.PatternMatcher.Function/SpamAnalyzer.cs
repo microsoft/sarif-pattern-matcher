@@ -38,6 +38,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
             var sb = new StringBuilder();
 
+            // We should clear every time to prevent colision.
+            FileRegionsCache.Instance.ClearCache();
+
             using (var outputTextWriter = new StringWriter(sb))
             using (var logger = new SarifLogger(
                 outputTextWriter,
