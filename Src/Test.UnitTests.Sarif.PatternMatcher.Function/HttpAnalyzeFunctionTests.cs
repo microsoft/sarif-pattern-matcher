@@ -110,7 +110,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                request: TestHelper.MockAnalyzeFunctionRequest(patTextFile, lines[1]),
                log: logger,
                context: TestHelper.ContextSetup());
-            ValidateResult(lines[1], result, runCount: 1, resultCount: 0, FailureLevel.None);
+            ValidateResult(lines[1], result, runCount: 1, resultCount: 0);
         }
 
         private static void ValidateResult(string text, IActionResult result, int runCount, int resultCount, FailureLevel failureLevel = FailureLevel.None, bool ignoreRegionContent = false)
