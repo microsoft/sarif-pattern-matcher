@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -50,22 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 log: logger,
                 context: TestHelper.ContextSetup());
 
-            var resultObject = (OkObjectResult)result;
-            resultObject.Should().NotBeNull();
-            resultObject.StatusCode.Should().Be((int)HttpStatusCode.OK);
-            resultObject.Value.Should().NotBeNull();
-
-            var sarifLog = resultObject.Value as SarifLog;
-            sarifLog.Should().NotBeNull();
-            sarifLog.Runs.Count.Should().Be(1);
-
-            IList<Result> results = sarifLog.Runs[0].Results;
-            results.Should().NotBeNull();
-
-            // 4 results: 2 warning 2 not applicable
-            results.Should().NotBeEmpty();
-            results.Count(r => r.Level == FailureLevel.Warning).Should().Be(2);
-            results.FirstOrDefault(r => r.Level == FailureLevel.Warning)?.RuleId.Should().StartWith("SEC101");
+            ValidateResult(string.Empty, result, runCount: 1, resultCount: 2, FailureLevel.Warning, ignoreRegionContent: true);
         }
 
         [Fact]
@@ -105,6 +91,55 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             var resultObject = (OkObjectResult)result;
             resultObject.Should().NotBeNull();
             resultObject.StatusCode.Should().Be((int)HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task Function_HttpAnalyze_WithFileContent_Should_Return_DifferentResponses()
+        {
+            const string patTextFile = "SEC101_005.SlackTokens.py";
+            string content = TestHelper.GetTestResourceContent(patTextFile);
+            string[] lines = content.Split(Environment.NewLine);
+
+            IActionResult result = await HttpAnalyzeFunction.Analyze(
+                request: TestHelper.MockAnalyzeFunctionRequest(patTextFile, lines[0]),
+                log: logger,
+                context: TestHelper.ContextSetup());
+            ValidateResult(lines[0], result, runCount: 1, resultCount: 1, FailureLevel.Warning);
+
+            result = await HttpAnalyzeFunction.Analyze(
+               request: TestHelper.MockAnalyzeFunctionRequest(patTextFile, lines[1]),
+               log: logger,
+               context: TestHelper.ContextSetup());
+            ValidateResult(lines[1], result, runCount: 1, resultCount: 0);
+        }
+
+        private static void ValidateResult(string text, IActionResult result, int runCount, int resultCount, FailureLevel failureLevel = FailureLevel.None, bool ignoreRegionContent = false)
+        {
+            var resultObject = (OkObjectResult)result;
+            resultObject.Should().NotBeNull();
+            resultObject.StatusCode.Should().Be((int)HttpStatusCode.OK);
+            resultObject.Value.Should().NotBeNull();
+
+            var sarifLog = resultObject.Value as SarifLog;
+            sarifLog.Should().NotBeNull();
+            sarifLog.Runs.Count.Should().Be(runCount);
+
+            IList<Result> results = sarifLog.Runs[0].Results;
+
+            if (resultCount == 0)
+            {
+                results.Should().BeNull();
+                return;
+            }
+
+            results.Should().NotBeEmpty();
+            results.Count(r => r.Level == failureLevel).Should().Be(resultCount);
+
+            if (!ignoreRegionContent)
+            {
+                results.First().Locations.First().PhysicalLocation.ContextRegion.Snippet.Text.Should().Contain(text);
+                results.First().Locations.First().PhysicalLocation.Region.Snippet.Text.Should().Contain(text);
+            }
         }
     }
 }

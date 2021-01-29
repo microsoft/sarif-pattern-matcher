@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/007",
-              "name": "DoNotExposePlaintextSecrets/AwsCredentials",
+              "id": "SEC101/005",
+              "name": "DoNotExposePlaintextSecrets/SlackToken",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -38,15 +38,15 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/007",
+          "ruleId": "SEC101/005",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_007.AwsCredentials.txt",
+              "SEC101_005.SlackTokens.py",
               "an apparent ",
               "",
-              "AWS access key and secret",
+              "Slack token",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -55,25 +55,25 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_007.AwsCredentials.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_005.SlackTokens.py",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 1,
-                  "startColumn": 16,
-                  "endLine": 2,
-                  "endColumn": 60,
-                  "charOffset": 15,
-                  "charLength": 81,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 56,
+                  "charOffset": 0,
+                  "charLength": 55,
                   "snippet": {
-                    "text": "AKIAIOSFODNN7EXAMPLE\r\nAWSSecretAccessKey\twJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+                    "text": "xoxb-83112120353-1016171244646-sGMxuWapBw3w3qdK6OfTjORe"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[id=AKIAIOSFODNN7EXAMPLE][key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY]"
+            "ValidationFingerprint/v1": "[key=xoxb-83112120353-1016171244646-sGMxuWapBw3w3qdK6OfTjORe]"
           }
         }
       ],
