@@ -69,6 +69,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             return validationState;
         }
 
+        public static bool IsValidPattern(string matchedPattern)
+        {
+            bool oneDigit = false, oneLetter = false;
+
+            foreach (char ch in matchedPattern)
+            {
+                if (char.IsDigit(ch)) { oneDigit = true; }
+                if (char.IsLetter(ch)) { oneLetter = true; }
+                if (oneDigit && oneLetter) { return true; }
+            }
+
+            return false;
+        }
+
         public static string ReturnValueForUnknownHostException(ref string message, Exception e, string asset)
         {
             if (e.Message.StartsWith("No such host is known") ||
