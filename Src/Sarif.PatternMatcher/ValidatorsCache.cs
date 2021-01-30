@@ -297,6 +297,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             this._resolvedNames.Add(assemblyName);
 
+            AppDomain currentDomain = AppDomain.CurrentDomain;
+            Assembly[] assemblies = currentDomain.GetAssemblies();
+            foreach (Assembly assembly in assemblies)
+            {
+                if (assembly.FullName.Split(',')[0] == assemblyName)
+                {
+                    return assembly;
+                }
+            }
+
             if (assemblyBaseFolder.EndsWith("analyze\\..\\bin"))
             {
                 assemblyBaseFolder = assemblyBaseFolder.Replace("analyze\\..\\bin", string.Empty);
