@@ -399,7 +399,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     {
                         // We will never allow a group returned by a dynamically executing
                         // regex to overwrite a static value in the match expression. This
-                        // allows the match expression to provide a default value that 
+                        // allows the match expression to provide a default value that
                         // may be replaced by the analysis.
                         if (!groups.ContainsKey(kv.Key))
                         {

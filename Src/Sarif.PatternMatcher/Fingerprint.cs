@@ -18,18 +18,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public const string KeyNameKeyName = "keyName";
         public const string SasTokenKeyName = "sasToken";
         public const string ThumbprintKeyName = "thumbprint";
+        public const string PersonalAccessTokenKeyName = "pat";
         public const string SymmetricKey128BitKeyName = "skey/128";
         public const string SymmetricKey256BitKeyName = "skey/256";
-        public const string PersonalAccessTokenGitHubKeyName = "pat/gh";
-        public const string PersonalAccessTokenAzureDevOpsKeyName = "pat/ado";
 
         private const char RightBracketReplacement = '\t';
 
         public Fingerprint(string fingerprintText)
         {
-            Account = Hmac = Host = Id = Key = KeyName = Password = Uri = null;
-            PersonalAccessTokenGitHub = PersonalAccessTokenAzureDevOps = null;
-            SasToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
+            Account = Hmac = Host = Id = Key = KeyName = Password = Uri = SasToken = null;
+            PersonalAccessToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -88,9 +86,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string SymmetricKey256Bit { get; set; }
 
-        public string PersonalAccessTokenGitHub { get; set; }
-
-        public string PersonalAccessTokenAzureDevOps { get; set; }
+        public string PersonalAccessToken { get; set; }
 
         public string GetFingerprintText() => this.ToString();
 
@@ -111,8 +107,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 case ThumbprintKeyName: { Thumbprint = value; break; }
                 case SymmetricKey128BitKeyName: { SymmetricKey128Bit = value; break; }
                 case SymmetricKey256BitKeyName: { SymmetricKey256Bit = value; break; }
-                case PersonalAccessTokenGitHubKeyName: { PersonalAccessTokenGitHub = value; break; }
-                case PersonalAccessTokenAzureDevOpsKeyName: { PersonalAccessTokenAzureDevOps = value; break; }
+                case PersonalAccessTokenKeyName: { PersonalAccessToken = value; break; }
                 default: throw new ArgumentOutOfRangeException(nameof(keyName));
             }
         }
@@ -158,14 +153,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 components.Add($"[{PasswordKeyName}={this.Password.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(PersonalAccessTokenAzureDevOps))
+            if (!string.IsNullOrEmpty(PersonalAccessToken))
             {
-                components.Add($"[{PersonalAccessTokenAzureDevOpsKeyName}={this.PersonalAccessTokenAzureDevOps.Trim()}]");
-            }
-
-            if (!string.IsNullOrEmpty(PersonalAccessTokenGitHub))
-            {
-                components.Add($"[{PersonalAccessTokenGitHubKeyName}={this.PersonalAccessTokenGitHub.Trim()}]");
+                components.Add($"[{PersonalAccessTokenKeyName}={this.PersonalAccessToken.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(SasToken))

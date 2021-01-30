@@ -53,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             fingerprintText = new Fingerprint
             {
-                PersonalAccessTokenGitHub = matchedPattern,
+                PersonalAccessToken = matchedPattern,
             }.ToString();
 
             return nameof(ValidationState.Unknown);
@@ -62,7 +62,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override string IsValidDynamicHelper(ref string fingerprintText, ref string message)
         {
             var fingerprint = new Fingerprint(fingerprintText);
-            string pat = fingerprint.PersonalAccessTokenGitHub;
+            string pat = fingerprint.PersonalAccessToken;
 
             try
             {

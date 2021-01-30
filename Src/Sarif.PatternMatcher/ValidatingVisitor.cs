@@ -7,7 +7,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatingVisitor : SarifRewritingVisitor
     {
-        private const string noValidationSuffix = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
+        private const string NoValidationSuffix = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
         private readonly ValidatorsCache _validators;
         private Run _run;
 
@@ -43,8 +43,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string message = null;
                 int messageIndex = GetDynamicValidationMessageArgumentIndex(node.Message.Arguments, ref message);
 
-
-                message = message.Replace(noValidationSuffix, string.Empty);
+                message = message.Replace(NoValidationSuffix, string.Empty);
 
                 // If we can't conclusively identify this message as a result that *could*
                 // have been validated previously, but which was not, we will not validate.
