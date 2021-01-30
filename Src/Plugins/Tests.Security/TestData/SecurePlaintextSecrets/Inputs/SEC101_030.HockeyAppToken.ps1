@@ -1,6 +1,16 @@
+# Xml style
+<HockeyAppToken>
+	AE3BEF6FF96ADF600F4F21823AB58368
+</HockeyAppToken>
 
 <HockeyAppToken>AE3BEF6FF96ADF600F4F21823AB58368</HockeyAppToken>
 
+# AppSettings style
+<appSettings>
+  <add key="HockeyAppToken" value="AE3BEF6FF96ADF600F4F21823AB58368" />
+</appSettings>
+
+# Code style
 var myHockeyAppToken = "AE3BEF6FF96ADF600F4F21823AB58368"
 
 set myHockeyAppToken=AE3BEF6FF96ADF600F4F21823AB58368

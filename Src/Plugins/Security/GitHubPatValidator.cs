@@ -46,16 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            bool oneDigit = false, oneLetter = false;
-
-            foreach (char ch in matchedPattern)
-            {
-                if (char.IsDigit(ch)) { oneDigit = true; }
-                if (char.IsLetter(ch)) { oneLetter = true; }
-                if (oneDigit && oneLetter) { break; }
-            }
-
-            if (!oneDigit || !oneLetter)
+            if (!ContainsBothDigitChar(matchedPattern))
             {
                 return nameof(ValidationState.NoMatch);
             }

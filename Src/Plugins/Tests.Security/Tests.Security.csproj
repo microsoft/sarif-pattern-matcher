@@ -20,10 +20,10 @@
     <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_030.HockeyAppToken.sarif" />
     <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_033.FacebookAppCredentials.sarif" />
     <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_006.GitHubPat.txt" />
-    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_007.GitHubAppCredentials.txt" />
-    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_008.AwsCredentials.txt" />
-    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_030.HockeyAppToken.txt" />
-    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_033.FacebookAppCredentials.txt" />
+    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_007.GitHubAppCredentials.ps1" />
+    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_008.AwsCredentials.ps1" />
+    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_030.HockeyAppToken.ps1" />
+    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_033.FacebookAppCredentials.ps1" />
     <None Remove="TestData\UseSecureApi\ExpectedOutputs\SEC101_005.SlackTokens.sarif" />
     <None Remove="TestData\UseSecureApi\Inputs\SEC104.Memory.Allocation_alloca.c" />
   </ItemGroup>
