@@ -95,7 +95,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 fingerprintText = new Fingerprint()
                 {
-                    PersonalAccessTokenAzureDevOps = pat,
+                    PersonalAccessToken = pat,
                 }.ToString();
             }
 

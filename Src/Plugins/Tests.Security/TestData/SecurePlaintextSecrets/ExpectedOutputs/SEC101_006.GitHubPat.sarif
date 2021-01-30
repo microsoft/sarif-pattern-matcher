@@ -73,7 +73,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[pat/gh=ff34885a8624460a855540c6592698d2f1812843]"
+            "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f1812843]"
           }
         }
       ],
