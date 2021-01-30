@@ -14,11 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_003.GoogleApiKey.sarif" />
     <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_006.GitHubPat.sarif" />
     <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_007.GitHubAppCredentials.sarif" />
     <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_008.AwsCredentials.sarif" />
     <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_030.HockeyAppToken.sarif" />
     <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_033.FacebookAppCredentials.sarif" />
+    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_003.GoogleApiKey.txt" />
     <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_006.GitHubPat.txt" />
     <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_007.GitHubAppCredentials.ps1" />
     <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_008.AwsCredentials.ps1" />
