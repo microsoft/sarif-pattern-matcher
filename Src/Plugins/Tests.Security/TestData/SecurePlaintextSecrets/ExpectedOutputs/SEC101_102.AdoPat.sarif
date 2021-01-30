@@ -73,7 +73,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[pat/ado=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
+            "ValidationFingerprint/v1": "[pat=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
           }
         },
         {
@@ -112,7 +112,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[pat/ado=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
+            "ValidationFingerprint/v1": "[pat=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
           }
         }
       ],

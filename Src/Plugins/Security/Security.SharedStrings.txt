@@ -21,9 +21,10 @@
   $BinaryFiles=(?i)\.(bmp|dll|exe|gif|jpe?g|lock|pack|png|psd|tar\.gz|tiff?|ttf|xcf|zip)$
   $SourceFiles=(?i)\.(azure|bat|c|cmd|config|cpp|cs|cscfg|definitions|dtsx|h|hxx|hpp|ini|java|jsx?|json|keys|kt|loadtest|m|md|php|properties|ps1|psm1|pubxml|py|resx|sample|sql|ste|swift|test|tsx?|txt|waz|xml)$
 
+  $AdoPat=(^|[^2-7a-z])(?<refine>[2-7a-z]{52})([^2-7a-z]|$)
   $AwsCredentials=(?s)\b(?<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}).+?\b(?i)(?<key>[0-9a-z\/+]{40})
-  $SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
-  $GitHubPat=(^|['\"\\s])(?<refine>[0-9a-z]{40})(['\"\\s]|\b|$)
   $GitHubAppCredentials=(?s)\b(?<id>Iv1.[0-9a-z]{16}).+?\b(?i)(?<key>[0-9a-z]{35,40})([^0-9a-f]|$)
+  $GitHubPat=(^|[^0-9a-z])(?<refine>[0-9a-z]{40})([^0-9a-z]|$)
   $HockeyAppToken=(?si)hockey.{0,50}[`'"\s>]?(?<refine>[0-9a-f]{32})([^0-9a-f]|$)
   $FacebookAppCredentials=(?si)(facebook|fb)(.{0,20})?[`'"\s>](?<id>[0-9]{13,17})[^0-9].+?(facebook|fb)(.{0,20})?[`'"\s>](?<key>[0-9a-f]{32})([^0-9a-f]|$)
+  $SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
