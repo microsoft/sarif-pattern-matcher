@@ -49,7 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.NoMatch);
             }
 
-            if (!IsValidPattern(key))
+            if (!ContainsBothDigitChar(key))
             {
                 return nameof(ValidationState.NoMatch);
             }

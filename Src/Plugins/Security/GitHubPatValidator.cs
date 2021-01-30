@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            if (!IsValidPattern(matchedPattern))
+            if (!ContainsBothDigitChar(matchedPattern))
             {
                 return nameof(ValidationState.NoMatch);
             }

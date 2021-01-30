@@ -69,7 +69,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             return validationState;
         }
 
-        public static bool IsValidPattern(string matchedPattern)
+        public static bool ContainsBothDigitChar(string matchedPattern)
         {
             bool oneDigit = false, oneLetter = false;
 
