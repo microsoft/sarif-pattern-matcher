@@ -37,6 +37,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public int MatchLengthToDecode { get; set; }
 
+        public Dictionary<string, string> Properties { get; set; }
+
         public Dictionary<string, string> MessageArguments { get; set; }
 
         public IList<string> Notes { get; set; }

@@ -393,6 +393,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 IDictionary<string, string> groups = match.Groups.CopyToDictionary(regex.GetGroupNames());
 
+                if (matchExpression.Properties != null)
+                {
+                    foreach (KeyValuePair<string, string> kv in matchExpression.Properties)
+                    {
+                        // We will never allow a group returned by a dynamically executing
+                        // regex to overwrite a static value in the match expression. This
+                        // allows the match expression to provide a default value that 
+                        // may be replaced by the analysis.
+                        if (!groups.ContainsKey(kv.Key))
+                        {
+                            groups[kv.Key] = kv.Value;
+                        }
+                    }
+                }
+
                 if (string.IsNullOrEmpty(refinedMatchedPattern))
                 {
                     refinedMatchedPattern = flexMatch.Value;
