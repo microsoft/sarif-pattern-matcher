@@ -83,45 +83,58 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             return false;
         }
 
-        public static string ReturnValueForUnknownHostException(ref string message, Exception e, string asset)
+        public static string ReturnUnhandledException(ref string message, Exception e, string asset = null, string account = null)
         {
-            if (e.Message.StartsWith("No such host is known") ||
-                e.InnerException?.Message.StartsWith("No such host is known") == true)
+            if (TestExceptionForMessage(e, "No such host is known", asset))
             {
                 return ReturnUnknownHost(ref message, asset);
             }
 
-            var aggregateException = e as AggregateException;
-            if (aggregateException?.InnerExceptions[0].Message.Equals("No such host is known.") == true)
+            if (TestExceptionForMessage(e, "The remote name could not be resolved", asset))
             {
                 return ReturnUnknownHost(ref message, asset);
             }
 
-            // Some AzureRequestFailed exceptions doubly nest relevant inner exceptions.
-            if (e.InnerException?.InnerException?.Message.StartsWith("The remote name could not be resolved:") == true)
-            {
-                return ReturnUnknownHost(ref message, asset);
-            }
-
-            return ReturnUnhandledException(ref message, e, asset);
-        }
-
-        public static string ReturnUnknownHost(ref string message, string host)
-        {
-            message = $"The host '{host}' is unknown.";
-            return nameof(ValidationState.UnknownHost);
-        }
-
-        public static string ReturnUnhandledException(ref string message,
-                                                      Exception e,
-                                                      string asset,
-                                                      string account = null)
-        {
             message = (account == null) ?
                 $"An unexpected exception was caught attempting to validate '{asset}': {e.Message}" :
                 $"An unexpected exception was caught attempting to validate the '{account} account on '{asset}': {e.Message}";
 
             return nameof(ValidationState.Unknown);
+        }
+
+        private static bool TestExceptionForMessage(Exception e, string message, string asset)
+        {
+            if (e == null)
+            {
+                return false;
+            }
+
+            if (e.Message.StartsWith(message))
+            {
+                return true;
+            }
+
+            if (TestExceptionForMessage(e.InnerException, message, asset))
+            {
+                return true;
+            }
+
+            var aggregateException = e as AggregateException;
+            foreach (Exception aggregatedException in aggregateException.InnerExceptions)
+            {
+                if (TestExceptionForMessage(aggregatedException, message, asset))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static string ReturnUnknownHost(ref string message, string host)
+        {
+            message = $"'{host}' is unknown.";
+            return nameof(ValidationState.UnknownHost);
         }
 
         public static string ReturnUnauthorizedAccess(ref string message,
