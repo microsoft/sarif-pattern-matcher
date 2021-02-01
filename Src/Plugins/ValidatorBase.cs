@@ -199,11 +199,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             }
 
             var aggregateException = e as AggregateException;
-            foreach (Exception aggregatedException in aggregateException.InnerExceptions)
+            if (aggregateException != null && aggregateException.InnerExceptions != null)
             {
-                if (TestExceptionForMessage(aggregatedException, message, asset))
+                foreach (Exception aggregatedException in aggregateException.InnerExceptions)
                 {
-                    return true;
+                    if (TestExceptionForMessage(aggregatedException, message, asset))
+                    {
+                        return true;
+                    }
                 }
             }
 
