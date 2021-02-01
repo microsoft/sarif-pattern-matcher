@@ -59,11 +59,89 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 1,
-                  "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 41,
-                  "charOffset": 0,
+                  "startLine": 3,
+                  "startColumn": 2,
+                  "endLine": 3,
+                  "endColumn": 42,
+                  "charOffset": 29,
+                  "charLength": 40,
+                  "snippet": {
+                    "text": "ff34885a8624460a855540c6592698d2f1812843"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f1812843]"
+          }
+        },
+        {
+          "ruleId": "SEC101/006",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_006.GitHubPat.txt",
+              "an apparent ",
+              "",
+              "GitHub personal access token (PAT)",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 31,
+                  "endLine": 8,
+                  "endColumn": 71,
+                  "charOffset": 155,
+                  "charLength": 40,
+                  "snippet": {
+                    "text": "ff34885a8624460a855540c6592698d2f1812843"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f1812843]"
+          }
+        },
+        {
+          "ruleId": "SEC101/006",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_006.GitHubPat.txt",
+              "an apparent ",
+              "",
+              "GitHub personal access token (PAT)",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 36,
+                  "endLine": 12,
+                  "endColumn": 76,
+                  "charOffset": 268,
                   "charLength": 40,
                   "snippet": {
                     "text": "ff34885a8624460a855540c6592698d2f1812843"
