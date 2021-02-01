@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -210,6 +211,35 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                                                       ref string message)
         {
             return null;
+        }
+
+        private static bool TestExceptionForMessage(Exception e, string message, string asset)
+        {
+            if (e == null)
+            {
+                return false;
+            }
+
+            if (e.Message.StartsWith(message))
+            {
+                return true;
+            }
+
+            if (TestExceptionForMessage(e.InnerException, message, asset))
+            {
+                return true;
+            }
+
+            var aggregateException = e as AggregateException;
+            foreach (Exception aggregatedException in aggregateException.InnerExceptions)
+            {
+                if (TestExceptionForMessage(aggregatedException, message, asset))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
