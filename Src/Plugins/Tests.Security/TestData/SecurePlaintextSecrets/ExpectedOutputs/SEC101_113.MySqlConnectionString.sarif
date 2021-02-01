@@ -1,0 +1,125 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC101/113",
+              "name": "DoNotExposePlaintextSecrets/MySqlConnectionString",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Odbc": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                },
+                "Php": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC101/113",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_113.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC MySQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_113.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 1,
+                  "endLine": 2,
+                  "endColumn": 131,
+                  "charOffset": 65,
+                  "charLength": 130,
+                  "snippet": {
+                    "text": "Server=some-database-name.mysql.database.azure.com; Port=3306; Database=catalog_db; Uid=username@some-database-name; Pwd=password;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com; Port=3306; Database=catalog_db][pwd=password]"
+          }
+        },
+        {
+          "ruleId": "SEC101/113",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Php",
+            "arguments": [
+              "SEC101_113.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "PHP MySQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_113.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 31,
+                  "endLine": 14,
+                  "endColumn": 176,
+                  "charOffset": 1174,
+                  "charLength": 145,
+                  "snippet": {
+                    "text": "user=\"username@some-database-name\", password=password, host=\"some-database-name.mysql.database.azure.com\", port=3306, database=catalog_db, ssl_ca"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com; port=3306; database=catalog_db][pwd=password]"
+          }
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}

@@ -28,4 +28,6 @@
   $GitHubPat=(?si)github.{0,50}(?<refine>[0-9a-z]{40})([^0-9a-z]|$)
   $GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
   $HockeyAppToken=(?si)hockey.{0,50}[`'"\s>]?(?<refine>[0-9a-f]{32})([^0-9a-f]|$)
+  $MySqlConnectionStringAdo=(?i)Server\s*=(?<host>[^,;]+mysql\.database\.azure\.com.*)(,|;).*Uid=(?<account>[a-z\@\-]+)(,|;).*Pwd=(?<password>[^;]+);
+  $MySqlConnectionStringPhp=(?i)user=\"(?<account>[a-z\@\-]+)(\").*password=(?<password>[^;]+)(,).*host=\"(?<host>[^;]+), ssl_ca
   $SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
