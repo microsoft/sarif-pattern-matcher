@@ -103,38 +103,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             return nameof(ValidationState.Unknown);
         }
 
-        private static bool TestExceptionForMessage(Exception e, string message, string asset)
-        {
-            if (e == null)
-            {
-                return false;
-            }
-
-            if (e.Message.StartsWith(message))
-            {
-                return true;
-            }
-
-            if (TestExceptionForMessage(e.InnerException, message, asset))
-            {
-                return true;
-            }
-
-            var aggregateException = e as AggregateException;
-            if (aggregateException != null && aggregateException.InnerExceptions != null)
-            {
-                foreach (Exception aggregatedException in aggregateException.InnerExceptions)
-                {
-                    if (TestExceptionForMessage(aggregatedException, message, asset))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
         public static string ReturnUnknownHost(ref string message, string host)
         {
             message = $"'{host}' is unknown.";
@@ -231,11 +199,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             }
 
             var aggregateException = e as AggregateException;
-            foreach (Exception aggregatedException in aggregateException.InnerExceptions)
+            if (aggregateException != null && aggregateException.InnerExceptions != null)
             {
-                if (TestExceptionForMessage(aggregatedException, message, asset))
+                foreach (Exception aggregatedException in aggregateException.InnerExceptions)
                 {
-                    return true;
+                    if (TestExceptionForMessage(aggregatedException, message, asset))
+                    {
+                        return true;
+                    }
                 }
             }
 
