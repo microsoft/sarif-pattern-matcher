@@ -46,6 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string message)
         {
             if (!groups.TryGetValue("host", out string host) ||
+                !groups.TryGetValue("port", out string port) ||
                 !groups.TryGetValue("database", out string database) ||
                 !groups.TryGetValue("account", out string account) ||
                 !groups.TryGetValue("password", out string password))
@@ -56,6 +57,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprintText = new Fingerprint()
             {
                 Host = host,
+                Port = port,
                 Database = database,
                 Account = account,
                 Password = password,
@@ -71,7 +73,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var fingerprint = new Fingerprint(fingerprintText);
 
-            string connString = $"Host={fingerprint.Host};Database={fingerprint.Database};Username={fingerprint.Account};Password={fingerprint.Password}";
+            string connString = null;
+
+            if (string.IsNullOrWhiteSpace(fingerprint.Port))
+            {
+                connString = $"Host={fingerprint.Host};Database={fingerprint.Database};Username={fingerprint.Account};Password={fingerprint.Password}";
+            }
+            else
+            {
+                connString = $"Host={fingerprint.Host};Port={fingerprint.Port};Database={fingerprint.Database};Username={fingerprint.Account};Password={fingerprint.Password}";
+            }
 
             try
             {
