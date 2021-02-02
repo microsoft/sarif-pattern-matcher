@@ -47,7 +47,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             if (!groups.TryGetValue("host", out string host) ||
                 !groups.TryGetValue("port", out string port) ||
-                !groups.TryGetValue("database", out string database) ||
                 !groups.TryGetValue("account", out string account) ||
                 !groups.TryGetValue("password", out string password))
             {
@@ -58,7 +57,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Host = host,
                 Port = port,
-                Database = database,
                 Account = account,
                 Password = password,
             }.ToString();
@@ -69,29 +67,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override string IsValidDynamicHelper(ref string fingerprintText,
                                                        ref string message)
         {
-            NpgsqlConnectionFactory npgsqlConnectionFactory = new NpgsqlConnectionFactory();
-
             var fingerprint = new Fingerprint(fingerprintText);
 
-            string connString = null;
-
+            string connString;
             if (string.IsNullOrWhiteSpace(fingerprint.Port))
             {
-                connString = $"Host={fingerprint.Host};Database={fingerprint.Database};Username={fingerprint.Account};Password={fingerprint.Password}";
+                connString = $"Host={fingerprint.Host};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require";
             }
             else
             {
-                connString = $"Host={fingerprint.Host};Port={fingerprint.Port};Database={fingerprint.Database};Username={fingerprint.Account};Password={fingerprint.Password}";
+                connString = $"Host={fingerprint.Host};Port={fingerprint.Port};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require";
             }
 
             try
             {
-                DbConnection postgreSqlconnection = npgsqlConnectionFactory.CreateConnection(connString);
+                using var postgreSqlconnection = new NpgsqlConnection(connString);
                 postgreSqlconnection.Open();
             }
             catch (Exception e)
             {
-                // TODO: Are any specific exceptions thrown here?  Npg documentation is lacking
+                if (e is PostgresException postgresException)
+                {
+                    // database does not exist, but the creds are valid
+                    if (postgresException.SqlState == "3D000")
+                    {
+                        return ReturnAuthorizedAccess(ref message, asset: fingerprint.Host);
+                    }
+
+                    // password authentication failed for user "sectoojlsadm"
+                    if (postgresException.SqlState == "28P01")
+                    {
+                        return ReturnUnauthorizedAccess(ref message, asset: fingerprint.Host);
+                    }
+                }
 
                 return ReturnUnhandledException(ref message, e, asset: fingerprint.Host);
             }

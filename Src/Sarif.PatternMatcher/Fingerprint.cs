@@ -14,7 +14,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public const string HmacKeyName = "hmac";
         public const string HostKeyName = "host";
         public const string PortKeyName = "port";
-        public const string DatabaseKeyName = "database";
         public const string AccountKeyName = "acct";
         public const string PasswordKeyName = "pwd";
         public const string KeyNameKeyName = "keyName";
@@ -28,7 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public Fingerprint(string fingerprintText)
         {
-            Account = Hmac = Host = Port = Database = Id = Key = KeyName = Password = Uri = null;
+            Account = Hmac = Host = Port = Id = Key = KeyName = Password = Uri = null;
             SasToken = PersonalAccessToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
 
             fingerprintText = fingerprintText ??
@@ -76,8 +75,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string Port { get; set; }
 
-        public string Database { get; set; }
-
         public string Account { get; set; }
 
         public string KeyName { get; set; }
@@ -107,7 +104,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 case HmacKeyName: { Hmac = value; break; }
                 case HostKeyName: { Host = value; break; }
                 case PortKeyName: { Port = value; break; }
-                case DatabaseKeyName: { Database = value; break; }
                 case AccountKeyName: { Account = value; break; }
                 case KeyNameKeyName: { KeyName = value; break; }
                 case PasswordKeyName: { Password = value; break; }
@@ -144,11 +140,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (!string.IsNullOrEmpty(Port))
             {
                 components.Add($"[{PortKeyName}={this.Port.Trim()}]");
-            }
-
-            if (!string.IsNullOrEmpty(Database))
-            {
-                components.Add($"[{DatabaseKeyName}={this.Database.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(Id))
