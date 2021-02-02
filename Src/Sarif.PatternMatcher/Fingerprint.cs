@@ -13,6 +13,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public const string UriKeyName = "uri";
         public const string HmacKeyName = "hmac";
         public const string HostKeyName = "host";
+        public const string PortKeyName = "port";
         public const string AccountKeyName = "acct";
         public const string PasswordKeyName = "pwd";
         public const string KeyNameKeyName = "keyName";
@@ -26,8 +27,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public Fingerprint(string fingerprintText)
         {
-            Account = Hmac = Host = Id = Key = KeyName = Password = Uri = SasToken = null;
-            PersonalAccessToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
+            Account = Hmac = Host = Port = Id = Key = KeyName = Password = Uri = null;
+            SasToken = PersonalAccessToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -72,6 +73,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string Host { get; set; }
 
+        public string Port { get; set; }
+
         public string Account { get; set; }
 
         public string KeyName { get; set; }
@@ -100,6 +103,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 case UriKeyName: { Uri = value; break; }
                 case HmacKeyName: { Hmac = value; break; }
                 case HostKeyName: { Host = value; break; }
+                case PortKeyName: { Port = value; break; }
                 case AccountKeyName: { Account = value; break; }
                 case KeyNameKeyName: { KeyName = value; break; }
                 case PasswordKeyName: { Password = value; break; }
@@ -131,6 +135,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (!string.IsNullOrEmpty(Host))
             {
                 components.Add($"[{HostKeyName}={this.Host.Trim()}]");
+            }
+
+            if (!string.IsNullOrEmpty(Port))
+            {
+                components.Add($"[{PortKeyName}={this.Port.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(Id))
