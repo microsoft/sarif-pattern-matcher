@@ -78,45 +78,6 @@
           "fingerprints": {
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com; Port=3306; Database=catalog_db][pwd=password]"
           }
-        },
-        {
-          "ruleId": "SEC101/113",
-          "ruleIndex": 0,
-          "message": {
-            "id": "Php",
-            "arguments": [
-              "SEC101_113.MySqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "PHP MySQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_113.MySqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 14,
-                  "startColumn": 31,
-                  "endLine": 14,
-                  "endColumn": 176,
-                  "charOffset": 1174,
-                  "charLength": 145,
-                  "snippet": {
-                    "text": "user=\"username@some-database-name\", password=password, host=\"some-database-name.mysql.database.azure.com\", port=3306, database=catalog_db, ssl_ca"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com; port=3306; database=catalog_db][pwd=password]"
-          }
         }
       ],
       "columnKind": "utf16CodeUnits"
