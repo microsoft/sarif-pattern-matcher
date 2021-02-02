@@ -3,19 +3,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
+using System.Data.SqlClient;
 
-using Npgsql;
+using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class PostgreSqlConnectionStringValidator : ValidatorBase
+    internal class SqlConnectionStringValidator : ValidatorBase
     {
-        internal static PostgreSqlConnectionStringValidator Instance;
+        internal static SqlConnectionStringValidator Instance;
+        internal static IRegex RegexEngine;
 
-        static PostgreSqlConnectionStringValidator()
+        private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
+
+        static SqlConnectionStringValidator()
         {
-            Instance = new PostgreSqlConnectionStringValidator();
+            Instance = new SqlConnectionStringValidator();
+            RegexEngine = RE2Regex.Instance;
+
+            // We perform this work in order to force caching of these
+            // expressions (an operation which otherwise can cause
+            // threading problems).
+            RegexEngine.Match(string.Empty, ClientIPExpression);
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -46,9 +55,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string message)
         {
             if (!groups.TryGetValue("host", out string host) ||
-                !groups.TryGetValue("port", out string port) ||
                 !groups.TryGetValue("account", out string account) ||
                 !groups.TryGetValue("password", out string password))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
+            // SQL server name can't exceed this length. If we have, we likely
+            // are looking at a lengthy string is an indirect key to the
+            // actual SQL server name.
+            if (host.Length > 128)
             {
                 return nameof(ValidationState.NoMatch);
             }
@@ -56,7 +72,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprintText = new Fingerprint()
             {
                 Host = host,
-                Port = port,
                 Account = account,
                 Password = password,
             }.ToString();
@@ -69,42 +84,48 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             var fingerprint = new Fingerprint(fingerprintText);
 
-            string connString;
-            if (string.IsNullOrWhiteSpace(fingerprint.Port))
-            {
-                connString = $"Host={fingerprint.Host};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require";
-            }
-            else
-            {
-                connString = $"Host={fingerprint.Host};Port={fingerprint.Port};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require";
-            }
+            string host = fingerprint.Host;
+            string account = fingerprint.Account;
+            string password = fingerprint.Password;
 
+            string connString =
+                $"Server=tcp:{host},1433;User ID={account};Password={password};" +
+                "Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
             try
             {
-                using var postgreSqlconnection = new NpgsqlConnection(connString);
-                postgreSqlconnection.Open();
+                using var connection = new SqlConnection(connString);
+                connection.OpenAsync().GetAwaiter().GetResult();
+            }
+            catch (ArgumentException)
+            {
+                // This exception means that some illegal chars, etc.
+                // have snuck into the connection string
+                return nameof(ValidationState.NoMatch);
             }
             catch (Exception e)
             {
-                if (e is PostgresException postgresException)
+                if (e is SqlException sqlException)
                 {
-                    // database does not exist, but the creds are valid
-                    if (postgresException.SqlState == "3D000")
+                    if (sqlException.ErrorCode == unchecked((int)0x80131904))
                     {
-                        return ReturnAuthorizedAccess(ref message, asset: fingerprint.Host);
-                    }
+                        if (e.Message.Contains("Login failed for user"))
+                        {
+                            return ReturnUnauthorizedAccess(ref message, asset: host);
+                        }
 
-                    // password authentication failed for user "sectoojlsadm"
-                    if (postgresException.SqlState == "28P01")
-                    {
-                        return ReturnUnauthorizedAccess(ref message, asset: fingerprint.Host);
+                        FlexMatch match = RegexEngine.Match(e.Message, ClientIPExpression);
+                        if (match.Success)
+                        {
+                            message = match.Value;
+                            return nameof(ValidationState.Unknown);
+                        }
                     }
                 }
 
-                return ReturnUnhandledException(ref message, e, asset: fingerprint.Host);
+                return ReturnUnhandledException(ref message, e, asset: host);
             }
 
-            return ReturnAuthorizedAccess(ref message, asset: fingerprint.Host);
+            return ReturnAuthorizedAccess(ref message, asset: host);
         }
     }
 }
