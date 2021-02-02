@@ -33,4 +33,4 @@
   $SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^:]+):.*;user\s*=\s*(?<account>[^@]+)@[^;]+;password\s*=\s*(?<password>[^;]+);
   $SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*tcp:(?<host>[^,]+),[^,]+,\s*"(?<account>[^"]+)",\s*"(?<password>[^"]+)"
   $SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
-  $PostgreSqlConnectionStringAdo=(?i)Host\s*=\s*(?-i)(?<host>[0-9a-z\-_]{3,91})((?i);Port\s*=\s*(?<port>[0-9]{1,5}))?;Database\s*=\s*(?-i)(?<database>[0-9a-z\-_]{3,91})(?i);Username\s*=\s*(?<account>[^,;]+);Password\s*=\s*(?<password>[^,;\s]+)
+  $PostgreSqlConnectionStringAdo=(?i)Host\s*=\s*(?-i)(?<host>[0-9a-z\-_\.]{3,91})((?i);Port\s*=\s*(?<port>[0-9]{1,5}))?;Database\s*=\s*(?-i)(?<database>[0-9a-z\-_]{3,91})(?i);Username\s*=\s*(?<account>[^,;]+);Password\s*=\s*(?<password>[^,;\s]+)
