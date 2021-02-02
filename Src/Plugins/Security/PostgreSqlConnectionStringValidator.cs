@@ -88,13 +88,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 if (e is PostgresException postgresException)
                 {
-                    // database does not exist, but the creds are valid
+                    // Database does not exist, but the creds are valid
                     if (postgresException.SqlState == "3D000")
                     {
                         return ReturnAuthorizedAccess(ref message, asset: fingerprint.Host);
                     }
 
-                    // password authentication failed for user "sectoojlsadm"
+                    // password authentication failed for user
                     if (postgresException.SqlState == "28P01")
                     {
                         return ReturnUnauthorizedAccess(ref message, asset: fingerprint.Host);
