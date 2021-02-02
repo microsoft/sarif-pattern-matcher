@@ -3,7 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
+
+using Microsoft.RE2.Managed;
 
 using Npgsql;
 
@@ -12,10 +13,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public class PostgreSqlConnectionStringValidator : ValidatorBase
     {
         internal static PostgreSqlConnectionStringValidator Instance;
+        internal static IRegex RegexEngine;
+        private const string _hostRegex = "(Host\\s*=\\s*(?<host>[\\w\\-_\\.]{3,91}))";
+        private const string _portRegex = "(Port\\s*=\\s*(?<port>[0-9]{1,5}))";
+        private const string _accountRegex = "(Username\\s*=\\s*(?<account>[^,;]+))";
+        private const string _passwordRegex = "(Password\\s*=\\s*(?<account>[^,;\"\\s]+))";
 
         static PostgreSqlConnectionStringValidator()
         {
             Instance = new PostgreSqlConnectionStringValidator();
+            RegexEngine = RE2Regex.Instance;
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -45,10 +52,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            if (!groups.TryGetValue("host", out string host) ||
-                !groups.TryGetValue("port", out string port) ||
-                !groups.TryGetValue("account", out string account) ||
-                !groups.TryGetValue("password", out string password))
+            GetStringFromPatternWithRegex(matchedPattern, _hostRegex, out string host);
+            GetStringFromPatternWithRegex(matchedPattern, _portRegex, out string port);
+            GetStringFromPatternWithRegex(matchedPattern, _accountRegex, out string account);
+            GetStringFromPatternWithRegex(matchedPattern, _passwordRegex, out string password);
+
+            if (string.IsNullOrWhiteSpace(host) ||
+                string.IsNullOrWhiteSpace(account) ||
+                string.IsNullOrWhiteSpace(password))
             {
                 return nameof(ValidationState.NoMatch);
             }
@@ -62,6 +73,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }.ToString();
 
             return nameof(ValidationState.Unknown);
+        }
+
+        private static void GetStringFromPatternWithRegex(string matchedPattern, string regex, out string host)
+        {
+            FlexMatch flexMatch = RegexEngine.Match(matchedPattern, regex);
+            host = flexMatch.Success ? flexMatch.Value : null;
         }
 
         protected override string IsValidDynamicHelper(ref string fingerprintText,
