@@ -203,7 +203,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             pluginCanPerformDynamicAnalysis = validationPair.IsValidDynamic != null;
 
-            return (result != Validation.NoMatch && dynamicValidation && pluginCanPerformDynamicAnalysis) ?
+            return (result != Validation.NoMatch && result != Validation.Expired && dynamicValidation && pluginCanPerformDynamicAnalysis) ?
                 ValidateDynamicHelper(validationPair.IsValidDynamic, ref fingerprint, ref message) :
                 result;
         }

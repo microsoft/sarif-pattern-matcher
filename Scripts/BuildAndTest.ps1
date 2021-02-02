@@ -65,7 +65,7 @@ if (-not $NoBuild) {
     MSBuild "$RepoRoot\Src\RE2.Native.sln" /p:Configuration=$Configuration /p:Platform="Any CPU"
     
     Write-Information "Building Sarif.Sdk"	
-    & $RepoRoot\Src\sarif-sdk\BuildAndTest.cmd -NoTest -NoPublish -NoFormat -Configuration $Configuration	
+    & $RepoRoot\Src\sarif-sdk\BuildAndTest.cmd -NoBuild -NoTest -NoPublish -NoSigningDirectory -NoPackage -NoFormat
     if ($LASTEXITCODE -ne 0) {	
         Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."	
     }
