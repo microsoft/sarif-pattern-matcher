@@ -31,3 +31,4 @@
   $MySqlConnectionStringAdo=(?i)Server\s*=(?<host>[^,;]+mysql\.database\.azure\.com.*)(,|;).*Uid=(?<account>[a-z\@\-]+)(,|;).*Pwd=(?<password>[^;]+);
   $MySqlConnectionStringPhp=(?i)user=\"(?<account>[a-z\@\-]+)(\").*password=(?<password>[^;]+)(,).*host=\"(?<host>[^;]+), ssl_ca
   $SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
+  $PostgreSqlConnectionStringAdo=(?i)Host\s*=(?-i)(?<host>[0-9a-z\-_]{3,91});(?i)Database\s*=(?-i)(?<database>[0-9a-z\-_]{3,91});Username=(?<account>[^,;]+);Password=(?<password>[^,;\s]+)
