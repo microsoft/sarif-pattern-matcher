@@ -24,9 +24,6 @@
                 },
                 "Odbc": {
                   "text": "'{0}' contains {1}{2}{3}{4}{5}."
-                },
-                "Php": {
-                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
