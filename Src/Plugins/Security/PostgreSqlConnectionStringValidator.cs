@@ -4,9 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.Text;
-
-using Microsoft.RE2.Managed;
 
 using Npgsql;
 
@@ -15,12 +12,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public class PostgreSqlConnectionStringValidator : ValidatorBase
     {
         internal static PostgreSqlConnectionStringValidator Instance;
-        internal static IRegex RegexEngine;
 
         static PostgreSqlConnectionStringValidator()
         {
             Instance = new PostgreSqlConnectionStringValidator();
-            RegexEngine = RE2Regex.Instance;
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -44,7 +39,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                 ref message);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern, ref Dictionary<string, string> groups, ref string failureLevel, ref string fingerprintText, ref string message)
+        protected override string IsValidStaticHelper(ref string matchedPattern,
+                                                      ref Dictionary<string, string> groups,
+                                                      ref string failureLevel,
+                                                      ref string fingerprintText,
+                                                      ref string message)
         {
             if (!groups.TryGetValue("host", out string host) ||
                 !groups.TryGetValue("database", out string database) ||
@@ -56,7 +55,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             fingerprintText = new Fingerprint()
             {
-                Host = host.Replace("\"", string.Empty).Replace(",", ";"),
+                Host = host,
                 Database = database,
                 Account = account,
                 Password = password,

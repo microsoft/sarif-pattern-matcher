@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_114.PostgreSqlConnectionString.sarif" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
     <ProjectReference Include="..\Security\Security.csproj" />
     <ProjectReference Include="..\..\sarif-sdk\src\Sarif\Sarif.csproj" />

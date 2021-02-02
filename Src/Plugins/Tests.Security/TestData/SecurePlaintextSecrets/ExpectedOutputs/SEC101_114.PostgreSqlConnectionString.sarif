@@ -73,7 +73,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][database=my_db][pwd=my_pw]"
           }
         }
       ],
