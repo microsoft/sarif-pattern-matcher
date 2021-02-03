@@ -160,20 +160,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             }
 
             value = value.Substring(value.IndexOf('=') + 1);
-
-            int index = 0;
-            foreach (char ch in value)
-            {
-                if (char.IsWhiteSpace(ch) || ch == '\t')
-                {
-                    index++;
-                    continue;
-                }
-
-                break;
-            }
-
-            return value.Substring(index).Trim();
+            return value.Trim();
         }
 
         /// <summary>
