@@ -13,10 +13,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static PostgreSqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
-        private const string _hostRegex = "(Host\\s*=\\s*(?<host>[\\w\\-_\\.]{3,91}))";
-        private const string _portRegex = "(Port\\s*=\\s*(?<port>[0-9]{1,5}))";
-        private const string _accountRegex = "(Username\\s*=\\s*(?<account>[^,;]+))";
-        private const string _passwordRegex = "(Password\\s*=\\s*(?<account>[^,;\"\\s]+))";
+        private const string _hostRegex = "(?i)(Host\\s*=\\s*(?-i)(?<host>[\\w\\-_\\.]{3,91}))";
+        private const string _portRegex = "(?i)(Port\\s*=\\s*(?<port>[0-9]{1,5}))";
+        private const string _accountRegex = "(?i)(Username\\s*=\\s*(?<account>[^,;]+))";
+        private const string _passwordRegex = "(?i)(Password\\s*=\\s*(?<account>[^,;\"\\s]+))";
 
         static PostgreSqlConnectionStringValidator()
         {
@@ -74,10 +74,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return nameof(ValidationState.Unknown);
         }
 
-        private static void GetStringFromPatternWithRegex(string matchedPattern, string regex, out string host)
+        private static void GetStringFromPatternWithRegex(string matchedPattern, string regex, out string stringFromPattern)
         {
             FlexMatch flexMatch = RegexEngine.Match(matchedPattern, regex);
-            host = flexMatch.Success ? flexMatch.Value : null;
+
+            if (flexMatch == null || !flexMatch.Success)
+            {
+                stringFromPattern = null;
+                return;
+            }
+
+            // The regular expressions defined in constants above will capture entire properties.
+            // For example:  "Password=blahblah" would be an entire match.
+            // We only need that which follows the first equal sign (just in case there are many)
+
+            int indexOfFirstEqualSign = flexMatch.Value.String.IndexOf('=');
+
+            // If we didn't find an equal sign or the equal sign is the last character (the property is empty) return null
+            if (indexOfFirstEqualSign < 0 || indexOfFirstEqualSign == flexMatch.Value.String.Length - 1)
+            {
+                stringFromPattern = null;
+                return;
+            }
+
+            stringFromPattern = flexMatch.Value.String.Substring(indexOfFirstEqualSign + 1);
         }
 
         protected override string IsValidDynamicHelper(ref string fingerprintText,

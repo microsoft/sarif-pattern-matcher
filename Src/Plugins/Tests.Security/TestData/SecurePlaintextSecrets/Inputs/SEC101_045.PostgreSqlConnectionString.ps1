@@ -1,7 +1,11 @@
 ﻿# ADO.NET
 # Using Npgsql
 # Currently caught
-Host=my_host;Database=my_db;Username=my_user;Password=my_pw
+<add name="BlogDbContext" connectionString="host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw">
+<add name="BlogDbContext" connectionString="Host=my_host;Port=5555;UsErname=my_user;Password=my_pw">
+<add name="BlogDbContext" connectionString="Password=my_pw;Host=my_host;Port=5555;Username=my_user;Pooling=true">
+<add name="BlogDbContext" connectionString="Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true">
+<add name="BlogDbContext" connectionString="Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true;Port=5555">
 ############### The rest of these patterns are not implemented!!
 Username=mylogin;Password=mypass;Database=mydatabase
 Password=mypass;Database=mydatabase;Username=mylogin;
