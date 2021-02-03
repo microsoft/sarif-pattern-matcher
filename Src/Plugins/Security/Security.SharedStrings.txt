@@ -25,7 +25,7 @@
   $AwsCredentials=(?s)\b(?<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}).+?\b(?i)(?<key>[0-9a-z\/+]{40})
   $FacebookAppCredentials=(?si)(facebook|fb)(.{0,20})?[`'"\s>](?<id>[0-9]{13,17})[^0-9].+?(facebook|fb)(.{0,20})?[`'"\s>](?<key>[0-9a-f]{32})([^0-9a-f]|$)
   $GitHubAppCredentials=(?s)\b(?<id>Iv1.[0-9a-z]{16}).+?\b(?i)(?<key>[0-9a-z]{35,40})([^0-9a-f]|$)
-  $GitHubPat=(?si)github(?<refine>.{0,50}[0-9a-z]{40})([^0-9a-z]|$)
+  $GitHubPat=(?si)(?<refine>github.{0,50}[0-9a-z]{40})([^0-9a-z]|$)
   $GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
   $HockeyAppToken=(?si)hockey.{0,50}[`'"\s>]?(?<refine>[0-9a-f]{32})([^0-9a-f]|$)
   $MySqlConnectionStringAdo=(?i)Server\s*=(?-i)(?<host>[0-9a-z\-]{3,63}\.mysql\.database\.azure\.com.*)(,|;).*Uid=(?<account>[a-z\@\-]{1,120})(,|;).*Pwd=(?<password>[^;]{8,128});
