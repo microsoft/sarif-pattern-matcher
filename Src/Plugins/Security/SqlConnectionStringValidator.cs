@@ -82,10 +82,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 password = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
             }
 
-            if (string.IsNullOrEmpty(host)
-                || string.IsNullOrEmpty(database)
-                || string.IsNullOrEmpty(account)
-                || string.IsNullOrEmpty(password))
+            if (string.IsNullOrWhiteSpace(host)
+                || string.IsNullOrWhiteSpace(database)
+                || string.IsNullOrWhiteSpace(account)
+                || string.IsNullOrWhiteSpace(password))
             {
                 return nameof(ValidationState.NoMatch);
             }
@@ -101,7 +101,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprintText = new Fingerprint()
             {
                 Host = host,
-                Database = database,
+                Resource = database,
                 Account = account,
                 Password = password,
             }.ToString();
@@ -117,7 +117,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string host = fingerprint.Host;
             string account = fingerprint.Account;
             string password = fingerprint.Password;
-            string database = fingerprint.Database;
+            string database = fingerprint.Resource;
 
             string connString =
                 $"Server={host};Initial Catalog={database};User ID={account};Password={password};" +

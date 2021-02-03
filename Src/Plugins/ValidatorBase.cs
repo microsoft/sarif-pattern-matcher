@@ -152,6 +152,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             return ParseValue(pattern);
         }
 
+        internal static string ParseValue(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+
+            value = value.Substring(value.IndexOf('=') + 1);
+
+            int index = 0;
+            foreach (char ch in value)
+            {
+                if (char.IsWhiteSpace(ch) || ch == '\t')
+                {
+                    index++;
+                    continue;
+                }
+
+                break;
+            }
+
+            return value.Substring(index).Trim();
+        }
+
         /// <summary>
         /// Validate if the match is a secret or credential.
         /// </summary>
@@ -187,30 +211,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                                                       ref string message)
         {
             return null;
-        }
-
-        private static string ParseValue(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return value;
-            }
-
-            value = value.Substring(value.IndexOf('=') + 1);
-
-            int index = 0;
-            foreach (char ch in value)
-            {
-                if (ch == ' ' || ch == '\t')
-                {
-                    index++;
-                    continue;
-                }
-
-                break;
-            }
-
-            return value.Substring(index);
         }
 
         private static bool TestExceptionForMessage(Exception e, string message, string asset)
