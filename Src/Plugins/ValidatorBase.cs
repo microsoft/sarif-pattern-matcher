@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 
+using Microsoft.RE2.Managed;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 {
     public abstract class ValidatorBase
@@ -144,6 +146,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             return nameof(ValidationState.Unknown);
         }
 
+        public static string ParseExpression(IRegex regexEngine, string matchedPattern, string expression)
+        {
+            string pattern = regexEngine.Match(matchedPattern, expression).Value;
+            return ParseValue(pattern);
+        }
+
         /// <summary>
         /// Validate if the match is a secret or credential.
         /// </summary>
@@ -179,6 +187,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                                                       ref string message)
         {
             return null;
+        }
+
+        private static string ParseValue(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+
+            value = value.Substring(value.IndexOf('=') + 1);
+
+            int index = 0;
+            foreach (char ch in value)
+            {
+                if (ch == ' ' || ch == '\t')
+                {
+                    index++;
+                    continue;
+                }
+
+                break;
+            }
+
+            return value.Substring(index);
         }
 
         private static bool TestExceptionForMessage(Exception e, string message, string asset)
