@@ -71,7 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Host = host,
                 Port = port,
-                Database = database,
+                Resource = database,
                 Account = account,
                 Password = password,
             }.ToString();
@@ -118,9 +118,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 connectionStringBuilder.Append($"Port={fingerprint.Port}");
             }
 
-            if (!string.IsNullOrWhiteSpace(fingerprint.Database))
+            if (!string.IsNullOrWhiteSpace(fingerprint.Resource))
             {
-                connectionStringBuilder.Append($"Database={fingerprint.Database}");
+                connectionStringBuilder.Append($"Database={fingerprint.Resource}");
             }
 
             try
