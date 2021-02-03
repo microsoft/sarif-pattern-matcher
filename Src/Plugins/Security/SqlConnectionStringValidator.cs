@@ -120,7 +120,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string database = fingerprint.Database;
 
             string connString =
-                $"Server=tcp:{host};Initial Catalog={database};User ID={account};Password={password};" +
+                $"Server={host};Initial Catalog={database};User ID={account};Password={password};" +
                 "Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
 
             // Validating ConnectionString with database.
@@ -131,7 +131,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             connString =
-               $"Server=tcp:{host},1433;User ID={account};Password={password};" +
+               $"Server=tcp:{host};User ID={account};Password={password};" +
                "Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
 
             // Validating ConnectionString without database.
