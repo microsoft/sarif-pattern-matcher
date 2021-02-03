@@ -43,7 +43,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_006.GitHubPat.txt",
+              "SEC101_006.GitHubPat.ps1",
               "an apparent ",
               "",
               "GitHub personal access token (PAT)",
@@ -55,18 +55,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 3,
+                  "startLine": 2,
                   "startColumn": 2,
                   "endLine": 3,
                   "endColumn": 42,
-                  "charOffset": 29,
-                  "charLength": 40,
+                  "charOffset": 14,
+                  "charLength": 55,
                   "snippet": {
-                    "text": "ff34885a8624460a855540c6592698d2f1812843"
+                    "text": "GithubToken>\r\n\tff34885a8624460a855540c6592698d2f1812843"
                   }
                 }
               }
@@ -82,7 +82,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_006.GitHubPat.txt",
+              "SEC101_006.GitHubPat.ps1",
               "an apparent ",
               "",
               "GitHub personal access token (PAT)",
@@ -94,18 +94,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 8,
-                  "startColumn": 31,
+                  "startColumn": 13,
                   "endLine": 8,
                   "endColumn": 71,
-                  "charOffset": 155,
-                  "charLength": 40,
+                  "charOffset": 137,
+                  "charLength": 58,
                   "snippet": {
-                    "text": "ff34885a8624460a855540c6592698d2f1812843"
+                    "text": "GitHubPat\" value=\"ff34885a8624460a855540c6592698d2f1812843"
                   }
                 }
               }
@@ -121,7 +121,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_006.GitHubPat.txt",
+              "SEC101_006.GitHubPat.ps1",
               "an apparent ",
               "",
               "GitHub personal access token (PAT)",
@@ -133,18 +133,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 12,
-                  "startColumn": 36,
+                  "startColumn": 7,
                   "endLine": 12,
                   "endColumn": 76,
-                  "charOffset": 268,
-                  "charLength": 40,
+                  "charOffset": 239,
+                  "charLength": 69,
                   "snippet": {
-                    "text": "ff34885a8624460a855540c6592698d2f1812843"
+                    "text": "GitHubPersonalAccessToken = \"ff34885a8624460a855540c6592698d2f1812843"
                   }
                 }
               }
