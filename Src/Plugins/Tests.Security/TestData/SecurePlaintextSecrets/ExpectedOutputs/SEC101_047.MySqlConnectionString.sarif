@@ -95,7 +95,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][database=catalog_db][host=some-database-name.mysql.database.azure.com][pwd=password]"
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password][resource=catalog_db]"
           }
         },
         {
@@ -134,7 +134,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][database=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db][host=some-database-name.mysql.database.azure.com][pwd=password, host=\"some-database-name.mysql.database.azure.com\", port=3306, database=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db]"
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password, host=\"some-database-name.mysql.database.azure.com\", port=3306, database=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db][resource=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db]"
           }
         },
         {
@@ -173,7 +173,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][database=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db][host=some-database-name.mysql.database.azure.com][pwd=password]"
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password][resource=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db]"
           }
         },
         {
@@ -212,7 +212,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][database=catalog_db][host=some-database-name.mysql.database.azure.com][pwd=password]"
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password][resource=catalog_db]"
           }
         },
         {
