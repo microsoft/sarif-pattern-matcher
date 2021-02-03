@@ -1,7 +1,13 @@
 ﻿# ADO.NET
 # Using Npgsql
 # Currently caught
-Host=my_host;Database=my_db;Username=my_user;Password=my_pw
+<add name="BlogDbContext" connectionString="host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw"> # host not capitalized, optional properties in the middle
+<add name="BlogDbContext" connectionString="host=my_host;Database=my_db;Username=my_user;Password=my_pw;Port=5555"> # optional properties in the middle and at the end
+<add name="BlogDbContext" connectionString="Host=my_host;Port=5555;UsErname=my_user;Password=my_pw"> # weird capitalization on UsErname
+<add name="BlogDbContext" connectionString="Password=my_pw;Host=my_host;Port=5555;Username=my_user;Pooling=true"> # weird order, unnecessary property at the end
+<add name="BlogDbContext" connectionString="Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true"> # begin with optional property
+<add name="BlogDbContext" connectionString="Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true;Port=5555"> # redundant optional property at beginning and end
+<add name="BlogDbContext" connectionString="Database=my_db;Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"> # space preceeding optional property
 ############### The rest of these patterns are not implemented!!
 Username=mylogin;Password=mypass;Database=mydatabase
 Password=mypass;Database=mydatabase;Username=mylogin;

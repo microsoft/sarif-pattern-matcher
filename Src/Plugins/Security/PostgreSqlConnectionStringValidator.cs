@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
+using System.Text;
+
+using Microsoft.RE2.Managed;
 
 using Npgsql;
 
@@ -12,10 +14,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public class PostgreSqlConnectionStringValidator : ValidatorBase
     {
         internal static PostgreSqlConnectionStringValidator Instance;
+        internal static IRegex RegexEngine;
+        private const string HostRegex = "(?i)(Host\\s*=\\s*(?-i)(?<host>[\\w\\-_\\.]{3,91}))";
+        private const string PortRegex = "(?i)(Port\\s*=\\s*(?<port>[0-9]{1,5}))";
+        private const string AccountRegex = "(?i)(Username\\s*=\\s*(?<account>[^,;]+))";
+        private const string PasswordRegex = "(?i)(Password\\s*=\\s*(?<account>[^,;\"\\s]+))";
+        private const string DatabaseRegex = "(?i)(Database\\s*=\\s*(?<database>[^;]+))";
 
         static PostgreSqlConnectionStringValidator()
         {
             Instance = new PostgreSqlConnectionStringValidator();
+            RegexEngine = RE2Regex.Instance;
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -45,10 +54,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            if (!groups.TryGetValue("host", out string host) ||
-                !groups.TryGetValue("port", out string port) ||
-                !groups.TryGetValue("account", out string account) ||
-                !groups.TryGetValue("password", out string password))
+            string host = ParseExpression(RegexEngine, matchedPattern, HostRegex);
+            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
+            string account = ParseExpression(RegexEngine, matchedPattern, AccountRegex);
+            string password = ParseExpression(RegexEngine, matchedPattern, PasswordRegex);
+            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
+
+            if (string.IsNullOrWhiteSpace(host) ||
+                string.IsNullOrWhiteSpace(account) ||
+                string.IsNullOrWhiteSpace(password))
             {
                 return nameof(ValidationState.NoMatch);
             }
@@ -57,6 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Host = host,
                 Port = port,
+                Resource = database,
                 Account = account,
                 Password = password,
             }.ToString();
@@ -69,19 +84,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             var fingerprint = new Fingerprint(fingerprintText);
 
-            string connString;
-            if (string.IsNullOrWhiteSpace(fingerprint.Port))
+            StringBuilder connectionStringBuilder = new StringBuilder();
+            connectionStringBuilder.Append($"Host={fingerprint.Host};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require");
+
+            if (!string.IsNullOrWhiteSpace(fingerprint.Port))
             {
-                connString = $"Host={fingerprint.Host};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require";
+                connectionStringBuilder.Append($"Port={fingerprint.Port}");
             }
-            else
+
+            if (!string.IsNullOrWhiteSpace(fingerprint.Resource))
             {
-                connString = $"Host={fingerprint.Host};Port={fingerprint.Port};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require";
+                connectionStringBuilder.Append($"Database={fingerprint.Resource}");
             }
 
             try
             {
-                using var postgreSqlconnection = new NpgsqlConnection(connString);
+                using var postgreSqlconnection = new NpgsqlConnection(connectionStringBuilder.ToString());
                 postgreSqlconnection.Open();
             }
             catch (Exception e)

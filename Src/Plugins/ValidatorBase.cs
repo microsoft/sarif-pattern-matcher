@@ -148,19 +148,36 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 
         public static string ParseExpression(IRegex regexEngine, string matchedPattern, string expression)
         {
-            string pattern = regexEngine.Match(matchedPattern, expression).Value;
-            return ParseValue(pattern);
+            FlexMatch match = regexEngine.Match(matchedPattern, expression);
+            return match?.Success ?? false ? ParseValue(match.Value) : null;
         }
 
         internal static string ParseValue(string value)
         {
-            if (string.IsNullOrEmpty(value))
+            // If ParseExpression passed us white space, we shouldn't pretend we successfully
+            // found a value.  Return null in both cases to make it clear, nothing useful was found.
+            if (string.IsNullOrWhiteSpace(value))
             {
-                return value;
+                return null;
             }
 
-            value = value.Substring(value.IndexOf('=') + 1);
-            return value.Trim();
+            // If the string is of the form "key=value", look for the first '=' and return everything following
+            // Otherwise, simply return the string.
+
+            int indexOfFirstEqualSign = value.IndexOf('=');
+
+            if (indexOfFirstEqualSign < 0)
+            {
+                return value.Trim();
+            }
+
+            if (indexOfFirstEqualSign == value.Length - 1)
+            {
+                // the string looks like "key=" with no value.
+                return null;
+            }
+
+            return value.Substring(indexOfFirstEqualSign + 1).Trim();
         }
 
         /// <summary>
