@@ -15,7 +15,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         public void ValidatorBase_ParseValue()
         {
             ValidatorBase.ParseValue(null).Should().BeNull();
-            ValidatorBase.ParseValue(string.Empty).Should().Be(string.Empty);
+            ValidatorBase.ParseValue(string.Empty).Should().BeNullOrWhiteSpace();
 
             var strings = new List<string>
             {

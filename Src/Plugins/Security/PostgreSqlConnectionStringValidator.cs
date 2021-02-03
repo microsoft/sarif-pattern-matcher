@@ -54,11 +54,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            GetStringFromPatternWithRegex(matchedPattern, HostRegex, out string host);
-            GetStringFromPatternWithRegex(matchedPattern, PortRegex, out string port);
-            GetStringFromPatternWithRegex(matchedPattern, AccountRegex, out string account);
-            GetStringFromPatternWithRegex(matchedPattern, PasswordRegex, out string password);
-            GetStringFromPatternWithRegex(matchedPattern, DatabaseRegex, out string database);
+            string host = ParseExpression(RegexEngine, matchedPattern, HostRegex);
+            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
+            string account = ParseExpression(RegexEngine, matchedPattern, AccountRegex);
+            string password = ParseExpression(RegexEngine, matchedPattern, PasswordRegex);
+            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
 
             if (string.IsNullOrWhiteSpace(host) ||
                 string.IsNullOrWhiteSpace(account) ||
@@ -77,32 +77,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }.ToString();
 
             return nameof(ValidationState.Unknown);
-        }
-
-        private static void GetStringFromPatternWithRegex(string matchedPattern, string regex, out string stringFromPattern)
-        {
-            FlexMatch flexMatch = RegexEngine.Match(matchedPattern, regex);
-
-            if (flexMatch == null || !flexMatch.Success)
-            {
-                stringFromPattern = null;
-                return;
-            }
-
-            // The regular expressions defined in constants above will capture entire properties.
-            // For example:  "Password=blahblah" would be an entire match.
-            // We only need that which follows the first equal sign (just in case there are many)
-
-            int indexOfFirstEqualSign = flexMatch.Value.String.IndexOf('=');
-
-            // If we didn't find an equal sign or the equal sign is the last character (the property is empty) return null
-            if (indexOfFirstEqualSign < 0 || indexOfFirstEqualSign == flexMatch.Value.String.Length - 1)
-            {
-                stringFromPattern = null;
-                return;
-            }
-
-            stringFromPattern = flexMatch.Value.String.Substring(indexOfFirstEqualSign + 1);
         }
 
         protected override string IsValidDynamicHelper(ref string fingerprintText,
