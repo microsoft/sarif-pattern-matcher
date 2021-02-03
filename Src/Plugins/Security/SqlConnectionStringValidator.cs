@@ -76,10 +76,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             else
             {
-                host = ParseExpression(matchedPattern, HostExpression);
-                database = ParseExpression(matchedPattern, DatabaseExpression);
-                account = ParseExpression(matchedPattern, AccountExpression);
-                password = ParseExpression(matchedPattern, PasswordExpression);
+                host = ParseExpression(RegexEngine, matchedPattern, HostExpression);
+                database = ParseExpression(RegexEngine, matchedPattern, DatabaseExpression);
+                account = ParseExpression(RegexEngine, matchedPattern, AccountExpression);
+                password = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
             }
 
             if (string.IsNullOrEmpty(host)
@@ -175,36 +175,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             return ReturnAuthorizedAccess(ref message, asset: host);
-        }
-
-        private static string ParseValue(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return value;
-            }
-
-            value = value.Substring(value.IndexOf('=') + 1);
-
-            int index = 0;
-            foreach (char ch in value)
-            {
-                if (ch == ' ' || ch == '\t')
-                {
-                    index++;
-                    continue;
-                }
-
-                break;
-            }
-
-            return value.Substring(index);
-        }
-
-        private string ParseExpression(string matchedPattern, string expression)
-        {
-            string pattern = RegexEngine.Match(matchedPattern, expression).Value;
-            return ParseValue(pattern);
         }
     }
 }

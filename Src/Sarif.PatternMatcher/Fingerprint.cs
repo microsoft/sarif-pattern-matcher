@@ -218,38 +218,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 switch (parseState)
                 {
                     case ParseState.GatherKeyOpen:
-                        {
-                            while (fingerprintText[i] != '[') { i++; }
-                            parseState = ParseState.GatherKeyName;
-                            break;
-                        }
+                    {
+                        while (fingerprintText[i] != '[') { i++; }
+                        parseState = ParseState.GatherKeyName;
+                        break;
+                    }
 
                     case ParseState.GatherKeyName:
+                    {
+                        int keyNameStart = i;
+                        while (fingerprintText[i] != '=') { i++; }
+                        currentKey = fingerprintText.Substring(keyNameStart, i - keyNameStart);
+
+                        if (sortedKeys.ContainsKey(currentKey))
                         {
-                            int keyNameStart = i;
-                            while (fingerprintText[i] != '=') { i++; }
-                            currentKey = fingerprintText.Substring(keyNameStart, i - keyNameStart);
-
-                            if (sortedKeys.ContainsKey(currentKey))
-                            {
-                                throw new ArgumentException($"The '{currentKey}' key name is duplicated in the fingerprint.");
-                            }
-
-                            sortedKeys.Add(currentKey, currentKey);
-
-                            parseState = ParseState.GatherValue;
-                            break;
+                            throw new ArgumentException($"The '{currentKey}' key name is duplicated in the fingerprint.");
                         }
+
+                        sortedKeys.Add(currentKey, currentKey);
+
+                        parseState = ParseState.GatherValue;
+                        break;
+                    }
 
                     case ParseState.GatherValue:
-                        {
-                            int valueStart = i;
-                            while (fingerprintText[i] != ']') { i++; }
-                            string value = fingerprintText.Substring(valueStart, i - valueStart);
-                            parseState = ParseState.GatherKeyOpen;
-                            SetProperty(currentKey, value);
-                            break;
-                        }
+                    {
+                        int valueStart = i;
+                        while (fingerprintText[i] != ']') { i++; }
+                        string value = fingerprintText.Substring(valueStart, i - valueStart);
+                        parseState = ParseState.GatherKeyOpen;
+                        SetProperty(currentKey, value);
+                        break;
+                    }
                 }
             }
         }
