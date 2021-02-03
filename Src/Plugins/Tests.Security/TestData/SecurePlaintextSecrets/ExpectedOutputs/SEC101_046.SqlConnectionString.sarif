@@ -79,7 +79,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=some-database-name.database.windows.net][pwd=password]"
+            "ValidationFingerprint/v1": "[acct=username][database=catalog-db][host=tcp:some-database-name.database.windows.net,1433][pwd=password]"
           }
         },
         {
@@ -104,11 +104,89 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 8,
+                  "startLine": 3,
+                  "startColumn": 1,
+                  "endLine": 3,
+                  "endColumn": 242,
+                  "charOffset": 306,
+                  "charLength": 241,
+                  "snippet": {
+                    "text": "Initial Catalog=catalog-db;Persist Security Info=False;Password=password;MultipleActiveResultSets=False;Encrypt=True;User ID=username;TrustServerCertificate=False;Connection Timeout=30;server=tcp:some-database-name.database.windows.net,1433;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username][database=catalog-db][host=tcp:some-database-name.database.windows.net,1433][pwd=password]"
+          }
+        },
+        {
+          "ruleId": "SEC101/046",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_046.SqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 4,
+                  "startColumn": 1,
+                  "endLine": 4,
+                  "endColumn": 113,
+                  "charOffset": 549,
+                  "charLength": 112,
+                  "snippet": {
+                    "text": "Data Source=0.0.0.0,1433;Network Library=DBMSSOCN;Initial Catalog=catalog-db;User ID=username;Password=password;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username][database=catalog-db][host=0.0.0.0,1433][pwd=password]"
+          }
+        },
+        {
+          "ruleId": "SEC101/046",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_046.SqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 10,
                   "startColumn": 40,
-                  "endLine": 8,
+                  "endLine": 10,
                   "endColumn": 157,
-                  "charOffset": 730,
+                  "charOffset": 1087,
                   "charLength": 117,
                   "snippet": {
                     "text": "Server=tcp:some-database-name.database.windows.net,1433;Database=tse-internal-spam-testing;Uid=username;Pwd=password;"
@@ -118,7 +196,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=some-database-name.database.windows.net][pwd=password]"
+            "ValidationFingerprint/v1": "[acct=username][database=tse-internal-spam-testing][host=tcp:some-database-name.database.windows.net,1433][pwd=password]"
           }
         },
         {
@@ -143,11 +221,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 5,
+                  "startLine": 7,
                   "startColumn": 1,
-                  "endLine": 5,
+                  "endLine": 7,
                   "endColumn": 149,
-                  "charOffset": 372,
+                  "charOffset": 729,
                   "charLength": 148,
                   "snippet": {
                     "text": "jdbc:sqlserver://some-database-name.database.windows.net:1433;database=tse-internal-spam-testing;user=username@some-database-name;password=password;"
@@ -157,7 +235,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=some-database-name.database.windows.net][pwd=password]"
+            "ValidationFingerprint/v1": "[acct=username][database=tse-internal-spam-testing][host=some-database-name.database.windows.net:1433][pwd=password]"
           }
         },
         {
@@ -182,11 +260,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 11,
+                  "startLine": 13,
                   "startColumn": 10,
-                  "endLine": 11,
+                  "endLine": 13,
                   "endColumn": 130,
-                  "charOffset": 983,
+                  "charOffset": 1340,
                   "charLength": 120,
                   "snippet": {
                     "text": "sqlsrv:server = tcp:some-database-name.database.windows.net,1433; Database = some-database-name\", \"username\", \"password\""
@@ -196,7 +274,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=some-database-name.database.windows.net][pwd=password]"
+            "ValidationFingerprint/v1": "[acct=username][database=some-database-name][host=tcp:some-database-name.database.windows.net,1433][pwd=password]"
           }
         }
       ],

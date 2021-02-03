@@ -17,6 +17,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public const string AccountKeyName = "acct";
         public const string PasswordKeyName = "pwd";
         public const string KeyNameKeyName = "keyName";
+        public const string DatabaseKeyName = "database";
         public const string SasTokenKeyName = "sasToken";
         public const string ThumbprintKeyName = "thumbprint";
         public const string PersonalAccessTokenKeyName = "pat";
@@ -27,7 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public Fingerprint(string fingerprintText)
         {
-            Account = Hmac = Host = Port = Id = Key = KeyName = Password = Uri = null;
+            Account = Hmac = Host = Port = Id = Key = KeyName = Password = Uri = Database = null;
             SasToken = PersonalAccessToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
 
             fingerprintText = fingerprintText ??
@@ -83,6 +84,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string SasToken { get; set; }
 
+        public string Database { get; set; }
+
         public string Thumbprint { get; set; }
 
         public string SymmetricKey128Bit { get; set; }
@@ -108,6 +111,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 case KeyNameKeyName: { KeyName = value; break; }
                 case PasswordKeyName: { Password = value; break; }
                 case SasTokenKeyName: { SasToken = value; break; }
+                case DatabaseKeyName: { Database = value; break; }
                 case ThumbprintKeyName: { Thumbprint = value; break; }
                 case SymmetricKey128BitKeyName: { SymmetricKey128Bit = value; break; }
                 case SymmetricKey256BitKeyName: { SymmetricKey256Bit = value; break; }
@@ -127,6 +131,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 components.Add($"[{AccountKeyName}={this.Account.Trim()}]");
             }
 
+            if (!string.IsNullOrEmpty(Database))
+            {
+                components.Add($"[{DatabaseKeyName}={this.Database.Trim()}]");
+            }
+
             if (!string.IsNullOrEmpty(Hmac))
             {
                 components.Add($"[{HmacKeyName}={this.Hmac.Trim()}]");
@@ -135,11 +144,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (!string.IsNullOrEmpty(Host))
             {
                 components.Add($"[{HostKeyName}={this.Host.Trim()}]");
-            }
-
-            if (!string.IsNullOrEmpty(Port))
-            {
-                components.Add($"[{PortKeyName}={this.Port.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(Id))
@@ -165,6 +169,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (!string.IsNullOrEmpty(PersonalAccessToken))
             {
                 components.Add($"[{PersonalAccessTokenKeyName}={this.PersonalAccessToken.Trim()}]");
+            }
+
+            if (!string.IsNullOrEmpty(Port))
+            {
+                components.Add($"[{PortKeyName}={this.Port.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(SasToken))
@@ -209,38 +218,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 switch (parseState)
                 {
                     case ParseState.GatherKeyOpen:
-                    {
-                        while (fingerprintText[i] != '[') { i++; }
-                        parseState = ParseState.GatherKeyName;
-                        break;
-                    }
-
-                    case ParseState.GatherKeyName:
-                    {
-                        int keyNameStart = i;
-                        while (fingerprintText[i] != '=') { i++; }
-                        currentKey = fingerprintText.Substring(keyNameStart, i - keyNameStart);
-
-                        if (sortedKeys.ContainsKey(currentKey))
                         {
-                            throw new ArgumentException($"The '{currentKey}' key name is duplicated in the fingerprint.");
+                            while (fingerprintText[i] != '[') { i++; }
+                            parseState = ParseState.GatherKeyName;
+                            break;
                         }
 
-                        sortedKeys.Add(currentKey, currentKey);
+                    case ParseState.GatherKeyName:
+                        {
+                            int keyNameStart = i;
+                            while (fingerprintText[i] != '=') { i++; }
+                            currentKey = fingerprintText.Substring(keyNameStart, i - keyNameStart);
 
-                        parseState = ParseState.GatherValue;
-                        break;
-                    }
+                            if (sortedKeys.ContainsKey(currentKey))
+                            {
+                                throw new ArgumentException($"The '{currentKey}' key name is duplicated in the fingerprint.");
+                            }
+
+                            sortedKeys.Add(currentKey, currentKey);
+
+                            parseState = ParseState.GatherValue;
+                            break;
+                        }
 
                     case ParseState.GatherValue:
-                    {
-                        int valueStart = i;
-                        while (fingerprintText[i] != ']') { i++; }
-                        string value = fingerprintText.Substring(valueStart, i - valueStart);
-                        parseState = ParseState.GatherKeyOpen;
-                        SetProperty(currentKey, value);
-                        break;
-                    }
+                        {
+                            int valueStart = i;
+                            while (fingerprintText[i] != ']') { i++; }
+                            string value = fingerprintText.Substring(valueStart, i - valueStart);
+                            parseState = ParseState.GatherKeyOpen;
+                            SetProperty(currentKey, value);
+                            break;
+                        }
                 }
             }
         }

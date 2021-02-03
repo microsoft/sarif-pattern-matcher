@@ -14,6 +14,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static SqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
 
+        private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;]+";
+        private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;]+";
+        private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;]+";
+        private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;]+";
+
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
         static SqlConnectionStringValidator()
@@ -25,6 +30,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // expressions (an operation which otherwise can cause
             // threading problems).
             RegexEngine.Match(string.Empty, ClientIPExpression);
+            RegexEngine.Match(string.Empty, HostExpression);
+            RegexEngine.Match(string.Empty, DatabaseExpression);
+            RegexEngine.Match(string.Empty, AccountExpression);
+            RegexEngine.Match(string.Empty, PasswordExpression);
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -54,9 +63,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            if (!groups.TryGetValue("host", out string host) ||
-                !groups.TryGetValue("account", out string account) ||
-                !groups.TryGetValue("password", out string password))
+            matchedPattern = matchedPattern.Trim();
+
+            string host, database, account, password;
+
+            if (groups.ContainsKey("host") && groups.ContainsKey("database") && groups.ContainsKey("account") && groups.ContainsKey("password"))
+            {
+                host = groups["host"];
+                database = groups["database"];
+                account = groups["account"];
+                password = groups["password"];
+            }
+            else
+            {
+                host = ParseExpression(matchedPattern, HostExpression);
+                database = ParseExpression(matchedPattern, DatabaseExpression);
+                account = ParseExpression(matchedPattern, AccountExpression);
+                password = ParseExpression(matchedPattern, PasswordExpression);
+            }
+
+            if (string.IsNullOrEmpty(host)
+                || string.IsNullOrEmpty(database)
+                || string.IsNullOrEmpty(account)
+                || string.IsNullOrEmpty(password))
             {
                 return nameof(ValidationState.NoMatch);
             }
@@ -72,6 +101,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprintText = new Fingerprint()
             {
                 Host = host,
+                Database = database,
                 Account = account,
                 Password = password,
             }.ToString();
@@ -87,10 +117,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string host = fingerprint.Host;
             string account = fingerprint.Account;
             string password = fingerprint.Password;
+            string database = fingerprint.Database;
 
             string connString =
-                $"Server=tcp:{host},1433;User ID={account};Password={password};" +
+                $"Server=tcp:{host};Initial Catalog={database};User ID={account};Password={password};" +
                 "Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
+
+            // Validating ConnectionString with database.
+            string validation = ValidateConnectionString(ref message, host, connString);
+            if (validation != nameof(ValidationState.Unknown))
+            {
+                return validation;
+            }
+
+            connString =
+               $"Server=tcp:{host},1433;User ID={account};Password={password};" +
+               "Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
+
+            // Validating ConnectionString without database.
+            return ValidateConnectionString(ref message, host, connString);
+        }
+
+        private static string ValidateConnectionString(ref string message, string host, string connString)
+        {
             try
             {
                 using var connection = new SqlConnection(connString);
@@ -126,6 +175,36 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             return ReturnAuthorizedAccess(ref message, asset: host);
+        }
+
+        private static string ParseValue(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+
+            value = value.Substring(value.IndexOf('=') + 1);
+
+            int index = 0;
+            foreach (char ch in value)
+            {
+                if (ch == ' ' || ch == '\t')
+                {
+                    index++;
+                    continue;
+                }
+
+                break;
+            }
+
+            return value.Substring(index);
+        }
+
+        private string ParseExpression(string matchedPattern, string expression)
+        {
+            string pattern = RegexEngine.Match(matchedPattern, expression).Value;
+            return ParseValue(pattern);
         }
     }
 }

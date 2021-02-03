@@ -13,6 +13,28 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
+              "id": "SEC101/046",
+              "name": "DoNotExposePlaintextSecrets/SqlConnectionString",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Odbc": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                },
+                "Jdbc": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                },
+                "Php": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            },
+            {
               "id": "SEC101/047",
               "name": "DoNotExposePlaintextSecrets/MySqlConnectionString",
               "fullDescription": {
@@ -38,8 +60,164 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/047",
+          "ruleId": "SEC101/046",
           "ruleIndex": 0,
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_047.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 1,
+                  "endLine": 2,
+                  "endColumn": 131,
+                  "charOffset": 65,
+                  "charLength": 130,
+                  "snippet": {
+                    "text": "Server=some-database-name.mysql.database.azure.com; Port=3306; Database=catalog_db; Uid=username@some-database-name; Pwd=password;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][database=catalog_db][host=some-database-name.mysql.database.azure.com][pwd=password]"
+          }
+        },
+        {
+          "ruleId": "SEC101/046",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_047.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 67,
+                  "endLine": 20,
+                  "endColumn": 133,
+                  "charOffset": 1210,
+                  "charLength": 667,
+                  "snippet": {
+                    "text": "password=password, host=\"some-database-name.mysql.database.azure.com\", port=3306, database=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db; Data Source=some-database-name.mysql.database.azure.com; User Id=username@some-database-name; Password=password"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][database=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db][host=some-database-name.mysql.database.azure.com][pwd=password, host=\"some-database-name.mysql.database.azure.com\", port=3306, database=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db]"
+          }
+        },
+        {
+          "ruleId": "SEC101/046",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_047.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 149,
+                  "endLine": 20,
+                  "endColumn": 133,
+                  "charOffset": 1292,
+                  "charLength": 585,
+                  "snippet": {
+                    "text": "database=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db; Data Source=some-database-name.mysql.database.azure.com; User Id=username@some-database-name; Password=password"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][database=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db][host=some-database-name.mysql.database.azure.com][pwd=password]"
+          }
+        },
+        {
+          "ruleId": "SEC101/046",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_047.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 20,
+                  "startColumn": 1,
+                  "endLine": 20,
+                  "endColumn": 133,
+                  "charOffset": 1745,
+                  "charLength": 132,
+                  "snippet": {
+                    "text": "Database=catalog_db; Data Source=some-database-name.mysql.database.azure.com; User Id=username@some-database-name; Password=password"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][database=catalog_db][host=some-database-name.mysql.database.azure.com][pwd=password]"
+          }
+        },
+        {
+          "ruleId": "SEC101/047",
+          "ruleIndex": 1,
           "message": {
             "id": "Odbc",
             "arguments": [
