@@ -29,6 +29,7 @@
   $GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
   $HockeyAppToken=(?si)hockey.{0,50}[`'"\s>]?(?<refine>[0-9a-f]{32})([^0-9a-f]|$)
   $MySqlConnectionStringAdo=(?i)Server\s*=(?-i)(?<host>[0-9a-z\-]{3,63}\.mysql\.database\.azure\.com.*)(,|;).*Uid=(?<account>[a-z\@\-]{1,120})(,|;).*Pwd=(?<password>[^;]{8,128});
+  $PostgreSqlConnectionStringAdo=(?i)Host\s*=\s*(?-i)(?<host>[0-9a-z\-_\.]{3,91})((?i);Port\s*=\s*(?<port>[0-9]{1,5}))?;Database\s*=\s*(?-i)(?<database>[0-9a-z\-_]{3,91})(?i);Username\s*=\s*(?<account>[^,;]+);Password\s*=\s*(?<password>[^,;\s]+)
   $SqlConnectionStringAdo=(?i)Server\s*=\s*tcp:(?<host>[^,;]+)(,|;).*(User ID|Uid)\s*=\s*(?<account>[^;]+);.*(Password|Pwd)\s*=\s*(?<password>[^;]+);
   $SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^:]+):.*;user\s*=\s*(?<account>[^@]+)@[^;]+;password\s*=\s*(?<password>[^;]+);
   $SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*tcp:(?<host>[^,]+),[^,]+,\s*"(?<account>[^"]+)",\s*"(?<password>[^"]+)"

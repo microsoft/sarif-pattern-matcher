@@ -13,7 +13,7 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/109",
+              "id": "SEC101/046",
               "name": "DoNotExposePlaintextSecrets/SqlConnectionString",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
@@ -44,12 +44,12 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/109",
+          "ruleId": "SEC101/046",
           "ruleIndex": 0,
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_109.SqlConnectionString.ps1",
+              "SEC101_046.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -61,7 +61,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_109.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -83,12 +83,12 @@
           }
         },
         {
-          "ruleId": "SEC101/109",
+          "ruleId": "SEC101/046",
           "ruleIndex": 0,
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_109.SqlConnectionString.ps1",
+              "SEC101_046.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -100,7 +100,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_109.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -122,12 +122,12 @@
           }
         },
         {
-          "ruleId": "SEC101/109",
+          "ruleId": "SEC101/046",
           "ruleIndex": 0,
           "message": {
             "id": "Jdbc",
             "arguments": [
-              "SEC101_109.SqlConnectionString.ps1",
+              "SEC101_046.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "JDBC SQL connection string",
@@ -139,7 +139,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_109.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -161,12 +161,12 @@
           }
         },
         {
-          "ruleId": "SEC101/109",
+          "ruleId": "SEC101/046",
           "ruleIndex": 0,
           "message": {
             "id": "Php",
             "arguments": [
-              "SEC101_109.SqlConnectionString.ps1",
+              "SEC101_046.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "PHP SQL connection string",
@@ -178,7 +178,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_109.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
