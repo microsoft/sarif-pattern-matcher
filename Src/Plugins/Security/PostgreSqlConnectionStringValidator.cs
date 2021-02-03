@@ -14,10 +14,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static PostgreSqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
-        private const string _hostRegex = "(?i)(Host\\s*=\\s*(?-i)(?<host>[\\w\\-_\\.]{3,91}))";
-        private const string _portRegex = "(?i)(Port\\s*=\\s*(?<port>[0-9]{1,5}))";
-        private const string _accountRegex = "(?i)(Username\\s*=\\s*(?<account>[^,;]+))";
-        private const string _passwordRegex = "(?i)(Password\\s*=\\s*(?<account>[^,;\"\\s]+))";
+        private const string HostRegex = "(?i)(Host\\s*=\\s*(?-i)(?<host>[\\w\\-_\\.]{3,91}))";
+        private const string PortRegex = "(?i)(Port\\s*=\\s*(?<port>[0-9]{1,5}))";
+        private const string AccountRegex = "(?i)(Username\\s*=\\s*(?<account>[^,;]+))";
+        private const string PasswordRegex = "(?i)(Password\\s*=\\s*(?<account>[^,;\"\\s]+))";
+        private const string DatabaseRegex = "(?i)(Database\\s*=\\s*(?<database>[^;]+))";
 
         static PostgreSqlConnectionStringValidator()
         {
@@ -52,10 +53,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            GetStringFromPatternWithRegex(matchedPattern, _hostRegex, out string host);
-            GetStringFromPatternWithRegex(matchedPattern, _portRegex, out string port);
-            GetStringFromPatternWithRegex(matchedPattern, _accountRegex, out string account);
-            GetStringFromPatternWithRegex(matchedPattern, _passwordRegex, out string password);
+            GetStringFromPatternWithRegex(matchedPattern, HostRegex, out string host);
+            GetStringFromPatternWithRegex(matchedPattern, PortRegex, out string port);
+            GetStringFromPatternWithRegex(matchedPattern, AccountRegex, out string account);
+            GetStringFromPatternWithRegex(matchedPattern, PasswordRegex, out string password);
+            GetStringFromPatternWithRegex(matchedPattern, DatabaseRegex, out string database);
 
             if (string.IsNullOrWhiteSpace(host) ||
                 string.IsNullOrWhiteSpace(account) ||
@@ -125,13 +127,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 if (e is PostgresException postgresException)
                 {
-                    // database does not exist, but the creds are valid
+                    // Database does not exist, but the creds are valid
                     if (postgresException.SqlState == "3D000")
                     {
                         return ReturnAuthorizedAccess(ref message, asset: fingerprint.Host);
                     }
 
-                    // password authentication failed for user "sectoojlsadm"
+                    // password authentication failed for user
                     if (postgresException.SqlState == "28P01")
                     {
                         return ReturnUnauthorizedAccess(ref message, asset: fingerprint.Host);
