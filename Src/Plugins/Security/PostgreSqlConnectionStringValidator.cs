@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 using Microsoft.RE2.Managed;
 
@@ -70,6 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Host = host,
                 Port = port,
+                Database = database,
                 Account = account,
                 Password = password,
             }.ToString();
@@ -108,19 +110,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             var fingerprint = new Fingerprint(fingerprintText);
 
-            string connString;
-            if (string.IsNullOrWhiteSpace(fingerprint.Port))
+            StringBuilder connectionStringBuilder = new StringBuilder();
+            connectionStringBuilder.Append($"Host={fingerprint.Host};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require");
+
+            if (!string.IsNullOrWhiteSpace(fingerprint.Port))
             {
-                connString = $"Host={fingerprint.Host};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require";
+                connectionStringBuilder.Append($"Port={fingerprint.Port}");
             }
-            else
+
+            if (!string.IsNullOrWhiteSpace(fingerprint.Database))
             {
-                connString = $"Host={fingerprint.Host};Port={fingerprint.Port};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require";
+                connectionStringBuilder.Append($"Database={fingerprint.Database}");
             }
 
             try
             {
-                using var postgreSqlconnection = new NpgsqlConnection(connString);
+                using var postgreSqlconnection = new NpgsqlConnection(connectionStringBuilder.ToString());
                 postgreSqlconnection.Open();
             }
             catch (Exception e)

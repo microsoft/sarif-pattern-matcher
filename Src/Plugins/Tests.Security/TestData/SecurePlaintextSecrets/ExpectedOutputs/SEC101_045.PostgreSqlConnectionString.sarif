@@ -73,7 +73,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][database=my_db][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -101,18 +101,18 @@
                   "startLine": 5,
                   "startColumn": 45,
                   "endLine": 5,
-                  "endColumn": 105,
-                  "charOffset": 231,
-                  "charLength": 60,
+                  "endColumn": 114,
+                  "charOffset": 266,
+                  "charLength": 69,
                   "snippet": {
-                    "text": "host=my_host;Database=my_db;Username=my_user;Password=my_pw\""
+                    "text": "host=my_host;Database=my_db;Username=my_user;Password=my_pw;Port=5555"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][database=my_db][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -141,7 +141,7 @@
                   "startColumn": 45,
                   "endLine": 6,
                   "endColumn": 100,
-                  "charOffset": 348,
+                  "charOffset": 434,
                   "charLength": 55,
                   "snippet": {
                     "text": "Host=my_host;Port=5555;UsErname=my_user;Password=my_pw\""
@@ -151,7 +151,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -180,7 +180,7 @@
                   "startColumn": 45,
                   "endLine": 7,
                   "endColumn": 100,
-                  "charOffset": 485,
+                  "charOffset": 571,
                   "charLength": 55,
                   "snippet": {
                     "text": "Password=my_pw;Host=my_host;Port=5555;Username=my_user;"
@@ -190,7 +190,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -219,7 +219,7 @@
                   "startColumn": 45,
                   "endLine": 8,
                   "endColumn": 135,
-                  "charOffset": 650,
+                  "charOffset": 733,
                   "charLength": 90,
                   "snippet": {
                     "text": "Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;"
@@ -229,7 +229,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -258,7 +258,7 @@
                   "startColumn": 55,
                   "endLine": 8,
                   "endColumn": 135,
-                  "charOffset": 660,
+                  "charOffset": 743,
                   "charLength": 80,
                   "snippet": {
                     "text": "Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;"
@@ -296,18 +296,18 @@
                   "startLine": 9,
                   "startColumn": 45,
                   "endLine": 9,
-                  "endColumn": 135,
-                  "charOffset": 833,
-                  "charLength": 90,
+                  "endColumn": 157,
+                  "charOffset": 914,
+                  "charLength": 112,
                   "snippet": {
-                    "text": "Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;"
+                    "text": "Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true;Port=5555"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -335,18 +335,135 @@
                   "startLine": 9,
                   "startColumn": 55,
                   "endLine": 9,
-                  "endColumn": 135,
-                  "charOffset": 843,
-                  "charLength": 80,
+                  "endColumn": 157,
+                  "charOffset": 924,
+                  "charLength": 102,
                   "snippet": {
-                    "text": "Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;"
+                    "text": "Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true;Port=5555"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
+          }
+        },
+        {
+          "ruleId": "SEC101/045",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Ado",
+            "arguments": [
+              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 45,
+                  "endLine": 10,
+                  "endColumn": 173,
+                  "charOffset": 1125,
+                  "charLength": 128,
+                  "snippet": {
+                    "text": "Database=my_db;Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=my_user][database=my_db][host=my_host][pwd=my_pw][port=5555]"
+          }
+        },
+        {
+          "ruleId": "SEC101/045",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Ado",
+            "arguments": [
+              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 60,
+                  "endLine": 10,
+                  "endColumn": 173,
+                  "charOffset": 1140,
+                  "charLength": 113,
+                  "snippet": {
+                    "text": "Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
+          }
+        },
+        {
+          "ruleId": "SEC101/045",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Ado",
+            "arguments": [
+              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 70,
+                  "endLine": 10,
+                  "endColumn": 173,
+                  "charOffset": 1150,
+                  "charLength": 103,
+                  "snippet": {
+                    "text": "Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -385,7 +502,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][database=my_db][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -413,18 +530,18 @@
                   "startLine": 5,
                   "startColumn": 45,
                   "endLine": 5,
-                  "endColumn": 105,
-                  "charOffset": 231,
-                  "charLength": 60,
+                  "endColumn": 114,
+                  "charOffset": 266,
+                  "charLength": 69,
                   "snippet": {
-                    "text": "host=my_host;Database=my_db;Username=my_user;Password=my_pw\""
+                    "text": "host=my_host;Database=my_db;Username=my_user;Password=my_pw;Port=5555"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][database=my_db][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -453,7 +570,7 @@
                   "startColumn": 45,
                   "endLine": 6,
                   "endColumn": 100,
-                  "charOffset": 348,
+                  "charOffset": 434,
                   "charLength": 55,
                   "snippet": {
                     "text": "Host=my_host;Port=5555;UsErname=my_user;Password=my_pw\""
@@ -463,7 +580,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -492,7 +609,7 @@
                   "startColumn": 45,
                   "endLine": 7,
                   "endColumn": 100,
-                  "charOffset": 485,
+                  "charOffset": 571,
                   "charLength": 55,
                   "snippet": {
                     "text": "Password=my_pw;Host=my_host;Port=5555;Username=my_user;"
@@ -502,7 +619,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -531,7 +648,7 @@
                   "startColumn": 45,
                   "endLine": 8,
                   "endColumn": 135,
-                  "charOffset": 650,
+                  "charOffset": 733,
                   "charLength": 90,
                   "snippet": {
                     "text": "Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;"
@@ -541,7 +658,7 @@
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -570,7 +687,7 @@
                   "startColumn": 55,
                   "endLine": 8,
                   "endColumn": 135,
-                  "charOffset": 660,
+                  "charOffset": 743,
                   "charLength": 80,
                   "snippet": {
                     "text": "Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;"
@@ -608,18 +725,18 @@
                   "startLine": 9,
                   "startColumn": 45,
                   "endLine": 9,
-                  "endColumn": 135,
-                  "charOffset": 833,
-                  "charLength": 90,
+                  "endColumn": 157,
+                  "charOffset": 914,
+                  "charLength": 112,
                   "snippet": {
-                    "text": "Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;"
+                    "text": "Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true;Port=5555"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
           }
         },
         {
@@ -647,18 +764,135 @@
                   "startLine": 9,
                   "startColumn": 55,
                   "endLine": 9,
-                  "endColumn": 135,
-                  "charOffset": 843,
-                  "charLength": 80,
+                  "endColumn": 157,
+                  "charOffset": 924,
+                  "charLength": 102,
                   "snippet": {
-                    "text": "Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;"
+                    "text": "Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true;Port=5555"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw]"
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
+          }
+        },
+        {
+          "ruleId": "SEC101/045",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Ado",
+            "arguments": [
+              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 45,
+                  "endLine": 10,
+                  "endColumn": 173,
+                  "charOffset": 1125,
+                  "charLength": 128,
+                  "snippet": {
+                    "text": "Database=my_db;Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=my_user][database=my_db][host=my_host][pwd=my_pw][port=5555]"
+          }
+        },
+        {
+          "ruleId": "SEC101/045",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Ado",
+            "arguments": [
+              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 60,
+                  "endLine": 10,
+                  "endColumn": 173,
+                  "charOffset": 1140,
+                  "charLength": 113,
+                  "snippet": {
+                    "text": "Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
+          }
+        },
+        {
+          "ruleId": "SEC101/045",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Ado",
+            "arguments": [
+              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 70,
+                  "endLine": 10,
+                  "endColumn": 173,
+                  "charOffset": 1150,
+                  "charLength": 103,
+                  "snippet": {
+                    "text": "Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
           }
         }
       ],
