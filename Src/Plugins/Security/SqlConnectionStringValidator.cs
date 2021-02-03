@@ -82,10 +82,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 password = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
             }
 
-            if (string.IsNullOrEmpty(host)
-                || string.IsNullOrEmpty(database)
-                || string.IsNullOrEmpty(account)
-                || string.IsNullOrEmpty(password))
+            if (string.IsNullOrWhiteSpace(host)
+                || string.IsNullOrWhiteSpace(database)
+                || string.IsNullOrWhiteSpace(account)
+                || string.IsNullOrWhiteSpace(password))
             {
                 return nameof(ValidationState.NoMatch);
             }
