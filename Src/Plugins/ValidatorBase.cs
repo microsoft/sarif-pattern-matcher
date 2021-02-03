@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 
+using Microsoft.RE2.Managed;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 {
     public abstract class ValidatorBase
@@ -142,6 +144,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                 $"The '{account}' account is potentially compromised for '{asset}'.";
 
             return nameof(ValidationState.Unknown);
+        }
+
+        public static string ParseExpression(IRegex regexEngine, string matchedPattern, string expression)
+        {
+            string pattern = regexEngine.Match(matchedPattern, expression).Value;
+            return ParseValue(pattern);
+        }
+
+        internal static string ParseValue(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+
+            value = value.Substring(value.IndexOf('=') + 1);
+            return value.Trim();
         }
 
         /// <summary>

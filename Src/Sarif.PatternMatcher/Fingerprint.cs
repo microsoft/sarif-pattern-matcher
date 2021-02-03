@@ -17,6 +17,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public const string AccountKeyName = "acct";
         public const string PasswordKeyName = "pwd";
         public const string KeyNameKeyName = "keyName";
+        public const string ResourceKeyName = "resource";
         public const string SasTokenKeyName = "sasToken";
         public const string ThumbprintKeyName = "thumbprint";
         public const string PersonalAccessTokenKeyName = "pat";
@@ -27,7 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public Fingerprint(string fingerprintText)
         {
-            Account = Hmac = Host = Port = Id = Key = KeyName = Password = Uri = null;
+            Account = Hmac = Host = Port = Id = Key = KeyName = Password = Uri = Resource = null;
             SasToken = PersonalAccessToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
 
             fingerprintText = fingerprintText ??
@@ -83,6 +84,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string SasToken { get; set; }
 
+        public string Resource { get; set; }
+
         public string Thumbprint { get; set; }
 
         public string SymmetricKey128Bit { get; set; }
@@ -108,6 +111,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 case KeyNameKeyName: { KeyName = value; break; }
                 case PasswordKeyName: { Password = value; break; }
                 case SasTokenKeyName: { SasToken = value; break; }
+                case ResourceKeyName: { Resource = value; break; }
                 case ThumbprintKeyName: { Thumbprint = value; break; }
                 case SymmetricKey128BitKeyName: { SymmetricKey128Bit = value; break; }
                 case SymmetricKey256BitKeyName: { SymmetricKey256Bit = value; break; }
@@ -137,11 +141,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 components.Add($"[{HostKeyName}={this.Host.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(Port))
-            {
-                components.Add($"[{PortKeyName}={this.Port.Trim()}]");
-            }
-
             if (!string.IsNullOrEmpty(Id))
             {
                 components.Add($"[{IdKeyName}={this.Id.Trim()}]");
@@ -165,6 +164,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (!string.IsNullOrEmpty(PersonalAccessToken))
             {
                 components.Add($"[{PersonalAccessTokenKeyName}={this.PersonalAccessToken.Trim()}]");
+            }
+
+            if (!string.IsNullOrEmpty(Port))
+            {
+                components.Add($"[{PortKeyName}={this.Port.Trim()}]");
+            }
+
+            if (!string.IsNullOrEmpty(Resource))
+            {
+                components.Add($"[{ResourceKeyName}={this.Resource.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(SasToken))
