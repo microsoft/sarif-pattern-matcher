@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 using Microsoft.RE2.Managed;
 
@@ -14,6 +15,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
     {
         internal static MySqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
+
+        private const string HostRegex = "(?i)(Server\\s*=\\s*(?<host>[\\w\\-.]{3,90}))";
+        private const string AccountRegex = "(?i)(Uid\\s*=\\s*(?-i)(?<account>[a-z\\@\\-]{1,120})(?i))";
+        private const string PasswordRegex = "(?i)(Pwd\\s*=\\s*(?<password>[^;]{8,128}))";
+        private const string DatabaseRegex = @"(?i)(Database\s*=\s*(?<database>[^\<>:""\/\\|?;.]{1,64}))";
+        private const string PortRegex = "(?i)(Port\\s*=\\s*(?<port>[0-9]{4,5}))";
 
         static MySqlConnectionStringValidator()
         {
@@ -48,9 +55,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            if (!groups.TryGetValue("host", out string host) ||
-                !groups.TryGetValue("account", out string account) ||
-                !groups.TryGetValue("password", out string password))
+            string host = ParseExpression(RegexEngine, matchedPattern, HostRegex);
+            string account = ParseExpression(RegexEngine, matchedPattern, AccountRegex);
+            string password = ParseExpression(RegexEngine, matchedPattern, PasswordRegex);
+            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
+            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
+
+            if (string.IsNullOrWhiteSpace(host) ||
+                string.IsNullOrWhiteSpace(database) ||
+                string.IsNullOrWhiteSpace(account) ||
+                string.IsNullOrWhiteSpace(password))
             {
                 return nameof(ValidationState.NoMatch);
             }
@@ -58,6 +72,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             fingerprintText = new Fingerprint()
             {
                 Host = host.Replace("\"", string.Empty).Replace(",", ";"),
+                Resource = database,
+                Port = port,
                 Account = account,
                 Password = password,
             }.ToString();
@@ -71,13 +87,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             var fingerprint = new Fingerprint(fingerprintText);
 
             string host = fingerprint.Host;
+            string database = fingerprint.Resource;
+            string port = fingerprint.Port;
             string account = fingerprint.Account;
             string password = fingerprint.Password;
 
-            string connString = $"Server={host}; Uid={account}; Pwd={password}; SslMode=Preferred;";
+            StringBuilder connectionStringBuilder = new StringBuilder();
+            connectionStringBuilder.Append($"Server={host}; Database={database}; Uid={account}; Pwd={password}; SslMode=Preferred;");
+
+            if (!string.IsNullOrWhiteSpace(port))
+            {
+                connectionStringBuilder.Append($"Port={port}");
+            }
+
             try
             {
-                using var conn = new MySqlConnection(connString);
+                using var conn = new MySqlConnection(connectionStringBuilder.ToString());
                 conn.Open();
             }
             catch (Exception e)
