@@ -64,7 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.NoMatch);
             }
 
-            if (matchedPattern.Contains("/commit/") || matchedPattern.Contains("githubusercontent.com"))
+            if (matchedPattern.Contains("/commit/") || matchedPattern.Contains("/tree/") || matchedPattern.Contains("githubusercontent.com"))
             {
                 return nameof(ValidationState.NoMatch);
             }
