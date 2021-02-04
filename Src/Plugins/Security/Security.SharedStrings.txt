@@ -28,7 +28,7 @@
   $GitHubPat=(?si)(?<refine>github.{0,50}[0-9a-z]{40})([^0-9a-z]|$)
   $GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
   $HockeyAppToken=(?si)hockey.{0,50}[`'"\s>]?(?<refine>[0-9a-f]{32})([^0-9a-f]|$)
-  $MySqlConnectionStringAdo=(?i)Server\s*=(?-i)(?<host>[0-9a-z\-]{3,63}\.mysql\.database\.azure\.com.*)(,|;).*Uid=(?<account>[a-z\@\-]{1,120})(,|;).*Pwd=(?<password>[^;]{8,128});
+  $MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<account>[a-z\@\-]{1,120})(?i))|(Pwd=(?<password>[^;]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
   $SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*[^;]+|(initial catalog|database)\s*=\s*[^;]+|(user id|uid)\s*=\s*[^;]+|(password|pwd)\s*=\s*[^;]+).+?){4}
   $SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;]+);database\s*=\s*(?<database>[^;]+);user\s*=\s*(?<account>[^@]+)@[^;]+;password\s*=\s*(?<password>[^;]+);
   $SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<account>[^"]+)",\s*"(?<password>[^"]+)"
