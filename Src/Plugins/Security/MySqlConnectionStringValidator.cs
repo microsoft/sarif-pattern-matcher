@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         private const string HostRegex = "(?i)(Server\\s*=\\s*(?<host>[\\w\\-.]{3,90}))";
         private const string AccountRegex = "(?i)(Uid\\s*=\\s*(?-i)(?<account>[a-z\\@\\-]{1,120})(?i))";
         private const string PasswordRegex = "(?i)(Pwd\\s*=\\s*(?<password>[^;]{8,128}))";
-        private const string DatabaseRegex = "(?i)(Database\\s*=\\s*(?<database>[^\\<>:\"\\/\\\\|?;.]{1,64}))";
+        private const string DatabaseRegex = @"(?i)(Database\s*=\s*(?<database>[^\<>:""\/\\|?;.]{1,64}))";
         private const string PortRegex = "(?i)(Port\\s*=\\s*(?<port>[0-9]{4,5}))";
 
         static MySqlConnectionStringValidator()
