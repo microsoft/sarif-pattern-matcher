@@ -131,7 +131,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             connString =
-               $"Server=tcp:{host};User ID={account};Password={password};" +
+               $"Server={host};User ID={account};Password={password};" +
                "Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
 
             // Validating ConnectionString without database.
