@@ -2,6 +2,14 @@
 <AWSAccessKeyId>
 	AKIAIOSFODNN7EXAMPLE
 </AWSAccessKeyId>
+<doodle>test1test2test3test4test5test6test7</doodle>
+<doodle>test1test2test3test4test5test6test7</doodle>
+<doodle>test1test2test3test4test5test6test7</doodle>
+<doodle>test1test2test3test4test5test6test7</doodle>
+<doodle>test1test2test3test4test5test6test7</doodle>
+<doodle>test1test2test3test4test5test6test7</doodle>
+<doodle>test1test2test3test4test5test6test7</doodle>
+<doodle>One more line and the regex fails to match</doodle>
 <AWSSecretAccessKey>
 	wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 </AWSSecretAccessKey>
