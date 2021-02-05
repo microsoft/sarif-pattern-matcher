@@ -14,10 +14,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static SqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
 
-        private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;]+";
-        private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;]+";
-        private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;]+";
-        private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;]+";
+        private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;<]+";
+        private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;<]+";
+        private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;<]+";
+        private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;<]+";
 
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
