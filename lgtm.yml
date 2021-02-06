@@ -1,5 +1,0 @@
-extraction:
-  csharp:
-    index:
-      build_command:
-        - ./BuildAndTest.cmd
