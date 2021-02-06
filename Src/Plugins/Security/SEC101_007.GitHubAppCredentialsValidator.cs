@@ -49,6 +49,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.NoMatch);
             }
 
+            // It is highly likely we do not have a key if we can't
+            // find at least one letter and digit within the pattern.
             if (!ContainsDigitAndChar(key))
             {
                 return nameof(ValidationState.NoMatch);

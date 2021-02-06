@@ -280,7 +280,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // trim a trailing '$' as it is commonly used to denote
             // and end-of-line in search patterns.
             Debug.Assert(!text.Substring(0, text.Length - 1).Contains("$"),
-                         "Failed to expand shared string.");
+                         $"Failed to expand shared string: {text}");
         }
 #endif
 
