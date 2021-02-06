@@ -59,6 +59,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string pat = RegexEngine.Match(matchedPattern, PatExpression).Value;
 
+            // It is highly likely we do not have a key if we can't
+            // find at least one letter and digit within the pattern.
             if (!ContainsDigitAndChar(pat))
             {
                 return nameof(ValidationState.NoMatch);
