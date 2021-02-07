@@ -270,7 +270,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // We failed to expand a pattern that is entirely rendered
             // via a shared string.
             Debug.Assert(!text.StartsWith("$"),
-                         "Failed to expand shared string.");
+                         "Failed to expand shared string: '{text}'");
 
             if (text.EndsWith("$")) { text = text.Substring(0, text.Length - 1); }
             if (text.EndsWith("$]")) { text = text.Substring(0, text.Length - 2); }
