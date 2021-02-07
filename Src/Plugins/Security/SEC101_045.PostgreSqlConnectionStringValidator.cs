@@ -84,17 +84,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             var fingerprint = new Fingerprint(fingerprintText);
 
-            StringBuilder connectionStringBuilder = new StringBuilder();
-            connectionStringBuilder.Append($"Host={fingerprint.Host};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require");
+            var connectionStringBuilder = new StringBuilder();
+            connectionStringBuilder.Append($"Host={fingerprint.Host};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require;");
 
             if (!string.IsNullOrWhiteSpace(fingerprint.Port))
             {
-                connectionStringBuilder.Append($"Port={fingerprint.Port}");
+                connectionStringBuilder.Append($"Port={fingerprint.Port};");
             }
 
             if (!string.IsNullOrWhiteSpace(fingerprint.Resource))
             {
-                connectionStringBuilder.Append($"Database={fingerprint.Resource}");
+                connectionStringBuilder.Append($"Database={fingerprint.Resource};");
             }
 
             try
