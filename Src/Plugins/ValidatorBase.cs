@@ -93,6 +93,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                 return ReturnUnknownHost(ref message, asset);
             }
 
+            if (TestExceptionForMessage(e, "The network path was not found", asset))
+            {
+                return ReturnUnknownHost(ref message, asset);
+            }
+
             if (TestExceptionForMessage(e, "The remote name could not be resolved", asset))
             {
                 return ReturnUnknownHost(ref message, asset);
