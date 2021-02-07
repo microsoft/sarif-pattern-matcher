@@ -103,6 +103,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                 return ReturnUnknownHost(ref message, asset);
             }
 
+            string sslMessage = "The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.";
+            if (TestExceptionForMessage(e, sslMessage, asset))
+            {
+                return ReturnUnknownHost(ref message, asset);
+            }
+
             message = (account == null) ?
                 $"An unexpected exception was caught attempting to validate '{asset}': {e.Message}" :
                 $"An unexpected exception was caught attempting to validate the '{account} account on '{asset}': {e.Message}";
