@@ -166,7 +166,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         if (match.Success)
                         {
                             message = match.Value;
-                            return nameof(ValidationState.Unknown);
+                            return nameof(ValidationState.Unauthorized);
                         }
                     }
                 }
