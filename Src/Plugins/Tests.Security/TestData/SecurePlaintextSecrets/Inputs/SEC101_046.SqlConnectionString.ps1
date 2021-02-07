@@ -32,3 +32,8 @@ new PDO("sqlsrv:server = tcp:some-database-name.database.windows.net,1433; Datab
   <add key="ConnectionString" value="Password=password;User ID=username;Initial Catalog=catalog-db;Data Source=server-name;" />
   <add key="ConnectionString" value="Initial Catalog=catalog-db;Data Source=server-name;Password=password;User ID=username;" />
 </appSettings>
+
+# Should be ignored, since is localhost/(local)/127.0.0.1
+jdbc:sqlserver://localhost;database=tse-internal-spam-testing;user=username@some-database-name;password=password;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+jdbc:sqlserver://(local);database=tse-internal-spam-testing;user=username@some-database-name;password=password;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+jdbc:sqlserver://127.0.0.1;database=tse-internal-spam-testing;user=username@some-database-name;password=password;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;

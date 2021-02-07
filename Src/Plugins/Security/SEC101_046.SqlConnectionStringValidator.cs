@@ -18,8 +18,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;<]+";
         private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;<]+";
         private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;<]+";
-
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
+
+        private readonly HashSet<string> ignoreList = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase)
+        {
+            "localhost",
+            "(local)",
+            "127.0.0.1",
+        };
 
         static SqlConnectionStringValidator()
         {
@@ -90,10 +96,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.NoMatch);
             }
 
-            // SQL server name can't exceed this length. If we have, we likely
-            // are looking at a lengthy string is an indirect key to the
-            // actual SQL server name.
-            if (host.Length > 128)
+            if (ignoreList.Contains(host))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
+            if (database.Length > 128
+                || account.Length > 128
+                || password.Length > 128
+                || host.Length > 128)
             {
                 return nameof(ValidationState.NoMatch);
             }
