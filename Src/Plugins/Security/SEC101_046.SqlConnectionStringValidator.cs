@@ -20,7 +20,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;<]+";
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
-        private readonly HashSet<string> ignoreList = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase)
+        private readonly HashSet<string> ignoreList = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "localhost",
             "(local)",

@@ -66,7 +66,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.NoMatch);
             }
 
-            if (matchedPattern.Contains("/commit/") || matchedPattern.Contains("/tree/") || matchedPattern.Contains("githubusercontent.com"))
+            if (matchedPattern.IndexOf("commit", StringComparison.OrdinalIgnoreCase) >= 0
+                || matchedPattern.IndexOf("tree", StringComparison.OrdinalIgnoreCase) >= 0
+                || matchedPattern.IndexOf("blob", StringComparison.OrdinalIgnoreCase) >= 0
+                || matchedPattern.IndexOf("gist", StringComparison.OrdinalIgnoreCase) >= 0
+                || matchedPattern.IndexOf("raw", StringComparison.OrdinalIgnoreCase) >= 0
+                || matchedPattern.IndexOf("repos", StringComparison.OrdinalIgnoreCase) >= 0
+                || matchedPattern.IndexOf("spec", StringComparison.OrdinalIgnoreCase) >= 0
+                || matchedPattern.IndexOf("assets", StringComparison.OrdinalIgnoreCase) >= 0
+                || matchedPattern.IndexOf("using ref", StringComparison.OrdinalIgnoreCase) >= 0
+                || matchedPattern.IndexOf("githubusercontent.com", StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 return nameof(ValidationState.NoMatch);
             }
