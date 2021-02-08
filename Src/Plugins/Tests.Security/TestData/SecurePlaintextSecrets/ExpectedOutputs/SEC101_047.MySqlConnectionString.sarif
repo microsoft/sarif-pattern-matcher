@@ -13,6 +13,22 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
+              "id": "SEC101/045",
+              "name": "DoNotExposePlaintextSecrets/PostgreSqlConnectionString",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Ado": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            },
+            {
               "id": "SEC101/046",
               "name": "DoNotExposePlaintextSecrets/SqlConnectionString",
               "fullDescription": {
@@ -60,15 +76,15 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/045",
           "ruleIndex": 0,
           "message": {
-            "id": "Odbc",
+            "id": "Ado",
             "arguments": [
               "SEC101_047.MySqlConnectionString.ps1",
               "an apparent ",
               "",
-              "ADO or ODBC SQL connection string",
+              "ADO PostgreSQL connection string",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -81,182 +97,26 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 2,
+                  "startLine": 30,
                   "startColumn": 1,
-                  "endLine": 2,
-                  "endColumn": 131,
-                  "charOffset": 65,
-                  "charLength": 130,
+                  "endLine": 30,
+                  "endColumn": 97,
+                  "charOffset": 2531,
+                  "charLength": 96,
                   "snippet": {
-                    "text": "Server=some-database-name.mysql.database.azure.com; Port=3306; Database=catalog_db; Uid=username@some-database-name; Pwd=password;"
+                    "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password][resource=catalog_db]"
+            "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=your-password][port=3306][resource=your-database]"
           }
         },
         {
           "ruleId": "SEC101/046",
-          "ruleIndex": 0,
-          "message": {
-            "id": "Odbc",
-            "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 12,
-                  "endLine": 3,
-                  "endColumn": 131,
-                  "charOffset": 227,
-                  "charLength": 119,
-                  "snippet": {
-                    "text": "Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password][resource=catalog_db]"
-          }
-        },
-        {
-          "ruleId": "SEC101/046",
-          "ruleIndex": 0,
-          "message": {
-            "id": "Odbc",
-            "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 4,
-                  "startColumn": 1,
-                  "endLine": 4,
-                  "endColumn": 120,
-                  "charOffset": 367,
-                  "charLength": 119,
-                  "snippet": {
-                    "text": "Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password][resource=catalog_db]"
-          }
-        },
-        {
-          "ruleId": "SEC101/046",
-          "ruleIndex": 0,
-          "message": {
-            "id": "Odbc",
-            "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 1,
-                  "endLine": 5,
-                  "endColumn": 138,
-                  "charOffset": 518,
-                  "charLength": 137,
-                  "snippet": {
-                    "text": "Server=some-database-name.mysql.database.azure.com;Database=catalog_db; SslMode=Preferred; Pwd=password; Uid=username@some-database-name;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password][resource=catalog_db]"
-          }
-        },
-        {
-          "ruleId": "SEC101/046",
-          "ruleIndex": 0,
-          "message": {
-            "id": "Odbc",
-            "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 23,
-                  "startColumn": 1,
-                  "endLine": 25,
-                  "endColumn": 40,
-                  "charOffset": 2186,
-                  "charLength": 175,
-                  "snippet": {
-                    "text": "Database=catalog_db; Data Source=some-database-name.mysql.database.azure.com; User Id=username@some-database-name; Password=password\r\n\r\n################ MariaDB shares the sam"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password\r\n\r\n################ MariaDB shares the sam][resource=catalog_db]"
-          }
-        },
-        {
-          "ruleId": "SEC101/046",
-          "ruleIndex": 0,
+          "ruleIndex": 1,
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -295,7 +155,7 @@
         },
         {
           "ruleId": "SEC101/046",
-          "ruleIndex": 0,
+          "ruleIndex": 1,
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -334,7 +194,7 @@
         },
         {
           "ruleId": "SEC101/046",
-          "ruleIndex": 0,
+          "ruleIndex": 1,
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -373,7 +233,7 @@
         },
         {
           "ruleId": "SEC101/047",
-          "ruleIndex": 1,
+          "ruleIndex": 2,
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -412,7 +272,7 @@
         },
         {
           "ruleId": "SEC101/047",
-          "ruleIndex": 1,
+          "ruleIndex": 2,
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -451,7 +311,7 @@
         },
         {
           "ruleId": "SEC101/047",
-          "ruleIndex": 1,
+          "ruleIndex": 2,
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -490,7 +350,7 @@
         },
         {
           "ruleId": "SEC101/047",
-          "ruleIndex": 1,
+          "ruleIndex": 2,
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -529,7 +389,7 @@
         },
         {
           "ruleId": "SEC101/047",
-          "ruleIndex": 1,
+          "ruleIndex": 2,
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -568,7 +428,7 @@
         },
         {
           "ruleId": "SEC101/047",
-          "ruleIndex": 1,
+          "ruleIndex": 2,
           "message": {
             "id": "Odbc",
             "arguments": [
