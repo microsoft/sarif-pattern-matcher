@@ -465,45 +465,6 @@
           "fingerprints": {
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw][port=5555]"
           }
-        },
-        {
-          "ruleId": "SEC101/045",
-          "ruleIndex": 0,
-          "message": {
-            "id": "Ado",
-            "arguments": [
-              "SEC101_045.PostgreSqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO PostgreSQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 13,
-                  "startColumn": 1,
-                  "endLine": 14,
-                  "endColumn": 54,
-                  "charOffset": 1329,
-                  "charLength": 107,
-                  "snippet": {
-                    "text": "Username=mylogin;Password=mypass;Database=mydatabase\r\nPassword=mypass;Database=mydatabase;Username=mylogin;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=mylogin][pwd=mypass][resource=mydatabase\r\nPassword=mypass]"
-          }
         }
       ],
       "columnKind": "utf16CodeUnits"

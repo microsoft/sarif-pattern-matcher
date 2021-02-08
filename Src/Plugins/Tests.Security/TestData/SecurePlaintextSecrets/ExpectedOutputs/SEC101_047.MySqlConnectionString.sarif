@@ -97,45 +97,6 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 17,
-                  "startColumn": 67,
-                  "endLine": 23,
-                  "endColumn": 134,
-                  "charOffset": 1651,
-                  "charLength": 668,
-                  "snippet": {
-                    "text": "password=password, host=\"some-database-name.mysql.database.azure.com\", port=3306, database=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db; Data Source=some-database-name.mysql.database.azure.com; User Id=username@some-database-name; Password=password\r"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][pwd=password][port=3306][resource=catalog_db, ssl_ca={ca-cert filename}, ssl_verify_cert=true)\r\n\r\n# This is a well-formed but invalid Ruby MySql connection string\r\nclient = Mysql2::Client.new(username: \"username@some-database-name\", password: password, database: catalog_db, host: \"some-database-name.mysql.database.azure.com\", port: 3306, sslca:{ca-cert filename}, sslverify:false, sslcipher:'AES256-SHA')\r\n\r\n# This is a well-formed but invalid WebApp MySql connection string\r\nDatabase=catalog_db]"
-          }
-        },
-        {
-          "ruleId": "SEC101/045",
-          "ruleIndex": 0,
-          "message": {
-            "id": "Ado",
-            "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO PostgreSQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
                   "startLine": 30,
                   "startColumn": 1,
                   "endLine": 30,

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtiliesAndExtensions;
 using Microsoft.RE2.Managed;
 
 using Npgsql;
@@ -54,9 +55,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
             string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
 
-            if (!groups.TryGetValue("host", out string host)
-                || !groups.TryGetValue("account", out string account)
-                || !groups.TryGetValue("password", out string password))
+            if (!groups.TryGetNonEmptyValue("host", out string host) ||
+                !groups.TryGetNonEmptyValue("account", out string account) ||
+                !groups.TryGetNonEmptyValue("password", out string password))
             {
                 return nameof(ValidationState.NoMatch);
             }
