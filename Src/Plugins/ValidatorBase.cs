@@ -76,6 +76,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         {
             bool oneDigit = false, oneLetter = false;
 
+            if (string.IsNullOrWhiteSpace(matchedPattern))
+            {
+                return false;
+            }
+
             foreach (char ch in matchedPattern)
             {
                 if (char.IsDigit(ch)) { oneDigit = true; }
