@@ -96,6 +96,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.NoMatch);
             }
 
+            // Ignoring Azure MySQL and Azure Postgres databases
+            if (host.EndsWith("postgres.database.azure.com", StringComparison.OrdinalIgnoreCase)
+                || host.EndsWith("mysql.database.azure.com", StringComparison.OrdinalIgnoreCase))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
             if (ignoreList.Contains(host))
             {
                 return nameof(ValidationState.NoMatch);

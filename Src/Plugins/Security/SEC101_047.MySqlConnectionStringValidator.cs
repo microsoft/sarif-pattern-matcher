@@ -69,6 +69,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 return nameof(ValidationState.NoMatch);
             }
 
+            // Ignoring Azure SQL and Azure Postgres databases
+            if (host.EndsWith("database.windows.net", StringComparison.OrdinalIgnoreCase)
+                || host.EndsWith("postgres.database.azure.com", StringComparison.OrdinalIgnoreCase))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
             fingerprintText = new Fingerprint()
             {
                 Host = host.Replace("\"", string.Empty).Replace(",", ";"),

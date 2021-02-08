@@ -15,11 +15,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static PostgreSqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
-        private const string HostRegex = "(?i)(Host\\s*=\\s*(?-i)(?<host>[\\w\\-_\\.]{3,91}))";
-        private const string PortRegex = "(?i)(Port\\s*=\\s*(?<port>[0-9]{1,5}))";
-        private const string AccountRegex = "(?i)(Username\\s*=\\s*(?<account>[^,;]+))";
-        private const string PasswordRegex = "(?i)(Password\\s*=\\s*(?<account>[^,;\"\\s]+))";
-        private const string DatabaseRegex = "(?i)(Database\\s*=\\s*(?<database>[^;]+))";
+        private const string HostRegex = @"(?i)(host|server)\s*=\s*(?-i)(?<host>[\w\-_\.]{3,91})";
+        private const string PortRegex = @"(?i)Port\s*=\s*(?<port>[0-9]{1,5})";
+        private const string AccountRegex = @"(?i)(username|uid|user id)\s*=\s*(?<account>[^,;]+)";
+        private const string PasswordRegex = @"(?i)(password|pwd)\s*=\s*(?<password>[^,;""\s]+)";
+        private const string DatabaseRegex = @"(?i)(database|db)\s*=\s*(?<database>[^;]+)";
 
         static PostgreSqlConnectionStringValidator()
         {
@@ -63,6 +63,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             if (string.IsNullOrWhiteSpace(host) ||
                 string.IsNullOrWhiteSpace(account) ||
                 string.IsNullOrWhiteSpace(password))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
+            // Ignoring Azure SQL and Azure MySQL databases
+            if (host.EndsWith("database.windows.net", StringComparison.OrdinalIgnoreCase)
+                || host.EndsWith("mysql.database.azure.com", StringComparison.OrdinalIgnoreCase))
             {
                 return nameof(ValidationState.NoMatch);
             }
