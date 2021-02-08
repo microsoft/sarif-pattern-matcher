@@ -3,8 +3,6 @@
 
 using System.Collections.Generic;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     internal static class PfxCryptographicKeyfileValidator
