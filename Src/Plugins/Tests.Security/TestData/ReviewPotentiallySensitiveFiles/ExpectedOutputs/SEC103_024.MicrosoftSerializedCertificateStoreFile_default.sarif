@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC103/002",
-              "name": "ReviewPotentiallySensitiveFiles/ASCIIArmoredFile",
+              "id": "SEC103/024",
+              "name": "ReviewPotentiallySensitiveFiles/MicrosoftSerializedCertificateStoreFile",
               "fullDescription": {
                 "text": "Review potentially sensitive files in versioned engineering content and other locations for security risk."
               },
@@ -38,23 +38,24 @@
       ],
       "results": [
         {
-          "ruleId": "SEC103/002",
+          "ruleId": "SEC103/024",
           "ruleIndex": 0,
+          "level": "error",
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC103.ASCIIArmoredFile_fake.asc",
-              "an apparent ",
-              "ASCII armored file",
+              "SEC103_024.MicrosoftSerializedCertificateStoreFile_default.sst",
+              "an exposed ",
+              "Microsoft Serialized Certificate Store",
               "",
-              ""
+              " (which contains private keys)"
             ]
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103.ASCIIArmoredFile_fake.asc",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103_024.MicrosoftSerializedCertificateStoreFile_default.sst",
                   "uriBaseId": "SRC_ROOT"
                 }
               }

@@ -93,7 +93,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                 return ReturnUnknownHost(ref message, asset);
             }
 
+            if (TestExceptionForMessage(e, "The network path was not found", asset))
+            {
+                return ReturnUnknownHost(ref message, asset);
+            }
+
             if (TestExceptionForMessage(e, "The remote name could not be resolved", asset))
+            {
+                return ReturnUnknownHost(ref message, asset);
+            }
+
+            string sslMessage = "The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.";
+            if (TestExceptionForMessage(e, sslMessage, asset))
             {
                 return ReturnUnknownHost(ref message, asset);
             }

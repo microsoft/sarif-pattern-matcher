@@ -14,10 +14,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static SqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
 
-        private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;]+";
-        private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;]+";
-        private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;]+";
-        private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;]+";
+        private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;<]+";
+        private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;<]+";
+        private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;<]+";
+        private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;<]+";
 
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
@@ -114,6 +114,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             var fingerprint = new Fingerprint(fingerprintText);
 
+            bool shouldRetry;
             string host = fingerprint.Host;
             string account = fingerprint.Account;
             string password = fingerprint.Password;
@@ -124,8 +125,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 "Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
 
             // Validating ConnectionString with database.
-            string validation = ValidateConnectionString(ref message, host, connString);
-            if (validation != nameof(ValidationState.Unknown))
+            string validation = ValidateConnectionString(ref message, host, connString, out shouldRetry);
+            if (validation != nameof(ValidationState.Unknown) || !shouldRetry)
             {
                 return validation;
             }
@@ -135,11 +136,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                "Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
 
             // Validating ConnectionString without database.
-            return ValidateConnectionString(ref message, host, connString);
+            return ValidateConnectionString(ref message, host, connString, out shouldRetry);
         }
 
-        private static string ValidateConnectionString(ref string message, string host, string connString)
+        private static string ValidateConnectionString(ref string message, string host, string connString, out bool shouldRetry)
         {
+            shouldRetry = true;
             try
             {
                 using var connection = new SqlConnection(connString);
@@ -166,6 +168,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         if (match.Success)
                         {
                             message = match.Value;
+                            shouldRetry = false;
                             return nameof(ValidationState.Unknown);
                         }
                     }
