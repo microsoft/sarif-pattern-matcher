@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtiliesAndExtensions;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {

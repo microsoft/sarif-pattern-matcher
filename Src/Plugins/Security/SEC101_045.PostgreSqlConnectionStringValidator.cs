@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtiliesAndExtensions;
 using Microsoft.RE2.Managed;
 
 using Npgsql;
@@ -15,10 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static PostgreSqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
-        private const string HostRegex = @"(?i)(host|server)\s*=\s*(?-i)(?<host>[\w\-_\.]{3,91})";
         private const string PortRegex = @"(?i)Port\s*=\s*(?<port>[0-9]{1,5})";
-        private const string AccountRegex = @"(?i)(username|uid|user id)\s*=\s*(?<account>[^,;]+)";
-        private const string PasswordRegex = @"(?i)(password|pwd)\s*=\s*(?<password>[^,;""\s]+)";
         private const string DatabaseRegex = @"(?i)(database|db)\s*=\s*(?<database>[^;]+)";
 
         static PostgreSqlConnectionStringValidator()
@@ -54,15 +52,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            string host = ParseExpression(RegexEngine, matchedPattern, HostRegex);
             string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
-            string account = ParseExpression(RegexEngine, matchedPattern, AccountRegex);
-            string password = ParseExpression(RegexEngine, matchedPattern, PasswordRegex);
             string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
 
-            if (string.IsNullOrWhiteSpace(host) ||
-                string.IsNullOrWhiteSpace(account) ||
-                string.IsNullOrWhiteSpace(password))
+            if (!groups.TryGetNonEmptyValue("host", out string host) ||
+                !groups.TryGetNonEmptyValue("account", out string account) ||
+                !groups.TryGetNonEmptyValue("password", out string password))
             {
                 return nameof(ValidationState.NoMatch);
             }
