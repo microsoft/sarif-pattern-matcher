@@ -8,9 +8,12 @@
 <add name="BlogDbContext" connectionString="Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true"> # begin with optional property
 <add name="BlogDbContext" connectionString="Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true;Port=5555"> # redundant optional property at beginning and end
 <add name="BlogDbContext" connectionString="Database=my_db;Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"> # space preceeding optional property
-############### The rest of these patterns are not implemented!!
+
+# These two are caught together
 Username=mylogin;Password=mypass;Database=mydatabase
 Password=mypass;Database=mydatabase;Username=mylogin;
+
+############### The rest of these patterns are not implemented!!
 
 # JDBC
 # Dream validation will catch the first method of connection string declaration
