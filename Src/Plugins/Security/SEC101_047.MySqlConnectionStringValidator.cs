@@ -69,9 +69,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 return nameof(ValidationState.NoMatch);
             }
 
-            // Ignoring Azure SQL and Azure Postgres databases
-            if (host.EndsWith("database.windows.net", StringComparison.OrdinalIgnoreCase)
-                || host.EndsWith("postgres.database.azure.com", StringComparison.OrdinalIgnoreCase))
+            if (LocalhostList.Contains(host))
+            {
+                host = "localhost";
+            }
+
+            // Other rules will handle these cases.
+            if (host.EndsWith("database.windows.net", StringComparison.OrdinalIgnoreCase) ||
+                host.EndsWith("postgres.database.azure.com", StringComparison.OrdinalIgnoreCase))
             {
                 return nameof(ValidationState.NoMatch);
             }
@@ -99,7 +104,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             string account = fingerprint.Account;
             string password = fingerprint.Password;
 
-            StringBuilder connectionStringBuilder = new StringBuilder();
+            if (LocalhostList.Contains(host))
+            {
+                return nameof(ValidationState.Unknown);
+            }
+
+            var connectionStringBuilder = new StringBuilder();
             connectionStringBuilder.Append($"Server={host}; Database={database}; Uid={account}; Pwd={password}; SslMode=Preferred;");
 
             if (!string.IsNullOrWhiteSpace(port))

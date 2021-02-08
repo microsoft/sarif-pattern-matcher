@@ -12,6 +12,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 {
     public abstract class ValidatorBase
     {
+        public static readonly HashSet<string> LocalhostList = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "localhost",
+            "(local)",
+            "127.0.0.1",
+        };
+
         static ValidatorBase()
         {
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
@@ -75,11 +82,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         public static bool ContainsDigitAndChar(string matchedPattern)
         {
             bool oneDigit = false, oneLetter = false;
-
-            if (string.IsNullOrWhiteSpace(matchedPattern))
-            {
-                return false;
-            }
 
             foreach (char ch in matchedPattern)
             {

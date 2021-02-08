@@ -430,6 +430,123 @@
           "ruleId": "SEC101/046",
           "ruleIndex": 1,
           "message": {
+            "id": "Jdbc",
+            "arguments": [
+              "SEC101_046.SqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "JDBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 1,
+                  "endLine": 37,
+                  "endColumn": 114,
+                  "charOffset": 2201,
+                  "charLength": 113,
+                  "snippet": {
+                    "text": "jdbc:sqlserver://localhost;database=tse-internal-spam-testing;user=username@some-database-name;password=password;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username][host=localhost][pwd=password][resource=tse-internal-spam-testing]"
+          }
+        },
+        {
+          "ruleId": "SEC101/046",
+          "ruleIndex": 1,
+          "message": {
+            "id": "Jdbc",
+            "arguments": [
+              "SEC101_046.SqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "JDBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 38,
+                  "startColumn": 1,
+                  "endLine": 38,
+                  "endColumn": 112,
+                  "charOffset": 2419,
+                  "charLength": 111,
+                  "snippet": {
+                    "text": "jdbc:sqlserver://(local);database=tse-internal-spam-testing;user=username@some-database-name;password=password;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username][host=localhost][pwd=password][resource=tse-internal-spam-testing]"
+          }
+        },
+        {
+          "ruleId": "SEC101/046",
+          "ruleIndex": 1,
+          "message": {
+            "id": "Jdbc",
+            "arguments": [
+              "SEC101_046.SqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "JDBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 39,
+                  "startColumn": 1,
+                  "endLine": 39,
+                  "endColumn": 114,
+                  "charOffset": 2635,
+                  "charLength": 113,
+                  "snippet": {
+                    "text": "jdbc:sqlserver://127.0.0.1;database=tse-internal-spam-testing;user=username@some-database-name;password=password;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username][host=localhost][pwd=password][resource=tse-internal-spam-testing]"
+          }
+        },
+        {
+          "ruleId": "SEC101/046",
+          "ruleIndex": 1,
+          "message": {
             "id": "Php",
             "arguments": [
               "SEC101_046.SqlConnectionString.ps1",

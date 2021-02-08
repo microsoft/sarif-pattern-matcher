@@ -20,13 +20,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;<]+";
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
-        private readonly HashSet<string> ignoreList = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            "localhost",
-            "(local)",
-            "127.0.0.1",
-        };
-
         static SqlConnectionStringValidator()
         {
             Instance = new SqlConnectionStringValidator();
@@ -88,30 +81,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 password = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
             }
 
-            if (string.IsNullOrWhiteSpace(host)
-                || string.IsNullOrWhiteSpace(database)
-                || string.IsNullOrWhiteSpace(account)
-                || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(host) ||
+                string.IsNullOrWhiteSpace(database) ||
+                string.IsNullOrWhiteSpace(account) ||
+                string.IsNullOrWhiteSpace(password))
             {
                 return nameof(ValidationState.NoMatch);
             }
 
-            // Ignoring Azure MySQL and Azure Postgres databases
-            if (host.EndsWith("postgres.database.azure.com", StringComparison.OrdinalIgnoreCase)
-                || host.EndsWith("mysql.database.azure.com", StringComparison.OrdinalIgnoreCase))
+            if (LocalhostList.Contains(host))
+            {
+                host = "localhost";
+            }
+
+            // Other rules will handle these cases.
+            if (host.EndsWith("postgres.database.azure.com", StringComparison.OrdinalIgnoreCase) ||
+                host.EndsWith("mysql.database.azure.com", StringComparison.OrdinalIgnoreCase))
             {
                 return nameof(ValidationState.NoMatch);
             }
 
-            if (ignoreList.Contains(host))
-            {
-                return nameof(ValidationState.NoMatch);
-            }
-
-            if (database.Length > 128
-                || account.Length > 128
-                || password.Length > 128
-                || host.Length > 128)
+            if (database.Length > 128 ||
+                account.Length > 128 ||
+                password.Length > 128 ||
+                host.Length > 128)
             {
                 return nameof(ValidationState.NoMatch);
             }
@@ -137,6 +130,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string account = fingerprint.Account;
             string password = fingerprint.Password;
             string database = fingerprint.Resource;
+
+            if (LocalhostList.Contains(host))
+            {
+                return nameof(ValidationState.Unknown);
+            }
 
             string connString =
                 $"Server={host};Initial Catalog={database};User ID={account};Password={password};" +

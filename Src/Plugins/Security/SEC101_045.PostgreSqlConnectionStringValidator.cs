@@ -67,9 +67,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.NoMatch);
             }
 
-            // Ignoring Azure SQL and Azure MySQL databases
-            if (host.EndsWith("database.windows.net", StringComparison.OrdinalIgnoreCase)
-                || host.EndsWith("mysql.database.azure.com", StringComparison.OrdinalIgnoreCase))
+            if (LocalhostList.Contains(host))
+            {
+                host = "localhost";
+            }
+
+            // Other rules will handle these cases.
+            if (host.EndsWith("database.windows.net", StringComparison.OrdinalIgnoreCase) ||
+                host.EndsWith("mysql.database.azure.com", StringComparison.OrdinalIgnoreCase))
             {
                 return nameof(ValidationState.NoMatch);
             }
@@ -90,6 +95,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref string message)
         {
             var fingerprint = new Fingerprint(fingerprintText);
+
+            if (LocalhostList.Contains(fingerprint.Host))
+            {
+                return nameof(ValidationState.Unknown);
+            }
 
             var connectionStringBuilder = new StringBuilder();
             connectionStringBuilder.Append($"Host={fingerprint.Host};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require;");
