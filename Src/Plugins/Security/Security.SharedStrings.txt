@@ -24,7 +24,7 @@
   $AdoPat=(^|[^2-7a-z])(?<refine>[2-7a-z]{52})([^2-7a-z]|$)
   $AwsCredentials=(?s)\b(?<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}).{1,500}?\b(?i)(?<key>[0-9a-z\/+]{40})
   $FacebookAppCredentials=(?si)(((facebook|fb)(.{0,20})?[`'"\s>](?<id>[0-9]{13,17})[^0-9].{1,500}?)|((facebook|fb)(.{0,20})?[`'"\s>](?<key>[0-9a-f]{32})([^0-9a-f]?)).{1,500}?){2}
-  $GitHubAppCredentials=(?s)\b(?<id>Iv1\.[0-9a-z]{16}).{1,500}?\b(?i)(?<key>[0-9a-z]{35,40})([^0-9a-f]|$)
+  $GitHubAppCredentials=(?s)((\b(?<id>Iv1\.[0-9a-z]{16}).{1,50}?)|(\b(?i)(?<key>[0-9a-z]{35,40})\b.{0,50}?)){2}
   $GitHubPat=(?si)(?<refine>github.{0,50}[^0-9a-z][0-9a-z]{40})([^0-9a-z]|$)
   $GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
   $HockeyAppToken=(?si)hockey.{0,50}[`'"\s>]?(?<refine>[0-9a-f]{32})([^0-9a-f]|$)
