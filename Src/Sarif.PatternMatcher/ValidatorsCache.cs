@@ -13,7 +13,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private static readonly object sync = new object();
         private static string assemblyBaseFolder;
         private readonly IFileSystem _fileSystem;
-        private readonly HashSet<string> _resolvedNames;
+        private readonly Dictionary<string, Assembly> _resolvedNames;
         private Dictionary<string, ValidationMethodPair> _ruleNameToValidationMethods;
 
         public ValidatorsCache(IEnumerable<string> validatorBinaryPaths = null, IFileSystem fileSystem = null)
@@ -24,7 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     : new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             _fileSystem = fileSystem ?? FileSystem.Instance;
-            _resolvedNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            _resolvedNames = new Dictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
         }
 
         public ISet<string> ValidatorPaths { get; }
@@ -290,12 +290,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // We will only attempt to resolve an assembly a single time
             // to avoid re-entrance in cases where our logic below fails
             string assemblyName = args.Name.Split(',')[0];
-            if (this._resolvedNames.Contains(assemblyName))
+            if (this._resolvedNames.ContainsKey(assemblyName))
             {
-                return null;
+                return this._resolvedNames[assemblyName];
             }
-
-            this._resolvedNames.Add(assemblyName);
 
             AppDomain currentDomain = AppDomain.CurrentDomain;
             Assembly[] assemblies = currentDomain.GetAssemblies();
@@ -333,6 +331,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // If we use Assembly.LoadFrom, a FileLoadException
                     // saying that it could not load the file.
                     resolved = Assembly.Load(_fileSystem.FileReadAllBytes(presumedAssemblyPath));
+
+                    this._resolvedNames.Add(assemblyName, resolved);
                 }
                 catch (IOException) { }
                 catch (TypeLoadException) { }
