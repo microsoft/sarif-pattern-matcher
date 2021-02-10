@@ -6,9 +6,10 @@ using System.Net.Mail;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal static class EmailAddressValidator
+    public static class EmailAddressValidator
     {
 #pragma warning disable IDE0060 // Unused parameter.
+
         public static string IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,

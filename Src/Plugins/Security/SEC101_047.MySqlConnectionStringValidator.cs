@@ -11,7 +11,7 @@ using MySqlConnector;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 {
-    internal class MySqlConnectionStringValidator : ValidatorBase
+    public class MySqlConnectionStringValidator : ValidatorBase
     {
         internal static MySqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;

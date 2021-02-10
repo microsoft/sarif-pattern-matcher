@@ -9,7 +9,7 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal class SqlConnectionStringValidator : ValidatorBase
+    public class SqlConnectionStringValidator : ValidatorBase
     {
         internal static SqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
