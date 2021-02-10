@@ -15,14 +15,14 @@
 </AWSSecretAccessKey>
 
 <AWSAccessKeyId>AKIAIOSFODNN7EXAMPLE</AWSAccessKeyId>
-<AWSSecretAccessKey>wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY</AWSSecretAccessKey>
+<AWSSecretAccessKey>xJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY</AWSSecretAccessKey>
 
 # AppSettings style
 <appSettings>
   <add key="AWSAccessKeyId" value="AKIAIOSFODNN7EXAMPLE" />
-  <add key="AWSSecretAccessKey" value="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" />
+  <add key="AWSSecretAccessKey" value="yJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" />
 </appSettings>
 
 # Code style
 var myAWSAccessKeyId = "AKIAIOSFODNN7EXAMPLE";
-var myAWSSecretAccessKey = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
+var myAWSSecretAccessKey = "zJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";

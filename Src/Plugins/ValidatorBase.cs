@@ -30,6 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         protected ValidatorBase()
         {
             FingerprintToResultCache = new Dictionary<string, Tuple<string, string>>();
+            PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -41,6 +42,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         /// </summary>
         protected IDictionary<string, Tuple<string, string>> FingerprintToResultCache { get; }
 
+        /// <summary>
+        /// Gets a cache of file + fingerprint combinations that have been
+        /// observed previously. Our scanner will only detect and validate
+        /// a unique fingerprint once per file. Many regexes will produce
+        /// multiple matches that resolve to the same unique credential in
+        /// a file (one of the perils of multiline regex matching). It is
+        /// possible that this cache may drop the location of a second
+        /// actual match that happens to be duplicated in the file. In
+        /// practice, we will not worry about this scenario: it will be
+        /// sufficient that we flag one instance of the unique secret.
+        /// </summary>
+        protected ISet<string> PerFileFingerprintCache { get; }
+
         public static string IsValidStatic(ValidatorBase validator,
                                            ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
@@ -48,12 +62,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                                            ref string fingerprint,
                                            ref string message)
         {
-            return
+            string state =
                 validator.IsValidStaticHelper(ref matchedPattern,
                                               ref groups,
                                               ref failureLevel,
                                               ref fingerprint,
                                               ref message);
+
+            if (state != nameof(ValidationState.NoMatch))
+            {
+                string scanTarget = groups["scanTargetFullPath"];
+                string key = scanTarget + "#" + fingerprint;
+
+                if (validator.PerFileFingerprintCache.Contains(key))
+                {
+                    return nameof(ValidationState.NoMatch);
+                }
+
+                validator.PerFileFingerprintCache.Add(key);
+            }
+
+            return state;
         }
 
         public static string IsValidDynamic(ValidatorBase validator,
