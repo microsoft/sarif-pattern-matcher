@@ -29,7 +29,7 @@
   $GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
   $HockeyAppToken=(?si)hockey.{0,50}[`'"\s>]?(?<refine>[0-9a-f]{32})([^0-9a-f]|$)
   $MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<account>[a-z\@\-]{1,120})(?i))|(Pwd=(?<password>[^;]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
-  $SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*(?<host>[^;]{0,50})|(initial catalog|database)\s*=\s*(?<database>[^;]{0,50})|(user id|uid)\s*=\s*(?<account>[^;]{0,50})|(password|pwd)\s*=\s*(?<password>[^;]{0,50})).+?){4}
+  $SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*(?<host>[^;]{0,128})|(initial catalog|database)\s*=\s*(?<database>[^;|"']{0,128})|(user id|uid)\s*=\s*(?<account>[^;|"']{0,128})|(password|pwd)\s*=\s*(?<password>[^;|"']{1,128})).+?){4}
   $SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;]+);(((database\s*=\s*(?<database>[^;]+))|(user\s*=\s*(?<account>[^@]+)@[^;]+)|(password\s*=\s*(?<password>[^;]+))).{1,50}?){3}
   $SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<account>[^"]+)",\s*"(?<password>[^"]+)"
   $SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
