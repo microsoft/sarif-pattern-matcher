@@ -105,14 +105,14 @@
                   "charOffset": 137,
                   "charLength": 58,
                   "snippet": {
-                    "text": "GitHubPat\" value=\"ff34885a8624460a855540c6592698d2f1812843"
+                    "text": "GitHubPat\" value=\"dead885a8624460a855540c6592698d2f1812843"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f1812843]"
+            "ValidationFingerprint/v1": "[pat=dead885a8624460a855540c6592698d2f1812843]"
           }
         },
         {
@@ -144,14 +144,14 @@
                   "charOffset": 239,
                   "charLength": 69,
                   "snippet": {
-                    "text": "GitHubPersonalAccessToken = \"ff34885a8624460a855540c6592698d2f1812843"
+                    "text": "GitHubPersonalAccessToken = \"ff34885a8624460a855540c6592698d2f181dead"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f1812843]"
+            "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f181dead]"
           }
         }
       ],
