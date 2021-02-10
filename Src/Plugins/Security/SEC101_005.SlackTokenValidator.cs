@@ -11,7 +11,7 @@ using System.Text.Json.Serialization;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal class SlackTokenValidator : ValidatorBase
+    public class SlackTokenValidator : ValidatorBase
     {
         internal static SlackTokenValidator Instance = new SlackTokenValidator();
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal static class AdoPatValidator
+    public static class AdoPatValidator
     {
         /// <summary>
         /// Magic number to validate PAT checksum.
@@ -75,6 +75,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         };
 
 #pragma warning disable IDE0060 // Remove unused parameter
+
         public static string IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,

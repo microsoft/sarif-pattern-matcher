@@ -10,7 +10,7 @@ using GoogleApi.Exceptions;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal class GoogleApiKeyValidator : ValidatorBase
+    public class GoogleApiKeyValidator : ValidatorBase
     {
         internal static GoogleApiKeyValidator Instance;
 

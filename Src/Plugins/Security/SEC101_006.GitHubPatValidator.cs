@@ -12,7 +12,7 @@ using Octokit.Internal;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal class GitHubPatValidator : ValidatorBase
+    public class GitHubPatValidator : ValidatorBase
     {
         internal static IRegex RegexEngine;
         internal static GitHubPatValidator Instance;
