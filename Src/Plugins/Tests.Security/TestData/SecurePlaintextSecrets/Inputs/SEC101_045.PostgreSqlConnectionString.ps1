@@ -1,13 +1,13 @@
 ﻿# ADO.NET
 # Using Npgsql
 # Currently caught
-<add name="BlogDbContext" connectionString="host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw"> # host not capitalized, optional properties in the middle
-<add name="BlogDbContext" connectionString="host=my_host;Database=my_db;Username=my_user;Password=my_pw;Port=5555"> # optional properties in the middle and at the end
-<add name="BlogDbContext" connectionString="Host=my_host;Port=5555;UsErname=my_user;Password=my_pw"> # weird capitalization on UsErname
-<add name="BlogDbContext" connectionString="Password=my_pw;Host=my_host;Port=5555;Username=my_user;Pooling=true"> # weird order, unnecessary property at the end
-<add name="BlogDbContext" connectionString="Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true"> # begin with optional property
-<add name="BlogDbContext" connectionString="Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true;Port=5555"> # redundant optional property at beginning and end
-<add name="BlogDbContext" connectionString="Database=my_db;Port=5555;Password=my_pw;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"> # space preceeding optional property
+<add name="BlogDbContext" connectionString="host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_1"> # host not capitalized, optional properties in the middle
+<add name="BlogDbContext" connectionString="host=my_host;Database=my_db;Username=my_user;Password=my_pw_2;Port=5555"> # optional properties in the middle and at the end
+<add name="BlogDbContext" connectionString="Host=my_host;Port=5555;UsErname=my_user;Password=my_pw_3"> # weird capitalization on UsErname
+<add name="BlogDbContext" connectionString="Password=my_pw_4;Host=my_host;Port=5555;Username=my_user;Pooling=true"> # weird order, unnecessary property at the end
+<add name="BlogDbContext" connectionString="Port=5555;Password=my_pw_5;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true"> # begin with optional property
+<add name="BlogDbContext" connectionString="Port=5555;Password=my_pw_6;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true;Port=5555"> # redundant optional property at beginning and end
+<add name="BlogDbContext" connectionString="Database=my_db;Port=5555;Password=my_pw_7;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"> # space preceeding optional property
 
 ############### The rest of these patterns are not implemented!!
 Username=mylogin;Password=mypass;Database=mydatabase
@@ -30,7 +30,7 @@ jdbc:postgresql://localhost/test?user=fred&password=secret&ssl=true
 # Node uses environment variables by default, which would be declared something like the first method
 PGUSER=dbuser \
 PGHOST=database.server.com \
-PGPASSWORD=secretpassword \
+PGPASSWORD=secretpassword_1 \
 PGDATABASE=mydb \
 PGPORT=3211 \
 node script.js
@@ -39,21 +39,21 @@ const pool = new Pool({
   user: 'dbuser',
   host: 'database.server.com',
   database: 'mydb',
-  password: 'secretpassword',
+  password: 'secretpassword_2',
   port: 3211,
 })
 
-const pool = new Pool({ user: 'dbuser', host: 'database.server.com', database: 'mydb', password: 'secretpassword', port: 3211,})
+const pool = new Pool({ user: 'dbuser', host: 'database.server.com', database: 'mydb', password: 'secretpassword_3', port: 3211,})
 
 const client = new Client({
   user: 'dbuser',
   host: 'database.server.com',
   database: 'mydb',
-  password: 'secretpassword',
+  password: 'secretpassword_4',
   port: 3211,
 })
 
-const client = new Client({ user: 'dbuser', host: 'database.server.com', database: 'mydb', password: 'secretpassword', port: 3211,})
+const client = new Client({ user: 'dbuser', host: 'database.server.com', database: 'mydb', password: 'secretpassword_5', port: 3211,})
 
 # PHP
 $dbconn3 = pg_connect("host=sheep port=5432 dbname=mary user=lamb password=foo");
@@ -69,7 +69,7 @@ conn = psycopg2.connect(
     user="postgres",
     password="Abcd1234")
 
-conn = psycopg2.connect(host="localhost",database="suppliers",user="postgres",password="Abcd1234")
+conn = psycopg2.connect(host="localhost",database="suppliers",user="postgres",password="Abcd12345")
 
 # Ruby
 # Using libpq 

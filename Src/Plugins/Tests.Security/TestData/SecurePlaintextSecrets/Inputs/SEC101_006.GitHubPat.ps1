@@ -5,11 +5,11 @@
 
 # AppSettings style
 <appSettings>
-  <add key="GitHubPat" value="ff34885a8624460a855540c6592698d2f1812843" />
+  <add key="GitHubPat" value="dead885a8624460a855540c6592698d2f1812843" />
 </appSettings>
 
 # Code style
-var myGitHubPersonalAccessToken = "ff34885a8624460a855540c6592698d2f1812843";
+var myGitHubPersonalAccessToken = "ff34885a8624460a855540c6592698d2f181dead";
 
 # Link style
 # This should trigger, but it should report as NoMatch

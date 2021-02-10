@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Resources;
 using System.Text;
@@ -381,17 +382,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 if (!flexMatch.Success) { continue; }
 
-                // ReportingDescriptor reportingDescriptor = _matchExpressionToRule[matchExpression];
                 ReportingDescriptor reportingDescriptor = this;
-                Regex regex = CachedDotNetRegex.GetOrCreateRegex(
-                                matchExpression.ContentsRegex,
-                                RegexDefaults.DefaultOptionsCaseInsensitive);
+
+                Regex regex =
+                    CachedDotNetRegex.GetOrCreateRegex(matchExpression.ContentsRegex,
+                                                      RegexDefaults.DefaultOptionsCaseInsensitive);
 
                 Match match = regex.Match(flexMatch.Value);
 
                 string refinedMatchedPattern = match.Groups["refine"].Value;
 
                 IDictionary<string, string> groups = match.Groups.CopyToDictionary(regex.GetGroupNames());
+
+                Debug.Assert(!groups.ContainsKey("scanTargetFullPath"));
+                groups["scanTargetFullPath"] = filePath;
 
                 if (matchExpression.Properties != null)
                 {
@@ -486,22 +490,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 messageArguments["validationPrefix"] = validationPrefix;
                 messageArguments["validationSuffix"] = validationSuffix;
 
-                IList<string> arguments = GetMessageArguments(
-                    match,
-                    matchExpression.ArgumentNameToIndexMap,
-                    filePath,
-                    validatorMessage: NormalizeValidatorMessage(validatorMessage),
-                    messageArguments);
+                IList<string> arguments = GetMessageArguments(match,
+                                                              matchExpression.ArgumentNameToIndexMap,
+                                                              filePath,
+                                                              validatorMessage: NormalizeValidatorMessage(validatorMessage),
+                                                              messageArguments);
 
-                Result result = ConstructResult(
-                    context.TargetUri,
-                    reportingDescriptor.Id,
-                    level,
-                    region,
-                    flexMatch,
-                    fingerprint,
-                    matchExpression,
-                    arguments);
+                Result result = ConstructResult(context.TargetUri,
+                                                reportingDescriptor.Id,
+                                                level,
+                                                region,
+                                                flexMatch,
+                                                fingerprint,
+                                                matchExpression,
+                                                arguments);
 
                 // This skimmer instance mutates its reporting descriptor state,
                 // for example, the sub-id may change for every match
