@@ -7,9 +7,10 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtilie
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal static class CertificateFileValidator
+    public static class CertificateFileValidator
     {
 #pragma warning disable IDE0060 // Remove unused parameter
+
         public static string IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,

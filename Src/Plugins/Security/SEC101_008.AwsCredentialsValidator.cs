@@ -11,7 +11,7 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal class AwsCredentialsValidator : ValidatorBase
+    public class AwsCredentialsValidator : ValidatorBase
     {
         internal static IRegex RegexEngine;
         internal static AwsCredentialsValidator Instance;
