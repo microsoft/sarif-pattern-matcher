@@ -101,7 +101,7 @@
                   "startColumn": 1,
                   "endLine": 30,
                   "endColumn": 97,
-                  "charOffset": 2531,
+                  "charOffset": 2552,
                   "charLength": 96,
                   "snippet": {
                     "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password;"
@@ -140,7 +140,7 @@
                   "startColumn": 1,
                   "endLine": 30,
                   "endColumn": 97,
-                  "charOffset": 2531,
+                  "charOffset": 2552,
                   "charLength": 96,
                   "snippet": {
                     "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password;"
@@ -178,18 +178,18 @@
                   "startLine": 2,
                   "startColumn": 1,
                   "endLine": 2,
-                  "endColumn": 130,
+                  "endColumn": 132,
                   "charOffset": 65,
-                  "charLength": 129,
+                  "charLength": 131,
                   "snippet": {
-                    "text": "Server=some-database-name.mysql.database.azure.com; Port=3306; Database=catalog_db; Uid=username@some-database-name; Pwd=password"
+                    "text": "Server=some-database-name.mysql.database.azure.com; Port=3306; Database=catalog_db; Uid=username@some-database-name; Pwd=password_1"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password][port=3306][resource=catalog_db]"
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_1][port=3306][resource=catalog_db]"
           }
         },
         {
@@ -217,18 +217,18 @@
                   "startLine": 3,
                   "startColumn": 1,
                   "endLine": 3,
-                  "endColumn": 130,
-                  "charOffset": 216,
-                  "charLength": 129,
+                  "endColumn": 132,
+                  "charOffset": 218,
+                  "charLength": 131,
                   "snippet": {
-                    "text": "Port=3306; Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password"
+                    "text": "Port=3306; Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_2"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password][port=3306][resource=catalog_db]"
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_2][port=3306][resource=catalog_db]"
           }
         },
         {
@@ -256,18 +256,18 @@
                   "startLine": 3,
                   "startColumn": 12,
                   "endLine": 3,
-                  "endColumn": 130,
-                  "charOffset": 227,
-                  "charLength": 118,
+                  "endColumn": 132,
+                  "charOffset": 229,
+                  "charLength": 120,
                   "snippet": {
-                    "text": "Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password"
+                    "text": "Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_2"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password][resource=catalog_db]"
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_2][resource=catalog_db]"
           }
         },
         {
@@ -295,18 +295,18 @@
                   "startLine": 4,
                   "startColumn": 1,
                   "endLine": 4,
-                  "endColumn": 148,
-                  "charOffset": 367,
-                  "charLength": 147,
+                  "endColumn": 150,
+                  "charOffset": 371,
+                  "charLength": 149,
                   "snippet": {
-                    "text": "Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password; SslMode=Preferred;Port=3306"
+                    "text": "Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_3; SslMode=Preferred;Port=3306"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password][port=3306][resource=catalog_db]"
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_3][port=3306][resource=catalog_db]"
           }
         },
         {
@@ -334,18 +334,18 @@
                   "startLine": 5,
                   "startColumn": 1,
                   "endLine": 5,
-                  "endColumn": 137,
-                  "charOffset": 518,
-                  "charLength": 136,
+                  "endColumn": 139,
+                  "charOffset": 524,
+                  "charLength": 138,
                   "snippet": {
-                    "text": "Server=some-database-name.mysql.database.azure.com;Database=catalog_db; SslMode=Preferred; Pwd=password; Uid=username@some-database-name"
+                    "text": "Server=some-database-name.mysql.database.azure.com;Database=catalog_db; SslMode=Preferred; Pwd=password_4; Uid=username@some-database-name"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password][resource=catalog_db]"
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_4][resource=catalog_db]"
           }
         },
         {
@@ -374,7 +374,7 @@
                   "startColumn": 1,
                   "endLine": 30,
                   "endColumn": 96,
-                  "charOffset": 2531,
+                  "charOffset": 2552,
                   "charLength": 95,
                   "snippet": {
                     "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password"
