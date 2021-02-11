@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtiliesAndExtensions;
 using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
@@ -15,6 +14,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static SqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
 
+        private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;<]+";
+        private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;<]+";
+        private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;<]+";
+        private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;<]+";
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
         static SqlConnectionStringValidator()
@@ -26,6 +29,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // expressions (an operation which otherwise can cause
             // threading problems).
             RegexEngine.Match(string.Empty, ClientIPExpression);
+            RegexEngine.Match(string.Empty, HostExpression);
+            RegexEngine.Match(string.Empty, DatabaseExpression);
+            RegexEngine.Match(string.Empty, AccountExpression);
+            RegexEngine.Match(string.Empty, PasswordExpression);
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -57,10 +64,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             matchedPattern = matchedPattern.Trim();
 
-            if (!groups.TryGetNonEmptyValue("host", out string host) ||
-                !groups.TryGetNonEmptyValue("database", out string database) ||
-                !groups.TryGetNonEmptyValue("account", out string account) ||
-                !groups.TryGetNonEmptyValue("password", out string password))
+            string host, database, account, password;
+
+            if (groups.ContainsKey("host") && groups.ContainsKey("database") && groups.ContainsKey("account") && groups.ContainsKey("password"))
+            {
+                host = groups["host"];
+                database = groups["database"];
+                account = groups["account"];
+                password = groups["password"];
+            }
+            else
+            {
+                host = ParseExpression(RegexEngine, matchedPattern, HostExpression);
+                database = ParseExpression(RegexEngine, matchedPattern, DatabaseExpression);
+                account = ParseExpression(RegexEngine, matchedPattern, AccountExpression);
+                password = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
+            }
+
+            if (string.IsNullOrWhiteSpace(host) ||
+                string.IsNullOrWhiteSpace(database) ||
+                string.IsNullOrWhiteSpace(account) ||
+                string.IsNullOrWhiteSpace(password))
             {
                 return nameof(ValidationState.NoMatch);
             }
