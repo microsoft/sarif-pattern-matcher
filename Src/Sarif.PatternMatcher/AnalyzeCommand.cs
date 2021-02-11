@@ -21,7 +21,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IEnumerable<string> searchDefinitionsPaths,
             IRegex engine = null)
         {
-            engine ??= RE2Regex.Instance;
+            engine ??= CachedDotNetRegex.Instance;
 
             var validators = new ValidatorsCache();
             FileRegionsCache fileRegionsCache = FileRegionsCache.Instance;
@@ -242,6 +242,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
 #if DEBUG
+
         private static void ValidateSharedStringsExpansion(SearchDefinitions searchDefinitions)
         {
             foreach (SearchDefinition definition in searchDefinitions.Definitions)
@@ -282,6 +283,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Debug.Assert(!text.Substring(0, text.Length - 1).Contains("$"),
                          $"Failed to expand shared string: {text}");
         }
+
 #endif
 
         private static string PushData(string text, params Dictionary<string, string>[] sharedStringsDictionaries)
