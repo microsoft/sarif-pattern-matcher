@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
-
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtiliesAndExtensions;
 using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
@@ -62,25 +62,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                                            ref string fingerprint,
                                            ref string message)
         {
-            string state =
-                validator.IsValidStaticHelper(ref matchedPattern,
-                                              ref groups,
-                                              ref failureLevel,
-                                              ref fingerprint,
-                                              ref message);
+            validator.MatchCleanup(ref matchedPattern,
+                                    ref groups,
+                                    ref failureLevel,
+                                    ref fingerprint,
+                                    ref message);
 
-            if (state != nameof(ValidationState.NoMatch))
+            string state = validator.HostExclusion(ref groups);
+
+            if (state == nameof(ValidationState.NoMatch))
             {
-                string scanTarget = groups["scanTargetFullPath"];
-                string key = scanTarget + "#" + fingerprint;
-
-                if (validator.PerFileFingerprintCache.Contains(key))
-                {
-                    return nameof(ValidationState.NoMatch);
-                }
-
-                validator.PerFileFingerprintCache.Add(key);
+                return state;
             }
+
+            state = validator.IsValidStaticHelper(ref matchedPattern,
+                                                  ref groups,
+                                                  ref failureLevel,
+                                                  ref fingerprint,
+                                                  ref message);
+
+            if (state == nameof(ValidationState.NoMatch))
+            {
+                return state;
+            }
+
+            string scanTarget = groups["scanTargetFullPath"];
+            string key = scanTarget + "#" + fingerprint;
+
+            if (validator.PerFileFingerprintCache.Contains(key))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
+            validator.PerFileFingerprintCache.Add(key);
 
             return state;
         }
@@ -197,6 +211,50 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         {
             FlexMatch match = regexEngine.Match(matchedPattern, expression);
             return match?.Success ?? false ? ParseValue(match.Value) : null;
+        }
+
+        public static void StandardizeLocalhostName(Dictionary<string, string> groups)
+        {
+            if (groups.TryGetNonEmptyValue("host", out string host))
+            {
+                if (LocalhostList.Contains(host))
+                {
+                    groups["host"] = "localhost";
+                }
+            }
+        }
+
+        public virtual string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null)
+        {
+            if (hostList == null)
+            {
+                return nameof(ValidationState.Unknown);
+            }
+
+            if (!groups.TryGetNonEmptyValue("host", out string host))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
+            // Other rules will handle these cases.
+            foreach (string hostToExclude in hostList)
+            {
+                if (host.EndsWith(hostToExclude, StringComparison.OrdinalIgnoreCase))
+                {
+                    return nameof(ValidationState.NoMatch);
+                }
+            }
+
+            return nameof(ValidationState.Unknown);
+        }
+
+        public virtual void MatchCleanup(ref string matchedPattern,
+                                             ref Dictionary<string, string> groups,
+                                             ref string failureLevel,
+                                             ref string fingerprintText,
+                                             ref string message)
+        {
+
         }
 
         internal static string ParseValue(string value)

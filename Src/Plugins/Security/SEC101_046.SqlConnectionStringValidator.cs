@@ -17,6 +17,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
+        private static readonly HashSet<string> HostsToExclude = new HashSet<string>
+        {
+            "postgres.database.azure.com",
+            "mysql.database.azure.com",
+        };
+
         static SqlConnectionStringValidator()
         {
             Instance = new SqlConnectionStringValidator();
@@ -49,30 +55,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                 ref message);
         }
 
+        public override void MatchCleanup(ref string matchedPattern, ref Dictionary<string, string> groups, ref string failureLevel, ref string fingerprintText, ref string message)
+        {
+            matchedPattern = matchedPattern.Trim();
+            StandardizeLocalhostName(groups);
+        }
+
+        public override string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null)
+        {
+            return base.HostExclusion(ref groups, HostsToExclude);
+        }
+
         protected override string IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            matchedPattern = matchedPattern.Trim();
-
             if (!groups.TryGetNonEmptyValue("host", out string host) ||
                 !groups.TryGetNonEmptyValue("database", out string database) ||
                 !groups.TryGetNonEmptyValue("account", out string account) ||
                 !groups.TryGetNonEmptyValue("password", out string password))
-            {
-                return nameof(ValidationState.NoMatch);
-            }
-
-            if (LocalhostList.Contains(host))
-            {
-                host = "localhost";
-            }
-
-            // Other rules will handle these cases.
-            if (host.EndsWith("postgres.database.azure.com", StringComparison.OrdinalIgnoreCase) ||
-                host.EndsWith("mysql.database.azure.com", StringComparison.OrdinalIgnoreCase))
             {
                 return nameof(ValidationState.NoMatch);
             }

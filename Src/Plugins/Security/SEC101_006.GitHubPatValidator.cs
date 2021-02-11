@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtiliesAndExtensions;
 using Microsoft.RE2.Managed;
 
 using Octokit;
@@ -18,6 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static GitHubPatValidator Instance;
 
         private const string PatExpression = "[0-9a-z]{40}";
+        private const string PatKey = "PATKEY";
 
         static GitHubPatValidator()
         {
@@ -51,13 +53,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                 ref message);
         }
 
+        public override void MatchCleanup(ref string matchedPattern, ref Dictionary<string, string> groups, ref string failureLevel, ref string fingerprintText, ref string message)
+        {
+            string pat = RegexEngine.Match(matchedPattern, PatExpression).Value;
+            groups.Add(PatKey, pat);
+        }
+
         protected override string IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            string pat = RegexEngine.Match(matchedPattern, PatExpression).Value;
+            if (!groups.TryGetNonEmptyValue(PatKey, out string pat))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
 
             // It is highly likely we do not have a key if we can't
             // find at least one letter and digit within the pattern.

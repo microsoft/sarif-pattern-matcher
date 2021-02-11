@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Amazon.IdentityManagement;
 using Amazon.IdentityManagement.Model;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtiliesAndExtensions;
 using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
@@ -55,8 +56,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            string id = groups["id"];
-            string key = groups["key"];
+            if (!groups.TryGetNonEmptyValue("id", out string id) ||
+                !groups.TryGetNonEmptyValue("key", out string key))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
 
             fingerprintText = new Fingerprint
             {

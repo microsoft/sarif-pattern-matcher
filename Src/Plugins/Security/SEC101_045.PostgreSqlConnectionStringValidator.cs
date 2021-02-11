@@ -18,6 +18,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static IRegex RegexEngine;
         private const string PortRegex = @"(?i)Port\s*=\s*(?<port>[0-9]{1,5})";
         private const string DatabaseRegex = @"(?i)(database|db)\s*=\s*(?<database>[^;]+)";
+        private const string PortKey = "PORTKEY";
+        private const string DatabaseKey = "DATABASEKEY";
+
+        private static readonly HashSet<string> HostsToExclude = new HashSet<string>
+        {
+            "database.windows.net",
+            "mysql.database.azure.com",
+        };
 
         static PostgreSqlConnectionStringValidator()
         {
@@ -46,15 +54,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                 ref message);
         }
 
+        public override void MatchCleanup(ref string matchedPattern, ref Dictionary<string, string> groups, ref string failureLevel, ref string fingerprintText, ref string message)
+        {
+            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
+            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
+            groups.Add(PortKey, port);
+            groups.Add(DatabaseKey, database);
+
+            StandardizeLocalhostName(groups);
+        }
+
+        public override string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null)
+        {
+            return base.HostExclusion(ref groups, HostsToExclude);
+        }
+
         protected override string IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
-            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
-
             if (!groups.TryGetNonEmptyValue("host", out string host) ||
                 !groups.TryGetNonEmptyValue("account", out string account) ||
                 !groups.TryGetNonEmptyValue("password", out string password))
@@ -62,17 +82,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.NoMatch);
             }
 
-            if (LocalhostList.Contains(host))
-            {
-                host = "localhost";
-            }
-
-            // Other rules will handle these cases.
-            if (host.EndsWith("database.windows.net", StringComparison.OrdinalIgnoreCase) ||
-                host.EndsWith("mysql.database.azure.com", StringComparison.OrdinalIgnoreCase))
-            {
-                return nameof(ValidationState.NoMatch);
-            }
+            groups.TryGetValue(DatabaseKey, out string database);
+            groups.TryGetValue(PortKey, out string port);
 
             fingerprintText = new Fingerprint()
             {
