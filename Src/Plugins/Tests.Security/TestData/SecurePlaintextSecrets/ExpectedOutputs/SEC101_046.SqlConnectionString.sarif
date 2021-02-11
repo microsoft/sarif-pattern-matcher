@@ -100,18 +100,18 @@
                   "startLine": 5,
                   "startColumn": 40,
                   "endLine": 5,
-                  "endColumn": 159,
-                  "charOffset": 424,
-                  "charLength": 119,
+                  "endColumn": 136,
+                  "charOffset": 401,
+                  "charLength": 96,
                   "snippet": {
-                    "text": "Server=tcp:some-database-name.database.windows.net,1433;Database=tse-internal-spam-testing;Uid=username;Pwd=password_2;"
+                    "text": "Server=tcp:servername2.database.windows.net,1433;Database=database2;Uid=username2;Pwd=password2;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=tcp][pwd=password_2][resource=tse-internal-spam-testing]"
+            "ValidationFingerprint/v1": "[acct=username2][host=tcp][pwd=password2][resource=database2]"
           }
         },
         {
@@ -139,18 +139,18 @@
                   "startLine": 5,
                   "startColumn": 40,
                   "endLine": 5,
-                  "endColumn": 159,
-                  "charOffset": 424,
-                  "charLength": 119,
+                  "endColumn": 136,
+                  "charOffset": 401,
+                  "charLength": 96,
                   "snippet": {
-                    "text": "Server=tcp:some-database-name.database.windows.net,1433;Database=tse-internal-spam-testing;Uid=username;Pwd=password_2;"
+                    "text": "Server=tcp:servername2.database.windows.net,1433;Database=database2;Uid=username2;Pwd=password2;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=tcp:some-database-name.database.windows.net,1433][pwd=password_2][resource=tse-internal-spam-testing]"
+            "ValidationFingerprint/v1": "[acct=username2][host=tcp:servername2.database.windows.net,1433][pwd=password2][resource=database2]"
           }
         },
         {
@@ -178,18 +178,18 @@
                   "startLine": 14,
                   "startColumn": 27,
                   "endLine": 14,
-                  "endColumn": 115,
-                  "charOffset": 955,
-                  "charLength": 88,
+                  "endColumn": 114,
+                  "charOffset": 892,
+                  "charLength": 87,
                   "snippet": {
-                    "text": "Data Source=server-name;Initial Catalog=catalog-db;User ID=username;Password=password_4;"
+                    "text": "Data Source=servername4;Initial Catalog=database4;User ID=username4;Password=password4;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=server-name][pwd=password_4][resource=catalog-db]"
+            "ValidationFingerprint/v1": "[acct=username4][host=servername4][pwd=password4][resource=database4]"
           }
         },
         {
@@ -217,18 +217,18 @@
                   "startLine": 17,
                   "startColumn": 27,
                   "endLine": 17,
-                  "endColumn": 115,
-                  "charOffset": 1163,
-                  "charLength": 88,
+                  "endColumn": 112,
+                  "charOffset": 1099,
+                  "charLength": 85,
                   "snippet": {
-                    "text": "Password=password_5;User ID=username;Initial Catalog=catalog-db;Data Source=server-name;"
+                    "text": "Password=password5;User ID=username5;Initial Catalog=database5;Data Source=database5;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=server-name][pwd=password_5][resource=catalog-db]"
+            "ValidationFingerprint/v1": "[acct=username5][host=database5][pwd=password5][resource=database5]"
           }
         },
         {
@@ -256,18 +256,18 @@
                   "startLine": 20,
                   "startColumn": 27,
                   "endLine": 20,
-                  "endColumn": 115,
-                  "charOffset": 1371,
-                  "charLength": 88,
+                  "endColumn": 114,
+                  "charOffset": 1304,
+                  "charLength": 87,
                   "snippet": {
-                    "text": "Initial Catalog=catalog-db;Data Source=server-name;Password=password_6;User ID=username;"
+                    "text": "Initial Catalog=database6;Data Source=servername6;Password=password6;User ID=username6;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=server-name][pwd=password_6][resource=catalog-db]"
+            "ValidationFingerprint/v1": "[acct=username6][host=servername6][pwd=password6][resource=database6]"
           }
         },
         {
@@ -295,18 +295,18 @@
                   "startLine": 31,
                   "startColumn": 38,
                   "endLine": 31,
-                  "endColumn": 126,
-                  "charOffset": 1786,
-                  "charLength": 88,
+                  "endColumn": 125,
+                  "charOffset": 1738,
+                  "charLength": 87,
                   "snippet": {
-                    "text": "Data Source=server-name;Initial Catalog=catalog-db;User ID=username;Password=password_7;"
+                    "text": "Data Source=servername8;Initial Catalog=database8;User ID=username8;Password=password8;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=server-name][pwd=password_7][resource=catalog-db]"
+            "ValidationFingerprint/v1": "[acct=username8][host=servername8][pwd=password8][resource=database8]"
           }
         },
         {
@@ -334,18 +334,18 @@
                   "startLine": 32,
                   "startColumn": 38,
                   "endLine": 32,
-                  "endColumn": 126,
-                  "charOffset": 1917,
-                  "charLength": 88,
+                  "endColumn": 125,
+                  "charOffset": 1868,
+                  "charLength": 87,
                   "snippet": {
-                    "text": "Password=password_8;User ID=username;Initial Catalog=catalog-db;Data Source=server-name;"
+                    "text": "Password=password9;User ID=username9;Initial Catalog=database9;Data Source=servername9;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=server-name][pwd=password_8][resource=catalog-db]"
+            "ValidationFingerprint/v1": "[acct=username9][host=servername9][pwd=password9][resource=database9]"
           }
         },
         {
@@ -373,18 +373,57 @@
                   "startLine": 33,
                   "startColumn": 38,
                   "endLine": 33,
-                  "endColumn": 126,
-                  "charOffset": 2048,
-                  "charLength": 88,
+                  "endColumn": 129,
+                  "charOffset": 1998,
+                  "charLength": 91,
                   "snippet": {
-                    "text": "Initial Catalog=catalog-db;Data Source=server-name;Password=password_9;User ID=username;"
+                    "text": "Initial Catalog=database10;Data Source=servername10;Password=password10;User ID=username10;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=server-name][pwd=password_9][resource=catalog-db]"
+            "ValidationFingerprint/v1": "[acct=username10][host=servername10][pwd=password10][resource=database10]"
+          }
+        },
+        {
+          "ruleId": "SEC101/046",
+          "ruleIndex": 1,
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_046.SqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 42,
+                  "startColumn": 61,
+                  "endLine": 42,
+                  "endColumn": 152,
+                  "charOffset": 2855,
+                  "charLength": 91,
+                  "snippet": {
+                    "text": "Data Source=servername14;Initial Catalog=database14;User ID=username14;Password=password14\""
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username14][host=servername14][pwd=password14][resource=database14]"
           }
         },
         {
@@ -412,18 +451,18 @@
                   "startLine": 2,
                   "startColumn": 1,
                   "endLine": 2,
-                  "endColumn": 151,
+                  "endColumn": 128,
                   "charOffset": 64,
-                  "charLength": 150,
+                  "charLength": 127,
                   "snippet": {
-                    "text": "jdbc:sqlserver://some-database-name.database.windows.net:1433;database=tse-internal-spam-testing;user=username@some-database-name;password=password_1;"
+                    "text": "jdbc:sqlserver://servername1.database.windows.net:1433;database=database1;user=username1@some-database-name;password=password1;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=some-database-name.database.windows.net:1433][pwd=password_1][resource=tse-internal-spam-testing]"
+            "ValidationFingerprint/v1": "[acct=username1][host=servername1.database.windows.net:1433][pwd=password1][resource=database1]"
           }
         },
         {
@@ -451,18 +490,18 @@
                   "startLine": 37,
                   "startColumn": 1,
                   "endLine": 37,
-                  "endColumn": 117,
-                  "charOffset": 2219,
-                  "charLength": 116,
+                  "endColumn": 103,
+                  "charOffset": 2172,
+                  "charLength": 102,
                   "snippet": {
-                    "text": "jdbc:sqlserver://localhost;database=tse-internal-spam-testing;user=username@some-database-name;password=password_10;"
+                    "text": "jdbc:sqlserver://localhost;database=database11;user=username11@some-database-name;password=password11;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=localhost][pwd=password_10][resource=tse-internal-spam-testing]"
+            "ValidationFingerprint/v1": "[acct=username11][host=localhost][pwd=password11][resource=database11]"
           }
         },
         {
@@ -490,18 +529,18 @@
                   "startLine": 38,
                   "startColumn": 1,
                   "endLine": 38,
-                  "endColumn": 115,
-                  "charOffset": 2440,
-                  "charLength": 114,
+                  "endColumn": 101,
+                  "charOffset": 2379,
+                  "charLength": 100,
                   "snippet": {
-                    "text": "jdbc:sqlserver://(local);database=tse-internal-spam-testing;user=username@some-database-name;password=password_11;"
+                    "text": "jdbc:sqlserver://(local);database=database12;user=username12@some-database-name;password=password12;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=localhost][pwd=password_11][resource=tse-internal-spam-testing]"
+            "ValidationFingerprint/v1": "[acct=username12][host=localhost][pwd=password12][resource=database12]"
           }
         },
         {
@@ -529,18 +568,18 @@
                   "startLine": 39,
                   "startColumn": 1,
                   "endLine": 39,
-                  "endColumn": 117,
-                  "charOffset": 2659,
-                  "charLength": 116,
+                  "endColumn": 103,
+                  "charOffset": 2584,
+                  "charLength": 102,
                   "snippet": {
-                    "text": "jdbc:sqlserver://127.0.0.1;database=tse-internal-spam-testing;user=username@some-database-name;password=password_12;"
+                    "text": "jdbc:sqlserver://127.0.0.1;database=database13;user=username13@some-database-name;password=password13;"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=localhost][pwd=password_12][resource=tse-internal-spam-testing]"
+            "ValidationFingerprint/v1": "[acct=username13][host=localhost][pwd=password13][resource=database13]"
           }
         },
         {
@@ -568,18 +607,18 @@
                   "startLine": 8,
                   "startColumn": 10,
                   "endLine": 8,
-                  "endColumn": 132,
-                  "charOffset": 679,
-                  "charLength": 122,
+                  "endColumn": 115,
+                  "charOffset": 633,
+                  "charLength": 105,
                   "snippet": {
-                    "text": "sqlsrv:server = tcp:some-database-name.database.windows.net,1433; Database = some-database-name\", \"username\", \"password_3\""
+                    "text": "sqlsrv:server = tcp:servername3.database.windows.net,1433; Database = databse3\", \"username3\", \"password3\""
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=tcp:some-database-name.database.windows.net,1433][pwd=password_3][resource=some-database-name]"
+            "ValidationFingerprint/v1": "[acct=username3][host=tcp:servername3.database.windows.net,1433][pwd=password3][resource=databse3]"
           }
         },
         {
@@ -607,18 +646,18 @@
                   "startLine": 5,
                   "startColumn": 40,
                   "endLine": 5,
-                  "endColumn": 158,
-                  "charOffset": 424,
-                  "charLength": 118,
+                  "endColumn": 135,
+                  "charOffset": 401,
+                  "charLength": 95,
                   "snippet": {
-                    "text": "Server=tcp:some-database-name.database.windows.net,1433;Database=tse-internal-spam-testing;Uid=username;Pwd=password_2"
+                    "text": "Server=tcp:servername2.database.windows.net,1433;Database=database2;Uid=username2;Pwd=password2"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username][host=tcp][pwd=password_2][resource=tse-internal-spam-testing]"
+            "ValidationFingerprint/v1": "[acct=username][host=tcp][pwd=password2][resource=database2]"
           }
         }
       ],

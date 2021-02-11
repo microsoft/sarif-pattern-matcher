@@ -24,13 +24,13 @@
   $AdoPat=(^|[^2-7a-z])(?<refine>[2-7a-z]{52})([^2-7a-z]|$)
   $AwsCredentials=(?s)\b(?<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}).{1,500}?\b(?i)(?<key>[0-9a-z\/+]{40})
   $FacebookAppCredentials=(?si)(((facebook|fb)(.{0,20})?[`'"\s>](?<id>[0-9]{13,17})[^0-9].{1,500}?)|((facebook|fb)(.{0,20})?[`'"\s>](?<key>[0-9a-f]{32})([^0-9a-f]?)).{1,500}?){2}
-  $GitHubAppCredentials=(?s)\b(?<id>Iv1\.[0-9a-z]{16}).{1,500}?\b(?i)(?<key>[0-9a-z]{35,40})([^0-9a-f]|$)
+  $GitHubAppCredentials=(?s)((\b(?<id>Iv1\.[0-9a-z]{16}).{1,50}?)|(\b(?i)(?<key>[0-9a-z]{35,40})\b.{0,50}?)){2}
   $GitHubPat=(?si)(?<refine>github.{0,50}[^0-9a-z][0-9a-z]{40})([^0-9a-z]|$)
   $GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
   $HockeyAppToken=(?si)hockey.{0,50}[`'"\s>]?(?<refine>[0-9a-f]{32})([^0-9a-f]|$)
   $MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<account>[a-z\@\-]{1,120})(?i))|(Pwd=(?<password>[^;]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
-  $SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*[^;]{0,50}|(initial catalog|database)\s*=\s*[^;]{0,50}|(user id|uid)\s*=\s*[^;]{0,50}|(password|pwd)\s*=\s*[^;]{0,50}).+?){4}
-  $SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;]+);database\s*=\s*(?<database>[^;]+);user\s*=\s*(?<account>[^@]+)@[^;]+;password\s*=\s*(?<password>[^;]+);
+  $SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*(?<host>[^;]{0,128})|(initial catalog|database)\s*=\s*(?<database>[^;|"']{0,128})|(user id|uid)\s*=\s*(?<account>[^;|"']{0,128})|(password|pwd)\s*=\s*(?<password>[^;|"']{1,128})).{1,128}?){4}
+  $SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;]+);(((database\s*=\s*(?<database>[^;]{1,128}))|(user\s*=\s*(?<account>[^@]+)@[^;]+)|(password\s*=\s*(?<password>[^;]+))).{1,50}?){3}
   $SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<account>[^"]+)",\s*"(?<password>[^"]+)"
   $SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
   $PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<account>[^,;\"\s]+)|(password|pwd)\s*=\s*(?<password>[^,;\"\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;]+)))?
