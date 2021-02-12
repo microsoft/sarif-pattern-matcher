@@ -10,7 +10,7 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class SqlConnectionStringValidator : DomainFilteringValidator
+    public class SqlConnectionStringValidator : ValidatorBase
     {
         internal static SqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
@@ -67,11 +67,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                 ref message);
         }
 
-        public override string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null, string hostKey = null)
-        {
-            return base.HostExclusion(ref groups, HostsToExclude, HostKey);
-        }
-
         protected override string IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
@@ -97,14 +92,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 password = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
             }
 
-            host = StandardizeLocalhostName(host);
-
             if (string.IsNullOrWhiteSpace(host) ||
                 string.IsNullOrWhiteSpace(database) ||
                 string.IsNullOrWhiteSpace(account) ||
                 string.IsNullOrWhiteSpace(password))
             {
                 return nameof(ValidationState.NoMatch);
+            }
+
+            host = DomainFilteringHelper.StandardizeLocalhostName(host);
+
+            string exclusionResult = DomainFilteringHelper.HostExclusion(ref host, HostsToExclude);
+
+            if (exclusionResult == nameof(ValidationState.NoMatch))
+            {
+                return exclusionResult;
             }
 
             if (database.Length > 128 ||
@@ -137,7 +139,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string password = fingerprint.Password;
             string database = fingerprint.Resource;
 
-            if (LocalhostList.Contains(host))
+            if (DomainFilteringHelper.LocalhostList.Contains(host))
             {
                 return nameof(ValidationState.Unknown);
             }

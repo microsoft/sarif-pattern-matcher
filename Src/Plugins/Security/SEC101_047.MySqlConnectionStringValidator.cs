@@ -12,7 +12,7 @@ using MySqlConnector;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 {
-    public class MySqlConnectionStringValidator : DomainFilteringValidator
+    public class MySqlConnectionStringValidator : ValidatorBase
     {
         internal static MySqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
@@ -61,13 +61,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                                 ref message);
         }
 
-        public override string HostExclusion(ref Dictionary<string, string> groups,
-                                             IEnumerable<string> hostList = null,
-                                             string hostKey = null)
-        {
-            return base.HostExclusion(ref groups, HostsToExclude, HostKey);
-        }
-
         protected override string IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
@@ -88,7 +81,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 return nameof(ValidationState.NoMatch);
             }
 
-            host = StandardizeLocalhostName(host);
+            host = DomainFilteringHelper.StandardizeLocalhostName(host);
+
+            string exclusionResult = DomainFilteringHelper.HostExclusion(ref host, HostsToExclude);
+
+            if (exclusionResult == nameof(ValidationState.NoMatch))
+            {
+                return exclusionResult;
+            }
 
             fingerprintText = new Fingerprint()
             {
@@ -113,7 +113,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             string account = fingerprint.Account;
             string password = fingerprint.Password;
 
-            if (LocalhostList.Contains(host))
+            if (DomainFilteringHelper.LocalhostList.Contains(host))
             {
                 return nameof(ValidationState.Unknown);
             }

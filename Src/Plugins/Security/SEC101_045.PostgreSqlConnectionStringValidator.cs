@@ -12,7 +12,7 @@ using Npgsql;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class PostgreSqlConnectionStringValidator : DomainFilteringValidator
+    public class PostgreSqlConnectionStringValidator : ValidatorBase
     {
         internal static PostgreSqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
@@ -54,13 +54,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                 ref message);
         }
 
-        public override string HostExclusion(ref Dictionary<string, string> groups,
-                                             IEnumerable<string> hostList = null,
-                                             string hostKey = null)
-        {
-            return base.HostExclusion(ref groups, HostsToExclude);
-        }
-
         protected override string IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
@@ -77,7 +70,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
             string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
 
-            host = StandardizeLocalhostName(host);
+            host = DomainFilteringHelper.StandardizeLocalhostName(host);
+
+            string exclusionResult = DomainFilteringHelper.HostExclusion(ref host, HostsToExclude);
+
+            if (exclusionResult == nameof(ValidationState.NoMatch))
+            {
+                return exclusionResult;
+            }
 
             fingerprintText = new Fingerprint()
             {
@@ -96,7 +96,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             var fingerprint = new Fingerprint(fingerprintText);
 
-            if (LocalhostList.Contains(fingerprint.Host))
+            if (DomainFilteringHelper.LocalhostList.Contains(fingerprint.Host))
             {
                 return nameof(ValidationState.Unknown);
             }
