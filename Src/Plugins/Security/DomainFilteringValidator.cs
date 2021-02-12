@@ -10,6 +10,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public abstract class DomainFilteringValidator : ValidatorBase
     {
+        public static readonly HashSet<string> LocalhostList = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "localhost",
+            "(local)",
+            "127.0.0.1",
+        };
+
         public static string IsValidStatic(DomainFilteringValidator validator,
                                            ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
@@ -17,11 +24,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            ref string fingerprint,
                                            ref string message)
         {
-            validator.MatchCleanup(ref matchedPattern,
-                                    ref groups,
-                                    ref failureLevel,
-                                    ref fingerprint,
-                                    ref message);
 
             string state = validator.HostExclusion(ref groups);
 
@@ -30,18 +32,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return state;
             }
 
-            return PerformValidationAndCheckCache(validator, ref matchedPattern, ref groups, ref failureLevel, ref fingerprint, ref message);
+            return ValidatorBase.IsValidStatic(validator, ref matchedPattern, ref groups, ref failureLevel, ref fingerprint, ref message);
         }
 
-        public static void StandardizeLocalhostName(Dictionary<string, string> groups, string hostKey = "host")
+        public static string StandardizeLocalhostName(string hostName)
         {
-            if (groups.TryGetNonEmptyValue(hostKey, out string host))
+            if (LocalhostList.Contains(hostName))
             {
-                if (LocalhostList.Contains(host))
-                {
-                    groups[hostKey] = "localhost";
-                }
+                return "localhost";
             }
+
+            return hostName;
         }
 
         public virtual string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null, string hostKey = "host")

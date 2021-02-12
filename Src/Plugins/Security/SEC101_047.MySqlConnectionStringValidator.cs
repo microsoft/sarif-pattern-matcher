@@ -61,23 +61,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                                 ref message);
         }
 
-        public override void MatchCleanup(ref string matchedPattern, ref Dictionary<string, string> groups, ref string failureLevel, ref string fingerprintText, ref string message)
-        {
-            string host = ParseExpression(RegexEngine, matchedPattern, HostRegex);
-            string account = ParseExpression(RegexEngine, matchedPattern, AccountRegex);
-            string password = ParseExpression(RegexEngine, matchedPattern, PasswordRegex);
-            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
-            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
-
-            groups.Add(HostKey, host);
-            groups.Add(AccountKey, account);
-            groups.Add(PasswordKey, password);
-            groups.Add(DatabaseKey, database);
-            groups.Add(PortKey, port);
-
-            StandardizeLocalhostName(groups);
-        }
-
         public override string HostExclusion(ref Dictionary<string, string> groups,
                                              IEnumerable<string> hostList = null,
                                              string hostKey = null)
@@ -91,15 +74,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            if (!groups.TryGetNonEmptyValue(HostKey, out string host) ||
-                !groups.TryGetNonEmptyValue(DatabaseKey, out string database) ||
-                !groups.TryGetNonEmptyValue(AccountKey, out string account) ||
-                !groups.TryGetNonEmptyValue(PasswordKey, out string password))
+            string host = ParseExpression(RegexEngine, matchedPattern, HostRegex);
+            string account = ParseExpression(RegexEngine, matchedPattern, AccountRegex);
+            string password = ParseExpression(RegexEngine, matchedPattern, PasswordRegex);
+            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
+            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
+
+            if (string.IsNullOrWhiteSpace(host) ||
+                string.IsNullOrWhiteSpace(database) ||
+                string.IsNullOrWhiteSpace(account) ||
+                string.IsNullOrWhiteSpace(password))
             {
                 return nameof(ValidationState.NoMatch);
             }
 
-            groups.TryGetValue(PortKey, out string port);
+            host = StandardizeLocalhostName(host);
 
             fingerprintText = new Fingerprint()
             {

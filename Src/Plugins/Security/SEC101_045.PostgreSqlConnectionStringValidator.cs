@@ -54,16 +54,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                 ref message);
         }
 
-        public override void MatchCleanup(ref string matchedPattern, ref Dictionary<string, string> groups, ref string failureLevel, ref string fingerprintText, ref string message)
-        {
-            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
-            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
-            groups.Add(PortKey, port);
-            groups.Add(DatabaseKey, database);
-
-            StandardizeLocalhostName(groups);
-        }
-
         public override string HostExclusion(ref Dictionary<string, string> groups,
                                              IEnumerable<string> hostList = null,
                                              string hostKey = null)
@@ -84,8 +74,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.NoMatch);
             }
 
-            groups.TryGetValue(DatabaseKey, out string database);
-            groups.TryGetValue(PortKey, out string port);
+            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
+            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
+
+            host = StandardizeLocalhostName(host);
 
             fingerprintText = new Fingerprint()
             {

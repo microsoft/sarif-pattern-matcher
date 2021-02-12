@@ -19,10 +19,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;<]+";
         private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;<]+";
         private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;<]+";
-        private const string HostKey = "HOSTKEY";
-        private const string DatabaseKey = "DATABASEKEY";
-        private const string AccountKey = "ACCOUNTKEY";
-        private const string PasswordKey = "PASSWORD";
+        private const string HostKey = "host";
+        private const string DatabaseKey = "database";
+        private const string AccountKey = "account";
+        private const string PasswordKey = "password";
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
@@ -67,13 +67,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                 ref message);
         }
 
-        public override void MatchCleanup(ref string matchedPattern, ref Dictionary<string, string> groups, ref string failureLevel, ref string fingerprintText, ref string message)
+        public override string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null, string hostKey = null)
+        {
+            return base.HostExclusion(ref groups, HostsToExclude, HostKey);
+        }
+
+        protected override string IsValidStaticHelper(ref string matchedPattern,
+                                                      ref Dictionary<string, string> groups,
+                                                      ref string failureLevel,
+                                                      ref string fingerprintText,
+                                                      ref string message)
         {
             matchedPattern = matchedPattern.Trim();
 
             string host, database, account, password;
 
-            if (groups.ContainsKey("host") && groups.ContainsKey("database") && groups.ContainsKey("account") && groups.ContainsKey("password"))
+            if (groups.ContainsKey(HostKey) && groups.ContainsKey("database") && groups.ContainsKey("account") && groups.ContainsKey("password"))
             {
                 host = groups["host"];
                 database = groups["database"];
@@ -88,29 +97,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 password = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
             }
 
-            groups.Add(HostKey, host);
-            groups.Add(DatabaseKey, database);
-            groups.Add(AccountKey, account);
-            groups.Add(PasswordKey, password);
+            host = StandardizeLocalhostName(host);
 
-            StandardizeLocalhostName(groups, HostKey);
-        }
-
-        public override string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null, string hostKey = null)
-        {
-            return base.HostExclusion(ref groups, HostsToExclude, HostKey);
-        }
-
-        protected override string IsValidStaticHelper(ref string matchedPattern,
-                                                      ref Dictionary<string, string> groups,
-                                                      ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
-        {
-            if (!groups.TryGetNonEmptyValue(HostKey, out string host) ||
-                !groups.TryGetNonEmptyValue(DatabaseKey, out string database) ||
-                !groups.TryGetNonEmptyValue(AccountKey, out string account) ||
-                !groups.TryGetNonEmptyValue(PasswordKey, out string password))
+            if (string.IsNullOrWhiteSpace(host) ||
+                string.IsNullOrWhiteSpace(database) ||
+                string.IsNullOrWhiteSpace(account) ||
+                string.IsNullOrWhiteSpace(password))
             {
                 return nameof(ValidationState.NoMatch);
             }

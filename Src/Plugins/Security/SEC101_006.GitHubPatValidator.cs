@@ -53,19 +53,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                 ref message);
         }
 
-        public override void MatchCleanup(ref string matchedPattern, ref Dictionary<string, string> groups, ref string failureLevel, ref string fingerprintText, ref string message)
-        {
-            string pat = RegexEngine.Match(matchedPattern, PatExpression).Value;
-            groups.Add(PatKey, pat);
-        }
-
         protected override string IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            if (!groups.TryGetNonEmptyValue(PatKey, out string pat))
+            string pat = RegexEngine.Match(matchedPattern, PatExpression).Value;
+
+            if (string.IsNullOrWhiteSpace(pat))
             {
                 return nameof(ValidationState.NoMatch);
             }

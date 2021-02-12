@@ -13,13 +13,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 {
     public abstract class ValidatorBase
     {
-        public static readonly HashSet<string> LocalhostList = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            "localhost",
-            "(local)",
-            "127.0.0.1",
-        };
-
         static ValidatorBase()
         {
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
@@ -62,17 +55,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                                            ref string failureLevel,
                                            ref string fingerprint,
                                            ref string message)
-        {
-            validator.MatchCleanup(ref matchedPattern,
-                                   ref groups,
-                                   ref failureLevel,
-                                   ref fingerprint,
-                                   ref message);
-
-            return PerformValidationAndCheckCache(validator, ref matchedPattern, ref groups, ref failureLevel, ref fingerprint, ref message);
-        }
-
-        protected static string PerformValidationAndCheckCache(ValidatorBase validator, ref string matchedPattern, ref Dictionary<string, string> groups, ref string failureLevel, ref string fingerprint, ref string message)
         {
             string state = validator.IsValidStaticHelper(ref matchedPattern,
                                                          ref groups,
@@ -210,15 +192,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         {
             FlexMatch match = regexEngine.Match(matchedPattern, expression);
             return match?.Success ?? false ? ParseValue(match.Value) : null;
-        }
-
-        public virtual void MatchCleanup(ref string matchedPattern,
-                                             ref Dictionary<string, string> groups,
-                                             ref string failureLevel,
-                                             ref string fingerprintText,
-                                             ref string message)
-        {
-
         }
 
         internal static string ParseValue(string value)
