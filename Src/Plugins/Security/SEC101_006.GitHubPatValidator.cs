@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtiliesAndExtensions;
 using Microsoft.RE2.Managed;
 
 using Octokit;
@@ -19,7 +18,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static GitHubPatValidator Instance;
 
         private const string PatExpression = "[0-9a-z]{40}";
-        private const string PatKey = "PATKEY";
 
         static GitHubPatValidator()
         {

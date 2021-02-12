@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtiliesAndExtensions;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtilitiesAndExtensions;
 using Microsoft.RE2.Managed;
 
@@ -19,8 +18,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static IRegex RegexEngine;
         private const string PortRegex = @"(?i)Port\s*=\s*(?<port>[0-9]{1,5})";
         private const string DatabaseRegex = @"(?i)(database|db)\s*=\s*(?<database>[^;]+)";
-        private const string PortKey = "PORTKEY";
-        private const string DatabaseKey = "DATABASEKEY";
 
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {

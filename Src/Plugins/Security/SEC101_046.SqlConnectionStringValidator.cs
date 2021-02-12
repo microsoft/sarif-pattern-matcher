@@ -19,10 +19,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;<]+";
         private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;<]+";
         private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;<]+";
-        private const string HostKey = "host";
-        private const string DatabaseKey = "database";
-        private const string AccountKey = "account";
-        private const string PasswordKey = "password";
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
@@ -77,7 +73,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string host, database, account, password;
 
-            if (groups.ContainsKey(HostKey) && groups.ContainsKey("database") && groups.ContainsKey("account") && groups.ContainsKey("password"))
+            if (groups.ContainsKey("host") && groups.ContainsKey("database") && groups.ContainsKey("account") && groups.ContainsKey("password"))
             {
                 host = groups["host"];
                 database = groups["database"];
