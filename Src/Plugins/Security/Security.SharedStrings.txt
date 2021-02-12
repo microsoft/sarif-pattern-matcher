@@ -34,3 +34,5 @@
   $SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<account>[^"]+)",\s*"(?<password>[^"]+)"
   $SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
   $PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<account>[^,;\"\s]+)|(password|pwd)\s*=\s*(?<password>[^,;\"\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;]+)))?
+
+  $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?<host>(http|ftp|https):\/\/[\w_-]+(?:(?:\.[\w_-]+)+))(?<resource>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|$|\s)+?authorization[,\[:= "']+(basic)[\s\r\n]{0,10}(?<key>[a-z0-9\/+_.=]{10,})
