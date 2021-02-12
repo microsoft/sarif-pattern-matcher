@@ -64,10 +64,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                                            ref string message)
         {
             validator.MatchCleanup(ref matchedPattern,
-                                    ref groups,
-                                    ref failureLevel,
-                                    ref fingerprint,
-                                    ref message);
+                                   ref groups,
+                                   ref failureLevel,
+                                   ref fingerprint,
+                                   ref message);
 
             return PerformValidationAndCheckCache(validator, ref matchedPattern, ref groups, ref failureLevel, ref fingerprint, ref message);
         }
@@ -75,10 +75,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         protected static string PerformValidationAndCheckCache(ValidatorBase validator, ref string matchedPattern, ref Dictionary<string, string> groups, ref string failureLevel, ref string fingerprint, ref string message)
         {
             string state = validator.IsValidStaticHelper(ref matchedPattern,
-                                                                      ref groups,
-                                                                      ref failureLevel,
-                                                                      ref fingerprint,
-                                                                      ref message);
+                                                         ref groups,
+                                                         ref failureLevel,
+                                                         ref fingerprint,
+                                                         ref message);
 
             if (state == nameof(ValidationState.NoMatch))
             {
