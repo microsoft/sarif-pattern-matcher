@@ -93,12 +93,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.Add(AccountKey, account);
             groups.Add(PasswordKey, password);
 
-            StandardizeLocalhostName(groups);
+            StandardizeLocalhostName(groups, HostKey);
         }
 
-        public override string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null)
+        public override string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null, string hostKey = null)
         {
-            return base.HostExclusion(ref groups, HostsToExclude);
+            return base.HostExclusion(ref groups, HostsToExclude, HostKey);
         }
 
         protected override string IsValidStaticHelper(ref string matchedPattern,

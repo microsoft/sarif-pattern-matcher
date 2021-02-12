@@ -64,7 +64,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             StandardizeLocalhostName(groups);
         }
 
-        public override string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null)
+        public override string HostExclusion(ref Dictionary<string, string> groups,
+                                             IEnumerable<string> hostList = null,
+                                             string hostKey = null)
         {
             return base.HostExclusion(ref groups, HostsToExclude);
         }

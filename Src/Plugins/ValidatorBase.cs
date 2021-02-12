@@ -213,25 +213,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             return match?.Success ?? false ? ParseValue(match.Value) : null;
         }
 
-        public static void StandardizeLocalhostName(Dictionary<string, string> groups)
+        public static void StandardizeLocalhostName(Dictionary<string, string> groups, string hostKey = "host")
         {
-            if (groups.TryGetNonEmptyValue("host", out string host))
+            if (groups.TryGetNonEmptyValue(hostKey, out string host))
             {
                 if (LocalhostList.Contains(host))
                 {
-                    groups["host"] = "localhost";
+                    groups[hostKey] = "localhost";
                 }
             }
         }
 
-        public virtual string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null)
+        public virtual string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null, string hostKey = "host")
         {
             if (hostList == null)
             {
                 return nameof(ValidationState.Unknown);
             }
 
-            if (!groups.TryGetNonEmptyValue("host", out string host))
+            if (!groups.TryGetNonEmptyValue(hostKey, out string host))
             {
                 return nameof(ValidationState.NoMatch);
             }
