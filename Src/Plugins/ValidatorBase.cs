@@ -69,18 +69,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                                     ref fingerprint,
                                     ref message);
 
-            string state = validator.HostExclusion(ref groups);
+            return PerformValidationAndCheckCache(validator, ref matchedPattern, ref groups, ref failureLevel, ref fingerprint, ref message);
+        }
 
-            if (state == nameof(ValidationState.NoMatch))
-            {
-                return state;
-            }
-
-            state = validator.IsValidStaticHelper(ref matchedPattern,
-                                                  ref groups,
-                                                  ref failureLevel,
-                                                  ref fingerprint,
-                                                  ref message);
+        protected static string PerformValidationAndCheckCache(ValidatorBase validator, ref string matchedPattern, ref Dictionary<string, string> groups, ref string failureLevel, ref string fingerprint, ref string message)
+        {
+            string state = validator.IsValidStaticHelper(ref matchedPattern,
+                                                                      ref groups,
+                                                                      ref failureLevel,
+                                                                      ref fingerprint,
+                                                                      ref message);
 
             if (state == nameof(ValidationState.NoMatch))
             {
@@ -212,41 +210,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         {
             FlexMatch match = regexEngine.Match(matchedPattern, expression);
             return match?.Success ?? false ? ParseValue(match.Value) : null;
-        }
-
-        public static void StandardizeLocalhostName(Dictionary<string, string> groups, string hostKey = "host")
-        {
-            if (groups.TryGetNonEmptyValue(hostKey, out string host))
-            {
-                if (LocalhostList.Contains(host))
-                {
-                    groups[hostKey] = "localhost";
-                }
-            }
-        }
-
-        public virtual string HostExclusion(ref Dictionary<string, string> groups, IEnumerable<string> hostList = null, string hostKey = "host")
-        {
-            if (hostList == null)
-            {
-                return nameof(ValidationState.Unknown);
-            }
-
-            if (!groups.TryGetNonEmptyValue(hostKey, out string host))
-            {
-                return nameof(ValidationState.NoMatch);
-            }
-
-            // Other rules will handle these cases.
-            foreach (string hostToExclude in hostList)
-            {
-                if (host.EndsWith(hostToExclude, StringComparison.OrdinalIgnoreCase))
-                {
-                    return nameof(ValidationState.NoMatch);
-                }
-            }
-
-            return nameof(ValidationState.Unknown);
         }
 
         public virtual void MatchCleanup(ref string matchedPattern,

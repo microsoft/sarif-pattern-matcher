@@ -12,7 +12,7 @@ using MySqlConnector;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 {
-    public class MySqlConnectionStringValidator : ValidatorBase
+    public class MySqlConnectionStringValidator : DomainFilteringValidator
     {
         internal static MySqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
@@ -46,12 +46,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                            ref string fingerprint,
                                            ref string message)
         {
-            return ValidatorBase.IsValidStatic(Instance,
-                                               ref matchedPattern,
-                                               ref groups,
-                                               ref failureLevel,
-                                               ref fingerprint,
-                                               ref message);
+            return IsValidStatic(Instance,
+                                ref matchedPattern,
+                                ref groups,
+                                ref failureLevel,
+                                ref fingerprint,
+                                ref message);
         }
 
         public static string IsValidDynamic(ref string fingerprint, ref string message)

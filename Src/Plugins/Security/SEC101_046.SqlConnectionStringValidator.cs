@@ -10,7 +10,7 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class SqlConnectionStringValidator : ValidatorBase
+    public class SqlConnectionStringValidator : DomainFilteringValidator
     {
         internal static SqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
@@ -52,12 +52,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            ref string fingerprint,
                                            ref string message)
         {
-            return ValidatorBase.IsValidStatic(Instance,
-                                               ref matchedPattern,
-                                               ref groups,
-                                               ref failureLevel,
-                                               ref fingerprint,
-                                               ref message);
+            return IsValidStatic(Instance,
+                                ref matchedPattern,
+                                ref groups,
+                                ref failureLevel,
+                                ref fingerprint,
+                                ref message);
         }
 
         public static string IsValidDynamic(ref string fingerprint, ref string message)
