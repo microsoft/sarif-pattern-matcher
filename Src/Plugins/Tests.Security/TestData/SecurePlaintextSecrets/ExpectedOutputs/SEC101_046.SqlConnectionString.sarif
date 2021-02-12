@@ -411,19 +411,19 @@
                 "region": {
                   "startLine": 42,
                   "startColumn": 61,
-                  "endLine": 42,
-                  "endColumn": 152,
+                  "endLine": 43,
+                  "endColumn": 37,
                   "charOffset": 2855,
-                  "charLength": 91,
+                  "charLength": 131,
                   "snippet": {
-                    "text": "Data Source=servername14;Initial Catalog=database14;User ID=username14;Password=password14\""
+                    "text": "Data Source=servername14;Initial Catalog=database14;User ID=username14;Password=password14\")]\r\n        public string ELSConnectionS"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=username14][host=servername14][pwd=password14][resource=database14]"
+            "ValidationFingerprint/v1": "[acct=username14][host=servername14][pwd=password14\")]\r\n        public string ELSConnectionS][resource=database14]"
           }
         },
         {

@@ -15,6 +15,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static SqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
 
+        private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;<]+";
+        private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;<]+";
+        private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;<]+";
+        private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;<]+";
+        private const string HostKey = "HOSTKEY";
+        private const string DatabaseKey = "DATABASEKEY";
+        private const string AccountKey = "ACCOUNTKEY";
+        private const string PasswordKey = "PASSWORD";
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
@@ -32,6 +40,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // expressions (an operation which otherwise can cause
             // threading problems).
             RegexEngine.Match(string.Empty, ClientIPExpression);
+            RegexEngine.Match(string.Empty, HostExpression);
+            RegexEngine.Match(string.Empty, DatabaseExpression);
+            RegexEngine.Match(string.Empty, AccountExpression);
+            RegexEngine.Match(string.Empty, PasswordExpression);
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -58,6 +70,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         public override void MatchCleanup(ref string matchedPattern, ref Dictionary<string, string> groups, ref string failureLevel, ref string fingerprintText, ref string message)
         {
             matchedPattern = matchedPattern.Trim();
+
+            string host, database, account, password;
+
+            if (groups.ContainsKey("host") && groups.ContainsKey("database") && groups.ContainsKey("account") && groups.ContainsKey("password"))
+            {
+                host = groups["host"];
+                database = groups["database"];
+                account = groups["account"];
+                password = groups["password"];
+            }
+            else
+            {
+                host = ParseExpression(RegexEngine, matchedPattern, HostExpression);
+                database = ParseExpression(RegexEngine, matchedPattern, DatabaseExpression);
+                account = ParseExpression(RegexEngine, matchedPattern, AccountExpression);
+                password = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
+            }
+
+            groups.Add(HostKey, host);
+            groups.Add(DatabaseKey, database);
+            groups.Add(AccountKey, account);
+            groups.Add(PasswordKey, password);
+
             StandardizeLocalhostName(groups);
         }
 
@@ -72,10 +107,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            if (!groups.TryGetNonEmptyValue("host", out string host) ||
-                !groups.TryGetNonEmptyValue("database", out string database) ||
-                !groups.TryGetNonEmptyValue("account", out string account) ||
-                !groups.TryGetNonEmptyValue("password", out string password))
+            if (!groups.TryGetNonEmptyValue(HostKey, out string host) ||
+                !groups.TryGetNonEmptyValue(DatabaseKey, out string database) ||
+                !groups.TryGetNonEmptyValue(AccountKey, out string account) ||
+                !groups.TryGetNonEmptyValue(PasswordKey, out string password))
             {
                 return nameof(ValidationState.NoMatch);
             }
