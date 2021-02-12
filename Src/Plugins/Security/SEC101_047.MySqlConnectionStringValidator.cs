@@ -22,11 +22,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         private const string PasswordRegex = "(?i)(Pwd\\s*=\\s*(?<password>[^;]{8,128}))";
         private const string DatabaseRegex = @"(?i)(Database\s*=\s*(?<database>[^\<>:""\/\\|?;.]{1,64}))";
         private const string PortRegex = "(?i)(Port\\s*=\\s*(?<port>[0-9]{4,5}))";
-        private const string HostKey = "HOSTKEY";
-        private const string AccountKey = "ACCOUNTKEY";
-        private const string PasswordKey = "PASSWORDKEY";
-        private const string DatabaseKey = "DATABASEKEY";
-        private const string PortKey = "PORTKEY";
 
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
