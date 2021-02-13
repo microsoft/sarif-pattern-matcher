@@ -78,7 +78,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 
             host = DomainFilteringHelper.StandardizeLocalhostName(host);
 
-            string exclusionResult = DomainFilteringHelper.HostExclusion(ref host, HostsToExclude);
+            string exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
 
             if (exclusionResult == nameof(ValidationState.NoMatch))
             {

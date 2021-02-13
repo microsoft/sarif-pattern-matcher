@@ -26,7 +26,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUt
             return hostName;
         }
 
-        public static string HostExclusion(ref string host, IEnumerable<string> hostList = null)
+        public static string HostExclusion(string host, IEnumerable<string> hostList = null)
         {
             if (hostList == null || hostList.Count() == 0)
             {
