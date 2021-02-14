@@ -9,11 +9,6 @@ using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Text;
 
-using Amazon.IdentityManagement;
-using Amazon.IdentityManagement.Model;
-
-using Microsoft.RE2.Managed;
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class SendGridApiKeyValidator : ValidatorBase
@@ -69,7 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string account = "apikey";
             string key = fingerprint.Key;
-            string host = "smtp.sendgrid.net";
+            const string host = "smtp.sendgrid.net";
 
             string response = string.Empty;
 
@@ -94,7 +89,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     }
 
                     // Say hello and request basic authentication.
-                    Send(reader, writer, out response, $"HELO\r\n", "250");
+                    Send(reader, writer, out response, $"HELLO\r\n", "250");
                     Send(reader, writer, out response, $"AUTH LOGIN\r\n", "334", "250");
 
                     // Send the account name. 'apikey' is the name for SendGrid SMTP access.

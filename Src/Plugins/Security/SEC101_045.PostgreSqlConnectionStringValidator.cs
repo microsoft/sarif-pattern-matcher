@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtiliesAndExtensions;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtilitiesAndExtensions;
 using Microsoft.RE2.Managed;
 
 using Npgsql;
@@ -19,6 +19,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private const string PortRegex = @"(?i)Port\s*=\s*(?<port>[0-9]{1,5})";
         private const string DatabaseRegex = @"(?i)(database|db)\s*=\s*(?<database>[^;]+)";
 
+        private static readonly HashSet<string> HostsToExclude = new HashSet<string>
+        {
+            "database.windows.net",
+            "mysql.database.azure.com",
+        };
+
         static PostgreSqlConnectionStringValidator()
         {
             Instance = new PostgreSqlConnectionStringValidator();
@@ -31,12 +37,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            ref string fingerprint,
                                            ref string message)
         {
-            return ValidatorBase.IsValidStatic(Instance,
-                                               ref matchedPattern,
-                                               ref groups,
-                                               ref failureLevel,
-                                               ref fingerprint,
-                                               ref message);
+            return IsValidStatic(Instance,
+                                ref matchedPattern,
+                                ref groups,
+                                ref failureLevel,
+                                ref fingerprint,
+                                ref message);
         }
 
         public static string IsValidDynamic(ref string fingerprint, ref string message)
@@ -52,9 +58,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
-            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
-
             if (!groups.TryGetNonEmptyValue("host", out string host) ||
                 !groups.TryGetNonEmptyValue("account", out string account) ||
                 !groups.TryGetNonEmptyValue("password", out string password))
@@ -62,16 +65,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.NoMatch);
             }
 
-            if (LocalhostList.Contains(host))
-            {
-                host = "localhost";
-            }
+            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
+            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
 
-            // Other rules will handle these cases.
-            if (host.EndsWith("database.windows.net", StringComparison.OrdinalIgnoreCase) ||
-                host.EndsWith("mysql.database.azure.com", StringComparison.OrdinalIgnoreCase))
+            host = DomainFilteringHelper.StandardizeLocalhostName(host);
+
+            string exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
+
+            if (exclusionResult == nameof(ValidationState.NoMatch))
             {
-                return nameof(ValidationState.NoMatch);
+                return exclusionResult;
             }
 
             fingerprintText = new Fingerprint()
@@ -91,7 +94,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             var fingerprint = new Fingerprint(fingerprintText);
 
-            if (LocalhostList.Contains(fingerprint.Host))
+            if (DomainFilteringHelper.LocalhostList.Contains(fingerprint.Host))
             {
                 return nameof(ValidationState.Unknown);
             }

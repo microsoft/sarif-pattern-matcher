@@ -12,13 +12,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 {
     public abstract class ValidatorBase
     {
-        public static readonly HashSet<string> LocalhostList = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            "localhost",
-            "(local)",
-            "127.0.0.1",
-        };
-
         static ValidatorBase()
         {
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
@@ -62,25 +55,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                                            ref string fingerprint,
                                            ref string message)
         {
-            string state =
-                validator.IsValidStaticHelper(ref matchedPattern,
-                                              ref groups,
-                                              ref failureLevel,
-                                              ref fingerprint,
-                                              ref message);
+            string state = validator.IsValidStaticHelper(ref matchedPattern,
+                                                         ref groups,
+                                                         ref failureLevel,
+                                                         ref fingerprint,
+                                                         ref message);
 
-            if (state != nameof(ValidationState.NoMatch))
+            if (state == nameof(ValidationState.NoMatch))
             {
-                string scanTarget = groups["scanTargetFullPath"];
-                string key = scanTarget + "#" + fingerprint;
-
-                if (validator.PerFileFingerprintCache.Contains(key))
-                {
-                    return nameof(ValidationState.NoMatch);
-                }
-
-                validator.PerFileFingerprintCache.Add(key);
+                return state;
             }
+
+            string scanTarget = groups["scanTargetFullPath"];
+            string key = scanTarget + "#" + fingerprint;
+
+            if (validator.PerFileFingerprintCache.Contains(key))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
+            validator.PerFileFingerprintCache.Add(key);
 
             return state;
         }
