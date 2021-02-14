@@ -9,11 +9,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class AmazonMwsAuthTokenValidator : ValidatorBase
     {
-        internal static HttpAuthorizationRequestHeaderValidator Instance;
+        internal static AmazonMwsAuthTokenValidator Instance;
 
         static AmazonMwsAuthTokenValidator()
         {
-            Instance = new HttpAuthorizationRequestHeaderValidator();
+            Instance = new AmazonMwsAuthTokenValidator();
         }
 
         public static string IsValidStatic(ref string matchedPattern,
