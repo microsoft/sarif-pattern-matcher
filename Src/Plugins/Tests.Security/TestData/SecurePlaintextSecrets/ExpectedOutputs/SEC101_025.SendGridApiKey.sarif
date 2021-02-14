@@ -43,7 +43,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_024.SendGridApiKey.txt",
+              "SEC101_025.SendGridApiKey.txt",
               "an apparent ",
               "",
               "SendGrid API Key",
@@ -55,7 +55,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_024.SendGridApiKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_025.SendGridApiKey.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

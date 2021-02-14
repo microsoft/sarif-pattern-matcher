@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtilitiesAndExtensions
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 {
     internal static class DomainFilteringHelper
     {
