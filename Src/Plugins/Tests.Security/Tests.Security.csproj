@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_024.SendGridApiKey.sarif" />
-    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_024.SendGridApiKey.txt" />
+    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_025.SendGridApiKey.sarif" />
+    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_025.SendGridApiKey.txt" />
   </ItemGroup>
 
   <ItemGroup>
