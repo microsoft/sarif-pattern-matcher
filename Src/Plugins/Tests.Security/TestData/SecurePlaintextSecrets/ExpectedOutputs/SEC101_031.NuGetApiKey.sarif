@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/025",
-              "name": "DoNotExposePlaintextSecrets/SendGridApiKey",
+              "id": "SEC101/031",
+              "name": "DoNotExposePlaintextSecrets/NuGetApiKey",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -38,42 +38,42 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/025",
+          "ruleId": "SEC101/031",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_025.SendGridApiKey.txt",
+              "SEC101_031.NuGetApiKey.txt",
               "an apparent ",
               "",
-              "SendGrid API Key",
+              "NuGet API Key",
               "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+              ""
             ]
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_025.SendGridApiKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_031.NuGetApiKey.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 1,
                   "startColumn": 1,
                   "endLine": 1,
-                  "endColumn": 70,
+                  "endColumn": 47,
                   "charOffset": 0,
-                  "charLength": 69,
+                  "charLength": 46,
                   "snippet": {
-                    "text": "SG.0deadbeef0deadbeef0dea.deadbeef0deadbeef0deadbeef0deadbeef0deadbee"
+                    "text": "oy20deadbeef0deadbee500deadbeef0deadbee50dead0"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[key=SG.0deadbeef0deadbeef0dea.deadbeef0deadbeef0deadbeef0deadbeef0deadbee]"
+            "ValidationFingerprint/v1": "[key=oy20deadbeef0deadbee500deadbeef0deadbee50dead0]"
           }
         }
       ],
