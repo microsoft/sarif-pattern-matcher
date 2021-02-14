@@ -71,7 +71,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             try
             {
                 using var tcpClient = new TcpClient();
-
                 tcpClient.ConnectAsync(host, 465).GetAwaiter().GetResult();
 
                 using (var sslStream = new SslStream(tcpClient.GetStream()))
@@ -89,7 +88,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     }
 
                     // Say hello and request basic authentication.
-                    Send(reader, writer, out response, $"HELLO\r\n", "250");
+                    Send(reader, writer, out response, $"HELO\r\n", "250");
                     Send(reader, writer, out response, $"AUTH LOGIN\r\n", "334", "250");
 
                     // Send the account name. 'apikey' is the name for SendGrid SMTP access.

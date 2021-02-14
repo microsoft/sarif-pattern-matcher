@@ -7,13 +7,13 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class GitHubAppCredentialsValidator : ValidatorBase
+    public class AmazonMwsAuthTokenValidator : ValidatorBase
     {
-        internal static GitHubAppCredentialsValidator Instance;
+        internal static HttpAuthorizationRequestHeaderValidator Instance;
 
-        static GitHubAppCredentialsValidator()
+        static AmazonMwsAuthTokenValidator()
         {
-            Instance = new GitHubAppCredentialsValidator();
+            Instance = new HttpAuthorizationRequestHeaderValidator();
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -36,22 +36,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            if (!groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("key", out string key))
+            if (!groups.TryGetNonEmptyValue("key", out string key))
             {
                 return nameof(ValidationState.NoMatch);
             }
 
-            // It is highly likely we do not have a key if we can't
-            // find at least one letter and digit within the pattern.
-            if (!ContainsDigitAndChar(key))
+            fingerprintText = new Fingerprint
             {
-                return nameof(ValidationState.NoMatch);
-            }
-
-            fingerprintText = new Fingerprint()
-            {
-                Id = id,
                 Key = key,
             }.ToString();
 
