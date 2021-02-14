@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtilitiesAndExtensions;
 using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
@@ -19,6 +20,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;<]+";
         private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;<]+";
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
+
+        private static readonly HashSet<string> HostsToExclude = new HashSet<string>
+        {
+            "postgres.database.azure.com",
+            "mysql.database.azure.com",
+        };
 
         static SqlConnectionStringValidator()
         {
@@ -41,12 +48,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            ref string fingerprint,
                                            ref string message)
         {
-            return ValidatorBase.IsValidStatic(Instance,
-                                               ref matchedPattern,
-                                               ref groups,
-                                               ref failureLevel,
-                                               ref fingerprint,
-                                               ref message);
+            return IsValidStatic(Instance,
+                                ref matchedPattern,
+                                ref groups,
+                                ref failureLevel,
+                                ref fingerprint,
+                                ref message);
         }
 
         public static string IsValidDynamic(ref string fingerprint, ref string message)
@@ -89,16 +96,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.NoMatch);
             }
 
-            if (LocalhostList.Contains(host))
-            {
-                host = "localhost";
-            }
+            host = DomainFilteringHelper.StandardizeLocalhostName(host);
 
-            // Other rules will handle these cases.
-            if (host.EndsWith("postgres.database.azure.com", StringComparison.OrdinalIgnoreCase) ||
-                host.EndsWith("mysql.database.azure.com", StringComparison.OrdinalIgnoreCase))
+            string exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
+
+            if (exclusionResult == nameof(ValidationState.NoMatch))
             {
-                return nameof(ValidationState.NoMatch);
+                return exclusionResult;
             }
 
             if (database.Length > 128 ||
@@ -131,7 +135,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string password = fingerprint.Password;
             string database = fingerprint.Resource;
 
-            if (LocalhostList.Contains(host))
+            if (DomainFilteringHelper.LocalhostList.Contains(host))
             {
                 return nameof(ValidationState.Unknown);
             }

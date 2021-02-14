@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.HelpersUtilitiesAndExtensions;
 using Microsoft.RE2.Managed;
 
 using MySqlConnector;
@@ -22,6 +23,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         private const string DatabaseRegex = @"(?i)(Database\s*=\s*(?<database>[^\<>:""\/\\|?;.]{1,64}))";
         private const string PortRegex = "(?i)(Port\\s*=\\s*(?<port>[0-9]{4,5}))";
 
+        private static readonly HashSet<string> HostsToExclude = new HashSet<string>
+        {
+            "database.windows.net",
+            "postgres.database.azure.com",
+        };
+
         static MySqlConnectionStringValidator()
         {
             Instance = new MySqlConnectionStringValidator();
@@ -34,12 +41,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                            ref string fingerprint,
                                            ref string message)
         {
-            return ValidatorBase.IsValidStatic(Instance,
-                                               ref matchedPattern,
-                                               ref groups,
-                                               ref failureLevel,
-                                               ref fingerprint,
-                                               ref message);
+            return IsValidStatic(Instance,
+                                ref matchedPattern,
+                                ref groups,
+                                ref failureLevel,
+                                ref fingerprint,
+                                ref message);
         }
 
         public static string IsValidDynamic(ref string fingerprint, ref string message)
@@ -69,16 +76,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 return nameof(ValidationState.NoMatch);
             }
 
-            if (LocalhostList.Contains(host))
-            {
-                host = "localhost";
-            }
+            host = DomainFilteringHelper.StandardizeLocalhostName(host);
 
-            // Other rules will handle these cases.
-            if (host.EndsWith("database.windows.net", StringComparison.OrdinalIgnoreCase) ||
-                host.EndsWith("postgres.database.azure.com", StringComparison.OrdinalIgnoreCase))
+            string exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
+
+            if (exclusionResult == nameof(ValidationState.NoMatch))
             {
-                return nameof(ValidationState.NoMatch);
+                return exclusionResult;
             }
 
             fingerprintText = new Fingerprint()
@@ -104,7 +108,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             string account = fingerprint.Account;
             string password = fingerprint.Password;
 
-            if (LocalhostList.Contains(host))
+            if (DomainFilteringHelper.LocalhostList.Contains(host))
             {
                 return nameof(ValidationState.Unknown);
             }
