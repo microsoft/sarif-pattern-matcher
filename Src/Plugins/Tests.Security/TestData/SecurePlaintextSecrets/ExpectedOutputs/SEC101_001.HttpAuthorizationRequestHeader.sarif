@@ -13,7 +13,7 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/101",
+              "id": "SEC101/001",
               "name": "DoNotExposePlaintextSecrets/HttpAuthorizationRequestHeader",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
@@ -38,7 +38,7 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/101",
+          "ruleId": "SEC101/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
@@ -77,7 +77,7 @@
           }
         },
         {
-          "ruleId": "SEC101/101",
+          "ruleId": "SEC101/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
@@ -116,7 +116,7 @@
           }
         },
         {
-          "ruleId": "SEC101/101",
+          "ruleId": "SEC101/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
