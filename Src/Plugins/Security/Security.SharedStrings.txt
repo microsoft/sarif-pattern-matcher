@@ -21,18 +21,17 @@
   $BinaryFiles=(?i)\.(bmp|dll|exe|gif|jpe?g|lock|pack|png|psd|tar\.gz|tiff?|ttf|xcf|zip)$
   $SourceFiles=(?i)\.(azure|bat|c|cmd|config|cpp|cs|cscfg|definitions|dtsx|h|hxx|hpp|ini|java|jsx?|json|keys|kt|loadtest|m|md|php|properties|ps1|psm1|pubxml|py|resx|sample|sql|ste|swift|test|tsx?|txt|waz|xml)$
 
-  $AdoPat=(^|[^2-7a-z])(?<refine>[2-7a-z]{52})([^2-7a-z]|$)
-  $AwsCredentials=(?s)\b(?<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}).{1,500}?\b(?i)(?<key>[0-9a-z\/+]{40})
 # $FacebookAppCredentials=(?si)(((facebook|fb)(.{0,20})?[`'"\s>](?<id>[0-9]{13,17})[^0-9].{1,500}?)|((facebook|fb)(.{0,20})?[`'"\s>](?<key>[0-9a-f]{32})([^0-9a-f]?)).{1,500}?){2}
-  $GitHubAppCredentials=(?s)((\b(?<id>Iv1\.[0-9a-z]{16}).{1,50}?)|(\b(?i)(?<key>[0-9a-z]{35,40})\b.{0,50}?)){2}
-  $GitHubPat=(?si)(?<refine>github.{0,50}[^0-9a-z][0-9a-z]{40})([^0-9a-z]|$)
-  $GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
-  $HockeyAppToken=(?si)hockey.{0,50}[`'"\s>]?(?<refine>[0-9a-f]{32})([^0-9a-f]|$)
-  $MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<account>[a-z\@\-]{1,120})(?i))|(Pwd=(?<password>[^;]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
-  $SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*[^;]{0,50}|(initial catalog|database)\s*=\s*[^;]{0,50}|(user id|uid)\s*=\s*[^;]{0,50}|(password|pwd)\s*=\s*[^;]{0,50}).+?){4}
-  $SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;]+);(((database\s*=\s*(?<database>[^;]{1,128}))|(user\s*=\s*(?<account>[^@]+)@[^;]+)|(password\s*=\s*(?<password>[^;]+))).{1,50}?){3}
-  $SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<account>[^"]+)",\s*"(?<password>[^"]+)"
-  $SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
-  $PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<account>[^,;\"\s]+)|(password|pwd)\s*=\s*(?<password>[^,;\"\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;]+)))?
 
   $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?<host>(http|ftp|https):\/\/[\w_-]+(?:(?:\.[\w_-]+)+))(?<resource>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|$|\s)+?authorization[,\[:= "']+(basic)[\s\r\n]{0,10}(?<key>[a-z0-9\/+_.=]{10,})
+  $SEC101/003.GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
+  $SEC101/005.SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
+  $SEC101/006.GitHubPat=(?si)(?<refine>github.{0,50}[^0-9a-z][0-9a-z]{40})([^0-9a-z]|$)
+  $SEC101/007.GitHubAppCredentials=(?s)((\b(?<id>Iv1\.[0-9a-z]{16}).{1,50}?)|(\b(?i)(?<key>[0-9a-z]{35,40})\b.{0,50}?)){2}
+  $SEC101/008.AwsCredentials=(?s)\b(?<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}).{1,500}?\b(?i)(?<key>[0-9a-z\/+]{40})
+  $SEC101/045.PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<account>[^,;\"\s]+)|(password|pwd)\s*=\s*(?<password>[^,;\"\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;]+)))?
+  $SEC101/046.SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*[^;]{0,50}|(initial catalog|database)\s*=\s*[^;]{0,50}|(user id|uid)\s*=\s*[^;]{0,50}|(password|pwd)\s*=\s*[^;]{0,50}).+?){4}
+  $SEC101/046.SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;]+);(((database\s*=\s*(?<database>[^;]{1,128}))|(user\s*=\s*(?<account>[^@]+)@[^;]+)|(password\s*=\s*(?<password>[^;]+))).{1,50}?){3}
+  $SEC101/046.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<account>[^"]+)",\s*"(?<password>[^"]+)"
+  $SEC101/047.MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<account>[a-z\@\-]{1,120})(?i))|(Pwd=(?<password>[^;]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
+  $SEC101/102.AdoPat=(^|[^2-7a-z])(?<refine>[2-7a-z]{52})([^2-7a-z]|$)
