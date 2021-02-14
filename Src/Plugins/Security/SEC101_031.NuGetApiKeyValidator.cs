@@ -7,13 +7,13 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class AmazonMwsAuthTokenValidator : ValidatorBase
+    public class NuGetApiKeyValidator : ValidatorBase
     {
-        internal static AmazonMwsAuthTokenValidator Instance;
+        internal static NuGetApiKeyValidator Instance;
 
-        static AmazonMwsAuthTokenValidator()
+        static NuGetApiKeyValidator()
         {
-            Instance = new AmazonMwsAuthTokenValidator();
+            Instance = new NuGetApiKeyValidator();
         }
 
         public static string IsValidStatic(ref string matchedPattern,
