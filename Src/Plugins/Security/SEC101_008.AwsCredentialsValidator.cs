@@ -129,31 +129,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.Unknown);
             }
 
-            /*          var client = new HttpClient();
-
-                        try
-                        {
-                            string uri = "https://iam.amazonaws.com/?Action=GetAccountAuthorizationDetails" +
-                                         "?X-Amz-Algorithm=AWS4-HMAC-SHA256" +
-                                        $"&X-Amz-Credential={id}";
-
-                            HttpResponseMessage response = client.GetAsync(uri).GetAwaiter().GetResult();
-
-                            switch (response.StatusCode)
-                            {
-                                case HttpStatusCode.Forbidden:
-                                {
-                                    message = $"for AWS credential id '{id}'.";
-                                    return nameof(ValidationState.Unauthorized);
-                                }
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            message = $"An unexpected exception was caught attempting to authentic AWS id '{id}': {e.Message}";
-                            return nameof(ValidationState.Unknown);
-                        }
-            */
             return nameof(ValidationState.Authorized);
         }
 

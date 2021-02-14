@@ -1,0 +1,161 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC101/101",
+              "name": "DoNotExposePlaintextSecrets/HttpAuthorizationRequestHeader",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC101/101",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_001.HttpAuthorizationRequestHeader.ps1",
+              "an apparent ",
+              "",
+              "Http authorization request header",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_001.HttpAuthorizationRequestHeader.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 30,
+                  "endLine": 4,
+                  "endColumn": 70,
+                  "charOffset": 51,
+                  "charLength": 137,
+                  "snippet": {
+                    "text": "https://example.com\");\r\nvar request = new RestRequest(Method.GET);\r\nrequest.AddHeader(\"Authorization\", \"Basic SomeAuthorizationKey0123456"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[host=https://example.com][key=SomeAuthorizationKey0123456]"
+          }
+        },
+        {
+          "ruleId": "SEC101/101",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_001.HttpAuthorizationRequestHeader.ps1",
+              "an apparent ",
+              "",
+              "Http authorization request header",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_001.HttpAuthorizationRequestHeader.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 30,
+                  "endLine": 8,
+                  "endColumn": 70,
+                  "charOffset": 224,
+                  "charLength": 181,
+                  "snippet": {
+                    "text": "https://example.com?some=parameters&that=should&appear=inresults\")\r\nvar request = new RestRequest(Method.GET);\r\nrequest.AddHeader(\"Authorization\", \"Basic SomeAuthorizationKey0123456"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[host=https://example.com][key=SomeAuthorizationKey0123456][resource=?some=parameters&that=should&appear=inresults]"
+          }
+        },
+        {
+          "ruleId": "SEC101/101",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_001.HttpAuthorizationRequestHeader.ps1",
+              "an apparent ",
+              "",
+              "Http authorization request header",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_001.HttpAuthorizationRequestHeader.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 32,
+                  "endLine": 12,
+                  "endColumn": 60,
+                  "charOffset": 451,
+                  "charLength": 83,
+                  "snippet": {
+                    "text": "https://example.com' \\\r\n--header 'Authorization: Basic SomeAuthorizationKey0123456="
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[host=https://example.com][key=SomeAuthorizationKey0123456=]"
+          }
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}
