@@ -11,13 +11,13 @@ using System.Text;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class SendGridApiKeyValidator : ValidatorBase
+    public class SendGridKeyValidator : ValidatorBase
     {
-        internal static SendGridApiKeyValidator Instance;
+        internal static SendGridKeyValidator Instance;
 
-        static SendGridApiKeyValidator()
+        static SendGridKeyValidator()
         {
-            Instance = new SendGridApiKeyValidator();
+            Instance = new SendGridKeyValidator();
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -62,7 +62,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             var fingerprint = new Fingerprint(fingerprintText);
 
-            string account = "apikey";
+            string account = "Key";
             string key = fingerprint.Key;
             const string host = "smtp.sendgrid.net";
 
@@ -92,7 +92,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Send(reader, writer, out response, $"HELLO\r\n", "250");
                     Send(reader, writer, out response, $"AUTH LOGIN\r\n", "334", "250");
 
-                    // Send the account name. 'apikey' is the name for SendGrid SMTP access.
+                    // Send the account name. 'Key' is the name for SendGrid SMTP access.
                     account = Convert.ToBase64String(Encoding.UTF8.GetBytes(account));
                     Send(reader, writer, out response, $"{account}\r\n", "334");
 

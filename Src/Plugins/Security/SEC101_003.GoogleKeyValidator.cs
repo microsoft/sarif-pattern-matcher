@@ -10,13 +10,13 @@ using GoogleApi.Exceptions;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class GoogleApiKeyValidator : ValidatorBase
+    public class GoogleKeyValidator : ValidatorBase
     {
-        internal static GoogleApiKeyValidator Instance;
+        internal static GoogleKeyValidator Instance;
 
-        static GoogleApiKeyValidator()
+        static GoogleKeyValidator()
         {
-            Instance = new GoogleApiKeyValidator();
+            Instance = new GoogleKeyValidator();
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -65,11 +65,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var fingerprint = new Fingerprint(fingerprintText);
 
-            string apiKey = fingerprint.Key;
+            string key = fingerprint.Key;
 
             var request = new DirectionsRequest
             {
-                Key = apiKey,
+                Key = key,
                 Origin = new Location("Seattle"),
                 Destination = new Location("Portland"),
             };
@@ -80,8 +80,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                var googleException = e as GoogleApiException;
-                if (googleException != null)
+                if (e is GoogleApiException googleException)
                 {
                     switch (e.Message)
                     {
