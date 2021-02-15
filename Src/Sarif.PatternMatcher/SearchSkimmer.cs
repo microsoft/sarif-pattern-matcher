@@ -136,6 +136,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             string filePath = context.TargetUri.OriginalString;
 
+            if (filePath.StartsWith("file://"))
+            {
+                filePath = context.TargetUri.LocalPath;
+            }
+
             if (context.FileContents == null)
             {
                 context.FileContents = _fileSystem.FileReadAllText(filePath);
