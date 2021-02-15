@@ -134,12 +134,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override void Analyze(AnalyzeContext context)
         {
+            string filePath = context.TargetUri.OriginalString;
+
             if (context.FileContents == null)
             {
-                context.FileContents = _fileSystem.FileReadAllText(context.TargetUri.LocalPath);
+                context.FileContents = _fileSystem.FileReadAllText(filePath);
             }
 
-            string filePath = context.TargetUri.GetFilePath();
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
