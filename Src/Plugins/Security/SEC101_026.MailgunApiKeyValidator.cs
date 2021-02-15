@@ -10,9 +10,6 @@ using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 
-using RestSharp;
-using RestSharp.Authenticators;
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class MailgunApiKeyValidator : ValidatorBase
