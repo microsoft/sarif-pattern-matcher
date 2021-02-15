@@ -26,7 +26,7 @@
   $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?<host>(http|ftp|https):\/\/[\w_-]+(?:(?:\.[\w_-]+)+))(?<resource>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|$|\s)+?authorization[,\[:= "']+(basic)[\s\r\n]{0,10}(?<key>[a-z0-9\/+_.=]{10,})
   $SEC101/002.GoogleOAuthCredentials=(?s)\b(?<id>[0-9]{12}\-[0-9a-z]{32})\.apps\.googleusercontent\.com.{1,500}?\b(?i)(?<key>[0-9a-z\-]{24})
   $SEC101/003.GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
-  $SEC101/004.FacebookAppCredentials=(?s)\b(?<id>[0-9]{15}).{1,500}?\b(?i)(?<key>[0-9a-f]{32})
+  $SEC101/004.FacebookAppCredentials=(?si)facebook.{1,50}\b(?<id>[0-9]{15}).{1,500}?\b(?<key>[0-9a-f]{32})
   $SEC101/005.SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
   $SEC101/006.GitHubPat=(?si)(?<refine>github.{0,50}[^0-9a-z][0-9a-z]{40})([^0-9a-z]|$)
   $SEC101/007.GitHubAppCredentials=(?s)((\b(?<id>Iv1\.[0-9a-z]{16}).{1,50}?)|(\b(?i)(?<key>[0-9a-z]{35,40})\b.{0,50}?)){2}
