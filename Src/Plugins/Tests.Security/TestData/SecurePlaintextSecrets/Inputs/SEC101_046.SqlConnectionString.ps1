@@ -23,8 +23,11 @@ new PDO("sqlsrv:server = tcp:servername3.database.windows.net,1433; Database = d
     <add name="YourConnectionStringKey" 
         providerName="System.Data.SqlClient"
         connectionString="Initial Catalog=database7;Data Source=servername7;User ID=username7;User ID=username7;" />
-
 </connectionStrings>
+
+<Connection>
+    <SqlServer>Data Source=servername15;Initial Catalog=database15;User ID=username15;Password=password15</SqlServer>
+</Connection>
 
 # AppSettings style
 <appSettings>
@@ -41,3 +44,10 @@ jdbc:sqlserver://127.0.0.1;database=database13;user=username13@some-database-nam
 
 [global::System.Configuration.DefaultSettingValueAttribute("Data Source=servername14;Initial Catalog=database14;User ID=username14;Password=password14")]
         public string ELSConnectionString {
+
+# Json
+{
+    "connectionString" : "Data Source=servername16;Initial Catalog=database16;User ID=username16;Password=password16",
+    "propertyA": "propertyA"
+    "propertyB": "propertyB"
+}
