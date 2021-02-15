@@ -102,14 +102,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message = $"An unexpected response was returned : '{response.StatusCode}'";
+                        message = $"An unexpected response code was returned attempting to "+
+                                  $"validate the '{account}' account: '{response.StatusCode}'";
                         break;
                     }
                 }
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset: account);
             }
 
             return ReturnUnknownAuthorization(ref message, asset: account);
