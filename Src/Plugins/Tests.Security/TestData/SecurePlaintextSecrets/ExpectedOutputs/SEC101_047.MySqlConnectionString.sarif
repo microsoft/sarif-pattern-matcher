@@ -178,18 +178,18 @@
                   "startLine": 33,
                   "startColumn": 1,
                   "endLine": 33,
-                  "endColumn": 129,
+                  "endColumn": 115,
                   "charOffset": 2699,
-                  "charLength": 128,
+                  "charLength": 114,
                   "snippet": {
-                    "text": "Server= \"mydemoserver.mariadb.database.azure.com\"; Port=3306; Database= \"wpdb\"; Uid= \"WPAdmin@mydemoserver\"; Pwd=\"mypassword!2\";"
+                    "text": "Server= \"mydemoserver.mariadb.database.azure.com\"; Port=3306; Database= \"wpdb\"; Uid= \"WPAdmin@mydemoserver\"; Pwd=\""
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[acct=\"WPAdmin@mydemoserver\"][host=\"mydemoserver.mariadb.database.azure.com\"][pwd=\"mypassword!2\"][resource=\"wpdb\"]"
+            "ValidationFingerprint/v1": "[acct=\"WPAdmin@mydemoserver\"][host=\"mydemoserver.mariadb.database.azure.com\"][pwd=\"][resource=\"wpdb\"]"
           }
         },
         {

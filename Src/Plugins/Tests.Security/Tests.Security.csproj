@@ -14,7 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_026.MailgunApiKey.sarif" />
     <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_031-NuGetApiKey.sarif" />
+    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_026.MailgunApiKey.ps1" />
     <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_031.NuGetApiKey.txt" />
   </ItemGroup>
 
