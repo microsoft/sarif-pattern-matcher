@@ -102,7 +102,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message = $"An unexpected response code was returned attempting to "+
+                        message = $"An unexpected response code was returned attempting to " +
                                   $"validate the '{account}' account: '{response.StatusCode}'";
                         break;
                     }
@@ -113,7 +113,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e, asset: account);
             }
 
-            return ReturnUnknownAuthorization(ref message, asset: account);
+            return nameof(ValidationState.Unknown);
         }
     }
 }
