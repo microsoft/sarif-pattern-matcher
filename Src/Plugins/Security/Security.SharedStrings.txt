@@ -30,7 +30,8 @@
   $SEC101/006.GitHubPat=(?si)(?<refine>github.{0,50}[^0-9a-z][0-9a-z]{40})([^0-9a-z]|$)
   $SEC101/007.GitHubAppCredentials=(?s)((\b(?<id>Iv1\.[0-9a-z]{16}).{1,50}?)|(\b(?i)(?<key>[0-9a-z]{35,40})\b.{0,50}?)){2}
   $SEC101/008.AwsCredentials=(?s)\b(?<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}).{1,500}?\b(?i)(?<key>[0-9a-z\/+]{40})
-  $SEC101/023.AmazonMwsAuthToken=\b(?<refine>amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)  
+  $SEC101/023.AmazonMwsAuthToken=\b(?<refine>amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)
+  $SEC101/026.MailgunApiKey=(?is)((^|[^0-9a-z\-])(?<key>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8}).{0,50}?|[^0-9a-z](?<account>[0-9a-z]+?\.mailgun\.org).{0,50}?){2}
   $SEC101/031.NuGetApiKey=\b(?<refine>(?<key>oy2[0-9a-z]{43}))(^[0-9a-z]|$)
   $SEC101/045.PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<account>[^,;\"\s]+)|(password|pwd)\s*=\s*(?<password>[^,;\"\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;]+)))?
   $SEC101/046.SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*[^;]{0,50}|(initial catalog|database)\s*=\s*[^;]{0,50}|(user id|uid)\s*=\s*[^;]{0,50}|(password|pwd)\s*=\s*[^;]{0,50}).+?){4}

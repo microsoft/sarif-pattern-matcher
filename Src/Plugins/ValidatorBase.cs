@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Net.Http;
 
 using Microsoft.RE2.Managed;
 
@@ -12,6 +13,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 {
     public abstract class ValidatorBase
     {
+        public const string ScanIdentityHttpCustomHeaderKey =
+            "Automation-Scan-Description";
+
         static ValidatorBase()
         {
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
@@ -25,6 +29,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             FingerprintToResultCache = new Dictionary<string, Tuple<string, string>>();
             PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
+
+        protected HttpClient CreateHttpClient()
+        {
+            var httpClient = new HttpClient();
+
+            httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
+                                                 ScanIdentityHttpCustomHeaderValue);
+
+            httpClient.DefaultRequestHeaders.Add("User-Agent",
+                                                 UserAgentValue);
+
+            return httpClient;
+        }
+
+        protected virtual string ScanIdentityHttpCustomHeaderValue =>
+            "This call originates with a build of the SARIF pattern matcher " +
+            "(https://github.com/microsoft/sarif-pattern/matcher. Someone is " +
+            "running an automated scan and validation of detected credentials.";
+
+        protected virtual string UserAgentValue => "SARIF Pattern Matcher scan tool";
 
         /// <summary>
         /// Gets a cache of fingerprint to previously generated validation
