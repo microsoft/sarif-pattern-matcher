@@ -33,10 +33,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 return nameof(ValidationState.Unknown);
             }
 
+            string lowerHost = host.ToLower();
             // Other rules will handle these cases.
             foreach (string hostToExclude in hostList)
             {
-                if (host.EndsWith(hostToExclude, StringComparison.OrdinalIgnoreCase))
+                if (lowerHost.Contains(hostToExclude.ToLower()))
                 {
                     return nameof(ValidationState.NoMatch);
                 }
