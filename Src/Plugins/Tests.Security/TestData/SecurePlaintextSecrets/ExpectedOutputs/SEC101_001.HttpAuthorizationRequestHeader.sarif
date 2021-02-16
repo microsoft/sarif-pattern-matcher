@@ -48,7 +48,7 @@
               "",
               "Http authorization request header",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
@@ -87,7 +87,7 @@
               "",
               "Http authorization request header",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
@@ -126,7 +126,7 @@
               "",
               "Http authorization request header",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
@@ -137,11 +137,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 11,
+                  "startLine": 17,
                   "startColumn": 32,
-                  "endLine": 12,
+                  "endLine": 18,
                   "endColumn": 60,
-                  "charOffset": 451,
+                  "charOffset": 733,
                   "charLength": 83,
                   "snippet": {
                     "text": "https://example.com' \\\r\n--header 'Authorization: Basic SomeAuthorizationKey0123456="
