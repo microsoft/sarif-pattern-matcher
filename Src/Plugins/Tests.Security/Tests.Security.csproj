@@ -14,15 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_016.StripeApiKey.sarif" />
-    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_026.MailgunApiKey.sarif" />
-    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_031-NuGetApiKey.sarif" />
-    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_016.StripeApiKey.txt" />
-    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_026.MailgunApiKey.ps1" />
-    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_031.NuGetApiKey.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
     <ProjectReference Include="..\Security\Security.csproj" />
     <ProjectReference Include="..\..\sarif-sdk\src\Sarif\Sarif.csproj" />
