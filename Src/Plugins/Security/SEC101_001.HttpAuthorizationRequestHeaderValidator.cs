@@ -68,6 +68,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             var fingerprint = new Fingerprint(fingerprintText);
             string host = fingerprint.Host;
+            string resource = fingerprint.Resource ?? string.Empty;
+            string uri = host + resource;
 
             try
             {
@@ -75,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Guid.NewGuid().ToString());
 
                 using HttpResponseMessage responseDummy = client
-                    .GetAsync(host + (fingerprint.Resource ?? string.Empty), HttpCompletionOption.ResponseHeadersRead)
+                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
@@ -86,7 +88,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", fingerprint.Key);
                 using HttpResponseMessage response = client
-                    .GetAsync(host + (fingerprint.Resource ?? string.Empty), HttpCompletionOption.ResponseHeadersRead)
+                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
