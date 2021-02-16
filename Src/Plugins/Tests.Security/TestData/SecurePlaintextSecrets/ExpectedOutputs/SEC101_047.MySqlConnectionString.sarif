@@ -115,6 +115,45 @@
           }
         },
         {
+          "ruleId": "SEC101/045",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Ado",
+            "arguments": [
+              "SEC101_047.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 22,
+                  "endLine": 32,
+                  "endColumn": 116,
+                  "charOffset": 2692,
+                  "charLength": 94,
+                  "snippet": {
+                    "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=password_11;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=password_11][port=3306][resource=your-database]"
+          }
+        },
+        {
           "ruleId": "SEC101/046",
           "ruleIndex": 1,
           "message": {
@@ -175,11 +214,50 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 33,
+                  "startLine": 32,
+                  "startColumn": 22,
+                  "endLine": 32,
+                  "endColumn": 116,
+                  "charOffset": 2692,
+                  "charLength": 94,
+                  "snippet": {
+                    "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=password_11;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=password_11][resource=your-database]"
+          }
+        },
+        {
+          "ruleId": "SEC101/046",
+          "ruleIndex": 1,
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_047.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 36,
                   "startColumn": 1,
-                  "endLine": 33,
+                  "endLine": 36,
                   "endColumn": 115,
-                  "charOffset": 2699,
+                  "charOffset": 2841,
                   "charLength": 114,
                   "snippet": {
                     "text": "Server= \"mydemoserver.mariadb.database.azure.com\"; Port=3306; Database= \"wpdb\"; Uid= \"WPAdmin@mydemoserver\"; Pwd=\""
@@ -214,11 +292,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 42,
+                  "startLine": 45,
                   "startColumn": 35,
-                  "endLine": 42,
+                  "endLine": 45,
                   "endColumn": 143,
-                  "charOffset": 3351,
+                  "charOffset": 3493,
                   "charLength": 108,
                   "snippet": {
                     "text": "Server=\"{your_host}\"; Port=3306; Database={your_database}; Uid=\"{username@servername}\"; Pwd={your_password};"
@@ -463,6 +541,45 @@
           ],
           "fingerprints": {
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=your-password][port=3306][resource=your-database]"
+          }
+        },
+        {
+          "ruleId": "SEC101/047",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_047.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC MySQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 22,
+                  "endLine": 32,
+                  "endColumn": 115,
+                  "charOffset": 2692,
+                  "charLength": 93,
+                  "snippet": {
+                    "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=password_11"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=password_11][port=3306][resource=your-database]"
           }
         }
       ],
