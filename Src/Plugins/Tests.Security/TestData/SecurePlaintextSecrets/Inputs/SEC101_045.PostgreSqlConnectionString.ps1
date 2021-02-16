@@ -13,6 +13,20 @@
 Username=mylogin;Password=mypass;Database=mydatabase
 Password=mypass;Database=mydatabase;Username=mylogin;
 
+# Json pattern
+{
+    "ConnectionString" : "host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_8",
+    "PropertyA": "This should not be caught"
+}
+
+# Xml
+
+<Connections>
+    <Postgres>host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_9</Postgres>
+</Connections>
+
+
+
 # JDBC
 # Dream validation will catch the first method of connection string declaration
 # but it's not expected.
