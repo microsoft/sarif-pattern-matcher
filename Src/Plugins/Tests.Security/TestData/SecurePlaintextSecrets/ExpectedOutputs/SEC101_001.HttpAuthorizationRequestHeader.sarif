@@ -137,11 +137,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 17,
+                  "startLine": 11,
                   "startColumn": 32,
-                  "endLine": 18,
+                  "endLine": 12,
                   "endColumn": 60,
-                  "charOffset": 733,
+                  "charOffset": 451,
                   "charLength": 83,
                   "snippet": {
                     "text": "https://example.com' \\\r\n--header 'Authorization: Basic SomeAuthorizationKey0123456="
