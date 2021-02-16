@@ -16,6 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public const string PortKeyName = "port";
         public const string AccountKeyName = "acct";
         public const string PasswordKeyName = "pwd";
+        public const string RegionKeyName = "region";
         public const string KeyNameKeyName = "keyName";
         public const string ResourceKeyName = "resource";
         public const string SasTokenKeyName = "sasToken";
@@ -28,7 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public Fingerprint(string fingerprintText)
         {
-            Account = Hmac = Host = Port = Id = Key = KeyName = Password = Uri = Resource = null;
+            Account = Hmac = Host = Port = Id = Key = KeyName = Password = Region = Uri = Resource = null;
             SasToken = PersonalAccessToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
 
             fingerprintText = fingerprintText ??
@@ -76,6 +77,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string Port { get; set; }
 
+        public string Region { get; set; }
+
         public string Account { get; set; }
 
         public string KeyName { get; set; }
@@ -107,6 +110,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 case HmacKeyName: { Hmac = value; break; }
                 case HostKeyName: { Host = value; break; }
                 case PortKeyName: { Port = value; break; }
+                case RegionKeyName: { Region = value; break; }
                 case AccountKeyName: { Account = value; break; }
                 case KeyNameKeyName: { KeyName = value; break; }
                 case PasswordKeyName: { Password = value; break; }
@@ -171,6 +175,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 components.Add($"[{PortKeyName}={this.Port.Trim()}]");
             }
 
+            if (!string.IsNullOrEmpty(Region))
+            {
+                components.Add($"[{RegionKeyName}={this.Region.Trim()}]");
+            }
+
             if (!string.IsNullOrEmpty(Resource))
             {
                 components.Add($"[{ResourceKeyName}={this.Resource.Trim()}]");
@@ -218,38 +227,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 switch (parseState)
                 {
                     case ParseState.GatherKeyOpen:
-                    {
-                        while (fingerprintText[i] != '[') { i++; }
-                        parseState = ParseState.GatherKeyName;
-                        break;
-                    }
-
-                    case ParseState.GatherKeyName:
-                    {
-                        int keyNameStart = i;
-                        while (fingerprintText[i] != '=') { i++; }
-                        currentKey = fingerprintText.Substring(keyNameStart, i - keyNameStart);
-
-                        if (sortedKeys.ContainsKey(currentKey))
                         {
-                            throw new ArgumentException($"The '{currentKey}' key name is duplicated in the fingerprint.");
+                            while (fingerprintText[i] != '[') { i++; }
+                            parseState = ParseState.GatherKeyName;
+                            break;
                         }
 
-                        sortedKeys.Add(currentKey, currentKey);
+                    case ParseState.GatherKeyName:
+                        {
+                            int keyNameStart = i;
+                            while (fingerprintText[i] != '=') { i++; }
+                            currentKey = fingerprintText.Substring(keyNameStart, i - keyNameStart);
 
-                        parseState = ParseState.GatherValue;
-                        break;
-                    }
+                            if (sortedKeys.ContainsKey(currentKey))
+                            {
+                                throw new ArgumentException($"The '{currentKey}' key name is duplicated in the fingerprint.");
+                            }
+
+                            sortedKeys.Add(currentKey, currentKey);
+
+                            parseState = ParseState.GatherValue;
+                            break;
+                        }
 
                     case ParseState.GatherValue:
-                    {
-                        int valueStart = i;
-                        while (fingerprintText[i] != ']') { i++; }
-                        string value = fingerprintText.Substring(valueStart, i - valueStart);
-                        parseState = ParseState.GatherKeyOpen;
-                        SetProperty(currentKey, value);
-                        break;
-                    }
+                        {
+                            int valueStart = i;
+                            while (fingerprintText[i] != ']') { i++; }
+                            string value = fingerprintText.Substring(valueStart, i - valueStart);
+                            parseState = ParseState.GatherKeyOpen;
+                            SetProperty(currentKey, value);
+                            break;
+                        }
                 }
             }
         }
