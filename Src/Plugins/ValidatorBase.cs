@@ -13,6 +13,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 {
     public abstract class ValidatorBase
     {
+        public const string UnknownErrorCode = "An unexpected response was returned : '{0}'";
+
         public const string ScanIdentityHttpCustomHeaderKey =
             "Automation-Scan-Description";
 
