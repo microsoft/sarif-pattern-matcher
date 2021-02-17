@@ -115,6 +115,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 
             var connectionStringBuilder = new StringBuilder();
             connectionStringBuilder.Append($"Server={host}; Database={database}; Uid={account}; Pwd={password}; SslMode=Preferred;");
+            message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
 
             if (!string.IsNullOrWhiteSpace(port))
             {
@@ -139,7 +140,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 return ReturnUnhandledException(ref message, e, asset: host);
             }
 
-            return ReturnAuthorizedAccess(ref message, asset: host);
+            return nameof(ValidationState.Authorized);
         }
     }
 }

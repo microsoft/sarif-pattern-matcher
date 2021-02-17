@@ -143,6 +143,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string connString =
                 $"Server={host};Initial Catalog={database};User ID={account};Password={password};" +
                 "Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
+            message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
 
             // Validating ConnectionString with database.
             string validation = ValidateConnectionString(ref message, host, connString, out shouldRetry);
@@ -154,6 +155,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             connString =
                $"Server={host};User ID={account};Password={password};" +
                "Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
+            message = $"the '{account}' account is compromised for server '{host}'";
 
             // Validating ConnectionString without database.
             return ValidateConnectionString(ref message, host, connString, out shouldRetry);
@@ -197,7 +199,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e, asset: host);
             }
 
-            return ReturnAuthorizedAccess(ref message, asset: host);
+            return nameof(ValidationState.Authorized);
         }
     }
 }

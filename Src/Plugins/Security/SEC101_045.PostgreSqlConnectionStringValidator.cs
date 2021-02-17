@@ -101,6 +101,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var connectionStringBuilder = new StringBuilder();
             connectionStringBuilder.Append($"Host={fingerprint.Host};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require;");
+            message = $"the '{fingerprint.Account}' account is compromised for server '{fingerprint.Host}'";
 
             if (!string.IsNullOrWhiteSpace(fingerprint.Port))
             {
@@ -109,6 +110,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             if (!string.IsNullOrWhiteSpace(fingerprint.Resource))
             {
+                message = $"the '{fingerprint.Account}' account was authenticated against database '{fingerprint.Resource}' hosted on '{fingerprint.Host}'";
                 connectionStringBuilder.Append($"Database={fingerprint.Resource};");
             }
 
@@ -137,7 +139,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e, asset: fingerprint.Host);
             }
 
-            return ReturnAuthorizedAccess(ref message, asset: fingerprint.Host);
+            return nameof(ValidationState.Authorized);
         }
     }
 }
