@@ -48,7 +48,7 @@
               "",
               "Http authorization request header",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
@@ -87,7 +87,7 @@
               "",
               "Http authorization request header",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
@@ -126,7 +126,7 @@
               "",
               "Http authorization request header",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [

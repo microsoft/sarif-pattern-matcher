@@ -387,6 +387,84 @@
           "fingerprints": {
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_7][port=5555]"
           }
+        },
+        {
+          "ruleId": "SEC101/045",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Ado",
+            "arguments": [
+              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 18,
+                  "startColumn": 27,
+                  "endLine": 18,
+                  "endColumn": 99,
+                  "charOffset": 1532,
+                  "charLength": 72,
+                  "snippet": {
+                    "text": "host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_8\""
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_8][port=5555][resource=my_db]"
+          }
+        },
+        {
+          "ruleId": "SEC101/045",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Ado",
+            "arguments": [
+              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 15,
+                  "endLine": 25,
+                  "endColumn": 87,
+                  "charOffset": 1696,
+                  "charLength": 72,
+                  "snippet": {
+                    "text": "host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_9<"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_9][port=5555][resource=my_db]"
+          }
         }
       ],
       "columnKind": "utf16CodeUnits"

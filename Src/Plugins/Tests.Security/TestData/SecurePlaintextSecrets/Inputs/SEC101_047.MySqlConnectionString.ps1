@@ -29,6 +29,9 @@ Database=catalog_db; Data Source=some-database-name.mysql.database.azure.com; Us
 ## Configuration file - Implemented
 Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password; SslMode=Preferred;
 
+string connection = "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=password_11; SslMode=Preferred;";
+
+
 ## C# code - Unimplemented
 Server= "mydemoserver.mariadb.database.azure.com"; Port=3306; Database= "wpdb"; Uid= "WPAdmin@mydemoserver"; Pwd="mypassword!2"; SslMode=Required;
 

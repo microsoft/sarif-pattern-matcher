@@ -30,19 +30,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
-        protected HttpClient CreateHttpClient()
-        {
-            var httpClient = new HttpClient();
-
-            httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
-                                                 ScanIdentityHttpCustomHeaderValue);
-
-            httpClient.DefaultRequestHeaders.Add("User-Agent",
-                                                 UserAgentValue);
-
-            return httpClient;
-        }
-
         protected virtual string ScanIdentityHttpCustomHeaderValue =>
             "This call originates with a build of the SARIF pattern matcher " +
             "(https://github.com/microsoft/sarif-pattern/matcher. Someone is " +
@@ -270,6 +257,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             }
 
             return value.Substring(indexOfFirstEqualSign + 1).Trim();
+        }
+
+        protected HttpClient CreateHttpClient()
+        {
+            var httpClient = new HttpClient();
+
+            httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
+                                                 ScanIdentityHttpCustomHeaderValue);
+
+            httpClient.DefaultRequestHeaders.Add("User-Agent",
+                                                 UserAgentValue);
+
+            return httpClient;
         }
 
         /// <summary>
