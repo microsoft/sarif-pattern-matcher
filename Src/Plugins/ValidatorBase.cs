@@ -170,6 +170,33 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             return nameof(ValidationState.Unknown);
         }
 
+        /// <summary>
+        /// Normalized specific Shannon entropy. See https://rosettacode.org/wiki/Entropy
+        /// </summary>
+        public static double ShannonEntropy(string input, int countOfPossibleSymbols)
+        {
+            double entropy = 0;
+
+            if (string.IsNullOrWhiteSpace(input)) { return entropy; }
+
+            var charCounts = new Dictionary<char, double>();
+
+            foreach (char ch in input)
+            {
+                charCounts.TryGetValue(ch, out double count);
+                charCounts[ch] = ++count;
+            }
+
+            foreach (char ch in charCounts.Keys)
+            {
+                double count = charCounts[ch];
+                double frequency = count / (double)input.Length;
+                entropy += -(frequency * Math.Log(frequency, countOfPossibleSymbols));
+            }
+
+            return entropy;
+        }
+
         public static string ReturnUnknownHost(ref string message, string host)
         {
             message = $"'{host}' is unknown.";
