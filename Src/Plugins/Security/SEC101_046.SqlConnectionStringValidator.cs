@@ -129,7 +129,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             var fingerprint = new Fingerprint(fingerprintText);
 
-            bool shouldRetry;
             string host = fingerprint.Host;
             string account = fingerprint.Account;
             string password = fingerprint.Password;
@@ -146,7 +145,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
 
             // Validating ConnectionString with database.
-            string validation = ValidateConnectionString(ref message, host, connString, out shouldRetry);
+            string validation = ValidateConnectionString(ref message, host, connString, out bool shouldRetry);
             if (validation != nameof(ValidationState.Unknown) || !shouldRetry)
             {
                 return validation;

@@ -93,25 +93,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref string message)
         {
             var fingerprint = new Fingerprint(fingerprintText);
+            string host = fingerprint.Host;
+            string port = fingerprint.Port;
+            string account = fingerprint.Account;
+            string password = fingerprint.Password;
+            string database = fingerprint.Resource;
 
-            if (DomainFilteringHelper.LocalhostList.Contains(fingerprint.Host))
+            if (DomainFilteringHelper.LocalhostList.Contains(host))
             {
                 return nameof(ValidationState.Unknown);
             }
 
             var connectionStringBuilder = new StringBuilder();
-            connectionStringBuilder.Append($"Host={fingerprint.Host};Username={fingerprint.Account};Password={fingerprint.Password};Ssl Mode=Require;");
-            message = $"the '{fingerprint.Account}' account is compromised for server '{fingerprint.Host}'";
+            message = $"the '{account}' account is compromised for server '{host}'";
+            connectionStringBuilder.Append($"Host={host};Username={account};Password={password};Ssl Mode=Require;");
 
-            if (!string.IsNullOrWhiteSpace(fingerprint.Port))
+            if (!string.IsNullOrWhiteSpace(port))
             {
-                connectionStringBuilder.Append($"Port={fingerprint.Port};");
+                connectionStringBuilder.Append($"Port={port};");
             }
 
-            if (!string.IsNullOrWhiteSpace(fingerprint.Resource))
+            if (!string.IsNullOrWhiteSpace(database))
             {
-                message = $"the '{fingerprint.Account}' account was authenticated against database '{fingerprint.Resource}' hosted on '{fingerprint.Host}'";
-                connectionStringBuilder.Append($"Database={fingerprint.Resource};");
+                message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
+                connectionStringBuilder.Append($"Database={database};");
             }
 
             try
@@ -126,17 +131,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     // Database does not exist, but the creds are valid
                     if (postgresException.SqlState == "3D000")
                     {
-                        return ReturnAuthorizedAccess(ref message, asset: fingerprint.Host);
+                        return ReturnAuthorizedAccess(ref message, asset: host);
                     }
 
                     // password authentication failed for user
                     if (postgresException.SqlState == "28P01")
                     {
-                        return ReturnUnauthorizedAccess(ref message, asset: fingerprint.Host);
+                        return ReturnUnauthorizedAccess(ref message, asset: host);
                     }
                 }
 
-                return ReturnUnhandledException(ref message, e, asset: fingerprint.Host);
+                return ReturnUnhandledException(ref message, e, asset: host);
             }
 
             return nameof(ValidationState.Authorized);
