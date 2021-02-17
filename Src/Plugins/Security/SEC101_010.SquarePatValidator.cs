@@ -66,8 +66,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                message = $"The detected secret is a {pat} key.";
-
                 using HttpClient client = CreateHttpClient();
 
                 client.DefaultRequestHeaders.Authorization =
@@ -93,7 +91,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     default:
                     {
                         message += $" An unexpected response code was returned attempting to " +
-                                  $"validate: '{response.StatusCode}'";
+                                   $"validate: '{response.StatusCode}'";
                         break;
                     }
                 }
