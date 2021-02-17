@@ -177,7 +177,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             foreach (char ch in charCounts.Keys)
             {
                 double count = charCounts[ch];
-                double frequency = count / (double)input.Length;
+                double frequency = count / input.Length;
                 entropy += -(frequency * Math.Log(frequency, countOfPossibleSymbols));
             }
 
