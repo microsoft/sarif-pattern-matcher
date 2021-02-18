@@ -198,7 +198,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             return nameof(ValidationState.Unknown);
         }
 
-        public static string ReturnUnexpectedResponseCode(int statusCode)
+        public static string ReturnUnexpectedResponseCode(HttpStatusCode statusCode)
         {
             return string.Format("An unexpected response was returned : '{0}'", statusCode);
         }
