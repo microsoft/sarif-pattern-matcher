@@ -14,6 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_012.SlackWebhook.sarif" />
+    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_012.SlackWebhook.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
     <ProjectReference Include="..\Security\Security.csproj" />
     <ProjectReference Include="..\..\sarif-sdk\src\Sarif\Sarif.csproj" />
