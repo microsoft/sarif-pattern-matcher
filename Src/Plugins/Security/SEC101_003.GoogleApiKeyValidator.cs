@@ -61,8 +61,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             const string Deleted = "RequestDenied: This API project was not found. This API project may have been deleted or may not be authorized to use this API. You may need to enable the API under APIs in the console).";
             const string KeyNotAuthorized = "RequestDenied: This API key is not authorized to use this service or API.";
             const string ProjectNotAuthorized = "RequestDenied: This API project is not authorized to use this API.";
+            const string IpNotAuthorized = "RequestDenied: This IP, site or mobile application is not authorized to use this API key.";
             const string Invalid = "RequestDenied: The provided API key is invalid.";
             const string Expired = "RequestDenied: The provided API key is expired.";
+            const string RefererRestricted = "RequestDenied: API keys with referer restrictions cannot be used with this API";
 
             var fingerprint = new Fingerprint(fingerprintText);
 
@@ -108,6 +110,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         }
 
                         case Invalid:
+                        case IpNotAuthorized:
+                        case RefererRestricted:
                         {
                             return nameof(ValidationState.NoMatch);
                         }
