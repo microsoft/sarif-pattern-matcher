@@ -13,8 +13,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 {
     public abstract class ValidatorBase
     {
-        public const string UnknownErrorCode = "An unexpected response was returned : '{0}'";
-
         public const string ScanIdentityHttpCustomHeaderKey =
             "Automation-Scan-Description";
 
@@ -202,7 +200,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 
         public static string ReturnUnexpectedResponseCode(int statusCode)
         {
-            return string.Format(UnknownErrorCode, statusCode);
+            return string.Format("An unexpected response was returned : '{0}'", statusCode);
         }
 
         public static string ParseExpression(IRegex regexEngine, string matchedPattern, string expression)
