@@ -172,7 +172,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         /// </summary>
         /// <param name="input">Input string to be analyzed.</param>
         /// <param name="countOfPossibleSymbols">Count of possible symbols.</param>
-        /// <returns>Entropy level.</returns>
+        /// <returns>A normalized specific Shannon entropy level for the input string.</returns>
         public static double ShannonEntropy(string input, int countOfPossibleSymbols)
         {
             double entropy = 0;
