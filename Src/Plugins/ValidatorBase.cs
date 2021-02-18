@@ -127,9 +127,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             return false;
         }
 
-        public static string CreateUnexpectedResponseCodeMessage(HttpStatusCode status)
+        public static string CreateUnexpectedResponseCodeMessage(HttpStatusCode status, string asset = null)
         {
-            return $"An unexpected HTTP response code was received: '{status}'.";
+            return asset == null ?
+                $"An unexpected HTTP response code was received: '{status}'." :
+                $"An unexpected HTTP response code was received from '{asset}': '{status}'.";
         }
 
         public static string ReturnUnhandledException(ref string message,
@@ -166,8 +168,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         }
 
         /// <summary>
-        /// Normalized specific Shannon entropy. See https://rosettacode.org/wiki/Entropy
+        /// Normalized specific Shannon entropy. See https://rosettacode.org/wiki/Entropy.
         /// </summary>
+        /// <param name="input">Input string to be analyzed.</param>
+        /// <param name="countOfPossibleSymbols">Count of possible symbols.</param>
+        /// <returns>Entropy level.</returns>
         public static double ShannonEntropy(string input, int countOfPossibleSymbols)
         {
             double entropy = 0;
