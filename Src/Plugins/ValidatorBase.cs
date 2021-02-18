@@ -200,6 +200,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             return nameof(ValidationState.Unknown);
         }
 
+        public static string ReturnUnexpectedResponseCode(int statusCode)
+        {
+            return string.Format(UnknownErrorCode, statusCode);
+        }
+
         public static string ParseExpression(IRegex regexEngine, string matchedPattern, string expression)
         {
             FlexMatch match = regexEngine.Match(matchedPattern, expression);
