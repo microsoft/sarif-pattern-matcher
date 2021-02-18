@@ -127,7 +127,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             return false;
         }
 
-        public static string ReturnUnhandledException(ref string message, Exception e, string asset = null, string account = null)
+        public static string CreateUnexpectedResponseCodeMessage(HttpStatusCode status)
+        {
+            return $"An unexpected HTTP response code was received: '{status}'.";
+        }
+
+        public static string ReturnUnhandledException(ref string message,
+                                                      Exception e,
+                                                      string asset = null,
+                                                      string account = null)
         {
             if (TestExceptionForMessage(e, "No such host is known", asset))
             {

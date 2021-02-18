@@ -34,6 +34,8 @@
   $SEC101/009.LinkedInCredentials=(?si)linkedin(.{0,50})?\b(?-i)(?<id>[0-9a-z]{14})\b.{0,50}?\b(?i)(?<key>[0-9a-z]{16})\b
   $SEC101/010.SquarePat=(?si)(?<refine>square.{0,50}[^0-9a-z](?<key>(?-i)EAAAE[\w\-]{59}))([^0-9a-z]|$)
   $SEC101/011.SquareCredentials=(?s)((\b(?<id>sq0idp\-[\w\-]{22}).{1,50}?)|(\b(?<key>sq0csp-(?i)[0-9a-z\-_]{43}).{0,50}?)){2}
+  $SEC101/012.SlackWebhook=(?i)https:\/\/hooks\.slack\.com\/services\/T[0-9a-z_]{8,10}\/B[0-9a-z_]{8,10}\/[0-9a-z_]{24}
+  $SEC101/014.FacebookAccessToken=\b(?<refine>EAACEdEose0cBA(?i)[0-9a-z]+)
   $SEC101/016.StripeApiKey=\b(?<refine>(?<key>(?:r|s)k_(live|test)_(?i)[0-9a-z]{24,99}))([^0-9a-z]|$)
   $SEC101/023.AmazonMwsAuthToken=\b(?<refine>amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)
   $SEC101/026.MailgunApiKey=(?is)((^|[^0-9a-z\-])(?<key>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8}).{0,50}?|[^0-9a-z](?<account>[0-9a-z]+?\.mailgun\.org).{0,50}?){2}
