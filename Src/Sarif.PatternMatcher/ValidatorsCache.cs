@@ -127,8 +127,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string currentDirectory = Environment.CurrentDirectory;
             try
             {
-                Environment.CurrentDirectory =
-                    Path.GetDirectoryName(isValidDynamicMethodInfo.ReflectedType.Assembly.Location);
+                string location = isValidDynamicMethodInfo.ReflectedType.Assembly.Location;
+                if (!string.IsNullOrWhiteSpace(location))
+                {
+                    Environment.CurrentDirectory = Path.GetDirectoryName(location);
+                }
 
                 validationText =
                     (string)isValidDynamicMethodInfo.Invoke(
@@ -225,7 +228,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     try
                     {
                         assemblyBaseFolder = Path.GetDirectoryName(validatorPath);
-                        assembly = Assembly.Load(_fileSystem.FileReadAllBytes(validatorPath));
+                        assembly = _fileSystem.AssemblyLoadFrom(validatorPath);
                     }
                     catch (ReflectionTypeLoadException)
                     {
