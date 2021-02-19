@@ -154,6 +154,5 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 return ValidatorBase.ReturnUnhandledException(ref message, e);
             }
         }
-
     }
 }

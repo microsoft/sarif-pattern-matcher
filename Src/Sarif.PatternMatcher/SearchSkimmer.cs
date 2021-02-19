@@ -400,7 +400,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 IDictionary<string, string> groups = match.Groups.CopyToDictionary(regex.GetGroupNames());
 
-                Debug.Assert(!groups.ContainsKey("scanTargetFullPath"));
+                Debug.Assert(!groups.ContainsKey("scanTargetFullPath"), "Full path should always exist.");
                 groups["scanTargetFullPath"] = filePath;
 
                 if (matchExpression.Properties != null)
