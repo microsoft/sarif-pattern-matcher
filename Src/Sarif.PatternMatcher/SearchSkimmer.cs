@@ -527,6 +527,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string fingerprint = null;
             IDictionary<string, string> groups = new Dictionary<string, string>();
 
+            if (!string.IsNullOrEmpty(context.FileContents))
+            {
+                groups["content"] = context.FileContents;
+            }
+
             string filePath = context.TargetUri.LocalPath;
             string fingerprintText = null, validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
