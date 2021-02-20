@@ -18,7 +18,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            ref string message)
         {
 #pragma warning restore IDE0060
-
             bool callCollectionApi = groups.ContainsKey("bundle");
 
             string thumbprint = null;
