@@ -40,14 +40,15 @@
         {
           "ruleId": "SEC103/024",
           "ruleIndex": 0,
+          "level": "error",
           "message": {
             "id": "Default",
             "arguments": [
               "SEC103_024.MicrosoftSerializedCertificateStoreFile_default.sst",
-              "an apparent ",
+              "an exposed ",
               "Microsoft Serialized Certificate Store",
               "",
-              " (an unexpected exception was caught attempting to validate '': The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters)"
+              " (which contains private keys)"
             ]
           },
           "locations": [
@@ -59,7 +60,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[thumbprint=391550988FF0B079A0E712728F2EB95D542EF58F]"
+          }
         }
       ],
       "columnKind": "utf16CodeUnits"

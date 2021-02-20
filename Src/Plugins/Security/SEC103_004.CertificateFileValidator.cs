@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 
@@ -23,6 +25,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             bool callCollectionApi = groups.ContainsKey("bundle");
             string thumbprint = null;
             string state = null;
+
+            if (groups.ContainsKey("content") && groups["content"].Any(ch => char.IsControl(ch) && ch != '\r' && ch != '\n'))
+            {
+                groups.Remove("content");
+            }
 
             if (groups.ContainsKey("content"))
             {
