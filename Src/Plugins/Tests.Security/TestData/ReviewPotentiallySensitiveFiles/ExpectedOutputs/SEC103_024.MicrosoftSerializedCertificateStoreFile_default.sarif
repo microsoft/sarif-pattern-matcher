@@ -45,7 +45,7 @@
             "id": "Default",
             "arguments": [
               "SEC103_024.MicrosoftSerializedCertificateStoreFile_default.sst",
-              "an exposed ",
+              "a valid ",
               "Microsoft Serialized Certificate Store",
               "",
               " (which contains private keys)"
