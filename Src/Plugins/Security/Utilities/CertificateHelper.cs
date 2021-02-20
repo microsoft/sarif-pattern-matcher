@@ -84,5 +84,75 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 return ValidatorBase.ReturnUnhandledException(ref message, e, fileName);
             }
         }
+
+        public static string TryLoadCertificate(byte[] rawData,
+                                                ref string fingerprintText,
+                                                ref string message)
+        {
+            try
+            {
+                // If this certificate needs a password or it is a bundle, it will throw an exception.
+                using var certificate = new X509Certificate2(rawData);
+                fingerprintText = certificate.Thumbprint;
+
+                if (!certificate.HasPrivateKey)
+                {
+                    return nameof(ValidationState.NoMatch);
+                }
+
+                message = "which contains private keys.";
+                return nameof(ValidationState.Authorized);
+            }
+            catch (Exception e)
+            {
+                if (e is CryptographicException cryptographicException)
+                {
+                    if (e.Message == "Cannot find the original signer.")
+                    {
+                        return TryLoadCertificateCollection(rawData,
+                                                            ref message,
+                                                            ref fingerprintText);
+                    }
+
+                    if (e.Message == "The specified network password is not correct.")
+                    {
+                        return nameof(ValidationState.PasswordProtected);
+                    }
+                }
+
+                return ValidatorBase.ReturnUnhandledException(ref message, e);
+            }
+        }
+
+        public static string TryLoadCertificateCollection(byte[] rawData,
+                                                          ref string fingerprintText,
+                                                          ref string message)
+        {
+            var certificates = new X509Certificate2Collection();
+            try
+            {
+                // If this certificate needs a password, it will throw an exception.
+                certificates.Import(rawData);
+                var thumbprints = new List<string>();
+                string state = nameof(ValidationState.NoMatch);
+                foreach (X509Certificate2 certificate in certificates)
+                {
+                    thumbprints.Add(certificate.Thumbprint);
+                    if (certificate.HasPrivateKey)
+                    {
+                        // Private key detected.
+                        state = nameof(ValidationState.Authorized);
+                    }
+                }
+
+                fingerprintText = string.Join(";", thumbprints);
+                message = "which contains private keys.";
+                return state;
+            }
+            catch (Exception e)
+            {
+                return ValidatorBase.ReturnUnhandledException(ref message, e);
+            }
+        }
     }
 }
