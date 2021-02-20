@@ -34,6 +34,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             }
 
             string lowerHost = host.ToLower();
+
             // Other rules will handle these cases.
             foreach (string hostToExclude in hostList)
             {
