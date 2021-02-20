@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/012",
-              "name": "DoNotExposePlaintextSecrets/SlackWebhook",
+              "id": "SEC101/013",
+              "name": "DoNotExposePlaintextSecrets/PemEncodedPrivateKey",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -22,7 +22,7 @@
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
-                "Default": {
+                "Pkcs8": {
                   "text": "'{0}' contains {1}{2}{3}{4}{5}."
                 }
               },
@@ -38,17 +38,17 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/012",
+          "ruleId": "SEC101/013",
           "ruleIndex": 0,
           "message": {
-            "id": "Default",
+            "id": "Pkcs8",
             "arguments": [
               "SEC101_013.PemEncodedPrivateKey.txt",
               "an apparent ",
               "",
-              "Slack web hook",
+              "PEM encoded PKCS8 private key",
               "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+              ""
             ]
           },
           "locations": [
@@ -59,21 +59,294 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 1,
+                  "startLine": 3,
                   "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 82,
-                  "charOffset": 0,
-                  "charLength": 81,
+                  "endLine": 11,
+                  "endColumn": 30,
+                  "charOffset": 12,
+                  "charLength": 500,
                   "snippet": {
-                    "text": "https://hooks.slack.com/services/T01JYS3KLKU/B0123456789/deedbeefdeaffeeddeadbeef"
+                    "text": "-----BEGIN RSA PRIVATE KEY-----\r\nMIIBOgIBAAJBAKj34GkxFhD90vcNLYLInFEX6Ppy1tPf9Cnzj4p4WGeKLs1Pt8Qu\r\nKUpRKfFLfRYC9AIKjbJTWit+CqvjWYzvQwECAwEAAQJAIJLixBy2qpFoS4DSmoEm\r\no3qGy0t6z09AIJtH+5OeRV1be+N4cDYJKffGzDa88vQENZiRm0GRq6a+HPGQMd2k\r\nTQIhAKMSvzIBnni7ot/OSie2TmJLY4SwTQAevXysE2RbFDYdAiEBCUEaRQnMnbp7\r\n9mxDXDf6AU0cN/RPBjb9qSHDcWZHGzUCIG2Es59z8ugGrDY+pxLQnwfotadxd+Uy\r\nv/Ow5T0q5gIJAiEAyS4RaI9YG8EWx/2w0T67ZUVAw8eOMB6BIUg0Xcu+3okCIBOs\r\n/5OiPgoTdSy7bcF9IGpSE8ZgGKzgYQVZeN97YE00\r\n-----END RSA PRIVATE KEY-----"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[uri=https://hooks.slack.com/services/T01JYS3KLKU/B0123456789/deedbeefdeaffeeddeadbeef]"
+            "ValidationFingerprint/v1": "[key=MIIBOgIBAAJBAKj34GkxFhD90vcNLYLInFEX6Ppy1tPf9Cnzj4p4WGeKLs1Pt8Qu\r\nKUpRKfFLfRYC9AIKjbJTWit+CqvjWYzvQwECAwEAAQJAIJLixBy2qpFoS4DSmoEm\r\no3qGy0t6z09AIJtH+5OeRV1be+N4cDYJKffGzDa88vQENZiRm0GRq6a+HPGQMd2k\r\nTQIhAKMSvzIBnni7ot/OSie2TmJLY4SwTQAevXysE2RbFDYdAiEBCUEaRQnMnbp7\r\n9mxDXDf6AU0cN/RPBjb9qSHDcWZHGzUCIG2Es59z8ugGrDY+pxLQnwfotadxd+Uy\r\nv/Ow5T0q5gIJAiEAyS4RaI9YG8EWx/2w0T67ZUVAw8eOMB6BIUg0Xcu+3okCIBOs\r\n/5OiPgoTdSy7bcF9IGpSE8ZgGKzgYQVZeN97YE00]"
+          }
+        },
+        {
+          "ruleId": "SEC101/013",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Pkcs8",
+            "arguments": [
+              "SEC101_013.PemEncodedPrivateKey.txt",
+              "an apparent ",
+              "",
+              "PEM encoded PKCS8 private key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.PemEncodedPrivateKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 1,
+                  "endLine": 18,
+                  "endColumn": 29,
+                  "charOffset": 523,
+                  "charLength": 230,
+                  "snippet": {
+                    "text": "-----BEGIN EC PRIVATE KEY-----\r\nMHcCAQEEIODzxjCf0NkBLVYX7sVilLtblWwtkZpWC3YoB/col3F9oAoGCCqGSM49\r\nAwEHoUQDQgAE5DL9kQY/fOr3OHf5MTDwt6o8XNvjxHA0safM0cDkRu3/Tl1o/SU4\r\n0TjYueDVtss8HArsJ2swDMplZp0pPdF5Vw==\r\n-----END EC PRIVATE KEY-----"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[key=MHcCAQEEIODzxjCf0NkBLVYX7sVilLtblWwtkZpWC3YoB/col3F9oAoGCCqGSM49\r\nAwEHoUQDQgAE5DL9kQY/fOr3OHf5MTDwt6o8XNvjxHA0safM0cDkRu3/Tl1o/SU4\r\n0TjYueDVtss8HArsJ2swDMplZp0pPdF5Vw==]"
+          }
+        },
+        {
+          "ruleId": "SEC101/013",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Pkcs8",
+            "arguments": [
+              "SEC101_013.PemEncodedPrivateKey.txt",
+              "an apparent ",
+              "",
+              "PEM encoded PKCS8 private key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.PemEncodedPrivateKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 1,
+                  "endLine": 25,
+                  "endColumn": 29,
+                  "charOffset": 767,
+                  "charLength": 230,
+                  "snippet": {
+                    "text": "-----BEGIN EC PRIVATE KEY-----\r\nMHcCAQEEIAyTKsj3kY5lVne0CuSgZnL7GTmpTvtBzkfp6eDmQliToAoGCCqGSM49\r\nAwEHoUQDQgAEqvQivyLG18SM5Sh5B3NVn9yfqgL/n6pIVBVd0gqwrdQgD3ZhtE/N\r\n+NPInP9ir9ggxWZBB/wOclcn4F33b42PdQ==\r\n-----END EC PRIVATE KEY-----"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[key=MHcCAQEEIAyTKsj3kY5lVne0CuSgZnL7GTmpTvtBzkfp6eDmQliToAoGCCqGSM49\r\nAwEHoUQDQgAEqvQivyLG18SM5Sh5B3NVn9yfqgL/n6pIVBVd0gqwrdQgD3ZhtE/N\r\n+NPInP9ir9ggxWZBB/wOclcn4F33b42PdQ==]"
+          }
+        },
+        {
+          "ruleId": "SEC101/013",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Pkcs8",
+            "arguments": [
+              "SEC101_013.PemEncodedPrivateKey.txt",
+              "an apparent ",
+              "",
+              "PEM encoded PKCS8 private key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.PemEncodedPrivateKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 28,
+                  "startColumn": 1,
+                  "endLine": 39,
+                  "endColumn": 30,
+                  "charOffset": 1009,
+                  "charLength": 678,
+                  "snippet": {
+                    "text": "-----BEGIN DSA PRIVATE KEY-----\r\nMIIBugIBAAKBgQC6G4LJmIfw64RrEwHAg4Rlv9r8MlwuqdGlra+RRIERkG1ONbBK\r\ns2IhsLIPM3uLTycNmUVFApo8Df2jPYjPFo8M2/uINgl1yhcFTUjcexOCaT58Be7W\r\npce6wkhmmzG9c2UCsrgriGhLMZ8fsPXvsltKDc5YSYMZoOEcSdf7VBntkwIVAIUE\r\nIfkWBofyvuQ5ihcQgR5AoT7dAoGAUUwcYwDLmgYiqxg2GPXKZIkitvJ6GJwb/FML\r\n5O939c/gv4GPB/OdtByN1rl7erf41BdmMnPcaKYcojjrNCHiRltXsamQDmsqRf8f\r\nwJmRNoqYpwa6ow3CKnKBe5NzfAkIAScoHo9ZCCDu6U4+XZ5w1RVEFu93bHzBSvFw\r\nNKgjTJcCgYA6jhLHdmlv+0dl07oGpXjW9w1NfIQhkOhX+AnBSuSZn9NxRhqNC0tC\r\nIFIsWbNPYeHmU0a6qYxfoFqvZof2TYoKVN9ZwLk9WlHWm54xOTKrg9P8NkstPjGK\r\nthZzWonZHN8bIsi3TwLcds0KWVpzXY0frZTq3Z59E9U8C7OngTArggIUQZlmZMQ6\r\nxM2zXXMukObXNJ6g2Yg=\r\n-----END DSA PRIVATE KEY-----"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[key=MIIBugIBAAKBgQC6G4LJmIfw64RrEwHAg4Rlv9r8MlwuqdGlra+RRIERkG1ONbBK\r\ns2IhsLIPM3uLTycNmUVFApo8Df2jPYjPFo8M2/uINgl1yhcFTUjcexOCaT58Be7W\r\npce6wkhmmzG9c2UCsrgriGhLMZ8fsPXvsltKDc5YSYMZoOEcSdf7VBntkwIVAIUE\r\nIfkWBofyvuQ5ihcQgR5AoT7dAoGAUUwcYwDLmgYiqxg2GPXKZIkitvJ6GJwb/FML\r\n5O939c/gv4GPB/OdtByN1rl7erf41BdmMnPcaKYcojjrNCHiRltXsamQDmsqRf8f\r\nwJmRNoqYpwa6ow3CKnKBe5NzfAkIAScoHo9ZCCDu6U4+XZ5w1RVEFu93bHzBSvFw\r\nNKgjTJcCgYA6jhLHdmlv+0dl07oGpXjW9w1NfIQhkOhX+AnBSuSZn9NxRhqNC0tC\r\nIFIsWbNPYeHmU0a6qYxfoFqvZof2TYoKVN9ZwLk9WlHWm54xOTKrg9P8NkstPjGK\r\nthZzWonZHN8bIsi3TwLcds0KWVpzXY0frZTq3Z59E9U8C7OngTArggIUQZlmZMQ6\r\nxM2zXXMukObXNJ6g2Yg=]"
+          }
+        },
+        {
+          "ruleId": "SEC101/013",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Pkcs8",
+            "arguments": [
+              "SEC101_013.PemEncodedPrivateKey.txt",
+              "an apparent ",
+              "",
+              "PEM encoded PKCS8 private key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.PemEncodedPrivateKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 42,
+                  "startColumn": 1,
+                  "endLine": 51,
+                  "endColumn": 26,
+                  "charOffset": 1701,
+                  "charLength": 530,
+                  "snippet": {
+                    "text": "-----BEGIN PRIVATE KEY-----\r\nMIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAqPfgaTEWEP3S9w0t\r\ngsicURfo+nLW09/0KfOPinhYZ4ouzU+3xC4pSlEp8Ut9FgL0AgqNslNaK34Kq+NZ\r\njO9DAQIDAQABAkAgkuLEHLaqkWhLgNKagSajeobLS3rPT0Agm0f7k55FXVt743hw\r\nNgkp98bMNrzy9AQ1mJGbQZGrpr4c8ZAx3aRNAiEAoxK/MgGeeLui385KJ7ZOYktj\r\nhLBNAB69fKwTZFsUNh0CIQEJQRpFCcydunv2bENcN/oBTRw39E8GNv2pIcNxZkcb\r\nNQIgbYSzn3Py6AasNj6nEtCfB+i1p3F35TK/87DlPSrmAgkCIQDJLhFoj1gbwRbH\r\n/bDRPrtlRUDDx44wHoEhSDRdy77eiQIgE6z/k6I+ChN1LLttwX0galITxmAYrOBh\r\nBVl433tgTTQ=\r\n-----END PRIVATE KEY-----"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[key=MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAqPfgaTEWEP3S9w0t\r\ngsicURfo+nLW09/0KfOPinhYZ4ouzU+3xC4pSlEp8Ut9FgL0AgqNslNaK34Kq+NZ\r\njO9DAQIDAQABAkAgkuLEHLaqkWhLgNKagSajeobLS3rPT0Agm0f7k55FXVt743hw\r\nNgkp98bMNrzy9AQ1mJGbQZGrpr4c8ZAx3aRNAiEAoxK/MgGeeLui385KJ7ZOYktj\r\nhLBNAB69fKwTZFsUNh0CIQEJQRpFCcydunv2bENcN/oBTRw39E8GNv2pIcNxZkcb\r\nNQIgbYSzn3Py6AasNj6nEtCfB+i1p3F35TK/87DlPSrmAgkCIQDJLhFoj1gbwRbH\r\n/bDRPrtlRUDDx44wHoEhSDRdy77eiQIgE6z/k6I+ChN1LLttwX0galITxmAYrOBh\r\nBVl433tgTTQ=]"
+          }
+        },
+        {
+          "ruleId": "SEC101/013",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Pkcs8",
+            "arguments": [
+              "SEC101_013.PemEncodedPrivateKey.txt",
+              "an apparent ",
+              "",
+              "PEM encoded PKCS8 private key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.PemEncodedPrivateKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 1,
+                  "endLine": 64,
+                  "endColumn": 34,
+                  "charOffset": 2247,
+                  "charLength": 672,
+                  "snippet": {
+                    "text": "-----BEGIN OPENSSH PRIVATE KEY-----\r\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAVwAAAAdzc2gtcn\r\nNhAAAAAwEAAQAAAEEAqPfgaTEWEP3S9w0tgsicURfo+nLW09/0KfOPinhYZ4ouzU+3xC4p\r\nSlEp8Ut9FgL0AgqNslNaK34Kq+NZjO9DAQAAATB+9/CSfvfwkgAAAAdzc2gtcnNhAAAAQQ\r\nCo9+BpMRYQ/dL3DS2CyJxRF+j6ctbT3/Qp84+KeFhnii7NT7fELilKUSnxS30WAvQCCo2y\r\nU1orfgqr41mM70MBAAAAAwEAAQAAAEAgkuLEHLaqkWhLgNKagSajeobLS3rPT0Agm0f7k5\r\n5FXVt743hwNgkp98bMNrzy9AQ1mJGbQZGrpr4c8ZAx3aRNAAAAIBOs/5OiPgoTdSy7bcF9\r\nIGpSE8ZgGKzgYQVZeN97YE00AAAAIQCjEr8yAZ54u6Lfzkontk5iS2OEsE0AHr18rBNkWx\r\nQ2HQAAACEBCUEaRQnMnbp79mxDXDf6AU0cN/RPBjb9qSHDcWZHGzUAAAAXcGhwc2VjbGli\r\nLWdlbmVyYXRlZC1rZXkBAgME\r\n-----END OPENSSH PRIVATE KEY-----"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[key=b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAVwAAAAdzc2gtcn\r\nNhAAAAAwEAAQAAAEEAqPfgaTEWEP3S9w0tgsicURfo+nLW09/0KfOPinhYZ4ouzU+3xC4p\r\nSlEp8Ut9FgL0AgqNslNaK34Kq+NZjO9DAQAAATB+9/CSfvfwkgAAAAdzc2gtcnNhAAAAQQ\r\nCo9+BpMRYQ/dL3DS2CyJxRF+j6ctbT3/Qp84+KeFhnii7NT7fELilKUSnxS30WAvQCCo2y\r\nU1orfgqr41mM70MBAAAAAwEAAQAAAEAgkuLEHLaqkWhLgNKagSajeobLS3rPT0Agm0f7k5\r\n5FXVt743hwNgkp98bMNrzy9AQ1mJGbQZGrpr4c8ZAx3aRNAAAAIBOs/5OiPgoTdSy7bcF9\r\nIGpSE8ZgGKzgYQVZeN97YE00AAAAIQCjEr8yAZ54u6Lfzkontk5iS2OEsE0AHr18rBNkWx\r\nQ2HQAAACEBCUEaRQnMnbp79mxDXDf6AU0cN/RPBjb9qSHDcWZHGzUAAAAXcGhwc2VjbGli\r\nLWdlbmVyYXRlZC1rZXkBAgME]"
+          }
+        },
+        {
+          "ruleId": "SEC101/013",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Pkcs8",
+            "arguments": [
+              "SEC101_013.PemEncodedPrivateKey.txt",
+              "an apparent ",
+              "",
+              "PEM encoded PKCS8 private key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.PemEncodedPrivateKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 67,
+                  "startColumn": 1,
+                  "endLine": 73,
+                  "endColumn": 34,
+                  "charOffset": 2935,
+                  "charLength": 424,
+                  "snippet": {
+                    "text": "-----BEGIN OPENSSH PRIVATE KEY-----\r\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\r\nQyNTUxOQAAACAcTZ1MXxofTe02fos2CvtcGv+htQMl0NbHpBHD8WVhOAAAAKBjs+7OY7Pu\r\nzgAAAAtzc2gtZWQyNTUxOQAAACAcTZ1MXxofTe02fos2CvtcGv+htQMl0NbHpBHD8WVhOA\r\nAAAEAP2dyJR6Q61DzjJgiw4JvCXPNvWLW8aO/MYnJvuq3KERxNnUxfGh9N7TZ+izYK+1wa\r\n/6G1AyXQ1sekEcPxZWE4AAAAHHJlZG1vbmRcbWlrZWZhbkBtaWtlZmFuLWRldjIB\r\n-----END OPENSSH PRIVATE KEY-----"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[key=b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\r\nQyNTUxOQAAACAcTZ1MXxofTe02fos2CvtcGv+htQMl0NbHpBHD8WVhOAAAAKBjs+7OY7Pu\r\nzgAAAAtzc2gtZWQyNTUxOQAAACAcTZ1MXxofTe02fos2CvtcGv+htQMl0NbHpBHD8WVhOA\r\nAAAEAP2dyJR6Q61DzjJgiw4JvCXPNvWLW8aO/MYnJvuq3KERxNnUxfGh9N7TZ+izYK+1wa\r\n/6G1AyXQ1sekEcPxZWE4AAAAHHJlZG1vbmRcbWlrZWZhbkBtaWtlZmFuLWRldjIB]"
+          }
+        },
+        {
+          "ruleId": "SEC101/013",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Pkcs8",
+            "arguments": [
+              "SEC101_013.PemEncodedPrivateKey.txt",
+              "an apparent ",
+              "",
+              "PEM encoded PKCS8 private key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.PemEncodedPrivateKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 76,
+                  "startColumn": 1,
+                  "endLine": 106,
+                  "endColumn": 36,
+                  "charOffset": 3371,
+                  "charLength": 1806,
+                  "snippet": {
+                    "text": "-----BEGIN PGP PRIVATE KEY BLOCK-----\r\nVersion: BCPG C# v1.6.1.0\r\n\r\nlQOsBGAxg+QBCACQ6wwSGeOuecSd7zvTcoJH6SNtu7Qg6KHUvDu+2HhajtpkFit1\r\n65d+tUxSOOYhKq+9okn4pBvY8rlEu+n+dNED8Q0UVCdCYM4iuXWpFM3uCRVfpePT\r\n4NvUp8BVOAyGa7Sjtb+F/37S4ydzdAR21wMomFtOfp+TGvfRsmcYKk8ECY7SUogC\r\nh+BGgRHHA5rEETeA0wGbGULwoewA9x3OfXl+FIJByjKGbJy/esKlO+v0buaUwMVO\r\ntSNuR9zcHQDvGSRcEbccYYjFtJumWJ0XgQm6dL626LQ7XGC1ohzMr5Q0s0fblEoE\r\nyChMDxzCoz3IC9UhowwHWeXbBlArQeIjm567ABEBAAH/AwMC/2JdFpwX9ZlggKx6\r\nhS1kcCFmlCztGlIUqZsqQMoPxKOseJVCfa8DfVUmOiAooH8V5yI7zZ4gCCzUdT0T\r\nfUvj4+N2Xx+NvaH0klT03oIYOo/YjxYhf82zWojlBsNe9PO3ffstQBjCUY3SXAyw\r\nwIt7DsxvMbyEUqF6qHPUKkznp2k5s67WoNf7bOZjQ201oktR8tyLPZv4CgHeuxnv\r\nkT7RYdBi9i7OTeYMChvOhRM0pBUioBi7aKDkt+BXMRbbNeyqZo3B5ZVu1BLQTPX/\r\nHo9np+9zUnwVGMSxKGhBrITfDdzKVTFzvUsjOA1vaTu9QaxztpyLfZlXNOeNZ1Rp\r\nEzfpHk4HnhVHPf08rjOsoMLIBn2vwSJSVCawoX0ZUVroz4YMIMCT6wYrCOA/dZpX\r\nRY/dwrUfh1/sbtZeT+x0kNcHvjjm5nQ42hx8uc7kVnzqXGw+DKZBvN1kNJH+qbkF\r\nBk1FpeqmfLKxhteZv2knkr9OS5FjfRYj1IYH50mvHUXtTx6E2zU8EE7ZT2DFaujS\r\nl3lD+yRdO5m7eJkf7gApS06O8K+zZCFyYflpovuc6kEZMSyV6/ufgpNfDprzeP3T\r\nvQY2XCShifSJYdfyuUmGyMhUt5hnkmK7jwB7miJYthU0MonlXYmDHRGr0iemrTpe\r\nJKgK+XXxpvZBc2muI9xDQ3vDf6V2NhP761ztyOpcwz3B9m17ERwSWI7SIKo/Hx/F\r\ncfaJ+xk6EoG0cdb0qeeB6w5YUCDqi2y0TBG0/+od6v9PlPOiuFR+x6pBdVgzGuj/\r\n6OhaFQSvmtRQknEdM/u67V/+ZRy8qmcFXSfaPfwKxHqyD5rBkRIxJH8h+Dd8xJh7\r\ncMRWjYupEHsmtFzlEcqH8wYxw6/Xkc44ojqznUI1H7QAiQEcBBABAgAGBQJgMYPk\r\nAAoJENmYLXAmikwSbgQH/07Ln+J/Un+V0uuwB1lOo44QOAI91JtU2LLGctDExHcK\r\nj8kk3RvQF7SX0Br0ONwZiq6hjQAUbtBl3exjyEXZ6QAL3dIccE3C1Rtd6SAvdVRd\r\n6NrDvf032kjUBqg0vyDT0tocsonMDedwz+gDWMwFvoJqeG4hWGphn1gYCxw628Es\r\nXmc+3sGp4QgKk/Jr2Cuqqimcz6/5PBTUEaMQ34fT7RIOAcifqfzYdvmxrP8nUE5f\r\nVMtwcjQxSi8kywOvkvdCGwWIHOFjtzIEYIjGnQMBFaR4MFIKOpd4KHyNkYD3ew7A\r\nlVB5iGvhYEn6YSU8xUVHNgwaZx4mgxnbU10D16QIJLc=\r\n=ya8A\r\n-----END PGP PRIVATE KEY BLOCK-----"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[key=lQOsBGAxg+QBCACQ6wwSGeOuecSd7zvTcoJH6SNtu7Qg6KHUvDu+2HhajtpkFit1\r\n65d+tUxSOOYhKq+9okn4pBvY8rlEu+n+dNED8Q0UVCdCYM4iuXWpFM3uCRVfpePT\r\n4NvUp8BVOAyGa7Sjtb+F/37S4ydzdAR21wMomFtOfp+TGvfRsmcYKk8ECY7SUogC\r\nh+BGgRHHA5rEETeA0wGbGULwoewA9x3OfXl+FIJByjKGbJy/esKlO+v0buaUwMVO\r\ntSNuR9zcHQDvGSRcEbccYYjFtJumWJ0XgQm6dL626LQ7XGC1ohzMr5Q0s0fblEoE\r\nyChMDxzCoz3IC9UhowwHWeXbBlArQeIjm567ABEBAAH/AwMC/2JdFpwX9ZlggKx6\r\nhS1kcCFmlCztGlIUqZsqQMoPxKOseJVCfa8DfVUmOiAooH8V5yI7zZ4gCCzUdT0T\r\nfUvj4+N2Xx+NvaH0klT03oIYOo/YjxYhf82zWojlBsNe9PO3ffstQBjCUY3SXAyw\r\nwIt7DsxvMbyEUqF6qHPUKkznp2k5s67WoNf7bOZjQ201oktR8tyLPZv4CgHeuxnv\r\nkT7RYdBi9i7OTeYMChvOhRM0pBUioBi7aKDkt+BXMRbbNeyqZo3B5ZVu1BLQTPX/\r\nHo9np+9zUnwVGMSxKGhBrITfDdzKVTFzvUsjOA1vaTu9QaxztpyLfZlXNOeNZ1Rp\r\nEzfpHk4HnhVHPf08rjOsoMLIBn2vwSJSVCawoX0ZUVroz4YMIMCT6wYrCOA/dZpX\r\nRY/dwrUfh1/sbtZeT+x0kNcHvjjm5nQ42hx8uc7kVnzqXGw+DKZBvN1kNJH+qbkF\r\nBk1FpeqmfLKxhteZv2knkr9OS5FjfRYj1IYH50mvHUXtTx6E2zU8EE7ZT2DFaujS\r\nl3lD+yRdO5m7eJkf7gApS06O8K+zZCFyYflpovuc6kEZMSyV6/ufgpNfDprzeP3T\r\nvQY2XCShifSJYdfyuUmGyMhUt5hnkmK7jwB7miJYthU0MonlXYmDHRGr0iemrTpe\r\nJKgK+XXxpvZBc2muI9xDQ3vDf6V2NhP761ztyOpcwz3B9m17ERwSWI7SIKo/Hx/F\r\ncfaJ+xk6EoG0cdb0qeeB6w5YUCDqi2y0TBG0/+od6v9PlPOiuFR+x6pBdVgzGuj/\r\n6OhaFQSvmtRQknEdM/u67V/+ZRy8qmcFXSfaPfwKxHqyD5rBkRIxJH8h+Dd8xJh7\r\ncMRWjYupEHsmtFzlEcqH8wYxw6/Xkc44ojqznUI1H7QAiQEcBBABAgAGBQJgMYPk\r\nAAoJENmYLXAmikwSbgQH/07Ln+J/Un+V0uuwB1lOo44QOAI91JtU2LLGctDExHcK\r\nj8kk3RvQF7SX0Br0ONwZiq6hjQAUbtBl3exjyEXZ6QAL3dIccE3C1Rtd6SAvdVRd\r\n6NrDvf032kjUBqg0vyDT0tocsonMDedwz+gDWMwFvoJqeG4hWGphn1gYCxw628Es\r\nXmc+3sGp4QgKk/Jr2Cuqqimcz6/5PBTUEaMQ34fT7RIOAcifqfzYdvmxrP8nUE5f\r\nVMtwcjQxSi8kywOvkvdCGwWIHOFjtzIEYIjGnQMBFaR4MFIKOpd4KHyNkYD3ew7A\r\nlVB5iGvhYEn6YSU8xUVHNgwaZx4mgxnbU10D16QIJLc=\r\n=ya8A]"
           }
         }
       ],
