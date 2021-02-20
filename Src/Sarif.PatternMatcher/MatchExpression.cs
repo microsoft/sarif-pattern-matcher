@@ -7,8 +7,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class MatchExpression
     {
-        public Dictionary<string, string> Strings { get; set; }
-
         public string Id { get; set; }
 
         public string SubId { get; set; }

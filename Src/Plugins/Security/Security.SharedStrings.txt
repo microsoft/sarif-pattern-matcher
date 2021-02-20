@@ -35,6 +35,7 @@
   $SEC101/010.SquarePat=(?si)(?<refine>square.{0,50}[^0-9a-z](?<key>(?-i)EAAAE[\w\-]{59}))([^0-9a-z]|$)
   $SEC101/011.SquareCredentials=(?s)((\b(?<id>sq0idp\-[\w\-]{22}).{1,50}?)|(\b(?<key>sq0csp-(?i)[0-9a-z\-_]{43}).{0,50}?)){2}
   $SEC101/012.SlackWebhook=(?i)https:\/\/hooks\.slack\.com\/services\/T[0-9a-z_]{8,10}\/B[0-9a-z_]{8,10}\/[0-9a-z_]{24}
+  $SEC101/013.PemEncodedPrivateKey=(?si)-{5}BEGIN (DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (KEY BLOCK|KEY)-{5}.*?(VERSION: [^\n]+\n)?\n(?<key>[^:]*?)-{5}END (DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (KEY BLOCK|KEY)-{5}
   $SEC101/014.FacebookAccessToken=\b(?<refine>EAACEdEose0cBA(?i)[0-9a-z]+)
   $SEC101/016.StripeApiKey=\b(?<refine>(?<key>(?:r|s)k_(live|test)_(?i)[0-9a-z]{24,99}))([^0-9a-z]|$)
   $SEC101/023.AmazonMwsAuthToken=\b(?<refine>amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)

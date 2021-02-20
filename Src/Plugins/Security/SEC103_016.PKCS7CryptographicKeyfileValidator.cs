@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public static class PKCS7CryptographicKeyfileValidator
+    public static class Pkcs7CryptographicKeyfileValidator
     {
         public static string IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
