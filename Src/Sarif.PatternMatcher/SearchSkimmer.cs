@@ -524,7 +524,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ReportingDescriptor reportingDescriptor = this;
 
             string levelText = level.ToString();
-            string fingerprint = null;
             IDictionary<string, string> groups = new Dictionary<string, string>();
 
             if (!string.IsNullOrEmpty(context.FileContents))
@@ -533,7 +532,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             string filePath = context.TargetUri.LocalPath;
-            string fingerprintText = null, validatorMessage = null;
+            string fingerprint = null, validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
 
             if (_validators != null && matchExpression.IsValidatorEnabled)
@@ -543,7 +542,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 ref filePath,
                                 ref groups,
                                 ref levelText,
-                                ref fingerprintText,
+                                ref fingerprint,
                                 ref validatorMessage,
                                 out bool pluginSupportsDynamicValidation);
 
