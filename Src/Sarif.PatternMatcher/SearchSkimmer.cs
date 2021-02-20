@@ -205,7 +205,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                  ref string validationPrefix,
                                                                  ref string validationSuffix,
                                                                  ref string validatorMessage,
-                                                                 bool pluginSupportsDynamicValidation)
+                                                                 bool pluginSupportsDynamicValidation,
+                                                                 ref ResultKind kind)
         {
             switch (state)
             {
@@ -272,6 +273,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
+                case Validation.PasswordProtected:
+                {
+                    level = FailureLevel.Warning;
+
+                    // Contributes to building a message fragment such as:
+                    // 'SomeFile.txt' contains a password-protected SomeSecret file
+                    // which could be exfiltrated and potentially brute-forced offline.
+                    validationPrefix = "a password-protected ";
+                    validationSuffix = " which could be exfiltrated and potentially brute-forced offline";
+                    break;
+                }
+
                 case Validation.UnknownHost:
                 {
                     level = FailureLevel.Warning;
@@ -327,6 +340,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // expected condition or not?
                     validationPrefix = "an apparent ";
 
+                    break;
+                }
+
+                case Validation.Pass:
+                {
+                    level = FailureLevel.Warning;
+                    kind = ResultKind.Pass;
                     break;
                 }
 
@@ -426,6 +446,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string levelText = level.ToString();
 
                 Validation state = 0;
+                ResultKind kind = ResultKind.Fail;
                 string fingerprint = null;
                 string validatorMessage = null;
                 string validationPrefix = string.Empty;
@@ -468,7 +489,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                         ref validationPrefix,
                                                         ref validationSuffix,
                                                         ref validatorMessage,
-                                                        pluginSupportsDynamicValidation);
+                                                        pluginSupportsDynamicValidation,
+                                                        ref kind);
 
                     if (state == Validation.None ||
                         state == Validation.NoMatch ||
@@ -505,6 +527,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Result result = ConstructResult(context.TargetUri,
                                                 reportingDescriptor.Id,
                                                 level,
+                                                kind,
                                                 region,
                                                 flexMatch,
                                                 fingerprint,
@@ -531,6 +554,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 groups["content"] = context.FileContents;
             }
 
+            ResultKind kind = ResultKind.Fail;
             string filePath = context.TargetUri.LocalPath;
             string fingerprint = null, validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
@@ -566,126 +590,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     level = FailureLevel.Error;
                 }
 
-                switch (state)
-                {
-                    case Validation.NoMatch:
-                    {
-                        // The validator determined the match is a false positive.
-                        // i.e., it is not the kind of artifact we're looking for.
-                        // We should suspend processing and move to the next match.
-                        return;
-                    }
-
-                    case Validation.None:
-                    case Validation.ValidatorReturnedIllegalValidationState:
-                    {
-                        // An illegal state was returned running check '{0}' against '{1}' ({2}).
-                        context.Logger.LogToolNotification(
-                            Errors.CreateNotification(
-                                context.TargetUri,
-                                "ERR998.ValidatorReturnedIllegalValidationState",
-                                context.Rule.Id,
-                                FailureLevel.Error,
-                                exception: null,
-                                persistExceptionStack: false,
-                                messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
-                                context.Rule.Id,
-                                context.TargetUri.GetFileName(),
-                                validatorMessage));
-
-                        level = FailureLevel.Error;
-                        return;
-                    }
-
-                    case Validation.Authorized:
-                    {
-                        level = FailureLevel.Error;
-
-                        // Contributes to building a message fragment such as:
-                        // 'SomeFile.txt' is an exposed SomeSecret file [...].
-                        validationPrefix = "an exposed ";
-                        break;
-                    }
-
-                    case Validation.Expired:
-                    {
-                        level = FailureLevel.Warning;
-
-                        // Contributes to building a message fragment such as:
-                        // 'SomeFile.txt' contains an expired SomeApi token[...].
-                        validationPrefix = "an expired ";
-                        break;
-                    }
-
-                    case Validation.PasswordProtected:
-                    {
-                        level = FailureLevel.Warning;
-
-                        // Contributes to building a message fragment such as:
-                        // 'SomeFile.txt' contains a password-protected SomeSecret file
-                        // which could be exfiltrated and potentially brute-forced offline.
-                        validationPrefix = "a password-protected ";
-                        validationSuffix = " which could be exfiltrated and potentially brute-forced offline";
-                        break;
-                    }
-
-                    case Validation.UnknownHost:
-                    case Validation.Unauthorized:
-                    case Validation.InvalidForConsultedAuthorities:
-                    {
-                        throw new InvalidOperationException();
-                    }
-
-                    case Validation.Unknown:
-                    {
-                        level = FailureLevel.Warning;
-
-                        validationPrefix = "an apparent ";
-                        if (!context.DynamicValidation)
-                        {
-                            if (pluginSupportsDynamicValidation)
-                            {
-                                // This indicates that dynamic validation was disabled but we
-                                // passed this result to a validator that could have performed
-                                // this work.
-                                validationSuffix = ". No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
-                            }
-                            else
-                            {
-                                // No validation was requested. The plugin indicated
-                                // that is can't perform this work in any case.
-                                validationSuffix = string.Empty;
-                            }
-                        }
-                        else if (pluginSupportsDynamicValidation)
-                        {
-                            validationSuffix = ", the validity of which could not be determined by runtime analysis";
-                        }
-                        else
-                        {
-                            // Validation was requested. But the plugin indicated
-                            // that it can't perform this work in any case.
-                            validationSuffix = string.Empty;
-                        }
-
-                        break;
-                    }
-
-                    case Validation.ValidatorNotFound:
-                    {
-                        // TODO: should we have an explicit indicator in
-                        // all cases that tells us whether this is an
-                        // expected condition or not?
-                        validationPrefix = "an apparent ";
-
-                        break;
-                    }
-
-                    default:
-                    {
-                        throw new InvalidOperationException($"Unrecognized validation value '{state}'.");
-                    }
-                }
+                SetPropertiesBasedOnValidationState(state,
+                                                    context,
+                                                    ref level,
+                                                    ref validationPrefix,
+                                                    ref validationSuffix,
+                                                    ref validatorMessage,
+                                                    pluginSupportsDynamicValidation,
+                                                    ref kind);
             }
 
             Dictionary<string, string> messageArguments =
@@ -707,6 +619,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     context.TargetUri,
                     reportingDescriptor.Id,
                     level,
+                    kind,
                     region: null,
                     flexMatch: null,
                     fingerprint,
@@ -746,6 +659,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Uri targetUri,
             string ruleId,
             FailureLevel level,
+            ResultKind kind,
             Region region,
             FlexMatch flexMatch,
             string fingerprint,
@@ -777,6 +691,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Id = messageId,
                     Arguments = arguments,
                 },
+                Kind = kind,
                 Locations = new List<Location>(new[] { location }),
                 Fingerprints = fingerprints,
             };

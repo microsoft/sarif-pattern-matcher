@@ -65,5 +65,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// Pattern is a match and the secret is valid.
         /// </summary>
         Authorized,
+
+        /// <summary>
+        /// Pattern is a match and the secret is secure.
+        /// </summary>
+        Pass,
     }
 }

@@ -47,15 +47,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string validationPrefix = node.Message.Arguments[1];
                 string validationSuffix = node.Message.Arguments[4];
 
+                ResultKind kind = ResultKind.Fail;
                 SearchSkimmer.SetPropertiesBasedOnValidationState(state,
                                                                   context: null,
                                                                   ref level,
                                                                   ref validationPrefix,
                                                                   ref validationSuffix,
                                                                   ref message,
-                                                                  pluginSupportsDynamicValidation: true);
+                                                                  pluginSupportsDynamicValidation: true,
+                                                                  ref kind);
 
                 node.Level = level;
+                node.Kind = kind;
                 node.Message.Arguments[1] = validationPrefix;
                 node.Message.Arguments[4] = validationSuffix;
                 node.Message.Arguments[5] = SearchSkimmer.NormalizeValidatorMessage(message);
