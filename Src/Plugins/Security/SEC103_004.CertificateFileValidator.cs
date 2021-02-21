@@ -58,6 +58,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     CertificateHelper.TryLoadCertificate(matchedPattern,
                                                          ref thumbprint,
                                                          ref message);
+
             }
 
             if (thumbprint != null)

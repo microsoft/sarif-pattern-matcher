@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_013.PemEncodedPrivateKey.sarif" />
-    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_013.PemEncodedPrivateKey.txt" />
+    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_013.CryptographicPrivateKey.sarif" />
+    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_013.CryptographicPrivateKey.txt" />
   </ItemGroup>
 
   <ItemGroup>
