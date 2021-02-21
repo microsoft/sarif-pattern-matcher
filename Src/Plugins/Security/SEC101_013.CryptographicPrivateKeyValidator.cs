@@ -3,19 +3,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-
-using Org.BouncyCastle.OpenSsl;
+using System.Text;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class PemEncodedPrivateKeyValidator : ValidatorBase
+    public class CryptographicPrivateKeyValidator : ValidatorBase
     {
-        internal static PemEncodedPrivateKeyValidator Instance;
+        internal static CryptographicPrivateKeyValidator Instance;
 
-        static PemEncodedPrivateKeyValidator()
+        static CryptographicPrivateKeyValidator()
         {
-            Instance = new PemEncodedPrivateKeyValidator();
+            Instance = new CryptographicPrivateKeyValidator();
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -39,6 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string message)
         {
             groups.TryGetValue("key", out string key);
+            groups.TryGetValue("kind", out string kind);
 
             key = key.Trim();
 
@@ -47,7 +46,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Key = key,
             }.ToString();
 
-            return nameof(ValidationState.Unknown);
+            switch (kind)
+            {
+                case "PrivateKeyBlob":
+                {
+                    byte[] bytes = Convert.FromBase64String(key);
+                    byte[] magic = new byte[4];
+
+                    // https://docs.microsoft.com/en-us/windows/win32/seccrypto/base-provider-key-blobs#private-key-blobs
+                    // This offset is the RSAPUBKEY structure. The magic
+                    // member must be set to the ASCII encoding of "RSA2".
+                    if (bytes[8] != 'R' ||
+                        bytes[9] != 'S' ||
+                        bytes[10] != 'A' ||
+                        bytes[11] != '2')
+                    {
+                        return nameof(ValidationState.NoMatch);
+                    }
+
+                    break;
+                }
+            }
+
+            return nameof(ValidationState.Authorized);
         }
     }
 }
