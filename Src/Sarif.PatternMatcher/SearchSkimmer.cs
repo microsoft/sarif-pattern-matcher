@@ -112,6 +112,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string filePath = context.TargetUri.GetFilePath();
             reasonIfNotApplicable = null;
 
+            if (!string.IsNullOrWhiteSpace(context.GlobalFileDenyRegex) &&
+                _engine.Match(filePath, pattern: context.GlobalFileDenyRegex).Success)
+            {
+                reasonIfNotApplicable = SpamResources.TargetWasFilteredByFileNameDenyRegex;
+                return AnalysisApplicability.NotApplicableToSpecifiedTarget;
+            }
+
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(filePath, matchExpression.FileNameDenyRegex))

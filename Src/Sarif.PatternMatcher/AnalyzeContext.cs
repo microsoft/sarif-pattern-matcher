@@ -43,7 +43,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public bool DynamicValidation { get; set; }
 
-        public bool MultilinePatternMatching { get; set; }
+        public string GlobalFileDenyRegex { get; set; }
 
         public void Dispose()
         {
