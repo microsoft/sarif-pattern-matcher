@@ -508,6 +508,45 @@
           "ruleId": "SEC101/046",
           "ruleIndex": 1,
           "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_046.SqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 56,
+                  "startColumn": 1,
+                  "endLine": 57,
+                  "endColumn": 35,
+                  "charOffset": 3355,
+                  "charLength": 118,
+                  "snippet": {
+                    "text": "Data Source=(local);Initial Catalog=AdventureWorks;User ID=ab;Password= a1Pass@@11\r\n    Modified: Data Source=(local);"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=ab][host=localhost][pwd=a1Pass@@11][resource=AdventureWorks]"
+          }
+        },
+        {
+          "ruleId": "SEC101/046",
+          "ruleIndex": 1,
+          "message": {
             "id": "Jdbc",
             "arguments": [
               "SEC101_046.SqlConnectionString.ps1",

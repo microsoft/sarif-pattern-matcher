@@ -51,3 +51,7 @@ jdbc:sqlserver://127.0.0.1;database=database13;user=username13@some-database-nam
     "propertyA": "propertyA"
     "propertyB": "propertyB"
 }
+
+# Plain text
+Data Source=(local);Initial Catalog=AdventureWorks;User ID=ab;Password= a1Pass@@11
+    Modified: Data Source=(local);
