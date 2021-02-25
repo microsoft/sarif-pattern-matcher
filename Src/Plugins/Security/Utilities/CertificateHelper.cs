@@ -66,10 +66,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 string state = nameof(ValidationState.NoMatch);
                 foreach (X509Certificate2 certificate in certificates)
                 {
-                    thumbprints.Add(certificate.Thumbprint);
                     if (certificate.HasPrivateKey)
                     {
-                        // Private key detected.
+                        thumbprints.Add(certificate.Thumbprint);
                         state = nameof(ValidationState.Authorized);
                     }
                 }

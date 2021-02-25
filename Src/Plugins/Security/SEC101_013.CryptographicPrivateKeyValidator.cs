@@ -6,13 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using Amazon.Runtime.SharedInterfaces;
-
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 
 using Org.BouncyCastle.Bcpg.OpenPgp;
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Crypto.Parameters;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -134,7 +130,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     }
 
                     return nameof(ValidationState.Authorized);
-                 }
+                }
             }
 
             if (oneOrMorePassphraseProtectedKeys)
