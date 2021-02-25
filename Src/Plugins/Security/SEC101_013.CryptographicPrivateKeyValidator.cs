@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class CryptographicPrivateKeyValidator : ValidatorBase
@@ -46,6 +48,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Key = key,
             }.ToString();
 
+            string state = nameof(ValidationState.Unknown);
+
             switch (kind)
             {
                 case "PrivateKeyBlob":
@@ -66,9 +70,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     break;
                 }
+
+                default:
+                {
+                    string thumbprint = string.Empty;
+                    byte[] rawData = Convert.FromBase64String(key);
+                    state = CertificateHelper.TryLoadCertificate(rawData,
+                                                                 ref thumbprint,
+                                                                 ref message);
+                    break;
+                }
             }
 
-            return nameof(ValidationState.Authorized);
+            return state;
         }
     }
 }
