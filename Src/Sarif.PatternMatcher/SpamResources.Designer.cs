@@ -86,5 +86,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher {
                 return ResourceManager.GetString("TargetDoesNotMeetFileNameCriteria", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to file name matches scan deny list regex..
+        /// </summary>
+        internal static string TargetWasFilteredByFileNameDenyRegex {
+            get {
+                return ResourceManager.GetString("TargetWasFilteredByFileNameDenyRegex", resourceCulture);
+            }
+        }
     }
 }

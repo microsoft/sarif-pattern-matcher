@@ -232,6 +232,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     DefaultTraces.None;
 
             context.DynamicValidation = options.DynamicValidation;
+            context.GlobalFileDenyRegex = options.FileNameDenyRegex;
 
             return context;
         }

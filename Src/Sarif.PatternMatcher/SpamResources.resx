@@ -126,4 +126,7 @@
   <data name="TargetDoesNotMeetFileNameCriteria" xml:space="preserve">
     <value>file name does not meet search definition criteria.</value>
   </data>
+  <data name="TargetWasFilteredByFileNameDenyRegex" xml:space="preserve">
+    <value>file name matches scan deny list regex.</value>
+  </data>
 </root>
