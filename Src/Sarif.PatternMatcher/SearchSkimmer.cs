@@ -258,6 +258,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
+                case Validation.PasswordProtected:
+                {
+                    level = FailureLevel.Warning;
+
+                    // Contributes to building a message fragment such as:
+                    // 'SomeFile.txt' contains a valid but password-protected
+                    // SomeApi token [...].
+                    validationPrefix = "a valid but password-protected ";
+                    break;
+                }
+
                 case Validation.Unauthorized:
                 {
                     level = FailureLevel.Warning;

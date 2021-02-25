@@ -3,9 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
+using Amazon.Runtime.SharedInterfaces;
+
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
+
+using Org.BouncyCastle.Bcpg.OpenPgp;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -41,6 +48,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.TryGetValue("key", out string key);
             groups.TryGetValue("kind", out string kind);
 
+            kind = matchedPattern.Contains(" PGP ") ? "Pgp" : kind;
+
             key = key.Trim();
 
             fingerprintText = new Fingerprint
@@ -71,6 +80,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     break;
                 }
 
+                case "Pgp":
+                {
+                    state = GetPrivatePgpKey(key, ref message);
+                    break;
+                }
+
+                case "PemCer":
+                {
+                    byte[] bytes = Encoding.UTF8.GetBytes(matchedPattern);
+                    state = CertificateHelper.TryLoadCertificate(bytes,
+                                                                 ref fingerprintText,
+                                                                 ref message);
+                    break;
+                }
+
                 default:
                 {
                     string thumbprint = string.Empty;
@@ -83,6 +107,42 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             return state;
+        }
+
+        private static string GetPrivatePgpKey(string key, ref string message)
+        {
+            using Stream keyIn = new MemoryStream(Encoding.UTF8.GetBytes(key));
+            using Stream stream = PgpUtilities.GetDecoderStream(keyIn);
+            PgpSecretKeyRingBundle secretKeyRingBundle = new PgpSecretKeyRingBundle(stream);
+
+            bool oneOrMorePassphraseProtectedKeys = false;
+
+            foreach (PgpSecretKeyRing kRing in secretKeyRingBundle.GetKeyRings())
+            {
+                foreach (PgpSecretKey secretKey in kRing.GetSecretKeys())
+                {
+                    PgpPrivateKey privateKey = null;
+                    try
+                    {
+                        char[] noPassphrase = new char[0];
+                        privateKey = secretKey.ExtractPrivateKey(noPassphrase);
+                    }
+                    catch (PgpException)
+                    {
+                        oneOrMorePassphraseProtectedKeys = true;
+                        continue;
+                    }
+
+                    return nameof(ValidationState.Authorized);
+                 }
+            }
+
+            if (oneOrMorePassphraseProtectedKeys)
+            {
+                return nameof(ValidationState.PasswordProtected);
+            }
+
+            return nameof(ValidationState.NoMatch);
         }
     }
 }
