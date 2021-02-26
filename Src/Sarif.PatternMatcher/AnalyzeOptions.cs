@@ -30,5 +30,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             "multiline",
             HelpText = "Enable multiline regular expression search.")]
         public bool Multiline { get; internal set; }
+
+        [Option(
+            "deny-regex",
+            HelpText = "A regular expression used to suppress scanning for any file or directory path that matches the regex.")]
+        public string FileNameDenyRegex { get; internal set; }
     }
 }

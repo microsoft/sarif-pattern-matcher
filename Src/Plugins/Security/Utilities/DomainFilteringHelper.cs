@@ -28,7 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 
         public static string HostExclusion(string host, IEnumerable<string> hostList = null)
         {
-            if (hostList == null || hostList.Count() == 0)
+            if (hostList == null || !hostList.Any())
             {
                 return nameof(ValidationState.Unknown);
             }

@@ -93,14 +93,8 @@
           "MessageArguments": { "fileKind": "OpenVPN client configuration file" }
         },
         {
-          "Id": "SEC103/015",
-          "Name": "ReviewPotentiallySensitiveFiles/PEMCryptographicPrivateKeyfile",
-          "FileNameAllowRegex": "(?i)\\.pem$",
-          "MessageArguments": { "fileKind": "PEM cryptographic private key" }
-        },
-        {
           "Id": "SEC103/016",
-          "Name": "ReviewPotentiallySensitiveFiles/PKCS7CryptographicKeyfile",
+          "Name": "ReviewPotentiallySensitiveFiles/Pkcs7CryptographicKeyfile",
           "FileNameAllowRegex": "(?i)\\.p7b$",
           "MessageArguments": { "fileKind": "PKCS#7 cryptographic key bundle" }
         },
@@ -112,7 +106,7 @@
         },
         {
           "Id": "SEC103/018",
-          "Name": "ReviewPotentiallySensitiveFiles/PKCS12CryptographicKeyfile",
+          "Name": "ReviewPotentiallySensitiveFiles/Pkcs12CryptographicKeyfile",
           "FileNameAllowRegex": "(?i)\\.(p12|pkcs12)$",
           "MessageArguments": { "fileKind": "PKCS#12 cryptographic key bundle" }
         },
@@ -121,12 +115,6 @@
           "Name": "ReviewPotentiallySensitiveFiles/NetworkTrafficCaptureFile",
           "FileNameAllowRegex": "(?i)\\.pcap$",
           "MessageArguments": { "fileKind": "Network traffic capture file" }
-        },
-        {
-          "Id": "SEC103/020",
-          "Name": "ReviewPotentiallySensitiveFiles/PuTTygenPrivateKeyfile",
-          "FileNameAllowRegex": "(?i)\\.ppk$",
-          "MessageArguments": { "fileKind": "PuTTYgen private key" }
         },
         {
           "Id": "SEC103/021",
