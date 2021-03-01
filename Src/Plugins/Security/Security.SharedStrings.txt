@@ -50,5 +50,8 @@
   $SEC101/046.SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;"<]+);(((database\s*=\s*(?<database>[^;"<]{1,128}))|(user\s*=\s*(?<account>[^@]+)@[^;"<]+)|(password\s*=\s*(?<password>[^;"<]+))).{1,50}?){3}
   $SEC101/046.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;"<]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<account>[^"]+)",\s*"(?<password>[^"]+)"
   $SEC101/047.MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<account>[a-z\@\-]{1,120})(?i))|(Pwd=(?<password>[^;"]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
+  $SEC101/048.PSCredentialConstructor=PSCredential\s*\(\s*"(?<account>[^"]*)"\s*,\s*"(?<password>[^"]*)"
+  $SEC101/048.PSCredentialObjectInitializer=(?s)PSCredential\s*\(\)\s*{\s*.{0,50}UserName\s*=\s*"(?<account>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<password>[^"]*)"
+  $SEC101/048.PSCredentialPowershell=ConvertTo-SecureString.{1,50}"(?<password>[^"]*)"(?s).{1,100}(?-s)PSCredential.{1,50}-ArgumentList\s+(?<account>[^,]+),
   $SEC101/102.AdoPat=(^|[^2-7a-z])(?<refine>[2-7a-z]{52})([^2-7a-z]|$)
   
