@@ -646,6 +646,45 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
+                  "startLine": 8,
+                  "startColumn": 129,
+                  "endLine": 8,
+                  "endColumn": 205,
+                  "charOffset": 951,
+                  "charLength": 76,
+                  "snippet": {
+                    "text": "DriverManager.getConnection(url, \"username@some-database-name\", \"PASSword_5\""
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][pwd=PASSword_5]"
+          }
+        },
+        {
+          "ruleId": "SEC101/047",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Jdbc",
+            "arguments": [
+              "SEC101_047.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "JDBC MySQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
                   "startLine": 60,
                   "startColumn": 17,
                   "endLine": 61,
