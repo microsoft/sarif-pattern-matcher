@@ -59,22 +59,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 case "PrivateKeyBlob":
                 {
-                    try
-                    {
-                        byte[] bytes = Convert.FromBase64String(key);
+                    byte[] bytes = Convert.FromBase64String(key);
 
-                        // https://docs.microsoft.com/en-us/windows/win32/seccrypto/base-provider-key-blobs#private-key-blobs
-                        // This offset is the RSAPUBKEY structure. The magic
-                        // member must be set to the ASCII encoding of "RSA2".
-                        if (bytes[8] != 'R' ||
-                            bytes[9] != 'S' ||
-                            bytes[10] != 'A' ||
-                            bytes[11] != '2')
-                        {
-                            return nameof(ValidationState.NoMatch);
-                        }
-                    }
-                    catch (Exception)
+                    // https://docs.microsoft.com/en-us/windows/win32/seccrypto/base-provider-key-blobs#private-key-blobs
+                    // This offset is the RSAPUBKEY structure. The magic
+                    // member must be set to the ASCII encoding of "RSA2".
+                    if (bytes[8] != 'R' ||
+                        bytes[9] != 'S' ||
+                        bytes[10] != 'A' ||
+                        bytes[11] != '2')
                     {
                         return nameof(ValidationState.NoMatch);
                     }
