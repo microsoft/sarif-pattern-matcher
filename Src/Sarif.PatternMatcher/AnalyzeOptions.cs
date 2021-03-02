@@ -35,5 +35,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             "deny-regex",
             HelpText = "A regular expression used to suppress scanning for any file or directory path that matches the regex.")]
         public string FileNameDenyRegex { get; internal set; }
+
+        [Option(
+            "file-size",
+            HelpText = "The maximum file size (in kilobytes) that will be analyzed.",
+            Default = 1024)]
+        public int FileSizeInKilobytes { get; internal set; }
     }
 }

@@ -60,7 +60,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 case "PrivateKeyBlob":
                 {
                     byte[] bytes = Convert.FromBase64String(key);
-                    byte[] magic = new byte[4];
 
                     // https://docs.microsoft.com/en-us/windows/win32/seccrypto/base-provider-key-blobs#private-key-blobs
                     // This offset is the RSAPUBKEY structure. The magic
@@ -109,7 +108,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             using Stream keyIn = new MemoryStream(Encoding.UTF8.GetBytes(key));
             using Stream stream = PgpUtilities.GetDecoderStream(keyIn);
-            PgpSecretKeyRingBundle secretKeyRingBundle = new PgpSecretKeyRingBundle(stream);
+            var secretKeyRingBundle = new PgpSecretKeyRingBundle(stream);
 
             bool oneOrMorePassphraseProtectedKeys = false;
 
@@ -120,7 +119,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     PgpPrivateKey privateKey = null;
                     try
                     {
-                        char[] noPassphrase = new char[0];
+                        char[] noPassphrase = Array.Empty<char>();
                         privateKey = secretKey.ExtractPrivateKey(noPassphrase);
                     }
                     catch (PgpException)
