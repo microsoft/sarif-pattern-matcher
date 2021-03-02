@@ -3,7 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
+
+using Org.BouncyCastle.Bcpg.OpenPgp;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -39,6 +44,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.TryGetValue("key", out string key);
             groups.TryGetValue("kind", out string kind);
 
+            kind = matchedPattern.Contains(" PGP ") ? "Pgp" : kind;
+
             key = key.Trim();
 
             fingerprintText = new Fingerprint
@@ -46,12 +53,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Key = key,
             }.ToString();
 
+            string state = nameof(ValidationState.Unknown);
+
             switch (kind)
             {
                 case "PrivateKeyBlob":
                 {
                     byte[] bytes = Convert.FromBase64String(key);
-                    byte[] magic = new byte[4];
 
                     // https://docs.microsoft.com/en-us/windows/win32/seccrypto/base-provider-key-blobs#private-key-blobs
                     // This offset is the RSAPUBKEY structure. The magic
@@ -66,9 +74,70 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     break;
                 }
+
+                case "Pgp":
+                {
+                    state = GetPrivatePgpKey(key, ref message);
+                    break;
+                }
+
+                case "PemCer":
+                {
+                    byte[] bytes = Encoding.UTF8.GetBytes(matchedPattern);
+                    state = CertificateHelper.TryLoadCertificate(bytes,
+                                                                 ref fingerprintText,
+                                                                 ref message);
+                    break;
+                }
+
+                default:
+                {
+                    string thumbprint = string.Empty;
+                    byte[] rawData = Convert.FromBase64String(key);
+                    state = CertificateHelper.TryLoadCertificate(rawData,
+                                                                 ref thumbprint,
+                                                                 ref message);
+                    break;
+                }
             }
 
-            return nameof(ValidationState.Authorized);
+            return state;
+        }
+
+        private static string GetPrivatePgpKey(string key, ref string message)
+        {
+            using Stream keyIn = new MemoryStream(Encoding.UTF8.GetBytes(key));
+            using Stream stream = PgpUtilities.GetDecoderStream(keyIn);
+            var secretKeyRingBundle = new PgpSecretKeyRingBundle(stream);
+
+            bool oneOrMorePassphraseProtectedKeys = false;
+
+            foreach (PgpSecretKeyRing kRing in secretKeyRingBundle.GetKeyRings())
+            {
+                foreach (PgpSecretKey secretKey in kRing.GetSecretKeys())
+                {
+                    PgpPrivateKey privateKey = null;
+                    try
+                    {
+                        char[] noPassphrase = Array.Empty<char>();
+                        privateKey = secretKey.ExtractPrivateKey(noPassphrase);
+                    }
+                    catch (PgpException)
+                    {
+                        oneOrMorePassphraseProtectedKeys = true;
+                        continue;
+                    }
+
+                    return nameof(ValidationState.Authorized);
+                }
+            }
+
+            if (oneOrMorePassphraseProtectedKeys)
+            {
+                return nameof(ValidationState.PasswordProtected);
+            }
+
+            return nameof(ValidationState.NoMatch);
         }
     }
 }

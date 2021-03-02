@@ -26,6 +26,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     return nameof(ValidationState.NoMatch);
                 }
 
+                if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
+                {
+                    return nameof(ValidationState.NoMatch);
+                }
+
                 message = "which contains private keys.";
                 return nameof(ValidationState.Authorized);
             }
@@ -66,10 +71,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 string state = nameof(ValidationState.NoMatch);
                 foreach (X509Certificate2 certificate in certificates)
                 {
-                    thumbprints.Add(certificate.Thumbprint);
+                    if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
+                    {
+                        continue;
+                    }
+
                     if (certificate.HasPrivateKey)
                     {
-                        // Private key detected.
+                        thumbprints.Add(certificate.Thumbprint);
                         state = nameof(ValidationState.Authorized);
                     }
                 }
@@ -100,6 +109,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     return nameof(ValidationState.NoMatch);
                 }
 
+                if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
+                {
+                    return nameof(ValidationState.NoMatch);
+                }
+
                 message = "which contains private keys.";
                 return nameof(ValidationState.Authorized);
             }
@@ -107,7 +121,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             {
                 if (e is CryptographicException cryptographicException)
                 {
-                    if (e.Message == "Cannot find the original signer.")
+                    if (e.Message.StartsWith("Cannot find the original signer."))
                     {
                         return TryLoadCertificateCollection(rawData,
                                                             ref message,
@@ -137,16 +151,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 string state = nameof(ValidationState.NoMatch);
                 foreach (X509Certificate2 certificate in certificates)
                 {
-                    thumbprints.Add(certificate.Thumbprint);
+                    if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
+                    {
+                        continue;
+                    }
+
                     if (certificate.HasPrivateKey)
                     {
-                        // Private key detected.
+                        thumbprints.Add(certificate.Thumbprint);
                         state = nameof(ValidationState.Authorized);
                     }
                 }
 
-                fingerprintText = string.Join(";", thumbprints);
-                message = "which contains private keys.";
+                if (thumbprints.Count > 0)
+                {
+                    fingerprintText = string.Join(";", thumbprints);
+                    message = "which contains private keys.";
+                }
+
                 return state;
             }
             catch (Exception e)

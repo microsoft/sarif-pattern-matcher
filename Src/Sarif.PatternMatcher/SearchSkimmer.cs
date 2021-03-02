@@ -112,6 +112,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string filePath = context.TargetUri.GetFilePath();
             reasonIfNotApplicable = null;
 
+            if (!string.IsNullOrWhiteSpace(context.GlobalFileDenyRegex) &&
+                _engine.Match(filePath, pattern: context.GlobalFileDenyRegex).Success)
+            {
+                reasonIfNotApplicable = SpamResources.TargetWasFilteredByFileNameDenyRegex;
+                return AnalysisApplicability.NotApplicableToSpecifiedTarget;
+            }
+
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(filePath, matchExpression.FileNameDenyRegex))
@@ -144,6 +151,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (context.FileContents == null)
             {
                 context.FileContents = _fileSystem.FileReadAllText(filePath);
+            }
+
+            if (context.FileContents.String.Length / 1024 > context.FileSizeInKilobytes)
+            {
+                return;
             }
 
             foreach (MatchExpression matchExpression in _matchExpressions)
@@ -248,6 +260,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains a valid SomeApi token [...].
                     validationPrefix = "a valid ";
+                    break;
+                }
+
+                case Validation.PasswordProtected:
+                {
+                    level = FailureLevel.Warning;
+
+                    // Contributes to building a message fragment such as:
+                    // 'SomeFile.txt' contains a valid but password-protected
+                    // SomeApi token [...].
+                    validationPrefix = "a valid but password-protected ";
                     break;
                 }
 
