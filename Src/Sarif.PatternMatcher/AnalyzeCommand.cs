@@ -233,6 +233,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             context.DynamicValidation = options.DynamicValidation;
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;
+            context.FileSizeInKilobytes = options.FileSizeInKilobytes;
 
             return context;
         }

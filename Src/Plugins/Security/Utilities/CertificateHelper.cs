@@ -26,6 +26,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     return nameof(ValidationState.NoMatch);
                 }
 
+                if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
+                {
+                    return nameof(ValidationState.NoMatch);
+                }
+
                 message = "which contains private keys.";
                 return nameof(ValidationState.Authorized);
             }
@@ -66,6 +71,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 string state = nameof(ValidationState.NoMatch);
                 foreach (X509Certificate2 certificate in certificates)
                 {
+                    if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
+                    {
+                        continue;
+                    }
+
                     if (certificate.HasPrivateKey)
                     {
                         thumbprints.Add(certificate.Thumbprint);
@@ -95,6 +105,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 fingerprintText = certificate.Thumbprint;
 
                 if (!certificate.HasPrivateKey)
+                {
+                    return nameof(ValidationState.NoMatch);
+                }
+
+                if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
                 {
                     return nameof(ValidationState.NoMatch);
                 }
@@ -136,6 +151,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 string state = nameof(ValidationState.NoMatch);
                 foreach (X509Certificate2 certificate in certificates)
                 {
+                    if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
+                    {
+                        continue;
+                    }
+
                     if (certificate.HasPrivateKey)
                     {
                         thumbprints.Add(certificate.Thumbprint);

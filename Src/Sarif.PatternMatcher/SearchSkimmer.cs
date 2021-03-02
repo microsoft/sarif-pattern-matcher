@@ -153,6 +153,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 context.FileContents = _fileSystem.FileReadAllText(filePath);
             }
 
+            if (context.FileContents.String.Length / 1024 > context.FileSizeInKilobytes)
+            {
+                return;
+            }
+
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
