@@ -53,5 +53,6 @@
   $SEC101/049.PSCredentialConstructor=PSCredential\s*\(\s*"(?<account>[^"]*)"\s*,\s*"(?<password>[^"]*)"
   $SEC101/049.PSCredentialObjectInitializer=(?s)PSCredential\s*\(\)\s*{\s*.{0,50}UserName\s*=\s*"(?<account>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<password>[^"]*)"
   $SEC101/049.PSCredentialPowershell=ConvertTo-SecureString.{1,50}"(?<password>[^"]*)"(?s).{1,100}(?-s)PSCredential.{1,50}-ArgumentList\s+(?<account>[^,]+),
+  $SEC101/051.GpgCredential=(?is)gpg[._-](gen_key_input|sign|decrypt_file)\s*\(\s*(name_email\s*=\s*["'](?<account>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?<password>[^"']*)["']
   $SEC101/102.AdoPat=(^|[^2-7a-z])(?<refine>[2-7a-z]{52})([^2-7a-z]|$)
   
