@@ -38,7 +38,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         [Option(
             "file-size",
-            HelpText = "The file max size in kilobytes that will be analyzed.",
+            HelpText = "The maximum file size (in kilobytes) that will be analyzed.",
             Default = 1024)]
         public int FileSizeInKilobytes { get; internal set; }
     }
