@@ -45,6 +45,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string GlobalFileDenyRegex { get; set; }
 
+        public int FileSizeInKilobytes { get; set; }
+
         public void Dispose()
         {
         }
