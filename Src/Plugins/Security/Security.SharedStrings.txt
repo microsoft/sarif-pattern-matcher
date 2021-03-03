@@ -42,6 +42,7 @@
   $SEC101/013/Pem.CryptographicPrivateKey=(?si)-{5}BEGIN (DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (KEY BLOCK|KEY)-{5}.*?(VERSION: [^\n]+\n)*\n(?<key>[^:]*?)-{5}END (DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (KEY BLOCK|KEY)-{5}
   $SEC101/014.FacebookAccessToken=\b(?<refine>EAACEdEose0cBA(?i)[0-9a-z]+)
   $SEC101/016.StripeApiKey=\b(?<refine>(?<key>(?:r|s)k_(live|test)_(?i)[0-9a-z]{24,99}))([^0-9a-z]|$)
+  $SEC101/019.PicaticApiKey=\b(?<refine>sk_(live|test)_[0-9a-z]{32})
   $SEC101/023.AmazonMwsAuthToken=\b(?<refine>amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)
   $SEC101/026.MailgunApiKey=(?is)((^|[^0-9a-z\-])(?<key>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8}).{0,50}?|[^0-9a-z](?<account>[0-9a-z]+?\.mailgun\.org).{0,50}?){2}
   $SEC101/031.NuGetApiKey=\b(?<refine>(?<key>oy2[0-9a-z]{43}))(^[0-9a-z]|$)
