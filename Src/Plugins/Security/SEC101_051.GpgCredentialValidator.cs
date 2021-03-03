@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class PSCredentialValidator : ValidatorBase
+    public class GpgCredentialValidator : ValidatorBase
     {
-        internal static PSCredentialValidator Instance;
+        internal static GpgCredentialValidator Instance;
 
-        static PSCredentialValidator()
+        static GpgCredentialValidator()
         {
-            Instance = new PSCredentialValidator();
+            Instance = new GpgCredentialValidator();
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -36,11 +36,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            if (!groups.TryGetNonEmptyValue("account", out string account) ||
-                !groups.TryGetNonEmptyValue("password", out string password))
+            if (!groups.TryGetNonEmptyValue("password", out string password))
             {
                 return nameof(ValidationState.NoMatch);
             }
+
+            groups.TryGetNonEmptyValue("account", out string account);
 
             fingerprintText = new Fingerprint()
             {
