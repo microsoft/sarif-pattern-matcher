@@ -43,7 +43,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_052.FacebookAccessToken.ps1",
+              "SEC101_014.FacebookAccessToken.ps1",
               "an apparent ",
               "",
               "Facebook access token",
@@ -55,7 +55,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_052.FacebookAccessToken.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_014.FacebookAccessToken.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -82,7 +82,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_052.FacebookAccessToken.ps1",
+              "SEC101_014.FacebookAccessToken.ps1",
               "an apparent ",
               "",
               "Facebook access token",
@@ -94,7 +94,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_052.FacebookAccessToken.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_014.FacebookAccessToken.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
