@@ -1,5 +1,14 @@
 # Release History
 
+## *v1.4.0-alpha-0145-gb5575bfb74*
+
+## *v1.4.0-alpha-0139-g9be1d98de6*
+
+## *v1.4.0-alpha-0064-g9308f29e09*
+
+- [9308f29](https://github.com/microsoft/sarif-pattern-matcher/commit/9308f29) Remove FB rule. Improve shared string expansion assert. (#188)
+- [6e94da7](https://github.com/microsoft/sarif-pattern-matcher/commit/6e94da7) Reverting last sql change (#187)
+
 ## *v1.4.0-alpha-0044-gee1e18ea36*
 
 - [ee1e18e](https://github.com/microsoft/sarif-pattern-matcher/commit/ee1e18e) Adding limits to SQL regex (#167)
