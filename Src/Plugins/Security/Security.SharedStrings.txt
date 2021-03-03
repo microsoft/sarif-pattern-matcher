@@ -55,4 +55,9 @@
   $SEC101/049.PSCredentialConstructor=PSCredential\s*\(\s*"(?<account>[^"]*)"\s*,\s*"(?<password>[^"]*)"
   $SEC101/049.PSCredentialObjectInitializer=(?s)PSCredential\s*\(\)\s*{\s*.{0,50}UserName\s*=\s*"(?<account>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<password>[^"]*)"
   $SEC101/049.PSCredentialPowershell=ConvertTo-SecureString.{1,50}"(?<password>[^"]*)"(?s).{1,100}(?-s)PSCredential.{1,50}-ArgumentList\s+(?<account>[^,]+),
+  $SEC101/050.SqlCredentialConstructor=SqlCredential\s*\(\s*"(?<account>[^"]*)"\s*,\s*"(?<password>[^"]*)"
+  $SEC101/050.SqlCredentialObjectInitializer=(?s)SqlCredential\(\)\s*{.{0,50}UserId\s*=\s*"(?<account>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<password>[^"]*)"
+  $SEC101/050.SqlCredentialPowershell=ConvertTo-SecureString(\s*-String)?\s*"(?<password>[^"]*)".{0,50}-AsPlainText.{0,50}-Force(?s).{0,200}(?-s)New-SqlCredential.{0,50}-Identity\s"(?<account>[^"]*)"
+  $SEC101/051.GpgCredential=(?is)gpg[._-](gen_key_input|sign|decrypt_file)\s*\(\s*(name_email\s*=\s*["'](?<account>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?<password>[^"']*)["']
   $SEC101/102.AdoPat=(^|[^2-7a-z])(?<refine>[2-7a-z]{52})([^2-7a-z]|$)
+  

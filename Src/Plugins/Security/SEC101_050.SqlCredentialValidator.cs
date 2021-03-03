@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class PSCredentialValidator : ValidatorBase
+    public class SqlCredentialValidator : ValidatorBase
     {
-        internal static PSCredentialValidator Instance;
+        internal static SqlCredentialValidator Instance;
 
-        static PSCredentialValidator()
+        static SqlCredentialValidator()
         {
-            Instance = new PSCredentialValidator();
+            Instance = new SqlCredentialValidator();
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -23,11 +23,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                            ref string message)
         {
             return IsValidStatic(Instance,
-                                 ref matchedPattern,
-                                 ref groups,
-                                 ref failureLevel,
-                                 ref fingerprint,
-                                 ref message);
+                                ref matchedPattern,
+                                ref groups,
+                                ref failureLevel,
+                                ref fingerprint,
+                                ref message);
         }
 
         protected override string IsValidStaticHelper(ref string matchedPattern,
