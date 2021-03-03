@@ -28,8 +28,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     IEnumerable<string> rules = o2["Definitions"][0]["MatchExpressions"].Select(x => x["Name"].ToString().Split('/')[1]).Distinct();
 
-                    Assembly assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.GetName().Name == "Security").Single();
-                    HashSet<string> validators = assemblies.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
+                    Assembly assembly = typeof(ValidatorBase).Assembly;
+                    // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
+                    HashSet<string> validators = assembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
 
                     List<string> rulesWithoutValidators = new List<string>();
 
@@ -53,11 +54,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Assert.True(false, "Unexpected JSON structure in rules file");
             }
-            catch (ArgumentNullException)
-            {
-                Assert.True(false, "Unable to find Security assembly, has the name changed?");
-            }
-
         }
     }
 }
