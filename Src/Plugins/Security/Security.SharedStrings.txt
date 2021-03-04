@@ -49,6 +49,7 @@
   $SEC101/024.TwilioApiKey=\b(?<refine>(?<key>SK(?i)[0-9a-f]{32}))([^0-9a-f]|$)
   $SEC101/026.MailgunApiKey=(?is)((^|[^0-9a-z\-])(?<key>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8}).{0,50}?|[^0-9a-z](?<account>[0-9a-z]+?\.mailgun\.org).{0,50}?){2}
   $SEC101/031.NuGetApiKey=\b(?<refine>(?<key>oy2[0-9a-z]{43}))(^[0-9a-z]|$)
+  $SEC101/043.ShopifySharedSecret=\b(?<refine>shpss_(?i)[0-9a-f]{32})
   $SEC101/045.PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<account>[^,;"<\s]+)|(password|pwd)\s*=\s*(?<password>[^,;"<\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+)))?
   $SEC101/046.SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*[^;"<]{0,50}|(initial catalog|database)\s*=\s*[^;"<]{0,50}|(user id|uid)\s*=\s*[^;"<]{0,50}|(password|pwd)\s*=\s*[^;"<]{0,50}).+?){4}
   $SEC101/046.SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;"<]+);(((database\s*=\s*(?<database>[^;"<]{1,128}))|(user\s*=\s*(?<account>[^@]+)@[^;"<]+)|(password\s*=\s*(?<password>[^;"<]+))).{1,50}?){3}
