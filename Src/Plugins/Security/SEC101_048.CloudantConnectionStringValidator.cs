@@ -71,6 +71,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         protected override string IsValidDynamicHelper(ref string fingerprintText,
                                                        ref string message)
         {
+            // TODO: Create a unit test for this. https://github.com/microsoft/sarif-pattern-matcher/issues/258
+
             var fingerprint = new Fingerprint(fingerprintText);
             string uri = fingerprint.Uri;
             string account = fingerprint.Account;
