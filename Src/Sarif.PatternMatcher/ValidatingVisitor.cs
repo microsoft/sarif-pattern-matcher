@@ -38,7 +38,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // {0:scanTarget}' contains {1:validationPrefix}{2:encoding}{3:secretKind}{4:validationSuffix}{5:validatorMessage}
                 string message = null;
 
-                FailureLevel level = node.Level;
+                FailureLevel level = default;
                 Validation state =
                     ValidatorsCache.ValidateDynamicHelper(validationPair.IsValidDynamic,
                                                           ref fingerprint,
