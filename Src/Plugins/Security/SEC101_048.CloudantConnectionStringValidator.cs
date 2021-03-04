@@ -78,37 +78,44 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             string account = fingerprint.Account;
             string password = fingerprint.Password;
 
-            // At this point account and password must be either both full or both empty.  Only check one
-            if (string.IsNullOrWhiteSpace(account))
+            try
             {
-                using (HttpClient client = CreateHttpClient())
+                // At this point account and password must be either both full or both empty.  Only check one
+                if (string.IsNullOrWhiteSpace(account))
                 {
-                    HttpResponseMessage response = client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult();
-                    if (response.StatusCode == HttpStatusCode.OK)
+                    using (HttpClient client = CreateHttpClient())
+                    using (HttpResponseMessage response = client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult())
                     {
-                        return ReturnAuthorizedAccess(ref message, uri);
-                    }
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            return ReturnAuthorizedAccess(ref message, uri);
+                        }
 
-                    message = CreateUnexpectedResponseCodeMessage(response.StatusCode, uri);
+                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode, uri);
+                    }
+                }
+                else
+                {
+                    HttpClientHandler handler = new HttpClientHandler();
+                    handler.Credentials = new NetworkCredential(account, password);
+                    using (HttpClient client = new HttpClient(handler)
+                    {
+                        BaseAddress = new Uri(uri),
+                    })
+                    using (HttpResponseMessage response = client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult())
+                    {
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            return ReturnAuthorizedAccess(ref message, uri);
+                        }
+
+                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode, uri);
+                    }
                 }
             }
-            else
+            catch (Exception e)
             {
-                HttpClientHandler handler = new HttpClientHandler();
-                handler.Credentials = new NetworkCredential(account, password);
-                using (HttpClient client = new HttpClient(handler)
-                {
-                    BaseAddress = new Uri(uri),
-                })
-                {
-                    HttpResponseMessage response = client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult();
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        return ReturnAuthorizedAccess(ref message, uri);
-                    }
-
-                    message = CreateUnexpectedResponseCodeMessage(response.StatusCode, uri);
-                }
+                return ReturnUnhandledException(ref message, e, asset: uri);
             }
 
             return nameof(ValidationState.Unknown);
