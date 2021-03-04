@@ -80,7 +80,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     case HttpStatusCode.BadRequest:
                     {
                         // We authenticated and our bogus payload was read.
-                        return nameof(ValidationState.Authorized);
+                        return nameof(ValidationState.AuthorizedError);
                     }
 
                     case HttpStatusCode.NotFound:
