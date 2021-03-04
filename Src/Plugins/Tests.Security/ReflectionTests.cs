@@ -16,7 +16,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class ReflectionTests
     {
-        [Fact]
         public void All101Rules_ShouldHaveValidators()
         {
             try
