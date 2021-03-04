@@ -33,7 +33,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     List<string> rulesWithoutValidators = new List<string>();
 
-                    foreach(string rule in rules)
+                    foreach (string rule in rules)
                     {
                         if (!validators.TryGetValue(rule + "Validator", out string _))
                         {
