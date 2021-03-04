@@ -136,6 +136,7 @@
         {
           "ruleId": "SEC101/019",
           "ruleIndex": 1,
+          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
@@ -175,6 +176,7 @@
         {
           "ruleId": "SEC101/019",
           "ruleIndex": 1,
+          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
