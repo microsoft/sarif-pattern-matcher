@@ -227,7 +227,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // i.e., it is not the kind of artifact we're looking for.
                     // We should suspend processing and move to the next match.
 
-                    level = FailureLevel.Note;
+                    level = FailureLevel.None;
                     return;
                 }
 
@@ -251,7 +251,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 validatorMessage));
                     }
 
-                    level = FailureLevel.Note;
+                    level = FailureLevel.Error;
                     return;
                 }
 
@@ -608,7 +608,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         // The validator determined the match is a false positive.
                         // i.e., it is not the kind of artifact we're looking for.
                         // We should suspend processing and move to the next match.
-                        level = FailureLevel.Note;
+                        level = FailureLevel.None;
                         return;
                     }
 
@@ -629,7 +629,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 context.TargetUri.GetFileName(),
                                 validatorMessage));
 
-                        level = FailureLevel.Note;
+                        level = FailureLevel.Error;
                         return;
                     }
 
