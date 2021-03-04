@@ -28,11 +28,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 
                 if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
                 {
-                    return nameof(ValidationState.NoMatch);
+                    return nameof(ValidationState.AuthorizedWarning);
                 }
 
                 message = "which contains private keys.";
-                return nameof(ValidationState.Authorized);
+                return nameof(ValidationState.AuthorizedError);
             }
             catch (Exception e)
             {
@@ -79,7 +79,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     if (certificate.HasPrivateKey)
                     {
                         thumbprints.Add(certificate.Thumbprint);
-                        state = nameof(ValidationState.Authorized);
+                        state = nameof(ValidationState.AuthorizedError);
                     }
                 }
 
@@ -115,7 +115,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 }
 
                 message = "which contains private keys.";
-                return nameof(ValidationState.Authorized);
+                return nameof(ValidationState.AuthorizedError);
             }
             catch (Exception e)
             {
@@ -159,7 +159,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     if (certificate.HasPrivateKey)
                     {
                         thumbprints.Add(certificate.Thumbprint);
-                        state = nameof(ValidationState.Authorized);
+                        state = nameof(ValidationState.AuthorizedError);
                     }
                 }
 
