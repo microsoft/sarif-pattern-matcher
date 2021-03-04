@@ -33,31 +33,7 @@
       },
       "invocations": [
         {
-          "toolExecutionNotifications": [
-            {
-              "locations": [
-                {
-                  "physicalLocation": {
-                    "artifactLocation": {
-                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.CryptographicPrivateKey.txt",
-                      "uriBaseId": "SRC_ROOT"
-                    }
-                  }
-                }
-              ],
-              "message": {
-                "text": "An illegal state was returned running check 'SEC101/013' against 'SEC101_013.CryptographicPrivateKey.txt' ()."
-              },
-              "level": "error",
-              "descriptor": {
-                "id": "ERR998.ValidatorReturnedIllegalValidationState"
-              },
-              "associatedRule": {
-                "id": "SEC101/013"
-              }
-            }
-          ],
-          "executionSuccessful": false
+          "executionSuccessful": true
         }
       ],
       "results": [
@@ -339,6 +315,46 @@
           ],
           "fingerprints": {
             "ValidationFingerprint/v1": "[key=b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\r\nQyNTUxOQAAACAcTZ1MXxofTe02fos2CvtcGv+htQMl0NbHpBHD8WVhOAAAAKBjs+7OY7Pu\r\nzgAAAAtzc2gtZWQyNTUxOQAAACAcTZ1MXxofTe02fos2CvtcGv+htQMl0NbHpBHD8WVhOA\r\nAAAEAP2dyJR6Q61DzjJgiw4JvCXPNvWLW8aO/MYnJvuq3KERxNnUxfGh9N7TZ+izYK+1wa\r\n/6G1AyXQ1sekEcPxZWE4AAAAHHJlZG1vbmRcbWlrZWZhbkBtaWtlZmFuLWRldjIB]"
+          }
+        },
+        {
+          "ruleId": "SEC101/013",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_013.CryptographicPrivateKey.txt",
+              "a valid ",
+              "",
+              "PEM encoded private key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.CryptographicPrivateKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 78,
+                  "startColumn": 1,
+                  "endLine": 108,
+                  "endColumn": 36,
+                  "charOffset": 3389,
+                  "charLength": 1814,
+                  "snippet": {
+                    "text": "-----BEGIN PGP PRIVATE KEY BLOCK-----\r\nVersion: BCPG C# v1.6.1.0\r\n\r\nlQOsBGA3tY0BCAC6oTMz+ofIVug9yMsXhnCYTULapVrndEIjpiCvLI1V1iHkCM3E\r\nhFAYBhQGrYV7ORchyXmw6OBNYGFYt9/wZrOoOjw+0MBb+JBpWwV3qN2yuyVSLxLa\r\n/+zUd/GXK6iqbuluvzaDE8BDbRrXDFWyJ9tgK2A79/LwHbko1F4YztEn0Ef1Ptlt\r\nHFObp+UYd1cZxjTSE8KNPUmcaXgC2b4NjAiPpMQG6XwDmpmNhRGINserDvs8K7/l\r\nCx6gI866Tj090IrVCmwdRCCpMpR05G7SYwUflSB8JH7FMxEuM01qiKDj9+ZMyDrn\r\nHQZk/Y6XHsQaIZwuUcbTOHm4Wyilk3ZXwRjbABEBAAH/AwMCkRc6MhTysFtgqWY4\r\nxJM3KRf3fyEI4yFfawMkt9zRMa8vKEkacldZXPXzuOzViMnmsSDnaLyaB85f0jSs\r\nIBHwHPbgT/WM0kUWTWR+UPCWV+bQTQFHjAfn1WRZ/QhSeYJ9AdS1TvtwHBorgjiZ\r\npvrqCB2BglLjFDL/V/kUZuXO79X34Gh22JgRdggBvbUl9YBOXpgqdBKhsCA8eXKV\r\nC6OAM0xAMCyfQPHFqIf9WAS6F2GNNbDehmCOhnvnFhAz1mTkH9SDmX7ASszVPuah\r\ni4NqizCfsfSKNkyyckbQk8FSWHP9Jzqd7T5iK1Cy3emInhAyeCbHwcezHXlXtJcR\r\nxNrzDF1fx/ImKCzQcEsKL3pIknyQhxK4sLUYpKyj+wllxUTzUg+VEWWaE13Z8a0L\r\njOx9exwbbJ05pF2kTEixTj3DYIAscFvf+0++LUHgMO37KILCZw7+WoA+d1WWTwjP\r\n+Uey4z0MKTIVaw5Gec6thf6/9EoLyUTvUXxlGPoDpjtBhK51x0Wn7isIyhd4fduL\r\nUDFO5Tdf2cRSi4wZa6DjLLTCh4ALkwRw/wOJriJMVQSwhHGyC1XV5R9bdd6BqYpI\r\nYm4qH9CNja9bVgTG0YuWXoq5qZB5o2euNHRi27rChrABNPihgBE1vAxbNAC8X/aQ\r\nG3dh9j7FDsdLkTfUGn4mgpqTuWsyQI/yMhBFKYB/J9h9FPIFzdiyXnLTK1TaLRa2\r\n/dBaKEaGmLoZsCwD7im9UX9XlfITIbAEnOyFbCy6XatbWnWwMGpvEP83veweNylI\r\nTIEieqIcaUATug1t3G8rVWOirCK/kKbL2BzJvapbzijaCdxv+bX8+QqDA/+qM5Z5\r\n7HbksfwhrSBWzIBxO4mNNmA+gpACHGCEr7yYf42TSLQHekB5LmNvbYkBHAQQAQIA\r\nBgUCYDe1jQAKCRARRkqgpPVnBG06B/0ZaVYDWNAm4xlIN70jpr7a5cbA+KYYY9Hc\r\nbgcJGldo2tt+piXoy+JTksUK84xFqxBz36fHAD8SFjy5TJYn4e7jjohE3I3pnznK\r\nJV1jybgVGNhLjlSnvFpt7cXrDE86LvfjUSdUVs4SRjkqSOP4k4DEA2sfxqkdUFTl\r\nxrMBCGNF6bN87cjMVvwwigykMIID6kl0JBjxBp5jKvqhDExLAPW15BNn8AOweByW\r\nxMKw6Pe2mcubCGny3QMOxzY+weOOw42NwDqw44w9lqDRDmaKmQSk7oAHX98vXJCX\r\nGFYJh424S0KExySAldyZcjy0cA7U8dEt8gb4J6SRiKN3NXMW4nHw\r\n=7zgG\r\n-----END PGP PRIVATE KEY BLOCK-----"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[key=lQOsBGA3tY0BCAC6oTMz+ofIVug9yMsXhnCYTULapVrndEIjpiCvLI1V1iHkCM3E\r\nhFAYBhQGrYV7ORchyXmw6OBNYGFYt9/wZrOoOjw+0MBb+JBpWwV3qN2yuyVSLxLa\r\n/+zUd/GXK6iqbuluvzaDE8BDbRrXDFWyJ9tgK2A79/LwHbko1F4YztEn0Ef1Ptlt\r\nHFObp+UYd1cZxjTSE8KNPUmcaXgC2b4NjAiPpMQG6XwDmpmNhRGINserDvs8K7/l\r\nCx6gI866Tj090IrVCmwdRCCpMpR05G7SYwUflSB8JH7FMxEuM01qiKDj9+ZMyDrn\r\nHQZk/Y6XHsQaIZwuUcbTOHm4Wyilk3ZXwRjbABEBAAH/AwMCkRc6MhTysFtgqWY4\r\nxJM3KRf3fyEI4yFfawMkt9zRMa8vKEkacldZXPXzuOzViMnmsSDnaLyaB85f0jSs\r\nIBHwHPbgT/WM0kUWTWR+UPCWV+bQTQFHjAfn1WRZ/QhSeYJ9AdS1TvtwHBorgjiZ\r\npvrqCB2BglLjFDL/V/kUZuXO79X34Gh22JgRdggBvbUl9YBOXpgqdBKhsCA8eXKV\r\nC6OAM0xAMCyfQPHFqIf9WAS6F2GNNbDehmCOhnvnFhAz1mTkH9SDmX7ASszVPuah\r\ni4NqizCfsfSKNkyyckbQk8FSWHP9Jzqd7T5iK1Cy3emInhAyeCbHwcezHXlXtJcR\r\nxNrzDF1fx/ImKCzQcEsKL3pIknyQhxK4sLUYpKyj+wllxUTzUg+VEWWaE13Z8a0L\r\njOx9exwbbJ05pF2kTEixTj3DYIAscFvf+0++LUHgMO37KILCZw7+WoA+d1WWTwjP\r\n+Uey4z0MKTIVaw5Gec6thf6/9EoLyUTvUXxlGPoDpjtBhK51x0Wn7isIyhd4fduL\r\nUDFO5Tdf2cRSi4wZa6DjLLTCh4ALkwRw/wOJriJMVQSwhHGyC1XV5R9bdd6BqYpI\r\nYm4qH9CNja9bVgTG0YuWXoq5qZB5o2euNHRi27rChrABNPihgBE1vAxbNAC8X/aQ\r\nG3dh9j7FDsdLkTfUGn4mgpqTuWsyQI/yMhBFKYB/J9h9FPIFzdiyXnLTK1TaLRa2\r\n/dBaKEaGmLoZsCwD7im9UX9XlfITIbAEnOyFbCy6XatbWnWwMGpvEP83veweNylI\r\nTIEieqIcaUATug1t3G8rVWOirCK/kKbL2BzJvapbzijaCdxv+bX8+QqDA/+qM5Z5\r\n7HbksfwhrSBWzIBxO4mNNmA+gpACHGCEr7yYf42TSLQHekB5LmNvbYkBHAQQAQIA\r\nBgUCYDe1jQAKCRARRkqgpPVnBG06B/0ZaVYDWNAm4xlIN70jpr7a5cbA+KYYY9Hc\r\nbgcJGldo2tt+piXoy+JTksUK84xFqxBz36fHAD8SFjy5TJYn4e7jjohE3I3pnznK\r\nJV1jybgVGNhLjlSnvFpt7cXrDE86LvfjUSdUVs4SRjkqSOP4k4DEA2sfxqkdUFTl\r\nxrMBCGNF6bN87cjMVvwwigykMIID6kl0JBjxBp5jKvqhDExLAPW15BNn8AOweByW\r\nxMKw6Pe2mcubCGny3QMOxzY+weOOw42NwDqw44w9lqDRDmaKmQSk7oAHX98vXJCX\r\nGFYJh424S0KExySAldyZcjy0cA7U8dEt8gb4J6SRiKN3NXMW4nHw\r\n=7zgG]"
           }
         },
         {
