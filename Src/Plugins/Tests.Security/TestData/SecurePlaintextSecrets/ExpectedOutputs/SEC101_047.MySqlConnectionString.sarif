@@ -62,6 +62,9 @@
                 },
                 "Odbc": {
                   "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                },
+                "Jdbc": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -102,7 +105,7 @@
                   "startColumn": 1,
                   "endLine": 30,
                   "endColumn": 97,
-                  "charOffset": 2552,
+                  "charOffset": 2752,
                   "charLength": 96,
                   "snippet": {
                     "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password;"
@@ -142,7 +145,7 @@
                   "startColumn": 22,
                   "endLine": 32,
                   "endColumn": 116,
-                  "charOffset": 2692,
+                  "charOffset": 2892,
                   "charLength": 94,
                   "snippet": {
                     "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=password_11;"
@@ -182,7 +185,7 @@
                   "startColumn": 1,
                   "endLine": 30,
                   "endColumn": 97,
-                  "charOffset": 2552,
+                  "charOffset": 2752,
                   "charLength": 96,
                   "snippet": {
                     "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password;"
@@ -222,7 +225,7 @@
                   "startColumn": 22,
                   "endLine": 32,
                   "endColumn": 116,
-                  "charOffset": 2692,
+                  "charOffset": 2892,
                   "charLength": 94,
                   "snippet": {
                     "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=password_11;"
@@ -262,7 +265,7 @@
                   "startColumn": 1,
                   "endLine": 36,
                   "endColumn": 115,
-                  "charOffset": 2841,
+                  "charOffset": 3041,
                   "charLength": 114,
                   "snippet": {
                     "text": "Server= \"mydemoserver.mariadb.database.azure.com\"; Port=3306; Database= \"wpdb\"; Uid= \"WPAdmin@mydemoserver\"; Pwd=\""
@@ -302,7 +305,7 @@
                   "startColumn": 35,
                   "endLine": 45,
                   "endColumn": 143,
-                  "charOffset": 3493,
+                  "charOffset": 3693,
                   "charLength": 108,
                   "snippet": {
                     "text": "Server=\"{your_host}\"; Port=3306; Database={your_database}; Uid=\"{username@servername}\"; Pwd={your_password};"
@@ -342,7 +345,7 @@
                   "startColumn": 1,
                   "endLine": 2,
                   "endColumn": 132,
-                  "charOffset": 65,
+                  "charOffset": 107,
                   "charLength": 131,
                   "snippet": {
                     "text": "Server=some-database-name.mysql.database.azure.com; Port=3306; Database=catalog_db; Uid=username@some-database-name; Pwd=password_1"
@@ -382,7 +385,7 @@
                   "startColumn": 1,
                   "endLine": 3,
                   "endColumn": 132,
-                  "charOffset": 218,
+                  "charOffset": 260,
                   "charLength": 131,
                   "snippet": {
                     "text": "Port=3306; Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_2"
@@ -422,7 +425,7 @@
                   "startColumn": 12,
                   "endLine": 3,
                   "endColumn": 132,
-                  "charOffset": 229,
+                  "charOffset": 271,
                   "charLength": 120,
                   "snippet": {
                     "text": "Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_2"
@@ -462,7 +465,7 @@
                   "startColumn": 1,
                   "endLine": 4,
                   "endColumn": 150,
-                  "charOffset": 371,
+                  "charOffset": 413,
                   "charLength": 149,
                   "snippet": {
                     "text": "Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_3; SslMode=Preferred;Port=3306"
@@ -502,7 +505,7 @@
                   "startColumn": 1,
                   "endLine": 5,
                   "endColumn": 139,
-                  "charOffset": 524,
+                  "charOffset": 566,
                   "charLength": 138,
                   "snippet": {
                     "text": "Server=some-database-name.mysql.database.azure.com;Database=catalog_db; SslMode=Preferred; Pwd=password_4; Uid=username@some-database-name"
@@ -542,7 +545,7 @@
                   "startColumn": 1,
                   "endLine": 30,
                   "endColumn": 96,
-                  "charOffset": 2552,
+                  "charOffset": 2752,
                   "charLength": 95,
                   "snippet": {
                     "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password"
@@ -582,7 +585,7 @@
                   "startColumn": 22,
                   "endLine": 32,
                   "endColumn": 115,
-                  "charOffset": 2692,
+                  "charOffset": 2892,
                   "charLength": 93,
                   "snippet": {
                     "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=password_11"
@@ -593,6 +596,123 @@
           ],
           "fingerprints": {
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=password_11][port=3306][resource=your-database]"
+          }
+        },
+        {
+          "ruleId": "SEC101/047",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Jdbc",
+            "arguments": [
+              "SEC101_047.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "JDBC MySQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 14,
+                  "endLine": 8,
+                  "endColumn": 205,
+                  "charOffset": 836,
+                  "charLength": 191,
+                  "snippet": {
+                    "text": "jdbc:mysql://some-database-name.mysql.database.azure.com:3306/catalog_db?useSSL=true&requireSSL=false\"; myDbConn = DriverManager.getConnection(url, \"username@some-database-name\", \"PASSword_5\""
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com:3306][pwd=PASSword_5]"
+          }
+        },
+        {
+          "ruleId": "SEC101/047",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Jdbc",
+            "arguments": [
+              "SEC101_047.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "JDBC MySQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 129,
+                  "endLine": 8,
+                  "endColumn": 205,
+                  "charOffset": 951,
+                  "charLength": 76,
+                  "snippet": {
+                    "text": "DriverManager.getConnection(url, \"username@some-database-name\", \"PASSword_5\""
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][pwd=PASSword_5]"
+          }
+        },
+        {
+          "ruleId": "SEC101/047",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Jdbc",
+            "arguments": [
+              "SEC101_047.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "JDBC MySQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 60,
+                  "startColumn": 17,
+                  "endLine": 61,
+                  "endColumn": 82,
+                  "charOffset": 4789,
+                  "charLength": 134,
+                  "snippet": {
+                    "text": "jdbc:mysql://\" + dbUri.getHost() + dbUri.getPath();\r\nreturn DriverManager.getConnection(dbUrl, \"cleardbusername1\", \"cleardb_PASSWORD1\""
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=cleardbusername1][pwd=cleardb_PASSWORD1]"
           }
         }
       ],

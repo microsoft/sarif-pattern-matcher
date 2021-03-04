@@ -17,9 +17,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         internal static MySqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
 
-        private const string HostRegex = "(?i)(Server\\s*=\\s*(?<host>[\\w\\-.]{3,90}))";
-        private const string AccountRegex = "(?i)(Uid\\s*=\\s*(?-i)(?<account>[a-z\\@\\-]{1,120})(?i))";
-        private const string PasswordRegex = "(?i)(Pwd\\s*=\\s*(?<password>[^;]{8,128}))";
         private const string DatabaseRegex = @"(?i)(Database\s*=\s*(?<database>[^\<>:""\/\\|?;.]{1,64}))";
         private const string PortRegex = "(?i)(Port\\s*=\\s*(?<port>[0-9]{4,5}))";
 
@@ -62,19 +59,31 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            string host = ParseExpression(RegexEngine, matchedPattern, HostRegex);
-            string account = ParseExpression(RegexEngine, matchedPattern, AccountRegex);
-            string password = ParseExpression(RegexEngine, matchedPattern, PasswordRegex);
-            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
-            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
-
-            if (string.IsNullOrWhiteSpace(host) ||
-                string.IsNullOrWhiteSpace(database) ||
-                string.IsNullOrWhiteSpace(account) ||
-                string.IsNullOrWhiteSpace(password))
+            if (!groups.TryGetNonEmptyValue("account", out string account) ||
+                !groups.TryGetNonEmptyValue("password", out string password))
             {
                 return nameof(ValidationState.NoMatch);
             }
+
+            // Our matches can sometimes fail to find a host (due to it being constructed in code)
+            // However, the credentials can still be valid, so we should return "unknown".
+            // Grab the empty host here and then short circuit in dynamic validation.
+
+            Fingerprint fingerprint = new Fingerprint()
+            {
+                Account = account,
+                Password = password,
+            };
+
+            if (!groups.TryGetNonEmptyValue("host", out string host))
+            {
+                fingerprintText = fingerprint.ToString();
+
+                return nameof(ValidationState.Unknown);
+            }
+
+            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
+            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
 
             host = DomainFilteringHelper.StandardizeLocalhostName(host);
 
@@ -85,14 +94,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 return exclusionResult;
             }
 
-            fingerprintText = new Fingerprint()
-            {
-                Host = host.Replace("\"", string.Empty).Replace(",", ";"),
-                Resource = database,
-                Port = port,
-                Account = account,
-                Password = password,
-            }.ToString();
+            fingerprint.Host = host.Replace("\"", string.Empty).Replace(",", ";");
+            fingerprint.Resource = database;
+            fingerprint.Port = port;
+
+            fingerprintText = fingerprint.ToString();
 
             return nameof(ValidationState.Unknown);
         }
@@ -108,7 +114,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             string account = fingerprint.Account;
             string password = fingerprint.Password;
 
-            if (DomainFilteringHelper.LocalhostList.Contains(host))
+            if (string.IsNullOrWhiteSpace(host) ||
+                string.IsNullOrWhiteSpace(database) ||
+                DomainFilteringHelper.LocalhostList.Contains(host))
             {
                 return nameof(ValidationState.Unknown);
             }
