@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Password = password,
             }.ToString();
 
-            return nameof(ValidationState.Unknown);
+            return nameof(ValidationState.AuthorizedWarning);
         }
     }
 }
