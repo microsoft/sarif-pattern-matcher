@@ -144,7 +144,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e, asset: host);
             }
 
-            return nameof(ValidationState.Authorized);
+            return nameof(ValidationState.AuthorizedError);
         }
     }
 }

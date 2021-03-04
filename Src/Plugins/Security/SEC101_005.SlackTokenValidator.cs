@@ -87,7 +87,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             message = BuildAuthTestResponseMessage(response);
-            return nameof(ValidationState.Authorized);
+            return nameof(ValidationState.AuthorizedError);
         }
 
         private string BuildAuthTestResponseMessage(AuthTestResponse response)
