@@ -601,6 +601,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [
@@ -640,6 +641,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [
@@ -679,6 +681,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [
