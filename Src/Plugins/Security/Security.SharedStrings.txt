@@ -43,7 +43,10 @@
   $SEC101/014.FacebookAccessToken=\b(?<refine>EAACEdEose0cBA(?i)[0-9a-z]+)
   $SEC101/015.GoogleGCMServiceAccount=(("|'|`)?type("|'|`)?\s{0,50}(:|=>|=)\s{0,50}("|'|`)?service_account("|'|`)?,?)
   $SEC101/016.StripeApiKey=\b(?<refine>(?<key>(?:r|s)k_(live|test)_(?i)[0-9a-z]{24,99}))([^0-9a-z]|$)
+  $SEC101/019.PicaticApiKey=\b(?<refine>sk_(live|test)_[0-9a-z]{32})
+  $SEC101/022.PayPalBraintreeAccessToken=access_token\$production\$(?<key>[0-9a-z]{16}\$[0-9a-f]{32})
   $SEC101/023.AmazonMwsAuthToken=\b(?<refine>amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)
+  $SEC101/024.TwilioApiKey=\b(?<refine>(?<key>SK(?i)[0-9a-f]{32}))([^0-9a-f]|$)
   $SEC101/026.MailgunApiKey=(?is)((^|[^0-9a-z\-])(?<key>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8}).{0,50}?|[^0-9a-z](?<account>[0-9a-z]+?\.mailgun\.org).{0,50}?){2}
   $SEC101/031.NuGetApiKey=\b(?<refine>(?<key>oy2[0-9a-z]{43}))(^[0-9a-z]|$)
   $SEC101/045.PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<account>[^,;"<\s]+)|(password|pwd)\s*=\s*(?<password>[^,;"<\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+)))?
@@ -52,6 +55,8 @@
   $SEC101/046.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;"<]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<account>[^"]+)",\s*"(?<password>[^"]+)"
   $SEC101/047.MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<account>[a-z\@\-]{1,120})(?i))|(Pwd=(?<password>[^;"]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
   $SEC101/047.MySqlConnectionStringPlainJdbc=(jdbc:mysql:\/\/(?<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?<url>[^,(]+),\s*"(?<account>[\w@-]{1,200})",\s*"(?<password>[^"';<>=]{7,200})"
+  $SEC101/048.CloudantConnectionPython=(?is)cloudant\s*\(\s*"(?<username>[\w-]+)"\s*\,\s*"(?<password>[\w]{64})"\s*\,\s*.{0,200}url="(?<uri>https:\/\/[\w.-]+\.cloudant.com)
+  $SEC101/048.CloudantConnectionUrl=(?<uri>(?i)https:\/\/([\w-]{1,63}\.)?[\w-]{1,63}:([\w]{64}|[a-z]{24})@[\w-]{1,50}\.cloudant\.com)
   $SEC101/049.PSCredentialConstructor=PSCredential\s*\(\s*"(?<account>[^"]*)"\s*,\s*"(?<password>[^"]*)"
   $SEC101/049.PSCredentialObjectInitializer=(?s)PSCredential\s*\(\)\s*{\s*.{0,50}UserName\s*=\s*"(?<account>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<password>[^"]*)"
   $SEC101/049.PSCredentialPowershell=ConvertTo-SecureString.{1,50}"(?<password>[^"]*)"(?s).{1,100}(?-s)PSCredential.{1,50}-ArgumentList\s+(?<account>[^,]+),

@@ -87,7 +87,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
-                        return nameof(ValidationState.Authorized);
+                        return nameof(ValidationState.AuthorizedError);
                     }
 
                     case HttpStatusCode.Unauthorized:

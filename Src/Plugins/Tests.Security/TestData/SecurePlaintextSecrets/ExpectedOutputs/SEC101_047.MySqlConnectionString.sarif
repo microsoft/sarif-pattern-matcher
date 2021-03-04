@@ -81,6 +81,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
@@ -120,6 +121,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
@@ -159,6 +161,7 @@
         {
           "ruleId": "SEC101/046",
           "ruleIndex": 1,
+          "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -198,6 +201,7 @@
         {
           "ruleId": "SEC101/046",
           "ruleIndex": 1,
+          "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -237,6 +241,7 @@
         {
           "ruleId": "SEC101/046",
           "ruleIndex": 1,
+          "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -276,6 +281,7 @@
         {
           "ruleId": "SEC101/046",
           "ruleIndex": 1,
+          "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -315,6 +321,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -354,6 +361,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -393,6 +401,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -432,6 +441,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -471,6 +481,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -510,6 +521,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -549,6 +561,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
@@ -588,6 +601,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [
@@ -627,6 +641,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [
@@ -666,6 +681,7 @@
         {
           "ruleId": "SEC101/047",
           "ruleIndex": 2,
+          "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [

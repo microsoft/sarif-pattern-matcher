@@ -114,7 +114,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e);
             }
 
-            return nameof(ValidationState.Authorized);
+            return nameof(ValidationState.AuthorizedError);
         }
 
         private static string Send(StreamReader reader,

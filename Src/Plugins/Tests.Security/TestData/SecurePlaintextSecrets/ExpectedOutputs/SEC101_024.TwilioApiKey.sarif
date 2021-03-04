@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/102",
-              "name": "DoNotExposePlaintextSecrets/AdoPat",
+              "id": "SEC101/024",
+              "name": "DoNotExposePlaintextSecrets/TwilioApiKey",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -38,16 +38,15 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/102",
+          "ruleId": "SEC101/024",
           "ruleIndex": 0,
-          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_102.AdoPat.txt",
+              "SEC101_024.TwilioApiKey.ps1",
               "an apparent ",
-              "base64-encoded",
-              "Azure DevOps personal access token",
+              "",
+              "Twilio API Key",
               "",
               ""
             ]
@@ -56,38 +55,37 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_102.AdoPat.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_024.TwilioApiKey.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 12,
+                  "startLine": 1,
                   "startColumn": 1,
-                  "endLine": 12,
-                  "endColumn": 73,
-                  "charOffset": 442,
-                  "charLength": 72,
+                  "endLine": 1,
+                  "endColumn": 35,
+                  "charOffset": 0,
+                  "charLength": 34,
                   "snippet": {
-                    "text": "aDVseGVxa3o0enVqa3l2emc1ZW1rZWpnZWx4ajR4NjR0dnl6Y2xwcmVrdWxvYXdiYno1cQ=="
+                    "text": "SK11111111110123456789012345678901"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[pat=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
+            "ValidationFingerprint/v1": "[key=SK11111111110123456789012345678901]"
           }
         },
         {
-          "ruleId": "SEC101/102",
+          "ruleId": "SEC101/024",
           "ruleIndex": 0,
-          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_102.AdoPat.txt",
+              "SEC101_024.TwilioApiKey.ps1",
               "an apparent ",
               "",
-              "Azure DevOps personal access token",
+              "Twilio API Key",
               "",
               ""
             ]
@@ -96,25 +94,25 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_102.AdoPat.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_024.TwilioApiKey.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 9,
-                  "startColumn": 1,
-                  "endLine": 9,
-                  "endColumn": 53,
-                  "charOffset": 326,
-                  "charLength": 52,
+                  "startLine": 3,
+                  "startColumn": 2,
+                  "endLine": 3,
+                  "endColumn": 36,
+                  "charOffset": 39,
+                  "charLength": 34,
                   "snippet": {
-                    "text": "h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q"
+                    "text": "SK22222222220123456789012345678901"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[pat=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
+            "ValidationFingerprint/v1": "[key=SK22222222220123456789012345678901]"
           }
         }
       ],
