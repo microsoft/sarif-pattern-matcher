@@ -14,7 +14,7 @@
           "rules": [
             {
               "id": "SEC101/048",
-              "name": "DoNotExposePlaintextSecrets/CloudantConnection",
+              "name": "DoNotExposePlaintextSecrets/CloudantConnectionString",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -43,6 +43,7 @@
         {
           "ruleId": "SEC101/048",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Python",
             "arguments": [
@@ -51,7 +52,7 @@
               "",
               "Cloudant connection string",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
@@ -74,11 +75,15 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=apikey-v2-username1111165BB6673E1B79482A8C][pwd=password1111123956157d94b25d574586f26d1211e8e589646b4713d5de4801][uri=https://host1111-47eb-45ce-b125-4a4e1b5a4f7e-bluemix.cloudant.com]"
+          }
         },
         {
           "ruleId": "SEC101/048",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Url",
             "arguments": [
@@ -87,7 +92,7 @@
               "",
               "Cloudant connection string",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
@@ -110,11 +115,15 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[uri=https://host22:password89012345678901234567890123456789012345678901234567890123@username2.cloudant.com]"
+          }
         },
         {
           "ruleId": "SEC101/048",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Url",
             "arguments": [
@@ -123,7 +132,7 @@
               "",
               "Cloudant connection string",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
@@ -146,7 +155,10 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[uri=https://host33:passwordijabcdefghijabcd@username3.cloudant.com]"
+          }
         }
       ],
       "columnKind": "utf16CodeUnits"

@@ -60,7 +60,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_016.StripeApiKey.txt",
+              "SEC101_019.PicaticApiKey.ps1",
               "an apparent ",
               "",
               "Stripe API key",
@@ -72,25 +72,25 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_016.StripeApiKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_019.PicaticApiKey.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 1,
                   "startColumn": 1,
                   "endLine": 1,
-                  "endColumn": 108,
+                  "endColumn": 41,
                   "charOffset": 0,
-                  "charLength": 107,
+                  "charLength": 40,
                   "snippet": {
-                    "text": "sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0"
+                    "text": "sk_test_01234567890123456789012345678901"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[key=sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]"
+            "ValidationFingerprint/v1": "[key=sk_test_01234567890123456789012345678901]"
           }
         },
         {
@@ -100,7 +100,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_016.StripeApiKey.txt",
+              "SEC101_019.PicaticApiKey.ps1",
               "an apparent ",
               "",
               "Stripe API key",
@@ -112,25 +112,25 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_016.StripeApiKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_019.PicaticApiKey.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 2,
+                  "startLine": 3,
                   "startColumn": 1,
-                  "endLine": 2,
-                  "endColumn": 108,
-                  "charOffset": 109,
-                  "charLength": 107,
+                  "endLine": 3,
+                  "endColumn": 41,
+                  "charOffset": 44,
+                  "charLength": 40,
                   "snippet": {
-                    "text": "sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0"
+                    "text": "sk_live_01234567890123456789012345678901"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[key=sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]"
+            "ValidationFingerprint/v1": "[key=sk_live_01234567890123456789012345678901]"
           }
         },
         {
@@ -140,7 +140,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_016.StripeApiKey.txt",
+              "SEC101_019.PicaticApiKey.ps1",
               "an apparent ",
               "",
               "Picatic API key",
@@ -152,7 +152,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_016.StripeApiKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_019.PicaticApiKey.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -163,14 +163,14 @@
                   "charOffset": 0,
                   "charLength": 40,
                   "snippet": {
-                    "text": "sk_test_0deadebeef00deadebeef00deadebeef"
+                    "text": "sk_test_01234567890123456789012345678901"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[key=sk_test_0deadebeef00deadebeef00deadebeef]"
+            "ValidationFingerprint/v1": "[key=sk_test_01234567890123456789012345678901]"
           }
         },
         {
@@ -180,7 +180,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_016.StripeApiKey.txt",
+              "SEC101_019.PicaticApiKey.ps1",
               "an apparent ",
               "",
               "Picatic API key",
@@ -192,25 +192,25 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_016.StripeApiKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_019.PicaticApiKey.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 2,
+                  "startLine": 3,
                   "startColumn": 1,
-                  "endLine": 2,
+                  "endLine": 3,
                   "endColumn": 41,
-                  "charOffset": 109,
+                  "charOffset": 44,
                   "charLength": 40,
                   "snippet": {
-                    "text": "sk_live_0deadebeef00deadebeef00deadebeef"
+                    "text": "sk_live_01234567890123456789012345678901"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "ValidationFingerprint/v1": "[key=sk_live_0deadebeef00deadebeef00deadebeef]"
+            "ValidationFingerprint/v1": "[key=sk_live_01234567890123456789012345678901]"
           }
         }
       ],
