@@ -5,12 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
-using Microsoft.RE2.Managed;
-
-using MySqlConnector;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 {
@@ -39,9 +35,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 
         public static string IsValidDynamic(ref string fingerprint, ref string message)
         {
-            return ValidatorBase.IsValidDynamic(Instance,
-                                                ref fingerprint,
-                                                ref message);
+            return IsValidDynamic(Instance,
+                                   ref fingerprint,
+                                   ref message);
         }
 
         protected override string IsValidStaticHelper(ref string matchedPattern,
