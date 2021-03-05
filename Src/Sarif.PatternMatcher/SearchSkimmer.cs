@@ -226,6 +226,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // The validator determined the match is a false positive.
                     // i.e., it is not the kind of artifact we're looking for.
                     // We should suspend processing and move to the next match.
+
+                    level = FailureLevel.None;
                     return;
                 }
 
@@ -606,6 +608,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         // The validator determined the match is a false positive.
                         // i.e., it is not the kind of artifact we're looking for.
                         // We should suspend processing and move to the next match.
+                        level = FailureLevel.None;
                         return;
                     }
 
