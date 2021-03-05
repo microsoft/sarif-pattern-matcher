@@ -40,12 +40,11 @@
         {
           "ruleId": "SEC101/052",
           "ruleIndex": 0,
-          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
               "SEC101_052.ConvertToSecureString.ps1",
-              "an apparent ",
+              "a valid ",
               "",
               "ConvertTo-SecureString powershell",
               "",
@@ -80,12 +79,11 @@
         {
           "ruleId": "SEC101/052",
           "ruleIndex": 0,
-          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
               "SEC101_052.ConvertToSecureString.ps1",
-              "an apparent ",
+              "a valid ",
               "",
               "ConvertTo-SecureString powershell",
               "",
@@ -120,12 +118,11 @@
         {
           "ruleId": "SEC101/052",
           "ruleIndex": 0,
-          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
               "SEC101_052.ConvertToSecureString.ps1",
-              "an apparent ",
+              "a valid ",
               "",
               "ConvertTo-SecureString powershell",
               "",
@@ -160,12 +157,11 @@
         {
           "ruleId": "SEC101/052",
           "ruleIndex": 0,
-          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
               "SEC101_052.ConvertToSecureString.ps1",
-              "an apparent ",
+              "a valid ",
               "",
               "ConvertTo-SecureString powershell",
               "",
@@ -200,12 +196,11 @@
         {
           "ruleId": "SEC101/052",
           "ruleIndex": 0,
-          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
               "SEC101_052.ConvertToSecureString.ps1",
-              "an apparent ",
+              "a valid ",
               "",
               "ConvertTo-SecureString powershell",
               "",
@@ -240,12 +235,11 @@
         {
           "ruleId": "SEC101/052",
           "ruleIndex": 0,
-          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
               "SEC101_052.ConvertToSecureString.ps1",
-              "an apparent ",
+              "a valid ",
               "",
               "ConvertTo-SecureString powershell",
               "",
@@ -280,12 +274,11 @@
         {
           "ruleId": "SEC101/052",
           "ruleIndex": 0,
-          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
               "SEC101_052.ConvertToSecureString.ps1",
-              "an apparent ",
+              "a valid ",
               "",
               "ConvertTo-SecureString powershell",
               "",
@@ -320,12 +313,11 @@
         {
           "ruleId": "SEC101/052",
           "ruleIndex": 0,
-          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
               "SEC101_052.ConvertToSecureString.ps1",
-              "an apparent ",
+              "a valid ",
               "",
               "ConvertTo-SecureString powershell",
               "",
