@@ -51,7 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 log: logger,
                 context: TestHelper.ContextSetup());
 
-            ValidateResult(string.Empty, result, runCount: 1, resultCount: 2, FailureLevel.Warning, ignoreRegionContent: true);
+            ValidateResult(string.Empty, result, runCount: 1, resultCount: 2, FailureLevel.Note, ignoreRegionContent: true);
         }
 
         [Fact]
@@ -104,7 +104,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 request: TestHelper.MockAnalyzeFunctionRequest(patTextFile, lines[0]),
                 log: logger,
                 context: TestHelper.ContextSetup());
-            ValidateResult(lines[0], result, runCount: 1, resultCount: 1, FailureLevel.Warning);
+            ValidateResult(lines[0], result, runCount: 1, resultCount: 1, FailureLevel.Note);
 
             result = await HttpAnalyzeFunction.Analyze(
                request: TestHelper.MockAnalyzeFunctionRequest(patTextFile, lines[1]),

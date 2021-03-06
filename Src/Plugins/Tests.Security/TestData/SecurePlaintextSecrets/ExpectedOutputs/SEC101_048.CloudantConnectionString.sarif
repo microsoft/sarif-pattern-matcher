@@ -1,0 +1,167 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC101/048",
+              "name": "DoNotExposePlaintextSecrets/CloudantConnectionString",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Python": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                },
+                "Url": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC101/048",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Python",
+            "arguments": [
+              "SEC101_048.CloudantConnectionString.ps1",
+              "an apparent ",
+              "",
+              "Cloudant connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_048.CloudantConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 10,
+                  "endLine": 4,
+                  "endColumn": 76,
+                  "charOffset": 143,
+                  "charLength": 207,
+                  "snippet": {
+                    "text": "Cloudant(\"apikey-v2-username1111165BB6673E1B79482A8C\", \r\n\t\t\t\t\t\"password1111123956157d94b25d574586f26d1211e8e589646b4713d5de4801\", \r\n\t\t\t\t\turl=\"https://host1111-47eb-45ce-b125-4a4e1b5a4f7e-bluemix.cloudant.com"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[acct=apikey-v2-username1111165BB6673E1B79482A8C][pwd=password1111123956157d94b25d574586f26d1211e8e589646b4713d5de4801][uri=https://host1111-47eb-45ce-b125-4a4e1b5a4f7e-bluemix.cloudant.com]"
+          }
+        },
+        {
+          "ruleId": "SEC101/048",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Url",
+            "arguments": [
+              "SEC101_048.CloudantConnectionString.ps1",
+              "an apparent ",
+              "",
+              "Cloudant connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_048.CloudantConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 3,
+                  "endLine": 7,
+                  "endColumn": 105,
+                  "charOffset": 397,
+                  "charLength": 102,
+                  "snippet": {
+                    "text": "https://host22:password89012345678901234567890123456789012345678901234567890123@username2.cloudant.com"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[uri=https://host22:password89012345678901234567890123456789012345678901234567890123@username2.cloudant.com]"
+          }
+        },
+        {
+          "ruleId": "SEC101/048",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Url",
+            "arguments": [
+              "SEC101_048.CloudantConnectionString.ps1",
+              "an apparent ",
+              "",
+              "Cloudant connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_048.CloudantConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 3,
+                  "endLine": 10,
+                  "endColumn": 65,
+                  "charOffset": 555,
+                  "charLength": 62,
+                  "snippet": {
+                    "text": "https://host33:passwordijabcdefghijabcd@username3.cloudant.com"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "ValidationFingerprint/v1": "[uri=https://host33:passwordijabcdefghijabcd@username3.cloudant.com]"
+          }
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}

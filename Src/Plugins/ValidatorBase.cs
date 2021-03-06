@@ -224,7 +224,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                 $"The compromised asset is '{asset}'." :
                 $"The '{account}' account is compromised for '{asset}'.";
 
-            return nameof(ValidationState.Authorized);
+            return nameof(ValidationState.AuthorizedError);
         }
 
         public static string ReturnUnknownAuthorization(ref string message,

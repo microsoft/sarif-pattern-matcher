@@ -77,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 case "Pgp":
                 {
-                    state = GetPrivatePgpKey(key, ref message);
+                    state = GetPrivatePgpKey(key);
                     break;
                 }
 
@@ -104,7 +104,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return state;
         }
 
-        private static string GetPrivatePgpKey(string key, ref string message)
+        private static string GetPrivatePgpKey(string key)
         {
             using Stream keyIn = new MemoryStream(Encoding.UTF8.GetBytes(key));
             using Stream stream = PgpUtilities.GetDecoderStream(keyIn);
@@ -128,7 +128,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         continue;
                     }
 
-                    return nameof(ValidationState.Authorized);
+                    return nameof(ValidationState.AuthorizedError);
                 }
             }
 

@@ -28,7 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
             try
             {
-                string fileName = "temp.txt";
+                string fileName = $"{Guid.NewGuid()}.txt";
                 string fileContent = request.Form[FunctionConstants.FileContentPropertyName].ToString();
                 if (request.Form.ContainsKey(FunctionConstants.FileNamePropertyName)
                     && !string.IsNullOrWhiteSpace(request.Form[FunctionConstants.FileNamePropertyName].ToString()))
