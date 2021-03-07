@@ -182,7 +182,7 @@ Private-MAC: e8da9814e085eea37b7f513fd8ef869da8c0a46f
 </RSAKeyPair>
 
 
-PEM encoded CER
+// PEM encoded CER
 -----BEGIN CERTIFICATE-----
 MIIC7DCCAdSgAwIBAgIQS+kEGc4per9DBIykcyxBKTANBgkqhkiG9w0BAQsFADAU
 MRIwEAYDVQQDEwlsb2NhbGhvc3QwHhcNMjAwNzE1MTg1NjAzWhcNMjUwNzE1MDAw
@@ -201,3 +201,8 @@ nOIhq1Fpm1Xow6N1LnxPDwT31EdGHYIHI5+0a/NrAdqEwF2F/GQtfHdfXc6rDO86
 Rhq6yOENMvY81JtuPBybk9B+klBJJsh4N8aiJsQvgrjLb7auty8tdeWSW+uJCuik
 Z6nPTMPMp8ddSGq23bPeu1RNUEFWQ+hL6/SotMC+ZMU=
 -----END CERTIFICATE-----
+
+
+// Should not raise an exception
+ -----BEGIN EC PRIVATE KEY-----
+ -----END EC PRIVATE KEY-----
