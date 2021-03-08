@@ -43,7 +43,7 @@
   $SEC101/014.FacebookAccessToken=\b(?<refine>EAACEdEose0cBA(?i)[0-9a-z]+)
   $SEC101/015.GoogleGCMServiceAccount=(("|'|`)?type("|'|`)?\s{0,50}(:|=>|=)\s{0,50}("|'|`)?service_account("|'|`)?,?)
   $SEC101/016.StripeApiKey=\b(?<refine>(?<key>(?:r|s)k_(live|test)_(?i)[0-9a-z]{24,99}))([^0-9a-z]|$)
-  $SEC101/017.NpmApiKey=(?i)npm.{0,100}[^0-9A-Za-z](?-i)(?<key>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})[^0-9A-Za-z]
+  $SEC101/017.NpmApiKey=(?i)npm.{0,100}[^0-9A-Za-z](?-i)(?<refine>(?<key>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}))[^0-9A-Za-z]
   $SEC101/019.PicaticApiKey=\b(?<refine>sk_(live|test)_[0-9a-z]{32})
   $SEC101/022.PayPalBraintreeAccessToken=access_token\$production\$(?<key>[0-9a-z]{16}\$[0-9a-f]{32})
   $SEC101/023.AmazonMwsAuthToken=\b(?<refine>amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)
