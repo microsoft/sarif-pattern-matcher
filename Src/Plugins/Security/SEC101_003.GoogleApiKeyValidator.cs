@@ -14,6 +14,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static GoogleApiKeyValidator Instance;
 
+        private static readonly HashSet<string> FalsePositive = new HashSet<string>
+        {
+            "AIzaSyC_iL-1h1jz_StV_vMbVtVfh3h2QjVUZ8c",
+        };
+
         static GoogleApiKeyValidator()
         {
             Instance = new GoogleApiKeyValidator();
@@ -67,6 +72,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             var fingerprint = new Fingerprint(fingerprintText);
 
             string apiKey = fingerprint.Key;
+
+            if (FalsePositive.Contains(apiKey))
+            {
+                return nameof(ValidationState.AuthorizedWarning);
+            }
 
             var request = new DirectionsRequest
             {
