@@ -51,9 +51,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Assert.True(rulesWithoutValidators.Count == 0, "Unable to find validators for these rules: " + string.Join(',', rulesWithoutValidators));
                 }
             }
-            catch (IOException)
+            catch (IOException ioe)
             {
-                Assert.True(false, "Failed to read the rules file.");
+                Assert.True(false, "Failed to read the rules file.  Exception was: " + ioe.Message);
             }
             catch (NullReferenceException)
             {
