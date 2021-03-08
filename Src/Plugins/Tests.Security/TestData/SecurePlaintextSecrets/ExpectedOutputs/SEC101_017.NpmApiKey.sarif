@@ -61,13 +61,13 @@
                 },
                 "region": {
                   "startLine": 1,
-                  "startColumn": 1,
+                  "startColumn": 7,
                   "endLine": 1,
-                  "endColumn": 44,
-                  "charOffset": 0,
-                  "charLength": 43,
+                  "endColumn": 43,
+                  "charOffset": 6,
+                  "charLength": 36,
                   "snippet": {
-                    "text": "npm: \"338a0fd3-7378-4ce1-8432-bbfc0f6777ca\""
+                    "text": "338a0fd3-7378-4ce1-8432-bbfc0f6777ca"
                   }
                 }
               }
@@ -101,13 +101,13 @@
                 },
                 "region": {
                   "startLine": 3,
-                  "startColumn": 2,
+                  "startColumn": 6,
                   "endLine": 3,
-                  "endColumn": 43,
-                  "charOffset": 48,
-                  "charLength": 41,
+                  "endColumn": 42,
+                  "charOffset": 52,
+                  "charLength": 36,
                   "snippet": {
-                    "text": "npm>338a0fd3-7378-4ce1-8432-bbfc0f6777cb<"
+                    "text": "338a0fd3-7378-4ce1-8432-bbfc0f6777cb"
                   }
                 }
               }
