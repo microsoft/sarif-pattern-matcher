@@ -45,7 +45,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 
         /// <summary>
         /// Pattern is a match and the secret is valid.
+        /// The result should be reported as an error.
         /// </summary>
-        Authorized,
+        AuthorizedError,
+
+        /// <summary>
+        /// Pattern is a match and the secret is valid.
+        /// The result should be reported as an warning.
+        /// </summary>
+        AuthorizedWarning,
     }
 }

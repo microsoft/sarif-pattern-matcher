@@ -110,7 +110,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             message = $"the compromised AWS identity is '{iamUser}";
                         }
 
-                        return nameof(ValidationState.Authorized);
+                        return nameof(ValidationState.AuthorizedError);
                     }
 
                     case "InvalidClientTokenId":
@@ -129,7 +129,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.Unknown);
             }
 
-            return nameof(ValidationState.Authorized);
+            return nameof(ValidationState.AuthorizedError);
         }
 
         private string BuildAuthorizedMessage(string id, GetAccountAuthorizationDetailsResponse response)

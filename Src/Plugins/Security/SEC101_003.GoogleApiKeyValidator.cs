@@ -89,7 +89,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         case EnableBilling:
                         {
                             // The API is enabled but billing has not been configured.
-                            return nameof(ValidationState.Authorized);
+                            return nameof(ValidationState.AuthorizedError);
                         }
 
                         case KeyNotAuthorized:
@@ -98,7 +98,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             // What this condition means is that the API key is recognized.
                             // It is not authorized for the Directions API, but this isn't
                             // what we're verifying here.
-                            return nameof(ValidationState.Authorized);
+                            return nameof(ValidationState.AuthorizedError);
                         }
 
                         case Deleted:
@@ -119,7 +119,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             // This condition indicates the API key is recognized and can access Directions API.
-            return nameof(ValidationState.Authorized);
+            return nameof(ValidationState.AuthorizedError);
         }
     }
 }

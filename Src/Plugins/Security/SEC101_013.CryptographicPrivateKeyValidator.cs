@@ -41,9 +41,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            groups.TryGetValue("key", out string key);
-            groups.TryGetValue("kind", out string kind);
+            if (!groups.TryGetNonEmptyValue("key", out string key))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
 
+            groups.TryGetValue("kind", out string kind);
             kind = matchedPattern.Contains(" PGP ") ? "Pgp" : kind;
 
             key = key.Trim();
@@ -77,7 +80,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 case "Pgp":
                 {
-                    state = GetPrivatePgpKey(key, ref message);
+                    state = GetPrivatePgpKey(key);
                     break;
                 }
 
@@ -104,7 +107,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return state;
         }
 
-        private static string GetPrivatePgpKey(string key, ref string message)
+        private static string GetPrivatePgpKey(string key)
         {
             using Stream keyIn = new MemoryStream(Encoding.UTF8.GetBytes(key));
             using Stream stream = PgpUtilities.GetDecoderStream(keyIn);
@@ -128,7 +131,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         continue;
                     }
 
-                    return nameof(ValidationState.Authorized);
+                    return nameof(ValidationState.AuthorizedError);
                 }
             }
 

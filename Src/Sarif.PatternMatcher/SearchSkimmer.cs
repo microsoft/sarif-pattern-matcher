@@ -153,7 +153,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 context.FileContents = _fileSystem.FileReadAllText(filePath);
             }
 
-            if (context.FileContents.String.Length / 1024 > context.FileSizeInKilobytes)
+            if (context.FileSizeInKilobytes != -1 && context.FileContents.String.Length / 1024 > context.FileSizeInKilobytes)
             {
                 return;
             }
@@ -226,6 +226,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // The validator determined the match is a false positive.
                     // i.e., it is not the kind of artifact we're looking for.
                     // We should suspend processing and move to the next match.
+
+                    level = FailureLevel.None;
                     return;
                 }
 
@@ -253,9 +255,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     return;
                 }
 
-                case Validation.Authorized:
+                case Validation.AuthorizedError:
                 {
                     level = FailureLevel.Error;
+
+                    // Contributes to building a message fragment such as:
+                    // 'SomeFile.txt' contains a valid SomeApi token [...].
+                    validationPrefix = "a valid ";
+                    break;
+                }
+
+                case Validation.AuthorizedWarning:
+                {
+                    level = FailureLevel.Warning;
 
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains a valid SomeApi token [...].
@@ -276,7 +288,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 case Validation.Unauthorized:
                 {
-                    level = FailureLevel.Warning;
+                    level = FailureLevel.Note;
 
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains an invalid SomeApi token[...].
@@ -287,7 +299,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 case Validation.Expired:
                 {
-                    level = FailureLevel.Warning;
+                    level = FailureLevel.Note;
 
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains an expired SomeApi token[...].
@@ -297,7 +309,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 case Validation.UnknownHost:
                 {
-                    level = FailureLevel.Warning;
+                    level = FailureLevel.Note;
 
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains an apparent SomeApi token
@@ -309,7 +321,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 case Validation.InvalidForConsultedAuthorities:
                 {
-                    level = FailureLevel.Warning;
+                    level = FailureLevel.Note;
 
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains an apparent SomeApi token
@@ -321,7 +333,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 case Validation.Unknown:
                 {
-                    level = FailureLevel.Warning;
+                    level = FailureLevel.Note;
                     validationSuffix = string.Empty;
 
                     validationPrefix = "an apparent ";
@@ -596,6 +608,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         // The validator determined the match is a false positive.
                         // i.e., it is not the kind of artifact we're looking for.
                         // We should suspend processing and move to the next match.
+                        level = FailureLevel.None;
                         return;
                     }
 
@@ -620,7 +633,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         return;
                     }
 
-                    case Validation.Authorized:
+                    case Validation.AuthorizedError:
                     {
                         level = FailureLevel.Error;
 
@@ -630,9 +643,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         break;
                     }
 
-                    case Validation.Expired:
+                    case Validation.AuthorizedWarning:
                     {
                         level = FailureLevel.Warning;
+
+                        // Contributes to building a message fragment such as:
+                        // 'SomeFile.txt' contains a valid SomeApi token [...].
+                        validationPrefix = "a valid ";
+                        break;
+                    }
+
+                    case Validation.Expired:
+                    {
+                        level = FailureLevel.Note;
 
                         // Contributes to building a message fragment such as:
                         // 'SomeFile.txt' contains an expired SomeApi token[...].
@@ -661,7 +684,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     case Validation.Unknown:
                     {
-                        level = FailureLevel.Warning;
+                        level = FailureLevel.Note;
 
                         validationPrefix = "an apparent ";
                         if (!context.DynamicValidation)

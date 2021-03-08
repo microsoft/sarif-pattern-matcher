@@ -40,6 +40,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
@@ -79,6 +80,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
@@ -118,6 +120,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
@@ -157,6 +160,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
@@ -196,6 +200,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
@@ -235,6 +240,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
@@ -274,6 +280,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
@@ -313,6 +320,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
@@ -352,6 +360,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
@@ -391,6 +400,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
@@ -430,6 +440,7 @@
         {
           "ruleId": "SEC101/045",
           "ruleIndex": 0,
+          "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
