@@ -14,7 +14,7 @@
           "rules": [
             {
               "id": "SEC101/017",
-              "name": "DoNotExposePlaintextSecrets/NpmApiKey",
+              "name": "DoNotExposePlaintextSecrets/NpmAuthorToken",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -44,7 +44,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_017.NpmApiKey.ps1",
+              "SEC101_017.NpmAuthorToken.ps1",
               "an apparent ",
               "",
               "NPM API key",
@@ -56,7 +56,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmApiKey.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmAuthorToken.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -84,7 +84,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_017.NpmApiKey.ps1",
+              "SEC101_017.NpmAuthorToken.ps1",
               "an apparent ",
               "",
               "NPM API key",
@@ -96,7 +96,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmApiKey.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmAuthorToken.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

@@ -13,13 +13,13 @@ using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class NpmApiKeyValidator : ValidatorBase
+    public class NpmAuthorTokenValidator : ValidatorBase
     {
-        internal static NpmApiKeyValidator Instance;
+        internal static NpmAuthorTokenValidator Instance;
 
-        static NpmApiKeyValidator()
+        static NpmAuthorTokenValidator()
         {
-            Instance = new NpmApiKeyValidator();
+            Instance = new NpmAuthorTokenValidator();
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -123,17 +123,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     if (obj.Readonly)
                     {
-                        message = "The token has read permissions.";
+                        message = "The token has 'read' permissions.";
                         return nameof(ValidationState.AuthorizedWarning);
                     }
 
                     if (obj.Automation)
                     {
-                        message = "The token has automation permissions.";
+                        message = "The token has 'automation' permissions.";
                         return nameof(ValidationState.AuthorizedError);
                     }
 
-                    message = "The token has publish permissions.";
+                    message = "The token has 'publish' permissions.";
                     return nameof(ValidationState.AuthorizedError);
                 }
             }
