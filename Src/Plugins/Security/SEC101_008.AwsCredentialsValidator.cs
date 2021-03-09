@@ -66,6 +66,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Id = id,
                 Key = key,
+                Platform = nameof(AssetPlatform.Aws),
             }.ToString();
 
             return nameof(ValidationState.Unknown);

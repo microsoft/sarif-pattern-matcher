@@ -49,6 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprintText = new Fingerprint
             {
                 Key = matchedPattern,
+                Platform = nameof(AssetPlatform.Google),
             }.ToString();
 
             return nameof(ValidationState.Unknown);

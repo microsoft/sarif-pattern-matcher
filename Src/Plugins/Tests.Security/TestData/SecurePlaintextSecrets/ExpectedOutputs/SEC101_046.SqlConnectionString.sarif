@@ -115,6 +115,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username2][host=tcp][resource=database2]",
             "ValidationFingerprint/v1": "[acct=username2][host=tcp][pwd=password2][resource=database2]"
           }
         },
@@ -155,6 +156,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username2][host=tcp:servername2.database.windows.net,1433][platform=Azure][resource=database2]",
             "ValidationFingerprint/v1": "[acct=username2][host=tcp:servername2.database.windows.net,1433][pwd=password2][resource=database2]"
           }
         },
@@ -195,6 +197,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username4][host=servername4][platform=SqlOnPremise][resource=database4]",
             "ValidationFingerprint/v1": "[acct=username4][host=servername4][pwd=password4][resource=database4]"
           }
         },
@@ -235,6 +238,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username5][host=database5][platform=SqlOnPremise][resource=database5]",
             "ValidationFingerprint/v1": "[acct=username5][host=database5][pwd=password5][resource=database5]"
           }
         },
@@ -275,6 +279,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username6][host=servername6][platform=SqlOnPremise][resource=database6]",
             "ValidationFingerprint/v1": "[acct=username6][host=servername6][pwd=password6][resource=database6]"
           }
         },
@@ -315,6 +320,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username15][host=servername15][platform=SqlOnPremise][resource=database15]",
             "ValidationFingerprint/v1": "[acct=username15][host=servername15][pwd=password15][resource=database15]"
           }
         },
@@ -355,6 +361,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username8][host=servername8][platform=SqlOnPremise][resource=database8]",
             "ValidationFingerprint/v1": "[acct=username8][host=servername8][pwd=password8][resource=database8]"
           }
         },
@@ -395,6 +402,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username9][host=servername9][platform=SqlOnPremise][resource=database9]",
             "ValidationFingerprint/v1": "[acct=username9][host=servername9][pwd=password9][resource=database9]"
           }
         },
@@ -435,6 +443,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username10][host=servername10][platform=SqlOnPremise][resource=database10]",
             "ValidationFingerprint/v1": "[acct=username10][host=servername10][pwd=password10][resource=database10]"
           }
         },
@@ -475,6 +484,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username14][host=servername14][platform=SqlOnPremise][resource=database14]",
             "ValidationFingerprint/v1": "[acct=username14][host=servername14][pwd=password14\"][resource=database14]"
           }
         },
@@ -515,6 +525,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username16][host=servername16][platform=SqlOnPremise][resource=database16]",
             "ValidationFingerprint/v1": "[acct=username16][host=servername16][pwd=password16\"][resource=database16]"
           }
         },
@@ -555,6 +566,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=ab][host=localhost][platform=SqlOnPremise][resource=AdventureWorks]",
             "ValidationFingerprint/v1": "[acct=ab][host=localhost][pwd=a1Pass@@11][resource=AdventureWorks]"
           }
         },
@@ -595,6 +607,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username1][host=servername1.database.windows.net:1433][platform=Azure][resource=database1]",
             "ValidationFingerprint/v1": "[acct=username1][host=servername1.database.windows.net:1433][pwd=password1][resource=database1]"
           }
         },
@@ -635,6 +648,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username11][host=localhost][platform=SqlOnPremise][resource=database11]",
             "ValidationFingerprint/v1": "[acct=username11][host=localhost][pwd=password11][resource=database11]"
           }
         },
@@ -675,6 +689,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username12][host=localhost][platform=SqlOnPremise][resource=database12]",
             "ValidationFingerprint/v1": "[acct=username12][host=localhost][pwd=password12][resource=database12]"
           }
         },
@@ -715,6 +730,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username13][host=localhost][platform=SqlOnPremise][resource=database13]",
             "ValidationFingerprint/v1": "[acct=username13][host=localhost][pwd=password13][resource=database13]"
           }
         },
@@ -755,6 +771,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username3][host=tcp:servername3.database.windows.net,1433][platform=Azure][resource=databse3]",
             "ValidationFingerprint/v1": "[acct=username3][host=tcp:servername3.database.windows.net,1433][pwd=password3][resource=databse3]"
           }
         },
@@ -795,6 +812,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username][host=tcp][platform=SqlOnPremise][resource=database2]",
             "ValidationFingerprint/v1": "[acct=username][host=tcp][pwd=password2][resource=database2]"
           }
         }
