@@ -76,15 +76,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             if (groups.ContainsKey("host") && groups.ContainsKey("database") && groups.ContainsKey("account") && groups.ContainsKey("password"))
             {
                 host = groups["host"];
-                database = groups["database"];
                 account = groups["account"];
+                database = groups["database"];
                 password = groups["password"];
             }
             else
             {
                 host = ParseExpression(RegexEngine, matchedPattern, HostExpression);
-                database = ParseExpression(RegexEngine, matchedPattern, DatabaseExpression);
                 account = ParseExpression(RegexEngine, matchedPattern, AccountExpression);
+                database = ParseExpression(RegexEngine, matchedPattern, DatabaseExpression);
                 password = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
             }
 
@@ -119,6 +119,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Resource = database,
                 Account = account,
                 Password = password,
+                Platform = SharedUtilities.GetDatabasePlatformFromHost(host, out _),
             }.ToString();
 
             return nameof(ValidationState.Unknown);

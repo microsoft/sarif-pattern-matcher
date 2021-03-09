@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=deadbeef0deadbeef0deadbeef.mailgun.org]",
             "ValidationFingerprint/v1": "[acct=deadbeef0deadbeef0deadbeef.mailgun.org][key=0deadbeef00deadbeef00deadbeef000-deadbeef-deadbeef]"
           }
         }

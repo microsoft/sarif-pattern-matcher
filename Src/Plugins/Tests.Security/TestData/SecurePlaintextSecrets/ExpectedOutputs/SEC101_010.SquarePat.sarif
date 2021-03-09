@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[pat=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671]"
           }
         },
@@ -114,6 +115,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[pat=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672]"
           }
         },
@@ -154,6 +156,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[pat=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673]"
           }
         }

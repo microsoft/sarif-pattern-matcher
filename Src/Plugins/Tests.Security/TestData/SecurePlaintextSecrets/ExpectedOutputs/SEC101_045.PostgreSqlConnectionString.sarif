@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_1][port=5555][resource=my_db]"
           }
         },
@@ -114,6 +115,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_2][port=5555][resource=my_db]"
           }
         },
@@ -154,6 +156,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_3][port=5555]"
           }
         },
@@ -194,6 +197,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_4][port=5555]"
           }
         },
@@ -234,6 +238,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_5][port=5555]"
           }
         },
@@ -274,6 +279,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=my_user][host=my_host]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_5]"
           }
         },
@@ -314,6 +320,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_6][port=5555]"
           }
         },
@@ -354,6 +361,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_7][port=5555][resource=my_db]"
           }
         },
@@ -394,6 +402,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_7][port=5555]"
           }
         },
@@ -434,6 +443,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_8][port=5555][resource=my_db]"
           }
         },
@@ -474,6 +484,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_9][port=5555][resource=my_db]"
           }
         }

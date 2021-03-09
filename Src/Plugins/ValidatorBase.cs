@@ -33,7 +33,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         protected virtual string ScanIdentityHttpCustomHeaderValue =>
             "This call originates with a build of the SARIF pattern matcher " +
             "(https://github.com/microsoft/sarif-pattern/matcher. Someone is " +
-            "running an automated scan and validation of detected credentials.";
+            "running an automated scan and attempting to validate detected credentials.";
 
         protected virtual string UserAgentValue => "SARIF Pattern Matcher scan tool";
 

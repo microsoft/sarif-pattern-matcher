@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[uri=https://hooks.slack.com/services/T01JYS3KLKU/B0123456789/deedbeefdeaffeeddeadbeef]",
             "ValidationFingerprint/v1": "[uri=https://hooks.slack.com/services/T01JYS3KLKU/B0123456789/deedbeefdeaffeeddeadbeef]"
           }
         }

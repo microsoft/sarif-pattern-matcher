@@ -97,6 +97,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             fingerprint.Host = host.Replace("\"", string.Empty).Replace(",", ";");
             fingerprint.Resource = database;
             fingerprint.Port = port;
+            fingerprint.Platform = SharedUtilities.GetDatabasePlatformFromHost(fingerprint.Host, out _);
 
             fingerprintText = fingerprint.ToString();
 
