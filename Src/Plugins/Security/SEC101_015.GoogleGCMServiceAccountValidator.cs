@@ -36,7 +36,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-
             fingerprintText = new Fingerprint()
             {
                 Resource = matchedPattern,

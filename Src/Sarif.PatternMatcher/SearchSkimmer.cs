@@ -17,6 +17,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {
+        public const string AssetFingerprint = "AssetFingerprint/v1";
         public const string GlobalFingerprint = "GlobalFingerprint/v1";
         public const string ValidationFingerprint = "ValidationFingerprint/v1";
         public const string DynamicValidationNotEnabled = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
@@ -764,6 +765,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch, string fingerprint)
         {
+            // TODO: this code is wrong!! We no longer use the fingerprint to refine the region
+
             int indexOffset = regionFlexMatch.Value.String.IndexOf(fingerprint);
             int lengthOffset = fingerprint.Length - regionFlexMatch.Length;
 
@@ -847,13 +850,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        private Dictionary<string, string> BuildFingerprints(string fingerprint)
+        private Dictionary<string, string> BuildFingerprints(string fingerprintText)
         {
-            if (fingerprint == null) { return null; }
+            if (string.IsNullOrWhiteSpace(fingerprintText))
+            {
+                return null;
+            }
+
+            var fingerprint = new Fingerprint(fingerprintText);
 
             return new Dictionary<string, string>()
             {
-                { ValidationFingerprint, fingerprint },
+                { AssetFingerprint, fingerprint.GetAssetFingerprintText() },
+                { ValidationFingerprint, fingerprint.GetValidationFingerprintText() },
             };
         }
 
