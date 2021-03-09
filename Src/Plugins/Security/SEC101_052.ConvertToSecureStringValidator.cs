@@ -2,16 +2,19 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using System.Linq;
+
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class GoogleGCMServiceAccountValidator : ValidatorBase
+    public class ConvertToSecureStringValidator : ValidatorBase
     {
-        internal static GoogleGCMServiceAccountValidator Instance;
+        internal static ConvertToSecureStringValidator Instance;
 
-        static GoogleGCMServiceAccountValidator()
+        static ConvertToSecureStringValidator()
         {
-            Instance = new GoogleGCMServiceAccountValidator();
+            Instance = new ConvertToSecureStringValidator();
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -34,12 +37,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
+            if (!groups.TryGetNonEmptyValue("password", out string password))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
             fingerprintText = new Fingerprint()
             {
-                Resource = matchedPattern,
+                Password = password,
             }.ToString();
 
-            return nameof(ValidationState.Unknown);
+            return nameof(ValidationState.AuthorizedWarning);
         }
     }
 }

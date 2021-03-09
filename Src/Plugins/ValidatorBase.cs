@@ -154,7 +154,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                 return ReturnUnknownHost(ref message, asset);
             }
 
-            string sslMessage = "The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.";
+            const string sslMessage = "The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.";
             if (TestExceptionForMessage(e, sslMessage, asset))
             {
                 return ReturnUnknownHost(ref message, asset);
@@ -340,7 +340,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             }
 
             var aggregateException = e as AggregateException;
-            if (aggregateException != null && aggregateException.InnerExceptions != null)
+            if (aggregateException?.InnerExceptions != null)
             {
                 foreach (Exception aggregatedException in aggregateException.InnerExceptions)
                 {
