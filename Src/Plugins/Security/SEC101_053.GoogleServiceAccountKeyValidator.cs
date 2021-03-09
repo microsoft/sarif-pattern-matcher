@@ -34,12 +34,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                  ref message);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message)
-        {
-            return IsValidDynamic(Instance,
-                                   ref fingerprint,
-                                   ref message);
-        }
+        // TODO: Complete dynamic validation for Google client id and secret 
+        // https://github.com/microsoft/sarif-pattern-matcher/issues/277
+        //public static string IsValidDynamic(ref string fingerprint, ref string message)
+        //{
+        //    return IsValidDynamic(Instance,
+        //                           ref fingerprint,
+        //                           ref message);
+        //}
 
         protected override string IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
@@ -76,24 +78,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.Unknown);
             }
 
-            ClientSecrets clientSecrets = new ClientSecrets()
-            {
-                ClientId = account,
-                ClientSecret = key,
-            };
-
             try
             {
+                ClientSecrets clientSecrets = new ClientSecrets()
+                {
+                    ClientId = account,
+                    ClientSecret = key,
+                };
+
+                // This opens a browser.  Can we somehow get the information from the browser?
+                // Or make our own calls, in-app instead?
                 UserCredential credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     clientSecrets,
-                    new string[] { },
+                    new string[] { "Read" },
                     "user",
                     CancellationToken.None).Result;
-            }
-            catch (Exception e)
-            {
 
+                // ***** This throws no exception and allows dummy credentials to be added.
+                // The result is a credentials object that is mostly empty. This means
+                // verification is indeterminate.
+                //var token = new TokenResponse { RefreshToken = null };
+                //var credentials = new UserCredential(new GoogleAuthorizationCodeFlow(
+                //    new GoogleAuthorizationCodeFlow.Initializer
+                //    {
+                //        ClientSecrets = clientSecrets,
+                //    }),
+                //    "user",
+                //    token);
+
+                //UserCredential testVar = credentials;
             }
+            catch (Exception)
+            { }
 
             return nameof(ValidationState.Unknown);
         }
