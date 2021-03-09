@@ -3,8 +3,6 @@
 
 using System.Collections.Generic;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class GoogleGCMServiceAccountValidator : ValidatorBase
@@ -36,7 +34,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-
             fingerprintText = new Fingerprint()
             {
                 Resource = matchedPattern,

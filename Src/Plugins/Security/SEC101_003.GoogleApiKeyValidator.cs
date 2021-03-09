@@ -81,8 +81,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                var googleException = e as GoogleApiException;
-                if (googleException != null)
+                if (e is GoogleApiException googleException)
                 {
                     switch (e.Message)
                     {

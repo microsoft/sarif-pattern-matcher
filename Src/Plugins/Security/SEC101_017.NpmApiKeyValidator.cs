@@ -9,6 +9,8 @@ using System.Net.Http.Headers;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 
+using Newtonsoft.Json;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class NpmApiKeyValidator : ValidatorBase
@@ -75,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     new AuthenticationHeaderValue("Bearer", key);
 
                 using HttpResponseMessage response = client
-                    .GetAsync($"https://registry.npmjs.org/-/whoami")
+                    .GetAsync($"https://registry.npmjs.com/-/npm/v1/tokens", HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
@@ -83,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
-                        return nameof(ValidationState.AuthorizedError);
+                        return CheckInformation(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), key, ref message);
                     }
 
                     case HttpStatusCode.Unauthorized:
@@ -105,6 +107,71 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             return nameof(ValidationState.Unknown);
+        }
+
+        private static string CheckInformation(string content, string key, ref string message)
+        {
+            TokensRoot tokensRoot = JsonConvert.DeserializeObject<TokensRoot>(content);
+            if (tokensRoot?.Tokens?.Count > 0)
+            {
+                foreach (Object obj in tokensRoot.Tokens)
+                {
+                    if (!key.Contains(obj.Token))
+                    {
+                        continue;
+                    }
+
+                    if (obj.Readonly)
+                    {
+                        message = "The token has read permissions.";
+                        return nameof(ValidationState.AuthorizedWarning);
+                    }
+
+                    if (obj.Automation)
+                    {
+                        message = "The token has automation permissions.";
+                        return nameof(ValidationState.AuthorizedError);
+                    }
+
+                    message = "The token has publish permissions.";
+                    return nameof(ValidationState.AuthorizedError);
+                }
+            }
+
+            return nameof(ValidationState.AuthorizedError);
+        }
+
+        private class Object
+        {
+            [JsonProperty("token")]
+            public string Token { get; set; }
+
+            [JsonProperty("key")]
+            public string Key { get; set; }
+
+            [JsonProperty("cidr_whitelist")]
+            public object CidrWhitelist { get; set; }
+
+            [JsonProperty("readonly")]
+            public bool Readonly { get; set; }
+
+            [JsonProperty("automation")]
+            public bool Automation { get; set; }
+
+            [JsonProperty("created")]
+            public DateTime Created { get; set; }
+
+            [JsonProperty("updated")]
+            public DateTime Updated { get; set; }
+        }
+
+        private class TokensRoot
+        {
+            [JsonProperty("objects")]
+            public List<Object> Tokens { get; set; }
+
+            [JsonProperty("total")]
+            public int Total { get; set; }
         }
     }
 }
