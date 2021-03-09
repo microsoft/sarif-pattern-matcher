@@ -57,6 +57,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprintText = new Fingerprint
             {
                 Key = key,
+                Platform = nameof(AssetPlatform.Npm),
             }.ToString();
 
             return nameof(ValidationState.Unknown);

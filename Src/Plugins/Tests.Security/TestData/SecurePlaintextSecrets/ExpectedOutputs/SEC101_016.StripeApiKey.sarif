@@ -90,7 +90,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
+            "AssetFingerprint/v1": "[platform=Stripe]",
             "ValidationFingerprint/v1": "[key=sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]"
           }
         },
@@ -131,7 +131,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
+            "AssetFingerprint/v1": "[platform=Stripe]",
             "ValidationFingerprint/v1": "[key=sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]"
           }
         },

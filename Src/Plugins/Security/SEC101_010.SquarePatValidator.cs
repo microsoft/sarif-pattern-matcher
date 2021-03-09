@@ -53,6 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprintText = new Fingerprint
             {
                 PersonalAccessToken = key,
+                Platform = nameof(AssetPlatform.Square),
             }.ToString();
 
             return nameof(ValidationState.Unknown);
