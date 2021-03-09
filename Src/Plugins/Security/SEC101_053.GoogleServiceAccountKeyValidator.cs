@@ -50,7 +50,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Key = key,
             }.ToString();
 
-            return nameof(ValidationState.Unknown);
+            // We have high confidence in these particular patterns as they are extracted directly from
+            // Google docs and JSON definitions
+            return nameof(ValidationState.AuthorizedWarning);
         }
     }
 }
