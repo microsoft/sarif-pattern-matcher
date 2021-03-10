@@ -113,7 +113,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return nameof(ValidationState.Unknown);
         }
 
-        public class Account
+        private class Account
         {
             [JsonProperty("account_name")]
             public string AccountName { get; set; }
