@@ -59,6 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 Uri = uri,
                 Account = account,
                 Password = password,
+                Platform = nameof(AssetPlatform.Cloudant),
             }.ToString();
 
             return nameof(ValidationState.Unknown);

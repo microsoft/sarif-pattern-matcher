@@ -74,7 +74,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
+            "AssetFingerprint/v1": "[platform=PayPal]",
             "ValidationFingerprint/v1": "[key=1111111111012345$01234567890123456789012345678901]"
           }
         },
@@ -115,7 +115,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
+            "AssetFingerprint/v1": "[platform=PayPal]",
             "ValidationFingerprint/v1": "[key=2222222222012345$01234567890123456789012345678901]"
           }
         }

@@ -26,9 +26,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         AzureDevOps,
 
         /// <summary>
-        /// Aws Platform.
+        /// Aws platform.
         /// </summary>
         Aws,
+
+        /// <summary>
+        /// Cloudant platform.
+        /// </summary>
+        Cloudant,
+
+        /// <summary>
+        /// Dynatrace platform.
+        /// </summary>
+        Dynatrace,
 
         /// <summary>
         /// Facebook platform.
@@ -51,9 +61,49 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         LinkedIn,
 
         /// <summary>
+        /// MailChimp platform.
+        /// </summary>
+        MailChimp,
+
+        /// <summary>
+        /// Mailgun platform.
+        /// </summary>
+        Mailgun,
+
+        /// <summary>
         /// Npm platform.
         /// </summary>
         Npm,
+
+        /// <summary>
+        /// Nuget platform.
+        /// </summary>
+        NuGet,
+
+        /// <summary>
+        /// Office platform.
+        /// </summary>
+        Office,
+
+        /// <summary>
+        /// PayPal platform.
+        /// </summary>
+        PayPal,
+
+        /// <summary>
+        /// Picatic platform.
+        /// </summary>
+        Picatic,
+
+        /// <summary>
+        /// SendGrid platform.
+        /// </summary>
+        SendGrid,
+
+        /// <summary>
+        /// Shopify platform.
+        /// </summary>
+        Shopify,
 
         /// <summary>
         /// Slack platform.
@@ -74,5 +124,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// Stripe platform.
         /// </summary>
         Stripe,
+
+        /// <summary>
+        /// Twilio platform.
+        /// </summary>
+        Twilio,
+
+        /// <summary>
+        /// Xbox platform.
+        /// </summary>
+        Xbox,
     }
 }
