@@ -68,7 +68,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Password = password,
             }.ToString();
 
-            return nameof(ValidationState.AuthorizedWarning);
+            return nameof(ValidationState.Unknown);
         }
 
         protected override string IsValidDynamicHelper(ref string fingerprintText,
@@ -107,7 +107,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         // Not even the client id we found is valid. Return no match.
                         return nameof(ValidationState.NoMatch);
                     case _invalidSecret:
-                        return nameof(ValidationState.Unknown);
+                        // The client ID is valid but the secret was not.  We have higher confidence than
+                        // normal warnings so return authorized warning
+                        return nameof(ValidationState.AuthorizedWarning);
                     default:
                         return ReturnUnhandledException(ref message, ce, asset: nameof(AssetPlatform.AlibabaCloud));
                 }
