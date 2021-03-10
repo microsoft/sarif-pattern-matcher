@@ -80,8 +80,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             try
             {
                 // Taken from https://www.alibabacloud.com/help/doc-detail/63638.htm
-                var clientProfile = DefaultProfile.GetProfile("cn-shanghai", account, password);
-                DefaultAcsClient client = new DefaultAcsClient(clientProfile);
+                IClientProfile clientProfile = DefaultProfile.GetProfile("cn-shanghai", account, password);
+                var client = new DefaultAcsClient(clientProfile);
 
                 var request = new PubRequest();
 
