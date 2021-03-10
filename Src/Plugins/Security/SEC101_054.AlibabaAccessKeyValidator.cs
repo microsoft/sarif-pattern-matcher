@@ -106,11 +106,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case _keyNotFound:
                         // Not even the client id we found is valid. Return no match.
-                        return ReturnUnauthorizedAccess(ref message, asset: account);
+                        return nameof(ValidationState.NoMatch);
                     case _invalidSecret:
-                        // The client ID is valid but the secret was not. We have higher confidence than
-                        // normal warnings so return authorized warning
-                        return nameof(ValidationState.AuthorizedWarning);
+                        // The client ID is valid but the secret was not.
+                        return ReturnUnauthorizedAccess(ref message, asset: account);
                     default:
                         return ReturnUnhandledException(ref message, ce, asset: account);
                 }
