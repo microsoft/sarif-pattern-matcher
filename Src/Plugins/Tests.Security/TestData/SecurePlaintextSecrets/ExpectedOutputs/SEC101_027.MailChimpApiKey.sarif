@@ -49,7 +49,7 @@
               "",
               "MailChimp API Key",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
@@ -74,7 +74,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
+            "AssetFingerprint/v1": "[platform=MailChimp]",
             "ValidationFingerprint/v1": "[key=11111111110123456789012345678901-us012345678901]"
           }
         },
@@ -90,7 +90,7 @@
               "",
               "MailChimp API Key",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
@@ -115,7 +115,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
+            "AssetFingerprint/v1": "[platform=MailChimp]",
             "ValidationFingerprint/v1": "[key=22222222220123456789012345678901-us012345678901]"
           }
         }
