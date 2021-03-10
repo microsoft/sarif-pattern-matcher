@@ -61,13 +61,13 @@
                 },
                 "region": {
                   "startLine": 1,
-                  "startColumn": 1,
+                  "startColumn": 25,
                   "endLine": 1,
                   "endColumn": 74,
-                  "charOffset": 0,
-                  "charLength": 73,
+                  "charOffset": 24,
+                  "charLength": 49,
                   "snippet": {
-                    "text": "access_token$production$1111111111012345$01234567890123456789012345678901"
+                    "text": "1111111111012345$01234567890123456789012345678901"
                   }
                 }
               }
@@ -102,13 +102,13 @@
                 },
                 "region": {
                   "startLine": 3,
-                  "startColumn": 1,
+                  "startColumn": 25,
                   "endLine": 3,
                   "endColumn": 74,
-                  "charOffset": 77,
-                  "charLength": 73,
+                  "charOffset": 101,
+                  "charLength": 49,
                   "snippet": {
-                    "text": "access_token$production$2222222222012345$01234567890123456789012345678901"
+                    "text": "2222222222012345$01234567890123456789012345678901"
                   }
                 }
               }
