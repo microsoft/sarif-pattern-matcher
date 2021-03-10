@@ -1,0 +1,124 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC101/054",
+              "name": "DoNotExposePlaintextSecrets/AlibabaAccessKey",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC101/054",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_054.AlibabaAccessKey.ps1",
+              "a valid ",
+              "",
+              "Alibaba Access Key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_054.AlibabaAccessKey.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 101,
+                  "endLine": 1,
+                  "endColumn": 168,
+                  "charOffset": 100,
+                  "charLength": 67,
+                  "snippet": {
+                    "text": "LTAI01234567890123456789\",\t         \"111111111101234567890123456789"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[acct=LTAI01234567890123456789]",
+            "ValidationFingerprint/v1": "[acct=LTAI01234567890123456789][pwd=111111111101234567890123456789]"
+          }
+        },
+        {
+          "ruleId": "SEC101/054",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_054.AlibabaAccessKey.ps1",
+              "a valid ",
+              "",
+              "Alibaba Access Key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_054.AlibabaAccessKey.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 4,
+                  "startColumn": 54,
+                  "endLine": 4,
+                  "endColumn": 120,
+                  "charOffset": 295,
+                  "charLength": 66,
+                  "snippet": {
+                    "text": "LTAI012345678901\"; \tstring scret = \"222222222201234567890123456789"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[acct=LTAI012345678901]",
+            "ValidationFingerprint/v1": "[acct=LTAI012345678901][pwd=222222222201234567890123456789]"
+          }
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}
