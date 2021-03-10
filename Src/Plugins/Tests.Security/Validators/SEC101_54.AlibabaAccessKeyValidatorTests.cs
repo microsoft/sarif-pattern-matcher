@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    public class AlibabaAccessKeyValidatorTests : AlibabaAccessKeyValidator
+    public class AlibabaAccessKeyValidatorTests
     {
         private readonly string _expectedValidationState = nameof(ValidationState.NoMatch);
         private readonly string _accessKeyId = "LTAI01234567890123456789";
@@ -17,7 +17,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         {
             string fingerprintText = string.Format("[acct={0}][pwd={1}]", _accessKeyId, _accessKeySecret);
             string message = null;
-            string actualValidationState = IsValidDynamicHelper(ref fingerprintText, ref message);
+
+            string actualValidationState = AlibabaAccessKeyValidator.IsValidDynamic(ref fingerprintText, ref message);
             Assert.Equal(_expectedValidationState, actualValidationState);
         }
     }

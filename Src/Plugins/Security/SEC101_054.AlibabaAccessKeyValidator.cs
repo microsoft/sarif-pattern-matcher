@@ -21,8 +21,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static AlibabaAccessKeyValidator Instance;
 
-        protected const string KeyNotFound = "InvalidAccessKeyId.NotFound";
-        protected const string InvalidSecret = "SDK.InvalidAccessKeySecret";
+        private const string _keyNotFound = "InvalidAccessKeyId.NotFound";
+        private const string _invalidSecret = "SDK.InvalidAccessKeySecret";
 
         static AlibabaAccessKeyValidator()
         {
@@ -74,7 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override string IsValidDynamicHelper(ref string fingerprintText,
                                                        ref string message)
         {
-            Fingerprint fingerprint = new Fingerprint(fingerprintText);
+            var fingerprint = new Fingerprint(fingerprintText);
             string account = fingerprint.Account;
             string password = fingerprint.Password;
 
@@ -96,22 +96,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 PubResponse response = client.GetAcsResponse(request);
 
                 // If all goes well, we'll receive a "product format invalid" message in the response
-                // which means authentication succeeded.  Therefore the id and secret are valid.
-                return ReturnAuthorizedAccess(ref message, asset: account);
+                // which means authentication succeeded. Therefore the id and secret are valid.
+                return ReturnAuthorizedAccess(ref message, asset: nameof(AssetPlatform.AlibabaCloud));
             }
             catch (ClientException ce)
             {
                 switch (ce.ErrorCode)
                 {
-                    case KeyNotFound:
-                        // Not even the client id we found is valid.  Return no match.
+                    case _keyNotFound:
+                        // Not even the client id we found is valid. Return no match.
                         return nameof(ValidationState.NoMatch);
-                    case InvalidSecret:
-                        // The client ID is valid but the secret was not.  We have higher confidence than
-                        // normal warnings so return authorized warning
-                        return nameof(ValidationState.AuthorizedWarning);
+                    case _invalidSecret:
+                        return nameof(ValidationState.Unknown);
                     default:
-                        return ReturnUnhandledException(ref message, ce, asset: account);
+                        return ReturnUnhandledException(ref message, ce, asset: nameof(AssetPlatform.AlibabaCloud));
                 }
             }
         }
