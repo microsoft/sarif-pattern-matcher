@@ -9,7 +9,6 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.Security</RootNamespace>
     <PackageId>Sarif.PatternMatcher.Security</PackageId>
-    <UserSecretsId>9dc71d33-341e-47a5-90c5-f12c84bd9e90</UserSecretsId>
   </PropertyGroup>
   
   <ItemGroup>
