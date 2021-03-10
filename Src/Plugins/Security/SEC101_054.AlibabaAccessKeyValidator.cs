@@ -64,6 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             fingerprintText = new Fingerprint()
             {
+                Platform = nameof(AssetPlatform.AlibabaCloud),
                 Account = account,
                 Password = password,
             }.ToString();
@@ -97,7 +98,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 // If all goes well, we'll receive a "product format invalid" message in the response
                 // which means authentication succeeded. Therefore the id and secret are valid.
-                return ReturnAuthorizedAccess(ref message, asset: nameof(AssetPlatform.AlibabaCloud));
+                return ReturnAuthorizedAccess(ref message, asset: account);
             }
             catch (ClientException ce)
             {
@@ -107,11 +108,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         // Not even the client id we found is valid. Return no match.
                         return nameof(ValidationState.NoMatch);
                     case _invalidSecret:
-                        // The client ID is valid but the secret was not.  We have higher confidence than
+                        // The client ID is valid but the secret was not. We have higher confidence than
                         // normal warnings so return authorized warning
                         return nameof(ValidationState.AuthorizedWarning);
                     default:
-                        return ReturnUnhandledException(ref message, ce, asset: nameof(AssetPlatform.AlibabaCloud));
+                        return ReturnUnhandledException(ref message, ce, asset: account);
                 }
             }
         }
