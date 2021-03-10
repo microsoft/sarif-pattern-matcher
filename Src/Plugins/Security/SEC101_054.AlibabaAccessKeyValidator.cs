@@ -5,12 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-// From the Nuget package
 using Aliyun.Acs.Core;
 using Aliyun.Acs.Core.Exceptions;
 using Aliyun.Acs.Core.Profile;
 
-// From the DLL
 using Aliyun.Acs.Iot.Model.V20170420;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
@@ -21,8 +19,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static AlibabaAccessKeyValidator Instance;
 
-        private const string _keyNotFound = "InvalidAccessKeyId.NotFound";
-        private const string _invalidSecret = "SDK.InvalidAccessKeySecret";
+        private const string KeyNotFound = "InvalidAccessKeyId.NotFound";
+        private const string InvalidSecret = "SDK.InvalidAccessKeySecret";
 
         static AlibabaAccessKeyValidator()
         {
@@ -82,38 +80,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             try
             {
                 // Taken from https://www.alibabacloud.com/help/doc-detail/63638.htm
-                IClientProfile clientProfile = DefaultProfile.GetProfile("cn-shanghai", account, password);
+                var clientProfile = DefaultProfile.GetProfile("cn-shanghai", account, password);
                 DefaultAcsClient client = new DefaultAcsClient(clientProfile);
 
-                PubRequest request = new PubRequest();
+                var request = new PubRequest();
 
-                // We don't actually care about any of the product stuff, so just leave dummy values in
+                // We don't actually care about any of the product stuff, so just leave dummy values in.
                 request.ProductKey = "<productKey>";
                 request.TopicFullName = "/<productKey>/<deviceName>/get";
-                byte[] payload = Encoding.Default.GetBytes("Hello World.");
+                byte[] payload = Encoding.Default.GetBytes("Invalid payload.");
                 string payloadStr = Convert.ToBase64String(payload);
                 request.MessageContent = payloadStr;
                 request.Qos = 0;
                 PubResponse response = client.GetAcsResponse(request);
-
-                // If all goes well, we'll receive a "product format invalid" message in the response
-                // which means authentication succeeded. Therefore the id and secret are valid.
-                return ReturnAuthorizedAccess(ref message, asset: account);
             }
             catch (ClientException ce)
             {
                 switch (ce.ErrorCode)
                 {
-                    case _keyNotFound:
+                    case KeyNotFound:
                         // Not even the client id we found is valid. Return no match.
                         return nameof(ValidationState.NoMatch);
-                    case _invalidSecret:
+                    case InvalidSecret:
                         // The client ID is valid but the secret was not.
                         return ReturnUnauthorizedAccess(ref message, asset: account);
                     default:
                         return ReturnUnhandledException(ref message, ce, asset: account);
                 }
             }
+
+            // If all goes well, we'll receive a "product format invalid" message in the response
+            // which means authentication succeeded. Therefore the id and secret are valid.
+            return ReturnAuthorizedAccess(ref message, asset: account);
         }
     }
 }
