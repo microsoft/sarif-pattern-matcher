@@ -68,6 +68,8 @@
   $SEC101/050.SqlCredentialObjectInitializer=(?s)SqlCredential\(\)\s*{.{0,50}UserId\s*=\s*"(?<account>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<password>[^"]*)"
   $SEC101/051.GpgCredential=(?is)gpg[._-](gen_key_input|sign|decrypt_file)\s*\(\s*(name_email\s*=\s*["'](?<account>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?<password>[^"']*)["']
   $SEC101/052.ConvertToSecureString=(?i)ConvertTo-SecureString\s*(-[S]tring)?\s*["'](?<password>[^"')(]*)["']
+  $SEC101/053.GoogleServiceAccountKeyConsoleFormat="private_key":\s*"-----BEGIN PRIVATE KEY-----\\n(?s)(?<key>[^"]+)(?-s)\\n-----END PRIVATE KEY-----\\n(?s).{1,200}(?-s)"client_id"\s*:\s*"(?<account>[\w.-]+)"
+  $SEC101/053.GoogleServiceAccountKeyConsoleRestFormat="name": "projects\/[\w-]+\/serviceAccounts\/[\w@.-]+\/keys\/(?<key>[^"]+)",
   $SEC101/054.AlibabaAccessKey=\b(?<account>LTAI([a-zA-Z0-9]{12}|[a-zA-Z0-9]{20}))\b(?s).{0,50}(?-s)\b(?<password>[\w]{30})\b
   $SEC101/102.AdoPat=(^|[^2-7a-z])(?<refine>[2-7a-z]{52})([^2-7a-z]|$)
   
