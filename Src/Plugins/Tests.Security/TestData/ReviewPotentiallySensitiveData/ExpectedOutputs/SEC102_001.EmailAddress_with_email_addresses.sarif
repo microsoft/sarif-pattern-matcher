@@ -70,6 +70,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=example.com]",
             "ValidationFingerprint/v1": "[acct=email][host=example.com]"
           }
         },
@@ -106,6 +107,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=firstname.lastname][host=example.com]",
             "ValidationFingerprint/v1": "[acct=firstname.lastname][host=example.com]"
           }
         },
@@ -142,6 +144,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=lastname][host=example.com]",
             "ValidationFingerprint/v1": "[acct=lastname][host=example.com]"
           }
         },
@@ -178,6 +181,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=subdomain.example.com]",
             "ValidationFingerprint/v1": "[acct=email][host=subdomain.example.com]"
           }
         },
@@ -214,6 +218,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=firstname+lastname][host=example.com]",
             "ValidationFingerprint/v1": "[acct=firstname+lastname][host=example.com]"
           }
         },
@@ -250,6 +255,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=+lastname][host=example.com]",
             "ValidationFingerprint/v1": "[acct=+lastname][host=example.com]"
           }
         },
@@ -286,6 +292,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=lastname][host=example.com]",
             "ValidationFingerprint/v1": "[acct=lastname][host=example.com]"
           }
         },
@@ -322,6 +329,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=123.123.123.123]",
             "ValidationFingerprint/v1": "[acct=email][host=123.123.123.123]"
           }
         },
@@ -358,6 +366,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=1234567890][host=example.com]",
             "ValidationFingerprint/v1": "[acct=1234567890][host=example.com]"
           }
         },
@@ -394,6 +403,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=example-one.com]",
             "ValidationFingerprint/v1": "[acct=email][host=example-one.com]"
           }
         },
@@ -430,6 +440,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=example.co.jp]",
             "ValidationFingerprint/v1": "[acct=email][host=example.co.jp]"
           }
         },
@@ -466,6 +477,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=firstname-lastname][host=example.com]",
             "ValidationFingerprint/v1": "[acct=firstname-lastname][host=example.com]"
           }
         },
@@ -502,6 +514,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=-lastname][host=example.com]",
             "ValidationFingerprint/v1": "[acct=-lastname][host=example.com]"
           }
         },
@@ -538,6 +551,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=lastname][host=example.com]",
             "ValidationFingerprint/v1": "[acct=lastname][host=example.com]"
           }
         },
@@ -574,6 +588,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=example.name]",
             "ValidationFingerprint/v1": "[acct=email][host=example.name]"
           }
         },
@@ -610,6 +625,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=example.museum]",
             "ValidationFingerprint/v1": "[acct=email][host=example.museum]"
           }
         },
@@ -646,6 +662,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=addressSurroundedBySpaces][host=example.com]",
             "ValidationFingerprint/v1": "[acct=addressSurroundedBySpaces][host=example.com]"
           }
         },
@@ -682,6 +699,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=addressSurroundedByTabs][host=example.com]",
             "ValidationFingerprint/v1": "[acct=addressSurroundedByTabs][host=example.com]"
           }
         },
@@ -718,6 +736,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=addressSurroundedByPipes][host=example.com]",
             "ValidationFingerprint/v1": "[acct=addressSurroundedByPipes][host=example.com]"
           }
         },
@@ -754,6 +773,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=addressSurroundedByDoubleQuotes][host=example.com]",
             "ValidationFingerprint/v1": "[acct=addressSurroundedByDoubleQuotes][host=example.com]"
           }
         },
@@ -790,6 +810,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=addressSurroundedBySingleQuotes][host=example.com]",
             "ValidationFingerprint/v1": "[acct=addressSurroundedBySingleQuotes][host=example.com]"
           }
         },
@@ -826,6 +847,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=htmlAddress][host=example.com]",
             "ValidationFingerprint/v1": "[acct=htmlAddress][host=example.com]"
           }
         },
@@ -862,6 +884,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=addressInTags][host=example.com]",
             "ValidationFingerprint/v1": "[acct=addressInTags][host=example.com]"
           }
         },
@@ -898,6 +921,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=addressPrecededByColon][host=example.com]",
             "ValidationFingerprint/v1": "[acct=addressPrecededByColon][host=example.com]"
           }
         },
@@ -934,6 +958,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=addressPrecededByColonAndFollowedByPeriod][host=example.com]",
             "ValidationFingerprint/v1": "[acct=addressPrecededByColonAndFollowedByPeriod][host=example.com]"
           }
         },
@@ -970,6 +995,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=111.222.333.44444]",
             "ValidationFingerprint/v1": "[acct=email][host=111.222.333.44444]"
           }
         },
@@ -1006,6 +1032,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email..email][host=example.com]",
             "ValidationFingerprint/v1": "[acct=email..email][host=example.com]"
           }
         },
@@ -1042,6 +1069,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=example.com]",
             "ValidationFingerprint/v1": "[acct=email][host=example.com]"
           }
         },
@@ -1078,6 +1106,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=example..com]",
             "ValidationFingerprint/v1": "[acct=email][host=example..com]"
           }
         },
@@ -1114,6 +1143,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=Abc..123][host=example.com]",
             "ValidationFingerprint/v1": "[acct=Abc..123][host=example.com]"
           }
         },
@@ -1150,6 +1180,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=123][host=example.com]",
             "ValidationFingerprint/v1": "[acct=123][host=example.com]"
           }
         },
@@ -1186,6 +1217,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=unusual.com][host=example.com]",
             "ValidationFingerprint/v1": "[acct=unusual.com][host=example.com]"
           }
         },
@@ -1222,6 +1254,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=com][host=example.com]",
             "ValidationFingerprint/v1": "[acct=com][host=example.com]"
           }
         },
@@ -1258,6 +1291,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=unusual][host=strange.example.com]",
             "ValidationFingerprint/v1": "[acct=unusual][host=strange.example.com]"
           }
         },
@@ -1294,6 +1328,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=example.com]",
             "ValidationFingerprint/v1": "[acct=email][host=example.com]"
           }
         },
@@ -1330,6 +1365,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=example][host=example.com]",
             "ValidationFingerprint/v1": "[acct=example][host=example.com]"
           }
         },
@@ -1366,6 +1402,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=example.com]",
             "ValidationFingerprint/v1": "[acct=email][host=example.com]"
           }
         },
@@ -1402,6 +1439,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=email][host=example.com]",
             "ValidationFingerprint/v1": "[acct=email][host=example.com]"
           }
         },
@@ -1438,6 +1476,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=user][host=example.com]",
             "ValidationFingerprint/v1": "[acct=user][host=example.com]"
           }
         },
@@ -1474,6 +1513,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=endOfLineCheck][host=example.com]",
             "ValidationFingerprint/v1": "[acct=endOfLineCheck][host=example.com]"
           }
         }

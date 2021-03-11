@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Google]",
             "ValidationFingerprint/v1": "[key=AIza0deadbeef00deadbeef00deadbeef00dead]"
           }
         }

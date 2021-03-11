@@ -62,6 +62,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[thumbprint=391550988FF0B079A0E712728F2EB95D542EF58F]",
             "ValidationFingerprint/v1": "[thumbprint=391550988FF0B079A0E712728F2EB95D542EF58F]"
           }
         }

@@ -49,6 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprintText = new Fingerprint
             {
                 Key = matchedPattern,
+                Platform = nameof(AssetPlatform.Google),
             }.ToString();
 
             return nameof(ValidationState.Unknown);
@@ -81,8 +82,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                var googleException = e as GoogleApiException;
-                if (googleException != null)
+                if (e is GoogleApiException googleException)
                 {
                     switch (e.Message)
                     {

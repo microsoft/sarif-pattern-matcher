@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             FileSystem = Sarif.FileSystem.Instance;
         }
 
-        public static SarifLog Analyze(string filePath, string text, string rulePath)
+        public static SarifLog Analyze(string filePath, string text, string rulePath, string originalFileName)
         {
             if (Skimmers == null)
             {
@@ -69,7 +69,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 }
             }
 
-            return JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
+            string sarifLog = sb.ToString();
+
+            if (!string.IsNullOrEmpty(originalFileName))
+            {
+                sarifLog = sarifLog.Replace(filePath, originalFileName);
+            }
+
+            return JsonConvert.DeserializeObject<SarifLog>(sarifLog);
         }
     }
 }

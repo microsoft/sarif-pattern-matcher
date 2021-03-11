@@ -17,6 +17,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public const string AccountKeyName = "acct";
         public const string PasswordKeyName = "pwd";
         public const string KeyNameKeyName = "keyName";
+        public const string PlatformKeyName = "platform";
         public const string ResourceKeyName = "resource";
         public const string SasTokenKeyName = "sasToken";
         public const string ThumbprintKeyName = "thumbprint";
@@ -25,10 +26,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public const string SymmetricKey256BitKeyName = "skey/256";
 
         private const char RightBracketReplacement = '\t';
+        private static readonly HashSet<string> s_emptyDenyList = new HashSet<string>();
+
+        private static readonly HashSet<string> s_assetOnlyKeys =
+            new HashSet<string>(new string[]
+            {
+                PlatformKeyName,
+            });
+
+        private static readonly HashSet<string> s_secretKeys =
+            new HashSet<string>(new string[]
+            {
+                KeyKeyName,
+                HmacKeyName,
+                PasswordKeyName,
+                SasTokenKeyName,
+                PersonalAccessTokenKeyName,
+                SymmetricKey128BitKeyName,
+                SymmetricKey256BitKeyName,
+            });
 
         public Fingerprint(string fingerprintText)
         {
-            Account = Hmac = Host = Port = Id = Key = KeyName = Password = Uri = Resource = null;
+            Account = Hmac = Host = Port = Id = Key = KeyName = Password = Uri = Platform = Resource = null;
             SasToken = PersonalAccessToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
 
             fingerprintText = fingerprintText ??
@@ -46,7 +66,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     nameof(fingerprintText));
             }
 
-            string computedFingerprint = this.GetFingerprintText();
+            string computedFingerprint = this.GetComprehensiveFingerprintText();
             if (!computedFingerprint.Equals(fingerprintText))
             {
                 throw new ArgumentException(
@@ -84,6 +104,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string SasToken { get; set; }
 
+        public string Platform { get; set; }
+
         public string Resource { get; set; }
 
         public string Thumbprint { get; set; }
@@ -94,7 +116,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string PersonalAccessToken { get; set; }
 
-        public string GetFingerprintText() => this.ToString();
+        public string GetComprehensiveFingerprintText() => ToString(this, denyList: s_emptyDenyList);
+
+        public string GetAssetFingerprintText() => ToString(this, denyList: s_secretKeys);
+
+        public string GetValidationFingerprintText() => ToString(this, denyList: s_assetOnlyKeys);
 
 #pragma warning disable SA1107 // Code should not contain multiple statements on one line
         public void SetProperty(string keyName, string value)
@@ -111,6 +137,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 case KeyNameKeyName: { KeyName = value; break; }
                 case PasswordKeyName: { Password = value; break; }
                 case SasTokenKeyName: { SasToken = value; break; }
+                case PlatformKeyName: { Platform = value; break; }
                 case ResourceKeyName: { Resource = value; break; }
                 case ThumbprintKeyName: { Thumbprint = value; break; }
                 case SymmetricKey128BitKeyName: { SymmetricKey128Bit = value; break; }
@@ -123,82 +150,94 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override string ToString()
         {
+            return ToString(this, s_emptyDenyList);
+        }
+
+        internal static string ToString(Fingerprint f, ISet<string> denyList)
+        {
+            denyList ??= s_emptyDenyList;
+
             var components = new List<string>(3);
 
             // These need to remain in alphabetical order.
-            if (!string.IsNullOrEmpty(Account))
+            if (!string.IsNullOrEmpty(f.Account) && !denyList.Contains(AccountKeyName))
             {
-                components.Add($"[{AccountKeyName}={this.Account.Trim()}]");
+                components.Add($"[{AccountKeyName}={f.Account.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(Hmac))
+            if (!string.IsNullOrEmpty(f.Hmac) && !denyList.Contains(HmacKeyName))
             {
-                components.Add($"[{HmacKeyName}={this.Hmac.Trim()}]");
+                components.Add($"[{HmacKeyName}={f.Hmac.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(Host))
+            if (!string.IsNullOrEmpty(f.Host) && !denyList.Contains(HostKeyName))
             {
-                components.Add($"[{HostKeyName}={this.Host.Trim()}]");
+                components.Add($"[{HostKeyName}={f.Host.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(Id))
+            if (!string.IsNullOrEmpty(f.Id) && !denyList.Contains(IdKeyName))
             {
-                components.Add($"[{IdKeyName}={this.Id.Trim()}]");
+                components.Add($"[{IdKeyName}={f.Id.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(Key))
+            if (!string.IsNullOrEmpty(f.Key) && !denyList.Contains(KeyKeyName))
             {
-                components.Add($"[{KeyKeyName}={this.Key.Trim()}]");
+                components.Add($"[{KeyKeyName}={f.Key.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(KeyName))
+            if (!string.IsNullOrEmpty(f.KeyName) && !denyList.Contains(KeyNameKeyName))
             {
-                components.Add($"[{KeyNameKeyName}={this.KeyName.Trim()}]");
+                components.Add($"[{KeyNameKeyName}={f.KeyName.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(Password))
+            if (!string.IsNullOrEmpty(f.Password) && !denyList.Contains(PasswordKeyName))
             {
-                components.Add($"[{PasswordKeyName}={this.Password.Trim()}]");
+                components.Add($"[{PasswordKeyName}={f.Password.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(PersonalAccessToken))
+            if (!string.IsNullOrEmpty(f.PersonalAccessToken) && !denyList.Contains(PersonalAccessTokenKeyName))
             {
-                components.Add($"[{PersonalAccessTokenKeyName}={this.PersonalAccessToken.Trim()}]");
+                components.Add($"[{PersonalAccessTokenKeyName}={f.PersonalAccessToken.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(Port))
+            if (!string.IsNullOrEmpty(f.Platform) && !denyList.Contains(PlatformKeyName))
             {
-                components.Add($"[{PortKeyName}={this.Port.Trim()}]");
+                components.Add($"[{PlatformKeyName}={f.Platform.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(Resource))
+            if (!string.IsNullOrEmpty(f.Port) && !denyList.Contains(PortKeyName))
             {
-                components.Add($"[{ResourceKeyName}={this.Resource.Trim()}]");
+                components.Add($"[{PortKeyName}={f.Port.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(SasToken))
+            if (!string.IsNullOrEmpty(f.Resource) && !denyList.Contains(ResourceKeyName))
             {
-                components.Add($"[{SasTokenKeyName}={this.SasToken.Trim()}]");
+                components.Add($"[{ResourceKeyName}={f.Resource.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(SymmetricKey128Bit))
+            if (!string.IsNullOrEmpty(f.SasToken) && !denyList.Contains(SasTokenKeyName))
             {
-                components.Add($"[{SymmetricKey128BitKeyName}={this.SymmetricKey128Bit.Trim()}]");
+                components.Add($"[{SasTokenKeyName}={f.SasToken.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(SymmetricKey256Bit))
+            if (!string.IsNullOrEmpty(f.SymmetricKey128Bit) && !denyList.Contains(SymmetricKey128BitKeyName))
             {
-                components.Add($"[{SymmetricKey256BitKeyName}={this.SymmetricKey256Bit.Trim()}]");
+                components.Add($"[{SymmetricKey128BitKeyName}={f.SymmetricKey128Bit.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(Thumbprint))
+            if (!string.IsNullOrEmpty(f.SymmetricKey256Bit) && !denyList.Contains(SymmetricKey256BitKeyName))
             {
-                components.Add($"[{ThumbprintKeyName}={this.Thumbprint.Trim()}]");
+                components.Add($"[{SymmetricKey256BitKeyName}={f.SymmetricKey256Bit.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(Uri))
+            if (!string.IsNullOrEmpty(f.Thumbprint) && !denyList.Contains(ThumbprintKeyName))
             {
-                components.Add($"[{UriKeyName}={this.Uri.Trim()}]");
+                components.Add($"[{ThumbprintKeyName}={f.Thumbprint.Trim()}]");
+            }
+
+            if (!string.IsNullOrEmpty(f.Uri) && !denyList.Contains(UriKeyName))
+            {
+                components.Add($"[{UriKeyName}={f.Uri.Trim()}]");
             }
 
             return components.Count > 0 ?

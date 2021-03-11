@@ -41,9 +41,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            groups.TryGetValue("key", out string key);
-            groups.TryGetValue("kind", out string kind);
+            if (!groups.TryGetNonEmptyValue("key", out string key))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
 
+            groups.TryGetValue("kind", out string kind);
             kind = matchedPattern.Contains(" PGP ") ? "Pgp" : kind;
 
             key = key.Trim();

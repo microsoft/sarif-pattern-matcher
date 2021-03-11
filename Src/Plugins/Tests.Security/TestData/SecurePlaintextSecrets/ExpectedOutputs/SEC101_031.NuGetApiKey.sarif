@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=NuGet]",
             "ValidationFingerprint/v1": "[key=oy20deadbeef0deadbee500deadbeef0deadbee50dead0]"
           }
         }

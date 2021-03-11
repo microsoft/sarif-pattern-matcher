@@ -53,6 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Key = key,
                 Account = account,
+                Platform = nameof(AssetPlatform.Mailgun),
             }.ToString();
 
             return nameof(ValidationState.Unknown);

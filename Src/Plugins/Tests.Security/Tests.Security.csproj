@@ -14,11 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="TestData\SecurePlaintextSecrets\ExpectedOutputs\SEC101_013.CryptographicPrivateKey.sarif" />
-    <None Remove="TestData\SecurePlaintextSecrets\Inputs\SEC101_013.CryptographicPrivateKey.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
     <ProjectReference Include="..\Security\Security.csproj" />
     <ProjectReference Include="..\..\sarif-sdk\src\Sarif\Sarif.csproj" />
