@@ -97,7 +97,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 if (!response.ErrorMessage.Equals(ProductKeyInvalidFormat))
                 {
-                    message = "Unexpected response from Alibaba Cloud.";
+                    message = $"Unexpected response from Alibaba Cloud: '{response.ErrorMessage}'";
                     return nameof(ValidationState.Unknown);
                 }
             }
