@@ -67,6 +67,6 @@
   $SEC101/050.SqlCredentialObjectInitializer=(?s)SqlCredential\(\)\s*{.{0,50}UserId\s*=\s*"(?<account>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<password>[^"]*)"
   $SEC101/051.GpgCredential=(?is)gpg[._-](gen_key_input|sign|decrypt_file)\s*\(\s*(name_email\s*=\s*["'](?<account>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?<password>[^"']*)["']
   $SEC101/052.ConvertToSecureString=(?i)ConvertTo-SecureString\s*(-[S]tring)?\s*["'](?<password>[^"')(]*)["']
-  $SEC101/053.UserPasswordCredential=new UserPasswordCredential\s*\(\s*"(?<account>[^"']+)",\s*"(?<password>[^"'\s]{7,255})"
+  $SEC101/055.UserPasswordCredential=new UserPasswordCredential\s*\(\s*"(?<account>[^"']+)",\s*"(?<password>[^"'\s]{7,255})"
   $SEC101/102.AdoPat=(^|[^2-7a-z])(?<refine>[2-7a-z]{52})([^2-7a-z]|$)
   
