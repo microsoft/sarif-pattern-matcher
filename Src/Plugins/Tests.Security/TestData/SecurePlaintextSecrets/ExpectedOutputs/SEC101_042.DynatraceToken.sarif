@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Dynatrace]",
             "ValidationFingerprint/v1": "[key=dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123]"
           }
         },
@@ -114,6 +115,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Dynatrace]",
             "ValidationFingerprint/v1": "[key=dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123]"
           }
         }

@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[host=https://example.com]",
             "ValidationFingerprint/v1": "[host=https://example.com][key=SomeAuthorizationKey0123456]"
           }
         },
@@ -114,6 +115,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[host=https://example.com][resource=?some=parameters&that=should&appear=inresults]",
             "ValidationFingerprint/v1": "[host=https://example.com][key=SomeAuthorizationKey0123456][resource=?some=parameters&that=should&appear=inresults]"
           }
         },
@@ -154,6 +156,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[host=https://example.com]",
             "ValidationFingerprint/v1": "[host=https://example.com][key=SomeAuthorizationKey0123456=]"
           }
         }

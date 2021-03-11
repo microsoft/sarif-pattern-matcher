@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Shopify]",
             "ValidationFingerprint/v1": "[key=shpat_11111111110123456789012345678901]"
           }
         },
@@ -114,6 +115,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Shopify]",
             "ValidationFingerprint/v1": "[key=shpca_22222222220123456789012345678901]"
           }
         },
@@ -154,6 +156,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Shopify]",
             "ValidationFingerprint/v1": "[key=shppa_33333333330123456789012345678901]"
           }
         }

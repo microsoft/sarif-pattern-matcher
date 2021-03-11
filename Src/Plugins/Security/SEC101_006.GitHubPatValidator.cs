@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Microsoft.RE2.Managed;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 
 using Octokit;
 using Octokit.Internal;
@@ -14,20 +14,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class GitHubPatValidator : ValidatorBase
     {
-        internal static IRegex RegexEngine;
         internal static GitHubPatValidator Instance;
-
-        private const string PatExpression = "[0-9a-z]{40}";
 
         static GitHubPatValidator()
         {
             Instance = new GitHubPatValidator();
-            RegexEngine = RE2Regex.Instance;
-
-            // We perform this work in order to force caching of these
-            // expressions (an operation which otherwise can cause
-            // threading problems).
-            RegexEngine.Match(string.Empty, PatExpression);
         }
 
         public static string IsValidStatic(ref string matchedPattern,
@@ -57,9 +48,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
-            string pat = RegexEngine.Match(matchedPattern, PatExpression).Value;
-
-            if (string.IsNullOrWhiteSpace(pat))
+            if (!groups.TryGetNonEmptyValue("key", out string pat))
             {
                 return nameof(ValidationState.NoMatch);
             }
@@ -88,6 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprintText = new Fingerprint
             {
                 PersonalAccessToken = pat,
+                Platform = nameof(AssetPlatform.GitHub),
             }.ToString();
 
             return nameof(ValidationState.Unknown);

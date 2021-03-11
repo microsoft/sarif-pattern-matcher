@@ -115,6 +115,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][resource=your-database]",
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=your-password][port=3306][resource=your-database]"
           }
         },
@@ -155,6 +156,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][resource=your-database]",
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=password_11][port=3306][resource=your-database]"
           }
         },
@@ -195,6 +197,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@servername][host=your-host][platform=SqlOnPremise][resource=your-database]",
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=your-password][resource=your-database]"
           }
         },
@@ -235,6 +238,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@servername][host=your-host][platform=SqlOnPremise][resource=your-database]",
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=password_11][resource=your-database]"
           }
         },
@@ -275,6 +279,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=\"WPAdmin@mydemoserver\"][host=\"mydemoserver.mariadb.database.azure.com\"][platform=Azure][resource=\"wpdb\"]",
             "ValidationFingerprint/v1": "[acct=\"WPAdmin@mydemoserver\"][host=\"mydemoserver.mariadb.database.azure.com\"][pwd=\"][resource=\"wpdb\"]"
           }
         },
@@ -315,6 +320,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=\"{username@servername}\"][host=\"{your_host}\"][platform=SqlOnPremise][resource={your_database}]",
             "ValidationFingerprint/v1": "[acct=\"{username@servername}\"][host=\"{your_host}\"][pwd={your_password}][resource={your_database}]"
           }
         },
@@ -355,6 +361,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][port=3306][resource=catalog_db]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_1][port=3306][resource=catalog_db]"
           }
         },
@@ -395,6 +402,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][port=3306][resource=catalog_db]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_2][port=3306][resource=catalog_db]"
           }
         },
@@ -435,6 +443,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][resource=catalog_db]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_2][resource=catalog_db]"
           }
         },
@@ -475,6 +484,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][port=3306][resource=catalog_db]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_3][port=3306][resource=catalog_db]"
           }
         },
@@ -515,6 +525,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][resource=catalog_db]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_4][resource=catalog_db]"
           }
         },
@@ -555,6 +566,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@servername][host=your-host][platform=SqlOnPremise][port=3306][resource=your-database]",
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=your-password][port=3306][resource=your-database]"
           }
         },
@@ -595,6 +607,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@servername][host=your-host][platform=SqlOnPremise][port=3306][resource=your-database]",
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=password_11][port=3306][resource=your-database]"
           }
         },
@@ -635,6 +648,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com:3306][platform=Azure]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com:3306][pwd=PASSword_5]"
           }
         },
@@ -675,6 +689,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username@some-database-name]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][pwd=PASSword_5]"
           }
         },
@@ -715,6 +730,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[acct=cleardbusername1]",
             "ValidationFingerprint/v1": "[acct=cleardbusername1][pwd=cleardb_PASSWORD1]"
           }
         }

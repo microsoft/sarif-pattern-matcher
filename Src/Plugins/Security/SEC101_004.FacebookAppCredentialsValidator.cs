@@ -53,6 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Id = id,
                 Key = key,
+                Platform = nameof(AssetPlatform.Facebook),
             }.ToString();
 
             return nameof(ValidationState.Unknown);

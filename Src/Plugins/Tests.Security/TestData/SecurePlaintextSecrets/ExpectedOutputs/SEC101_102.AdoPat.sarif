@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=AzureDevOps]",
             "ValidationFingerprint/v1": "[pat=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
           }
         },
@@ -114,6 +115,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=AzureDevOps]",
             "ValidationFingerprint/v1": "[pat=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]"
           }
         }
