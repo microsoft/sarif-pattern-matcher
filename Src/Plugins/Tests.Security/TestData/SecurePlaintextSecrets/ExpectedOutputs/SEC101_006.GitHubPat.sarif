@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=GitHub]",
             "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f1812843]"
           }
         },
@@ -114,6 +115,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=GitHub]",
             "ValidationFingerprint/v1": "[pat=dead885a8624460a855540c6592698d2f1812843]"
           }
         },
@@ -154,6 +156,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=GitHub]",
             "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f181dead]"
           }
         }

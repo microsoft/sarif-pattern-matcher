@@ -29,11 +29,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             try
             {
                 string fileName = $"{Guid.NewGuid()}.txt";
+                string originalFileName = string.Empty;
                 string fileContent = request.Form[FunctionConstants.FileContentPropertyName].ToString();
                 if (request.Form.ContainsKey(FunctionConstants.FileNamePropertyName)
                     && !string.IsNullOrWhiteSpace(request.Form[FunctionConstants.FileNamePropertyName].ToString()))
                 {
-                    fileName = request.Form[FunctionConstants.FileNamePropertyName].ToString();
+                    originalFileName = request.Form[FunctionConstants.FileNamePropertyName].ToString();
                 }
 
                 string definitionsFolder = context.FunctionDirectory;
@@ -41,7 +42,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
                 // AnalyzeContext requires URI to file
                 string sourceFilePath = $"{fileName}";
-                SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, fileContent, definitionsFolder));
+                SarifLog sariflog = await Task.Run(() => SpamAnalyzer.Analyze(sourceFilePath, fileContent, definitionsFolder, originalFileName));
                 if (sariflog.Runs.Count > 0)
                 {
                     sariflog.Runs[0].Tool.Driver.Name = "SPAM";

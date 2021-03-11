@@ -3,7 +3,8 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\src\Plugins\ValidatorBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\src\Plugins\ValidationState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\src\Sarif.PatternMatcher\AssetPlatform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\src\Sarif.PatternMatcher\Fingerprint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\src\Sarif.PatternMatcher\SharedUtilities.cs" />
   </ItemGroup>
-
 </Project>

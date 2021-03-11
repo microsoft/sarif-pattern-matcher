@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Twilio]",
             "ValidationFingerprint/v1": "[key=SK11111111110123456789012345678901]"
           }
         },
@@ -114,6 +115,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Twilio]",
             "ValidationFingerprint/v1": "[key=SK22222222220123456789012345678901]"
           }
         }

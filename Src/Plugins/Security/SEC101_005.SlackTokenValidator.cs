@@ -45,6 +45,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprintText = new Fingerprint
             {
                 Key = matchedPattern,
+                Platform = nameof(AssetPlatform.Slack),
             }.ToString();
 
             return nameof(ValidationState.Unknown);

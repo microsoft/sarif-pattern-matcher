@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Facebook]",
             "ValidationFingerprint/v1": "[key=EAACEdEose0cBAtestjunk111111]"
           }
         },
@@ -114,6 +115,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Facebook]",
             "ValidationFingerprint/v1": "[key=EAACEdEose0cBAtestjunk22222222]"
           }
         }

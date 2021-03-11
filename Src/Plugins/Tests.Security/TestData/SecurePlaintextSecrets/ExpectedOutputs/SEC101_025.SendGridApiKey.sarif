@@ -74,6 +74,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "[platform=SendGrid]",
             "ValidationFingerprint/v1": "[key=SG.0deadbeef0deadbeef0dea.deadbeef0deadbeef0deadbeef0deadbeef0deadbee]"
           }
         }

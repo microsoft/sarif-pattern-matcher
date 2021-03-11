@@ -46,6 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Id = id,
                 Key = key,
+                Platform = nameof(AssetPlatform.LinkedIn),
             }.ToString();
 
             return nameof(ValidationState.Unknown);

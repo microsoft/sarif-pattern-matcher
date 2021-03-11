@@ -33,7 +33,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         protected virtual string ScanIdentityHttpCustomHeaderValue =>
             "This call originates with a build of the SARIF pattern matcher " +
             "(https://github.com/microsoft/sarif-pattern/matcher. Someone is " +
-            "running an automated scan and validation of detected credentials.";
+            "running an automated scan and attempting to validate detected credentials.";
 
         protected virtual string UserAgentValue => "SARIF Pattern Matcher scan tool";
 
@@ -154,7 +154,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                 return ReturnUnknownHost(ref message, asset);
             }
 
-            string sslMessage = "The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.";
+            const string sslMessage = "The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.";
             if (TestExceptionForMessage(e, sslMessage, asset))
             {
                 return ReturnUnknownHost(ref message, asset);
@@ -340,7 +340,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             }
 
             var aggregateException = e as AggregateException;
-            if (aggregateException != null && aggregateException.InnerExceptions != null)
+            if (aggregateException?.InnerExceptions != null)
             {
                 foreach (Exception aggregatedException in aggregateException.InnerExceptions)
                 {

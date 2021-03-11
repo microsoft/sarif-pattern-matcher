@@ -76,15 +76,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             if (groups.ContainsKey("host") && groups.ContainsKey("database") && groups.ContainsKey("account") && groups.ContainsKey("password"))
             {
                 host = groups["host"];
-                database = groups["database"];
                 account = groups["account"];
+                database = groups["database"];
                 password = groups["password"];
             }
             else
             {
                 host = ParseExpression(RegexEngine, matchedPattern, HostExpression);
-                database = ParseExpression(RegexEngine, matchedPattern, DatabaseExpression);
                 account = ParseExpression(RegexEngine, matchedPattern, AccountExpression);
+                database = ParseExpression(RegexEngine, matchedPattern, DatabaseExpression);
                 password = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
             }
 
@@ -119,6 +119,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Resource = database,
                 Account = account,
                 Password = password,
+                Platform = SharedUtilities.GetDatabasePlatformFromHost(host, out _),
             }.ToString();
 
             return nameof(ValidationState.Unknown);
@@ -141,7 +142,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string connString =
                 $"Server={host};Initial Catalog={database};User ID={account};Password={password};" +
-                "Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
+                "Trusted_Connection=False;Encrypt=True;Connection Timeout=3;";
             message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
 
             // Validating ConnectionString with database.
@@ -153,7 +154,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             connString =
                $"Server={host};User ID={account};Password={password};" +
-               "Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
+               "Trusted_Connection=False;Encrypt=True;Connection Timeout=3;";
             message = $"the '{account}' account is compromised for server '{host}'";
 
             // Validating ConnectionString without database.

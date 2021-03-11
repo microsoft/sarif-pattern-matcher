@@ -73,6 +73,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[pwd=doodle_BLOB0000]"
           }
         },
@@ -112,6 +113,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[pwd=Doodle$111111]"
           }
         },
@@ -151,6 +153,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[pwd=D00dle2222]"
           }
         },
@@ -190,6 +193,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[pwd=D$oodle3333]"
           }
         },
@@ -229,6 +233,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[pwd=D$oodle4444]"
           }
         },
@@ -268,6 +273,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[pwd=Doodle$555555]"
           }
         },
@@ -307,6 +313,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[pwd=666666]"
           }
         },
@@ -346,6 +353,7 @@
             }
           ],
           "fingerprints": {
+            "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[pwd=6ood137777]"
           }
         }

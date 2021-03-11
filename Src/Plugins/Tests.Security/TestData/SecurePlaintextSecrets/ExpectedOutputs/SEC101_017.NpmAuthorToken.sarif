@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/050",
-              "name": "DoNotExposePlaintextSecrets/SqlCredential",
+              "id": "SEC101/017",
+              "name": "DoNotExposePlaintextSecrets/NpmAuthorToken",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -38,85 +38,85 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/050",
+          "ruleId": "SEC101/017",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_050.SqlCredential.ps1",
+              "SEC101_017.NpmAuthorToken.ps1",
               "an apparent ",
               "",
-              "SqlCredential constructor",
+              "NPM API key",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.SqlCredential.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmAuthorToken.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 2,
-                  "startColumn": 5,
-                  "endLine": 2,
-                  "endColumn": 46,
-                  "charOffset": 57,
-                  "charLength": 41,
+                  "startLine": 1,
+                  "startColumn": 7,
+                  "endLine": 1,
+                  "endColumn": 43,
+                  "charOffset": 6,
+                  "charLength": 36,
                   "snippet": {
-                    "text": "SqlCredential(\"username1\", \"doodle_BLOB1\""
+                    "text": "338a0fd3-7378-4ce1-8432-bbfc0f6777ca"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=username1]",
-            "ValidationFingerprint/v1": "[acct=username1][pwd=doodle_BLOB1]"
+            "AssetFingerprint/v1": "[platform=Npm]",
+            "ValidationFingerprint/v1": "[key=338a0fd3-7378-4ce1-8432-bbfc0f6777ca]"
           }
         },
         {
-          "ruleId": "SEC101/050",
+          "ruleId": "SEC101/017",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_050.SqlCredential.ps1",
+              "SEC101_017.NpmAuthorToken.ps1",
               "an apparent ",
               "",
-              "SqlCredential object initializer",
+              "NPM API key",
               "",
-              ""
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.SqlCredential.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmAuthorToken.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 5,
-                  "startColumn": 5,
-                  "endLine": 8,
-                  "endColumn": 27,
-                  "charOffset": 166,
-                  "charLength": 70,
+                  "startLine": 3,
+                  "startColumn": 6,
+                  "endLine": 3,
+                  "endColumn": 42,
+                  "charOffset": 52,
+                  "charLength": 36,
                   "snippet": {
-                    "text": "SqlCredential()\r\n{\r\n\tUserId = \"username2\",\r\n\tPassword = \"doodle_BLOB2\""
+                    "text": "338a0fd3-7378-4ce1-8432-bbfc0f6777cb"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=username2]",
-            "ValidationFingerprint/v1": "[acct=username2][pwd=doodle_BLOB2]"
+            "AssetFingerprint/v1": "[platform=Npm]",
+            "ValidationFingerprint/v1": "[key=338a0fd3-7378-4ce1-8432-bbfc0f6777cb]"
           }
         }
       ],

@@ -31,10 +31,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
         }
 
-        public void LogMessage(bool verbose, string message)
-        {
-        }
-
         public void LogToolNotification(Notification notification)
         {
         }

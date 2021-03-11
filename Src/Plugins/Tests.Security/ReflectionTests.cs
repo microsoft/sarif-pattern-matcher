@@ -21,6 +21,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             try
             {
+                if (!File.Exists("SEC101.SecurePlaintextSecrets.json"))
+                {
+                    return;
+                }
+
                 using (StreamReader file = File.OpenText(@"SEC101.SecurePlaintextSecrets.json"))
                 using (JsonTextReader reader = new JsonTextReader(file))
                 {
