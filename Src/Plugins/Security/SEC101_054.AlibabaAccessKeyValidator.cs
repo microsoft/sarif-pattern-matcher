@@ -21,6 +21,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private const string KeyNotFound = "InvalidAccessKeyId.NotFound";
         private const string InvalidSecret = "SDK.InvalidAccessKeySecret";
+        private const string ProductKeyInvalidFormat = "The productKey format is incorrect.";
 
         static AlibabaAccessKeyValidator()
         {
@@ -93,6 +94,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 request.MessageContent = payloadStr;
                 request.Qos = 0;
                 PubResponse response = client.GetAcsResponse(request);
+
+                if (!response.ErrorMessage.Equals(ProductKeyInvalidFormat))
+                {
+                    message = "Unexpected response from Alibaba Cloud.";
+                    return nameof(ValidationState.Unknown);
+                }
             }
             catch (ClientException ce)
             {
