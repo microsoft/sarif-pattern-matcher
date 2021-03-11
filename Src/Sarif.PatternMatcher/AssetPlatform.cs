@@ -16,6 +16,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         Unknown = 0,
 
         /// <summary>
+        /// Alibaba Cloud platform
+        /// </summary>
+        AlibabaCloud,
+
+        /// <summary>
         /// Azure platform.
         /// </summary>
         Azure,
