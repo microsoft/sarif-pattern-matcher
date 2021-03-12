@@ -234,6 +234,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.DynamicValidation = options.DynamicValidation;
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;
             context.FileSizeInKilobytes = options.FileSizeInKilobytes;
+            context.DisableValidationCaching = options.DisableValidationCaching;
 
             return context;
         }
@@ -244,6 +245,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
 #if DEBUG
+
         private static void ValidateSharedStringsExpansion(SearchDefinitions searchDefinitions)
         {
             foreach (SearchDefinition definition in searchDefinitions.Definitions)
@@ -274,6 +276,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Debug.Assert(!text.StartsWith("$"),
                          $"Failed to expand shared string: '{text}'");
         }
+
 #endif
 
         private static string PushData(string text, params Dictionary<string, string>[] sharedStringsDictionaries)

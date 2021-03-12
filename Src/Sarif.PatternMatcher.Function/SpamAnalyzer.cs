@@ -60,6 +60,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                     FileContents = text,
                     Logger = logger,
                     DynamicValidation = true,
+                    DisableValidationCaching = true,
                 };
 
                 using (context)

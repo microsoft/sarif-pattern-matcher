@@ -119,9 +119,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 connectionStringBuilder.Append($"Database={database};");
             }
 
+            NpgsqlConnection postgreSqlconnection = null;
+
             try
             {
-                using var postgreSqlconnection = new NpgsqlConnection(connectionStringBuilder.ToString());
+                postgreSqlconnection = new NpgsqlConnection(connectionStringBuilder.ToString());
                 postgreSqlconnection.Open();
             }
             catch (Exception e)
@@ -142,6 +144,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 }
 
                 return ReturnUnhandledException(ref message, e, asset: host);
+            }
+            finally
+            {
+                postgreSqlconnection?.Close();
+                postgreSqlconnection?.Dispose();
             }
 
             return nameof(ValidationState.AuthorizedError);

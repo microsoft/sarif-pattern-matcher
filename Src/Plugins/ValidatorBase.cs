@@ -16,6 +16,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
         public const string ScanIdentityHttpCustomHeaderKey =
             "Automation-Scan-Description";
 
+        private static bool shouldUseCache;
+
         static ValidatorBase()
         {
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
@@ -85,7 +87,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                 return nameof(ValidationState.NoMatch);
             }
 
-            validator.PerFileFingerprintCache.Add(key);
+            if (shouldUseCache)
+            {
+                validator.PerFileFingerprintCache.Add(key);
+            }
 
             return state;
         }
@@ -94,7 +99,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                                             ref string fingerprint,
                                             ref string message)
         {
-            if (validator.FingerprintToResultCache.TryGetValue(fingerprint, out Tuple<string, string> result))
+            if (shouldUseCache &&
+                validator.FingerprintToResultCache.TryGetValue(fingerprint, out Tuple<string, string> result))
             {
                 message = result.Item2;
                 return result.Item1;
@@ -111,6 +117,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
             }
 
             return validationState;
+        }
+
+        public static void DisableValidationCaching(bool disableValidationCaching)
+        {
+            shouldUseCache = !disableValidationCaching;
         }
 
         public static bool ContainsDigitAndChar(string matchedPattern)

@@ -476,7 +476,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                 ref levelText,
                                                 ref fingerprint,
                                                 ref validatorMessage,
-                                                out bool pluginSupportsDynamicValidation);
+                                                out bool pluginSupportsDynamicValidation,
+                                                context.DisableValidationCaching);
 
                     if (!Enum.TryParse<FailureLevel>(levelText, out level))
                     {
