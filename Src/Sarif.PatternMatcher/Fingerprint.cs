@@ -258,24 +258,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var keys = new HashSet<string>();
 
-            string[] splitText = text.Split(new[] { "][" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] splitText = text.Split(new[] { "][" }, StringSplitOptions.None);
 
             foreach (string split in splitText)
             {
-                string[] keyValue = split.Split('=');
+                int indexOf = split.IndexOf('=');
 
-                if (keyValue.Length != 2)
+                if (indexOf < 0)
                 {
-                    continue;
+                    throw new ArgumentException();
                 }
 
-                if (keys.Contains(keyValue[0]))
+                string key = split.Substring(0, indexOf);
+                string value = split.Substring(indexOf + 1);
+
+                if (keys.Contains(key))
                 {
-                    throw new ArgumentException($"The '{keyValue[0]}' key name is duplicated in the fingerprint.");
+                    throw new ArgumentException($"The '{key}' key name is duplicated in the fingerprint.");
                 }
 
-                keys.Add(keyValue[0]);
-                SetProperty(keyValue[0], keyValue[1]);
+                keys.Add(key);
+                SetProperty(key, value);
             }
         }
     }
