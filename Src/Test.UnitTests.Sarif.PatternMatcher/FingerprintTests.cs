@@ -296,6 +296,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             failedTestCases.Should().BeEmpty();
         }
 
+        [Fact]
+        public void Fingerprint_ShouldNotBeInWrongOrder()
+        {
+            var fingerprint = new Fingerprint
+            {
+                Password = "password",
+                Platform = "platform",
+            };
+
+            string fingerprintText = fingerprint.ToString();
+
+            var newFingerprint = new Fingerprint(fingerprintText);
+            fingerprint.Should().Be(newFingerprint);
+        }
+
         private static readonly FingerprintTestCase[] s_workingTestCases = new[]
         {
             new FingerprintTestCase {
