@@ -51,7 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public int FileSizeInKilobytes { get; set; } = -1;
 
-        public bool DisableValidationCaching { get; set; }
+        public bool DisableDynamicValidationCaching { get; set; }
 
         public void Dispose()
         {

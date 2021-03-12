@@ -234,7 +234,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.DynamicValidation = options.DynamicValidation;
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;
             context.FileSizeInKilobytes = options.FileSizeInKilobytes;
-            context.DisableValidationCaching = options.DisableValidationCaching;
+            context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
 
             return context;
         }
