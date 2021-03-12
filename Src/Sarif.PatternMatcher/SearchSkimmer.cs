@@ -263,6 +263,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains a valid SomeApi token [...].
                     validationPrefix = "a valid ";
+                    validationSuffix = string.Empty;
                     break;
                 }
 
@@ -273,6 +274,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains a valid SomeApi token [...].
                     validationPrefix = "a valid ";
+                    validationSuffix = string.Empty;
                     break;
                 }
 
