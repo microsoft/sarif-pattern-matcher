@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ReportingDescriptor rule = node.GetRule(_run);
 
             ValidationMethods validationPair =
-                ValidatorsCache.GetValidationMethodPair(rule.Name, _validators.RuleNameToValidationMethods);
+                ValidatorsCache.GetValidationMethods(rule.Name, _validators.RuleNameToValidationMethods);
 
             if (validationPair.IsValidDynamic != null)
             {

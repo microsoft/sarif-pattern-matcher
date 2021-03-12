@@ -131,10 +131,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 connectionStringBuilder.Append($"Port={port}");
             }
 
-            MySqlConnection connection = null;
             try
             {
-                connection = new MySqlConnection(connectionStringBuilder.ToString());
+                using var connection = new MySqlConnection(connectionStringBuilder.ToString());
                 connection.Open();
             }
             catch (Exception e)
@@ -148,11 +147,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 }
 
                 return ReturnUnhandledException(ref message, e, asset: host);
-            }
-            finally
-            {
-                connection?.Close();
-                connection?.Dispose();
             }
 
             return nameof(ValidationState.AuthorizedError);

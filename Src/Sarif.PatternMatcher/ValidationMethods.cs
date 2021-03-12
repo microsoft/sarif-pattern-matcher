@@ -11,6 +11,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public MethodInfo IsValidDynamic { get; set; }
 
-        public MethodInfo DisableValidationCaching { get; set; }
+        public MethodInfo DisableDynamicValidationCaching { get; set; }
     }
 }

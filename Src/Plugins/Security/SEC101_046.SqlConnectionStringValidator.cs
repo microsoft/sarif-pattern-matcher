@@ -164,11 +164,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private static string ValidateConnectionString(ref string message, string host, string connString, out bool shouldRetry)
         {
             shouldRetry = true;
-            SqlConnection connection = null;
 
             try
             {
-                connection = new SqlConnection(connString);
+                using var connection = new SqlConnection(connString);
                 connection.Open();
             }
             catch (ArgumentException)
@@ -199,11 +198,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 }
 
                 return ReturnUnhandledException(ref message, e, asset: host);
-            }
-            finally
-            {
-                connection?.Close();
-                connection?.Dispose();
             }
 
             return nameof(ValidationState.AuthorizedError);
