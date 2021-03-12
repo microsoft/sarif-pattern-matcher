@@ -311,6 +311,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint.Should().Be(newFingerprint);
         }
 
+        [Fact]
+        public void Fingerprint_ShouldParseNormally()
+        {
+            string fingerprintText = "[acct=[a]][id=[]123][port=123][pwd=pwd[]]";
+            var fingerprint = new Fingerprint(fingerprintText);
+            fingerprint.ToString().Should().Be(fingerprintText);
+        }
+
         private static readonly FingerprintTestCase[] s_workingTestCases = new[]
         {
             new FingerprintTestCase {

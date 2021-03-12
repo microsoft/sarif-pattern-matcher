@@ -253,49 +253,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         internal void Parse(string fingerprintText)
         {
-            ParseState parseState = ParseState.GatherKeyOpen;
-            string currentKey = null;
+            string text = fingerprintText.Substring(1);
+            text = text.Substring(0, text.Length - 1);
 
-            var sortedKeys = new SortedList<string, string>();
+            var keys = new HashSet<string>();
 
-            for (int i = 0; i < fingerprintText.Length; i++)
+            string[] splitText = text.Split(new[] { "][" }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string split in splitText)
             {
-                switch (parseState)
+                string[] keyValue = split.Split('=');
+
+                if (keyValue.Length != 2)
                 {
-                    case ParseState.GatherKeyOpen:
-                    {
-                        while (fingerprintText[i] != '[') { i++; }
-                        parseState = ParseState.GatherKeyName;
-                        break;
-                    }
-
-                    case ParseState.GatherKeyName:
-                    {
-                        int keyNameStart = i;
-                        while (fingerprintText[i] != '=') { i++; }
-                        currentKey = fingerprintText.Substring(keyNameStart, i - keyNameStart);
-
-                        if (sortedKeys.ContainsKey(currentKey))
-                        {
-                            throw new ArgumentException($"The '{currentKey}' key name is duplicated in the fingerprint.");
-                        }
-
-                        sortedKeys.Add(currentKey, currentKey);
-
-                        parseState = ParseState.GatherValue;
-                        break;
-                    }
-
-                    case ParseState.GatherValue:
-                    {
-                        int valueStart = i;
-                        while (fingerprintText[i] != ']') { i++; }
-                        string value = fingerprintText.Substring(valueStart, i - valueStart);
-                        parseState = ParseState.GatherKeyOpen;
-                        SetProperty(currentKey, value);
-                        break;
-                    }
+                    continue;
                 }
+
+                if (keys.Contains(keyValue[0]))
+                {
+                    throw new ArgumentException($"The '{keyValue[0]}' key name is duplicated in the fingerprint.");
+                }
+
+                keys.Add(keyValue[0]);
+                SetProperty(keyValue[0], keyValue[1]);
             }
         }
     }
