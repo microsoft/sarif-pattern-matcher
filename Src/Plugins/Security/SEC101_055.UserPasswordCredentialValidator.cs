@@ -5,12 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Security;
 
-using GoogleApi.Entities.Maps.Elevation.Response;
-
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.Identity.Client;
-
-using Org.BouncyCastle.Asn1.X509.Qualified;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -107,7 +103,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     switch (clientException.ErrorCode)
                     {
                         case UnknownUserType:
-                            // Username probably missing @microsoft.com or something similar
+                        // Username probably missing @microsoft.com or something similar
                         case ParsingWSTrustResponseFailed:
                             // One or both of username and password is wrong
                             return ReturnUnauthorizedAccess(ref message, asset: account);
