@@ -116,7 +116,7 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][resource=your-database]",
-            "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=your-password][port=3306][resource=your-database]"
+            "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][pwd=your-password][resource=your-database]"
           }
         },
         {
@@ -157,7 +157,7 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][resource=your-database]",
-            "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=password_11][port=3306][resource=your-database]"
+            "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][pwd=password_11][resource=your-database]"
           }
         },
         {
@@ -362,7 +362,7 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][port=3306][resource=catalog_db]",
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_1][port=3306][resource=catalog_db]"
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][port=3306][pwd=password_1][resource=catalog_db]"
           }
         },
         {
@@ -403,7 +403,7 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][port=3306][resource=catalog_db]",
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_2][port=3306][resource=catalog_db]"
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][port=3306][pwd=password_2][resource=catalog_db]"
           }
         },
         {
@@ -485,7 +485,7 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][port=3306][resource=catalog_db]",
-            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_3][port=3306][resource=catalog_db]"
+            "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][port=3306][pwd=password_3][resource=catalog_db]"
           }
         },
         {
@@ -567,7 +567,7 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[acct=username@servername][host=your-host][platform=SqlOnPremise][port=3306][resource=your-database]",
-            "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=your-password][port=3306][resource=your-database]"
+            "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][pwd=your-password][resource=your-database]"
           }
         },
         {
@@ -608,7 +608,7 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[acct=username@servername][host=your-host][platform=SqlOnPremise][port=3306][resource=your-database]",
-            "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=password_11][port=3306][resource=your-database]"
+            "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][pwd=password_11][resource=your-database]"
           }
         },
         {
