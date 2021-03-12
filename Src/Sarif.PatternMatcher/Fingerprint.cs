@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
@@ -46,7 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 SymmetricKey256BitKeyName,
             });
 
-        public Fingerprint(string fingerprintText)
+        public Fingerprint(string fingerprintText, bool validate = true)
         {
             Account = Hmac = Host = Port = Id = Key = KeyName = Password = Uri = Platform = Resource = null;
             SasToken = PersonalAccessToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
@@ -66,14 +67,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     nameof(fingerprintText));
             }
 
-            string computedFingerprint = this.GetComprehensiveFingerprintText();
-            if (!computedFingerprint.Equals(fingerprintText))
+            if (validate)
             {
-                throw new ArgumentException(
-                    $"Fingerprint did not round-trip. Ensure properties are in sorted order, that " +
-                    $"there are no spaces between components, etc. Initializer was '{fingerprintText}'. " +
-                    $"Valid computed fingerprint was '{computedFingerprint}'.",
-                    nameof(fingerprintText));
+                string computedFingerprint = this.GetComprehensiveFingerprintText();
+                if (!computedFingerprint.Equals(fingerprintText))
+                {
+                    throw new ArgumentException(
+                        $"Fingerprint did not round-trip. Ensure properties are in sorted order, that " +
+                        $"there are no spaces between components, etc. Initializer was '{fingerprintText}'. " +
+                        $"Valid computed fingerprint was '{computedFingerprint}'.",
+                        nameof(fingerprintText));
+                }
             }
         }
 
@@ -123,6 +127,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public string GetValidationFingerprintText() => ToString(this, denyList: s_assetOnlyKeys);
 
 #pragma warning disable SA1107 // Code should not contain multiple statements on one line
+
         public void SetProperty(string keyName, string value)
         {
             switch (keyName)
@@ -146,6 +151,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 default: throw new ArgumentOutOfRangeException(nameof(keyName));
             }
         }
+
 #pragma warning restore SA1107
 
         public override string ToString()
@@ -157,91 +163,91 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             denyList ??= s_emptyDenyList;
 
-            var components = new List<string>(3);
+            var components = new Dictionary<string, string>(3);
 
             // These need to remain in alphabetical order.
             if (!string.IsNullOrEmpty(f.Account) && !denyList.Contains(AccountKeyName))
             {
-                components.Add($"[{AccountKeyName}={f.Account.Trim()}]");
+                components.Add(AccountKeyName, $"[{AccountKeyName}={f.Account.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Hmac) && !denyList.Contains(HmacKeyName))
             {
-                components.Add($"[{HmacKeyName}={f.Hmac.Trim()}]");
+                components.Add(HmacKeyName, $"[{HmacKeyName}={f.Hmac.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Host) && !denyList.Contains(HostKeyName))
             {
-                components.Add($"[{HostKeyName}={f.Host.Trim()}]");
+                components.Add(HostKeyName, $"[{HostKeyName}={f.Host.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Id) && !denyList.Contains(IdKeyName))
             {
-                components.Add($"[{IdKeyName}={f.Id.Trim()}]");
+                components.Add(IdKeyName, $"[{IdKeyName}={f.Id.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Key) && !denyList.Contains(KeyKeyName))
             {
-                components.Add($"[{KeyKeyName}={f.Key.Trim()}]");
+                components.Add(KeyKeyName, $"[{KeyKeyName}={f.Key.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.KeyName) && !denyList.Contains(KeyNameKeyName))
             {
-                components.Add($"[{KeyNameKeyName}={f.KeyName.Trim()}]");
+                components.Add(KeyNameKeyName, $"[{KeyNameKeyName}={f.KeyName.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Password) && !denyList.Contains(PasswordKeyName))
             {
-                components.Add($"[{PasswordKeyName}={f.Password.Trim()}]");
+                components.Add(PasswordKeyName, $"[{PasswordKeyName}={f.Password.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.PersonalAccessToken) && !denyList.Contains(PersonalAccessTokenKeyName))
             {
-                components.Add($"[{PersonalAccessTokenKeyName}={f.PersonalAccessToken.Trim()}]");
+                components.Add(PersonalAccessTokenKeyName, $"[{PersonalAccessTokenKeyName}={f.PersonalAccessToken.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Platform) && !denyList.Contains(PlatformKeyName))
             {
-                components.Add($"[{PlatformKeyName}={f.Platform.Trim()}]");
+                components.Add(PlatformKeyName, $"[{PlatformKeyName}={f.Platform.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Port) && !denyList.Contains(PortKeyName))
             {
-                components.Add($"[{PortKeyName}={f.Port.Trim()}]");
+                components.Add(PortKeyName, $"[{PortKeyName}={f.Port.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Resource) && !denyList.Contains(ResourceKeyName))
             {
-                components.Add($"[{ResourceKeyName}={f.Resource.Trim()}]");
+                components.Add(ResourceKeyName, $"[{ResourceKeyName}={f.Resource.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.SasToken) && !denyList.Contains(SasTokenKeyName))
             {
-                components.Add($"[{SasTokenKeyName}={f.SasToken.Trim()}]");
+                components.Add(SasTokenKeyName, $"[{SasTokenKeyName}={f.SasToken.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.SymmetricKey128Bit) && !denyList.Contains(SymmetricKey128BitKeyName))
             {
-                components.Add($"[{SymmetricKey128BitKeyName}={f.SymmetricKey128Bit.Trim()}]");
+                components.Add(SymmetricKey128BitKeyName, $"[{SymmetricKey128BitKeyName}={f.SymmetricKey128Bit.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.SymmetricKey256Bit) && !denyList.Contains(SymmetricKey256BitKeyName))
             {
-                components.Add($"[{SymmetricKey256BitKeyName}={f.SymmetricKey256Bit.Trim()}]");
+                components.Add(SymmetricKey256BitKeyName, $"[{SymmetricKey256BitKeyName}={f.SymmetricKey256Bit.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Thumbprint) && !denyList.Contains(ThumbprintKeyName))
             {
-                components.Add($"[{ThumbprintKeyName}={f.Thumbprint.Trim()}]");
+                components.Add(ThumbprintKeyName, $"[{ThumbprintKeyName}={f.Thumbprint.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Uri) && !denyList.Contains(UriKeyName))
             {
-                components.Add($"[{UriKeyName}={f.Uri.Trim()}]");
+                components.Add(UriKeyName, $"[{UriKeyName}={f.Uri.Trim()}]");
             }
 
             return components.Count > 0 ?
-                string.Concat(components) :
+                string.Concat(components.Where(c => !string.IsNullOrEmpty(c.Value)).OrderBy(c => c.Key).Select(v => v.Value)) :
                 string.Empty;
         }
 

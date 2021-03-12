@@ -128,7 +128,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override string IsValidDynamicHelper(ref string fingerprintText,
                                                        ref string message)
         {
-            var fingerprint = new Fingerprint(fingerprintText);
+            var fingerprint = new Fingerprint(fingerprintText, false);
 
             string host = fingerprint.Host;
             string account = fingerprint.Account;
