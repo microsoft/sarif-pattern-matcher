@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 SymmetricKey256BitKeyName,
             });
 
-        public Fingerprint(string fingerprintText)
+        public Fingerprint(string fingerprintText, bool validate = true)
         {
             Account = Hmac = Host = Port = Id = Key = KeyName = Password = Uri = Platform = Resource = null;
             SasToken = PersonalAccessToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
@@ -67,14 +67,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     nameof(fingerprintText));
             }
 
-            string computedFingerprint = this.GetComprehensiveFingerprintText();
-            if (!computedFingerprint.Equals(fingerprintText))
+            if (validate)
             {
-                throw new ArgumentException(
-                    $"Fingerprint did not round-trip. Ensure properties are in sorted order, that " +
-                    $"there are no spaces between components, etc. Initializer was '{fingerprintText}'. " +
-                    $"Valid computed fingerprint was '{computedFingerprint}'.",
-                    nameof(fingerprintText));
+                string computedFingerprint = this.GetComprehensiveFingerprintText();
+                if (!computedFingerprint.Equals(fingerprintText))
+                {
+                    throw new ArgumentException(
+                        $"Fingerprint did not round-trip. Ensure properties are in sorted order, that " +
+                        $"there are no spaces between components, etc. Initializer was '{fingerprintText}'. " +
+                        $"Valid computed fingerprint was '{computedFingerprint}'.",
+                        nameof(fingerprintText));
+                }
             }
         }
 
@@ -244,7 +247,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return components.Count > 0 ?
-                string.Concat(components.OrderBy(c => c.Key).Select(v => v.Value)) :
+                string.Concat(components.Where(c => !string.IsNullOrEmpty(c.Value)).OrderBy(c => c.Key).Select(v => v.Value)) :
                 string.Empty;
         }
 
