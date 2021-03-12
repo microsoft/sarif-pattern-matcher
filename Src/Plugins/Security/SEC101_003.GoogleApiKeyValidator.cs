@@ -93,7 +93,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         }
 
                         case KeyNotAuthorized:
-                        case ProjectNotAuthorized:
                         {
                             // What this condition means is that the API key is recognized.
                             // It is not authorized for the Directions API, but this isn't
@@ -108,6 +107,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         }
 
                         case Invalid:
+                        case ProjectNotAuthorized:
                         {
                             return nameof(ValidationState.NoMatch);
                         }
