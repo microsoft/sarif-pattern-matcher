@@ -133,8 +133,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 
             try
             {
-                using var conn = new MySqlConnection(connectionStringBuilder.ToString());
-                conn.Open();
+                using var connection = new MySqlConnection(connectionStringBuilder.ToString());
+                connection.Open();
             }
             catch (Exception e)
             {

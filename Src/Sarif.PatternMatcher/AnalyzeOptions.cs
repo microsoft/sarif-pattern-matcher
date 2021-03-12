@@ -41,5 +41,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             HelpText = "The maximum file size (in kilobytes) that will be analyzed.",
             Default = 1024)]
         public int FileSizeInKilobytes { get; internal set; }
+
+        [Option(
+            "disable-dynamic-validation-caching")]
+        public bool DisableDynamicValidationCaching { get; internal set; }
     }
 }

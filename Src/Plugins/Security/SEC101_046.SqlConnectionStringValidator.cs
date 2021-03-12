@@ -164,10 +164,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private static string ValidateConnectionString(ref string message, string host, string connString, out bool shouldRetry)
         {
             shouldRetry = true;
+
             try
             {
                 using var connection = new SqlConnection(connString);
-                connection.OpenAsync().GetAwaiter().GetResult();
+                connection.Open();
             }
             catch (ArgumentException)
             {
