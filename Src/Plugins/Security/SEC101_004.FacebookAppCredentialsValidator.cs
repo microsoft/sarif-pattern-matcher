@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 
+using Newtonsoft.Json;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class FacebookAppCredentialsValidator : ValidatorBase
@@ -66,20 +68,77 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string id = fingerprint.Id;
             string key = fingerprint.Key;
 
-            using var httpClient = new HttpClient();
+            string result = RetrieveInformation(
+                $"https://graph.facebook.com/oauth/access_token?client_id={id}&client_secret={key}&grant_type=client_credentials",
+                id,
+                ref message,
+                out AccessTokenObject obj);
+
+            if (result == nameof(ValidationState.AuthorizedError))
+            {
+                return CheckInformation(id, obj.AccessToken, ref message);
+            }
+
+            return result;
+        }
+
+        private string CheckInformation(string id, string accessToken, ref string message)
+        {
+            string result = RetrieveInformation(
+                $"https://graph.facebook.com/{id}?access_token={accessToken}&fields=creator_uid",
+                id,
+                ref message,
+                out CreatorObject obj);
+
+            if (result == nameof(ValidationState.AuthorizedError))
+            {
+                return RetrieveAccountInformation(id, obj.CreatorUid, accessToken, ref message);
+            }
+
+            return result;
+        }
+
+        private string RetrieveAccountInformation(string id, string creatorUid, string accessToken, ref string message)
+        {
+            string result = RetrieveInformation(
+                $"https://graph.facebook.com/{creatorUid}?access_token={accessToken}",
+                id,
+                ref message,
+                out AccountObj obj);
+
+            if (result == nameof(ValidationState.AuthorizedError))
+            {
+                return ReturnAuthorizedAccess(ref message, asset: $"{obj.Id}:{obj.Name}");
+            }
+
+            return result;
+        }
+
+        private string RetrieveInformation<T>(string url, string id, ref string message, out T obj)
+        {
+            using HttpClient httpClient = CreateHttpClient();
+            obj = default;
 
             try
             {
-                using HttpResponseMessage httpResponse = httpClient
-                    .GetAsync($"https://graph.facebook.com/oauth/access_token?client_id={id}&client_secret={key}&grant_type=client_credentials")
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage httpResponse = httpClient.GetAsync(url).GetAwaiter().GetResult();
 
                 switch (httpResponse.StatusCode)
                 {
                     case System.Net.HttpStatusCode.OK:
                     {
-                        return ReturnAuthorizedAccess(ref message, asset: id);
+                        obj = JsonConvert.DeserializeObject<T>(httpResponse
+                            .Content
+                            .ReadAsStringAsync()
+                            .GetAwaiter()
+                            .GetResult());
+
+                        if (obj == null)
+                        {
+                            return nameof(ValidationState.Unknown);
+                        }
+
+                        return nameof(ValidationState.AuthorizedError);
                     }
 
                     case System.Net.HttpStatusCode.BadRequest:
@@ -96,8 +155,35 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e, asset: fingerprint.Id);
+                return ReturnUnhandledException(ref message, e, asset: id);
             }
+        }
+
+        private class AccessTokenObject
+        {
+            [JsonProperty("access_token")]
+            public string AccessToken { get; set; }
+
+            [JsonProperty("token_type")]
+            public string TokenType { get; set; }
+        }
+
+        private class CreatorObject
+        {
+            [JsonProperty("creator_uid")]
+            public string CreatorUid { get; set; }
+
+            [JsonProperty("id")]
+            public string Id { get; set; }
+        }
+
+        private class AccountObj
+        {
+            [JsonProperty("name")]
+            public string Name { get; set; }
+
+            [JsonProperty("id")]
+            public string Id { get; set; }
         }
     }
 }
