@@ -81,7 +81,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     .GetAwaiter()
                     .GetResult();
 
-                if (responseDummy.StatusCode == HttpStatusCode.OK)
+                if (responseDummy.StatusCode == HttpStatusCode.OK ||
+                    responseDummy.StatusCode == HttpStatusCode.NotFound ||
+                    responseDummy.StatusCode == HttpStatusCode.NonAuthoritativeInformation)
                 {
                     return nameof(ValidationState.NoMatch);
                 }
