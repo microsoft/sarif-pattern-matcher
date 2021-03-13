@@ -256,7 +256,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ParseState parseState = ParseState.GatherKeyOpen;
             string currentKey = null;
 
-            var sortedKeys = new SortedList<string, string>();
+            var keys = new HashSet<string>();
 
             for (int i = 0; i < fingerprintText.Length; i++)
             {
@@ -275,12 +275,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         while (fingerprintText[i] != '=') { i++; }
                         currentKey = fingerprintText.Substring(keyNameStart, i - keyNameStart);
 
-                        if (sortedKeys.ContainsKey(currentKey))
+                        if (keys.Contains(currentKey))
                         {
                             throw new ArgumentException($"The '{currentKey}' key name is duplicated in the fingerprint.");
                         }
 
-                        sortedKeys.Add(currentKey, currentKey);
+                        keys.Add(currentKey);
 
                         parseState = ParseState.GatherValue;
                         break;
@@ -289,7 +289,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     case ParseState.GatherValue:
                     {
                         int valueStart = i;
-                        while (fingerprintText[i] != ']') { i++; }
+                        while (fingerprintText[i] != ']' || (i + 1 < fingerprintText.Length && fingerprintText[i + 1] != '[')) { i++; }
                         string value = fingerprintText.Substring(valueStart, i - valueStart);
                         parseState = ParseState.GatherKeyOpen;
                         SetProperty(currentKey, value);
