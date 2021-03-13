@@ -104,7 +104,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 $"https://graph.facebook.com/{creatorUid}?access_token={accessToken}",
                 id,
                 ref message,
-                out AccountObj obj);
+                out AccountObject obj);
 
             if (result == nameof(ValidationState.AuthorizedError))
             {
@@ -177,7 +177,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             public string Id { get; set; }
         }
 
-        private class AccountObj
+        private class AccountObject
         {
             [JsonProperty("name")]
             public string Name { get; set; }
