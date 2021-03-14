@@ -83,7 +83,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             if (!string.IsNullOrEmpty(response.Error))
             {
                 message = $"An unexpected error was observed " +
-                           "attempting to validate token: '{response.Error}'";
+                          $"attempting to validate token: '{response.Error}'";
                 return nameof(ValidationState.Unknown);
             }
 
