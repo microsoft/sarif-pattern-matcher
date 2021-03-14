@@ -65,6 +65,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return nameof(ValidationState.NoMatch);
             }
 
+            if (host == "tcp")
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
             string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
             string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
 
@@ -141,7 +146,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     }
                 }
 
-                return ReturnUnhandledException(ref message, e, asset: host);
+                return ReturnUnhandledException(ref message, e.InnerException ?? e, asset: host);
             }
 
             return nameof(ValidationState.AuthorizedError);
