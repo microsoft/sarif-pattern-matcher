@@ -68,50 +68,50 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string id = fingerprint.Id;
             string key = fingerprint.Key;
 
-            string result = RetrieveInformation(
+            string state = RetrieveInformation(
                 $"https://graph.facebook.com/oauth/access_token?client_id={id}&client_secret={key}&grant_type=client_credentials",
                 id,
                 ref message,
                 out AccessTokenObject obj);
 
-            if (result == nameof(ValidationState.AuthorizedError))
+            if (state == nameof(ValidationState.AuthorizedError))
             {
                 return CheckInformation(id, obj.AccessToken, ref message);
             }
 
-            return result;
+            return state;
         }
 
         private string CheckInformation(string id, string accessToken, ref string message)
         {
-            string result = RetrieveInformation(
+            string state = RetrieveInformation(
                 $"https://graph.facebook.com/{id}?access_token={accessToken}&fields=creator_uid",
                 id,
                 ref message,
                 out CreatorObject obj);
 
-            if (result == nameof(ValidationState.AuthorizedError))
+            if (state == nameof(ValidationState.AuthorizedError))
             {
                 return RetrieveAccountInformation(id, obj.CreatorUid, accessToken, ref message);
             }
 
-            return result;
+            return state;
         }
 
         private string RetrieveAccountInformation(string id, string creatorUid, string accessToken, ref string message)
         {
-            string result = RetrieveInformation(
+            string state = RetrieveInformation(
                 $"https://graph.facebook.com/{creatorUid}?access_token={accessToken}",
                 id,
                 ref message,
                 out AccountObject obj);
 
-            if (result == nameof(ValidationState.AuthorizedError))
+            if (state == nameof(ValidationState.AuthorizedError))
             {
                 return ReturnAuthorizedAccess(ref message, asset: $"{obj.Id}:{obj.Name}");
             }
 
-            return result;
+            return state;
         }
 
         private string RetrieveInformation<T>(string url, string id, ref string message, out T obj)

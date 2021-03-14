@@ -347,11 +347,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Text = $"[{Fingerprint.HostKeyName}=Host][{Fingerprint.AccountKeyName}=Account]",
                 ExceptionType = typeof(ArgumentException) },
 
-            //new FingerprintTestCase {
-            //    Title = "Two keys (Account & Host) in alphabetical order with spaces.",
-            //    Text = $"[{Fingerprint.AccountKeyName}=Account] [{Fingerprint.HostKeyName}=Host]",
-            //    ExceptionType = typeof(ArgumentException) },
-
             new FingerprintTestCase {
                 Title = "Key name (NON_EXISTENT) does not exist.",
                 Text = $"[NON_EXISTENT=RandomValue]",
