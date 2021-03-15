@@ -151,7 +151,34 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (context.FileContents == null)
             {
-                context.FileContents = _fileSystem.FileReadAllText(filePath);
+                try
+                {
+                    context.FileContents = _fileSystem.FileReadAllText(filePath);
+                }
+                catch (Exception e)
+                {
+                    if (e is IOException || e is UnauthorizedAccessException)
+                    {
+                        // We should log and return here because we want the rule to continue to run. i.e., the issue is likely
+                        // in permissions with the scan target, not a general problem with the rule. In other cases, we 'throw',
+                        // which will result in the rule getting disabled.
+                        context.Logger.LogToolNotification(
+                            Errors.CreateNotification(
+                                context.TargetUri,
+                                "ERR998.ExceptionInAnalyze",
+                                context.Rule.Id,
+                                FailureLevel.Error,
+                                e,
+                                persistExceptionStack: true,
+                                messageFormat: null,
+                                e.GetType().Name,
+                                context.TargetUri.GetFileName(),
+                                context.Rule.Name));
+                        return;
+                    }
+
+                    throw;
+                }
             }
 
             if (context.FileSizeInKilobytes != -1 && context.FileContents.String.Length / 1024 > context.FileSizeInKilobytes)
