@@ -121,6 +121,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             {
                 if (e is CryptographicException cryptographicException)
                 {
+                    if (e.Message.StartsWith("Cannot find the requested object."))
+                    {
+                        // Garbage data received.
+                        return nameof(ValidationState.NoMatch);
+                    }
+
                     if (e.Message.StartsWith("Cannot find the original signer."))
                     {
                         return TryLoadCertificateCollection(rawData,
