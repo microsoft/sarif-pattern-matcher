@@ -151,7 +151,33 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (context.FileContents == null)
             {
-                context.FileContents = _fileSystem.FileReadAllText(filePath);
+                try
+                {
+                    context.FileContents = _fileSystem.FileReadAllText(filePath);
+                }
+                catch (Exception e)
+                {
+                    if (e is IOException || e is UnauthorizedAccessException)
+                    {
+                        // We should only log here, since when we throw,
+                        // the analyzer will catch the exception and log.
+                        context.Logger.LogToolNotification(
+                            Errors.CreateNotification(
+                                context.TargetUri,
+                                "ERR998.ExceptionInAnalyze",
+                                context.Rule.Id,
+                                FailureLevel.Error,
+                                e,
+                                persistExceptionStack: true,
+                                messageFormat: null,
+                                e.GetType().Name,
+                                context.TargetUri.GetFileName(),
+                                context.Rule.Name));
+                        return;
+                    }
+
+                    throw;
+                }
             }
 
             if (context.FileSizeInKilobytes != -1 && context.FileContents.String.Length / 1024 > context.FileSizeInKilobytes)
