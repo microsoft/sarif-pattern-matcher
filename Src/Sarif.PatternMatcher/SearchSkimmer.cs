@@ -159,8 +159,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     if (e is IOException || e is UnauthorizedAccessException)
                     {
-                        // We should only log here, since when we throw,
-                        // the analyzer will catch the exception and log.
+                        // We should log and return here because we want the rule to continue to run. i.e., the issue is likely
+                        // in permissions with the scan target, not a general problem with the rule. In other cases, we 'throw',
+                        // which will result in the rule getting disabled.
                         context.Logger.LogToolNotification(
                             Errors.CreateNotification(
                                 context.TargetUri,
