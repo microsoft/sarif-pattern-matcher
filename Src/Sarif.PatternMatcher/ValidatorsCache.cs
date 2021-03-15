@@ -113,8 +113,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         public static Validation ValidateDynamicHelper(MethodInfo isValidDynamicMethodInfo,
-                                                        ref string fingerprint,
-                                                        ref string message)
+                                                       ref string fingerprint,
+                                                       ref string message,
+                                                       ref IDictionary<string, string> options)
         {
             string validationText;
 
@@ -122,6 +123,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 fingerprint,
                 message,
+                options,
             };
 
             string currentDirectory = Environment.CurrentDirectory;
@@ -144,6 +146,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             fingerprint = (string)arguments[0];
             message = (string)arguments[1];
+            options = (Dictionary<string, string>)arguments[2];
 
             if (!Enum.TryParse(validationText, out Validation result))
             {
@@ -242,7 +245,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             pluginCanPerformDynamicAnalysis = validationMethods.IsValidDynamic != null;
 
             return (result != Validation.NoMatch && result != Validation.Expired && dynamicValidation && pluginCanPerformDynamicAnalysis) ?
-                ValidateDynamicHelper(validationMethods.IsValidDynamic, ref fingerprint, ref message) :
+                ValidateDynamicHelper(validationMethods.IsValidDynamic, ref fingerprint, ref message, ref groups) :
                 result;
         }
 
@@ -301,6 +304,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             {
                                 typeof(string).MakeByRefType(), // Fingerprint.
                                 typeof(string).MakeByRefType(), // Message.
+                                typeof(Dictionary<string, string>).MakeByRefType(), // Options.
                             },
                             null);
 
