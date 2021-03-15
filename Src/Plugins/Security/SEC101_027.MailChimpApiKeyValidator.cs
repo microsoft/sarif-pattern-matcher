@@ -36,11 +36,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                  ref message);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message)
+        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
-                                  ref message);
+                                  ref message,
+                                  ref options);
         }
 
         protected override string IsValidStaticHelper(ref string matchedPattern,
@@ -64,7 +65,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override string IsValidDynamicHelper(ref string fingerprintText,
-                                                       ref string message)
+                                                       ref string message,
+                                                       ref Dictionary<string, string> options)
         {
             var fingerprint = new Fingerprint(fingerprintText);
 
