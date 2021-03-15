@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
@@ -28,7 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 
         protected ValidatorBase()
         {
-            FingerprintToResultCache = new Dictionary<string, Tuple<string, string>>();
+            FingerprintToResultCache = new ConcurrentDictionary<string, Tuple<string, string>>();
             PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
