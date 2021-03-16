@@ -26,18 +26,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                            ref string message)
         {
             return IsValidStatic(Instance,
-                                ref matchedPattern,
-                                ref groups,
-                                ref failureLevel,
-                                ref fingerprint,
-                                ref message);
+                                 ref matchedPattern,
+                                 ref groups,
+                                 ref failureLevel,
+                                 ref fingerprint,
+                                 ref message);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message)
+        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
-                                   ref fingerprint,
-                                   ref message);
+                                  ref fingerprint,
+                                  ref message,
+                                  ref options);
         }
 
         protected override string IsValidStaticHelper(ref string matchedPattern,
@@ -66,7 +67,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         }
 
         protected override string IsValidDynamicHelper(ref string fingerprintText,
-                                                       ref string message)
+                                                       ref string message,
+                                                       ref Dictionary<string, string> options)
         {
             // TODO: Create a unit test for this. https://github.com/microsoft/sarif-pattern-matcher/issues/258
 

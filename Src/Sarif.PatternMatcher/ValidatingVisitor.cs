@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Collections.Generic;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatingVisitor : SarifRewritingVisitor
@@ -37,12 +39,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // Our validation messages currently look like so.
                 // {0:scanTarget}' contains {1:validationPrefix}{2:encoding}{3:secretKind}{4:validationSuffix}{5:validatorMessage}
                 string message = null;
+                IDictionary<string, string> options = new Dictionary<string, string>();
 
                 FailureLevel level = default;
                 Validation state =
                     ValidatorsCache.ValidateDynamicHelper(validationPair.IsValidDynamic,
                                                           ref fingerprint,
-                                                          ref message);
+                                                          ref message,
+                                                          ref options);
 
                 string validationPrefix = node.Message.Arguments[1];
                 string validationSuffix = node.Message.Arguments[4];

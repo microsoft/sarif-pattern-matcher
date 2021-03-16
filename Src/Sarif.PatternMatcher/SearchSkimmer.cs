@@ -467,6 +467,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Debug.Assert(!groups.ContainsKey("scanTargetFullPath"), "Full path should always exist.");
                 groups["scanTargetFullPath"] = filePath;
+                groups["enhancedReporting"] = context.EnhancedReporting.ToString();
 
                 if (matchExpression.Properties != null)
                 {
@@ -499,14 +500,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (_validators != null && matchExpression.IsValidatorEnabled)
                 {
                     state = _validators.Validate(reportingDescriptor.Name,
-                                                context.DynamicValidation,
+                                                context,
                                                 ref refinedMatchedPattern,
                                                 ref groups,
                                                 ref levelText,
                                                 ref fingerprint,
                                                 ref validatorMessage,
-                                                out bool pluginSupportsDynamicValidation,
-                                                context.DisableDynamicValidationCaching);
+                                                out bool pluginSupportsDynamicValidation);
 
                     if (!Enum.TryParse<FailureLevel>(levelText, out level))
                     {
@@ -604,7 +604,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 Validation state = _validators.Validate(reportingDescriptor.Name,
-                                context.DynamicValidation,
+                                context,
                                 ref filePath,
                                 ref groups,
                                 ref levelText,
