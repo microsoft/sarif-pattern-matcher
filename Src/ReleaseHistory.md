@@ -1,5 +1,30 @@
 # Release History
 
+## *v1.4.0-alpha-0198-g840f9cbd87*
+
+- [840f9cb](https://github.com/microsoft/sarif-pattern-matcher/commit/840f9cb) Updating submodules (#292)
+- [60b696c](https://github.com/microsoft/sarif-pattern-matcher/commit/60b696c) Fixing fingerprint ordering (#289)
+- [9602f06](https://github.com/microsoft/sarif-pattern-matcher/commit/9602f06) Fixing wrong suffix (#291)
+- [1c9855e](https://github.com/microsoft/sarif-pattern-matcher/commit/1c9855e) ProjectNotAuthorized should be NoMatch (#290)
+- [2dab565](https://github.com/microsoft/sarif-pattern-matcher/commit/2dab565) Adding argument to disable cache (#288)
+- [9d714cf](https://github.com/microsoft/sarif-pattern-matcher/commit/9d714cf) New alibaba access key validator (#285)
+- [0c54206](https://github.com/microsoft/sarif-pattern-matcher/commit/0c54206) Add new google service account key validator (#280)
+- [41d5eb2](https://github.com/microsoft/sarif-pattern-matcher/commit/41d5eb2) Improving regex (#286)
+- [b85b783](https://github.com/microsoft/sarif-pattern-matcher/commit/b85b783) Adding dynamic validation for MailChimp and improving regex (#284)
+- [4b2fb7d](https://github.com/microsoft/sarif-pattern-matcher/commit/4b2fb7d) Updating AssetPlatform and tests (#283)
+- [6995c8e](https://github.com/microsoft/sarif-pattern-matcher/commit/6995c8e) Fixing caching issue while using AzureDevops URL (#282)
+
+## *v1.4.0-alpha-0187-g70c7ddaf47*
+
+- [70c7dda](https://github.com/microsoft/sarif-pattern-matcher/commit/70c7dda) Updating sarif-sdk submodule (#279)
+- [9780de1](https://github.com/microsoft/sarif-pattern-matcher/commit/9780de1) Asset fingerprint (#276)
+- [ec93a4f](https://github.com/microsoft/sarif-pattern-matcher/commit/ec93a4f) Updating release history (#252)
+- [c5e675a](https://github.com/microsoft/sarif-pattern-matcher/commit/c5e675a) Enable NPM Validator (#274)
+- [6b96d5a](https://github.com/microsoft/sarif-pattern-matcher/commit/6b96d5a) Move ConvertToSecureString into its own small validator (#271)
+- [af6e3fa](https://github.com/microsoft/sarif-pattern-matcher/commit/af6e3fa) Add handling for empty certificate key data. (#273)
+- [b90ddf7](https://github.com/microsoft/sarif-pattern-matcher/commit/b90ddf7) Check if all rules have validators (#250)
+- [579d2b0](https://github.com/microsoft/sarif-pattern-matcher/commit/579d2b0) Filename should be unique (#270)
+
 ## *v1.4.0-alpha-0179-gad1976d55c*
 
 - [08014ba](https://github.com/microsoft/sarif-pattern-matcher/commit/08014ba) sarif sdk kusto update (#254)
