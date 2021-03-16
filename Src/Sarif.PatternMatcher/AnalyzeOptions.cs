@@ -49,8 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         [Option(
             "enhanced-reporting",
-            HelpText = "Enable enhanced reporting. If possible, it will fetch data from " +
-                       "the provider and add more information to the reporting message.")]
+            HelpText = "Enable enhanced reporting provided by dynamic validators (when --dynamic-validation is also enabled).")]
         public bool EnhancedReporting { get; internal set; }
     }
 }
