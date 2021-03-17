@@ -8,6 +8,8 @@ using GoogleApi.Entities.Common;
 using GoogleApi.Entities.Maps.Directions.Request;
 using GoogleApi.Exceptions;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class GoogleApiKeyValidator : ValidatorBase

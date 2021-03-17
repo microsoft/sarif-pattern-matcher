@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 using Org.BouncyCastle.Bcpg.OpenPgp;
 

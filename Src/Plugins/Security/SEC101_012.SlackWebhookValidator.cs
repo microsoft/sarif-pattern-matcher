@@ -7,6 +7,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class SlackWebhookValidator : ValidatorBase

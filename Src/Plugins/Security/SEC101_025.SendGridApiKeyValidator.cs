@@ -9,6 +9,8 @@ using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Text;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class SendGridApiKeyValidator : ValidatorBase

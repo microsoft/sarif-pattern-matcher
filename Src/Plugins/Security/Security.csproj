@@ -10,7 +10,7 @@
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.Security</RootNamespace>
     <PackageId>Sarif.PatternMatcher.Security</PackageId>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <Content Include="*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -24,9 +24,9 @@
     <Content Include="..\..\..\refs\Octokit.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-	<Content Include="..\..\..\refs\aliyun-net-sdk-Iot.dll">
-	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	</Content>
+    <Content Include="..\..\..\refs\aliyun-net-sdk-Iot.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +45,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\RE2.Managed\RE2.Managed.csproj" />
+    <ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,5 +61,4 @@
     <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
     <Copy SourceFiles="Security.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
   </Target>
-  
 </Project>

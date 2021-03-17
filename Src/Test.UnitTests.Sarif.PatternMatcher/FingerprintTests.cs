@@ -7,6 +7,8 @@ using System.Reflection;
 
 using FluentAssertions;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
