@@ -26,30 +26,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     return;
                 }
 
-                using (StreamReader file = File.OpenText(@"SEC101.SecurePlaintextSecrets.json"))
-                using (JsonTextReader reader = new JsonTextReader(file))
+                string content = File.ReadAllText(@"SEC101.SecurePlaintextSecrets.json");
+
+                JObject jobject = (JObject)JToken.Parse(content);
+
+                IEnumerable<string> rules = jobject["Definitions"][0]["MatchExpressions"].Select(x => x["Name"].ToString().Split('/')[1]).Distinct();
+
+                Assembly assembly = typeof(HttpAuthorizationRequestHeaderValidator).Assembly;
+                // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
+                HashSet<string> validators = assembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
+
+                var rulesWithoutValidators = new List<string>();
+
+                foreach (string rule in rules)
                 {
-                    JObject o2 = (JObject)JToken.ReadFrom(reader);
-
-                    IEnumerable<string> rules = o2["Definitions"][0]["MatchExpressions"].Select(x => x["Name"].ToString().Split('/')[1]).Distinct();
-
-                    Assembly assembly = typeof(HttpAuthorizationRequestHeaderValidator).Assembly;
-                    // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
-                    HashSet<string> validators = assembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
-
-                    List<string> rulesWithoutValidators = new List<string>();
-
-                    foreach (string rule in rules)
+                    if (!validators.TryGetValue(rule + "Validator", out string _))
                     {
-                        if (!validators.TryGetValue(rule + "Validator", out string _))
-                        {
-                            rulesWithoutValidators.Add(rule);
-                        }
+                        rulesWithoutValidators.Add(rule);
                     }
-
-                    // Assert.Empty doesn't allow custom messages, so use Assert.True
-                    Assert.True(rulesWithoutValidators.Count == 0, "Unable to find validators for these rules: " + string.Join(',', rulesWithoutValidators));
                 }
+
+                // Assert.Empty doesn't allow custom messages, so use Assert.True
+                Assert.True(rulesWithoutValidators.Count == 0, "Unable to find validators for these rules: " + string.Join(',', rulesWithoutValidators));
             }
             catch (IOException ioe)
             {
