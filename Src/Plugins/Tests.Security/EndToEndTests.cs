@@ -38,6 +38,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected abstract string RuleId { get; }
 
+        protected abstract string Framework { get; }
+
         protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.TestData.{TypeUnderTest}";
 
         protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @"Plugins\Tests.Security");
@@ -64,7 +66,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string regexDefinitions = Path.Combine(
                 Path.GetDirectoryName(typeof(RebaseUriVisitor).Assembly.Location),
                 @"..\..\",
-                @$"{productBinaryName}\netstandard2.0\{RuleId}.{TypeUnderTest}.json");
+                @$"{productBinaryName}\{Framework}\{RuleId}.{TypeUnderTest}.json");
 
             string filePath = Path.Combine(
                 ProductTestDataDirectory,
