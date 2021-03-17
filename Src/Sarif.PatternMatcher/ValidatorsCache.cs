@@ -113,8 +113,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         public static Validation ValidateDynamicHelper(MethodInfo isValidDynamicMethodInfo,
-                                                        ref string fingerprint,
-                                                        ref string message)
+                                                       ref string fingerprint,
+                                                       ref string message,
+                                                       ref IDictionary<string, string> options)
         {
             string validationText;
 
@@ -122,6 +123,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 fingerprint,
                 message,
+                options,
             };
 
             string currentDirectory = Environment.CurrentDirectory;
@@ -144,6 +146,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             fingerprint = (string)arguments[0];
             message = (string)arguments[1];
+            options = (Dictionary<string, string>)arguments[2];
 
             if (!Enum.TryParse(validationText, out Validation result))
             {
@@ -180,41 +183,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public Validation Validate(
             string ruleName,
-            bool dynamicValidation,
+            AnalyzeContext context,
             ref string matchedPattern,
             ref IDictionary<string, string> groups,
             ref string failureLevel,
             ref string fingerprint,
             ref string message,
-            out bool pluginCanPerformDynamicAnalysis,
-            bool disableValidationCaching = false)
+            out bool pluginCanPerformDynamicAnalysis)
         {
             pluginCanPerformDynamicAnalysis = false;
 
             return ValidateHelper(
                 RuleNameToValidationMethods,
                 ruleName,
-                dynamicValidation,
+                context,
                 ref matchedPattern,
                 ref groups,
                 ref failureLevel,
                 ref fingerprint,
                 ref message,
-                out pluginCanPerformDynamicAnalysis,
-                disableValidationCaching);
+                out pluginCanPerformDynamicAnalysis);
         }
 
         internal static Validation ValidateHelper(
             Dictionary<string, ValidationMethods> ruleIdToMethodMap,
             string ruleName,
-            bool dynamicValidation,
+            AnalyzeContext context,
             ref string matchedPattern,
             ref IDictionary<string, string> groups,
             ref string failureLevel,
             ref string fingerprint,
             ref string message,
-            out bool pluginCanPerformDynamicAnalysis,
-            bool disableValidationCaching = false)
+            out bool pluginCanPerformDynamicAnalysis)
         {
             pluginCanPerformDynamicAnalysis = false;
             fingerprint = null;
@@ -229,7 +229,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (validationMethods.DisableDynamicValidationCaching != null)
             {
-                DisableValidationCaching(validationMethods.DisableDynamicValidationCaching, disableValidationCaching);
+                DisableValidationCaching(validationMethods.DisableDynamicValidationCaching, context.DisableDynamicValidationCaching);
             }
 
             Validation result = ValidateStaticHelper(validationMethods.IsValidStatic,
@@ -241,8 +241,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             pluginCanPerformDynamicAnalysis = validationMethods.IsValidDynamic != null;
 
-            return (result != Validation.NoMatch && result != Validation.Expired && dynamicValidation && pluginCanPerformDynamicAnalysis) ?
-                ValidateDynamicHelper(validationMethods.IsValidDynamic, ref fingerprint, ref message) :
+            return (result != Validation.NoMatch && result != Validation.Expired && context.DynamicValidation && pluginCanPerformDynamicAnalysis) ?
+                ValidateDynamicHelper(validationMethods.IsValidDynamic, ref fingerprint, ref message, ref groups) :
                 result;
         }
 
@@ -301,6 +301,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             {
                                 typeof(string).MakeByRefType(), // Fingerprint.
                                 typeof(string).MakeByRefType(), // Message.
+                                typeof(Dictionary<string, string>).MakeByRefType(), // Options.
                             },
                             null);
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
@@ -28,7 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 
         protected ValidatorBase()
         {
-            FingerprintToResultCache = new Dictionary<string, Tuple<string, string>>();
+            FingerprintToResultCache = new ConcurrentDictionary<string, Tuple<string, string>>();
             PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
@@ -94,7 +95,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 
         public static string IsValidDynamic(ValidatorBase validator,
                                             ref string fingerprint,
-                                            ref string message)
+                                            ref string message,
+                                            ref Dictionary<string, string> options)
         {
             if (shouldUseDynamicCache &&
                 validator.FingerprintToResultCache.TryGetValue(fingerprint, out Tuple<string, string> result))
@@ -105,7 +107,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
 
             string validationState =
                 validator.IsValidDynamicHelper(ref fingerprint,
-                                               ref message);
+                                               ref message,
+                                               ref options);
 
             if (fingerprint != null)
             {
@@ -325,7 +328,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins
                                                       ref string message);
 
         protected virtual string IsValidDynamicHelper(ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      ref Dictionary<string, string> options)
         {
             return null;
         }

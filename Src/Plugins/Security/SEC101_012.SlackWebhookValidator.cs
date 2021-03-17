@@ -5,10 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
-
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -27,19 +24,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            ref string fingerprint,
                                            ref string message)
         {
-            return ValidatorBase.IsValidStatic(Instance,
-                                               ref matchedPattern,
-                                               ref groups,
-                                               ref failureLevel,
-                                               ref fingerprint,
-                                               ref message);
+            return IsValidStatic(Instance,
+                                 ref matchedPattern,
+                                 ref groups,
+                                 ref failureLevel,
+                                 ref fingerprint,
+                                 ref message);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message)
+        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
         {
-            return ValidatorBase.IsValidDynamic(Instance,
-                                                ref fingerprint,
-                                                ref message);
+            return IsValidDynamic(Instance,
+                                  ref fingerprint,
+                                  ref message,
+                                  ref options);
         }
 
         protected override string IsValidStaticHelper(ref string matchedPattern,
@@ -58,7 +56,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override string IsValidDynamicHelper(ref string fingerprintText,
-                                                       ref string message)
+                                                       ref string message,
+                                                       ref Dictionary<string, string> options)
         {
             var fingerprint = new Fingerprint(fingerprintText);
 

@@ -206,3 +206,6 @@ Z6nPTMPMp8ddSGq23bPeu1RNUEFWQ+hL6/SotMC+ZMU=
 // Should not raise an exception
  -----BEGIN EC PRIVATE KEY-----
  -----END EC PRIVATE KEY-----
+
+ // Garbage data. Should not raise an exception
+ -----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----

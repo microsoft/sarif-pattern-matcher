@@ -43,7 +43,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public int FileSizeInKilobytes { get; internal set; }
 
         [Option(
-            "disable-dynamic-validation-caching")]
+            "disable-dynamic-validation-caching",
+            HelpText = "Disable caching from dynamic validation.")]
         public bool DisableDynamicValidationCaching { get; internal set; }
+
+        [Option(
+            "enhanced-reporting",
+            HelpText = "Enable enhanced reporting provided by dynamic validators (when --dynamic-validation is also enabled).")]
+        public bool EnhancedReporting { get; internal set; }
     }
 }
