@@ -75,7 +75,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Npm]",
-            "ValidationFingerprint/v1": "[key=338a0fd3-7378-4ce1-8432-bbfc0f6777ca]"
+            "ValidationFingerprint/v1": "[key=338a0fd3-7378-4ce1-8432-bbfc0f6777ca]",
+            "ValidationFingerprintHash/v1": "a32dbf216fbf08fff9da376f55efd8a93d072f7663536e355b9e24c56e56bb9f"
           }
         },
         {
@@ -116,7 +117,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Npm]",
-            "ValidationFingerprint/v1": "[key=338a0fd3-7378-4ce1-8432-bbfc0f6777cb]"
+            "ValidationFingerprint/v1": "[key=338a0fd3-7378-4ce1-8432-bbfc0f6777cb]",
+            "ValidationFingerprintHash/v1": "558b670be8d781a4ddb6d720ce8709d964f5b56328b44682248e599c985070a5"
           }
         }
       ],

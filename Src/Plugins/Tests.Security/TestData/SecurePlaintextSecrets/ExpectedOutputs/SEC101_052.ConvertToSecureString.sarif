@@ -74,7 +74,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[pwd=doodle_BLOB0000]"
+            "ValidationFingerprint/v1": "[pwd=doodle_BLOB0000]",
+            "ValidationFingerprintHash/v1": "495c553c7f8536da3d4361de3c0fa2fc7e0c3861d4a76433126153dda1fc71c7"
           }
         },
         {
@@ -114,7 +115,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[pwd=Doodle$111111]"
+            "ValidationFingerprint/v1": "[pwd=Doodle$111111]",
+            "ValidationFingerprintHash/v1": "7a372535cd9cc36cd1c12c80bbb516dd1023e75bdedb9a81214df9cad080bd57"
           }
         },
         {
@@ -154,7 +156,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[pwd=D00dle2222]"
+            "ValidationFingerprint/v1": "[pwd=D00dle2222]",
+            "ValidationFingerprintHash/v1": "36b78c66955c21fabc201dcb59c92e211635ffa84f6244b0690ed4d33241a155"
           }
         },
         {
@@ -194,7 +197,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[pwd=D$oodle3333]"
+            "ValidationFingerprint/v1": "[pwd=D$oodle3333]",
+            "ValidationFingerprintHash/v1": "82bec276ea37e70fc16967aa8705296176aeda1a24e4f19e27ee0f589418ca28"
           }
         },
         {
@@ -234,7 +238,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[pwd=D$oodle4444]"
+            "ValidationFingerprint/v1": "[pwd=D$oodle4444]",
+            "ValidationFingerprintHash/v1": "730814e72e08ab10b0d0160e44bd86052e0a5cd4b7e86194ebfeb85e4d9b316f"
           }
         },
         {
@@ -274,7 +279,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[pwd=Doodle$555555]"
+            "ValidationFingerprint/v1": "[pwd=Doodle$555555]",
+            "ValidationFingerprintHash/v1": "452470db61e040b16eb87db9a5d70c027307e3d3cf8be25730dd92b67e078049"
           }
         },
         {
@@ -314,7 +320,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[pwd=666666]"
+            "ValidationFingerprint/v1": "[pwd=666666]",
+            "ValidationFingerprintHash/v1": "a93c7685d4e461bd85bd0ffc1657977ae10314069e703d6205700a8e0170a2db"
           }
         },
         {
@@ -354,7 +361,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[pwd=6ood137777]"
+            "ValidationFingerprint/v1": "[pwd=6ood137777]",
+            "ValidationFingerprintHash/v1": "5eab366efba54782ba293d482600579b44d8bc643fb822986df478358d00aa71"
           }
         }
       ],
