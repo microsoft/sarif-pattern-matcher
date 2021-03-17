@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators

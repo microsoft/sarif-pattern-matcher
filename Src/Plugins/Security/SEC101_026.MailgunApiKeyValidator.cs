@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {

@@ -7,6 +7,8 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 {
     internal static class CertificateHelper

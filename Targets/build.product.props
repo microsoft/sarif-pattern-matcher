@@ -39,13 +39,14 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)..\src\.ruleset</CodeAnalysisRuleSet>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)..\src\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
-    
+
     <Compile Include="$(MSBuildThisFileDirectory)..\src\Shared\CommonAssemblyInfo.cs" />
   </ItemGroup>
 

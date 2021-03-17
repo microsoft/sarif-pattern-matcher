@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public struct Fingerprint
     {

@@ -8,6 +8,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class SlackTokenValidator : ValidatorBase

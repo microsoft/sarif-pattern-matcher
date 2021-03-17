@@ -4,6 +4,8 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public static class EmailAddressValidator

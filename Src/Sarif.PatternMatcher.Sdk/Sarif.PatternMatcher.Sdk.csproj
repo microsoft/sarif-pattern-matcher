@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.lib.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
+
+  <PropertyGroup Label="AssemblyAttributes">
+    <AssemblyTitle>Sarif Pattern Matcher Sdk</AssemblyTitle>
+    <Description>A general pattern matching Sdk that persist results to SARIF.</Description>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Sdk</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RE2.Managed\RE2.Managed.csproj" />
+  </ItemGroup>
+</Project>

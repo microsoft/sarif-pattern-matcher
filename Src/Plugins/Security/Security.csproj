@@ -34,6 +34,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="C:\Microsoft\sarif-pattern-matcher\Targets\..\src\Plugins\ValidationState.cs" />
+    <Compile Remove="C:\Microsoft\sarif-pattern-matcher\Targets\..\src\Plugins\ValidatorBase.cs" />
+    <Compile Remove="C:\Microsoft\sarif-pattern-matcher\Targets\..\src\Sarif.PatternMatcher\Fingerprint.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="aliyun-net-sdk-core" Version="1.5.10" />
     <PackageReference Include="AWSSDK.IdentityManagement" Version="3.5.0.61" />
     <PackageReference Include="GoogleApi" Version="3.10.5" />
@@ -45,6 +51,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\RE2.Managed\RE2.Managed.csproj" />
+    <ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
   </ItemGroup>
 
   <ItemGroup>

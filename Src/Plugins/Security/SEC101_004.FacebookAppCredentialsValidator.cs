@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security

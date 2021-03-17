@@ -9,10 +9,6 @@
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher</RootNamespace>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
@@ -21,6 +17,7 @@
     <ProjectReference Include="..\RE2.Managed\RE2.Managed.csproj" />
     <ProjectReference Include="..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
     <ProjectReference Include="..\sarif-sdk\src\Sarif\Sarif.csproj" />
+    <ProjectReference Include="..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
     <ProjectReference Include="..\Strings.Interop\Strings.Interop.csproj" />
   </ItemGroup>
 

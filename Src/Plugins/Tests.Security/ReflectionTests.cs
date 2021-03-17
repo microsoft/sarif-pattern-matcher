@@ -33,7 +33,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     IEnumerable<string> rules = o2["Definitions"][0]["MatchExpressions"].Select(x => x["Name"].ToString().Split('/')[1]).Distinct();
 
-                    Assembly assembly = typeof(ValidatorBase).Assembly;
+                    Assembly assembly = typeof(HttpAuthorizationRequestHeaderValidator).Assembly;
                     // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
                     HashSet<string> validators = assembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
 

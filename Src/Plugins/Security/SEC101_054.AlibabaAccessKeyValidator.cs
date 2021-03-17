@@ -12,6 +12,7 @@ using Aliyun.Acs.Core.Profile;
 using Aliyun.Acs.Iot.Model.V20170420;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
