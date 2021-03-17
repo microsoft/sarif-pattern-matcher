@@ -8,9 +8,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class ReviewPotentiallySensitiveFilesTests : EndToEndTests
     {
-        public ReviewPotentiallySensitiveFilesTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
+        public ReviewPotentiallySensitiveFilesTests(ITestOutputHelper outputHelper) : base(outputHelper)
+        {
+        }
 
         protected override string RuleId => "SEC103";
+
+        protected override string Framework => "netstandard2.0";
 
         [Fact]
         public void ReviewPotentiallySensitiveFiles_EndToEndFunctionalTests()

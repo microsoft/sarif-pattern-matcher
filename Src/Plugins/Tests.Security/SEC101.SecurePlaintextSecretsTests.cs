@@ -8,9 +8,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class SecurePlaintextSecretsTests : EndToEndTests
     {
-        public SecurePlaintextSecretsTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
+        public SecurePlaintextSecretsTests(ITestOutputHelper outputHelper) : base(outputHelper)
+        {
+        }
 
         protected override string RuleId => "SEC101";
+
+        protected override string Framework => "netstandard2.0";
 
         [Fact]
         public void SecurePlaintextSecrets_EndToEndFunctionalTests()
