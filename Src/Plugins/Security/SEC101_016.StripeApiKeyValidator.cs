@@ -17,7 +17,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private static readonly HashSet<string> WellKnownKeys = new HashSet<string>
         {
-            // This is a well-known key used as example from stripe website https://stripe.com/payments
+            // This is a well-known key used as example from stripe website (check examples section). https://stripe.com/payments
             "sk_test_BQokikJOvBiI2HlWgH4olfQ2",
         };
 
