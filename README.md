@@ -18,6 +18,11 @@ The following packages are published from this repository:
 | [RE2.Managed](https://www.nuget.org/packages/RE2.Managed/)| [![Nuget](https://img.shields.io/nuget/vpre/RE2.Managed)](https://www.nuget.org/packages/RE2.Managed/)|
 | [Strings.Interop](https://www.nuget.org/packages/Strings.Interop/)| [![Nuget](https://img.shields.io/nuget/vpre/Strings.Interop)](https://www.nuget.org/packages/Strings.Interop/)|
 
+## Getting started
+- [Creating plugins](./docs/getting-started/creating-plugins.md)
+- [Using the client tool](./docs/getting-started/using-the-client-tool.md)
+- [Using the library](./docs/getting-started/using-the-library.md)
+
 ## How To Contribute
 
 sarif-pattern-matcher is accepting contributions. If you've submitted a PR for an existing issue, please post a comment in the issue to avoid duplication of effort. See our [CONTRIBUTING](/CONTRIBUTING.md) file for more information - it also contains guidelines for how to submit a PR.
