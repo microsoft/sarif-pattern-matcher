@@ -15,6 +15,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static StripeApiKeyValidator Instance;
 
+        private static readonly HashSet<string> WellKnownKeys = new HashSet<string>
+        {
+            // This is a well-known key used as example from stripe website https://stripe.com/payments
+            "sk_test_BQokikJOvBiI2HlWgH4olfQ2",
+        };
+
         static StripeApiKeyValidator()
         {
             Instance = new StripeApiKeyValidator();
@@ -49,6 +55,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string message)
         {
             if (!groups.TryGetNonEmptyValue("key", out string key))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
+            if (WellKnownKeys.Contains(key))
             {
                 return nameof(ValidationState.NoMatch);
             }
@@ -101,7 +112,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     default:
                     {
                         message += $" An unexpected response code was returned attempting to " +
-                                  $"validate: '{response.StatusCode}'";
+                                   $"validate: '{response.StatusCode}'";
                         break;
                     }
                 }
