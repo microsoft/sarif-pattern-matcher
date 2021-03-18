@@ -8,13 +8,13 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 {
-    public class PSCredentialValidator : ValidatorBase
+    public class CredentialObjectValidator : ValidatorBase
     {
-        internal static PSCredentialValidator Instance;
+        internal static CredentialObjectValidator Instance;
 
-        static PSCredentialValidator()
+        static CredentialObjectValidator()
         {
-            Instance = new PSCredentialValidator();
+            Instance = new CredentialObjectValidator();
         }
 
         public static string IsValidStatic(ref string matchedPattern,
