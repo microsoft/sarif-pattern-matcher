@@ -91,7 +91,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Stripe]",
-            "ValidationFingerprint/v1": "[key=sk_test_01234567890123456789012345678901]"
+            "ValidationFingerprint/v1": "[key=sk_test_01234567890123456789012345678901]",
+            "ValidationFingerprintHash/v1": "7a343129a5469e625344b48a5ff92e3ea97c4388f932872eefd085144502959d"
           }
         },
         {
@@ -132,7 +133,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Stripe]",
-            "ValidationFingerprint/v1": "[key=sk_live_01234567890123456789012345678901]"
+            "ValidationFingerprint/v1": "[key=sk_live_01234567890123456789012345678901]",
+            "ValidationFingerprintHash/v1": "e7818db412638ca2c5eacfe7b4e7951d89f0d65e2ea6c424258f2de4291af395"
           }
         },
         {
@@ -173,7 +175,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Picatic]",
-            "ValidationFingerprint/v1": "[key=sk_test_01234567890123456789012345678901]"
+            "ValidationFingerprint/v1": "[key=sk_test_01234567890123456789012345678901]",
+            "ValidationFingerprintHash/v1": "7a343129a5469e625344b48a5ff92e3ea97c4388f932872eefd085144502959d"
           }
         },
         {
@@ -214,7 +217,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Picatic]",
-            "ValidationFingerprint/v1": "[key=sk_live_01234567890123456789012345678901]"
+            "ValidationFingerprint/v1": "[key=sk_live_01234567890123456789012345678901]",
+            "ValidationFingerprintHash/v1": "e7818db412638ca2c5eacfe7b4e7951d89f0d65e2ea6c424258f2de4291af395"
           }
         }
       ],

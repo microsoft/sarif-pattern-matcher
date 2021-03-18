@@ -75,7 +75,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=GitHub]",
-            "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f1812843]"
+            "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f1812843]",
+            "ValidationFingerprintHash/v1": "582af51f7ade8f37b6e43b05d5f4d70bb2fdbb45cfb14abbfccd97ec4b5a2fa5"
           }
         },
         {
@@ -116,7 +117,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=GitHub]",
-            "ValidationFingerprint/v1": "[pat=dead885a8624460a855540c6592698d2f1812843]"
+            "ValidationFingerprint/v1": "[pat=dead885a8624460a855540c6592698d2f1812843]",
+            "ValidationFingerprintHash/v1": "28c28e7d487cb8b5a9fc76072637aad7ad74325cf4a40e7374cadc4c66d93797"
           }
         },
         {
@@ -157,7 +159,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=GitHub]",
-            "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f181dead]"
+            "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f181dead]",
+            "ValidationFingerprintHash/v1": "7958a7093006f8fb16c3a45e6bbbecbd4d0543667e7f31b930cef13b0bb3ab8e"
           }
         }
       ],

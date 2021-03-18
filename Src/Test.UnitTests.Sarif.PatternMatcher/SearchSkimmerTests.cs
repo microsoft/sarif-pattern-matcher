@@ -105,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             skimmer.Analyze(context);
 
             // But we should see a change in encoding information in message. Note
-            // that when emitting plaintext matches, we elide this information 
+            // that when emitting plaintext matches, we elide this information
             // entirely (i.e., we only explicitly report 'base64-encoded' and
             // report nothing for plaintext).
             logger.Results.Count.Should().Be(1);

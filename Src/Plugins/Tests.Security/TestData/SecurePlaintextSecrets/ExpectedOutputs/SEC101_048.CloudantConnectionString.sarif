@@ -78,7 +78,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[acct=apikey-v2-username1111165BB6673E1B79482A8C][platform=Cloudant][uri=https://host1111-47eb-45ce-b125-4a4e1b5a4f7e-bluemix.cloudant.com]",
-            "ValidationFingerprint/v1": "[acct=apikey-v2-username1111165BB6673E1B79482A8C][pwd=password1111123956157d94b25d574586f26d1211e8e589646b4713d5de4801][uri=https://host1111-47eb-45ce-b125-4a4e1b5a4f7e-bluemix.cloudant.com]"
+            "ValidationFingerprint/v1": "[acct=apikey-v2-username1111165BB6673E1B79482A8C][pwd=password1111123956157d94b25d574586f26d1211e8e589646b4713d5de4801][uri=https://host1111-47eb-45ce-b125-4a4e1b5a4f7e-bluemix.cloudant.com]",
+            "ValidationFingerprintHash/v1": "ebb239141850b2e00ee1ca558b60a53832e3e22622c0b26cf4e611f1785b402b"
           }
         },
         {
@@ -119,7 +120,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Cloudant][uri=https://host22:password89012345678901234567890123456789012345678901234567890123@username2.cloudant.com]",
-            "ValidationFingerprint/v1": "[uri=https://host22:password89012345678901234567890123456789012345678901234567890123@username2.cloudant.com]"
+            "ValidationFingerprint/v1": "[uri=https://host22:password89012345678901234567890123456789012345678901234567890123@username2.cloudant.com]",
+            "ValidationFingerprintHash/v1": "f1b7ff266a296a52bac09b4b0948a84dfddc6ba7e37522e3605ae2f757145db4"
           }
         },
         {
@@ -160,7 +162,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Cloudant][uri=https://host33:passwordijabcdefghijabcd@username3.cloudant.com]",
-            "ValidationFingerprint/v1": "[uri=https://host33:passwordijabcdefghijabcd@username3.cloudant.com]"
+            "ValidationFingerprint/v1": "[uri=https://host33:passwordijabcdefghijabcd@username3.cloudant.com]",
+            "ValidationFingerprintHash/v1": "fae1035ddff69ec7deacf681eb8611fe7ba53c96efe0bf4fb5a33c6babdc1ca5"
           }
         }
       ],

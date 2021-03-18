@@ -75,7 +75,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=MailChimp]",
-            "ValidationFingerprint/v1": "[key=11111111110123456789012345678901-us012345678901]"
+            "ValidationFingerprint/v1": "[key=11111111110123456789012345678901-us012345678901]",
+            "ValidationFingerprintHash/v1": "928d6934f3edb2095d4c728c494759671ea69654e2e3837c2828bbc96039d617"
           }
         },
         {
@@ -116,7 +117,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=MailChimp]",
-            "ValidationFingerprint/v1": "[key=22222222220123456789012345678901-us012345678901]"
+            "ValidationFingerprint/v1": "[key=22222222220123456789012345678901-us012345678901]",
+            "ValidationFingerprintHash/v1": "9712bd2d4b9ae8543c3b22d779917cdf1b37f8dea26b59c50b1bd5090280aec1"
           }
         }
       ],

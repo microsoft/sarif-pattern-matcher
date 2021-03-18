@@ -75,7 +75,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=PayPal]",
-            "ValidationFingerprint/v1": "[key=1111111111012345$01234567890123456789012345678901]"
+            "ValidationFingerprint/v1": "[key=1111111111012345$01234567890123456789012345678901]",
+            "ValidationFingerprintHash/v1": "852b13d50cf35a49a9a14813b45b3f880108f9564111fe6bf89615c7e9b94258"
           }
         },
         {
@@ -116,7 +117,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=PayPal]",
-            "ValidationFingerprint/v1": "[key=2222222222012345$01234567890123456789012345678901]"
+            "ValidationFingerprint/v1": "[key=2222222222012345$01234567890123456789012345678901]",
+            "ValidationFingerprintHash/v1": "d758068b63f4b5a001b91c1b52204eef4fe3baa1b1f24564fa19bca131c89c83"
           }
         }
       ],

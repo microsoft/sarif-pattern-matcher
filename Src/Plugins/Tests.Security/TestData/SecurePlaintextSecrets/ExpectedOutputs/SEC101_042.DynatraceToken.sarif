@@ -75,7 +75,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Dynatrace]",
-            "ValidationFingerprint/v1": "[key=dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123]"
+            "ValidationFingerprint/v1": "[key=dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123]",
+            "ValidationFingerprintHash/v1": "56ff55f481a31e9005fb534e52f4e2372b2e3c0bdeb4461d1d00812a74be1cec"
           }
         },
         {
@@ -116,7 +117,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Dynatrace]",
-            "ValidationFingerprint/v1": "[key=dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123]"
+            "ValidationFingerprint/v1": "[key=dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123]",
+            "ValidationFingerprintHash/v1": "584ffea4fa2a06f4389f2f6a02b1107e778da03318fc3a106b8dc0892f8b3294"
           }
         }
       ],

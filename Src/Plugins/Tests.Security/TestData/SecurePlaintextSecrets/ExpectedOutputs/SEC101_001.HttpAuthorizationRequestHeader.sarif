@@ -75,7 +75,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[host=https://example.com]",
-            "ValidationFingerprint/v1": "[host=https://example.com][key=SomeAuthorizationKey0123456]"
+            "ValidationFingerprint/v1": "[host=https://example.com][key=SomeAuthorizationKey0123456]",
+            "ValidationFingerprintHash/v1": "e602ed14d4f19df6d63caf83274669886728a35ec3574f2e2da1ac14e5e1a8b8"
           }
         },
         {
@@ -116,7 +117,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[host=https://example.com][resource=?some=parameters&that=should&appear=inresults]",
-            "ValidationFingerprint/v1": "[host=https://example.com][key=SomeAuthorizationKey0123456][resource=?some=parameters&that=should&appear=inresults]"
+            "ValidationFingerprint/v1": "[host=https://example.com][key=SomeAuthorizationKey0123456][resource=?some=parameters&that=should&appear=inresults]",
+            "ValidationFingerprintHash/v1": "ba610f0dbd610a11527c24d954a4f6b401b11fb71b734628da017fdeab9448bf"
           }
         },
         {
@@ -157,7 +159,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[host=https://example.com]",
-            "ValidationFingerprint/v1": "[host=https://example.com][key=SomeAuthorizationKey0123456=]"
+            "ValidationFingerprint/v1": "[host=https://example.com][key=SomeAuthorizationKey0123456=]",
+            "ValidationFingerprintHash/v1": "37a4543bb3f62c62a7650e4cd4032cc247c66017020dd14900343dead2c3a7dd"
           }
         }
       ],

@@ -75,7 +75,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Slack][uri=https://hooks.slack.com/services/T01JYS3KLKU/B0123456789/deedbeefdeaffeeddeadbeef]",
-            "ValidationFingerprint/v1": "[uri=https://hooks.slack.com/services/T01JYS3KLKU/B0123456789/deedbeefdeaffeeddeadbeef]"
+            "ValidationFingerprint/v1": "[uri=https://hooks.slack.com/services/T01JYS3KLKU/B0123456789/deedbeefdeaffeeddeadbeef]",
+            "ValidationFingerprintHash/v1": "8e678f5e7762dcf0ddfd448cec9d696ec3807960f4a4ba9a17e334f4baa3438c"
           }
         }
       ],
