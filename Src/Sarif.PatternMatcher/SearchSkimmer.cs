@@ -891,13 +891,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var fingerprint = new Fingerprint(fingerprintText);
 
-            string validationFingerprint = fingerprint.GetValidationFingerprintText();
-
             return new Dictionary<string, string>()
             {
                 { AssetFingerprint, fingerprint.GetAssetFingerprintText() },
-                { ValidationFingerprint, validationFingerprint },
-                { ValidationFingerprintHash, MatchHasher.ComputeHash(validationFingerprint) },
+                { ValidationFingerprint, fingerprint.GetValidationFingerprintText() },
+                { ValidationFingerprintHash, fingerprint.GetValidationFingerprintHashText() },
             };
         }
 

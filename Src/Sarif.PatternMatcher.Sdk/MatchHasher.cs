@@ -7,9 +7,9 @@ using System.Text;
 
 using Microsoft.Strings.Interop;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
-    public static class MatchHasher
+    internal static class MatchHasher
     {
         private const string HashKey = "7B2FD4B8B55B49428DBFB22C9E61D817";
         private static readonly byte[] HashKeyBytes = Encoding.UTF8.GetBytes(HashKey);

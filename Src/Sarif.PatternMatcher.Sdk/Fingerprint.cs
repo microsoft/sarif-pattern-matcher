@@ -126,6 +126,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string GetValidationFingerprintText() => ToString(this, denyList: s_assetOnlyKeys);
 
+        public string GetValidationFingerprintHashText()
+        {
+            string validationFingerprint = ToString(this, denyList: s_assetOnlyKeys);
+            return MatchHasher.ComputeHash(validationFingerprint);
+        }
+
 #pragma warning disable SA1107 // Code should not contain multiple statements on one line
 
         public void SetProperty(string keyName, string value)
