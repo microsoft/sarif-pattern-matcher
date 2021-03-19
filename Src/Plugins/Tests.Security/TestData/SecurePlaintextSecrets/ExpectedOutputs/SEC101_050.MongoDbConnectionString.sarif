@@ -1,0 +1,170 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC101/050",
+              "name": "DoNotExposePlaintextSecrets/MongoDbConnectionString",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC101/050",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_050.MongoDbConnectionString.ps1",
+              "an apparent ",
+              "",
+              "MongoDb connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.MongoDbConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 67,
+                  "charOffset": 0,
+                  "charLength": 66,
+                  "snippet": {
+                    "text": "mongodb://dbuser1:<password>@database.com:10250/database?ssl=true\r"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[acct=dbuser1][host=database.com:10250]",
+            "ValidationFingerprint/v1": "[acct=dbuser1][host=database.com:10250][pwd=<password>]",
+            "ValidationFingerprintHash/v1": "3028affffa1468bb27dd05d7cf73297593f13bbc04351a87bdf1ff9bc1284367"
+          }
+        },
+        {
+          "ruleId": "SEC101/050",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_050.MongoDbConnectionString.ps1",
+              "an apparent ",
+              "",
+              "MongoDb connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.MongoDbConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 1,
+                  "endLine": 3,
+                  "endColumn": 56,
+                  "charOffset": 69,
+                  "charLength": 55,
+                  "snippet": {
+                    "text": "mongodb+srv://dbuser2:<password>@database.com/database\r"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[acct=dbuser2][host=database.com]",
+            "ValidationFingerprint/v1": "[acct=dbuser2][host=database.com][pwd=<password>]",
+            "ValidationFingerprintHash/v1": "db4d837ab3cbc67e77f1eace68dc1d98a244810e2c5c7a2e36fa89a4a5c743fe"
+          }
+        },
+        {
+          "ruleId": "SEC101/050",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_050.MongoDbConnectionString.ps1",
+              "an apparent ",
+              "",
+              "MongoDb connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.MongoDbConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1,
+                  "endLine": 5,
+                  "endColumn": 47,
+                  "charOffset": 127,
+                  "charLength": 46,
+                  "snippet": {
+                    "text": "mongodb+srv://dbuser3:<password>@database.com/"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[acct=dbuser3][host=database.com]",
+            "ValidationFingerprint/v1": "[acct=dbuser3][host=database.com][pwd=<password>]",
+            "ValidationFingerprintHash/v1": "1f745dcb33df5d43f70cb5bb84b69566fdae28cc3a4549f982d0cefcc414edaf"
+          }
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}

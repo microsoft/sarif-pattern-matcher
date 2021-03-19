@@ -67,6 +67,7 @@
   $SEC101/048.CloudantConnectionStringUrl=(?<uri>(?i)https:\/\/([\w-]{1,63}\.)?[\w-]{1,63}:([\w]{64}|[a-z]{24})@[\w-]{1,50}\.cloudant\.com)
   $SEC101/049.CredentialObjectConstructor=(PSCredential|SqlCredential)\s*\(\s*"(?<account>[^"]*)"\s*,\s*"(?<password>[^"]*)"
   $SEC101/049.CredentialObjectInitializer=(?s)(PSCredential|SqlCredential)\s*\(\)\s*{\s*.{0,50}User(Name|Id)\s*=\s*"(?<account>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<password>[^"]*)"
+  $SEC101/050.MongoDbConnectionString=(?i)mongodb([^:]+)?:\/\/(?<account>[0-9a-z]+):(?<password>[^@]+)@(?<host>[^\/]+)\/(.*)(\?|$|)
   $SEC101/051.GpgCredential=(?is)gpg[._-](gen_key_input|sign|decrypt_file)\s*\(\s*(name_email\s*=\s*["'](?<account>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?<password>[^"']*)["']
   $SEC101/052.ConvertToSecureString=(?i)ConvertTo-SecureString\s*(-[S]tring)?\s*["'](?<password>[^"')(]*)["']
   $SEC101/053.GoogleServiceAccountKeyConsoleFormat="private_key":\s*"-----BEGIN PRIVATE KEY-----\\n(?s)(?<key>[^"]+)(?-s)\\n-----END PRIVATE KEY-----\\n(?s).{1,200}(?-s)"client_id"\s*:\s*"(?<account>[\w.-]+)"
