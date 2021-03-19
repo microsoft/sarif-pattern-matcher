@@ -70,6 +70,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override string IsValidDynamicHelper(ref string fingerprintText, ref string message, ref Dictionary<string, string> options)
         {
+            const string NoAccessMessage = "Your app is not permitted to access this endpoint";
+            const string DisabledMessage = "This app is currently disabled.";
+
             var fingerprint = new Fingerprint(fingerprintText);
             string key = fingerprint.Key;
             using HttpClient httpClient = CreateHttpClient();
@@ -94,15 +97,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         string body = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
                         // App deleted.
-                        if (body.Contains("This app is currently disabled"))
+                        if (body.EndsWith(DisabledMessage))
                         {
                             return nameof(ValidationState.Expired);
                         }
 
-                        // Request was successfull but AccessToken does not have access.
-                        if (body.Contains("file_requests.read"))
+                        // Request was successful but AccessToken does not have access.
+                        if (body.Contains(NoAccessMessage))
                         {
-                            return nameof(ValidationState.AuthorizedError);
+                            return key.Length == 64
+                                ? nameof(ValidationState.AuthorizedError) // No expiration token.
+                                : nameof(ValidationState.AuthorizedWarning); // Short expiration token (4h).
                         }
 
                         // We don't recognize this message.
