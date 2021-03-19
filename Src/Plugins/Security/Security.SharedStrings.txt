@@ -45,6 +45,9 @@
   $SEC101/016.StripeApiKey=\b(?<refine>(?<key>(?:r|s)k_(live|test)_(?i)[0-9a-z]{24,99}))([^0-9a-z]|$)
   $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?<refine>(?<key>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}))[^0-9A-Za-z]
   $SEC101/019.PicaticApiKey=\b(?<refine>sk_(live|test)_[0-9a-z]{32})(?i)([^0-9a-z]|$)
+  $SEC101/020.DropboxAccessTokenNoExpiration=(?si)dropbox.{1,50}[^0-9a-z](?<refine>[0-9a-z_-]{64})([^0-9a-z]|$)
+  $SEC101/020.DropboxAccessTokenShortExpiration=(?si)dropbox.{1,50}\b(?<refine>sl\.(?i)[0-9a-z-_]{135,139})(?i)([^0-9a-z]|$)
+  $SEC101/021.DropboxAppCredentials=(?si)dropbox.{0,50}key.{0,10}[^0-9a-z](?<key>(?-i)[0-9a-z]{15})([^0-9a-z]|$).{0,50}secret.{0,10}[^0-9a-z](?<secret>(?-i)[0-9a-z]{15})([^0-9a-z]|$)
   $SEC101/022.PayPalBraintreeAccessToken=access_token\$production\$(?<refine>(?<key>[0-9a-z]{16}\$[0-9a-f]{32}))
   $SEC101/023.AmazonMwsAuthToken=\b(?<refine>amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)
   $SEC101/024.TwilioApiKey=\b(?<refine>(?<key>SK(?i)[0-9a-f]{32}))([^0-9a-f]|$)
