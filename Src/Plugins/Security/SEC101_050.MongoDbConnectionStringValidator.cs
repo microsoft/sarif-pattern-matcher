@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
@@ -78,13 +80,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             try
             {
                 var dbClient = new MongoClient($"mongodb+srv://{account}:{password}@{host}/?connectTimeoutMS=3000");
-                dbClient.ListDatabases();
+                List<BsonDocument> databases = dbClient.ListDatabases().ToList();
+                message = $"The following databases are compromised: {string.Join(",", databases.Select(q => $"'{q["name"].AsString}'"))}";
+                return nameof(ValidationState.AuthorizedError);
             }
             catch (Exception e)
             {
                 if (e is MongoAuthenticationException mae)
                 {
-                    if (e.Message.Contains("Unable to authenticate"))
+                    if (e.Message.StartsWith("Unable to authenticate"))
                     {
                         return ReturnUnauthorizedAccess(ref message, asset: host);
                     }
@@ -92,8 +96,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 
                 return ReturnUnhandledException(ref message, e, asset: host);
             }
-
-            return ReturnAuthorizedAccess(ref message, asset: host, account: account);
         }
     }
 }
