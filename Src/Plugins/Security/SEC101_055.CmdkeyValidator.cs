@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
-using System.Linq;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
@@ -79,7 +78,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return true;
             }
 
-            if (potentialPassword.First() == '$')
+            if (potentialPassword[0] == '$')
             {
                 // The command looks like
                 // cmdkey /pass: $passwordVariable
@@ -87,25 +86,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return true;
             }
 
+            int lastCharacterIndex = potentialPassword.Length - 1;
+
             // The following may be valid characters in the middle of a password, but
             // seeing them on both ends specifically is HIGHLY indicative that a variable
             // was passed into the command.
-            if (potentialPassword.First() == '<' && potentialPassword.Last() == '>')
+            if (potentialPassword[0] == '<' && potentialPassword[lastCharacterIndex] == '>')
             {
                 return true;
             }
 
-            if (potentialPassword.First() == '{' && potentialPassword.Last() == '}')
+            if (potentialPassword[0] == '{' && potentialPassword[lastCharacterIndex] == '}')
             {
                 return true;
             }
 
-            if (potentialPassword.First() == '(' && potentialPassword.Last() == ')')
+            if (potentialPassword[0] == '(' && potentialPassword[lastCharacterIndex] == ')')
             {
                 return true;
             }
 
-            if (potentialPassword.First() == '[' && potentialPassword.Last() == ']')
+            if (potentialPassword[0] == '[' && potentialPassword[lastCharacterIndex] == ']')
             {
                 return true;
             }
