@@ -55,6 +55,7 @@
   $SEC101/026.MailgunApiKey=(?is)((^|[^0-9a-z\-])(?<key>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8}).{0,50}?|[^0-9a-z](?<account>[0-9a-z]+?\.mailgun\.org).{0,50}?){2}
   $SEC101/027.MailChimpApiKey=\b(?<refine>(?<key>[0-9a-f]{32}-us[0-9]{12}))
   $SEC101/031.NuGetApiKey=\b(?<refine>(?<key>oy2[0-9a-z]{43}))(^[0-9a-z]|$)
+  $SEC101/041.RabbitMqConnectionString=(?i)amqps?:\/\/(?<account>[^:]+):(?<password>[^@]+)@(?<host>.+)\/(?<resource>[\w]+)([^0-9a-z]|$)
   $SEC101/042.DynatraceToken=\b(?<refine>dt0(?i)[a-z]{1}[0-9]{2}\.[0-9A-Z]{24}\.[0-9A-Z]{64})
   $SEC101/043.ShopifySharedSecret=\b(?<refine>shpss_(?i)[0-9a-f]{32})
   $SEC101/044.ShopifyAccessToken=\b(?<refine>(shpat|shpca|shppa)_(?i)[0-9a-f]{32})
