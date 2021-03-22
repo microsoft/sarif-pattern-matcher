@@ -44,6 +44,7 @@
   $SEC101/015.GoogleGCMServiceAccount=(("|'|`)?type("|'|`)?\s{0,50}(:|=>|=)\s{0,50}("|'|`)?service_account("|'|`)?,?)
   $SEC101/016.StripeApiKey=\b(?<refine>(?<key>(?:r|s)k_(live|test)_(?i)[0-9a-z]{24,99}))([^0-9a-z]|$)
   $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?<refine>(?<key>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}))[^0-9A-Za-z]
+  $SEC101/018.TwilioCredentials=(?si)twilio.{1,50}\b(?<id>AC[0-9a-z]{32}).{1,500}?\b(?<key>[0-9a-f]{32})
   $SEC101/019.PicaticApiKey=\b(?<refine>sk_(live|test)_[0-9a-z]{32})(?i)([^0-9a-z]|$)
   $SEC101/020.DropboxAccessTokenNoExpiration=(?si)dropbox.{1,50}[^0-9a-z](?<refine>[0-9a-z_-]{64})([^0-9a-z]|$)
   $SEC101/020.DropboxAccessTokenShortExpiration=(?si)dropbox.{1,50}\b(?<refine>sl\.(?i)[0-9a-z-_]{135,139})(?i)([^0-9a-z]|$)
