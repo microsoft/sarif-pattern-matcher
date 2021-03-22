@@ -41,6 +41,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         Cloudant,
 
         /// <summary>
+        /// Dropbox platform. https://www.dropbox.com/developers
+        /// </summary>
+        Dropbox,
+
+        /// <summary>
         /// Dynatrace platform.
         /// </summary>
         Dynatrace,
