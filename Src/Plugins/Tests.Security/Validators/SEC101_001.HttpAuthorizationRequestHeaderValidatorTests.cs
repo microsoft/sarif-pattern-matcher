@@ -17,7 +17,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         private const string ExpectedValidationState = nameof(ValidationState.Unknown);
 
         [Fact]
-        public void DummyCredentials_ShouldHaveInvalidTest()
+        public void HttpAuthorizationRequestHeaderValidator_Test()
         {
             string fingerprintText = string.Format("[host={0}][key={1}][resource={2}]", TestHost, TestKey, TestResource);
             string message = null;
