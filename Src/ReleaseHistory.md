@@ -1,5 +1,29 @@
 # Release History
 
+## *v1.4.0-alpha-0221-gc18b188ba9*
+
+- [c18b188](https://github.com/microsoft/sarif-pattern-matcher/commit/c18b188) Twilio credential validator (#319)
+- [c6a0632](https://github.com/microsoft/sarif-pattern-matcher/commit/c6a0632) RabbitMq Validator (#318)
+- [a5b1306](https://github.com/microsoft/sarif-pattern-matcher/commit/a5b1306) MongoDb validator (#316)
+- [9ef2fca](https://github.com/microsoft/sarif-pattern-matcher/commit/9ef2fca) Adding dropbox validators (#315)
+- [fc2198b](https://github.com/microsoft/sarif-pattern-matcher/commit/fc2198b) Hash validation fingerprint (#312)
+- [9b26d3d](https://github.com/microsoft/sarif-pattern-matcher/commit/9b26d3d) Merge PS and Sql Credential Validators (#314)
+- [cd2eea6](https://github.com/microsoft/sarif-pattern-matcher/commit/cd2eea6) Adding docs (#313)
+- [963f551](https://github.com/microsoft/sarif-pattern-matcher/commit/963f551) Creating Sarif.PatternMatcher.Sdk (#310)
+- [2d476bf](https://github.com/microsoft/sarif-pattern-matcher/commit/2d476bf) Testing framework should be configurable (#311)
+- [9176c71](https://github.com/microsoft/sarif-pattern-matcher/commit/9176c71) adding well known keys for stripe (#309)
+- [bc21b4a](https://github.com/microsoft/sarif-pattern-matcher/commit/bc21b4a) Resolve 'the certificate chain was issued by an authority that is not trusted.' exceptions (#308)
+- [e12eef2](https://github.com/microsoft/sarif-pattern-matcher/commit/e12eef2) Updating submodule and ReleaseHistory (#307)
+- [e5a88f1](https://github.com/microsoft/sarif-pattern-matcher/commit/e5a88f1) Enhanced reporting (#306)
+- [5f8b720](https://github.com/microsoft/sarif-pattern-matcher/commit/5f8b720) FileContent exception handling (#305)
+- [7d82475](https://github.com/microsoft/sarif-pattern-matcher/commit/7d82475) Resolve unhandled exception when receiving junk data. (#303)
+- [bf5cdb9](https://github.com/microsoft/sarif-pattern-matcher/commit/bf5cdb9) ConcurrentDictionary for ValidatorBase (#302)
+- [9dfbb70](https://github.com/microsoft/sarif-pattern-matcher/commit/9dfbb70) Improving performance (sarif-sdk update) (#301)
+- [a80aafa](https://github.com/microsoft/sarif-pattern-matcher/commit/a80aafa) Improving message handling (#300)
+- [d64ef4f](https://github.com/microsoft/sarif-pattern-matcher/commit/d64ef4f) Update google API key rule. Fix reporting helper. Update windows SDK. (#298)
+- [d7e1bff](https://github.com/microsoft/sarif-pattern-matcher/commit/d7e1bff) Fixing comments from previous prs (#299)
+- [cebccd6](https://github.com/microsoft/sarif-pattern-matcher/commit/cebccd6) Improving fingerprint parser (#296)
+
 ## *v1.4.0-alpha-0198-g840f9cbd87*
 
 - [840f9cb](https://github.com/microsoft/sarif-pattern-matcher/commit/840f9cb) Updating submodules (#292)
