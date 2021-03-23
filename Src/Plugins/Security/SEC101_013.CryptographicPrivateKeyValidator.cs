@@ -51,10 +51,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.TryGetValue("kind", out string kind);
             kind = matchedPattern.Contains(" PGP ") ? "Pgp" : kind;
 
-            // Attempt to cleanup the key. Remove all white space, escaped new lines, and escaped double qoutes
-            key = string.Join(string.Empty, key.Where(c => !char.IsWhiteSpace(c)));
-            key = key.Replace("\\n", string.Empty);
-            key = key.Replace("\"", string.Empty);
+            key = key.Trim();
+
+            // Attempt to cleanup the key
+            if (key.IndexOf('"') > -1)
+            {
+                string[] linesArray = key.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                linesArray = linesArray.Select(x =>
+                {
+                    return string.Join(string.Empty, x.Replace("\\n", string.Empty)
+                                                      .Replace("\"", string.Empty)
+                                                      .Where(c => !char.IsWhiteSpace(c)));
+                }).ToArray();
+                key = string.Join(Environment.NewLine, linesArray);
+            }
 
             fingerprintText = new Fingerprint
             {

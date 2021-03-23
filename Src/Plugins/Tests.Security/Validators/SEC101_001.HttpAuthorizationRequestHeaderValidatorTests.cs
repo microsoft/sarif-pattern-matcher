@@ -14,7 +14,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         private const string TestHost = "http://www.host.com";
         private const string TestKey = "somekey";
         private const string TestResource = "/some-path";
-        private const string ExpectedValidationState = nameof(ValidationState.Unknown);
+        private const string ExpectedValidationState = nameof(ValidationState.NoMatch);
 
         [Fact]
         public void HttpAuthorizationRequestHeaderValidator_Test()
