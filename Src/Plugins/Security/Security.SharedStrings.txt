@@ -75,5 +75,5 @@
   $SEC101/053.GoogleServiceAccountKeyConsoleFormat="private_key":\s*"-----BEGIN PRIVATE KEY-----\\n(?s)(?<key>[^"]+)(?-s)\\n-----END PRIVATE KEY-----\\n(?s).{1,200}(?-s)"client_id"\s*:\s*"(?<account>[\w.-]+)"
   $SEC101/053.GoogleServiceAccountKeyConsoleRestFormat="name": "projects\/[\w-]+\/serviceAccounts\/[\w@.-]+\/keys\/(?<key>[^"]+)",
   $SEC101/054.AlibabaAccessKey=\b(?<account>LTAI([a-zA-Z0-9]{12}|[a-zA-Z0-9]{20}))\b(?s).{0,50}(?-s)\b(?<password>[\w]{30})\b
-  $SEC101/102.AdoPat=(^|[^2-7a-z])(?<refine>[2-7a-z]{52})([^2-7a-z]|$)
+  $SEC101/102.AdoPat=(^|[^2-7a-z])(?<refine>(?<key>[2-7a-z]{52}))([^2-7a-z]|$)
   

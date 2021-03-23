@@ -459,7 +459,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Regex regex =
                     CachedDotNetRegex.GetOrCreateRegex(matchExpression.ContentsRegex,
-                                                      RegexDefaults.DefaultOptionsCaseInsensitive);
+                                                      RegexDefaults.DefaultOptionsCaseSensitive);
 
                 Match match = regex.Match(flexMatch.Value);
 

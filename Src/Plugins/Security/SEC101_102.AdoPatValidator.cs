@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
@@ -85,8 +86,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            ref string message)
         {
 #pragma warning restore IDE0060
-
-            string pat = matchedPattern;
+            if (!groups.TryGetNonEmptyValue("key", out string pat))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
 
             string state =
                 IsChecksumValid(pat, ChecksumPat) ||
