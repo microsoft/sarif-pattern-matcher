@@ -34,6 +34,7 @@ new PDO("sqlsrv:server = tcp:servername3.database.windows.net,1433; Database = d
   <add key="ConnectionString" value="Data Source=servername8;Initial Catalog=database8;User ID=username8;Password=password8;" />
   <add key="ConnectionString" value="Password=password9;User ID=username9;Initial Catalog=database9;Data Source=servername9;" />
   <add key="ConnectionString" value="Initial Catalog=database10;Data Source=servername10;Password=password10;User ID=username10;" />
+  <add key="ConnectionString" value="Data Source=servername17;Initial Catalog=database17;User ID=username17;Password=password17" />
 </appSettings>
 
 # Should be ignored, since is localhost/(local)/127.0.0.1

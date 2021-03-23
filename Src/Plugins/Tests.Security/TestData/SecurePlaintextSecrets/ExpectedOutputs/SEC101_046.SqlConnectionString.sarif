@@ -421,11 +421,53 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 45,
+                  "startLine": 37,
+                  "startColumn": 38,
+                  "endLine": 37,
+                  "endColumn": 129,
+                  "charOffset": 2280,
+                  "charLength": 91,
+                  "snippet": {
+                    "text": "Data Source=servername17;Initial Catalog=database17;User ID=username17;Password=password17\""
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[acct=username17][host=servername17][platform=SqlOnPremise][resource=database17]",
+            "ValidationFingerprint/v1": "[acct=username17][host=servername17][pwd=password17][resource=database17]",
+            "ValidationFingerprintHash/v1": "a445dde99e28544863599120f456c7f4e0e629e7d584377d5cc48ec6604d660e"
+          }
+        },
+        {
+          "ruleId": "SEC101/046",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_046.SqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 46,
                   "startColumn": 61,
-                  "endLine": 45,
+                  "endLine": 46,
                   "endColumn": 152,
-                  "charOffset": 3003,
+                  "charOffset": 3136,
                   "charLength": 91,
                   "snippet": {
                     "text": "Data Source=servername14;Initial Catalog=database14;User ID=username14;Password=password14\""
@@ -436,8 +478,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[acct=username14][host=servername14][platform=SqlOnPremise][resource=database14]",
-            "ValidationFingerprint/v1": "[acct=username14][host=servername14][pwd=password14\"][resource=database14]",
-            "ValidationFingerprintHash/v1": "82e1c3e18ac4ee93fc10fbc8e045dbca5811a35c0de46f117ee391ddc018df2d"
+            "ValidationFingerprint/v1": "[acct=username14][host=servername14][pwd=password14][resource=database14]",
+            "ValidationFingerprintHash/v1": "4dca0964f18c42e44078d9392650ba5585c330bb2d774e4497594040b45a349b"
           }
         },
         {
@@ -463,11 +505,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 50,
+                  "startLine": 51,
                   "startColumn": 27,
-                  "endLine": 50,
+                  "endLine": 51,
                   "endColumn": 118,
-                  "charOffset": 3182,
+                  "charOffset": 3315,
                   "charLength": 91,
                   "snippet": {
                     "text": "Data Source=servername16;Initial Catalog=database16;User ID=username16;Password=password16\""
@@ -478,8 +520,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[acct=username16][host=servername16][platform=SqlOnPremise][resource=database16]",
-            "ValidationFingerprint/v1": "[acct=username16][host=servername16][pwd=password16\"][resource=database16]",
-            "ValidationFingerprintHash/v1": "09be0c5d9133c40a96b8c290dce65c316af42a41d4ff29289d792252f4645b16"
+            "ValidationFingerprint/v1": "[acct=username16][host=servername16][pwd=password16][resource=database16]",
+            "ValidationFingerprintHash/v1": "3cff57f840f65e0908deff34147020e97d67c1235f976a1516e36f5b9e9cde91"
           }
         },
         {
@@ -505,11 +547,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 56,
+                  "startLine": 57,
                   "startColumn": 1,
-                  "endLine": 57,
+                  "endLine": 58,
                   "endColumn": 35,
-                  "charOffset": 3355,
+                  "charOffset": 3488,
                   "charLength": 118,
                   "snippet": {
                     "text": "Data Source=(local);Initial Catalog=AdventureWorks;User ID=ab;Password= a1Pass@@11\r\n    Modified: Data Source=(local);"
@@ -589,11 +631,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 40,
+                  "startLine": 41,
                   "startColumn": 1,
-                  "endLine": 40,
+                  "endLine": 41,
                   "endColumn": 103,
-                  "charOffset": 2320,
+                  "charOffset": 2453,
                   "charLength": 102,
                   "snippet": {
                     "text": "jdbc:sqlserver://localhost;database=database11;user=username11@some-database-name;password=password11;"
@@ -631,11 +673,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 41,
+                  "startLine": 42,
                   "startColumn": 1,
-                  "endLine": 41,
+                  "endLine": 42,
                   "endColumn": 101,
-                  "charOffset": 2527,
+                  "charOffset": 2660,
                   "charLength": 100,
                   "snippet": {
                     "text": "jdbc:sqlserver://(local);database=database12;user=username12@some-database-name;password=password12;"
@@ -673,11 +715,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 42,
+                  "startLine": 43,
                   "startColumn": 1,
-                  "endLine": 42,
+                  "endLine": 43,
                   "endColumn": 103,
-                  "charOffset": 2732,
+                  "charOffset": 2865,
                   "charLength": 102,
                   "snippet": {
                     "text": "jdbc:sqlserver://127.0.0.1;database=database13;user=username13@some-database-name;password=password13;"
