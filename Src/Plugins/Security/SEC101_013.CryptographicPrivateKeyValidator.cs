@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
@@ -51,6 +52,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             kind = matchedPattern.Contains(" PGP ") ? "Pgp" : kind;
 
             key = key.Trim();
+
+            // Attempt to cleanup the key
+            if (key.IndexOf('"') > -1)
+            {
+                string[] linesArray = key.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                linesArray = linesArray.Select(x =>
+                {
+                    return string.Join(string.Empty, x.Replace("\\n", string.Empty)
+                                                      .Replace("\"", string.Empty)
+                                                      .Where(c => !char.IsWhiteSpace(c)));
+                }).ToArray();
+                key = string.Join(Environment.NewLine, linesArray);
+            }
 
             fingerprintText = new Fingerprint
             {

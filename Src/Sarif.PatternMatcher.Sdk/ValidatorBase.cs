@@ -285,7 +285,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected HttpClient CreateHttpClient()
         {
-            var httpClient = new HttpClient();
+            var httpClientHandler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = true,
+                MaxAutomaticRedirections = 10,
+            };
+
+            var httpClient = new HttpClient(httpClientHandler);
 
             httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
                                                  ScanIdentityHttpCustomHeaderValue);
