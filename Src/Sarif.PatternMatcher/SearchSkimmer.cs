@@ -599,12 +599,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 groups["content"] = context.FileContents;
             }
 
-            string filePath = context.TargetUri.LocalPath;
             string fingerprint = null, validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
 
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
+                string filePath = context.TargetUri.LocalPath;
                 Validation state = _validators.Validate(reportingDescriptor.Name,
                                 context,
                                 ref filePath,

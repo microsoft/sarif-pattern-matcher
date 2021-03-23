@@ -145,13 +145,13 @@
                 },
                 "region": {
                   "startLine": 5,
-                  "startColumn": 1,
+                  "startColumn": 2,
                   "endLine": 5,
-                  "endColumn": 38,
-                  "charOffset": 79,
+                  "endColumn": 39,
+                  "charOffset": 80,
                   "charLength": 37,
                   "snippet": {
-                    "text": "amqps://user:password@host/database3\""
+                    "text": "amqps://user:password@host/database3<"
                   }
                 }
               }
