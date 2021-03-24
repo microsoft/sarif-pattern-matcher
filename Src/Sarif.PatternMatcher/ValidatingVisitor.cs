@@ -7,12 +7,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatingVisitor : SarifRewritingVisitor
     {
+        private readonly bool _enhancedReporting;
         private readonly ValidatorsCache _validators;
         private Run _run;
 
-        public ValidatingVisitor(ValidatorsCache validators)
+        public ValidatingVisitor(ValidatorsCache validators, bool enhancedReporting = false)
         {
             _validators = validators;
+            _enhancedReporting = enhancedReporting;
         }
 
         public override Run VisitRun(Run node)
@@ -39,7 +41,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // Our validation messages currently look like so.
                 // {0:scanTarget}' contains {1:validationPrefix}{2:encoding}{3:secretKind}{4:validationSuffix}{5:validatorMessage}
                 string message = null;
-                IDictionary<string, string> options = new Dictionary<string, string>();
+                IDictionary<string, string> options = new Dictionary<string, string>
+                {
+                    { "enhancedReporting", _enhancedReporting ? bool.TrueString : bool.FalseString },
+                };
 
                 FailureLevel level = default;
                 Validation state =
