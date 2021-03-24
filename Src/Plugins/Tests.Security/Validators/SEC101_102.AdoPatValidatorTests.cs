@@ -86,27 +86,5 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 failedTestCases.Add($"{Environment.NewLine}{title}");
             }
         }
-
-        [Fact]
-        public void AzureDevOpsPersonalAccessTokenValidator_CheckInvalidInput()
-        {
-            string[] invalidInputs = new[] { "a", string.Empty };
-
-            foreach (string input in invalidInputs)
-            {
-                string matchedPattern = input;
-
-                var groups = new Dictionary<string, string>();
-                string failureLevel = "Error";
-                string fingerprintText = null, message = null;
-
-                Assert.Throws<ArgumentException>(() =>
-                    AdoPatValidator.IsValidStatic(ref matchedPattern,
-                                                                    ref groups,
-                                                                    ref failureLevel,
-                                                                    ref fingerprintText,
-                                                                    ref message));
-            }
-        }
     }
 }
