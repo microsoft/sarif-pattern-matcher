@@ -601,10 +601,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             string fingerprint = null, validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
+            string filePath = context.TargetUri.IsAbsoluteUri ? context.TargetUri.LocalPath : context.TargetUri.OriginalString;
 
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
-                string filePath = context.TargetUri.LocalPath;
                 Validation state = _validators.Validate(reportingDescriptor.Name,
                                 context,
                                 ref filePath,
@@ -778,7 +778,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IList<string> arguments = GetMessageArguments(
                 match: null,
                 matchExpression.ArgumentNameToIndexMap,
-                context.TargetUri.LocalPath,
+                filePath,
                 validatorMessage: NormalizeValidatorMessage(validatorMessage),
                 messageArguments);
 
