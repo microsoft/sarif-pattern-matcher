@@ -86,7 +86,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            ref string message)
         {
 #pragma warning restore IDE0060
-            if (!groups.TryGetNonEmptyValue("key", out string pat))
+            if (!groups.TryGetNonEmptyValue("pat", out string pat))
             {
                 return nameof(ValidationState.NoMatch);
             }
