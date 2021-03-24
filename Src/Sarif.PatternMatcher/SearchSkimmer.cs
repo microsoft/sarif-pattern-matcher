@@ -601,7 +601,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             string fingerprint = null, validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
-            string filePath = context.TargetUri.IsAbsoluteUri ? context.TargetUri.LocalPath : context.TargetUri.OriginalString;
+            string filePath = context.TargetUri.IsAbsoluteUri
+                ? context.TargetUri.LocalPath
+                : context.TargetUri.OriginalString;
 
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
