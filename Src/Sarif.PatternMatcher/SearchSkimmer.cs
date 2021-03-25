@@ -459,7 +459,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Regex regex =
                     CachedDotNetRegex.GetOrCreateRegex(matchExpression.ContentsRegex,
-                                                      RegexDefaults.DefaultOptionsCaseSensitive);
+                                                       RegexDefaults.DefaultOptionsCaseSensitive);
 
                 Match match = regex.Match(flexMatch.Value);
 
@@ -469,7 +469,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Debug.Assert(!groups.ContainsKey("scanTargetFullPath"), "Full path should always exist.");
                 groups["scanTargetFullPath"] = filePath;
-                groups["enhancedReporting"] = context.EnhancedReporting.ToString();
+                groups["enhancedReporting"] = context.EnhancedReporting ? bool.TrueString : bool.FalseString;
 
                 if (matchExpression.Properties != null)
                 {
