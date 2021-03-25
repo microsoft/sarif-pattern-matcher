@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
@@ -48,9 +49,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       ref string fingerprintText,
                                                       ref string message)
         {
+            if (!groups.TryGetNonEmptyValue("id", out string id) ||
+                !groups.TryGetNonEmptyValue("key", out string key))
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
             fingerprintText = new Fingerprint
             {
-                Uri = matchedPattern,
+                Id = id,
+                Key = key,
                 Platform = nameof(AssetPlatform.Slack),
             }.ToString();
 
@@ -63,7 +71,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             var fingerprint = new Fingerprint(fingerprintText);
 
+            string id = fingerprint.Id;
+            string key = fingerprint.Key;
             string uri = fingerprint.Uri;
+
+            // This will let previous fingerprint to keep working.
+            if (string.IsNullOrEmpty(uri))
+            {
+                uri = $"https://hooks.slack.com/services/{id}/{key}";
+            }
 
             using HttpClient client = CreateHttpClient();
 
