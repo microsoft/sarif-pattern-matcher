@@ -53,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public bool DisableDynamicValidationCaching { get; set; }
 
-        public bool EnhancedReporting { get; internal set; }
+        public bool EnhancedReporting { get; set; }
 
         public void Dispose()
         {

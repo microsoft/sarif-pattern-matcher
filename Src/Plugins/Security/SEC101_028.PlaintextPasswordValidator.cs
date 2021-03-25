@@ -2,20 +2,19 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
-using System.Linq;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class ConvertToSecureStringValidator : ValidatorBase
+    public class PlaintextPasswordValidator : ValidatorBase
     {
-        internal static ConvertToSecureStringValidator Instance;
+        internal static PlaintextPasswordValidator Instance;
 
-        static ConvertToSecureStringValidator()
+        static PlaintextPasswordValidator()
         {
-            Instance = new ConvertToSecureStringValidator();
+            Instance = new PlaintextPasswordValidator();
         }
 
         public static string IsValidStatic(ref string matchedPattern,

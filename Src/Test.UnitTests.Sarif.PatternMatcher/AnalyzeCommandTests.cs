@@ -22,21 +22,35 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     public class AnalyzeCommandTests
     {
         [Fact]
-        public void AnalyzeCommand_SimpleAnalysisDotNetRegex()
+        public void AnalyzeCommand_SimpleAnalysis()
         {
-            AnalyzeCommand(DotNetRegex.Instance);
+            var regexList = new List<IRegex>
+            {
+                DotNetRegex.Instance,
+                CachedDotNetRegex.Instance,
+                RE2Regex.Instance
+            };
+
+            foreach (IRegex regex in regexList)
+            {
+                AnalyzeCommand(regex);
+            }
         }
 
         [Fact]
-        public void AnalyzeCommand_SimpleAnalysisCachedDotNetRegex()
+        public void AnalyzeFileCommand_SimpleAnalysis()
         {
-            AnalyzeCommand(CachedDotNetRegex.Instance);
-        }
+            var regexList = new List<IRegex>
+            {
+                DotNetRegex.Instance,
+                CachedDotNetRegex.Instance,
+                RE2Regex.Instance
+            };
 
-        [Fact]
-        public void AnalyzeCommand_SimpleAnalysisRegex2()
-        {
-            AnalyzeCommand(RE2Regex.Instance);
+            foreach (IRegex regex in regexList)
+            {
+                AnalyzeFileCommand(regex);
+            }
         }
 
         private static void AnalyzeCommand(IRegex engine)
@@ -106,6 +120,66 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             testLogger.Results.Should().NotBeNull();
             testLogger.Results.Count.Should().Be(2);
+
+            foreach (Result result in testLogger.Results)
+            {
+                result.Level.Should().Be(FailureLevel.Error);
+            }
+        }
+
+        private static void AnalyzeFileCommand(IRegex engine)
+        {
+            var definitions = new SearchDefinitions()
+            {
+                Definitions = new List<SearchDefinition>(new[]
+                {
+                    new SearchDefinition()
+                    {
+                        Name = "MinimalRule", Id = "Test1002",
+                        Level = FailureLevel.Error, FileNameAllowRegex = "(?i)\\.test$",
+                        Message = "A problem occurred in '{0:scanTarget}'.",
+                        MatchExpressions = new List<MatchExpression>(new[]
+                        {
+                            new MatchExpression()
+                        })
+                    }
+                })
+            };
+
+            string definitionsText = JsonConvert.SerializeObject(definitions);
+
+            string searchDefinitionsPath = Guid.NewGuid().ToString();
+
+            var disabledSkimmers = new HashSet<string>();
+            var testLogger = new TestLogger();
+
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
+
+            // Acquire skimmers for searchers
+            ISet<Skimmer<AnalyzeContext>> skimmers =
+                PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
+                    mockFileSystem.Object,
+                    new string[] { searchDefinitionsPath },
+                    engine);
+
+            string scanTargetFileName = Path.Combine(Guid.NewGuid().ToString() + ".test");
+            FlexString fileContents = "bar foo foo";
+            FlexString fixedFileContents = "bar bar bar";
+
+            var context = new AnalyzeContext()
+            {
+                TargetUri = new Uri(scanTargetFileName, UriKind.Relative),
+                FileContents = fileContents,
+                Logger = testLogger
+            };
+
+            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
+
+            PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
+
+            testLogger.Results.Should().NotBeNull();
+            testLogger.Results.Count.Should().Be(1);
 
             foreach (Result result in testLogger.Results)
             {

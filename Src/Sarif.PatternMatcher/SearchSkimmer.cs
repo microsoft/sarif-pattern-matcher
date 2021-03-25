@@ -459,7 +459,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Regex regex =
                     CachedDotNetRegex.GetOrCreateRegex(matchExpression.ContentsRegex,
-                                                      RegexDefaults.DefaultOptionsCaseSensitive);
+                                                       RegexDefaults.DefaultOptionsCaseSensitive);
 
                 Match match = regex.Match(flexMatch.Value);
 
@@ -469,7 +469,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Debug.Assert(!groups.ContainsKey("scanTargetFullPath"), "Full path should always exist.");
                 groups["scanTargetFullPath"] = filePath;
-                groups["enhancedReporting"] = context.EnhancedReporting.ToString();
+                groups["enhancedReporting"] = context.EnhancedReporting ? bool.TrueString : bool.FalseString;
 
                 if (matchExpression.Properties != null)
                 {
@@ -601,10 +601,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             string fingerprint = null, validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
+            string filePath = context.TargetUri.IsAbsoluteUri
+                ? context.TargetUri.LocalPath
+                : context.TargetUri.OriginalString;
 
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
-                string filePath = context.TargetUri.LocalPath;
                 Validation state = _validators.Validate(reportingDescriptor.Name,
                                 context,
                                 ref filePath,
@@ -778,7 +780,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IList<string> arguments = GetMessageArguments(
                 match: null,
                 matchExpression.ArgumentNameToIndexMap,
-                context.TargetUri.LocalPath,
+                filePath,
                 validatorMessage: NormalizeValidatorMessage(validatorMessage),
                 messageArguments);
 
