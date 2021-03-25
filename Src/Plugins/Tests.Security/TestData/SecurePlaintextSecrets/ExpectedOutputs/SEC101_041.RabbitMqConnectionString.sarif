@@ -60,11 +60,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 1,
+                  "startLine": 2,
                   "startColumn": 1,
-                  "endLine": 1,
+                  "endLine": 2,
                   "endColumn": 36,
-                  "charOffset": 0,
+                  "charOffset": 17,
                   "charLength": 35,
                   "snippet": {
                     "text": "amqp://user:password@host/database1"
@@ -103,11 +103,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 3,
-                  "startColumn": 1,
-                  "endLine": 3,
-                  "endColumn": 36,
-                  "charOffset": 39,
+                  "startLine": 5,
+                  "startColumn": 2,
+                  "endLine": 5,
+                  "endColumn": 37,
+                  "charOffset": 83,
                   "charLength": 35,
                   "snippet": {
                     "text": "amqp://user:password@host/database2"
@@ -146,11 +146,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 5,
-                  "startColumn": 2,
-                  "endLine": 5,
-                  "endColumn": 38,
-                  "charOffset": 80,
+                  "startLine": 8,
+                  "startColumn": 6,
+                  "endLine": 8,
+                  "endColumn": 42,
+                  "charOffset": 152,
                   "charLength": 36,
                   "snippet": {
                     "text": "amqps://user:password@host/database3"
@@ -163,6 +163,49 @@
             "AssetFingerprint/v1": "[acct=user][host=host][resource=database3]",
             "ValidationFingerprint/v1": "[acct=user][host=host][pwd=password][resource=database3]",
             "ValidationFingerprintHash/v1": "c6ab3b95d6897462e61e03b0ab284f2e35c3b0aa0df63f1b8d8f4f742f37d828"
+          },
+          "rank": 39.28571428571428
+        },
+        {
+          "ruleId": "SEC101/041",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_041.RabbitMqConnectionString.ps1",
+              "an apparent ",
+              "",
+              "RabbitMq connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_041.RabbitMqConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 1,
+                  "endLine": 11,
+                  "endColumn": 41,
+                  "charOffset": 225,
+                  "charLength": 40,
+                  "snippet": {
+                    "text": "amqp://user:password@host:1234/database4"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[acct=user][host=host:1234][resource=database4]",
+            "ValidationFingerprint/v1": "[acct=user][host=host:1234][pwd=password][resource=database4]",
+            "ValidationFingerprintHash/v1": "f010b8872de262184fbd81f40c5a43596df07f82fdfe893c25632a5af97af642"
           },
           "rank": 39.28571428571428
         }
