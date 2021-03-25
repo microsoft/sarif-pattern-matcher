@@ -41,7 +41,7 @@
   $SEC101/013/Putty.CryptographicPrivateKey=(?is)PuTTY-User-Key-File-2.+?Private-Lines:\s*[0-9]+\s*(?<key>.+?)Private-MAC:\s[0-9a-z]+([^0-9a-d]|$)
   $SEC101/013/Pem.CryptographicPrivateKey=(?si)-{5}BEGIN (DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (KEY BLOCK|KEY)-{5}.*?(VERSION: [^\n]+\n)*\n(?<key>[^:]*?)-{5}END (DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (KEY BLOCK|KEY)-{5}
   $SEC101/014.FacebookAccessToken=\b(?<refine>EAACEdEose0cBA(?i)[0-9a-z]+)
-  $SEC101/015.AkamaiKey=(?si)(?<host>https:\/\/[\w\-\.]+\.akamaiapis\.net).{0,150}((client_token.{0,10}\b(?<id>akab[\w\-]+).{0,50})|(access_token.{0,10}\b(?<key>akab[\w\-]+).{0,200})|((signature|secret).{0,10}\b(?<pwd>[\w\-\/]+=))){3}
+  $SEC101/015.AkamaiKey=(?si)(?<host>https:\/\/[\w\-\.]+\.akamaiapis\.net).{0,150}((client_token.{0,10}\b(?<id>akab[\w\-]+).{0,50})|(access_token.{0,10}\b(?<key>akab[\w\-]+).{0,200})|((client_secret).{0,10}\b(?<pwd>[a-z0-9\/\\+]{43}=))){3}
   $SEC101/016.StripeApiKey=\b(?<refine>(?<key>(?:r|s)k_(live|test)_(?i)[0-9a-z]{24,99}))([^0-9a-z]|$)
   $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?<refine>(?<key>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}))[^0-9A-Za-z]
   $SEC101/018.TwilioCredentials=(?si)twilio.{1,50}\b(?<id>AC[0-9a-z]{32}).{1,500}?\b(?<key>[0-9a-f]{32})

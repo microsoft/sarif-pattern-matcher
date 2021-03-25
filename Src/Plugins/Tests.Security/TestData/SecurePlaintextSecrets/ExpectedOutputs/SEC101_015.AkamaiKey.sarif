@@ -63,11 +63,11 @@
                   "startLine": 1,
                   "startColumn": 1,
                   "endLine": 2,
-                  "endColumn": 253,
+                  "endColumn": 257,
                   "charOffset": 0,
-                  "charLength": 321,
+                  "charLength": 325,
                   "snippet": {
-                    "text": "https://akab-xxxxx-yyyyy.purge.akamaiapis.net/ccu/v2/queues/default\r\nEG1-HMAC-SHA256 client_token=akab-client-token-xxx-xxxxxxxxxxxxxxxx;access_token=akab-access-token-xxx-xxxxxxxxxxxxxxxx;timestamp=2021-03-25T19:18:12+0000;nonce=5c43bd4d-4dcd-4e22-b64b-efaa1a20047d;signature=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx="
+                    "text": "https://akab-xxxxx-yyyyy.purge.akamaiapis.net/ccu/v2/queues/default\r\nEG1-HMAC-SHA256 client_token=akab-client-token-xxx-xxxxxxxxxxxxxxxx;access_token=akab-access-token-xxx-xxxxxxxxxxxxxxxx;timestamp=2021-03-25T19:18:12+0000;nonce=5c43bd4d-4dcd-4e22-b64b-efaa1a20047d;client_secret=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx="
                   }
                 }
               }
@@ -107,7 +107,7 @@
                   "startColumn": 18,
                   "endLine": 7,
                   "endColumn": 67,
-                  "charOffset": 342,
+                  "charOffset": 346,
                   "charLength": 263,
                   "snippet": {
                     "text": "https://akaa-baseurl-xxxxxxxxxxx-xxxxxxxxxxxxx.luna.akamaiapis.net/\",\r\n    \"client_token\": \"akab-client-token-xxx-xxxxxxxxxxxxxxxx\",\r\n    \"access_token\": \"akab-access-token-xxx-xxxxxxxxxxxxxxxx\",\r\n    \"client_secret\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx="
@@ -150,7 +150,7 @@
                   "startColumn": 18,
                   "endLine": 14,
                   "endColumn": 67,
-                  "charOffset": 704,
+                  "charOffset": 708,
                   "charLength": 263,
                   "snippet": {
                     "text": "https://akaa-baseurl-xxxxxxxxxxx-xxxxxxxxxxxxx.luna.akamaiapis.net/\",\r\n    \"access_token\": \"akab-access-token-xxx-xxxxxxxxxxxyyyyy\",\r\n    \"client_token\": \"akab-client-token-xxx-xxxxxxxxxxxxxxxx\",\r\n    \"client_secret\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx="

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
@@ -76,13 +77,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string host = fingerprint.Host;
             string pwd = fingerprint.Password;
 
-            using HttpClient httpClient = CreateHttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                $"EG1-HMAC-SHA256",
-                $"client_token={id};access_token={key};timestamp={DateTime.UtcNow:yyyyMMddTHH:mm:ss}+0000;nonce={Guid.NewGuid()};signature={pwd}");
-
             try
             {
+                string timestamp = $"{DateTime.UtcNow:yyyyMMddTHH:mm:ss}";
+                string header = $"client_token={id};access_token={key};timestamp={timestamp}+0000;nonce={Guid.NewGuid()}";
+                string textToSign = $"EG1-HMAC-SHA256 {header};";
+
+                // Generating signing key based on timestamp.
+                using var hmac = new HMACSHA256(Convert.FromBase64String(pwd));
+                string signingKey = Convert.ToBase64String(hmac.ComputeHash(Convert.FromBase64String(timestamp)));
+
+                // Generating signature based on textToSign and signingKey.
+                using var hmacSignature = new HMACSHA256(Convert.FromBase64String(signingKey));
+                string signature = Convert.ToBase64String(hmacSignature.ComputeHash(Convert.FromBase64String(textToSign)));
+
+                using HttpClient httpClient = CreateHttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    $"EG1-HMAC-SHA256",
+                    $"{header};signature={signature}");
+
                 using HttpResponseMessage httpResponse = httpClient
                     .GetAsync($"{host}/ccu/v2/queues/default")
                     .GetAwaiter()
