@@ -77,7 +77,8 @@
             "AssetFingerprint/v1": "[platform=Dropbox]",
             "ValidationFingerprint/v1": "[key=3g2u1OFlqngAAAAAAAAAARsJBUfljyXkQImmVaieedYBk9VlSGxEP_N6V84qPoZ4]",
             "ValidationFingerprintHash/v1": "3abe56a48932d966c4cd4f3c377fe3d88f9a270fbfefd28b1bd88bbef999bb8d"
-          }
+          },
+          "rank": 72.60512143901768
         },
         {
           "ruleId": "SEC101/020",
@@ -119,7 +120,8 @@
             "AssetFingerprint/v1": "[platform=Dropbox]",
             "ValidationFingerprint/v1": "[key=sl.AtS80GLHpwtH4xnmVKHE_odL4vp3m_3RVO_eH0Swdj3QkyFNBIV0kmb3jdDdzz-EwrZ9HiJO3gIKMCF3ovbf-MG6z5DVEFgfI8jzet2F5tze_bmdCeZJzsDPBKRSV9gxOi3JMS8]",
             "ValidationFingerprintHash/v1": "efb7af4e8d1a315b58d22dd50c05a3175b475b2293382013c161f1b46c3901a5"
-          }
+          },
+          "rank": 79.21041994049914
         }
       ],
       "columnKind": "utf16CodeUnits"

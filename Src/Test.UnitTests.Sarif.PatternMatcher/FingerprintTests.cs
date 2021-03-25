@@ -29,6 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (PropertyInfo pi in type.GetProperties())
             {
+                if (pi.PropertyType != typeof(string)) { continue; }
                 expectedKeyNames.Add(pi.Name + "KeyName");
             }
 
@@ -87,6 +88,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (PropertyInfo pi in type.GetProperties())
             {
+                if (pi.PropertyType != typeof(string)) { continue; }
                 string guidText = Guid.NewGuid().ToString();
                 object boxed = fingerprint;
                 pi.SetMethod.Invoke(boxed, new[] { guidText });
@@ -130,6 +132,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (PropertyInfo pi in type.GetProperties())
             {
+                if (pi.PropertyType != typeof(string)) { continue; }
                 var fingerprint = new Fingerprint();
                 string guidText = Guid.NewGuid().ToString();
                 object boxed = fingerprint;
@@ -174,6 +177,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Type type = typeof(Fingerprint);
             foreach (PropertyInfo pi in type.GetProperties())
             {
+                if (pi.PropertyType != typeof(string)) { continue; }
                 string expected = Guid.NewGuid().ToString();
                 var fingerprint = new Fingerprint();
 

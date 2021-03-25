@@ -845,7 +845,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 },
             };
 
-            Dictionary<string, string> fingerprints = BuildFingerprints(fingerprint);
+            Dictionary<string, string> fingerprints = BuildFingerprints(fingerprint, out double rank);
 
             string messageId = matchExpression.SubId ?? "Default";
 
@@ -858,6 +858,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Id = messageId,
                     Arguments = arguments,
                 },
+                Rank = rank,
                 Locations = new List<Location>(new[] { location }),
                 Fingerprints = fingerprints,
             };
@@ -882,14 +883,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        private Dictionary<string, string> BuildFingerprints(string fingerprintText)
+        private Dictionary<string, string> BuildFingerprints(string fingerprintText, out double rank)
         {
+            rank = -1.0;
+
             if (string.IsNullOrWhiteSpace(fingerprintText))
             {
                 return null;
             }
 
             var fingerprint = new Fingerprint(fingerprintText);
+            rank = fingerprint.GetRank();
 
             return new Dictionary<string, string>()
             {

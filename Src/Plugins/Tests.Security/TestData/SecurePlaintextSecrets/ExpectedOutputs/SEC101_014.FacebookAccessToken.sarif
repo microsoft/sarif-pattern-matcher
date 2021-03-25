@@ -77,7 +77,8 @@
             "AssetFingerprint/v1": "[platform=Facebook]",
             "ValidationFingerprint/v1": "[key=EAACEdEose0cBAtestjunk111111]",
             "ValidationFingerprintHash/v1": "126f91a306e3ec6654d32df313a53be4ff09461f61cbee419406f5ce7c7103df"
-          }
+          },
+          "rank": 52.85019786171381
         },
         {
           "ruleId": "SEC101/014",
@@ -119,7 +120,8 @@
             "AssetFingerprint/v1": "[platform=Facebook]",
             "ValidationFingerprint/v1": "[key=EAACEdEose0cBAtestjunk22222222]",
             "ValidationFingerprintHash/v1": "09746c32db4adc8aac3e99c29373df1fc0a274b10ed0dbc7bfc003e9a3ea11b5"
-          }
+          },
+          "rank": 51.28425850663268
         }
       ],
       "columnKind": "utf16CodeUnits"
