@@ -77,7 +77,8 @@
             "AssetFingerprint/v1": "[acct=deadbeef0deadbeef0deadbeef.mailgun.org][platform=Mailgun]",
             "ValidationFingerprint/v1": "[acct=deadbeef0deadbeef0deadbeef.mailgun.org][key=0deadbeef00deadbeef00deadbeef000-deadbeef-deadbeef]",
             "ValidationFingerprintHash/v1": "be77c8109fe27b76b16749ec3963d90fb2615e0a3b241af62a52105aa7c7efba"
-          }
+          },
+          "rank": 37.011785194978394
         }
       ],
       "columnKind": "utf16CodeUnits"

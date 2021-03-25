@@ -77,7 +77,8 @@
             "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw_1][resource=my_db]",
             "ValidationFingerprintHash/v1": "a31f76358123b00d3be2e8afc0037e66a62f1aebf65b11b365911d2abbfea669"
-          }
+          },
+          "rank": 36.02343766204741
         },
         {
           "ruleId": "SEC101/045",
@@ -119,7 +120,8 @@
             "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw_2][resource=my_db]",
             "ValidationFingerprintHash/v1": "e3ce328188ac40359152550f23e9957f3a667818bee163c83e735a4875715b42"
-          }
+          },
+          "rank": 36.02343766204741
         },
         {
           "ruleId": "SEC101/045",
@@ -161,7 +163,8 @@
             "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw_3]",
             "ValidationFingerprintHash/v1": "cb821afed6a245045884f018e095dc73fa8a547b450932d439d37d951f641f9f"
-          }
+          },
+          "rank": 36.02343766204741
         },
         {
           "ruleId": "SEC101/045",
@@ -203,7 +206,8 @@
             "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw_4]",
             "ValidationFingerprintHash/v1": "ff1f32cce7450e31640871b014e4e8bb1033868d7617980c007dd1823ba505ee"
-          }
+          },
+          "rank": 36.02343766204741
         },
         {
           "ruleId": "SEC101/045",
@@ -245,7 +249,8 @@
             "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw_5]",
             "ValidationFingerprintHash/v1": "0f56f35a31fb12035aa2b1e97727733c1f40fa02b0eed160726d64ad34c76d84"
-          }
+          },
+          "rank": 36.02343766204741
         },
         {
           "ruleId": "SEC101/045",
@@ -287,7 +292,8 @@
             "AssetFingerprint/v1": "[acct=my_user][host=my_host]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][pwd=my_pw_5]",
             "ValidationFingerprintHash/v1": "78307bd48b6bd1af097b07e6d2bf772e426f20ef2f2988f744a5b9380b236b87"
-          }
+          },
+          "rank": 36.02343766204741
         },
         {
           "ruleId": "SEC101/045",
@@ -329,7 +335,8 @@
             "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw_6]",
             "ValidationFingerprintHash/v1": "8e1e52df7b1de3824b6f6a606e7436c3b0ec13f49c87bf8545d2a2ab35633ea9"
-          }
+          },
+          "rank": 36.02343766204741
         },
         {
           "ruleId": "SEC101/045",
@@ -371,7 +378,8 @@
             "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw_7][resource=my_db]",
             "ValidationFingerprintHash/v1": "d1d2d63c8e5f6fbd814640e752ccfe8db95af273e305bea9831ffed18fcb22e3"
-          }
+          },
+          "rank": 36.02343766204741
         },
         {
           "ruleId": "SEC101/045",
@@ -413,7 +421,8 @@
             "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw_7]",
             "ValidationFingerprintHash/v1": "3b47fcb2e5e3eeac20d9dd77ea838bfa93525920bd7a2342b3953436059cf50a"
-          }
+          },
+          "rank": 36.02343766204741
         },
         {
           "ruleId": "SEC101/045",
@@ -455,7 +464,8 @@
             "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw_8][resource=my_db]",
             "ValidationFingerprintHash/v1": "91f4102c2b4edb05112e79e9f0be14ad5b574fe780dd6007ae5c2fd60dcc717b"
-          }
+          },
+          "rank": 36.02343766204741
         },
         {
           "ruleId": "SEC101/045",
@@ -497,7 +507,8 @@
             "AssetFingerprint/v1": "[acct=my_user][host=my_host][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[acct=my_user][host=my_host][port=5555][pwd=my_pw_9][resource=my_db]",
             "ValidationFingerprintHash/v1": "947f25422e447d8b6ed7e1bc8655f1d34eddf271414fe1171bc5343b37e23551"
-          }
+          },
+          "rank": 36.02343766204741
         }
       ],
       "columnKind": "utf16CodeUnits"

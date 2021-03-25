@@ -77,7 +77,8 @@
             "AssetFingerprint/v1": "[platform=Shopify]",
             "ValidationFingerprint/v1": "[key=shpat_11111111110123456789012345678901]",
             "ValidationFingerprintHash/v1": "89f23352105f79565b1808e0353b6e978a0568b5a9ab0375693226c68ae1f7db"
-          }
+          },
+          "rank": 49.08294799731525
         },
         {
           "ruleId": "SEC101/044",
@@ -119,7 +120,8 @@
             "AssetFingerprint/v1": "[platform=Shopify]",
             "ValidationFingerprint/v1": "[key=shpca_22222222220123456789012345678901]",
             "ValidationFingerprintHash/v1": "4e70b27b41bcb09a39be5268e208ab6e2bbe34390eecf230648bc8d63f21cd37"
-          }
+          },
+          "rank": 49.95936860822384
         },
         {
           "ruleId": "SEC101/044",
@@ -161,7 +163,8 @@
             "AssetFingerprint/v1": "[platform=Shopify]",
             "ValidationFingerprint/v1": "[key=shppa_33333333330123456789012345678901]",
             "ValidationFingerprintHash/v1": "1c7bd74bd74f4636ed5259a65f755f09a73059b1a95961b2da7a431da074ad77"
-          }
+          },
+          "rank": 49.207488908975726
         }
       ],
       "columnKind": "utf16CodeUnits"

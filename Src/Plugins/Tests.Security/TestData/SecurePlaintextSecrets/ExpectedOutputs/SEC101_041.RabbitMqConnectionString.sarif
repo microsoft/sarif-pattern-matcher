@@ -77,7 +77,8 @@
             "AssetFingerprint/v1": "[acct=user][host=host][resource=database1]",
             "ValidationFingerprint/v1": "[acct=user][host=host][pwd=password][resource=database1]",
             "ValidationFingerprintHash/v1": "a6f1c12d3e4399407fd6a5805c6f44499d95fbbfe74f8d67475269d6655ad695"
-          }
+          },
+          "rank": 39.28571428571428
         },
         {
           "ruleId": "SEC101/041",
@@ -119,7 +120,8 @@
             "AssetFingerprint/v1": "[acct=user][host=host][resource=database2]",
             "ValidationFingerprint/v1": "[acct=user][host=host][pwd=password][resource=database2]",
             "ValidationFingerprintHash/v1": "ef155284baee0ded3ef82c7489e9457197f26dea1ec08d894e82391dce2674d6"
-          }
+          },
+          "rank": 39.28571428571428
         },
         {
           "ruleId": "SEC101/041",
@@ -161,7 +163,8 @@
             "AssetFingerprint/v1": "[acct=user][host=host][resource=database3]",
             "ValidationFingerprint/v1": "[acct=user][host=host][pwd=password][resource=database3]",
             "ValidationFingerprintHash/v1": "c6ab3b95d6897462e61e03b0ab284f2e35c3b0aa0df63f1b8d8f4f742f37d828"
-          }
+          },
+          "rank": 39.28571428571428
         }
       ],
       "columnKind": "utf16CodeUnits"

@@ -118,7 +118,8 @@
             "AssetFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][resource=your-database]",
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][pwd=your-password][resource=your-database]",
             "ValidationFingerprintHash/v1": "5d8f65647fa5746a31f0d059a76aa165f818c7455394a0e42fb1344221115054"
-          }
+          },
+          "rank": 46.270017951466166
         },
         {
           "ruleId": "SEC101/045",
@@ -160,7 +161,8 @@
             "AssetFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][resource=your-database]",
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][pwd=password_11][resource=your-database]",
             "ValidationFingerprintHash/v1": "f977c768700f6d9774c535574377d6c1f8c5669fbe7001bf78064ec91d56ef3c"
-          }
+          },
+          "rank": 44.22564650001334
         },
         {
           "ruleId": "SEC101/046",
@@ -202,7 +204,8 @@
             "AssetFingerprint/v1": "[acct=username@servername][host=your-host][platform=SqlOnPremise][resource=your-database]",
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=your-password][resource=your-database]",
             "ValidationFingerprintHash/v1": "5b4a520c5e2e5097b357819c106e337e94049b210688f40d04329c5896d90dd3"
-          }
+          },
+          "rank": 46.270017951466166
         },
         {
           "ruleId": "SEC101/046",
@@ -244,7 +247,8 @@
             "AssetFingerprint/v1": "[acct=username@servername][host=your-host][platform=SqlOnPremise][resource=your-database]",
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][pwd=password_11][resource=your-database]",
             "ValidationFingerprintHash/v1": "ee2208cba72f4440f930afb8c417152efc381ffa6fade5bd777946f57ead986a"
-          }
+          },
+          "rank": 44.22564650001334
         },
         {
           "ruleId": "SEC101/047",
@@ -286,7 +290,8 @@
             "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][port=3306][resource=catalog_db]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][port=3306][pwd=password_1][resource=catalog_db]",
             "ValidationFingerprintHash/v1": "b7651566e53af4829451b0e7ec5ac5b195141be34c0d8046f3fee50a799ff52e"
-          }
+          },
+          "rank": 44.598972784105165
         },
         {
           "ruleId": "SEC101/047",
@@ -328,7 +333,8 @@
             "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][port=3306][resource=catalog_db]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][port=3306][pwd=password_2][resource=catalog_db]",
             "ValidationFingerprintHash/v1": "9c9f69a184396fbbe434d17884be5dc0d7c19de137be6e8c29a30012ae097794"
-          }
+          },
+          "rank": 44.598972784105165
         },
         {
           "ruleId": "SEC101/047",
@@ -370,7 +376,8 @@
             "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][resource=catalog_db]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_2][resource=catalog_db]",
             "ValidationFingerprintHash/v1": "3a61738e5f4d0d792ad9798eefa7e35ba43d1318e5ebbfb2c059017554505cb6"
-          }
+          },
+          "rank": 44.598972784105165
         },
         {
           "ruleId": "SEC101/047",
@@ -412,7 +419,8 @@
             "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][port=3306][resource=catalog_db]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][port=3306][pwd=password_3][resource=catalog_db]",
             "ValidationFingerprintHash/v1": "d9528ddab6609cf405ce9a0e432873b88dc83a9a0e7db3671a5935b9e53005ac"
-          }
+          },
+          "rank": 44.598972784105165
         },
         {
           "ruleId": "SEC101/047",
@@ -454,7 +462,8 @@
             "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][resource=catalog_db]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com][pwd=password_4][resource=catalog_db]",
             "ValidationFingerprintHash/v1": "76aae78314d842ee58c87b36722f8f83c4b2030cd0189bc47a0d7a9b4cf29601"
-          }
+          },
+          "rank": 44.598972784105165
         },
         {
           "ruleId": "SEC101/047",
@@ -496,7 +505,8 @@
             "AssetFingerprint/v1": "[acct=username@servername][host=your-host][platform=SqlOnPremise][port=3306][resource=your-database]",
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][pwd=your-password][resource=your-database]",
             "ValidationFingerprintHash/v1": "5d8f65647fa5746a31f0d059a76aa165f818c7455394a0e42fb1344221115054"
-          }
+          },
+          "rank": 46.270017951466166
         },
         {
           "ruleId": "SEC101/047",
@@ -538,7 +548,8 @@
             "AssetFingerprint/v1": "[acct=username@servername][host=your-host][platform=SqlOnPremise][port=3306][resource=your-database]",
             "ValidationFingerprint/v1": "[acct=username@servername][host=your-host][port=3306][pwd=password_11][resource=your-database]",
             "ValidationFingerprintHash/v1": "f977c768700f6d9774c535574377d6c1f8c5669fbe7001bf78064ec91d56ef3c"
-          }
+          },
+          "rank": 44.22564650001334
         },
         {
           "ruleId": "SEC101/047",
@@ -580,7 +591,8 @@
             "AssetFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com:3306][platform=Azure]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][host=some-database-name.mysql.database.azure.com:3306][pwd=PASSword_5]",
             "ValidationFingerprintHash/v1": "b80aab4b4c2fcb30210b8bb7490427395b718295d872dd3fa3877d438262cf75"
-          }
+          },
+          "rank": 44.598972784105165
         },
         {
           "ruleId": "SEC101/047",
@@ -622,7 +634,8 @@
             "AssetFingerprint/v1": "[acct=username@some-database-name]",
             "ValidationFingerprint/v1": "[acct=username@some-database-name][pwd=PASSword_5]",
             "ValidationFingerprintHash/v1": "a83301eee74b283e1fa7b63f768f6b20b1883205226fc135d9a1e8cfdd2aed70"
-          }
+          },
+          "rank": 44.598972784105165
         },
         {
           "ruleId": "SEC101/047",
@@ -664,7 +677,8 @@
             "AssetFingerprint/v1": "[acct=cleardbusername1]",
             "ValidationFingerprint/v1": "[acct=cleardbusername1][pwd=cleardb_PASSWORD1]",
             "ValidationFingerprintHash/v1": "ba9ac04428fd5a40a52a4864c88c2252076012ffe44ee7a59f1ef8e18e9b69c0"
-          }
+          },
+          "rank": 56.71165403466873
         }
       ],
       "columnKind": "utf16CodeUnits"
