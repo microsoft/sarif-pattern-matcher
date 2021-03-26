@@ -185,7 +185,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     if (sqlException.ErrorCode == unchecked((int)0x80131904))
                     {
-                        if (e.Message.Contains("Login failed for user"))
+                        if (e.Message.Contains("Login failed for user") ||
+                            e.Message.EndsWith("The login failed."))
                         {
                             return ReturnUnauthorizedAccess(ref message, asset: host);
                         }
