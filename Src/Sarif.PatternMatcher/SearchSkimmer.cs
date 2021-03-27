@@ -851,6 +851,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             string messageId = matchExpression.SubId ?? "Default";
 
+            // We'll limit rank precision to two decimal places. Because this value
+            // is actually converted from a nomalized range of 0.0 to 1.0, to the
+            // SARIF 0.0 to 100.0 equivalent, this is effectively four decimal places
+            // of precision as far as the normalized Shannon entrop is concerned.
+            rank = Math.Round(rank, 2, MidpointRounding.AwayFromZero);
+
             var result = new Result()
             {
                 RuleId = ruleId,

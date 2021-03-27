@@ -103,7 +103,7 @@
             "ValidationFingerprint/v1": "[acct=username2][host=tcp:servername2.database.windows.net,1433][pwd=password2][resource=database2]",
             "ValidationFingerprintHash/v1": "d4b5889d8acb8903cc8a0dde67bd1ce513deed535778afab720ae6af5381e093"
           },
-          "rank": 42.11003970314416
+          "rank": 42.11
         },
         {
           "ruleId": "SEC101/046",
@@ -146,7 +146,7 @@
             "ValidationFingerprint/v1": "[acct=username4][host=servername4][pwd=password4][resource=database4]",
             "ValidationFingerprintHash/v1": "b45404660ea413d4c40e0c484e081d829659a65680717d922fce9380cdcfb0d9"
           },
-          "rank": 42.11003970314416
+          "rank": 42.11
         },
         {
           "ruleId": "SEC101/046",
@@ -189,7 +189,7 @@
             "ValidationFingerprint/v1": "[acct=username5][host=database5][pwd=password5][resource=database5]",
             "ValidationFingerprintHash/v1": "8a48c6c99c73e1fc396487c114fdc206b790c310e00574a784c2a9ea6c098954"
           },
-          "rank": 42.11003970314416
+          "rank": 42.11
         },
         {
           "ruleId": "SEC101/046",
@@ -232,7 +232,7 @@
             "ValidationFingerprint/v1": "[acct=username6][host=servername6][pwd=password6][resource=database6]",
             "ValidationFingerprintHash/v1": "7fd40d0c9337582419cf4b4f9f4e8bac0ceffe0bd1e7085dcee0821cd29c296c"
           },
-          "rank": 42.11003970314416
+          "rank": 42.11
         },
         {
           "ruleId": "SEC101/046",
@@ -275,7 +275,7 @@
             "ValidationFingerprint/v1": "[acct=username15][host=servername15][pwd=password15][resource=database15]",
             "ValidationFingerprintHash/v1": "2c07f8be82afd1cd7794d5248534ef73a6ced65a2c1abc3cc040cc62c08dee52"
           },
-          "rank": 44.598972784105165
+          "rank": 44.6
         },
         {
           "ruleId": "SEC101/046",
@@ -318,7 +318,7 @@
             "ValidationFingerprint/v1": "[acct=username8][host=servername8][pwd=password8][resource=database8]",
             "ValidationFingerprintHash/v1": "bf6711b9ee30e517cfd82073dfdf259914175522a6949536cdcde23811326a8f"
           },
-          "rank": 42.11003970314416
+          "rank": 42.11
         },
         {
           "ruleId": "SEC101/046",
@@ -361,7 +361,7 @@
             "ValidationFingerprint/v1": "[acct=username9][host=servername9][pwd=password9][resource=database9]",
             "ValidationFingerprintHash/v1": "d57ce9a80c52560b1270794b762c51674ce672f6ea8ad0fe1ae93dc19298f7f8"
           },
-          "rank": 42.11003970314416
+          "rank": 42.11
         },
         {
           "ruleId": "SEC101/046",
@@ -404,7 +404,7 @@
             "ValidationFingerprint/v1": "[acct=username10][host=servername10][pwd=password10][resource=database10]",
             "ValidationFingerprintHash/v1": "0ba26100eb5ca9e26ce4a023af5a3144feb6f63db89a3b4d98b9d1fdb4c3de20"
           },
-          "rank": 44.598972784105165
+          "rank": 44.6
         },
         {
           "ruleId": "SEC101/046",
@@ -447,7 +447,7 @@
             "ValidationFingerprint/v1": "[acct=username17][host=servername17][pwd=password17][resource=database17]",
             "ValidationFingerprintHash/v1": "a445dde99e28544863599120f456c7f4e0e629e7d584377d5cc48ec6604d660e"
           },
-          "rank": 44.598972784105165
+          "rank": 44.6
         },
         {
           "ruleId": "SEC101/046",
@@ -490,7 +490,7 @@
             "ValidationFingerprint/v1": "[acct=username14][host=servername14][pwd=password14][resource=database14]",
             "ValidationFingerprintHash/v1": "4dca0964f18c42e44078d9392650ba5585c330bb2d774e4497594040b45a349b"
           },
-          "rank": 44.598972784105165
+          "rank": 44.6
         },
         {
           "ruleId": "SEC101/046",
@@ -533,7 +533,7 @@
             "ValidationFingerprint/v1": "[acct=username16][host=servername16][pwd=password16][resource=database16]",
             "ValidationFingerprintHash/v1": "3cff57f840f65e0908deff34147020e97d67c1235f976a1516e36f5b9e9cde91"
           },
-          "rank": 44.598972784105165
+          "rank": 44.6
         },
         {
           "ruleId": "SEC101/046",
@@ -576,7 +576,7 @@
             "ValidationFingerprint/v1": "[acct=ab][host=localhost][pwd=a1Pass@@11][resource=AdventureWorks]",
             "ValidationFingerprintHash/v1": "0f90cef748be9c03b50ca5697a96760a166c4d5e0cee4195dfd652e168f3102f"
           },
-          "rank": 32.09199063815737
+          "rank": 32.09
         },
         {
           "ruleId": "SEC101/046",
@@ -619,7 +619,7 @@
             "ValidationFingerprint/v1": "[acct=username1][host=servername1.database.windows.net:1433][pwd=password1][resource=database1]",
             "ValidationFingerprintHash/v1": "cdbaac49d97670dbaf759476f189862683e9827f12648ebc19500da98ecde390"
           },
-          "rank": 42.11003970314416
+          "rank": 42.11
         },
         {
           "ruleId": "SEC101/046",
@@ -662,7 +662,7 @@
             "ValidationFingerprint/v1": "[acct=username11][host=localhost][pwd=password11][resource=database11]",
             "ValidationFingerprintHash/v1": "cf4ce2a9d1bb660a71a8bfde9e3d9e9a05c14164f5c2d0f9106dd7ef736a9962"
           },
-          "rank": 41.74182992696232
+          "rank": 41.74
         },
         {
           "ruleId": "SEC101/046",
@@ -705,7 +705,7 @@
             "ValidationFingerprint/v1": "[acct=username12][host=localhost][pwd=password12][resource=database12]",
             "ValidationFingerprintHash/v1": "5e12ee98e18e7724316a02327a70c91b1235e2ce04059a5c49ca6cbcb58250f5"
           },
-          "rank": 44.598972784105165
+          "rank": 44.6
         },
         {
           "ruleId": "SEC101/046",
@@ -748,7 +748,7 @@
             "ValidationFingerprint/v1": "[acct=username13][host=localhost][pwd=password13][resource=database13]",
             "ValidationFingerprintHash/v1": "32fa8968768ced7f7fb08ab6bd784c20316ef288ce21ae12ce932ccf9d2a679e"
           },
-          "rank": 44.598972784105165
+          "rank": 44.6
         },
         {
           "ruleId": "SEC101/046",
@@ -791,7 +791,7 @@
             "ValidationFingerprint/v1": "[acct=username3][host=tcp:servername3.database.windows.net,1433][pwd=password3][resource=databse3]",
             "ValidationFingerprintHash/v1": "281bf18455c8ab2d67241ded10c345c54034555fe5c6ec20f618b9c2408568a8"
           },
-          "rank": 42.11003970314416
+          "rank": 42.11
         },
         {
           "ruleId": "SEC101/047",
@@ -834,7 +834,7 @@
             "ValidationFingerprint/v1": "[acct=username][host=tcp][pwd=password2][resource=database2]",
             "ValidationFingerprintHash/v1": "ce93a887c73862e96f7c0abf362e2f305e45e1228edda2837f0b87ded769185d"
           },
-          "rank": 42.11003970314416
+          "rank": 42.11
         }
       ],
       "columnKind": "utf16CodeUnits"
