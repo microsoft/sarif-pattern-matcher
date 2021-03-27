@@ -33,25 +33,6 @@
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            },
-            {
-              "id": "SEC101/047",
-              "name": "DoNotExposePlaintextSecrets/MySqlConnectionString",
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Odbc": {
-                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
-                },
-                "Jdbc": {
-                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             }
           ]
         }
@@ -790,49 +771,6 @@
             "AssetFingerprint/v1": "[acct=username3][host=tcp:servername3.database.windows.net,1433][platform=Azure][resource=databse3]",
             "ValidationFingerprint/v1": "[acct=username3][host=tcp:servername3.database.windows.net,1433][pwd=password3][resource=databse3]",
             "ValidationFingerprintHash/v1": "281bf18455c8ab2d67241ded10c345c54034555fe5c6ec20f618b9c2408568a8"
-          },
-          "rank": 42.11
-        },
-        {
-          "ruleId": "SEC101/047",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Odbc",
-            "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO or ODBC MySQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 40,
-                  "endLine": 5,
-                  "endColumn": 135,
-                  "charOffset": 401,
-                  "charLength": 95,
-                  "snippet": {
-                    "text": "Server=tcp:servername2.database.windows.net,1433;Database=database2;Uid=username2;Pwd=password2"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[acct=username][host=tcp][platform=SqlOnPremise][resource=database2]",
-            "ValidationFingerprint/v1": "[acct=username][host=tcp][pwd=password2][resource=database2]",
-            "ValidationFingerprintHash/v1": "ce93a887c73862e96f7c0abf362e2f305e45e1228edda2837f0b87ded769185d"
           },
           "rank": 42.11
         }
