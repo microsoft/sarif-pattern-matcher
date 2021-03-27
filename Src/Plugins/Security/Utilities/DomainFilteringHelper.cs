@@ -16,6 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             "localhost",
             "(local)",
             "127.0.0.1",
+            ".",
         };
 
         public static string StandardizeLocalhostName(string hostName)
