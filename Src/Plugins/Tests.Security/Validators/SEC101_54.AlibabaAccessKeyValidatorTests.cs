@@ -22,7 +22,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string message = null;
             Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
 
-            // TODO: uncomment when MongoDB release a signed package/dll.
+            // TODO: uncomment when Alibaba release a signed package/dll.
             // string actualValidationState = AlibabaAccessKeyValidator.IsValidDynamic(ref fingerprintText, ref message, ref keyValuePairs);
             // Assert.Equal(_expectedValidationState, actualValidationState);
         }
