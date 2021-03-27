@@ -17,7 +17,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             Instance = new CredentialObjectValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
                                            ref string fingerprint,
@@ -31,7 +31,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                  ref message);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
@@ -40,7 +40,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             if (!groups.TryGetNonEmptyValue("account", out string account) ||
                 !groups.TryGetNonEmptyValue("password", out string password))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             fingerprintText = new Fingerprint()
@@ -49,7 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 Password = password,
             }.ToString();
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
     }
 }

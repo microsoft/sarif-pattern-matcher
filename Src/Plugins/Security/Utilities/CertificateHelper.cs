@@ -13,7 +13,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 {
     internal static class CertificateHelper
     {
-        public static string TryLoadCertificate(string certificatePath,
+        public static ValidationState TryLoadCertificate(string certificatePath,
                                                 ref string fingerprintText,
                                                 ref string message)
         {
@@ -25,16 +25,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 
                 if (!certificate.HasPrivateKey)
                 {
-                    return nameof(ValidationState.NoMatch);
+                    return ValidationState.NoMatch;
                 }
 
                 if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
                 {
-                    return nameof(ValidationState.AuthorizedWarning);
+                    return ValidationState.AuthorizedWarning;
                 }
 
                 message = "which contains private keys.";
-                return nameof(ValidationState.AuthorizedError);
+                return ValidationState.AuthorizedError;
             }
             catch (Exception e)
             {
@@ -51,16 +51,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 
                     if (e.Message == "The specified network password is not correct.")
                     {
-                        return nameof(ValidationState.PasswordProtected);
+                        return ValidationState.PasswordProtected;
                     }
                 }
 
-                ValidatorBase.ReturnUnhandledException(ref message, e, asset: fileName);
-                return message;
+                return ValidatorBase.ReturnUnhandledException(ref message, e, asset: fileName);
             }
         }
 
-        public static string TryLoadCertificateCollection(string certificatePath,
+        public static ValidationState TryLoadCertificateCollection(string certificatePath,
                                                           ref string fingerprintText,
                                                           ref string message)
         {
@@ -70,7 +69,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 // If this certificate needs a password, it will throw an exception.
                 certificates.Import(certificatePath);
                 var thumbprints = new List<string>();
-                string state = nameof(ValidationState.NoMatch);
+                ValidationState state = ValidationState.NoMatch;
                 foreach (X509Certificate2 certificate in certificates)
                 {
                     if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
@@ -81,7 +80,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     if (certificate.HasPrivateKey)
                     {
                         thumbprints.Add(certificate.Thumbprint);
-                        state = nameof(ValidationState.AuthorizedError);
+                        state = ValidationState.AuthorizedError;
                     }
                 }
 
@@ -96,7 +95,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             }
         }
 
-        public static string TryLoadCertificate(byte[] rawData,
+        public static ValidationState TryLoadCertificate(byte[] rawData,
                                                 ref string fingerprintText,
                                                 ref string message)
         {
@@ -108,16 +107,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 
                 if (!certificate.HasPrivateKey)
                 {
-                    return nameof(ValidationState.NoMatch);
+                    return ValidationState.NoMatch;
                 }
 
                 if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
                 {
-                    return nameof(ValidationState.NoMatch);
+                    return ValidationState.NoMatch;
                 }
 
                 message = "which contains private keys.";
-                return nameof(ValidationState.AuthorizedError);
+                return ValidationState.AuthorizedError;
             }
             catch (Exception e)
             {
@@ -126,7 +125,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     if (e.Message.StartsWith("Cannot find the requested object."))
                     {
                         // Garbage data received.
-                        return nameof(ValidationState.NoMatch);
+                        return ValidationState.NoMatch;
                     }
 
                     if (e.Message.StartsWith("Cannot find the original signer."))
@@ -138,7 +137,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 
                     if (e.Message == "The specified network password is not correct.")
                     {
-                        return nameof(ValidationState.PasswordProtected);
+                        return ValidationState.PasswordProtected;
                     }
                 }
 
@@ -146,7 +145,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             }
         }
 
-        public static string TryLoadCertificateCollection(byte[] rawData,
+        public static ValidationState TryLoadCertificateCollection(byte[] rawData,
                                                           ref string fingerprintText,
                                                           ref string message)
         {
@@ -156,7 +155,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 // If this certificate needs a password, it will throw an exception.
                 certificates.Import(rawData);
                 var thumbprints = new List<string>();
-                string state = nameof(ValidationState.NoMatch);
+                ValidationState state = ValidationState.NoMatch;
                 foreach (X509Certificate2 certificate in certificates)
                 {
                     if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
@@ -167,7 +166,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     if (certificate.HasPrivateKey)
                     {
                         thumbprints.Add(certificate.Thumbprint);
-                        state = nameof(ValidationState.AuthorizedError);
+                        state = ValidationState.AuthorizedError;
                     }
                 }
 

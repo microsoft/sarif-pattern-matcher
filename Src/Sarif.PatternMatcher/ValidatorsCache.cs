@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatorsCache
@@ -62,14 +64,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return validationMethods;
         }
 
-        public static Validation ValidateStaticHelper(MethodInfo isValidStaticMethodInfo,
+        public static ValidationState ValidateStaticHelper(MethodInfo isValidStaticMethodInfo,
                                                        ref string matchedPattern,
                                                        ref IDictionary<string, string> groups,
                                                        ref string failureLevel,
                                                        ref string fingerprint,
                                                        ref string message)
         {
-            string validationText;
+            ValidationState validationState;
 
             object[] arguments = new object[]
             {
@@ -89,8 +91,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Environment.CurrentDirectory = Path.GetDirectoryName(location);
                 }
 
-                validationText =
-                    (string)isValidStaticMethodInfo.Invoke(
+                validationState =
+                    (ValidationState)isValidStaticMethodInfo.Invoke(
                         obj: null, arguments);
             }
             finally
@@ -104,20 +106,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint = (string)arguments[3];
             message = (string)arguments[4];
 
-            if (!Enum.TryParse(validationText, out Validation result))
-            {
-                return Validation.ValidatorReturnedIllegalValidationState;
-            }
-
-            return result;
+            return validationState;
         }
 
-        public static Validation ValidateDynamicHelper(MethodInfo isValidDynamicMethodInfo,
+        public static ValidationState ValidateDynamicHelper(MethodInfo isValidDynamicMethodInfo,
                                                        ref string fingerprint,
                                                        ref string message,
                                                        ref IDictionary<string, string> options)
         {
-            string validationText;
+            ValidationState validationText;
 
             object[] arguments = new object[]
             {
@@ -136,7 +133,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
 
                 validationText =
-                    (string)isValidDynamicMethodInfo.Invoke(
+                    (ValidationState)isValidDynamicMethodInfo.Invoke(
                         obj: null, arguments);
             }
             finally
@@ -148,13 +145,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             message = (string)arguments[1];
             options = (Dictionary<string, string>)arguments[2];
 
-            if (!Enum.TryParse(validationText, out Validation result))
-            {
-                message = $"the unrecognized value was '{validationText}'";
-                return Validation.ValidatorReturnedIllegalValidationState;
-            }
-
-            return result;
+            return validationText;
         }
 
         public static void DisableValidationCaching(MethodInfo shouldCacheMethodInfo, bool disableValidationCaching)
@@ -181,7 +172,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        public Validation Validate(
+        public ValidationState Validate(
             string ruleName,
             AnalyzeContext context,
             ref string matchedPattern,
@@ -205,7 +196,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 out pluginCanPerformDynamicAnalysis);
         }
 
-        internal static Validation ValidateHelper(
+        internal static ValidationState ValidateHelper(
             Dictionary<string, ValidationMethods> ruleIdToMethodMap,
             string ruleName,
             AnalyzeContext context,
@@ -224,7 +215,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (validationMethods == null)
             {
-                return Validation.ValidatorNotFound;
+                return ValidationState.ValidatorNotFound;
             }
 
             if (validationMethods.DisableDynamicValidationCaching != null)
@@ -232,7 +223,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 DisableValidationCaching(validationMethods.DisableDynamicValidationCaching, context.DisableDynamicValidationCaching);
             }
 
-            Validation result = ValidateStaticHelper(validationMethods.IsValidStatic,
+            ValidationState result = ValidateStaticHelper(validationMethods.IsValidStatic,
                                                      ref matchedPattern,
                                                      ref groups,
                                                      ref failureLevel,
@@ -241,7 +232,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             pluginCanPerformDynamicAnalysis = validationMethods.IsValidDynamic != null;
 
-            return (result != Validation.NoMatch && result != Validation.Expired && context.DynamicValidation && pluginCanPerformDynamicAnalysis) ?
+            return (result != ValidationState.NoMatch && result != ValidationState.Expired && context.DynamicValidation && pluginCanPerformDynamicAnalysis) ?
                 ValidateDynamicHelper(validationMethods.IsValidDynamic, ref fingerprint, ref message, ref groups) :
                 result;
         }
@@ -290,7 +281,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             },
                             null);
 
-                        if (isValidStatic == null || isValidStatic?.ReturnType != typeof(string))
+                        if (isValidStatic == null || isValidStatic?.ReturnType != typeof(ValidationState))
                         {
                             continue;
                         }
@@ -305,7 +296,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             },
                             null);
 
-                        if (isValidDynamic?.ReturnType != typeof(string))
+                        if (isValidDynamic?.ReturnType != typeof(ValidationState))
                         {
                             isValidDynamic = null;
                         }

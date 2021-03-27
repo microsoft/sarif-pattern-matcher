@@ -21,7 +21,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new DropboxAccessTokenValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
                                            ref string fingerprint,
@@ -35,7 +35,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                  ref message);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -43,7 +43,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
@@ -51,12 +51,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             if (!groups.TryGetNonEmptyValue("refine", out string key))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             if (!ContainsDigitAndChar(key))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             fingerprintText = new Fingerprint()
@@ -65,10 +65,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Platform = nameof(AssetPlatform.Dropbox),
             }.ToString();
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText, ref string message, ref Dictionary<string, string> options)
+        protected override ValidationState IsValidDynamicHelper(ref string fingerprintText, ref string message, ref Dictionary<string, string> options)
         {
             const string NoAccessMessage = "Your app is not permitted to access this endpoint";
             const string DisabledMessage = "This app is currently disabled.";
@@ -89,7 +89,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
-                        return nameof(ValidationState.AuthorizedError);
+                        return ValidationState.AuthorizedError;
                     }
 
                     case HttpStatusCode.BadRequest:
@@ -99,15 +99,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         // App deleted.
                         if (body.EndsWith(DisabledMessage))
                         {
-                            return nameof(ValidationState.Expired);
+                            return ValidationState.Expired;
                         }
 
                         // Request was successful but AccessToken does not have access.
                         if (body.Contains(NoAccessMessage))
                         {
                             return key.Length == 64
-                                ? nameof(ValidationState.AuthorizedError) // No expiration token.
-                                : nameof(ValidationState.AuthorizedWarning); // Short expiration token (4h).
+                                ? ValidationState.AuthorizedError // No expiration token.
+                                : ValidationState.AuthorizedWarning; // Short expiration token (4h).
                         }
 
                         // We don't recognize this message.
@@ -117,7 +117,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     case HttpStatusCode.Unauthorized:
                     {
-                        return nameof(ValidationState.Unauthorized);
+                        return ValidationState.Unauthorized;
                     }
 
                     default:
@@ -132,7 +132,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e);
             }
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
     }
 }

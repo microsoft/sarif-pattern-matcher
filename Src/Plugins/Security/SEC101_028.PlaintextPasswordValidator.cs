@@ -17,7 +17,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new PlaintextPasswordValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
                                            ref string fingerprint,
@@ -31,7 +31,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                  ref message);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
@@ -39,7 +39,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             if (!groups.TryGetNonEmptyValue("password", out string password))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             fingerprintText = new Fingerprint()
@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Password = password,
             }.ToString();
 
-            return nameof(ValidationState.AuthorizedWarning);
+            return ValidationState.AuthorizedWarning;
         }
     }
 }

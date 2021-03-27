@@ -22,7 +22,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new GitHubPatValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
                                            ref string fingerprint,
@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                  ref message);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -44,7 +44,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
@@ -52,14 +52,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             if (!groups.TryGetNonEmptyValue("key", out string pat))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             // It is highly likely we do not have a key if we can't
             // find at least one letter and digit within the pattern.
             if (!ContainsDigitAndChar(pat))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             if (matchedPattern.IndexOf("commit", StringComparison.OrdinalIgnoreCase) >= 0 ||
@@ -73,7 +73,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 matchedPattern.IndexOf("using ref", StringComparison.OrdinalIgnoreCase) >= 0 ||
                 matchedPattern.IndexOf("githubusercontent.com", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             fingerprintText = new Fingerprint
@@ -82,10 +82,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Platform = nameof(AssetPlatform.GitHub),
             }.ToString();
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText, ref string message, ref Dictionary<string, string> options)
+        protected override ValidationState IsValidDynamicHelper(ref string fingerprintText, ref string message, ref Dictionary<string, string> options)
         {
             var fingerprint = new Fingerprint(fingerprintText);
             string pat = fingerprint.PersonalAccessToken;
@@ -107,15 +107,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (AuthorizationException)
             {
-                return nameof(ValidationState.Unauthorized);
+                return ValidationState.Unauthorized;
             }
             catch (Exception e)
             {
                 message = $"An unexpected exception was caught attempting to validate PAT: {e.Message}";
-                return nameof(ValidationState.Unknown);
+                return ValidationState.Unknown;
             }
 
-            return nameof(ValidationState.AuthorizedError);
+            return ValidationState.AuthorizedError;
         }
     }
 }

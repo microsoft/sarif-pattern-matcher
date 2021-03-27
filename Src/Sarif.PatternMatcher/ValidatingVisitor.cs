@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatingVisitor : SarifRewritingVisitor
@@ -47,7 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 };
 
                 FailureLevel level = default;
-                Validation state =
+                ValidationState state =
                     ValidatorsCache.ValidateDynamicHelper(validationPair.IsValidDynamic,
                                                           ref fingerprint,
                                                           ref message,

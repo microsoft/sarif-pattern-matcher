@@ -20,7 +20,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new RabbitMqConnectionStringValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
                                            ref string fingerprint,
@@ -34,7 +34,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                  ref message);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -42,7 +42,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
@@ -53,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 !groups.TryGetNonEmptyValue("password", out string password) ||
                 !groups.TryGetNonEmptyValue("resource", out string resource))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             host = DomainFilteringHelper.StandardizeLocalhostName(host);
@@ -66,10 +66,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Resource = resource,
             }.ToString();
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText, ref string message, ref Dictionary<string, string> options)
+        protected override ValidationState IsValidDynamicHelper(ref string fingerprintText, ref string message, ref Dictionary<string, string> options)
         {
             var fingerprint = new Fingerprint(fingerprintText);
             string host = fingerprint.Host;
@@ -79,7 +79,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             if (DomainFilteringHelper.LocalhostList.Contains(host))
             {
-                return nameof(ValidationState.Unknown);
+                return ValidationState.Unknown;
             }
 
             try
@@ -96,7 +96,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e, asset: host, account: account);
             }
 
-            return nameof(ValidationState.AuthorizedError);
+            return ValidationState.AuthorizedError;
         }
     }
 }

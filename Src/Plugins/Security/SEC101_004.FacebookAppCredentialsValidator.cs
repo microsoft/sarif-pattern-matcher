@@ -20,7 +20,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new FacebookAppCredentialsValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
                                            ref string fingerprint,
@@ -34,7 +34,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                  ref message);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -42,7 +42,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
@@ -51,7 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             if (!groups.TryGetValue("id", out string id) ||
                 !groups.TryGetValue("key", out string key))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             fingerprintText = new Fingerprint
@@ -61,10 +61,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Platform = nameof(AssetPlatform.Facebook),
             }.ToString();
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref string fingerprintText,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
@@ -72,13 +72,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string id = fingerprint.Id;
             string key = fingerprint.Key;
 
-            string state = RetrieveInformation(
+            ValidationState state = RetrieveInformation(
                 $"https://graph.facebook.com/oauth/access_token?client_id={id}&client_secret={key}&grant_type=client_credentials",
                 id,
                 ref message,
                 out AccessTokenObject obj);
 
-            if (state == nameof(ValidationState.AuthorizedError))
+            if (state == ValidationState.AuthorizedError)
             {
                 return CheckInformation(id, obj.AccessToken, ref message);
             }
@@ -86,15 +86,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return state;
         }
 
-        private string CheckInformation(string id, string accessToken, ref string message)
+        private ValidationState CheckInformation(string id, string accessToken, ref string message)
         {
-            string state = RetrieveInformation(
+            ValidationState state = RetrieveInformation(
                 $"https://graph.facebook.com/{id}?access_token={accessToken}&fields=creator_uid",
                 id,
                 ref message,
                 out CreatorObject obj);
 
-            if (state == nameof(ValidationState.AuthorizedError))
+            if (state == ValidationState.AuthorizedError)
             {
                 return RetrieveAccountInformation(id, obj.CreatorUid, accessToken, ref message);
             }
@@ -102,15 +102,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return state;
         }
 
-        private string RetrieveAccountInformation(string id, string creatorUid, string accessToken, ref string message)
+        private ValidationState RetrieveAccountInformation(string id, string creatorUid, string accessToken, ref string message)
         {
-            string state = RetrieveInformation(
+            ValidationState state = RetrieveInformation(
                 $"https://graph.facebook.com/{creatorUid}?access_token={accessToken}",
                 id,
                 ref message,
                 out AccountObject obj);
 
-            if (state == nameof(ValidationState.AuthorizedError))
+            if (state == ValidationState.AuthorizedError)
             {
                 return ReturnAuthorizedAccess(ref message, asset: $"{obj.Id}:{obj.Name}");
             }
@@ -118,7 +118,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return state;
         }
 
-        private string RetrieveInformation<T>(string url, string id, ref string message, out T obj)
+        private ValidationState RetrieveInformation<T>(string url, string id, ref string message, out T obj)
         {
             using HttpClient httpClient = CreateHttpClient();
             obj = default;
@@ -139,10 +139,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                         if (obj == null)
                         {
-                            return nameof(ValidationState.Unknown);
+                            return ValidationState.Unknown;
                         }
 
-                        return nameof(ValidationState.AuthorizedError);
+                        return ValidationState.AuthorizedError;
                     }
 
                     case System.Net.HttpStatusCode.BadRequest:

@@ -33,7 +33,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             RegexEngine = RE2Regex.Instance;
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
                                            ref string fingerprint,
@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                  ref message);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -55,7 +55,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
@@ -64,7 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             if (!groups.TryGetNonEmptyValue("account", out string account) ||
                 !groups.TryGetNonEmptyValue("password", out string password))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             // Our matches can sometimes fail to find a host (due to it being constructed in code)
@@ -81,12 +81,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             {
                 fingerprintText = fingerprint.ToString();
 
-                return nameof(ValidationState.Unknown);
+                return ValidationState.Unknown;
             }
 
             if (host == "tcp")
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
@@ -94,9 +94,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 
             host = DomainFilteringHelper.StandardizeLocalhostName(host);
 
-            string exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
+            ValidationState exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
 
-            if (exclusionResult == nameof(ValidationState.NoMatch))
+            if (exclusionResult == ValidationState.NoMatch)
             {
                 return exclusionResult;
             }
@@ -108,10 +108,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 
             fingerprintText = fingerprint.ToString();
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref string fingerprintText,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
@@ -127,7 +127,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 string.IsNullOrWhiteSpace(database) ||
                 DomainFilteringHelper.LocalhostList.Contains(host))
             {
-                return nameof(ValidationState.Unknown);
+                return ValidationState.Unknown;
             }
 
             var connectionStringBuilder = new StringBuilder();
@@ -162,7 +162,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 return ReturnUnhandledException(ref message, e, asset: host);
             }
 
-            return nameof(ValidationState.AuthorizedError);
+            return ValidationState.AuthorizedError;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
 #pragma warning disable IDE0060 // Unused parameter.
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
                                            ref string fingerprintText,
@@ -34,15 +34,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         }.ToString();
                     }
 
-                    return nameof(ValidationState.Unknown);
+                    return ValidationState.Unknown;
                 }
             }
             catch
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
-            return nameof(ValidationState.NoMatch);
+            return ValidationState.NoMatch;
         }
     }
 }

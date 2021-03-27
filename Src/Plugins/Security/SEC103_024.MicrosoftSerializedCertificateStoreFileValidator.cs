@@ -10,7 +10,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public static class MicrosoftSerializedCertificateStoreFileValidator
     {
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
 #pragma warning disable IDE0060 // Remove unused parameter
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
@@ -20,7 +20,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string thumbprint = null;
 
-            string state =
+            ValidationState state =
                 CertificateHelper.TryLoadCertificateCollection(matchedPattern,
                                                                ref thumbprint,
                                                                ref message);

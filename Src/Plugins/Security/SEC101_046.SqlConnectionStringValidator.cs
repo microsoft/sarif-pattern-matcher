@@ -43,7 +43,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             RegexEngine.Match(string.Empty, PasswordExpression);
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
                                            ref string fingerprint,
@@ -57,7 +57,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                  ref message);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -65,7 +65,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
@@ -95,14 +95,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string.IsNullOrWhiteSpace(account) ||
                 string.IsNullOrWhiteSpace(password))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             host = DomainFilteringHelper.StandardizeLocalhostName(host);
 
-            string exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
+            ValidationState exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
 
-            if (exclusionResult == nameof(ValidationState.NoMatch))
+            if (exclusionResult == ValidationState.NoMatch)
             {
                 return exclusionResult;
             }
@@ -112,7 +112,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 password.Length > 128 ||
                 host.Length > 128)
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             fingerprintText = new Fingerprint()
@@ -124,10 +124,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Platform = SharedUtilities.GetDatabasePlatformFromHost(host, out _),
             }.ToString();
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref string fingerprintText,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
@@ -140,7 +140,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             if (DomainFilteringHelper.LocalhostList.Contains(host))
             {
-                return nameof(ValidationState.Unknown);
+                return ValidationState.Unknown;
             }
 
             string connString =
@@ -149,8 +149,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
 
             // Validating ConnectionString with database.
-            string validation = ValidateConnectionString(ref message, host, connString, out bool shouldRetry);
-            if (validation != nameof(ValidationState.Unknown) || !shouldRetry)
+            ValidationState validation = ValidateConnectionString(ref message, host, connString, out bool shouldRetry);
+            if (validation != ValidationState.Unknown || !shouldRetry)
             {
                 return validation;
             }
@@ -164,7 +164,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return ValidateConnectionString(ref message, host, connString, out shouldRetry);
         }
 
-        private static string ValidateConnectionString(ref string message, string host, string connString, out bool shouldRetry)
+        private static ValidationState ValidateConnectionString(ref string message, string host, string connString, out bool shouldRetry)
         {
             shouldRetry = true;
 
@@ -177,7 +177,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 // This exception means that some illegal chars, etc.
                 // have snuck into the connection string
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
             catch (Exception e)
             {
@@ -196,7 +196,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         {
                             message = match.Value;
                             shouldRetry = false;
-                            return nameof(ValidationState.Unknown);
+                            return ValidationState.Unknown;
                         }
                     }
                 }
@@ -204,7 +204,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e, asset: host);
             }
 
-            return nameof(ValidationState.AuthorizedError);
+            return ValidationState.AuthorizedError;
         }
     }
 }

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 using FluentAssertions;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
@@ -16,7 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             public string Title;
             public string Input;
-            public string ExpectedValidationState;
+            public ValidationState ExpectedValidationState;
             public bool PerformDynamicValidation;
             public string FailureLevel;
         }
@@ -27,14 +29,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Title = "NoMatch due to invalid PAT CRC, no dynamic validation requested.",
                 Input = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead",
-                ExpectedValidationState = "NoMatch",
+                ExpectedValidationState = ValidationState.NoMatch,
                 FailureLevel = "Error",
             },
             new TestCase
             {
                 Title = "NoMatch due to invalid PAT CRC, dynamic validation requested.",
                 Input = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead",
-                ExpectedValidationState = "NoMatch",
+                ExpectedValidationState = ValidationState.NoMatch,
                 FailureLevel = "Warning",
                 PerformDynamicValidation = true
             }
@@ -52,7 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string fingerprintText = null, message = null;
                 var groups = new Dictionary<string, string>();
 
-                string state =
+                ValidationState state =
                     AdoPatValidator.IsValidStatic(ref testCase.Input,
                                                                           ref groups,
                                                                           ref failureLevel,
@@ -66,7 +68,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Verify(failureLevel == testCase.FailureLevel, title, failedTestCases);
                 Verify(state == testCase.ExpectedValidationState, title, failedTestCases);
 
-                if (state != "Unknown")
+                if (state != ValidationState.Unknown)
                 {
                     Verify(fingerprintText == null, title, failedTestCases);
                 }

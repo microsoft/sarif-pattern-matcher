@@ -22,7 +22,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new DropboxAppCredentialsValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
                                            ref string fingerprint,
@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                  ref message);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -44,7 +44,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
                                                       ref string fingerprintText,
@@ -53,13 +53,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             if (!groups.TryGetNonEmptyValue("key", out string key) ||
                 !groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             if (!ContainsDigitAndChar(key) ||
                 !ContainsDigitAndChar(secret))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             fingerprintText = new Fingerprint()
@@ -69,10 +69,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Platform = nameof(AssetPlatform.Dropbox),
             }.ToString();
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText, ref string message, ref Dictionary<string, string> options)
+        protected override ValidationState IsValidDynamicHelper(ref string fingerprintText, ref string message, ref Dictionary<string, string> options)
         {
             var fingerprint = new Fingerprint(fingerprintText);
             string id = fingerprint.Id;
@@ -94,7 +94,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     case HttpStatusCode.InternalServerError:
                     {
                         // The request is correct, but the header 'Dropbox-API-Arg' is wrong.
-                        return nameof(ValidationState.AuthorizedError);
+                        return ValidationState.AuthorizedError;
                     }
 
                     case HttpStatusCode.BadRequest:
@@ -104,12 +104,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         // App deleted.
                         if (body.Contains("App has been disabled"))
                         {
-                            return nameof(ValidationState.Expired);
+                            return ValidationState.Expired;
                         }
 
                         if (body.Contains("invalid_client"))
                         {
-                            return nameof(ValidationState.Unauthorized);
+                            return ValidationState.Unauthorized;
                         }
 
                         // We don't recognize this message.
@@ -129,7 +129,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e);
             }
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
     }
 }
