@@ -78,7 +78,7 @@
             "ValidationFingerprint/v1": "[pat=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671]",
             "ValidationFingerprintHash/v1": "a9b12c0838e46b30434cc08690b35014498dc31dd0eea0bd66ed932b066dba2b"
           },
-          "rank": 74.85955569573863
+          "rank": 74.86
         },
         {
           "ruleId": "SEC101/010",
@@ -121,7 +121,7 @@
             "ValidationFingerprint/v1": "[pat=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672]",
             "ValidationFingerprintHash/v1": "78021545648bd50779d30d021856d7214662424f30273ab50de465412fc3846b"
           },
-          "rank": 74.8595556957386
+          "rank": 74.86
         },
         {
           "ruleId": "SEC101/010",
@@ -164,7 +164,7 @@
             "ValidationFingerprint/v1": "[pat=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673]",
             "ValidationFingerprintHash/v1": "934988d03d62c4fdd030296b0042d57b314c1da5c64cdbb32a7851fcc5075e3a"
           },
-          "rank": 74.85955569573863
+          "rank": 74.86
         }
       ],
       "columnKind": "utf16CodeUnits"
