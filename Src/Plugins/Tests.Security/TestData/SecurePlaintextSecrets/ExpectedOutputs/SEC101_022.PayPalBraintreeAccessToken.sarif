@@ -78,7 +78,7 @@
             "ValidationFingerprint/v1": "[key=1111111111012345$01234567890123456789012345678901]",
             "ValidationFingerprintHash/v1": "852b13d50cf35a49a9a14813b45b3f880108f9564111fe6bf89615c7e9b94258"
           },
-          "rank": 44.865374036276016
+          "rank": 44.87
         },
         {
           "ruleId": "SEC101/022",
@@ -121,7 +121,7 @@
             "ValidationFingerprint/v1": "[key=2222222222012345$01234567890123456789012345678901]",
             "ValidationFingerprintHash/v1": "d758068b63f4b5a001b91c1b52204eef4fe3baa1b1f24564fa19bca131c89c83"
           },
-          "rank": 45.35830393449307
+          "rank": 45.36
         }
       ],
       "columnKind": "utf16CodeUnits"
