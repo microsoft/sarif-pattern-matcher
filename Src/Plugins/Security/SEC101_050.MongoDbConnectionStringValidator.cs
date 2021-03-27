@@ -36,14 +36,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                  ref message);
         }
 
-        // TODO: uncomment when MongoDB release a signed package/dll.
-        // public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
-        // {
-        //     return IsValidDynamic(Instance,
-        //                           ref fingerprint,
-        //                           ref message,
-        //                           ref options);
-        // }
+        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        {
+            return IsValidDynamic(Instance,
+                                  ref fingerprint,
+                                  ref message,
+                                  ref options);
+        }
 
         protected override string IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
