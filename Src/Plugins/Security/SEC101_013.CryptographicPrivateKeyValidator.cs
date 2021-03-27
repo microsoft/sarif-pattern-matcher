@@ -111,10 +111,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 default:
                 {
                     string thumbprint = string.Empty;
-                    byte[] rawData = Convert.FromBase64String(key);
-                    state = CertificateHelper.TryLoadCertificate(rawData,
-                                                                 ref thumbprint,
-                                                                 ref message);
+                    try
+                    {
+                        byte[] rawData = Convert.FromBase64String(key);
+                        state = CertificateHelper.TryLoadCertificate(rawData,
+                                                                     ref thumbprint,
+                                                                     ref message);
+                    }
+                    catch (FormatException)
+                    {
+                        return nameof(ValidationState.NoMatch);
+                    }
+
                     break;
                 }
             }

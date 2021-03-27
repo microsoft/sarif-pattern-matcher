@@ -49,7 +49,7 @@
               "",
               "MongoDb connection string",
               "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+              ""
             ]
           },
           "locations": [
@@ -78,7 +78,7 @@
             "ValidationFingerprint/v1": "[acct=dbuser1][host=database.com:10250][pwd=<password>]",
             "ValidationFingerprintHash/v1": "3028affffa1468bb27dd05d7cf73297593f13bbc04351a87bdf1ff9bc1284367"
           },
-          "rank": 44.59897278410517
+          "rank": 44.6
         },
         {
           "ruleId": "SEC101/050",
@@ -92,7 +92,7 @@
               "",
               "MongoDb connection string",
               "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+              ""
             ]
           },
           "locations": [
@@ -121,7 +121,7 @@
             "ValidationFingerprint/v1": "[acct=dbuser2][host=database.com][pwd=<password>]",
             "ValidationFingerprintHash/v1": "db4d837ab3cbc67e77f1eace68dc1d98a244810e2c5c7a2e36fa89a4a5c743fe"
           },
-          "rank": 44.59897278410517
+          "rank": 44.6
         },
         {
           "ruleId": "SEC101/050",
@@ -135,7 +135,7 @@
               "",
               "MongoDb connection string",
               "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+              ""
             ]
           },
           "locations": [
@@ -164,7 +164,7 @@
             "ValidationFingerprint/v1": "[acct=dbuser3][host=database.com][pwd=<password>]",
             "ValidationFingerprintHash/v1": "1f745dcb33df5d43f70cb5bb84b69566fdae28cc3a4549f982d0cefcc414edaf"
           },
-          "rank": 44.59897278410517
+          "rank": 44.6
         },
         {
           "ruleId": "SEC101/050",
@@ -178,7 +178,7 @@
               "",
               "MongoDb connection string",
               "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+              ""
             ]
           },
           "locations": [
@@ -207,7 +207,7 @@
             "ValidationFingerprint/v1": "[acct=dbuser4][host=database.com][pwd=<password>]",
             "ValidationFingerprintHash/v1": "c1490ede76bec9b826ee8098d8b8d0cbf84b1a02c6b55cce02908c84efdb1b50"
           },
-          "rank": 44.59897278410517
+          "rank": 44.6
         }
       ],
       "columnKind": "utf16CodeUnits"
