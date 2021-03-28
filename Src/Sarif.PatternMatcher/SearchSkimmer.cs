@@ -451,7 +451,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;
 
-            foreach (FlexMatch flexMatch in _engine.Matches(searchText, matchExpression.ContentsRegex))
+             foreach (FlexMatch flexMatch in _engine.Matches(searchText, matchExpression.ContentsRegex))
             {
                 if (!flexMatch.Success) { continue; }
 
