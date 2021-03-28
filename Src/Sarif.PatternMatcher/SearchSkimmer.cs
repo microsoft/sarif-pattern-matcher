@@ -241,7 +241,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        internal static void SetPropertiesBasedOnValidationState(Validation state,
+        internal static void SetPropertiesBasedOnValidationState(ValidationState state,
                                                                  AnalyzeContext context,
                                                                  ref FailureLevel level,
                                                                  ref string validationPrefix,
@@ -251,7 +251,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             switch (state)
             {
-                case Validation.NoMatch:
+                case ValidationState.NoMatch:
                 {
                     // The validator determined the match is a false positive.
                     // i.e., it is not the kind of artifact we're looking for.
@@ -261,8 +261,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     return;
                 }
 
-                case Validation.None:
-                case Validation.ValidatorReturnedIllegalValidationState:
+                case ValidationState.None:
+                case ValidationState.ValidatorReturnedIllegalValidationState:
                 {
                     if (context != null)
                     {
@@ -285,7 +285,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     return;
                 }
 
-                case Validation.AuthorizedError:
+                case ValidationState.AuthorizedError:
                 {
                     level = FailureLevel.Error;
 
@@ -296,7 +296,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
-                case Validation.AuthorizedWarning:
+                case ValidationState.AuthorizedWarning:
                 {
                     level = FailureLevel.Warning;
 
@@ -307,7 +307,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
-                case Validation.PasswordProtected:
+                case ValidationState.PasswordProtected:
                 {
                     level = FailureLevel.Warning;
 
@@ -318,7 +318,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
-                case Validation.Unauthorized:
+                case ValidationState.Unauthorized:
                 {
                     level = FailureLevel.Note;
 
@@ -329,7 +329,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
-                case Validation.Expired:
+                case ValidationState.Expired:
                 {
                     level = FailureLevel.Note;
 
@@ -339,7 +339,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
-                case Validation.UnknownHost:
+                case ValidationState.UnknownHost:
                 {
                     level = FailureLevel.Note;
 
@@ -351,7 +351,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
-                case Validation.InvalidForConsultedAuthorities:
+                case ValidationState.InvalidForConsultedAuthorities:
                 {
                     level = FailureLevel.Note;
 
@@ -363,7 +363,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
-                case Validation.Unknown:
+                case ValidationState.Unknown:
                 {
                     level = FailureLevel.Note;
                     validationSuffix = string.Empty;
@@ -387,7 +387,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
-                case Validation.ValidatorNotFound:
+                case ValidationState.ValidatorNotFound:
                 {
                     // TODO: should we have an explicit indicator in
                     // all cases that tells us whether this is an
@@ -493,8 +493,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 string levelText = level.ToString();
 
-                Validation state = 0;
-                string fingerprint = null;
+                ValidationState state = 0;
+                Fingerprint fingerprint = default;
                 string validatorMessage = null;
                 string validationPrefix = string.Empty;
                 string validationSuffix = string.Empty;
@@ -506,8 +506,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                 ref refinedMatchedPattern,
                                                 ref groups,
                                                 ref levelText,
-                                                ref fingerprint,
                                                 ref validatorMessage,
+                                                out fingerprint,
                                                 out bool pluginSupportsDynamicValidation);
 
                     if (!Enum.TryParse<FailureLevel>(levelText, out level))
@@ -538,9 +538,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                         ref validatorMessage,
                                                         pluginSupportsDynamicValidation);
 
-                    if (state == Validation.None ||
-                        state == Validation.NoMatch ||
-                        state == Validation.ValidatorReturnedIllegalValidationState)
+                    if (state == ValidationState.None ||
+                        state == ValidationState.NoMatch ||
+                        state == ValidationState.ValidatorReturnedIllegalValidationState)
                     {
                         continue;
                     }
@@ -599,7 +599,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 groups["content"] = context.FileContents;
             }
 
-            string fingerprint = null, validatorMessage = null;
+            Fingerprint fingerprint = default;
+            string validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
             string filePath = context.TargetUri.IsAbsoluteUri
                 ? context.TargetUri.LocalPath
@@ -607,13 +608,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
-                Validation state = _validators.Validate(reportingDescriptor.Name,
+                ValidationState state = _validators.Validate(reportingDescriptor.Name,
                                 context,
                                 ref filePath,
                                 ref groups,
                                 ref levelText,
-                                ref fingerprint,
                                 ref validatorMessage,
+                                out fingerprint,
                                 out bool pluginSupportsDynamicValidation);
 
                 if (!Enum.TryParse<FailureLevel>(levelText, out level))
@@ -638,7 +639,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 switch (state)
                 {
-                    case Validation.NoMatch:
+                    case ValidationState.NoMatch:
                     {
                         // The validator determined the match is a false positive.
                         // i.e., it is not the kind of artifact we're looking for.
@@ -647,8 +648,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         return;
                     }
 
-                    case Validation.None:
-                    case Validation.ValidatorReturnedIllegalValidationState:
+                    case ValidationState.None:
+                    case ValidationState.ValidatorReturnedIllegalValidationState:
                     {
                         // An illegal state was returned running check '{0}' against '{1}' ({2}).
                         context.Logger.LogToolNotification(
@@ -668,7 +669,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         return;
                     }
 
-                    case Validation.AuthorizedError:
+                    case ValidationState.AuthorizedError:
                     {
                         level = FailureLevel.Error;
 
@@ -678,7 +679,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         break;
                     }
 
-                    case Validation.AuthorizedWarning:
+                    case ValidationState.AuthorizedWarning:
                     {
                         level = FailureLevel.Warning;
 
@@ -688,7 +689,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         break;
                     }
 
-                    case Validation.Expired:
+                    case ValidationState.Expired:
                     {
                         level = FailureLevel.Note;
 
@@ -698,7 +699,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         break;
                     }
 
-                    case Validation.PasswordProtected:
+                    case ValidationState.PasswordProtected:
                     {
                         level = FailureLevel.Warning;
 
@@ -710,14 +711,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         break;
                     }
 
-                    case Validation.UnknownHost:
-                    case Validation.Unauthorized:
-                    case Validation.InvalidForConsultedAuthorities:
+                    case ValidationState.UnknownHost:
+                    case ValidationState.Unauthorized:
+                    case ValidationState.InvalidForConsultedAuthorities:
                     {
                         throw new InvalidOperationException();
                     }
 
-                    case Validation.Unknown:
+                    case ValidationState.Unknown:
                     {
                         level = FailureLevel.Note;
 
@@ -752,7 +753,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         break;
                     }
 
-                    case Validation.ValidatorNotFound:
+                    case ValidationState.ValidatorNotFound:
                     {
                         // TODO: should we have an explicit indicator in
                         // all cases that tells us whether this is an
@@ -831,7 +832,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FailureLevel level,
             Region region,
             FlexMatch flexMatch,
-            string fingerprint,
+            Fingerprint fingerprint,
             MatchExpression matchExpression,
             IList<string> arguments)
         {
@@ -891,16 +892,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        private Dictionary<string, string> BuildFingerprints(string fingerprintText, out double rank)
+        private Dictionary<string, string> BuildFingerprints(Fingerprint fingerprint, out double rank)
         {
-            rank = -1.0;
+            rank = -1;
 
-            if (string.IsNullOrWhiteSpace(fingerprintText))
+            if (fingerprint == default)
             {
                 return null;
             }
 
-            var fingerprint = new Fingerprint(fingerprintText);
             rank = fingerprint.GetRank();
 
             return new Dictionary<string, string>()

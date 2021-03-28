@@ -11,16 +11,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public static class PfxCryptographicKeyfileValidator
     {
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
 #pragma warning disable IDE0060 // Remove unused parameter
                                            ref string failureLevel,
 #pragma warning restore IDE0060
-                                           ref string fingerprintText,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
-            string thumbprint = null;
-            string state = null;
+            fingerprint = default;
+            ValidationState state = ValidationState.Unknown;
 
             groups.TryGetValue("content", out string content);
 
@@ -29,20 +29,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 // This condition indicates that we have textual (PEM-encoded) data.
                 // These certificates are handled by the SecurePlaintextSecrets rules.
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             state = CertificateHelper.TryLoadCertificate(matchedPattern,
-                                                         ref thumbprint,
+                                                         ref fingerprint,
                                                          ref message);
-
-            if (thumbprint != null)
-            {
-                fingerprintText = new Fingerprint()
-                {
-                    Thumbprint = thumbprint,
-                }.ToString();
-            }
 
             return state;
         }

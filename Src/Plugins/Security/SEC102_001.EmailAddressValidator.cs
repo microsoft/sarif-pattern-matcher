@@ -12,13 +12,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
 #pragma warning disable IDE0060 // Unused parameter.
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprintText,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
 #pragma warning restore IDE0060 // Unused parameter.
         {
+            fingerprint = default;
             try
             {
                 var addr = new MailAddress(matchedPattern);
@@ -27,22 +28,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     string[] parts = matchedPattern.Split('@');
                     if (parts.Length == 2)
                     {
-                        fingerprintText = new Fingerprint()
+                        fingerprint = new Fingerprint()
                         {
                             Account = parts[0],
                             Host = parts[1],
-                        }.ToString();
+                        };
                     }
 
-                    return nameof(ValidationState.Unknown);
+                    return ValidationState.Unknown;
                 }
             }
             catch
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
-            return nameof(ValidationState.NoMatch);
+            return ValidationState.NoMatch;
         }
     }
 }

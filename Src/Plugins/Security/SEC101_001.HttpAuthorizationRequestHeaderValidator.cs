@@ -20,21 +20,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new HttpAuthorizationRequestHeaderValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
                                  ref failureLevel,
-                                 ref fingerprint,
-                                 ref message);
+                                 ref message,
+                                 out fingerprint);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -42,35 +42,35 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
+            fingerprint = default;
             if (!groups.TryGetValue("host", out string host) ||
                 !groups.TryGetValue("key", out string key))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
-            fingerprintText = new Fingerprint
+            fingerprint = new Fingerprint
             {
                 Host = host,
                 Key = key,
                 Resource = (groups.ContainsKey("resource") && groups["resource"] != "/")
                     ? groups["resource"]
                     : string.Empty,
-            }.ToString();
+            };
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            var fingerprint = new Fingerprint(fingerprintText);
             string host = fingerprint.Host;
             string resource = fingerprint.Resource ?? string.Empty;
             string uri = host + resource;
@@ -89,7 +89,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     responseDummy.StatusCode == HttpStatusCode.NotFound ||
                     responseDummy.StatusCode == HttpStatusCode.NonAuthoritativeInformation)
                 {
-                    return nameof(ValidationState.NoMatch);
+                    return ValidationState.NoMatch;
                 }
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", fingerprint.Key);
@@ -116,11 +116,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         // If this happen, it means it does not matter if we add the authentication.
                         if (responseDummy.StatusCode == response.StatusCode)
                         {
-                            return nameof(ValidationState.NoMatch);
+                            return ValidationState.NoMatch;
                         }
 
                         message = CreateUnexpectedResponseCodeMessage(response.StatusCode, asset: host);
-                        return nameof(ValidationState.Unknown);
+                        return ValidationState.Unknown;
                     }
                 }
             }
