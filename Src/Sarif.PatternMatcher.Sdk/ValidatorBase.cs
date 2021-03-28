@@ -169,7 +169,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                                                                string asset = null,
                                                                string account = null)
         {
-
             if (TestExceptionForMessage(e, s_noSuchHostIsKnown, ref asset))
             {
                 return ReturnUnknownHost(ref message, asset);
@@ -328,8 +327,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             return ValidationState.NoMatch;
         }
-
-
 
         private static bool TestExceptionForMessage(Exception e, Regex regex, ref string asset)
         {

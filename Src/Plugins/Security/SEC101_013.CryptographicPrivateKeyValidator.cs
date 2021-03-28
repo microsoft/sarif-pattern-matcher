@@ -58,12 +58,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             if (key.IndexOf('"') > -1)
             {
                 string[] linesArray = key.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-                linesArray = linesArray.Select(x =>
-                {
-                    return string.Join(string.Empty, x.Replace("\\n", string.Empty)
+                linesArray = linesArray.Select(x => string.Join(string.Empty, x.Replace("\\n", string.Empty)
                                                       .Replace("\"", string.Empty)
-                                                      .Where(c => !char.IsWhiteSpace(c)));
-                }).ToArray();
+                                                      .Where(c => !char.IsWhiteSpace(c)))).ToArray();
                 key = string.Join(Environment.NewLine, linesArray);
             }
 
