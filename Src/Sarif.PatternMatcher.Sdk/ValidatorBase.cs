@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected ValidatorBase()
         {
-            FingerprintToResultCache = new ConcurrentDictionary<string, Tuple<string, string>>();
+            FingerprintToResultCache = new ConcurrentDictionary<Fingerprint, Tuple<ValidationState, string>>();
             PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
@@ -64,7 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// string representing a cached validation state and a user-facing
         /// message.
         /// </summary>
-        protected IDictionary<string, Tuple<string, string>> FingerprintToResultCache { get; }
+        protected IDictionary<Fingerprint, Tuple<ValidationState, string>> FingerprintToResultCache { get; }
 
         /// <summary>
         /// Gets a cache of file + fingerprint combinations that have been
@@ -79,30 +79,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// </summary>
         protected ISet<string> PerFileFingerprintCache { get; }
 
-        public static string IsValidStatic(ValidatorBase validator,
+        public static ValidationState IsValidStatic(ValidatorBase validator,
                                            ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
-            string state = validator.IsValidStaticHelper(ref matchedPattern,
+            ValidationState state = validator.IsValidStaticHelper(ref matchedPattern,
                                                          ref groups,
                                                          ref failureLevel,
-                                                         ref fingerprint,
-                                                         ref message);
+                                                         ref message,
+                                                         out fingerprint);
 
-            if (state == nameof(ValidationState.NoMatch))
+            if (state == ValidationState.NoMatch)
             {
                 return state;
             }
 
             string scanTarget = groups["scanTargetFullPath"];
-            string key = scanTarget + "#" + fingerprint;
+            string key = $"{scanTarget}#{fingerprint}";
 
             if (validator.PerFileFingerprintCache.Contains(key))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             validator.PerFileFingerprintCache.Add(key);
@@ -110,28 +110,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return state;
         }
 
-        public static string IsValidDynamic(ValidatorBase validator,
-                                            ref string fingerprint,
+        public static ValidationState IsValidDynamic(ValidatorBase validator,
+                                            ref Fingerprint fingerprint,
                                             ref string message,
                                             ref Dictionary<string, string> options)
         {
             if (shouldUseDynamicCache &&
-                validator.FingerprintToResultCache.TryGetValue(fingerprint, out Tuple<string, string> result))
+                validator.FingerprintToResultCache.TryGetValue(fingerprint, out Tuple<ValidationState, string> result))
             {
                 message = result.Item2;
                 return result.Item1;
             }
 
-            string validationState =
+            ValidationState validationState =
                 validator.IsValidDynamicHelper(ref fingerprint,
                                                ref message,
                                                ref options);
 
-            if (fingerprint != null)
-            {
-                validator.FingerprintToResultCache[fingerprint] =
-                    new Tuple<string, string>(validationState, message);
-            }
+            validator.FingerprintToResultCache[fingerprint] =
+                new Tuple<ValidationState, string>(validationState, message);
 
             return validationState;
         }
@@ -167,10 +164,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 $"An unexpected HTTP response code was received from '{asset}': '{status}'.";
         }
 
-        public static string ReturnUnhandledException(ref string message,
-                                                      Exception e,
-                                                      string asset = null,
-                                                      string account = null)
+        public static ValidationState ReturnUnhandledException(ref string message,
+                                                               Exception e,
+                                                               string asset = null,
+                                                               string account = null)
         {
 
             if (TestExceptionForMessage(e, s_noSuchHostIsKnown, ref asset))
@@ -197,29 +194,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 $"An unexpected exception was caught attempting to validate '{asset}': {e.Message}" :
                 $"An unexpected exception was caught attempting to validate the '{account}' account on '{asset}': {e.Message}";
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        public static string ReturnUnknownHost(ref string message, string host)
+        public static ValidationState ReturnUnknownHost(ref string message, string host)
         {
             message = $"'{host}' is unknown.";
-            return nameof(ValidationState.UnknownHost);
+            return ValidationState.UnknownHost;
         }
 
-        public static string ReturnUnauthorizedAccess(ref string message,
-                                                      string asset,
-                                                      string assetIdentifier = null,
-                                                      string account = null)
+        public static ValidationState ReturnUnauthorizedAccess(ref string message,
+                                                               string asset,
+                                                               string assetIdentifier = null,
+                                                               string account = null)
         {
             assetIdentifier += assetIdentifier != null ? " " : string.Empty;
             message = (account == null) ?
                 $"The provided secret is not authorized to access {assetIdentifier}'{asset}'." :
                 $"The provided '{account}' account secret is not authorized to access {assetIdentifier}'{asset}'.";
 
-            return nameof(ValidationState.Unauthorized);
+            return ValidationState.Unauthorized;
         }
 
-        public static string ReturnAuthorizedAccess(ref string message,
+        public static ValidationState ReturnAuthorizedAccess(ref string message,
                                                     string asset,
                                                     string account = null)
         {
@@ -227,18 +224,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 $"The compromised asset is '{asset}'." :
                 $"The '{account}' account is compromised for '{asset}'.";
 
-            return nameof(ValidationState.AuthorizedError);
+            return ValidationState.AuthorizedError;
         }
 
-        public static string ReturnUnknownAuthorization(ref string message,
-                                                        string asset,
-                                                        string account = null)
+        public static ValidationState ReturnUnknownAuthorization(ref string message,
+                                                                 string asset,
+                                                                 string account = null)
         {
             message = (account == null) ?
                 $"The potentially compromised asset is '{asset}'." :
                 $"The '{account}' account is potentially compromised for '{asset}'.";
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
         public static string ParseExpression(IRegex regexEngine, string matchedPattern, string expression)
@@ -311,25 +308,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// The current failure level associated with the match (if a match occurs). This parameter can be
         /// set to a different failure level by the callee, if appropriate.
         /// </param>
-        /// <param name="fingerprintText">
-        /// A SARIF fingerprint that identifies a logically unique secret. This parameter should be
-        /// set to null if no fingerprint can be computed that definitively identifies the secret.
-        /// </param>
         /// <param name="message">
         /// A message that can be used to pass additional information back to the user.
         /// </param>
+        /// <param name="fingerprint">
+        /// A SARIF fingerprint that identifies a logically unique secret. This parameter should be
+        /// set to null if no fingerprint can be computed that definitively identifies the secret.
+        /// </param>
         /// <returns>Return the validation state.</returns>
-        protected abstract string IsValidStaticHelper(ref string matchedPattern,
+        protected abstract ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message);
+                                                      ref string message,
+                                                      out Fingerprint fingerprint);
 
-        protected virtual string IsValidDynamicHelper(ref string fingerprintText,
+        protected virtual ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                       ref string message,
                                                       ref Dictionary<string, string> options)
         {
-            return null;
+            return ValidationState.NoMatch;
         }
 
 

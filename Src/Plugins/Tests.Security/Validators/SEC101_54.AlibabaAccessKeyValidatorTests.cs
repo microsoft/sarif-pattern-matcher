@@ -11,7 +11,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     public class AlibabaAccessKeyValidatorTests
     {
-        private readonly string _expectedValidationState = nameof(ValidationState.NoMatch);
+        private readonly ValidationState _expectedValidationState = ValidationState.NoMatch;
         private readonly string _accessKeyId = "LTAI01234567890123456789";
         private readonly string _accessKeySecret = "111111111101234567890123456789";
 

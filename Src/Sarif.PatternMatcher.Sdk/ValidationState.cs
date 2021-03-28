@@ -54,5 +54,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// The result should be reported as an warning.
         /// </summary>
         AuthorizedWarning,
+
+        /// <summary>
+        /// Validator not found.
+        /// </summary>
+        ValidatorNotFound,
+
+        ValidatorReturnedIllegalValidationState,
+        None,
     }
 }

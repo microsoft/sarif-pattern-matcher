@@ -32,6 +32,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         private const char RightBracketReplacement = '\t';
         private const string HashKey = "7B2FD4B8B55B49428DBFB22C9E61D817";
+
         private const string Base64EncodingSymbolSet =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
@@ -55,6 +56,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 SymmetricKey128BitKeyName,
                 SymmetricKey256BitKeyName,
             });
+
+        public static bool operator ==(Fingerprint op1, Fingerprint op2)
+        {
+            return op1.Equals(op2);
+        }
+
+        public static bool operator !=(Fingerprint op1, Fingerprint op2)
+        {
+            return !op1.Equals(op2);
+        }
 
         /// <summary>
         /// Normalized specific Shannon entropy. See https://rosettacode.org/wiki/Entropy.

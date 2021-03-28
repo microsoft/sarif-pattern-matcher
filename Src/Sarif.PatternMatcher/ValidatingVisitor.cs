@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatingVisitor : SarifRewritingVisitor
@@ -26,10 +28,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public override Result VisitResult(Result node)
         {
             if (node.Fingerprints == null ||
-                !node.Fingerprints.TryGetValue(SearchSkimmer.ValidationFingerprint, out string fingerprint))
+                !node.Fingerprints.TryGetValue(SearchSkimmer.ValidationFingerprint, out string fingerprintText))
             {
                 return node;
             }
+
+            var fingerprint = new Fingerprint(fingerprintText, validate: false);
 
             ReportingDescriptor rule = node.GetRule(_run);
 
@@ -47,7 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 };
 
                 FailureLevel level = default;
-                Validation state =
+                ValidationState state =
                     ValidatorsCache.ValidateDynamicHelper(validationPair.IsValidDynamic,
                                                           ref fingerprint,
                                                           ref message,
