@@ -43,13 +43,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                  ref message);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  ref options);
-        }
+        // TODO: uncomment when Alibaba release a signed package/dll.
+        // public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        // {
+        //     return IsValidDynamic(Instance,
+        //                           ref fingerprint,
+        //                           ref message,
+        //                           ref options);
+        // }
 
         protected override string IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,

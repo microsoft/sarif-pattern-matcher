@@ -84,6 +84,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 return nameof(ValidationState.Unknown);
             }
 
+            if (host == "tcp")
+            {
+                return nameof(ValidationState.NoMatch);
+            }
+
             string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
             string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
 
@@ -146,6 +151,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                     if (mysqlException.ErrorCode == MySqlErrorCode.AccessDenied)
                     {
                         return ReturnUnauthorizedAccess(ref message, asset: host);
+                    }
+
+                    if (mysqlException.ErrorCode == MySqlErrorCode.UnableToConnectToHost)
+                    {
+                        return ReturnUnknownHost(ref message, host);
                     }
                 }
 

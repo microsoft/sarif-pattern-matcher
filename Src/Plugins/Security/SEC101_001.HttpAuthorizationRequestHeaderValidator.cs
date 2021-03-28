@@ -110,16 +110,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     {
                         return ReturnUnauthorizedAccess(ref message, asset: host);
                     }
+
+                    default:
+                    {
+                        // If this happen, it means it does not matter if we add the authentication.
+                        if (responseDummy.StatusCode == response.StatusCode)
+                        {
+                            return nameof(ValidationState.NoMatch);
+                        }
+
+                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode, asset: host);
+                        return nameof(ValidationState.Unknown);
+                    }
                 }
             }
             catch (Exception e)
             {
                 return ReturnUnhandledException(ref message, e, asset: host);
             }
-
-            // Since we are just handling 200, 401, and 403.
-            // We will return unknown for all the others if that happen.
-            return nameof(ValidationState.Unknown);
         }
     }
 }
