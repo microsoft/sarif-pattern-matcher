@@ -24,8 +24,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             Fingerprint fingerprint;
             string message = null;
             string validationState = null;
-            Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
-            keyValuePairs.Add("key", TestKey);
+            var keyValuePairs = new Dictionary<string, string>
+            {
+                { "key", TestKey }
+            };
 
             ValidationState actualValidationState = CryptographicPrivateKeyValidator.IsValidStatic(ref TestMatchedPattern, ref keyValuePairs, ref validationState, ref message, out fingerprint);
             Assert.Equal(ExpectedValidationState, actualValidationState);

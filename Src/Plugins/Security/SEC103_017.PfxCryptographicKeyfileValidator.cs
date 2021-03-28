@@ -20,7 +20,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            out Fingerprint fingerprint)
         {
             fingerprint = default;
-            ValidationState state = ValidationState.Unknown;
 
             groups.TryGetValue("content", out string content);
 
@@ -32,11 +31,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationState.NoMatch;
             }
 
-            state = CertificateHelper.TryLoadCertificate(matchedPattern,
+            return CertificateHelper.TryLoadCertificate(matchedPattern,
                                                          ref fingerprint,
                                                          ref message);
-
-            return state;
         }
     }
 }

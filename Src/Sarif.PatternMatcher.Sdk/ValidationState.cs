@@ -6,9 +6,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
     public enum ValidationState
     {
         /// <summary>
+        /// A default value that reflects an uninitialized state,
+        /// (i.e., no useful validation state is available).
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        /// Validator not found.
+        /// </summary>
+        ValidatorNotFound,
+
+        /// <summary>
+        /// A validator for the current matched pattern returned
+        /// an unrecognized state when asked to validate.
+        /// </summary>
+        ValidatorReturnedIllegalValidationState,
+
+        /// <summary>
         /// Pattern isn't actually a match for secret type.
         /// </summary>
-        NoMatch = 0,
+        NoMatch,
 
         /// <summary>
         /// The validity of the secret can't be determined.
@@ -54,13 +71,5 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// The result should be reported as an warning.
         /// </summary>
         AuthorizedWarning,
-
-        /// <summary>
-        /// Validator not found.
-        /// </summary>
-        ValidatorNotFound,
-
-        ValidatorReturnedIllegalValidationState,
-        None,
     }
 }
