@@ -82,10 +82,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprintText,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
 #pragma warning restore IDE0060
+            fingerprint = default;
             if (!groups.TryGetNonEmptyValue("pat", out string pat))
             {
                 return ValidationState.NoMatch;
@@ -99,11 +100,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             if (state != ValidationState.NoMatch)
             {
-                fingerprintText = new Fingerprint()
+                fingerprint = new Fingerprint()
                 {
                     PersonalAccessToken = pat,
                     Platform = nameof(AssetPlatform.AzureDevOps),
-                }.ToString();
+                };
             }
 
             return state;

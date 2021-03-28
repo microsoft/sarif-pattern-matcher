@@ -29,7 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected ValidatorBase()
         {
-            FingerprintToResultCache = new ConcurrentDictionary<string, Tuple<ValidationState, string>>();
+            FingerprintToResultCache = new ConcurrentDictionary<Fingerprint, Tuple<ValidationState, string>>();
             PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// string representing a cached validation state and a user-facing
         /// message.
         /// </summary>
-        protected IDictionary<string, Tuple<ValidationState, string>> FingerprintToResultCache { get; }
+        protected IDictionary<Fingerprint, Tuple<ValidationState, string>> FingerprintToResultCache { get; }
 
         /// <summary>
         /// Gets a cache of file + fingerprint combinations that have been
@@ -66,14 +66,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                                            ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             ValidationState state = validator.IsValidStaticHelper(ref matchedPattern,
                                                          ref groups,
                                                          ref failureLevel,
-                                                         ref fingerprint,
-                                                         ref message);
+                                                         ref message,
+                                                         out fingerprint);
 
             if (state == ValidationState.NoMatch)
             {
@@ -94,7 +94,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         }
 
         public static ValidationState IsValidDynamic(ValidatorBase validator,
-                                            ref string fingerprint,
+                                            ref Fingerprint fingerprint,
                                             ref string message,
                                             ref Dictionary<string, string> options)
         {
@@ -110,11 +110,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                                                ref message,
                                                ref options);
 
-            if (fingerprint != null)
-            {
-                validator.FingerprintToResultCache[fingerprint] =
-                    new Tuple<ValidationState, string>(validationState, message);
-            }
+            validator.FingerprintToResultCache[fingerprint] =
+                new Tuple<ValidationState, string>(validationState, message);
 
             return validationState;
         }
@@ -289,21 +286,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// The current failure level associated with the match (if a match occurs). This parameter can be
         /// set to a different failure level by the callee, if appropriate.
         /// </param>
-        /// <param name="fingerprintText">
-        /// A SARIF fingerprint that identifies a logically unique secret. This parameter should be
-        /// set to null if no fingerprint can be computed that definitively identifies the secret.
-        /// </param>
         /// <param name="message">
         /// A message that can be used to pass additional information back to the user.
+        /// </param>
+        /// <param name="fingerprint">
+        /// A SARIF fingerprint that identifies a logically unique secret. This parameter should be
+        /// set to null if no fingerprint can be computed that definitively identifies the secret.
         /// </param>
         /// <returns>Return the validation state.</returns>
         protected abstract ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message);
+                                                      ref string message,
+                                                      out Fingerprint fingerprint);
 
-        protected virtual ValidationState IsValidDynamicHelper(ref string fingerprintText,
+        protected virtual ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                       ref string message,
                                                       ref Dictionary<string, string> options)
         {

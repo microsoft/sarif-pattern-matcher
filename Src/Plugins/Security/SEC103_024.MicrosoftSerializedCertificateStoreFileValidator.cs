@@ -15,25 +15,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
 #pragma warning restore IDE0060// Remove unused parameter
-                                           ref string fingerprintText,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
-            string thumbprint = null;
+            fingerprint = default;
 
-            ValidationState state =
-                CertificateHelper.TryLoadCertificateCollection(matchedPattern,
-                                                               ref thumbprint,
+            return CertificateHelper.TryLoadCertificateCollection(matchedPattern,
+                                                               ref fingerprint,
                                                                ref message);
-
-            if (thumbprint != null)
-            {
-                fingerprintText = new Fingerprint()
-                {
-                    Thumbprint = thumbprint,
-                }.ToString();
-            }
-
-            return state;
         }
     }
 }

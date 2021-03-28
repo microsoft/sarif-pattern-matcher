@@ -14,14 +14,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
     internal static class CertificateHelper
     {
         public static ValidationState TryLoadCertificate(string certificatePath,
-                                                ref string fingerprintText,
+                                                ref Fingerprint fingerprint,
                                                 ref string message)
         {
             try
             {
                 // If this certificate needs a password or it is a bundle, it will throw an exception.
                 using var certificate = new X509Certificate2(certificatePath);
-                fingerprintText = certificate.Thumbprint;
+                fingerprint.Thumbprint = certificate.Thumbprint;
 
                 if (!certificate.HasPrivateKey)
                 {
@@ -45,8 +45,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     if (e.Message == "Cannot find the original signer.")
                     {
                         return TryLoadCertificateCollection(certificatePath,
-                                                            ref message,
-                                                            ref fingerprintText);
+                                                            ref fingerprint,
+                                                            ref message);
                     }
 
                     if (e.Message == "The specified network password is not correct.")
@@ -60,7 +60,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
         }
 
         public static ValidationState TryLoadCertificateCollection(string certificatePath,
-                                                          ref string fingerprintText,
+                                                          ref Fingerprint fingerprint,
                                                           ref string message)
         {
             var certificates = new X509Certificate2Collection();
@@ -84,7 +84,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     }
                 }
 
-                fingerprintText = string.Join(";", thumbprints);
+                fingerprint.Thumbprint = string.Join(";", thumbprints);
                 message = "which contains private keys.";
                 return state;
             }
@@ -96,14 +96,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
         }
 
         public static ValidationState TryLoadCertificate(byte[] rawData,
-                                                ref string fingerprintText,
+                                                ref Fingerprint fingerprint,
                                                 ref string message)
         {
             try
             {
                 // If this certificate needs a password or it is a bundle, it will throw an exception.
                 using var certificate = new X509Certificate2(rawData);
-                fingerprintText = certificate.Thumbprint;
+                fingerprint.Thumbprint = certificate.Thumbprint;
 
                 if (!certificate.HasPrivateKey)
                 {
@@ -131,8 +131,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     if (e.Message.StartsWith("Cannot find the original signer."))
                     {
                         return TryLoadCertificateCollection(rawData,
-                                                            ref message,
-                                                            ref fingerprintText);
+                                                            ref fingerprint,
+                                                            ref message);
                     }
 
                     if (e.Message == "The specified network password is not correct.")
@@ -146,7 +146,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
         }
 
         public static ValidationState TryLoadCertificateCollection(byte[] rawData,
-                                                          ref string fingerprintText,
+                                                          ref Fingerprint fingerprint,
                                                           ref string message)
         {
             var certificates = new X509Certificate2Collection();
@@ -172,7 +172,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 
                 if (thumbprints.Count > 0)
                 {
-                    fingerprintText = string.Join(";", thumbprints);
+                    fingerprint.Thumbprint = string.Join(";", thumbprints);
                     message = "which contains private keys.";
                 }
 

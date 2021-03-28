@@ -16,10 +16,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 #pragma warning disable IDE0060 // Remove unused parameter
                                            ref string failureLevel,
 #pragma warning restore IDE0060
-                                           ref string fingerprintText,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
-            string thumbprint = null;
+            fingerprint = default;
             ValidationState state = ValidationState.Unknown;
 
             groups.TryGetValue("content", out string content);
@@ -33,16 +33,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             state = CertificateHelper.TryLoadCertificate(matchedPattern,
-                                                         ref thumbprint,
+                                                         ref fingerprint,
                                                          ref message);
-
-            if (thumbprint != null)
-            {
-                fingerprintText = new Fingerprint()
-                {
-                    Thumbprint = thumbprint,
-                }.ToString();
-            }
 
             return state;
         }

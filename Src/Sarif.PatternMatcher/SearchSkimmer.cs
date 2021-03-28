@@ -494,7 +494,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string levelText = level.ToString();
 
                 ValidationState state = 0;
-                string fingerprint = null;
+                Fingerprint fingerprint = default;
                 string validatorMessage = null;
                 string validationPrefix = string.Empty;
                 string validationSuffix = string.Empty;
@@ -506,8 +506,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                 ref refinedMatchedPattern,
                                                 ref groups,
                                                 ref levelText,
-                                                ref fingerprint,
                                                 ref validatorMessage,
+                                                out fingerprint,
                                                 out bool pluginSupportsDynamicValidation);
 
                     if (!Enum.TryParse<FailureLevel>(levelText, out level))
@@ -599,7 +599,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 groups["content"] = context.FileContents;
             }
 
-            string fingerprint = null, validatorMessage = null;
+            Fingerprint fingerprint = default;
+            string validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
             string filePath = context.TargetUri.IsAbsoluteUri
                 ? context.TargetUri.LocalPath
@@ -612,8 +613,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 ref filePath,
                                 ref groups,
                                 ref levelText,
-                                ref fingerprint,
                                 ref validatorMessage,
+                                out fingerprint,
                                 out bool pluginSupportsDynamicValidation);
 
                 if (!Enum.TryParse<FailureLevel>(levelText, out level))
@@ -831,7 +832,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FailureLevel level,
             Region region,
             FlexMatch flexMatch,
-            string fingerprint,
+            Fingerprint fingerprint,
             MatchExpression matchExpression,
             IList<string> arguments)
         {
@@ -891,16 +892,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        private Dictionary<string, string> BuildFingerprints(string fingerprintText, out double rank)
+        private Dictionary<string, string> BuildFingerprints(Fingerprint fingerprint, out double rank)
         {
-            rank = -1.0;
+            rank = -1;
 
-            if (string.IsNullOrWhiteSpace(fingerprintText))
+            if (fingerprint == default)
             {
                 return null;
             }
 
-            var fingerprint = new Fingerprint(fingerprintText);
             rank = fingerprint.GetRank();
 
             return new Dictionary<string, string>()

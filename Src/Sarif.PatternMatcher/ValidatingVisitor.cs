@@ -28,10 +28,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public override Result VisitResult(Result node)
         {
             if (node.Fingerprints == null ||
-                !node.Fingerprints.TryGetValue(SearchSkimmer.ValidationFingerprint, out string fingerprint))
+                !node.Fingerprints.TryGetValue(SearchSkimmer.ValidationFingerprint, out string fingerprintText))
             {
                 return node;
             }
+
+            var fingerprint = new Fingerprint(fingerprintText, validate: false);
 
             ReportingDescriptor rule = node.GetRule(_run);
 
