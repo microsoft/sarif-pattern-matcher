@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 
 using Microsoft.RE2.Managed;
 
@@ -16,6 +17,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
     {
         public const string ScanIdentityHttpCustomHeaderKey =
             "Automation-Scan-Description";
+
+        private static readonly RegexOptions s_options =
+            RegexOptions.ExplicitCapture | RegexOptions.Compiled;
+
+        private static readonly Regex s_noSuchHostIsKnown =
+            new Regex($@"No such host is known", s_options);
+
+        private static readonly Regex s_networkPathNotFound =
+            new Regex($@"The network path was not found", s_options);
+
+        private static readonly Regex s_remoteNameCouldNotBeResolved =
+            new Regex($@"The remote name could not be resolved: '(?<asset>[^']+)'", s_options);
+
+        private static readonly Regex s_underlyingConnectionWasClosed =
+            new Regex($@"The underlying connection was closed: Could not establish " +
+                         "trust relationship for the SSL/TLS secure channel.", s_options);
 
         private static bool shouldUseDynamicCache;
 
@@ -137,6 +154,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public static string CreateUnexpectedResponseCodeMessage(HttpStatusCode status, string asset = null)
         {
+            return CreateUnexpectedResponseCodeMessage(status, ref asset);
+        }
+
+        public static string CreateUnexpectedResponseCodeMessage(HttpStatusCode status, ref string asset)
+        {
             return asset == null ?
                 $"An unexpected HTTP response code was received: '{status}'." :
                 $"An unexpected HTTP response code was received from '{asset}': '{status}'.";
@@ -147,23 +169,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                                                                string asset = null,
                                                                string account = null)
         {
-            if (TestExceptionForMessage(e, "No such host is known", asset))
+
+            if (TestExceptionForMessage(e, s_noSuchHostIsKnown, ref asset))
             {
                 return ReturnUnknownHost(ref message, asset);
             }
 
-            if (TestExceptionForMessage(e, "The network path was not found", asset))
+            if (TestExceptionForMessage(e, s_networkPathNotFound, ref asset))
             {
                 return ReturnUnknownHost(ref message, asset);
             }
 
-            if (TestExceptionForMessage(e, "The remote name could not be resolved", asset))
+            if (TestExceptionForMessage(e, s_remoteNameCouldNotBeResolved, ref asset))
             {
                 return ReturnUnknownHost(ref message, asset);
             }
 
-            const string sslMessage = "The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.";
-            if (TestExceptionForMessage(e, sslMessage, asset))
+            if (TestExceptionForMessage(e, s_underlyingConnectionWasClosed, ref asset))
             {
                 return ReturnUnknownHost(ref message, asset);
             }
@@ -307,19 +329,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return ValidationState.NoMatch;
         }
 
-        private static bool TestExceptionForMessage(Exception e, string message, string asset)
+
+
+        private static bool TestExceptionForMessage(Exception e, Regex regex, ref string asset)
         {
             if (e == null)
             {
                 return false;
             }
 
-            if (e.Message.StartsWith(message))
+            Match match = regex.Match(e.Message);
+            if (match.Success)
             {
+                asset = asset ?? match.Groups?["asset"].Value;
                 return true;
             }
 
-            if (TestExceptionForMessage(e.InnerException, message, asset))
+            if (TestExceptionForMessage(e.InnerException, regex, ref asset))
             {
                 return true;
             }
@@ -329,7 +355,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             {
                 foreach (Exception aggregatedException in aggregateException.InnerExceptions)
                 {
-                    if (TestExceptionForMessage(aggregatedException, message, asset))
+                    if (TestExceptionForMessage(aggregatedException, regex, ref asset))
                     {
                         return true;
                     }
