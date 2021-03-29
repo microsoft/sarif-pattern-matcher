@@ -28,11 +28,1600 @@
           "ContentsRegex": "$SEC105/002.AnalysisAssume",
           "Fixes": {
             "testKey": {
-              "Description": "Replace __analysis_assume with _Analysis_assume_",
+              "Description": "Automatic AnalysisAssume",
               "Find": "__analysis_assume",
               "ReplaceWith": "_Analysis_assume_"
             }
           }
+        },
+        {
+          "Id": "SEC105/003",
+          "Name": "CorrectUseOfSal/AssumeBound",
+          "ContentsRegex": "$SEC105/003.AssumeBound",
+          "Fixes": {
+            "testKey": {
+              "Description": "Delete AssumeBound",
+              "Find": ";__assume_bound",
+              "ReplaceWith": ""
+            }
+          }
+        },
+        {
+          "Id": "SEC105/004",
+          "Name": "CorrectUseOfSal/AssumeBound",
+          "ContentsRegex": "$SEC105/003.AssumeBound"
+        },
+        {
+          "Id": "SEC105/005",
+          "Name": "CorrectUseOfSal/Bcount",
+          "ContentsRegex": "$SEC105/004.AssumeBound"
+        },
+        {
+          "Id": "SEC105/006",
+          "Name": "CorrectUseOfSal/BcountOpt",
+          "ContentsRegex": "$SEC105/005.Bcount"
+        },
+        {
+          "Id": "SEC105/007",
+          "Name": "CorrectUseOfSal/Bound",
+          "ContentsRegex": "$SEC105/007.Bound",
+          "Fixes": {
+            "testKey": {
+              "Description": "Delete Bound",
+              "Find": "__bound",
+              "ReplaceWith": ""
+            }
+          }
+        },
+        {
+          "Id": "SEC105/008",
+          "Name": "CorrectUseOfSal/ByteReadableto",
+          "ContentsRegex": "$SEC105/008.ByteReadableto",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic ByteReadableto",
+              "Find": "__byte_readableTo",
+              "ReplaceWith": "_Readable_bytes_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/009",
+          "Name": "CorrectUseOfSal/ByteWritableto",
+          "ContentsRegex": "$SEC105/009.ByteWritableto",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic ByteWritableto",
+              "Find": "__byte_writableTo",
+              "ReplaceWith": "_Writable_bytes_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/010",
+          "Name": "CorrectUseOfSal/Checkreturn",
+          "ContentsRegex": "$SEC105/010.Checkreturn",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic Checkreturn",
+              "Find": "__checkReturn",
+              "ReplaceWith": "_Check_return_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/011",
+          "Name": "CorrectUseOfSal/ControlEntrypoint",
+          "ContentsRegex": "$SEC105/011.ControlEntrypoint",
+          "Fixes": {
+            "testKey": {
+              "Description": "Delete ControlEntrypoint",
+              "Find": ";__control_entrypoint",
+              "ReplaceWith": ""
+            }
+          }
+        },
+        {
+          "Id": "SEC105/012",
+          "Name": "CorrectUseOfSal/ControlEntrypoint",
+          "ContentsRegex": "$SEC105/011.ControlEntrypoint"
+        },
+        {
+          "Id": "SEC105/013",
+          "Name": "CorrectUseOfSal/DataEntrypoint",
+          "ContentsRegex": "$SEC105/013.DataEntrypoint",
+          "Fixes": {
+            "testKey": {
+              "Description": "Delete DataEntrypoint",
+              "Find": ";__data_entrypoint",
+              "ReplaceWith": ""
+            }
+          }
+        },
+        {
+          "Id": "SEC105/014",
+          "Name": "CorrectUseOfSal/DataEntrypoint",
+          "ContentsRegex": "$SEC105/013.DataEntrypoint"
+        },
+        {
+          "Id": "SEC105/015",
+          "Name": "CorrectUseOfSal/Deref",
+          "ContentsRegex": "$SEC105/014.DataEntrypoint"
+        },
+        {
+          "Id": "SEC105/016",
+          "Name": "CorrectUseOfSal/DerefBcount",
+          "ContentsRegex": "$SEC105/015.Deref"
+        },
+        {
+          "Id": "SEC105/017",
+          "Name": "CorrectUseOfSal/DerefEcount",
+          "ContentsRegex": "$SEC105/016.DerefBcount"
+        },
+        {
+          "Id": "SEC105/018",
+          "Name": "CorrectUseOfSal/DerefEcountOpt",
+          "ContentsRegex": "$SEC105/017.DerefEcount"
+        },
+        {
+          "Id": "SEC105/019",
+          "Name": "CorrectUseOfSal/DerefIn",
+          "ContentsRegex": "$SEC105/019.DerefIn",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefIn",
+              "Find": "__deref_in",
+              "ReplaceWith": " _In_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/020",
+          "Name": "CorrectUseOfSal/DerefInBcountOpt",
+          "ContentsRegex": "$SEC105/019.DerefIn"
+        },
+        {
+          "Id": "SEC105/021",
+          "Name": "CorrectUseOfSal/DerefInOptOut",
+          "ContentsRegex": "$SEC105/020.DerefInBcountOpt"
+        },
+        {
+          "Id": "SEC105/022",
+          "Name": "CorrectUseOfSal/DerefInRange",
+          "ContentsRegex": "$SEC105/021.DerefInOptOut"
+        },
+        {
+          "Id": "SEC105/023",
+          "Name": "CorrectUseOfSal/DerefInout",
+          "ContentsRegex": "$SEC105/023.DerefInout",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefInout",
+              "Find": "__deref_inout",
+              "ReplaceWith": "_Inout_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/024",
+          "Name": "CorrectUseOfSal/DerefInoutBcount",
+          "ContentsRegex": "$SEC105/023.DerefInout"
+        },
+        {
+          "Id": "SEC105/025",
+          "Name": "CorrectUseOfSal/DerefInoutBcountOpt",
+          "ContentsRegex": "$SEC105/024.DerefInoutBcount"
+        },
+        {
+          "Id": "SEC105/026",
+          "Name": "CorrectUseOfSal/DerefInoutBcountPart",
+          "ContentsRegex": "$SEC105/025.DerefInoutBcountOpt"
+        },
+        {
+          "Id": "SEC105/027",
+          "Name": "CorrectUseOfSal/DerefInoutEcount",
+          "ContentsRegex": "$SEC105/026.DerefInoutBcountPart"
+        },
+        {
+          "Id": "SEC105/028",
+          "Name": "CorrectUseOfSal/DerefInoutEcountPart",
+          "ContentsRegex": "$SEC105/027.DerefInoutEcount"
+        },
+        {
+          "Id": "SEC105/029",
+          "Name": "CorrectUseOfSal/DerefInoutEcountZ",
+          "ContentsRegex": "$SEC105/028.DerefInoutEcountPart"
+        },
+        {
+          "Id": "SEC105/030",
+          "Name": "CorrectUseOfSal/DerefInoutOpt",
+          "ContentsRegex": "$SEC105/030.DerefInoutOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefInoutOpt",
+              "Find": "__deref_inout_opt",
+              "ReplaceWith": "_Inout_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/031",
+          "Name": "CorrectUseOfSal/DerefInoutRange",
+          "ContentsRegex": "$SEC105/030.DerefInoutOpt"
+        },
+        {
+          "Id": "SEC105/032",
+          "Name": "CorrectUseOfSal/DerefInoutXcount",
+          "ContentsRegex": "$SEC105/031.DerefInoutRange"
+        },
+        {
+          "Id": "SEC105/033",
+          "Name": "CorrectUseOfSal/DerefInoutZ",
+          "ContentsRegex": "$SEC105/032.DerefInoutXcount"
+        },
+        {
+          "Id": "SEC105/034",
+          "Name": "CorrectUseOfSal/DerefOptInout",
+          "ContentsRegex": "$SEC105/034.DerefOptInout",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOptInout",
+              "Find": "__deref_opt_inout",
+              "ReplaceWith": "_Inout_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/035",
+          "Name": "CorrectUseOfSal/DerefOptInoutBcountFull",
+          "ContentsRegex": "$SEC105/034.DerefOptInout"
+        },
+        {
+          "Id": "SEC105/036",
+          "Name": "CorrectUseOfSal/DerefOptInoutBcountPartOpt",
+          "ContentsRegex": "$SEC105/035.DerefOptInoutBcountFull"
+        },
+        {
+          "Id": "SEC105/037",
+          "Name": "CorrectUseOfSal/DerefOptInoutOpt",
+          "ContentsRegex": "$SEC105/037.DerefOptInoutOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOptInoutOpt",
+              "Find": "__deref_opt_inout_opt",
+              "ReplaceWith": "_Inout_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/038",
+          "Name": "CorrectUseOfSal/DerefOptOut",
+          "ContentsRegex": "$SEC105/038.DerefOptOut",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOptOut",
+              "Find": "__deref_opt_out",
+              "ReplaceWith": "_Outptr_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/039",
+          "Name": "CorrectUseOfSal/DerefOptOutBcount",
+          "ContentsRegex": "$SEC105/038.DerefOptOut"
+        },
+        {
+          "Id": "SEC105/040",
+          "Name": "CorrectUseOfSal/DerefOptOutBcountFull",
+          "ContentsRegex": "$SEC105/039.DerefOptOutBcount"
+        },
+        {
+          "Id": "SEC105/041",
+          "Name": "CorrectUseOfSal/DerefOptOutBcountOpt",
+          "ContentsRegex": "$SEC105/041.DerefOptOutBcountOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOptOutBcountOpt",
+              "Find": "__deref_opt_out_bcount_opt",
+              "ReplaceWith": "_Outptr_opt_result_bytebuffer_maybenull_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/042",
+          "Name": "CorrectUseOfSal/DerefOptOutEcount",
+          "ContentsRegex": "$SEC105/041.DerefOptOutBcountOpt"
+        },
+        {
+          "Id": "SEC105/043",
+          "Name": "CorrectUseOfSal/DerefOptOutOpt",
+          "ContentsRegex": "$SEC105/043.DerefOptOutOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOptOutOpt",
+              "Find": "__deref_opt_out_opt",
+              "ReplaceWith": "_Outptr_opt_result_maybenull_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/044",
+          "Name": "CorrectUseOfSal/DerefOptOutXcount",
+          "ContentsRegex": "$SEC105/043.DerefOptOutOpt"
+        },
+        {
+          "Id": "SEC105/045",
+          "Name": "CorrectUseOfSal/DerefOptOutZ",
+          "ContentsRegex": "$SEC105/045.DerefOptOutZ",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOptOutZ",
+              "Find": "__deref_opt_out_z",
+              "ReplaceWith": "_Outptr_opt_result_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/046",
+          "Name": "CorrectUseOfSal/DerefOptOutZOpt",
+          "ContentsRegex": "$SEC105/046.DerefOptOutZOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOptOutZOpt",
+              "Find": "__deref_opt_out_z_opt",
+              "ReplaceWith": "_Outptr_opt_result_maybenull_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/047",
+          "Name": "CorrectUseOfSal/DerefOut",
+          "ContentsRegex": "$SEC105/047.DerefOut",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOut",
+              "Find": "__deref_out",
+              "ReplaceWith": "_Outptr_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/048",
+          "Name": "CorrectUseOfSal/DerefOutBcount",
+          "ContentsRegex": "$SEC105/048.DerefOutBcount",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOutBcount",
+              "Find": "__deref_out_bcount",
+              "ReplaceWith": "_Outptr_result_bytebuffer_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/049",
+          "Name": "CorrectUseOfSal/DerefOutBcountFull",
+          "ContentsRegex": "$SEC105/049.DerefOutBcountFull",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual DerefOutBcountFull",
+              "Find": "__deref_out_bcount_full",
+              "ReplaceWith": "_Outptr_result_bytebuffer_to_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/050",
+          "Name": "CorrectUseOfSal/DerefOutBcountFullOpt",
+          "ContentsRegex": "$SEC105/049.DerefOutBcountFull"
+        },
+        {
+          "Id": "SEC105/051",
+          "Name": "CorrectUseOfSal/DerefOutBcountOpt",
+          "ContentsRegex": "$SEC105/051.DerefOutBcountOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOutBcountOpt",
+              "Find": "__deref_out_bcount_opt",
+              "ReplaceWith": "_Outptr_result_bytebuffer_maybenull_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/052",
+          "Name": "CorrectUseOfSal/DerefOutBcountPart",
+          "ContentsRegex": "$SEC105/052.DerefOutBcountPart",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOutBcountPart",
+              "Find": "__deref_out_bcount_part",
+              "ReplaceWith": "_Outptr_result_bytebuffer_to_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/053",
+          "Name": "CorrectUseOfSal/DerefOutEcount",
+          "ContentsRegex": "$SEC105/053.DerefOutEcount",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOutEcount",
+              "Find": "__deref_out_ecount",
+              "ReplaceWith": "_Outptr_result_buffer_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/054",
+          "Name": "CorrectUseOfSal/DerefOutEcountFull",
+          "ContentsRegex": "$SEC105/054.DerefOutEcountFull",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual DerefOutEcountFull",
+              "Find": "__deref_out_ecount_full",
+              "ReplaceWith": "_Outptr_result_buffer_to_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/055",
+          "Name": "CorrectUseOfSal/DerefOutEcountFullOpt",
+          "ContentsRegex": "$SEC105/054.DerefOutEcountFull"
+        },
+        {
+          "Id": "SEC105/056",
+          "Name": "CorrectUseOfSal/DerefOutEcountOpt",
+          "ContentsRegex": "$SEC105/056.DerefOutEcountOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOutEcountOpt",
+              "Find": "__deref_out_ecount_opt",
+              "ReplaceWith": "_Outptr_result_buffer_maybenull_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/057",
+          "Name": "CorrectUseOfSal/DerefOutEcountPart",
+          "ContentsRegex": "$SEC105/057.DerefOutEcountPart",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOutEcountPart",
+              "Find": "__deref_out_ecount_part",
+              "ReplaceWith": "_Outptr_result_buffer_to_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/058",
+          "Name": "CorrectUseOfSal/DerefOutEcountZOpt",
+          "ContentsRegex": "$SEC105/057.DerefOutEcountPart"
+        },
+        {
+          "Id": "SEC105/059",
+          "Name": "CorrectUseOfSal/DerefOutOpt",
+          "ContentsRegex": "$SEC105/059.DerefOutOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOutOpt",
+              "Find": "__deref_out_opt",
+              "ReplaceWith": "_Outptr_result_maybenull_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/060",
+          "Name": "CorrectUseOfSal/DerefOutRange",
+          "ContentsRegex": "$SEC105/060.DerefOutRange",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOutRange",
+              "Find": "__deref_out_range",
+              "ReplaceWith": "_Deref_out_range_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/061",
+          "Name": "CorrectUseOfSal/DerefOutXcount",
+          "ContentsRegex": "$SEC105/060.DerefOutRange"
+        },
+        {
+          "Id": "SEC105/062",
+          "Name": "CorrectUseOfSal/DerefOutXcountPart",
+          "ContentsRegex": "$SEC105/061.DerefOutXcount"
+        },
+        {
+          "Id": "SEC105/063",
+          "Name": "CorrectUseOfSal/DerefOutZ",
+          "ContentsRegex": "$SEC105/063.DerefOutZ",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOutZ",
+              "Find": "__deref_out_z",
+              "ReplaceWith": "_Outptr_result_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/064",
+          "Name": "CorrectUseOfSal/DerefOutZOpt",
+          "ContentsRegex": "$SEC105/064.DerefOutZOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic DerefOutZOpt",
+              "Find": "__deref_out_z_opt",
+              "ReplaceWith": "_Outptr_result_maybenull_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/065",
+          "Name": "CorrectUseOfSal/Ecount",
+          "ContentsRegex": "$SEC105/064.DerefOutZOpt"
+        },
+        {
+          "Id": "SEC105/066",
+          "Name": "CorrectUseOfSal/ElemReadableto",
+          "ContentsRegex": "$SEC105/066.ElemReadableto",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic ElemReadableto",
+              "Find": "__elem_readableTo",
+              "ReplaceWith": "_Readable_elements_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/067",
+          "Name": "CorrectUseOfSal/ElemWritableto",
+          "ContentsRegex": "$SEC105/067.ElemWritableto",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic ElemWritableto",
+              "Find": "__elem_writableTo",
+              "ReplaceWith": "_Writable_elements_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/068",
+          "Name": "CorrectUseOfSal/Exceptthat",
+          "ContentsRegex": "$SEC105/067.ElemWritableto"
+        },
+        {
+          "Id": "SEC105/069",
+          "Name": "CorrectUseOfSal/FieldBcount",
+          "ContentsRegex": "$SEC105/069.FieldBcount",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic FieldBcount",
+              "Find": "__field_bcount",
+              "ReplaceWith": "_Field_size_bytes_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/070",
+          "Name": "CorrectUseOfSal/FieldBcountFull",
+          "ContentsRegex": "$SEC105/070.FieldBcountFull",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic FieldBcountFull",
+              "Find": "__field_bcount_full",
+              "ReplaceWith": "_Field_size_bytes_full_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/071",
+          "Name": "CorrectUseOfSal/FieldBcountOpt",
+          "ContentsRegex": "$SEC105/071.FieldBcountOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic FieldBcountOpt",
+              "Find": "__field_bcount_opt",
+              "ReplaceWith": "_Field_size_bytes_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/072",
+          "Name": "CorrectUseOfSal/FieldBcountPart",
+          "ContentsRegex": "$SEC105/072.FieldBcountPart",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic FieldBcountPart",
+              "Find": "__field_bcount_part",
+              "ReplaceWith": "_Field_size_bytes_part_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/073",
+          "Name": "CorrectUseOfSal/FieldBcountPartOpt",
+          "ContentsRegex": "$SEC105/073.FieldBcountPartOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic FieldBcountPartOpt",
+              "Find": "__field_bcount_part_opt",
+              "ReplaceWith": "_Field_size_bytes_part_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/074",
+          "Name": "CorrectUseOfSal/FieldEcount",
+          "ContentsRegex": "$SEC105/074.FieldEcount",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic FieldEcount",
+              "Find": "__field_ecount",
+              "ReplaceWith": "_Field_size_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/075",
+          "Name": "CorrectUseOfSal/FieldEcountFull",
+          "ContentsRegex": "$SEC105/075.FieldEcountFull",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic FieldEcountFull",
+              "Find": "__field_ecount_full",
+              "ReplaceWith": "_Field_size_full_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/076",
+          "Name": "CorrectUseOfSal/FieldEcountOpt",
+          "ContentsRegex": "$SEC105/076.FieldEcountOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic FieldEcountOpt",
+              "Find": "__field_ecount_opt",
+              "ReplaceWith": "_Field_size_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/077",
+          "Name": "CorrectUseOfSal/FieldEcountPart",
+          "ContentsRegex": "$SEC105/077.FieldEcountPart",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic FieldEcountPart",
+              "Find": "__field_ecount_part",
+              "ReplaceWith": "_Field_size_part_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/078",
+          "Name": "CorrectUseOfSal/FieldNullterminated",
+          "ContentsRegex": "$SEC105/078.FieldNullterminated",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic FieldNullterminated",
+              "Find": "__field_nullterminated",
+              "ReplaceWith": "_Field_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/079",
+          "Name": "CorrectUseOfSal/FieldRange",
+          "ContentsRegex": "$SEC105/079.FieldRange",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic FieldRange",
+              "Find": "__field_range",
+              "ReplaceWith": "_Field_range_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/080",
+          "Name": "CorrectUseOfSal/FormatString",
+          "ContentsRegex": "$SEC105/079.FieldRange"
+        },
+        {
+          "Id": "SEC105/081",
+          "Name": "CorrectUseOfSal/GdiEntry",
+          "ContentsRegex": "$SEC105/081.GdiEntry",
+          "Fixes": {
+            "testKey": {
+              "Description": "Delete GdiEntry",
+              "Find": "__gdi_entry",
+              "ReplaceWith": ""
+            }
+          }
+        },
+        {
+          "Id": "SEC105/082",
+          "Name": "CorrectUseOfSal/In",
+          "ContentsRegex": "$SEC105/082.In",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic In",
+              "Find": "__in",
+              "ReplaceWith": "_In_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/083",
+          "Name": "CorrectUseOfSal/InBcount",
+          "ContentsRegex": "$SEC105/083.InBcount",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InBcount",
+              "Find": "__in_bcount",
+              "ReplaceWith": "_In_reads_bytes_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/084",
+          "Name": "CorrectUseOfSal/InBcountOpt",
+          "ContentsRegex": "$SEC105/084.InBcountOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InBcountOpt",
+              "Find": "__in_bcount_opt",
+              "ReplaceWith": "_In_reads_bytes_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/085",
+          "Name": "CorrectUseOfSal/InBcountZ",
+          "ContentsRegex": "$SEC105/085.InBcountZ",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual InBcountZ",
+              "Find": "__in_bcount_z",
+              "ReplaceWith": "_In_reads_bytes_ _Pre_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/086",
+          "Name": "CorrectUseOfSal/InBound",
+          "ContentsRegex": "$SEC105/086.InBound",
+          "Fixes": {
+            "testKey": {
+              "Description": "Delete InBound",
+              "Find": "__in_bound",
+              "ReplaceWith": ""
+            }
+          }
+        },
+        {
+          "Id": "SEC105/087",
+          "Name": "CorrectUseOfSal/InEcount",
+          "ContentsRegex": "$SEC105/087.InEcount",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InEcount",
+              "Find": "__in_ecount",
+              "ReplaceWith": "_In_reads_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/088",
+          "Name": "CorrectUseOfSal/InEcountOpt",
+          "ContentsRegex": "$SEC105/088.InEcountOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InEcountOpt",
+              "Find": "__in_ecount_opt",
+              "ReplaceWith": "_In_reads_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/089",
+          "Name": "CorrectUseOfSal/InEcountOrZ",
+          "ContentsRegex": "$SEC105/089.InEcountOrZ",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InEcountOrZ",
+              "Find": "__in_ecount_or_z",
+              "ReplaceWith": "_In_reads_or_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/090",
+          "Name": "CorrectUseOfSal/InEcountZ",
+          "ContentsRegex": "$SEC105/090.InEcountZ",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual InEcountZ",
+              "Find": "__in_ecount_z",
+              "ReplaceWith": "_In_reads_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/091",
+          "Name": "CorrectUseOfSal/InOpt",
+          "ContentsRegex": "$SEC105/091.InOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InOpt",
+              "Find": "__in_opt",
+              "ReplaceWith": "_In_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/092",
+          "Name": "CorrectUseOfSal/InRange",
+          "ContentsRegex": "$SEC105/092.InRange",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InRange",
+              "Find": "__in_range",
+              "ReplaceWith": "_In_range_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/093",
+          "Name": "CorrectUseOfSal/InXcount",
+          "ContentsRegex": "$SEC105/092.InRange"
+        },
+        {
+          "Id": "SEC105/094",
+          "Name": "CorrectUseOfSal/InXcountOpt",
+          "ContentsRegex": "$SEC105/093.InXcount"
+        },
+        {
+          "Id": "SEC105/095",
+          "Name": "CorrectUseOfSal/InZ",
+          "ContentsRegex": "$SEC105/095.InZ",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InZ",
+              "Find": "__in_z",
+              "ReplaceWith": "_In_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/096",
+          "Name": "CorrectUseOfSal/InZOpt",
+          "ContentsRegex": "$SEC105/096.InZOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InZOpt",
+              "Find": "__in_z_opt",
+              "ReplaceWith": "_In_opt_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/097",
+          "Name": "CorrectUseOfSal/InexpressibleReadableto",
+          "ContentsRegex": "$SEC105/096.InZOpt"
+        },
+        {
+          "Id": "SEC105/098",
+          "Name": "CorrectUseOfSal/Inout",
+          "ContentsRegex": "$SEC105/098.Inout",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic Inout",
+              "Find": "__inout",
+              "ReplaceWith": "_Inout_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/099",
+          "Name": "CorrectUseOfSal/InoutBcount",
+          "ContentsRegex": "$SEC105/099.InoutBcount",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InoutBcount",
+              "Find": "__inout_bcount",
+              "ReplaceWith": "_Inout_updates_bytes_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/100",
+          "Name": "CorrectUseOfSal/InoutBcountFull",
+          "ContentsRegex": "$SEC105/100.InoutBcountFull",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual InoutBcountFull",
+              "Find": "__inout_bcount_full",
+              "ReplaceWith": "_Inout_updates_bytes_all_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/101",
+          "Name": "CorrectUseOfSal/InoutBcountFullOpt",
+          "ContentsRegex": "$SEC105/101.InoutBcountFullOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual InoutBcountFullOpt",
+              "Find": "__inout_bcount_full_opt",
+              "ReplaceWith": "_Inout_updates_bytes_all_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/102",
+          "Name": "CorrectUseOfSal/InoutBcountOpt",
+          "ContentsRegex": "$SEC105/102.InoutBcountOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InoutBcountOpt",
+              "Find": "__inout_bcount_opt",
+              "ReplaceWith": "_Inout_updates_bytes_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/103",
+          "Name": "CorrectUseOfSal/InoutBcountPart",
+          "ContentsRegex": "$SEC105/103.InoutBcountPart",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InoutBcountPart",
+              "Find": "__inout_bcount_part",
+              "ReplaceWith": "_Inout_updates_bytes_to_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/104",
+          "Name": "CorrectUseOfSal/InoutBcountPartOpt",
+          "ContentsRegex": "$SEC105/104.InoutBcountPartOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InoutBcountPartOpt",
+              "Find": "__inout_bcount_part_opt",
+              "ReplaceWith": "_Inout_updates_bytes_to_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/105",
+          "Name": "CorrectUseOfSal/InoutBcountZ",
+          "ContentsRegex": "$SEC105/104.InoutBcountPartOpt"
+        },
+        {
+          "Id": "SEC105/106",
+          "Name": "CorrectUseOfSal/InoutEcount",
+          "ContentsRegex": "$SEC105/106.InoutEcount",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InoutEcount",
+              "Find": "__inout_ecount",
+              "ReplaceWith": "_Inout_updates_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/107",
+          "Name": "CorrectUseOfSal/InoutEcountFull",
+          "ContentsRegex": "$SEC105/107.InoutEcountFull",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual InoutEcountFull",
+              "Find": "__inout_ecount_full",
+              "ReplaceWith": "_Inout_updates_all_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/108",
+          "Name": "CorrectUseOfSal/InoutEcountFullOptManual",
+          "ContentsRegex": "$SEC105/107.InoutEcountFull"
+        },
+        {
+          "Id": "SEC105/109",
+          "Name": "CorrectUseOfSal/InoutEcountOpt",
+          "ContentsRegex": "$SEC105/109.InoutEcountOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InoutEcountOpt",
+              "Find": "__inout_ecount_opt",
+              "ReplaceWith": "_Inout_updates_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/110",
+          "Name": "CorrectUseOfSal/InoutEcountPart",
+          "ContentsRegex": "$SEC105/110.InoutEcountPart",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InoutEcountPart",
+              "Find": "__inout_ecount_part",
+              "ReplaceWith": "_Inout_updates_to_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/111",
+          "Name": "CorrectUseOfSal/InoutEcountPartOpt",
+          "ContentsRegex": "$SEC105/111.InoutEcountPartOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InoutEcountPartOpt",
+              "Find": "__inout_ecount_part_opt",
+              "ReplaceWith": "_Inout_updates_to_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/112",
+          "Name": "CorrectUseOfSal/InoutEcountZ",
+          "ContentsRegex": "$SEC105/112.InoutEcountZ",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InoutEcountZ",
+              "Find": "__inout_ecount_z",
+              "ReplaceWith": "_Inout_updates_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/113",
+          "Name": "CorrectUseOfSal/InoutOpt",
+          "ContentsRegex": "$SEC105/113.InoutOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InoutOpt",
+              "Find": "__inout_opt",
+              "ReplaceWith": "_Inout_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/114",
+          "Name": "CorrectUseOfSal/InoutXcount",
+          "ContentsRegex": "$SEC105/113.InoutOpt"
+        },
+        {
+          "Id": "SEC105/115",
+          "Name": "CorrectUseOfSal/InoutXcountOpt",
+          "ContentsRegex": "$SEC105/114.InoutXcount"
+        },
+        {
+          "Id": "SEC105/116",
+          "Name": "CorrectUseOfSal/InoutZ",
+          "ContentsRegex": "$SEC105/116.InoutZ",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic InoutZ",
+              "Find": "__inout_z",
+              "ReplaceWith": "_Inout_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/117",
+          "Name": "CorrectUseOfSal/InternalKernelDriver",
+          "ContentsRegex": "$SEC105/116.InoutZ"
+        },
+        {
+          "Id": "SEC105/118",
+          "Name": "CorrectUseOfSal/KernelDriver",
+          "ContentsRegex": "$SEC105/118.KernelDriver",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic KernelDriver",
+              "Find": "__kernel_driver",
+              "ReplaceWith": " _Analysis_mode_(_Analysis_code_type_kernel_driver_)"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/119",
+          "Name": "CorrectUseOfSal/Maybenull",
+          "ContentsRegex": "$SEC105/118.KernelDriver"
+        },
+        {
+          "Id": "SEC105/120",
+          "Name": "CorrectUseOfSal/Maybevalid",
+          "ContentsRegex": "$SEC105/119.Maybenull"
+        },
+        {
+          "Id": "SEC105/121",
+          "Name": "CorrectUseOfSal/Notnull",
+          "ContentsRegex": "$SEC105/120.Maybevalid"
+        },
+        {
+          "Id": "SEC105/122",
+          "Name": "CorrectUseOfSal/Notvalid",
+          "ContentsRegex": "$SEC105/121.Notnull"
+        },
+        {
+          "Id": "SEC105/123",
+          "Name": "CorrectUseOfSal/Null",
+          "ContentsRegex": "$SEC105/122.Notvalid"
+        },
+        {
+          "Id": "SEC105/124",
+          "Name": "CorrectUseOfSal/Nullnullterminated",
+          "ContentsRegex": "$SEC105/124.Nullnullterminated",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual Nullnullterminated",
+              "Find": "__nullnullterminated",
+              "ReplaceWith": "_NullNull_terminated_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/125",
+          "Name": "CorrectUseOfSal/Nullterminated",
+          "ContentsRegex": "$SEC105/125.Nullterminated",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual Nullterminated",
+              "Find": "__nullterminated",
+              "ReplaceWith": "_Pre_z_ or _Post_z_ or _Null_terminated_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/126",
+          "Name": "CorrectUseOfSal/OnFailure",
+          "ContentsRegex": "$SEC105/126.OnFailure",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OnFailure",
+              "Find": "__on_failure",
+              "ReplaceWith": "_On_failure_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/127",
+          "Name": "CorrectUseOfSal/Out",
+          "ContentsRegex": "$SEC105/127.Out",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic Out",
+              "Find": "__out",
+              "ReplaceWith": "_Out_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/128",
+          "Name": "CorrectUseOfSal/OutAwcount",
+          "ContentsRegex": "$SEC105/127.Out"
+        },
+        {
+          "Id": "SEC105/129",
+          "Name": "CorrectUseOfSal/OutBcount",
+          "ContentsRegex": "$SEC105/129.OutBcount",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OutBcount",
+              "Find": "__out_bcount",
+              "ReplaceWith": "_Out_writes_bytes_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/130",
+          "Name": "CorrectUseOfSal/OutBcountFull",
+          "ContentsRegex": "$SEC105/130.OutBcountFull",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual OutBcountFull",
+              "Find": "__out_bcount_full",
+              "ReplaceWith": "_Out_writes_bytes_all_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/131",
+          "Name": "CorrectUseOfSal/OutBcountFullOpt",
+          "ContentsRegex": "$SEC105/131.OutBcountFullOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual OutBcountFullOpt",
+              "Find": "__out_bcount_full_opt",
+              "ReplaceWith": "_Out_writes_bytes_all_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/132",
+          "Name": "CorrectUseOfSal/OutBcountOpt",
+          "ContentsRegex": "$SEC105/132.OutBcountOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OutBcountOpt",
+              "Find": "__out_bcount_opt",
+              "ReplaceWith": "_Out_writes_bytes_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/133",
+          "Name": "CorrectUseOfSal/OutBcountPart",
+          "ContentsRegex": "$SEC105/133.OutBcountPart",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OutBcountPart",
+              "Find": "__out_bcount_part",
+              "ReplaceWith": "_Out_writes_bytes_to_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/134",
+          "Name": "CorrectUseOfSal/OutBcountPartOpt",
+          "ContentsRegex": "$SEC105/134.OutBcountPartOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OutBcountPartOpt",
+              "Find": "__out_bcount_part_opt",
+              "ReplaceWith": "_Out_writes_bytes_to_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/135",
+          "Name": "CorrectUseOfSal/OutBcountPartZ",
+          "ContentsRegex": "$SEC105/134.OutBcountPartOpt"
+        },
+        {
+          "Id": "SEC105/136",
+          "Name": "CorrectUseOfSal/OutBcountZOpt",
+          "ContentsRegex": "$SEC105/135.OutBcountPartZ"
+        },
+        {
+          "Id": "SEC105/137",
+          "Name": "CorrectUseOfSal/OutEcount",
+          "ContentsRegex": "$SEC105/137.OutEcount",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OutEcount",
+              "Find": "__out_ecount",
+              "ReplaceWith": "_Out_writes_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/138",
+          "Name": "CorrectUseOfSal/OutEcountFull",
+          "ContentsRegex": "$SEC105/138.OutEcountFull",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual OutEcountFull",
+              "Find": "__out_ecount_full",
+              "ReplaceWith": "_Out_writes_all_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/139",
+          "Name": "CorrectUseOfSal/OutEcountFullOpt",
+          "ContentsRegex": "$SEC105/139.OutEcountFullOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual OutEcountFullOpt",
+              "Find": "__out_ecount_full_opt",
+              "ReplaceWith": "_Out_writes_all_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/140",
+          "Name": "CorrectUseOfSal/OutEcountFullZ",
+          "ContentsRegex": "$SEC105/139.OutEcountFullOpt"
+        },
+        {
+          "Id": "SEC105/141",
+          "Name": "CorrectUseOfSal/OutEcountOpt",
+          "ContentsRegex": "$SEC105/141.OutEcountOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OutEcountOpt",
+              "Find": "__out_ecount_opt",
+              "ReplaceWith": "_Out_writes_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/142",
+          "Name": "CorrectUseOfSal/OutEcountPart",
+          "ContentsRegex": "$SEC105/142.OutEcountPart",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OutEcountPart",
+              "Find": "__out_ecount_part",
+              "ReplaceWith": "_Out_writes_to_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/143",
+          "Name": "CorrectUseOfSal/OutEcountPartOpt",
+          "ContentsRegex": "$SEC105/143.OutEcountPartOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OutEcountPartOpt",
+              "Find": "__out_ecount_part_opt",
+              "ReplaceWith": "_Out_writes_to_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/144",
+          "Name": "CorrectUseOfSal/OutEcountPartZ",
+          "ContentsRegex": "$SEC105/143.OutEcountPartOpt"
+        },
+        {
+          "Id": "SEC105/145",
+          "Name": "CorrectUseOfSal/OutEcountPartZOpt",
+          "ContentsRegex": "$SEC105/144.OutEcountPartZ"
+        },
+        {
+          "Id": "SEC105/146",
+          "Name": "CorrectUseOfSal/OutEcountZ",
+          "ContentsRegex": "$SEC105/146.OutEcountZ",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OutEcountZ",
+              "Find": "__out_ecount_z",
+              "ReplaceWith": "_Out_writes_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/147",
+          "Name": "CorrectUseOfSal/OutEcountZOpt",
+          "ContentsRegex": "$SEC105/147.OutEcountZOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OutEcountZOpt",
+              "Find": "__out_ecount_z_opt",
+              "ReplaceWith": "_Out_writes_opt_z_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/148",
+          "Name": "CorrectUseOfSal/OutOpt",
+          "ContentsRegex": "$SEC105/148.OutOpt",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OutOpt",
+              "Find": "__out_opt",
+              "ReplaceWith": "_Out_opt_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/149",
+          "Name": "CorrectUseOfSal/OutRange",
+          "ContentsRegex": "$SEC105/149.OutRange",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic OutRange",
+              "Find": "__out_range",
+              "ReplaceWith": "_Out_range_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/150",
+          "Name": "CorrectUseOfSal/OutValidated",
+          "ContentsRegex": "$SEC105/150.OutValidated",
+          "Fixes": {
+            "testKey": {
+              "Description": "Delete OutValidated",
+              "Find": ";__out_validated",
+              "ReplaceWith": ""
+            }
+          }
+        },
+        {
+          "Id": "SEC105/151",
+          "Name": "CorrectUseOfSal/OutValidated",
+          "ContentsRegex": "$SEC105/150.OutValidated"
+        },
+        {
+          "Id": "SEC105/152",
+          "Name": "CorrectUseOfSal/OutXcount",
+          "ContentsRegex": "$SEC105/151.OutValidated"
+        },
+        {
+          "Id": "SEC105/153",
+          "Name": "CorrectUseOfSal/OutXcountOpt",
+          "ContentsRegex": "$SEC105/152.OutXcount"
+        },
+        {
+          "Id": "SEC105/154",
+          "Name": "CorrectUseOfSal/OutXcountPartOpt",
+          "ContentsRegex": "$SEC105/153.OutXcountOpt"
+        },
+        {
+          "Id": "SEC105/155",
+          "Name": "CorrectUseOfSal/OutZ",
+          "ContentsRegex": "$SEC105/154.OutXcountPartOpt"
+        },
+        {
+          "Id": "SEC105/156",
+          "Name": "CorrectUseOfSal/OutZOpt",
+          "ContentsRegex": "$SEC105/155.OutZ"
+        },
+        {
+          "Id": "SEC105/157",
+          "Name": "CorrectUseOfSal/PossiblyNotnullterminated",
+          "ContentsRegex": "$SEC105/157.PossiblyNotnullterminated",
+          "Fixes": {
+            "testKey": {
+              "Description": "Delete PossiblyNotnullterminated",
+              "Find": "__possibly_notnullterminated",
+              "ReplaceWith": ""
+            }
+          }
+        },
+        {
+          "Id": "SEC105/158",
+          "Name": "CorrectUseOfSal/Post",
+          "ContentsRegex": "$SEC105/157.PossiblyNotnullterminated"
+        },
+        {
+          "Id": "SEC105/159",
+          "Name": "CorrectUseOfSal/PostInvalid",
+          "ContentsRegex": "$SEC105/158.Post"
+        },
+        {
+          "Id": "SEC105/160",
+          "Name": "CorrectUseOfSal/PostNullnullterminated",
+          "ContentsRegex": "$SEC105/160.PostNullnullterminated",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic PostNullnullterminated",
+              "Find": "__post_nullnullterminated",
+              "ReplaceWith": "_Post_ _NullNull_terminated_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/161",
+          "Name": "CorrectUseOfSal/Pre",
+          "ContentsRegex": "$SEC105/160.PostNullnullterminated"
+        },
+        {
+          "Id": "SEC105/162",
+          "Name": "CorrectUseOfSal/Precond",
+          "ContentsRegex": "$SEC105/161.Pre"
+        },
+        {
+          "Id": "SEC105/163",
+          "Name": "CorrectUseOfSal/PrefastOperatorNewNull",
+          "ContentsRegex": "$SEC105/162.Precond"
+        },
+        {
+          "Id": "SEC105/164",
+          "Name": "CorrectUseOfSal/Range",
+          "ContentsRegex": "$SEC105/163.PrefastOperatorNewNull"
+        },
+        {
+          "Id": "SEC105/165",
+          "Name": "CorrectUseOfSal/Refparam",
+          "ContentsRegex": "$SEC105/165.Refparam",
+          "Fixes": {
+            "testKey": {
+              "Description": "Delete Refparam",
+              "Find": "__refparam",
+              "ReplaceWith": ""
+            }
+          }
+        },
+        {
+          "Id": "SEC105/166",
+          "Name": "CorrectUseOfSal/Reserved",
+          "ContentsRegex": "$SEC105/166.Reserved",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic Reserved",
+              "Find": "__reserved",
+              "ReplaceWith": "_Reserved_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/167",
+          "Name": "CorrectUseOfSal/SalHFullVer",
+          "ContentsRegex": "$SEC105/166.Reserved"
+        },
+        {
+          "Id": "SEC105/168",
+          "Name": "CorrectUseOfSal/Specstrings",
+          "ContentsRegex": "$SEC105/167.SalHFullVer"
+        },
+        {
+          "Id": "SEC105/169",
+          "Name": "CorrectUseOfSal/StructBcount",
+          "ContentsRegex": "$SEC105/169.StructBcount",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic StructBcount",
+              "Find": "__struct_bcount",
+              "ReplaceWith": "_Struct_size_bytes_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/170",
+          "Name": "CorrectUseOfSal/StructXcount",
+          "ContentsRegex": "$SEC105/169.StructBcount"
+        },
+        {
+          "Id": "SEC105/171",
+          "Name": "CorrectUseOfSal/Success",
+          "ContentsRegex": "$SEC105/171.Success",
+          "Fixes": {
+            "testKey": {
+              "Description": "Manual Success",
+              "Find": "__success",
+              "ReplaceWith": "_Success_ or _Return_type_success_"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/172",
+          "Name": "CorrectUseOfSal/Typefix",
+          "ContentsRegex": "$SEC105/171.Success"
+        },
+        {
+          "Id": "SEC105/173",
+          "Name": "CorrectUseOfSal/UserCode",
+          "ContentsRegex": "$SEC105/173.UserCode",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic UserCode",
+              "Find": "__user_code",
+              "ReplaceWith": "_Analysis_mode_(_Analysis_code_type_user_code_)"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/174",
+          "Name": "CorrectUseOfSal/UserDriver",
+          "ContentsRegex": "$SEC105/174.UserDriver",
+          "Fixes": {
+            "testKey": {
+              "Description": "Automatic UserDriver",
+              "Find": "__user_driver",
+              "ReplaceWith": "_Analysis_mode_(_Analysis_code_type_user_driver_)"
+            }
+          }
+        },
+        {
+          "Id": "SEC105/175",
+          "Name": "CorrectUseOfSal/Writableto",
+          "ContentsRegex": "$SEC105/174.UserDriver"
+        },
+        {
+          "Id": "SEC105/176",
+          "Name": "CorrectUseOfSal/Valid",
+          "ContentsRegex": "$SEC105/175.Writableto"
+        },
+        {
+          "Id": "SEC105/177",
+          "Name": "CorrectUseOfSal/Xcount",
+          "ContentsRegex": "$SEC105/176.Valid"
         }
       ]
     }
