@@ -1,0 +1,21 @@
+{
+  "ValidatorsAssemblyName": "SalAnalyzer.dll",
+  "SharedStringsFileName": "SalAnalyzer.SharedStrings.txt",
+  "Definitions": [
+    {
+      "Id": "SEC105",
+      "Name": "CorrectUseOfSal",
+      "Level": "Warning",
+      "FileNameAllowRegex": "$CSourceFiles",
+      "Description": "Use SAL correctly.",
+      "Message": "'{0:scanTarget}' contains incorrect or out-dated use of SAL: {1:validatorMessage}.",
+      "MatchExpressions": [
+        {
+          "Id": "SEC105/001",
+          "Name": "CorrectUseOfSal/AnalysisAssume",
+          "ContentsRegex": "$SEC105/001.AnalysisAssume"
+        }
+      ]
+    }
+  ]
+}

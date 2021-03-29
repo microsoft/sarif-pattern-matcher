@@ -16,7 +16,7 @@ using Newtonsoft.Json;
 
 using Xunit.Abstractions;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SalAnalyzer
 {
     public abstract class EndToEndTests : FileDiffingUnitTests
     {
@@ -63,10 +63,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string productBinaryName = TestBinaryName.Substring("Tests.".Length);
 
+            //string regexDefinitions = Path.Combine(
+            //    Path.GetDirectoryName(typeof(RebaseUriVisitor).Assembly.Location),
+            //    @"..\..\",
+            //    @$"{productBinaryName}\{Framework}\{RuleId}.{TypeUnderTest}.json");
+
+            //  TODO: Why did we have to modify this path?
             string regexDefinitions = Path.Combine(
                 Path.GetDirectoryName(typeof(RebaseUriVisitor).Assembly.Location),
-                @"..\..\",
-                @$"{productBinaryName}\{Framework}\{RuleId}.{TypeUnderTest}.json");
+                @"",
+                @$"{RuleId}.{TypeUnderTest}.json");
 
             string filePath = Path.Combine(
                 ProductTestDataDirectory,
@@ -133,6 +139,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected void RunAllTests()
         {
+            string testVar = ProductTestDataDirectory;
+
             Directory.Exists(ProductTestDataDirectory).Should().BeTrue();
 
             string testsDirectory = Path.Combine(ProductTestDataDirectory, @"Inputs\");
