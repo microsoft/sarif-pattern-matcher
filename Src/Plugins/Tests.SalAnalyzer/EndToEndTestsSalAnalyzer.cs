@@ -4,13 +4,17 @@
 using System;
 using System.IO;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security;
+
 using Xunit.Abstractions;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SalAnalyzer
 {
     public abstract class EndToEndTestsSalAnalyzer : EndToEndTests
     {
-        public EndToEndTestsSalAnalyzer(ITestOutputHelper outputHelper) : base(outputHelper) { }
+        public EndToEndTestsSalAnalyzer(ITestOutputHelper outputHelper) : base(outputHelper)
+        {
+        }
 
         protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SalAnalyzer.TestData.{TypeUnderTest}";
 
@@ -18,14 +22,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SalAnalyzer
         {
             get
             {
-                // TODO: why was this wrong?
                 string path = typeof(EndToEndTestsSalAnalyzer).Assembly.Location;
-                path = Path.GetDirectoryName(GitHelper.Default.GetTopLevel(path));
-                return Path.Combine(path, @"Plugins\Tests.SalAnalyzer");
-
-                //string dll = typeof(EndToEndTestsSalAnalyzer).Assembly.Location;
-                //string path = Path.GetDirectoryName(dll);
-                //return path;
+                path = GitHelper.Default.GetTopLevel(path);
+                return Path.Combine(path, @"src\Plugins\Tests.SalAnalyzer");
             }
         }
     }

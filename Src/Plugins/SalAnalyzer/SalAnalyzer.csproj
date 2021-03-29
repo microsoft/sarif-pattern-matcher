@@ -1,8 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	<TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
-    <!--<TargetFramework>netstandard2.1</TargetFramework>-->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.common.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.product.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.plugins.props" />
+  
+  <PropertyGroup Label="AssemblyAttributes">
+    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.SalAnalyzer</RootNamespace>
+    <PackageId>Sarif.PatternMatcher.SalAnalyzer</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +23,10 @@
     <Content Include="SEC105.CorrectUseOfSal.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
   </ItemGroup>
 
 </Project>
