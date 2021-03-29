@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SalAnalyzer
         // Set this value to 'true' temporarily and rerun tests to update
         // test files in all \ExpectedOutputs\ locations. This value needs
         // to be set to 'false' against in order for suites to actually pass.
-        protected override bool RebaselineExpectedResults => true;
+        protected override bool RebaselineExpectedResults => false;
 
         // We set this to false to prevent the base class from verifying this
         // condition after executing every single test. Doing so would result in
@@ -40,9 +40,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SalAnalyzer
 
         protected abstract string Framework { get; }
 
-        protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.TestData.{TypeUnderTest}";
+        protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SalAnalyzer.TestData.{TypeUnderTest}";
 
-        protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @"Plugins\Tests.Security");
+        protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @"Plugins\Tests.SalAnalyzer");
 
         protected override IDictionary<string, string> ConstructTestOutputsFromInputResources(IEnumerable<string> inputResourceNames, object parameter)
         {

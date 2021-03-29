@@ -6,7 +6,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SalAnalyzer
 {
-    public class CorrectUseOfSalTests : EndToEndTestsSalAnalyzer
+    public class CorrectUseOfSalTests : EndToEndTests
     {
         public CorrectUseOfSalTests(ITestOutputHelper outputHelper) : base(outputHelper)
         {
