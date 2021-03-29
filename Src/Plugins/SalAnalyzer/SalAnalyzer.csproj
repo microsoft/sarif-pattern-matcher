@@ -12,15 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="SalAnalyzer.SharedStrings.txt" />
-    <None Remove="SEC105.CorrectUseOfSal.json" />
-  </ItemGroup>
-
-  <ItemGroup>
+	<Content Include="SEC105.CorrectUseOfSal.json">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
     <Content Include="SalAnalyzer.SharedStrings.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SEC105.CorrectUseOfSal.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -29,4 +24,12 @@
     <ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+	<SpamFiles Include="$(MSBuildThisFileDirectory)*.json" />
+  </ItemGroup>
+	
+  <Target Name="CopyingSpam" AfterTargets="Build">
+	<Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\SalAnalyzer\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+	<Copy SourceFiles="SalAnalyzer.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\SalAnalyzer\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+  </Target>
 </Project>
