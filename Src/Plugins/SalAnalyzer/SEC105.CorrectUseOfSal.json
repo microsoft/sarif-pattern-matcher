@@ -12,8 +12,27 @@
       "MatchExpressions": [
         {
           "Id": "SEC105/001",
+          "Name": "CorrectUseOfSal/Allocator",
+          "ContentsRegex": "$SEC105/001.Allocator",
+          "Fixes": {
+            "testKey": {
+              "Description": "Delete Allocator",
+              "Find": "__allocator",
+              "ReplaceWith": ""
+            }
+          }
+        },
+        {
+          "Id": "SEC105/002",
           "Name": "CorrectUseOfSal/AnalysisAssume",
-          "ContentsRegex": "$SEC105/001.AnalysisAssume"
+          "ContentsRegex": "$SEC105/002.AnalysisAssume",
+          "Fixes": {
+            "testKey": {
+              "Description": "Replace __analysis_assume with _Analysis_assume_",
+              "Find": "__analysis_assume",
+              "ReplaceWith": "_Analysis_assume_"
+            }
+          }
         }
       ]
     }

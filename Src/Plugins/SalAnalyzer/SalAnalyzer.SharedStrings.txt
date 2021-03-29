@@ -21,5 +21,6 @@
   $BinaryFiles=(?i)\.(bmp|dll|exe|gif|jpe?g|lock|pack|png|psd|tar\.gz|tiff?|ttf|wmf|xcf|zip)$
   $SourceFiles=(?i)\.(azure|bat|c|cmd|config|cpp|cs|cscfg|definitions|dtsx|h|hxx|hpp|ini|java|jsx?|json|keys|kt|loadtest|m|md|php|properties|ps1|psm1|pubxml|py|resx|sample|sql|ste|swift|test|tsx?|txt|waz|xml)$
 
-  $SEC105/001.AnalysisAssume=__analysis_assume
+  $SEC105/001.Allocator=__allocator
+  $SEC105/002.AnalysisAssume=__analysis_assume
   
