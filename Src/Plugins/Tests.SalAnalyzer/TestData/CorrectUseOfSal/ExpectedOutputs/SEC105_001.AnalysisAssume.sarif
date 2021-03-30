@@ -43,6 +43,86 @@
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            },
+            {
+              "id": "SEC105/082",
+              "name": "CorrectUseOfSal/In",
+              "fullDescription": {
+                "text": "Use SAL correctly."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' contains incorrect or out-dated use of SAL: {1}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            },
+            {
+              "id": "SEC105/119",
+              "name": "CorrectUseOfSal/Maybenull",
+              "fullDescription": {
+                "text": "Use SAL correctly."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' contains incorrect or out-dated use of SAL: {1}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            },
+            {
+              "id": "SEC105/121",
+              "name": "CorrectUseOfSal/Notnull",
+              "fullDescription": {
+                "text": "Use SAL correctly."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' contains incorrect or out-dated use of SAL: {1}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            },
+            {
+              "id": "SEC105/158",
+              "name": "CorrectUseOfSal/Post",
+              "fullDescription": {
+                "text": "Use SAL correctly."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' contains incorrect or out-dated use of SAL: {1}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            },
+            {
+              "id": "SEC105/159",
+              "name": "CorrectUseOfSal/PostInvalid",
+              "fullDescription": {
+                "text": "Use SAL correctly."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' contains incorrect or out-dated use of SAL: {1}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             }
           ]
         }
@@ -203,7 +283,7 @@
           "fixes": [
             {
               "description": {
-                "text": "Replace __analysis_assume with _Analysis_assume_"
+                "text": "Automatic AnalysisAssume"
               },
               "artifactChanges": [
                 {
@@ -224,6 +304,256 @@
                   ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC105/082",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC105_001.AnalysisAssume.cpp",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SalAnalyzer/TestData/CorrectUseOfSal/Inputs/SEC105_001.AnalysisAssume.cpp",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 77,
+                  "endLine": 1,
+                  "endColumn": 81,
+                  "charOffset": 76,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "__in"
+                  }
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Automatic In"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/Plugins/Tests.SalAnalyzer/TestData/CorrectUseOfSal/Inputs/SEC105_001.AnalysisAssume.cpp",
+                    "uriBaseId": "SRC_ROOT"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 76,
+                        "charLength": 4
+                      },
+                      "insertedContent": {
+                        "text": "_In_"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC105/119",
+          "ruleIndex": 3,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC105_001.AnalysisAssume.cpp",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SalAnalyzer/TestData/CorrectUseOfSal/Inputs/SEC105_001.AnalysisAssume.cpp",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 92,
+                  "endLine": 3,
+                  "endColumn": 103,
+                  "charOffset": 301,
+                  "charLength": 11,
+                  "snippet": {
+                    "text": "__maybenull"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC105/121",
+          "ruleIndex": 4,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC105_001.AnalysisAssume.cpp",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SalAnalyzer/TestData/CorrectUseOfSal/Inputs/SEC105_001.AnalysisAssume.cpp",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 88,
+                  "endLine": 2,
+                  "endColumn": 97,
+                  "charOffset": 183,
+                  "charLength": 9,
+                  "snippet": {
+                    "text": "__notnull"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC105/158",
+          "ruleIndex": 5,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC105_001.AnalysisAssume.cpp",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SalAnalyzer/TestData/CorrectUseOfSal/Inputs/SEC105_001.AnalysisAssume.cpp",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 98,
+                  "endLine": 2,
+                  "endColumn": 104,
+                  "charOffset": 193,
+                  "charLength": 6,
+                  "snippet": {
+                    "text": "__post"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC105/158",
+          "ruleIndex": 5,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC105_001.AnalysisAssume.cpp",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SalAnalyzer/TestData/CorrectUseOfSal/Inputs/SEC105_001.AnalysisAssume.cpp",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 104,
+                  "endLine": 3,
+                  "endColumn": 110,
+                  "charOffset": 313,
+                  "charLength": 6,
+                  "snippet": {
+                    "text": "__post"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC105/159",
+          "ruleIndex": 6,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC105_001.AnalysisAssume.cpp",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SalAnalyzer/TestData/CorrectUseOfSal/Inputs/SEC105_001.AnalysisAssume.cpp",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 98,
+                  "endLine": 2,
+                  "endColumn": 112,
+                  "charOffset": 193,
+                  "charLength": 14,
+                  "snippet": {
+                    "text": "__post_invalid"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC105/159",
+          "ruleIndex": 6,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC105_001.AnalysisAssume.cpp",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SalAnalyzer/TestData/CorrectUseOfSal/Inputs/SEC105_001.AnalysisAssume.cpp",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 104,
+                  "endLine": 3,
+                  "endColumn": 118,
+                  "charOffset": 313,
+                  "charLength": 14,
+                  "snippet": {
+                    "text": "__post_invalid"
+                  }
+                }
+              }
             }
           ]
         }
