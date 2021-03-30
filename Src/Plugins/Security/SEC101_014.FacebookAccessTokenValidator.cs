@@ -17,38 +17,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new FacebookAccessTokenValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
                                  ref failureLevel,
-                                 ref fingerprint,
-                                 ref message);
+                                 ref message,
+                                 out fingerprint);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
+            fingerprint = default;
             if (!groups.TryGetNonEmptyValue("refine", out string key))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
-            fingerprintText = new Fingerprint()
+            fingerprint = new Fingerprint()
             {
                 Key = key,
                 Platform = nameof(AssetPlatform.Facebook),
-            }.ToString();
+            };
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
     }
 }

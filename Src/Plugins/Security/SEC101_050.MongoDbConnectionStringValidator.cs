@@ -22,57 +22,56 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             Instance = new MongoDbConnectionStringValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
                                  ref failureLevel,
-                                 ref fingerprint,
-                                 ref message);
+                                 ref message,
+                                 out fingerprint);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  ref options);
-        }
+        // public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
+        // {
+        //     return IsValidDynamic(Instance,
+        //                           ref fingerprint,
+        //                           ref message,
+        //                           ref options);
+        // }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
+            fingerprint = default;
             if (!groups.TryGetNonEmptyValue("account", out string account) ||
                 !groups.TryGetNonEmptyValue("password", out string password) ||
                 !groups.TryGetNonEmptyValue("host", out string host))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
-            fingerprintText = new Fingerprint()
+            fingerprint = new Fingerprint()
             {
                 Account = account,
                 Password = password,
                 Host = host,
-            }.ToString();
+            };
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            var fingerprint = new Fingerprint(fingerprintText, false);
-
             string host = fingerprint.Host;
             string account = fingerprint.Account;
             string password = fingerprint.Password;
@@ -82,7 +81,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 var dbClient = new MongoClient($"mongodb+srv://{account}:{password}@{host}/?connectTimeoutMS=3000");
                 List<BsonDocument> databases = dbClient.ListDatabases().ToList();
                 message = $"The following databases are compromised: {string.Join(",", databases.Select(q => $"'{q["name"].AsString}'"))}";
-                return nameof(ValidationState.AuthorizedError);
+                return ValidationState.AuthorizedError;
             }
             catch (Exception e)
             {

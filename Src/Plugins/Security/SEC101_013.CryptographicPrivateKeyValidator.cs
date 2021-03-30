@@ -23,29 +23,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new CryptographicPrivateKeyValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return ValidatorBase.IsValidStatic(Instance,
                                                ref matchedPattern,
                                                ref groups,
                                                ref failureLevel,
-                                               ref fingerprint,
-                                               ref message);
+                                               ref message,
+                                               out fingerprint);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
+            fingerprint = default;
             if (!groups.TryGetNonEmptyValue("key", out string key))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             groups.TryGetValue("kind", out string kind);
@@ -57,21 +58,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             if (key.IndexOf('"') > -1)
             {
                 string[] linesArray = key.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-                linesArray = linesArray.Select(x =>
-                {
-                    return string.Join(string.Empty, x.Replace("\\n", string.Empty)
+                linesArray = linesArray.Select(x => string.Join(string.Empty, x.Replace("\\n", string.Empty)
                                                       .Replace("\"", string.Empty)
-                                                      .Where(c => !char.IsWhiteSpace(c)));
-                }).ToArray();
+                                                      .Where(c => !char.IsWhiteSpace(c)))).ToArray();
                 key = string.Join(Environment.NewLine, linesArray);
             }
 
-            fingerprintText = new Fingerprint
+            fingerprint = new Fingerprint
             {
                 Key = key,
-            }.ToString();
+            };
 
-            string state = nameof(ValidationState.Unknown);
+            ValidationState state = ValidationState.Unknown;
 
             switch (kind)
             {
@@ -87,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         bytes[10] != 'A' ||
                         bytes[11] != '2')
                     {
-                        return nameof(ValidationState.NoMatch);
+                        return ValidationState.NoMatch;
                     }
 
                     break;
@@ -103,7 +101,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     byte[] bytes = Encoding.UTF8.GetBytes(matchedPattern);
                     state = CertificateHelper.TryLoadCertificate(bytes,
-                                                                 ref fingerprintText,
+                                                                 ref fingerprint,
                                                                  ref message);
                     break;
                 }
@@ -111,10 +109,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 default:
                 {
                     string thumbprint = string.Empty;
-                    byte[] rawData = Convert.FromBase64String(key);
-                    state = CertificateHelper.TryLoadCertificate(rawData,
-                                                                 ref thumbprint,
-                                                                 ref message);
+                    try
+                    {
+                        byte[] rawData = Convert.FromBase64String(key);
+                        state = CertificateHelper.TryLoadCertificate(rawData,
+                                                                     ref fingerprint,
+                                                                     ref message);
+                    }
+                    catch (FormatException)
+                    {
+                        return ValidationState.NoMatch;
+                    }
+
                     break;
                 }
             }
@@ -122,7 +128,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return state;
         }
 
-        private static string GetPrivatePgpKey(string key)
+        private static ValidationState GetPrivatePgpKey(string key)
         {
             using Stream keyIn = new MemoryStream(Encoding.UTF8.GetBytes(key));
             using Stream stream = PgpUtilities.GetDecoderStream(keyIn);
@@ -146,16 +152,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         continue;
                     }
 
-                    return nameof(ValidationState.AuthorizedError);
+                    return ValidationState.AuthorizedError;
                 }
             }
 
             if (oneOrMorePassphraseProtectedKeys)
             {
-                return nameof(ValidationState.PasswordProtected);
+                return ValidationState.PasswordProtected;
             }
 
-            return nameof(ValidationState.NoMatch);
+            return ValidationState.NoMatch;
         }
     }
 }

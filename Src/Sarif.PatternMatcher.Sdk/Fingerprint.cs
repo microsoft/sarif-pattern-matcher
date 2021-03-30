@@ -32,6 +32,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         private const char RightBracketReplacement = '\t';
         private const string HashKey = "7B2FD4B8B55B49428DBFB22C9E61D817";
+
         private const string Base64EncodingSymbolSet =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
@@ -55,36 +56,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 SymmetricKey128BitKeyName,
                 SymmetricKey256BitKeyName,
             });
-
-        /// <summary>
-        /// Normalized specific Shannon entropy. See https://rosettacode.org/wiki/Entropy.
-        /// </summary>
-        /// <param name="input">Input string to be analyzed.</param>
-        /// <param name="countOfPossibleSymbols">Count of possible symbols.</param>
-        /// <returns>A normalized specific Shannon entropy level for the input string.</returns>
-        public static double ShannonEntropy(string input, int countOfPossibleSymbols)
-        {
-            double entropy = 0;
-
-            if (string.IsNullOrWhiteSpace(input)) { return entropy; }
-
-            var charCounts = new Dictionary<char, double>();
-
-            foreach (char ch in input)
-            {
-                charCounts.TryGetValue(ch, out double count);
-                charCounts[ch] = ++count;
-            }
-
-            foreach (char ch in charCounts.Keys)
-            {
-                double count = charCounts[ch];
-                double frequency = count / input.Length;
-                entropy += -(frequency * Math.Log(frequency, countOfPossibleSymbols));
-            }
-
-            return entropy;
-        }
 
         public Fingerprint(string fingerprintText, bool validate = true)
         {
@@ -168,6 +139,46 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// the normalized Shannon entropy of the key or password).
         /// </summary>
         public int SecretSymbolSetCount { get; set; }
+
+        public static bool operator ==(Fingerprint op1, Fingerprint op2)
+        {
+            return op1.Equals(op2);
+        }
+
+        public static bool operator !=(Fingerprint op1, Fingerprint op2)
+        {
+            return !op1.Equals(op2);
+        }
+
+        /// <summary>
+        /// Normalized specific Shannon entropy. See https://rosettacode.org/wiki/Entropy.
+        /// </summary>
+        /// <param name="input">Input string to be analyzed.</param>
+        /// <param name="countOfPossibleSymbols">Count of possible symbols.</param>
+        /// <returns>A normalized specific Shannon entropy level for the input string.</returns>
+        public static double ShannonEntropy(string input, int countOfPossibleSymbols)
+        {
+            double entropy = 0;
+
+            if (string.IsNullOrWhiteSpace(input)) { return entropy; }
+
+            var charCounts = new Dictionary<char, double>();
+
+            foreach (char ch in input)
+            {
+                charCounts.TryGetValue(ch, out double count);
+                charCounts[ch] = ++count;
+            }
+
+            foreach (char ch in charCounts.Keys)
+            {
+                double count = charCounts[ch];
+                double frequency = count / input.Length;
+                entropy += -(frequency * Math.Log(frequency, countOfPossibleSymbols));
+            }
+
+            return entropy;
+        }
 
         public string GetComprehensiveFingerprintText() => ToString(this, denyList: s_emptyDenyList);
 
@@ -262,6 +273,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public override string ToString()
         {
             return ToString(this, s_emptyDenyList);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Fingerprint equatable &&
+                Id == equatable.Id &&
+                Key == equatable.Key &&
+                Uri == equatable.Uri &&
+                Hmac == equatable.Hmac &&
+                Host == equatable.Host &&
+                Port == equatable.Port &&
+                Account == equatable.Account &&
+                KeyName == equatable.KeyName &&
+                Password == equatable.Password &&
+                SasToken == equatable.SasToken &&
+                Platform == equatable.Platform &&
+                Resource == equatable.Resource &&
+                Thumbprint == equatable.Thumbprint &&
+                SymmetricKey128Bit == equatable.SymmetricKey128Bit &&
+                SymmetricKey256Bit == equatable.SymmetricKey256Bit &&
+                PersonalAccessToken == equatable.PersonalAccessToken;
         }
 
         internal static string ToString(Fingerprint f, ISet<string> denyList)

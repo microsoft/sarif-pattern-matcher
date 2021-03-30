@@ -29,55 +29,56 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new AlibabaAccessKeyValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
                                  ref failureLevel,
-                                 ref fingerprint,
-                                 ref message);
+                                 ref message,
+                                 out fingerprint);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  ref options);
-        }
+        // TODO: uncomment when Alibaba release a signed package/dll.
+        // public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
+        // {
+        //     return IsValidDynamic(Instance,
+        //                           ref fingerprint,
+        //                           ref message,
+        //                           ref options);
+        // }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
+            fingerprint = default;
             if (!groups.TryGetNonEmptyValue("account", out string account) ||
                 !groups.TryGetNonEmptyValue("password", out string password))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
-            fingerprintText = new Fingerprint()
+            fingerprint = new Fingerprint()
             {
                 Platform = nameof(AssetPlatform.AlibabaCloud),
                 Account = account,
                 Password = password,
-            }.ToString();
+            };
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            var fingerprint = new Fingerprint(fingerprintText);
             string account = fingerprint.Account;
             string password = fingerprint.Password;
 
@@ -101,7 +102,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 if (!response.ErrorMessage.Equals(ProductKeyInvalidFormat))
                 {
                     message = $"Unexpected response from Alibaba Cloud: '{response.ErrorMessage}'";
-                    return nameof(ValidationState.Unknown);
+                    return ValidationState.Unknown;
                 }
             }
             catch (ClientException ce)
@@ -110,7 +111,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case KeyNotFound:
                         // Not even the client id we found is valid. Return no match.
-                        return nameof(ValidationState.NoMatch);
+                        return ValidationState.NoMatch;
 
                     case InvalidSecret:
                         // The client ID is valid but the secret was not.

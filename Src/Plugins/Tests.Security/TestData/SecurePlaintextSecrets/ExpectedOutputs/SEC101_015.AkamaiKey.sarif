@@ -78,7 +78,7 @@
             "ValidationFingerprint/v1": "[host=https://akab-xxxxx-yyyyy.purge.akamaiapis.net][id=akab-client-token-xxx-xxxxxxxxxxxxxxxx][key=akab-access-token-xxx-xxxxxxxxxxxxxxxx][pwd=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=]",
             "ValidationFingerprintHash/v1": "79b46c768fffc5ddf91cd424c964b692ab306197f9d258c4b9421618b4e81edc"
           },
-          "rank": 36.82546438092656
+          "rank": 36.83
         },
         {
           "ruleId": "SEC101/015",
@@ -121,7 +121,7 @@
             "ValidationFingerprint/v1": "[host=https://akaa-baseurl-xxxxxxxxxxx-xxxxxxxxxxxxx.luna.akamaiapis.net][id=akab-client-token-xxx-xxxxxxxxxxxxxxxx][key=akab-access-token-xxx-xxxxxxxxxxxxxxxx][pwd=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=]",
             "ValidationFingerprintHash/v1": "9d08800893d0a3adf72f59dc5d759c751f4e669700a3d532e681cf815a809390"
           },
-          "rank": 36.82546438092656
+          "rank": 36.83
         },
         {
           "ruleId": "SEC101/015",
@@ -164,7 +164,7 @@
             "ValidationFingerprint/v1": "[host=https://akaa-baseurl-xxxxxxxxxxx-xxxxxxxxxxxxx.luna.akamaiapis.net][id=akab-client-token-xxx-xxxxxxxxxxxxxxxx][key=akab-access-token-xxx-xxxxxxxxxxxyyyyy][pwd=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=]",
             "ValidationFingerprintHash/v1": "78c70718fc60661d0384c3a8d0e18a2a286fa5cc7952328af2a4d9bde5c59493"
           },
-          "rank": 42.76456715242463
+          "rank": 42.76
         }
       ],
       "columnKind": "utf16CodeUnits"
