@@ -74,9 +74,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=user][host=host][resource=database1]",
-            "ValidationFingerprint/v1": "[acct=user][host=host][pwd=password][resource=database1]",
-            "ValidationFingerprintHash/v1": "a6f1c12d3e4399407fd6a5805c6f44499d95fbbfe74f8d67475269d6655ad695"
+            "AssetFingerprint/v1": "[account=user][host=host][resource=database1]",
+            "ValidationFingerprint/v1": "[account=user][host=host][resource=database1][secret=password]",
+            "ValidationFingerprintHash/v1": "6fca3c991627de637acae53a73a1510f1e6bdf0f36d2b8810d32c0aa51f80b67"
           },
           "rank": 39.29
         },
@@ -117,9 +117,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=user][host=host][resource=database2]",
-            "ValidationFingerprint/v1": "[acct=user][host=host][pwd=password][resource=database2]",
-            "ValidationFingerprintHash/v1": "ef155284baee0ded3ef82c7489e9457197f26dea1ec08d894e82391dce2674d6"
+            "AssetFingerprint/v1": "[account=user][host=host][resource=database2]",
+            "ValidationFingerprint/v1": "[account=user][host=host][resource=database2][secret=password]",
+            "ValidationFingerprintHash/v1": "b53861c88e635199c2cbec85eae8ce73e3560703e46ed7e89c6396b23c9bd2b8"
           },
           "rank": 39.29
         },
@@ -160,9 +160,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=user][host=host][resource=database3]",
-            "ValidationFingerprint/v1": "[acct=user][host=host][pwd=password][resource=database3]",
-            "ValidationFingerprintHash/v1": "c6ab3b95d6897462e61e03b0ab284f2e35c3b0aa0df63f1b8d8f4f742f37d828"
+            "AssetFingerprint/v1": "[account=user][host=host][resource=database3]",
+            "ValidationFingerprint/v1": "[account=user][host=host][resource=database3][secret=password]",
+            "ValidationFingerprintHash/v1": "cfa38e5cdcc8cbc9427e4c73d1cdfc253fb6bc80114b2aaa85ec2ae3e3ea43d9"
           },
           "rank": 39.29
         },
@@ -203,9 +203,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=user][host=host:1234][resource=database4]",
-            "ValidationFingerprint/v1": "[acct=user][host=host:1234][pwd=password][resource=database4]",
-            "ValidationFingerprintHash/v1": "f010b8872de262184fbd81f40c5a43596df07f82fdfe893c25632a5af97af642"
+            "AssetFingerprint/v1": "[account=user][host=host:1234][resource=database4]",
+            "ValidationFingerprint/v1": "[account=user][host=host:1234][resource=database4][secret=password]",
+            "ValidationFingerprintHash/v1": "3c3fda13d68dbf5447329bc749ad6f243626e235cdc2ff0e4cc4a8f17d86a83d"
           },
           "rank": 39.29
         }

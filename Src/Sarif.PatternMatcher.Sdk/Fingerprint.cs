@@ -187,11 +187,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 return ShannonEntropy(this.Secret, symbolSetCount) * 100;
             }
 
-            if (!string.IsNullOrEmpty(this.Secret))
-            {
-                return ShannonEntropy(this.Secret, symbolSetCount) * 100;
-            }
-
             return -1.0;
         }
 
@@ -230,8 +225,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 Host == equatable.Host &&
                 Port == equatable.Port &&
                 Account == equatable.Account &&
-                Secret == equatable.Secret &&
-                Secret == equatable.Secret &&
                 Platform == equatable.Platform &&
                 Resource == equatable.Resource &&
                 Thumbprint == equatable.Thumbprint;
@@ -245,11 +238,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 if (this.Id != null)
                 {
                     result = (result * 31) + this.Id.GetHashCode();
-                }
-
-                if (this.Secret != null)
-                {
-                    result = (result * 31) + this.Secret.GetHashCode();
                 }
 
                 if (this.Uri != null)
@@ -277,11 +265,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     result = (result * 31) + this.Secret.GetHashCode();
                 }
 
-                if (this.Secret != null)
-                {
-                    result = (result * 31) + this.Secret.GetHashCode();
-                }
-
                 if (this.Platform != null)
                 {
                     result = (result * 31) + this.Platform.GetHashCode();
@@ -300,7 +283,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
             return result;
         }
-
 
         internal static string ToString(Fingerprint f, ISet<string> denyList)
         {

@@ -93,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     new AuthenticationHeaderValue("Bearer", secret);
 
                 using HttpResponseMessage response = client
-                    .GetAsync($"https://api.stripe.com/v1/customers")
+                    .GetAsync($"https://api.stripe.com/v1/customers", HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
