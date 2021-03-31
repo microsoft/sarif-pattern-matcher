@@ -92,16 +92,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Environment.CurrentDirectory = Path.GetDirectoryName(location);
                 }
 
-                try
-                {
-                    validationState =
-                        (ValidationState)isValidStaticMethodInfo.Invoke(
-                            obj: null, arguments);
-                }
-                catch (TargetInvocationException e)
-                {
-                    throw e.InnerException;
-                }
+                validationState =
+                    (ValidationState)isValidStaticMethodInfo.Invoke(
+                        obj: null, arguments);
+            }
+            catch (TargetInvocationException e)
+            {
+                throw e.InnerException;
             }
             finally
             {
@@ -140,16 +137,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Environment.CurrentDirectory = Path.GetDirectoryName(location);
                 }
 
-                try
-                {
-                    validationText =
-                        (ValidationState)isValidDynamicMethodInfo.Invoke(
-                            obj: null, arguments);
-                }
-                catch (TargetInvocationException e)
-                {
-                    throw e.InnerException;
-                }
+                validationText =
+                    (ValidationState)isValidDynamicMethodInfo.Invoke(
+                        obj: null, arguments);
+            }
+            catch (TargetInvocationException e)
+            {
+                throw e.InnerException;
             }
             finally
             {
@@ -179,14 +173,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Environment.CurrentDirectory = Path.GetDirectoryName(location);
                 }
 
-                try
-                {
-                    shouldCacheMethodInfo.Invoke(obj: null, arguments);
-                }
-                catch (TargetInvocationException e)
-                {
-                    throw e.InnerException;
-                }
+                shouldCacheMethodInfo.Invoke(obj: null, arguments);
+            }
+            catch (TargetInvocationException e)
+            {
+                throw e.InnerException;
             }
             finally
             {
