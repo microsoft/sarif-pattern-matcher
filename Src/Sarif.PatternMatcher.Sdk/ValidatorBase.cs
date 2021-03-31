@@ -252,7 +252,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 return null;
             }
 
-            // If the string is of the form "key=value", look for the first '=' and return everything following
+            // If the string is of the form "secret=value", look for the first '=' and return everything following
             // Otherwise, simply return the string.
 
             int indexOfFirstEqualSign = value.IndexOf('=');
@@ -264,7 +264,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
             if (indexOfFirstEqualSign == value.Length - 1)
             {
-                // the string looks like "key=" with no value.
+                // the string looks like "secret=" with no value.
                 return null;
             }
 

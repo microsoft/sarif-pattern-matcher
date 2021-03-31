@@ -12,13 +12,13 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class AkamaiKeyValidator : ValidatorBase
+    public class AkamaiCredentialsValidator : ValidatorBase
     {
-        internal static AkamaiKeyValidator Instance;
+        internal static AkamaiCredentialsValidator Instance;
 
-        static AkamaiKeyValidator()
+        static AkamaiCredentialsValidator()
         {
-            Instance = new AkamaiKeyValidator();
+            Instance = new AkamaiCredentialsValidator();
         }
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
@@ -51,9 +51,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             fingerprint = default;
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("key", out string key) ||
-                !groups.TryGetNonEmptyValue("pwd", out string pwd) ||
-                !groups.TryGetNonEmptyValue("host", out string host))
+                !groups.TryGetNonEmptyValue("host", out string host) ||
+                !groups.TryGetNonEmptyValue("secret", out string secret) ||
+                !groups.TryGetNonEmptyValue("resource", out string resource))
             {
                 return ValidationState.NoMatch;
             }
@@ -61,8 +61,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint = new Fingerprint()
             {
                 Id = id,
-                Password = pwd,
-                Key = key,
+                Secret = secret,
+                Resource = resource,
                 Host = host,
             };
 
@@ -72,18 +72,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             string id = fingerprint.Id;
-            string key = fingerprint.Key;
             string host = fingerprint.Host;
-            string pwd = fingerprint.Password;
+            string secret = fingerprint.Secret;
+            string resource = fingerprint.Resource;
 
             try
             {
                 string timestamp = $"{DateTime.UtcNow:yyyyMMddTHH:mm:ss}";
-                string header = $"client_token={id};access_token={key};timestamp={timestamp}+0000;nonce={Guid.NewGuid()}";
+                string header = $"client_token={id};access_token={resource};timestamp={timestamp}+0000;nonce={Guid.NewGuid()}";
                 string textToSign = $"EG1-HMAC-SHA256 {header};";
 
                 // Generating signing key based on timestamp.
-                using var hmac = new HMACSHA256(Convert.FromBase64String(pwd));
+                using var hmac = new HMACSHA256(Convert.FromBase64String(secret));
                 string signingKey = Convert.ToBase64String(hmac.ComputeHash(Convert.FromBase64String(timestamp)));
 
                 // Generating signature based on textToSign and signingKey.

@@ -50,7 +50,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             fingerprint = default;
             if (!groups.TryGetValue("id", out string id) ||
-                !groups.TryGetValue("key", out string key))
+                !groups.TryGetValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
@@ -58,7 +58,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint = new Fingerprint
             {
                 Id = id,
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.Facebook),
             };
 
@@ -70,10 +70,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref Dictionary<string, string> options)
         {
             string id = fingerprint.Id;
-            string key = fingerprint.Key;
+            string secret = fingerprint.Secret;
 
             ValidationState state = RetrieveInformation(
-                $"https://graph.facebook.com/oauth/access_token?client_id={id}&client_secret={key}&grant_type=client_credentials",
+                $"https://graph.facebook.com/oauth/access_token?client_id={id}&client_secret={secret}&grant_type=client_credentials",
                 id,
                 ref message,
                 out AccessTokenObject obj);

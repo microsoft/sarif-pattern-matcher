@@ -38,7 +38,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             fingerprint = default;
             if (!groups.TryGetValue("id", out string id) ||
-                !groups.TryGetValue("key", out string key))
+                !groups.TryGetValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint = new Fingerprint
             {
                 Id = id,
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.Google),
             };
 

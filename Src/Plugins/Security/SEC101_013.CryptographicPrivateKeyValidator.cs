@@ -44,7 +44,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("key", out string key))
+            if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
@@ -52,21 +52,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.TryGetValue("kind", out string kind);
             kind = matchedPattern.Contains(" PGP ") ? "Pgp" : kind;
 
-            key = key.Trim();
+            secret = secret.Trim();
 
-            // Attempt to cleanup the key
-            if (key.IndexOf('"') > -1)
+            // Attempt to cleanup the secret
+            if (secret.IndexOf('"') > -1)
             {
-                string[] linesArray = key.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                string[] linesArray = secret.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
                 linesArray = linesArray.Select(x => string.Join(string.Empty, x.Replace("\\n", string.Empty)
                                                       .Replace("\"", string.Empty)
                                                       .Where(c => !char.IsWhiteSpace(c)))).ToArray();
-                key = string.Join(Environment.NewLine, linesArray);
+                secret = string.Join(Environment.NewLine, linesArray);
             }
 
             fingerprint = new Fingerprint
             {
-                Key = key,
+                Secret = secret,
             };
 
             ValidationState state = ValidationState.Unknown;
@@ -75,9 +75,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 case "PrivateKeyBlob":
                 {
-                    byte[] bytes = Convert.FromBase64String(key);
+                    byte[] bytes = Convert.FromBase64String(secret);
 
-                    // https://docs.microsoft.com/en-us/windows/win32/seccrypto/base-provider-key-blobs#private-key-blobs
+                    // https://docs.microsoft.com/en-us/windows/win32/seccrypto/base-provider-secret-blobs#private-secret-blobs
                     // This offset is the RSAPUBKEY structure. The magic
                     // member must be set to the ASCII encoding of "RSA2".
                     if (bytes[8] != 'R' ||
@@ -93,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 case "Pgp":
                 {
-                    state = GetPrivatePgpKey(key);
+                    state = GetPrivatePgpKey(secret);
                     break;
                 }
 
@@ -111,7 +111,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     string thumbprint = string.Empty;
                     try
                     {
-                        byte[] rawData = Convert.FromBase64String(key);
+                        byte[] rawData = Convert.FromBase64String(secret);
                         state = CertificateHelper.TryLoadCertificate(rawData,
                                                                      ref fingerprint,
                                                                      ref message);
@@ -128,9 +128,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return state;
         }
 
-        private static ValidationState GetPrivatePgpKey(string key)
+        private static ValidationState GetPrivatePgpKey(string secret)
         {
-            using Stream keyIn = new MemoryStream(Encoding.UTF8.GetBytes(key));
+            using Stream keyIn = new MemoryStream(Encoding.UTF8.GetBytes(secret));
             using Stream stream = PgpUtilities.GetDecoderStream(keyIn);
             var secretKeyRingBundle = new PgpSecretKeyRingBundle(stream);
 

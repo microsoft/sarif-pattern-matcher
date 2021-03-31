@@ -74,27 +74,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint = default;
             matchedPattern = matchedPattern.Trim();
 
-            string host, database, account, password;
+            string host, database, account, secret;
 
-            if (groups.ContainsKey("host") && groups.ContainsKey("database") && groups.ContainsKey("account") && groups.ContainsKey("password"))
+            if (groups.ContainsKey("host") && groups.ContainsKey("database") && groups.ContainsKey("account") && groups.ContainsKey("secret"))
             {
                 host = groups["host"];
                 account = groups["account"];
                 database = groups["database"];
-                password = groups["password"];
+                secret = groups["secret"];
             }
             else
             {
                 host = ParseExpression(RegexEngine, matchedPattern, HostExpression);
                 account = ParseExpression(RegexEngine, matchedPattern, AccountExpression);
                 database = ParseExpression(RegexEngine, matchedPattern, DatabaseExpression);
-                password = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
+                secret = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
             }
 
             if (string.IsNullOrWhiteSpace(host) ||
                 string.IsNullOrWhiteSpace(database) ||
                 string.IsNullOrWhiteSpace(account) ||
-                string.IsNullOrWhiteSpace(password))
+                string.IsNullOrWhiteSpace(secret))
             {
                 return ValidationState.NoMatch;
             }
@@ -110,7 +110,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             if (database.Length > 128 ||
                 account.Length > 128 ||
-                password.Length > 128 ||
+                secret.Length > 128 ||
                 host.Length > 128)
             {
                 return ValidationState.NoMatch;
@@ -121,7 +121,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Host = host,
                 Resource = database,
                 Account = account,
-                Password = password,
+                Secret = secret,
                 Platform = SharedUtilities.GetDatabasePlatformFromHost(host, out _),
             };
 
@@ -134,7 +134,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string host = fingerprint.Host;
             string account = fingerprint.Account;
-            string password = fingerprint.Password;
+            string password = fingerprint.Secret;
             string database = fingerprint.Resource;
 
             if (DomainFilteringHelper.LocalhostList.Contains(host))

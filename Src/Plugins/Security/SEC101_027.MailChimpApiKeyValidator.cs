@@ -52,14 +52,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("key", out string key))
+            if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint()
             {
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.MailChimp),
             };
 
@@ -70,12 +70,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            string key = fingerprint.Key;
+            string secret = fingerprint.Secret;
 
             try
             {
                 using HttpClient client = CreateHttpClient();
-                string[] keys = key.Split('-');
+                string[] keys = secret.Split('-');
 
                 client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Basic", keys[0]);

@@ -50,7 +50,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             fingerprint = default;
             if (!groups.TryGetValue("host", out string host) ||
-                !groups.TryGetValue("key", out string key))
+                !groups.TryGetValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
@@ -58,7 +58,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint = new Fingerprint
             {
                 Host = host,
-                Key = key,
+                Secret = secret,
                 Resource = (groups.ContainsKey("resource") && groups["resource"] != "/")
                     ? groups["resource"]
                     : string.Empty,
@@ -92,7 +92,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     return ValidationState.NoMatch;
                 }
 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", fingerprint.Key);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", fingerprint.Secret);
                 using HttpResponseMessage response = client
                     .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()

@@ -38,14 +38,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("refine", out string key))
+            if (!groups.TryGetNonEmptyValue("refine", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint()
             {
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.Dynatrace),
             };
 

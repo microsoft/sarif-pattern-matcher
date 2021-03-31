@@ -26,7 +26,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string validationState = null;
             var keyValuePairs = new Dictionary<string, string>
             {
-                { "key", TestKey }
+                { "secret", TestKey }
             };
 
             ValidationState actualValidationState = CryptographicPrivateKeyValidator.IsValidStatic(ref TestMatchedPattern, ref keyValuePairs, ref validationState, ref message, out fingerprint);

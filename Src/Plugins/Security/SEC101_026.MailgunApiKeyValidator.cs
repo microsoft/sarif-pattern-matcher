@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("key", out string key) ||
+            if (!groups.TryGetNonEmptyValue("secret", out string secret) ||
                 !groups.TryGetNonEmptyValue("account", out string account))
             {
                 return ValidationState.NoMatch;
@@ -54,7 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             fingerprint = new Fingerprint
             {
-                Key = key,
+                Secret = secret,
                 Account = account,
                 Platform = nameof(AssetPlatform.Mailgun),
             };
@@ -66,14 +66,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            string key = fingerprint.Key;
+            string secret = fingerprint.Secret;
             string account = fingerprint.Account;
 
             try
             {
                 using HttpClient client = CreateHttpClient();
 
-                string credentials = $"api:{key}";
+                string credentials = $"api:{secret}";
                 byte[] bytes = Encoding.UTF8.GetBytes(credentials);
                 credentials = Convert.ToBase64String(bytes);
 

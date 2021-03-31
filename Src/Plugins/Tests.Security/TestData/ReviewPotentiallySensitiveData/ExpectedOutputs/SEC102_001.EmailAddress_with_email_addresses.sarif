@@ -70,9 +70,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=email][host=example.com]",
-            "ValidationFingerprintHash/v1": "88181e107e11e8919de3f2026917200bff88bbc0497f4bd9774fb5235e3c9426"
+            "AssetFingerprint/v1": "[account=email][host=example.com]",
+            "ValidationFingerprint/v1": "[account=email][host=example.com]",
+            "ValidationFingerprintHash/v1": "273960feffba32a4e29407e429efa7c6261313bfc5e3393f8e2351875458fe7e"
           }
         },
         {
@@ -108,9 +108,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=firstname.lastname][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=firstname.lastname][host=example.com]",
-            "ValidationFingerprintHash/v1": "134b8060da9b66802feb065b7fd2f1e5173c36cfa16f07e1f02c178332004dfa"
+            "AssetFingerprint/v1": "[account=firstname.lastname][host=example.com]",
+            "ValidationFingerprint/v1": "[account=firstname.lastname][host=example.com]",
+            "ValidationFingerprintHash/v1": "669d9e0bb50c30a8dfb5f2bbc1caafb95668250f0e36f2e5e619191778e5dc74"
           }
         },
         {
@@ -146,9 +146,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=lastname][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=lastname][host=example.com]",
-            "ValidationFingerprintHash/v1": "fd608d5128dc258b0c7e774dac1d1219b925197bbfc2e315019281e981077867"
+            "AssetFingerprint/v1": "[account=lastname][host=example.com]",
+            "ValidationFingerprint/v1": "[account=lastname][host=example.com]",
+            "ValidationFingerprintHash/v1": "7e52b19d9fadf2cc1268dfd0f501c43e1b078fcd1c036dd7fb92af3064800e66"
           }
         },
         {
@@ -184,9 +184,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=subdomain.example.com]",
-            "ValidationFingerprint/v1": "[acct=email][host=subdomain.example.com]",
-            "ValidationFingerprintHash/v1": "179ebc50085384fb633c2851133e5d3717f19aa120f358376c70e6e49582eb2b"
+            "AssetFingerprint/v1": "[account=email][host=subdomain.example.com]",
+            "ValidationFingerprint/v1": "[account=email][host=subdomain.example.com]",
+            "ValidationFingerprintHash/v1": "5032405e111b6b87e0c0a76852b8225e1df7b0d8796d3e7c525d4e83aeeffccd"
           }
         },
         {
@@ -222,9 +222,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=firstname+lastname][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=firstname+lastname][host=example.com]",
-            "ValidationFingerprintHash/v1": "c2b1e035a665825417e20471ba585df73cd4ea0bd313abc9f066c9019ada173d"
+            "AssetFingerprint/v1": "[account=firstname+lastname][host=example.com]",
+            "ValidationFingerprint/v1": "[account=firstname+lastname][host=example.com]",
+            "ValidationFingerprintHash/v1": "c908fe2abce67c5577f77cc0d057d57e449f07e83ee5cf26ba8156b984113b08"
           }
         },
         {
@@ -260,9 +260,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=+lastname][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=+lastname][host=example.com]",
-            "ValidationFingerprintHash/v1": "8588c5cfcd2a833983b760bbe168a994ae08f437a136588ffa57113c02c1a208"
+            "AssetFingerprint/v1": "[account=+lastname][host=example.com]",
+            "ValidationFingerprint/v1": "[account=+lastname][host=example.com]",
+            "ValidationFingerprintHash/v1": "cfc3a92a8aaf563ce7cb26bf9784ca8b7e7eeb68e7cfab5c98b90efbd37f6709"
           }
         },
         {
@@ -298,9 +298,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=lastname][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=lastname][host=example.com]",
-            "ValidationFingerprintHash/v1": "fd608d5128dc258b0c7e774dac1d1219b925197bbfc2e315019281e981077867"
+            "AssetFingerprint/v1": "[account=lastname][host=example.com]",
+            "ValidationFingerprint/v1": "[account=lastname][host=example.com]",
+            "ValidationFingerprintHash/v1": "7e52b19d9fadf2cc1268dfd0f501c43e1b078fcd1c036dd7fb92af3064800e66"
           }
         },
         {
@@ -336,9 +336,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=123.123.123.123]",
-            "ValidationFingerprint/v1": "[acct=email][host=123.123.123.123]",
-            "ValidationFingerprintHash/v1": "264d9bdd95a646c115b6e90da2eeb03b8b8aa87b483d19952433f618472598c4"
+            "AssetFingerprint/v1": "[account=email][host=123.123.123.123]",
+            "ValidationFingerprint/v1": "[account=email][host=123.123.123.123]",
+            "ValidationFingerprintHash/v1": "c0ffb43bf029d43b603fbb34c1ee359e044fc45c7adf633cdf59676289cba613"
           }
         },
         {
@@ -374,9 +374,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=1234567890][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=1234567890][host=example.com]",
-            "ValidationFingerprintHash/v1": "f6aa7960bf3a751e2699ae4536e9a0062fd6fa496b602fed596aa4f655f2de08"
+            "AssetFingerprint/v1": "[account=1234567890][host=example.com]",
+            "ValidationFingerprint/v1": "[account=1234567890][host=example.com]",
+            "ValidationFingerprintHash/v1": "824aaf669d33d817cc2ad8b5e6c9f274fee895cdde78d0ad4233a749173243a2"
           }
         },
         {
@@ -412,9 +412,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=example-one.com]",
-            "ValidationFingerprint/v1": "[acct=email][host=example-one.com]",
-            "ValidationFingerprintHash/v1": "f9fd494a2233850c0aa42e7f496180b010c0c9e908d74accf024654bcceac568"
+            "AssetFingerprint/v1": "[account=email][host=example-one.com]",
+            "ValidationFingerprint/v1": "[account=email][host=example-one.com]",
+            "ValidationFingerprintHash/v1": "9b6e345478e5dff59855410deea8bb6395311c0ef0906fc472562daca3846e13"
           }
         },
         {
@@ -450,9 +450,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=example.co.jp]",
-            "ValidationFingerprint/v1": "[acct=email][host=example.co.jp]",
-            "ValidationFingerprintHash/v1": "088138266bb877a45e34512d4fc6ad4103b65c8b3859eca1c4b06495606b97b8"
+            "AssetFingerprint/v1": "[account=email][host=example.co.jp]",
+            "ValidationFingerprint/v1": "[account=email][host=example.co.jp]",
+            "ValidationFingerprintHash/v1": "8880098ac086f93351e7732100a7e419179107a5c0395ce5bcbc88b1018a0334"
           }
         },
         {
@@ -488,9 +488,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=firstname-lastname][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=firstname-lastname][host=example.com]",
-            "ValidationFingerprintHash/v1": "4c808b52cb3bbf9feb2642c0c65debf0bda9be9a78c499604db12729dee5387b"
+            "AssetFingerprint/v1": "[account=firstname-lastname][host=example.com]",
+            "ValidationFingerprint/v1": "[account=firstname-lastname][host=example.com]",
+            "ValidationFingerprintHash/v1": "3ddacfae0bfbe1d35928b4ef1a44b853324de15688482783b98ebbe8ccd39fa0"
           }
         },
         {
@@ -526,9 +526,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=-lastname][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=-lastname][host=example.com]",
-            "ValidationFingerprintHash/v1": "1e6378f52a62b859228a291d6d331de26685339c501a8d2ef033969908e94053"
+            "AssetFingerprint/v1": "[account=-lastname][host=example.com]",
+            "ValidationFingerprint/v1": "[account=-lastname][host=example.com]",
+            "ValidationFingerprintHash/v1": "82e7c6bdf04a647a17c8cd9bfcdce4dae99412c8cb72464ff1fab3055386523d"
           }
         },
         {
@@ -564,9 +564,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=lastname][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=lastname][host=example.com]",
-            "ValidationFingerprintHash/v1": "fd608d5128dc258b0c7e774dac1d1219b925197bbfc2e315019281e981077867"
+            "AssetFingerprint/v1": "[account=lastname][host=example.com]",
+            "ValidationFingerprint/v1": "[account=lastname][host=example.com]",
+            "ValidationFingerprintHash/v1": "7e52b19d9fadf2cc1268dfd0f501c43e1b078fcd1c036dd7fb92af3064800e66"
           }
         },
         {
@@ -602,9 +602,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=example.name]",
-            "ValidationFingerprint/v1": "[acct=email][host=example.name]",
-            "ValidationFingerprintHash/v1": "891ea0089b794fb8d47a7f3cbdbacf9dbf65b9b2a5f533040a7a6b068b58d057"
+            "AssetFingerprint/v1": "[account=email][host=example.name]",
+            "ValidationFingerprint/v1": "[account=email][host=example.name]",
+            "ValidationFingerprintHash/v1": "f27078cec97341cfc88cd438aaacb4565614e1e8fb163e437ab179b316390a36"
           }
         },
         {
@@ -640,9 +640,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=example.museum]",
-            "ValidationFingerprint/v1": "[acct=email][host=example.museum]",
-            "ValidationFingerprintHash/v1": "cba3611f58cbccaf0ba91b673797322e8db27a1d9632deb38c224cd836d0c4c4"
+            "AssetFingerprint/v1": "[account=email][host=example.museum]",
+            "ValidationFingerprint/v1": "[account=email][host=example.museum]",
+            "ValidationFingerprintHash/v1": "ee3f8a151779018e12aded773e75903401860a73b567eae01cbcdc8ff00c42f1"
           }
         },
         {
@@ -678,9 +678,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=addressSurroundedBySpaces][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=addressSurroundedBySpaces][host=example.com]",
-            "ValidationFingerprintHash/v1": "948950b39d34be58c1a968ff4d5c360d32628d82c14556ee45f7f969bd808bae"
+            "AssetFingerprint/v1": "[account=addressSurroundedBySpaces][host=example.com]",
+            "ValidationFingerprint/v1": "[account=addressSurroundedBySpaces][host=example.com]",
+            "ValidationFingerprintHash/v1": "c4c7dace47f78f7715e112d721b3eb7c312f88b5cc781d4e61a6a22d9ba37fa7"
           }
         },
         {
@@ -716,9 +716,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=addressSurroundedByTabs][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=addressSurroundedByTabs][host=example.com]",
-            "ValidationFingerprintHash/v1": "9fa433d13ab331a5f424ebee255974e3db7a46a71329c9fb655076bb06c10f33"
+            "AssetFingerprint/v1": "[account=addressSurroundedByTabs][host=example.com]",
+            "ValidationFingerprint/v1": "[account=addressSurroundedByTabs][host=example.com]",
+            "ValidationFingerprintHash/v1": "a776ad4c3e0b95b3f75655d0fb6b77ee4cb572afbe0873d632f96bdd75a0d2d9"
           }
         },
         {
@@ -754,9 +754,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=addressSurroundedByPipes][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=addressSurroundedByPipes][host=example.com]",
-            "ValidationFingerprintHash/v1": "6a00123a3285a74dfe5165ea4694428184e92b2d931c98bef2c595092d5dc646"
+            "AssetFingerprint/v1": "[account=addressSurroundedByPipes][host=example.com]",
+            "ValidationFingerprint/v1": "[account=addressSurroundedByPipes][host=example.com]",
+            "ValidationFingerprintHash/v1": "de79377a6d4d16155b288e7ae6c1aa1ddfb17ff6f471d9dc25a7eee344150170"
           }
         },
         {
@@ -792,9 +792,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=addressSurroundedByDoubleQuotes][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=addressSurroundedByDoubleQuotes][host=example.com]",
-            "ValidationFingerprintHash/v1": "9cba6920ec953d34e6d82ff2840d2207f2ad5efdda62d4ca728f1bfa8ea9fafe"
+            "AssetFingerprint/v1": "[account=addressSurroundedByDoubleQuotes][host=example.com]",
+            "ValidationFingerprint/v1": "[account=addressSurroundedByDoubleQuotes][host=example.com]",
+            "ValidationFingerprintHash/v1": "5cd86f278265a608052458fb796c7b49788b0781608d40ca6a0bed82f6e878c0"
           }
         },
         {
@@ -830,9 +830,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=addressSurroundedBySingleQuotes][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=addressSurroundedBySingleQuotes][host=example.com]",
-            "ValidationFingerprintHash/v1": "55ee4eb2d93d71fd5ae2e376ebd99644639025579f062da485113731a60ded20"
+            "AssetFingerprint/v1": "[account=addressSurroundedBySingleQuotes][host=example.com]",
+            "ValidationFingerprint/v1": "[account=addressSurroundedBySingleQuotes][host=example.com]",
+            "ValidationFingerprintHash/v1": "0a19fe37950d52ac7c69276f18769db6781a521bdf286b8ab6e844eaad77b8f8"
           }
         },
         {
@@ -868,9 +868,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=htmlAddress][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=htmlAddress][host=example.com]",
-            "ValidationFingerprintHash/v1": "3515aadee69827b5c94b973bd7b233ae442bf13158dfb88fec3c0ac86bec65c7"
+            "AssetFingerprint/v1": "[account=htmlAddress][host=example.com]",
+            "ValidationFingerprint/v1": "[account=htmlAddress][host=example.com]",
+            "ValidationFingerprintHash/v1": "d54890eee6ee4eb0bdd4879c7b2a32e37744c80b6ef54a9f729e2f7850429a0e"
           }
         },
         {
@@ -906,9 +906,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=addressInTags][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=addressInTags][host=example.com]",
-            "ValidationFingerprintHash/v1": "1d52b62db36909d1ecd10d02851fdc67a9032f1720d5bfa01a1b8d21e4fea428"
+            "AssetFingerprint/v1": "[account=addressInTags][host=example.com]",
+            "ValidationFingerprint/v1": "[account=addressInTags][host=example.com]",
+            "ValidationFingerprintHash/v1": "aadaadb88996f7813c3132880979c27f631cd2254a0f65eb8d64063ec30b8748"
           }
         },
         {
@@ -944,9 +944,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=addressPrecededByColon][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=addressPrecededByColon][host=example.com]",
-            "ValidationFingerprintHash/v1": "89195da6389a6d536ac545d42f6ad5bd303a0710a5641a9a2b58b599f0da054e"
+            "AssetFingerprint/v1": "[account=addressPrecededByColon][host=example.com]",
+            "ValidationFingerprint/v1": "[account=addressPrecededByColon][host=example.com]",
+            "ValidationFingerprintHash/v1": "bab1680afbc1e7357a3a48fa0aead73218b4ff81443f0a8cc6051a969e743803"
           }
         },
         {
@@ -982,9 +982,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=addressPrecededByColonAndFollowedByPeriod][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=addressPrecededByColonAndFollowedByPeriod][host=example.com]",
-            "ValidationFingerprintHash/v1": "c514636853e7212fb3aaac8ecb56631c9b91479afc218ca61825a61118e0ffe8"
+            "AssetFingerprint/v1": "[account=addressPrecededByColonAndFollowedByPeriod][host=example.com]",
+            "ValidationFingerprint/v1": "[account=addressPrecededByColonAndFollowedByPeriod][host=example.com]",
+            "ValidationFingerprintHash/v1": "294fe6ce2be88b292295678ba144eba82bfe8fb464cd85daea23bfcc395bbd49"
           }
         },
         {
@@ -1020,9 +1020,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=111.222.333.44444]",
-            "ValidationFingerprint/v1": "[acct=email][host=111.222.333.44444]",
-            "ValidationFingerprintHash/v1": "269fa7a6351f2b9a58dfb4cfb908633de4e6dc2d09d0dc3ddeeb7e37830293c5"
+            "AssetFingerprint/v1": "[account=email][host=111.222.333.44444]",
+            "ValidationFingerprint/v1": "[account=email][host=111.222.333.44444]",
+            "ValidationFingerprintHash/v1": "22e8990b996251d48ce49470418eddc16750b26b9ca026343fd03ca14ff2da9d"
           }
         },
         {
@@ -1058,9 +1058,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email..email][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=email..email][host=example.com]",
-            "ValidationFingerprintHash/v1": "cc5f3c401c64e832a37097926e1a09a6a1dbf8f41732e562569e1b14d1812a2b"
+            "AssetFingerprint/v1": "[account=email..email][host=example.com]",
+            "ValidationFingerprint/v1": "[account=email..email][host=example.com]",
+            "ValidationFingerprintHash/v1": "741b934adad7ffd62d4b54774da8fd71b2acd44359b50b31ce0776c4ac8fd8bf"
           }
         },
         {
@@ -1096,9 +1096,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=email][host=example.com]",
-            "ValidationFingerprintHash/v1": "88181e107e11e8919de3f2026917200bff88bbc0497f4bd9774fb5235e3c9426"
+            "AssetFingerprint/v1": "[account=email][host=example.com]",
+            "ValidationFingerprint/v1": "[account=email][host=example.com]",
+            "ValidationFingerprintHash/v1": "273960feffba32a4e29407e429efa7c6261313bfc5e3393f8e2351875458fe7e"
           }
         },
         {
@@ -1134,9 +1134,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=example..com]",
-            "ValidationFingerprint/v1": "[acct=email][host=example..com]",
-            "ValidationFingerprintHash/v1": "0505ff83add961692693dd46e5124ba26ccba7338364db9571c82043e114427a"
+            "AssetFingerprint/v1": "[account=email][host=example..com]",
+            "ValidationFingerprint/v1": "[account=email][host=example..com]",
+            "ValidationFingerprintHash/v1": "b71b34a1291c4295989b2f734d5858c2c68703743331f8bf4dbb22f6049de27f"
           }
         },
         {
@@ -1172,9 +1172,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=Abc..123][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=Abc..123][host=example.com]",
-            "ValidationFingerprintHash/v1": "b64894cdf6c58e04975b9d7988f9fbd70abbb5dbe21715a012b7481e6e330a60"
+            "AssetFingerprint/v1": "[account=Abc..123][host=example.com]",
+            "ValidationFingerprint/v1": "[account=Abc..123][host=example.com]",
+            "ValidationFingerprintHash/v1": "96de60b14f9b3c9e33c432ac20c29556ddd67f45e8503517aef7334e42445399"
           }
         },
         {
@@ -1210,9 +1210,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=123][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=123][host=example.com]",
-            "ValidationFingerprintHash/v1": "be2e7b5a7fa9a9d44bcb7345ba1943136af8e8775ae8454adde0095cbcdbf4cd"
+            "AssetFingerprint/v1": "[account=123][host=example.com]",
+            "ValidationFingerprint/v1": "[account=123][host=example.com]",
+            "ValidationFingerprintHash/v1": "3e4326ebcb6db6b76770232e626ae92a80d0730fc2a553033cda74c8caa767f1"
           }
         },
         {
@@ -1248,9 +1248,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=unusual.com][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=unusual.com][host=example.com]",
-            "ValidationFingerprintHash/v1": "bbc159b3abb5d07f194bbd3846df40e3391952efefa7cfb0024f54e48733b641"
+            "AssetFingerprint/v1": "[account=unusual.com][host=example.com]",
+            "ValidationFingerprint/v1": "[account=unusual.com][host=example.com]",
+            "ValidationFingerprintHash/v1": "8657a580e38af7dd553a3749138735eafb1e6468e6e8979aced39131ad3dd304"
           }
         },
         {
@@ -1286,9 +1286,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=com][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=com][host=example.com]",
-            "ValidationFingerprintHash/v1": "c9d1b331f185111c7f9f8b64161615481d793821e7b4d428cd194952dd0b27e8"
+            "AssetFingerprint/v1": "[account=com][host=example.com]",
+            "ValidationFingerprint/v1": "[account=com][host=example.com]",
+            "ValidationFingerprintHash/v1": "aacd35213fdabcea5c39340e6f177f5b5032059e1b0bb9ad5ddbe782d8d70ece"
           }
         },
         {
@@ -1324,9 +1324,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=unusual][host=strange.example.com]",
-            "ValidationFingerprint/v1": "[acct=unusual][host=strange.example.com]",
-            "ValidationFingerprintHash/v1": "102544f1f3cc92bd8789b0fc01ee404fbfd5aa74f5abbf7e56743fb5fe0032b4"
+            "AssetFingerprint/v1": "[account=unusual][host=strange.example.com]",
+            "ValidationFingerprint/v1": "[account=unusual][host=strange.example.com]",
+            "ValidationFingerprintHash/v1": "4d1847a18d986de07fc2e3042f0263f83ae466d96c63a9b668c20cf1e7929201"
           }
         },
         {
@@ -1362,9 +1362,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=email][host=example.com]",
-            "ValidationFingerprintHash/v1": "88181e107e11e8919de3f2026917200bff88bbc0497f4bd9774fb5235e3c9426"
+            "AssetFingerprint/v1": "[account=email][host=example.com]",
+            "ValidationFingerprint/v1": "[account=email][host=example.com]",
+            "ValidationFingerprintHash/v1": "273960feffba32a4e29407e429efa7c6261313bfc5e3393f8e2351875458fe7e"
           }
         },
         {
@@ -1400,9 +1400,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=example][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=example][host=example.com]",
-            "ValidationFingerprintHash/v1": "e0b72cd8729721fa0d3450ba057daef485a9369673cd7a7fcf28765f0073ef4b"
+            "AssetFingerprint/v1": "[account=example][host=example.com]",
+            "ValidationFingerprint/v1": "[account=example][host=example.com]",
+            "ValidationFingerprintHash/v1": "25e608611dc52a9fd001e7669e7abbbcadb6743c301efb92d2921ecb02ded481"
           }
         },
         {
@@ -1438,9 +1438,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=email][host=example.com]",
-            "ValidationFingerprintHash/v1": "88181e107e11e8919de3f2026917200bff88bbc0497f4bd9774fb5235e3c9426"
+            "AssetFingerprint/v1": "[account=email][host=example.com]",
+            "ValidationFingerprint/v1": "[account=email][host=example.com]",
+            "ValidationFingerprintHash/v1": "273960feffba32a4e29407e429efa7c6261313bfc5e3393f8e2351875458fe7e"
           }
         },
         {
@@ -1476,9 +1476,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=email][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=email][host=example.com]",
-            "ValidationFingerprintHash/v1": "88181e107e11e8919de3f2026917200bff88bbc0497f4bd9774fb5235e3c9426"
+            "AssetFingerprint/v1": "[account=email][host=example.com]",
+            "ValidationFingerprint/v1": "[account=email][host=example.com]",
+            "ValidationFingerprintHash/v1": "273960feffba32a4e29407e429efa7c6261313bfc5e3393f8e2351875458fe7e"
           }
         },
         {
@@ -1514,9 +1514,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=user][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=user][host=example.com]",
-            "ValidationFingerprintHash/v1": "08aa8485adfe735a70249a7c3ffe6eb2b35d62667247605e4da802c0984412eb"
+            "AssetFingerprint/v1": "[account=user][host=example.com]",
+            "ValidationFingerprint/v1": "[account=user][host=example.com]",
+            "ValidationFingerprintHash/v1": "a34a5edb0ef83031bf1fb1e906dbc2dd21c5fe2d531f45002074d087d6f437e9"
           }
         },
         {
@@ -1552,9 +1552,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=endOfLineCheck][host=example.com]",
-            "ValidationFingerprint/v1": "[acct=endOfLineCheck][host=example.com]",
-            "ValidationFingerprintHash/v1": "6fa811ecc10cd82263f2a1a629dac2e4e28ca183fde093fad7d6917eaa8a5bdf"
+            "AssetFingerprint/v1": "[account=endOfLineCheck][host=example.com]",
+            "ValidationFingerprint/v1": "[account=endOfLineCheck][host=example.com]",
+            "ValidationFingerprintHash/v1": "0c9d739cdf8a3c3857c2a17b39c396cbaf9c3dd083e2fbfa6f8f5b076e2515a8"
           }
         }
       ],

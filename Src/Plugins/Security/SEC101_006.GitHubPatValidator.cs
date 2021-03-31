@@ -51,7 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("key", out string pat))
+            if (!groups.TryGetNonEmptyValue("secret", out string pat))
             {
                 return ValidationState.NoMatch;
             }
@@ -79,7 +79,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             fingerprint = new Fingerprint
             {
-                PersonalAccessToken = pat,
+                Secret = pat,
                 Platform = nameof(AssetPlatform.GitHub),
             };
 
@@ -88,7 +88,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
-            string pat = fingerprint.PersonalAccessToken;
+            string pat = fingerprint.Secret;
 
             try
             {
