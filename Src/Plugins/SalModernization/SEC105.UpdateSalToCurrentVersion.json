@@ -7,8 +7,8 @@
       "Name": "UpdateSalToCurrentVersion",
       "Level": "Warning",
       "FileNameAllowRegex": "$CSourceFiles",
-      "Description": "Use SAL correctly.",
-      "Message": "'{0:scanTarget}' contains incorrect or out-dated use of SAL: {1:validatorMessage}.",
+      "Description": "Update SAL to current version",
+      "Message": "'{0:scanTarget}' contains incorrect or out-dated use of SAL.",
       "MatchExpressions": [
         {
           "Id": "SEC105/001",

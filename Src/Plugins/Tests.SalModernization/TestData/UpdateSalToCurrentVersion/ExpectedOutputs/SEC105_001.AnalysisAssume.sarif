@@ -16,14 +16,14 @@
               "id": "SEC105/001",
               "name": "UpdateSalToCurrentVersion/Allocator",
               "fullDescription": {
-                "text": "Use SAL correctly."
+                "text": "Update SAL to current version"
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL: {1}."
+                  "text": "'{0}' contains incorrect or out-dated use of SAL."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -32,14 +32,14 @@
               "id": "SEC105/002",
               "name": "UpdateSalToCurrentVersion/AnalysisAssume",
               "fullDescription": {
-                "text": "Use SAL correctly."
+                "text": "Update SAL to current version"
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL: {1}."
+                  "text": "'{0}' contains incorrect or out-dated use of SAL."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -48,14 +48,14 @@
               "id": "SEC105/119",
               "name": "UpdateSalToCurrentVersion/Maybenull",
               "fullDescription": {
-                "text": "Use SAL correctly."
+                "text": "Update SAL to current version"
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL: {1}."
+                  "text": "'{0}' contains incorrect or out-dated use of SAL."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -64,14 +64,14 @@
               "id": "SEC105/121",
               "name": "UpdateSalToCurrentVersion/Notnull",
               "fullDescription": {
-                "text": "Use SAL correctly."
+                "text": "Update SAL to current version"
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL: {1}."
+                  "text": "'{0}' contains incorrect or out-dated use of SAL."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -80,14 +80,14 @@
               "id": "SEC105/159",
               "name": "UpdateSalToCurrentVersion/PostInvalid",
               "fullDescription": {
-                "text": "Use SAL correctly."
+                "text": "Update SAL to current version"
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL: {1}."
+                  "text": "'{0}' contains incorrect or out-dated use of SAL."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -107,8 +107,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
-              ""
+              "SEC105_001.AnalysisAssume.cpp"
             ]
           },
           "locations": [
@@ -165,8 +164,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
-              ""
+              "SEC105_001.AnalysisAssume.cpp"
             ]
           },
           "locations": [
@@ -223,8 +221,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
-              ""
+              "SEC105_001.AnalysisAssume.cpp"
             ]
           },
           "locations": [
@@ -281,8 +278,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
-              ""
+              "SEC105_001.AnalysisAssume.cpp"
             ]
           },
           "locations": [
@@ -313,8 +309,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
-              ""
+              "SEC105_001.AnalysisAssume.cpp"
             ]
           },
           "locations": [
@@ -345,8 +340,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
-              ""
+              "SEC105_001.AnalysisAssume.cpp"
             ]
           },
           "locations": [
@@ -377,8 +371,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
-              ""
+              "SEC105_001.AnalysisAssume.cpp"
             ]
           },
           "locations": [
