@@ -27,9 +27,11 @@
 	
 	<Target Name="CopyingSpam" AfterTargets="Build">
 		<ItemGroup>
+			<SecurityFile Include="$(OutputPath)SalModernization.dll" />
 			<SpamFiles Include="SEC105.UpdateSalToCurrentVersion.json" />
 		</ItemGroup>
 		<Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\SalModernization\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="@(SecurityFile)" DestinationFolder="$(SolutionDir).spam\SalModernization\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" ContinueOnError="true" />
 		<Copy SourceFiles="SalModernization.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\SalModernization\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
 	</Target>
 </Project>
