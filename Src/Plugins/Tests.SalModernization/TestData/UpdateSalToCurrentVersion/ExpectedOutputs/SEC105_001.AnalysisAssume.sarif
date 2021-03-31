@@ -45,22 +45,6 @@
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             },
             {
-              "id": "SEC105/082",
-              "name": "UpdateSalToCurrentVersion/In",
-              "fullDescription": {
-                "text": "Use SAL correctly."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL: {1}."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            },
-            {
               "id": "SEC105/119",
               "name": "UpdateSalToCurrentVersion/Maybenull",
               "fullDescription": {
@@ -79,22 +63,6 @@
             {
               "id": "SEC105/121",
               "name": "UpdateSalToCurrentVersion/Notnull",
-              "fullDescription": {
-                "text": "Use SAL correctly."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL: {1}."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            },
-            {
-              "id": "SEC105/158",
-              "name": "UpdateSalToCurrentVersion/Post",
               "fullDescription": {
                 "text": "Use SAL correctly."
               },
@@ -136,12 +104,11 @@
         {
           "ruleId": "SEC105/001",
           "ruleIndex": 0,
-          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
               "SEC105_001.AnalysisAssume.cpp",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+              ""
             ]
           },
           "locations": [
@@ -153,13 +120,13 @@
                 },
                 "region": {
                   "startLine": 1,
-                  "startColumn": 9,
+                  "startColumn": 8,
                   "endLine": 1,
-                  "endColumn": 20,
-                  "charOffset": 8,
-                  "charLength": 11,
+                  "endColumn": 21,
+                  "charOffset": 7,
+                  "charLength": 13,
                   "snippet": {
-                    "text": "__allocator"
+                    "text": " __allocator "
                   }
                 }
               }
@@ -179,11 +146,69 @@
                   "replacements": [
                     {
                       "deletedRegion": {
-                        "charOffset": 8,
-                        "charLength": 11
+                        "charOffset": 7,
+                        "charLength": 13
                       },
                       "insertedContent": {
-                        "text": ""
+                        "text": "  "
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC105/001",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC105_001.AnalysisAssume.cpp",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 59,
+                  "endLine": 1,
+                  "endColumn": 72,
+                  "charOffset": 58,
+                  "charLength": 13,
+                  "snippet": {
+                    "text": "(__allocator,"
+                  }
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Delete Allocator"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
+                    "uriBaseId": "SRC_ROOT"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 58,
+                        "charLength": 13
+                      },
+                      "insertedContent": {
+                        "text": "(,"
                       }
                     }
                   ]
@@ -210,14 +235,14 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 7,
-                  "startColumn": 1,
+                  "startLine": 6,
+                  "startColumn": 2,
                   "endLine": 7,
-                  "endColumn": 18,
-                  "charOffset": 336,
-                  "charLength": 17,
+                  "endColumn": 19,
+                  "charOffset": 335,
+                  "charLength": 19,
                   "snippet": {
-                    "text": "__analysis_assume"
+                    "text": "\n__analysis_assume("
                   }
                 }
               }
@@ -237,11 +262,11 @@
                   "replacements": [
                     {
                       "deletedRegion": {
-                        "charOffset": 336,
-                        "charLength": 17
+                        "charOffset": 335,
+                        "charLength": 19
                       },
                       "insertedContent": {
-                        "text": "_Analysis_assume_"
+                        "text": "\n_Analysis_assume_("
                       }
                     }
                   ]
@@ -251,7 +276,7 @@
           ]
         },
         {
-          "ruleId": "SEC105/082",
+          "ruleId": "SEC105/119",
           "ruleIndex": 2,
           "message": {
             "id": "Default",
@@ -268,48 +293,22 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 1,
-                  "startColumn": 77,
-                  "endLine": 1,
-                  "endColumn": 81,
-                  "charOffset": 76,
-                  "charLength": 4,
+                  "startLine": 3,
+                  "startColumn": 91,
+                  "endLine": 3,
+                  "endColumn": 104,
+                  "charOffset": 300,
+                  "charLength": 13,
                   "snippet": {
-                    "text": "__in"
+                    "text": " __maybenull "
                   }
                 }
               }
             }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Automatic In"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                    "uriBaseId": "SRC_ROOT"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "charOffset": 76,
-                        "charLength": 4
-                      },
-                      "insertedContent": {
-                        "text": "_In_"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
           ]
         },
         {
-          "ruleId": "SEC105/119",
+          "ruleId": "SEC105/121",
           "ruleIndex": 3,
           "message": {
             "id": "Default",
@@ -326,14 +325,14 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 3,
-                  "startColumn": 92,
-                  "endLine": 3,
-                  "endColumn": 103,
-                  "charOffset": 301,
+                  "startLine": 2,
+                  "startColumn": 87,
+                  "endLine": 2,
+                  "endColumn": 98,
+                  "charOffset": 182,
                   "charLength": 11,
                   "snippet": {
-                    "text": "__maybenull"
+                    "text": " __notnull "
                   }
                 }
               }
@@ -341,7 +340,7 @@
           ]
         },
         {
-          "ruleId": "SEC105/121",
+          "ruleId": "SEC105/159",
           "ruleIndex": 4,
           "message": {
             "id": "Default",
@@ -359,13 +358,13 @@
                 },
                 "region": {
                   "startLine": 2,
-                  "startColumn": 88,
+                  "startColumn": 97,
                   "endLine": 2,
-                  "endColumn": 97,
-                  "charOffset": 183,
-                  "charLength": 9,
+                  "endColumn": 113,
+                  "charOffset": 192,
+                  "charLength": 16,
                   "snippet": {
-                    "text": "__notnull"
+                    "text": " __post_invalid)"
                   }
                 }
               }
@@ -373,40 +372,8 @@
           ]
         },
         {
-          "ruleId": "SEC105/158",
-          "ruleIndex": 5,
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
-              ""
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 2,
-                  "startColumn": 98,
-                  "endLine": 2,
-                  "endColumn": 104,
-                  "charOffset": 193,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "__post"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "SEC105/158",
-          "ruleIndex": 5,
+          "ruleId": "SEC105/159",
+          "ruleIndex": 4,
           "message": {
             "id": "Default",
             "arguments": [
@@ -423,77 +390,13 @@
                 },
                 "region": {
                   "startLine": 3,
-                  "startColumn": 104,
+                  "startColumn": 103,
                   "endLine": 3,
-                  "endColumn": 110,
-                  "charOffset": 313,
-                  "charLength": 6,
+                  "endColumn": 119,
+                  "charOffset": 312,
+                  "charLength": 16,
                   "snippet": {
-                    "text": "__post"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "SEC105/159",
-          "ruleIndex": 6,
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
-              ""
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 2,
-                  "startColumn": 98,
-                  "endLine": 2,
-                  "endColumn": 112,
-                  "charOffset": 193,
-                  "charLength": 14,
-                  "snippet": {
-                    "text": "__post_invalid"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "SEC105/159",
-          "ruleIndex": 6,
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
-              ""
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 104,
-                  "endLine": 3,
-                  "endColumn": 118,
-                  "charOffset": 313,
-                  "charLength": 14,
-                  "snippet": {
-                    "text": "__post_invalid"
+                    "text": " __post_invalid)"
                   }
                 }
               }
