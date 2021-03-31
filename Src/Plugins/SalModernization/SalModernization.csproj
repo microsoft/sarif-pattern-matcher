@@ -7,15 +7,15 @@
   <PropertyGroup Label="AssemblyAttributes">
     <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.SalAnalyzer</RootNamespace>
-    <PackageId>Sarif.PatternMatcher.SalAnalyzer</PackageId>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.SalModernization</RootNamespace>
+    <PackageId>Sarif.PatternMatcher.SalModernization</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
-	<Content Include="SEC105.CorrectUseOfSal.json">
-	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	</Content>
-    <Content Include="SalAnalyzer.SharedStrings.txt">
+    <Content Include="SalModernization.SharedStrings.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SEC105.UpdateSalToCurrentVersion.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -27,9 +27,17 @@
   <ItemGroup>
 	<SpamFiles Include="$(MSBuildThisFileDirectory)*.json" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="SEC105.UpdateSalToCurrentVersion.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SpamFiles Remove="SEC105.UpdateSalToCurrentVersion.json" />
+  </ItemGroup>
 	
   <Target Name="CopyingSpam" AfterTargets="Build">
-	<Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\SalAnalyzer\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
-	<Copy SourceFiles="SalAnalyzer.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\SalAnalyzer\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+	<Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\SalModernization\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+	<Copy SourceFiles="SalModernization.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\SalModernization\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
   </Target>
 </Project>

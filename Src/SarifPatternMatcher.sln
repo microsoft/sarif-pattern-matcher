@@ -81,9 +81,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sarif-sdk", "sarif-sdk", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sarif.PatternMatcher.Sdk", "Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj", "{409BE6A9-1713-47D2-A0F8-D767858077F1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalAnalyzer", "Plugins\SalAnalyzer\SalAnalyzer.csproj", "{D32E9414-DEF5-4C3D-86E3-C317FEA678EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalModernization", "Plugins\SalModernization\SalModernization.csproj", "{D32E9414-DEF5-4C3D-86E3-C317FEA678EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.SalAnalyzer", "Plugins\Tests.SalAnalyzer\Tests.SalAnalyzer.csproj", "{843E818B-1BC2-43FB-97E0-56F6005CE12A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.SalModernization", "Plugins\Tests.SalModernization\Tests.SalModernization.csproj", "{843E818B-1BC2-43FB-97E0-56F6005CE12A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

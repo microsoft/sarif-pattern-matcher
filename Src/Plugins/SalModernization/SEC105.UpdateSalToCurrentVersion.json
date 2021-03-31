@@ -1,10 +1,10 @@
 {
-  "ValidatorsAssemblyName": "SalAnalyzer.dll",
-  "SharedStringsFileName": "SalAnalyzer.SharedStrings.txt",
+  "ValidatorsAssemblyName": "SalModernization.dll",
+  "SharedStringsFileName": "SalModernization.SharedStrings.txt",
   "Definitions": [
     {
       "Id": "SEC105",
-      "Name": "CorrectUseOfSal",
+      "Name": "UpdateSalToCurrentVersion",
       "Level": "Warning",
       "FileNameAllowRegex": "$CSourceFiles",
       "Description": "Use SAL correctly.",
@@ -12,7 +12,7 @@
       "MatchExpressions": [
         {
           "Id": "SEC105/001",
-          "Name": "CorrectUseOfSal/Allocator",
+          "Name": "UpdateSalToCurrentVersion/Allocator",
           "ContentsRegex": "$SEC105/001.Allocator",
           "Fixes": {
             "testKey": {
@@ -24,7 +24,7 @@
         },
         {
           "Id": "SEC105/002",
-          "Name": "CorrectUseOfSal/AnalysisAssume",
+          "Name": "UpdateSalToCurrentVersion/AnalysisAssume",
           "ContentsRegex": "$SEC105/002.AnalysisAssume",
           "Fixes": {
             "testKey": {
@@ -36,7 +36,7 @@
         },
         {
           "Id": "SEC105/003",
-          "Name": "CorrectUseOfSal/AssumeBound",
+          "Name": "UpdateSalToCurrentVersion/AssumeBound",
           "ContentsRegex": "$SEC105/003.AssumeBound",
           "Fixes": {
             "testKey": {
@@ -48,22 +48,22 @@
         },
         {
           "Id": "SEC105/004",
-          "Name": "CorrectUseOfSal/AssumeBound",
+          "Name": "UpdateSalToCurrentVersion/AssumeBound",
           "ContentsRegex": "$SEC105/004.AssumeBound"
         },
         {
           "Id": "SEC105/005",
-          "Name": "CorrectUseOfSal/Bcount",
+          "Name": "UpdateSalToCurrentVersion/Bcount",
           "ContentsRegex": "$SEC105/005.Bcount"
         },
         {
           "Id": "SEC105/006",
-          "Name": "CorrectUseOfSal/BcountOpt",
+          "Name": "UpdateSalToCurrentVersion/BcountOpt",
           "ContentsRegex": "$SEC105/006.BcountOpt"
         },
         {
           "Id": "SEC105/007",
-          "Name": "CorrectUseOfSal/Bound",
+          "Name": "UpdateSalToCurrentVersion/Bound",
           "ContentsRegex": "$SEC105/007.Bound",
           "Fixes": {
             "testKey": {
@@ -75,7 +75,7 @@
         },
         {
           "Id": "SEC105/008",
-          "Name": "CorrectUseOfSal/ByteReadableto",
+          "Name": "UpdateSalToCurrentVersion/ByteReadableto",
           "ContentsRegex": "$SEC105/008.ByteReadableto",
           "Fixes": {
             "testKey": {
@@ -87,7 +87,7 @@
         },
         {
           "Id": "SEC105/009",
-          "Name": "CorrectUseOfSal/ByteWritableto",
+          "Name": "UpdateSalToCurrentVersion/ByteWritableto",
           "ContentsRegex": "$SEC105/009.ByteWritableto",
           "Fixes": {
             "testKey": {
@@ -99,7 +99,7 @@
         },
         {
           "Id": "SEC105/010",
-          "Name": "CorrectUseOfSal/Checkreturn",
+          "Name": "UpdateSalToCurrentVersion/Checkreturn",
           "ContentsRegex": "$SEC105/010.Checkreturn",
           "Fixes": {
             "testKey": {
@@ -111,7 +111,7 @@
         },
         {
           "Id": "SEC105/011",
-          "Name": "CorrectUseOfSal/ControlEntrypoint",
+          "Name": "UpdateSalToCurrentVersion/ControlEntrypoint",
           "ContentsRegex": "$SEC105/011.ControlEntrypoint",
           "Fixes": {
             "testKey": {
@@ -123,12 +123,12 @@
         },
         {
           "Id": "SEC105/012",
-          "Name": "CorrectUseOfSal/ControlEntrypoint",
+          "Name": "UpdateSalToCurrentVersion/ControlEntrypoint",
           "ContentsRegex": "$SEC105/012.ControlEntrypoint"
         },
         {
           "Id": "SEC105/013",
-          "Name": "CorrectUseOfSal/DataEntrypoint",
+          "Name": "UpdateSalToCurrentVersion/DataEntrypoint",
           "ContentsRegex": "$SEC105/013.DataEntrypoint",
           "Fixes": {
             "testKey": {
@@ -140,32 +140,32 @@
         },
         {
           "Id": "SEC105/014",
-          "Name": "CorrectUseOfSal/DataEntrypoint",
+          "Name": "UpdateSalToCurrentVersion/DataEntrypoint",
           "ContentsRegex": "$SEC105/014.DataEntrypoint"
         },
         {
           "Id": "SEC105/015",
-          "Name": "CorrectUseOfSal/Deref",
+          "Name": "UpdateSalToCurrentVersion/Deref",
           "ContentsRegex": "$SEC105/015.Deref"
         },
         {
           "Id": "SEC105/016",
-          "Name": "CorrectUseOfSal/DerefBcount",
+          "Name": "UpdateSalToCurrentVersion/DerefBcount",
           "ContentsRegex": "$SEC105/016.DerefBcount"
         },
         {
           "Id": "SEC105/017",
-          "Name": "CorrectUseOfSal/DerefEcount",
+          "Name": "UpdateSalToCurrentVersion/DerefEcount",
           "ContentsRegex": "$SEC105/017.DerefEcount"
         },
         {
           "Id": "SEC105/018",
-          "Name": "CorrectUseOfSal/DerefEcountOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefEcountOpt",
           "ContentsRegex": "$SEC105/018.DerefEcountOpt"
         },
         {
           "Id": "SEC105/019",
-          "Name": "CorrectUseOfSal/DerefIn",
+          "Name": "UpdateSalToCurrentVersion/DerefIn",
           "ContentsRegex": "$SEC105/019.DerefIn",
           "Fixes": {
             "testKey": {
@@ -177,22 +177,22 @@
         },
         {
           "Id": "SEC105/020",
-          "Name": "CorrectUseOfSal/DerefInBcountOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefInBcountOpt",
           "ContentsRegex": "$SEC105/020.DerefInBcountOpt"
         },
         {
           "Id": "SEC105/021",
-          "Name": "CorrectUseOfSal/DerefInOptOut",
+          "Name": "UpdateSalToCurrentVersion/DerefInOptOut",
           "ContentsRegex": "$SEC105/021.DerefInOptOut"
         },
         {
           "Id": "SEC105/022",
-          "Name": "CorrectUseOfSal/DerefInRange",
+          "Name": "UpdateSalToCurrentVersion/DerefInRange",
           "ContentsRegex": "$SEC105/022.DerefInRange"
         },
         {
           "Id": "SEC105/023",
-          "Name": "CorrectUseOfSal/DerefInout",
+          "Name": "UpdateSalToCurrentVersion/DerefInout",
           "ContentsRegex": "$SEC105/023.DerefInout",
           "Fixes": {
             "testKey": {
@@ -204,37 +204,37 @@
         },
         {
           "Id": "SEC105/024",
-          "Name": "CorrectUseOfSal/DerefInoutBcount",
+          "Name": "UpdateSalToCurrentVersion/DerefInoutBcount",
           "ContentsRegex": "$SEC105/024.DerefInoutBcount"
         },
         {
           "Id": "SEC105/025",
-          "Name": "CorrectUseOfSal/DerefInoutBcountOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefInoutBcountOpt",
           "ContentsRegex": "$SEC105/025.DerefInoutBcountOpt"
         },
         {
           "Id": "SEC105/026",
-          "Name": "CorrectUseOfSal/DerefInoutBcountPart",
+          "Name": "UpdateSalToCurrentVersion/DerefInoutBcountPart",
           "ContentsRegex": "$SEC105/026.DerefInoutBcountPart"
         },
         {
           "Id": "SEC105/027",
-          "Name": "CorrectUseOfSal/DerefInoutEcount",
+          "Name": "UpdateSalToCurrentVersion/DerefInoutEcount",
           "ContentsRegex": "$SEC105/027.DerefInoutEcount"
         },
         {
           "Id": "SEC105/028",
-          "Name": "CorrectUseOfSal/DerefInoutEcountPart",
+          "Name": "UpdateSalToCurrentVersion/DerefInoutEcountPart",
           "ContentsRegex": "$SEC105/028.DerefInoutEcountPart"
         },
         {
           "Id": "SEC105/029",
-          "Name": "CorrectUseOfSal/DerefInoutEcountZ",
+          "Name": "UpdateSalToCurrentVersion/DerefInoutEcountZ",
           "ContentsRegex": "$SEC105/029.DerefInoutEcountZ"
         },
         {
           "Id": "SEC105/030",
-          "Name": "CorrectUseOfSal/DerefInoutOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefInoutOpt",
           "ContentsRegex": "$SEC105/030.DerefInoutOpt",
           "Fixes": {
             "testKey": {
@@ -246,22 +246,22 @@
         },
         {
           "Id": "SEC105/031",
-          "Name": "CorrectUseOfSal/DerefInoutRange",
+          "Name": "UpdateSalToCurrentVersion/DerefInoutRange",
           "ContentsRegex": "$SEC105/031.DerefInoutRange"
         },
         {
           "Id": "SEC105/032",
-          "Name": "CorrectUseOfSal/DerefInoutXcount",
+          "Name": "UpdateSalToCurrentVersion/DerefInoutXcount",
           "ContentsRegex": "$SEC105/032.DerefInoutXcount"
         },
         {
           "Id": "SEC105/033",
-          "Name": "CorrectUseOfSal/DerefInoutZ",
+          "Name": "UpdateSalToCurrentVersion/DerefInoutZ",
           "ContentsRegex": "$SEC105/033.DerefInoutZ"
         },
         {
           "Id": "SEC105/034",
-          "Name": "CorrectUseOfSal/DerefOptInout",
+          "Name": "UpdateSalToCurrentVersion/DerefOptInout",
           "ContentsRegex": "$SEC105/034.DerefOptInout",
           "Fixes": {
             "testKey": {
@@ -273,17 +273,17 @@
         },
         {
           "Id": "SEC105/035",
-          "Name": "CorrectUseOfSal/DerefOptInoutBcountFull",
+          "Name": "UpdateSalToCurrentVersion/DerefOptInoutBcountFull",
           "ContentsRegex": "$SEC105/035.DerefOptInoutBcountFull"
         },
         {
           "Id": "SEC105/036",
-          "Name": "CorrectUseOfSal/DerefOptInoutBcountPartOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOptInoutBcountPartOpt",
           "ContentsRegex": "$SEC105/036.DerefOptInoutBcountPartOpt"
         },
         {
           "Id": "SEC105/037",
-          "Name": "CorrectUseOfSal/DerefOptInoutOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOptInoutOpt",
           "ContentsRegex": "$SEC105/037.DerefOptInoutOpt",
           "Fixes": {
             "testKey": {
@@ -295,7 +295,7 @@
         },
         {
           "Id": "SEC105/038",
-          "Name": "CorrectUseOfSal/DerefOptOut",
+          "Name": "UpdateSalToCurrentVersion/DerefOptOut",
           "ContentsRegex": "$SEC105/038.DerefOptOut",
           "Fixes": {
             "testKey": {
@@ -307,17 +307,17 @@
         },
         {
           "Id": "SEC105/039",
-          "Name": "CorrectUseOfSal/DerefOptOutBcount",
+          "Name": "UpdateSalToCurrentVersion/DerefOptOutBcount",
           "ContentsRegex": "$SEC105/039.DerefOptOutBcount"
         },
         {
           "Id": "SEC105/040",
-          "Name": "CorrectUseOfSal/DerefOptOutBcountFull",
+          "Name": "UpdateSalToCurrentVersion/DerefOptOutBcountFull",
           "ContentsRegex": "$SEC105/040.DerefOptOutBcountFull"
         },
         {
           "Id": "SEC105/041",
-          "Name": "CorrectUseOfSal/DerefOptOutBcountOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOptOutBcountOpt",
           "ContentsRegex": "$SEC105/041.DerefOptOutBcountOpt",
           "Fixes": {
             "testKey": {
@@ -329,12 +329,12 @@
         },
         {
           "Id": "SEC105/042",
-          "Name": "CorrectUseOfSal/DerefOptOutEcount",
+          "Name": "UpdateSalToCurrentVersion/DerefOptOutEcount",
           "ContentsRegex": "$SEC105/042.DerefOptOutEcount"
         },
         {
           "Id": "SEC105/043",
-          "Name": "CorrectUseOfSal/DerefOptOutOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOptOutOpt",
           "ContentsRegex": "$SEC105/043.DerefOptOutOpt",
           "Fixes": {
             "testKey": {
@@ -346,12 +346,12 @@
         },
         {
           "Id": "SEC105/044",
-          "Name": "CorrectUseOfSal/DerefOptOutXcount",
+          "Name": "UpdateSalToCurrentVersion/DerefOptOutXcount",
           "ContentsRegex": "$SEC105/044.DerefOptOutXcount"
         },
         {
           "Id": "SEC105/045",
-          "Name": "CorrectUseOfSal/DerefOptOutZ",
+          "Name": "UpdateSalToCurrentVersion/DerefOptOutZ",
           "ContentsRegex": "$SEC105/045.DerefOptOutZ",
           "Fixes": {
             "testKey": {
@@ -363,7 +363,7 @@
         },
         {
           "Id": "SEC105/046",
-          "Name": "CorrectUseOfSal/DerefOptOutZOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOptOutZOpt",
           "ContentsRegex": "$SEC105/046.DerefOptOutZOpt",
           "Fixes": {
             "testKey": {
@@ -375,7 +375,7 @@
         },
         {
           "Id": "SEC105/047",
-          "Name": "CorrectUseOfSal/DerefOut",
+          "Name": "UpdateSalToCurrentVersion/DerefOut",
           "ContentsRegex": "$SEC105/047.DerefOut",
           "Fixes": {
             "testKey": {
@@ -387,7 +387,7 @@
         },
         {
           "Id": "SEC105/048",
-          "Name": "CorrectUseOfSal/DerefOutBcount",
+          "Name": "UpdateSalToCurrentVersion/DerefOutBcount",
           "ContentsRegex": "$SEC105/048.DerefOutBcount",
           "Fixes": {
             "testKey": {
@@ -399,7 +399,7 @@
         },
         {
           "Id": "SEC105/049",
-          "Name": "CorrectUseOfSal/DerefOutBcountFull",
+          "Name": "UpdateSalToCurrentVersion/DerefOutBcountFull",
           "ContentsRegex": "$SEC105/049.DerefOutBcountFull",
           "Fixes": {
             "testKey": {
@@ -411,12 +411,12 @@
         },
         {
           "Id": "SEC105/050",
-          "Name": "CorrectUseOfSal/DerefOutBcountFullOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOutBcountFullOpt",
           "ContentsRegex": "$SEC105/050.DerefOutBcountFullOpt"
         },
         {
           "Id": "SEC105/051",
-          "Name": "CorrectUseOfSal/DerefOutBcountOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOutBcountOpt",
           "ContentsRegex": "$SEC105/051.DerefOutBcountOpt",
           "Fixes": {
             "testKey": {
@@ -428,7 +428,7 @@
         },
         {
           "Id": "SEC105/052",
-          "Name": "CorrectUseOfSal/DerefOutBcountPart",
+          "Name": "UpdateSalToCurrentVersion/DerefOutBcountPart",
           "ContentsRegex": "$SEC105/052.DerefOutBcountPart",
           "Fixes": {
             "testKey": {
@@ -440,7 +440,7 @@
         },
         {
           "Id": "SEC105/053",
-          "Name": "CorrectUseOfSal/DerefOutEcount",
+          "Name": "UpdateSalToCurrentVersion/DerefOutEcount",
           "ContentsRegex": "$SEC105/053.DerefOutEcount",
           "Fixes": {
             "testKey": {
@@ -452,7 +452,7 @@
         },
         {
           "Id": "SEC105/054",
-          "Name": "CorrectUseOfSal/DerefOutEcountFull",
+          "Name": "UpdateSalToCurrentVersion/DerefOutEcountFull",
           "ContentsRegex": "$SEC105/054.DerefOutEcountFull",
           "Fixes": {
             "testKey": {
@@ -464,12 +464,12 @@
         },
         {
           "Id": "SEC105/055",
-          "Name": "CorrectUseOfSal/DerefOutEcountFullOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOutEcountFullOpt",
           "ContentsRegex": "$SEC105/055.DerefOutEcountFullOpt"
         },
         {
           "Id": "SEC105/056",
-          "Name": "CorrectUseOfSal/DerefOutEcountOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOutEcountOpt",
           "ContentsRegex": "$SEC105/056.DerefOutEcountOpt",
           "Fixes": {
             "testKey": {
@@ -481,7 +481,7 @@
         },
         {
           "Id": "SEC105/057",
-          "Name": "CorrectUseOfSal/DerefOutEcountPart",
+          "Name": "UpdateSalToCurrentVersion/DerefOutEcountPart",
           "ContentsRegex": "$SEC105/057.DerefOutEcountPart",
           "Fixes": {
             "testKey": {
@@ -493,12 +493,12 @@
         },
         {
           "Id": "SEC105/058",
-          "Name": "CorrectUseOfSal/DerefOutEcountZOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOutEcountZOpt",
           "ContentsRegex": "$SEC105/058.DerefOutEcountZOpt"
         },
         {
           "Id": "SEC105/059",
-          "Name": "CorrectUseOfSal/DerefOutOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOutOpt",
           "ContentsRegex": "$SEC105/059.DerefOutOpt",
           "Fixes": {
             "testKey": {
@@ -510,7 +510,7 @@
         },
         {
           "Id": "SEC105/060",
-          "Name": "CorrectUseOfSal/DerefOutRange",
+          "Name": "UpdateSalToCurrentVersion/DerefOutRange",
           "ContentsRegex": "$SEC105/060.DerefOutRange",
           "Fixes": {
             "testKey": {
@@ -522,17 +522,17 @@
         },
         {
           "Id": "SEC105/061",
-          "Name": "CorrectUseOfSal/DerefOutXcount",
+          "Name": "UpdateSalToCurrentVersion/DerefOutXcount",
           "ContentsRegex": "$SEC105/061.DerefOutXcount"
         },
         {
           "Id": "SEC105/062",
-          "Name": "CorrectUseOfSal/DerefOutXcountPart",
+          "Name": "UpdateSalToCurrentVersion/DerefOutXcountPart",
           "ContentsRegex": "$SEC105/062.DerefOutXcountPart"
         },
         {
           "Id": "SEC105/063",
-          "Name": "CorrectUseOfSal/DerefOutZ",
+          "Name": "UpdateSalToCurrentVersion/DerefOutZ",
           "ContentsRegex": "$SEC105/063.DerefOutZ",
           "Fixes": {
             "testKey": {
@@ -544,7 +544,7 @@
         },
         {
           "Id": "SEC105/064",
-          "Name": "CorrectUseOfSal/DerefOutZOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOutZOpt",
           "ContentsRegex": "$SEC105/064.DerefOutZOpt",
           "Fixes": {
             "testKey": {
@@ -556,12 +556,12 @@
         },
         {
           "Id": "SEC105/065",
-          "Name": "CorrectUseOfSal/Ecount",
+          "Name": "UpdateSalToCurrentVersion/Ecount",
           "ContentsRegex": "$SEC105/065.Ecount"
         },
         {
           "Id": "SEC105/066",
-          "Name": "CorrectUseOfSal/ElemReadableto",
+          "Name": "UpdateSalToCurrentVersion/ElemReadableto",
           "ContentsRegex": "$SEC105/066.ElemReadableto",
           "Fixes": {
             "testKey": {
@@ -573,7 +573,7 @@
         },
         {
           "Id": "SEC105/067",
-          "Name": "CorrectUseOfSal/ElemWritableto",
+          "Name": "UpdateSalToCurrentVersion/ElemWritableto",
           "ContentsRegex": "$SEC105/067.ElemWritableto",
           "Fixes": {
             "testKey": {
@@ -585,12 +585,12 @@
         },
         {
           "Id": "SEC105/068",
-          "Name": "CorrectUseOfSal/Exceptthat",
+          "Name": "UpdateSalToCurrentVersion/Exceptthat",
           "ContentsRegex": "$SEC105/068.Exceptthat"
         },
         {
           "Id": "SEC105/069",
-          "Name": "CorrectUseOfSal/FieldBcount",
+          "Name": "UpdateSalToCurrentVersion/FieldBcount",
           "ContentsRegex": "$SEC105/069.FieldBcount",
           "Fixes": {
             "testKey": {
@@ -602,7 +602,7 @@
         },
         {
           "Id": "SEC105/070",
-          "Name": "CorrectUseOfSal/FieldBcountFull",
+          "Name": "UpdateSalToCurrentVersion/FieldBcountFull",
           "ContentsRegex": "$SEC105/070.FieldBcountFull",
           "Fixes": {
             "testKey": {
@@ -614,7 +614,7 @@
         },
         {
           "Id": "SEC105/071",
-          "Name": "CorrectUseOfSal/FieldBcountOpt",
+          "Name": "UpdateSalToCurrentVersion/FieldBcountOpt",
           "ContentsRegex": "$SEC105/071.FieldBcountOpt",
           "Fixes": {
             "testKey": {
@@ -626,7 +626,7 @@
         },
         {
           "Id": "SEC105/072",
-          "Name": "CorrectUseOfSal/FieldBcountPart",
+          "Name": "UpdateSalToCurrentVersion/FieldBcountPart",
           "ContentsRegex": "$SEC105/072.FieldBcountPart",
           "Fixes": {
             "testKey": {
@@ -638,7 +638,7 @@
         },
         {
           "Id": "SEC105/073",
-          "Name": "CorrectUseOfSal/FieldBcountPartOpt",
+          "Name": "UpdateSalToCurrentVersion/FieldBcountPartOpt",
           "ContentsRegex": "$SEC105/073.FieldBcountPartOpt",
           "Fixes": {
             "testKey": {
@@ -650,7 +650,7 @@
         },
         {
           "Id": "SEC105/074",
-          "Name": "CorrectUseOfSal/FieldEcount",
+          "Name": "UpdateSalToCurrentVersion/FieldEcount",
           "ContentsRegex": "$SEC105/074.FieldEcount",
           "Fixes": {
             "testKey": {
@@ -662,7 +662,7 @@
         },
         {
           "Id": "SEC105/075",
-          "Name": "CorrectUseOfSal/FieldEcountFull",
+          "Name": "UpdateSalToCurrentVersion/FieldEcountFull",
           "ContentsRegex": "$SEC105/075.FieldEcountFull",
           "Fixes": {
             "testKey": {
@@ -674,7 +674,7 @@
         },
         {
           "Id": "SEC105/076",
-          "Name": "CorrectUseOfSal/FieldEcountOpt",
+          "Name": "UpdateSalToCurrentVersion/FieldEcountOpt",
           "ContentsRegex": "$SEC105/076.FieldEcountOpt",
           "Fixes": {
             "testKey": {
@@ -686,7 +686,7 @@
         },
         {
           "Id": "SEC105/077",
-          "Name": "CorrectUseOfSal/FieldEcountPart",
+          "Name": "UpdateSalToCurrentVersion/FieldEcountPart",
           "ContentsRegex": "$SEC105/077.FieldEcountPart",
           "Fixes": {
             "testKey": {
@@ -698,7 +698,7 @@
         },
         {
           "Id": "SEC105/078",
-          "Name": "CorrectUseOfSal/FieldNullterminated",
+          "Name": "UpdateSalToCurrentVersion/FieldNullterminated",
           "ContentsRegex": "$SEC105/078.FieldNullterminated",
           "Fixes": {
             "testKey": {
@@ -710,7 +710,7 @@
         },
         {
           "Id": "SEC105/079",
-          "Name": "CorrectUseOfSal/FieldRange",
+          "Name": "UpdateSalToCurrentVersion/FieldRange",
           "ContentsRegex": "$SEC105/079.FieldRange",
           "Fixes": {
             "testKey": {
@@ -722,12 +722,12 @@
         },
         {
           "Id": "SEC105/080",
-          "Name": "CorrectUseOfSal/FormatString",
+          "Name": "UpdateSalToCurrentVersion/FormatString",
           "ContentsRegex": "$SEC105/080.FormatString"
         },
         {
           "Id": "SEC105/081",
-          "Name": "CorrectUseOfSal/GdiEntry",
+          "Name": "UpdateSalToCurrentVersion/GdiEntry",
           "ContentsRegex": "$SEC105/081.GdiEntry",
           "Fixes": {
             "testKey": {
@@ -739,7 +739,7 @@
         },
         {
           "Id": "SEC105/082",
-          "Name": "CorrectUseOfSal/In",
+          "Name": "UpdateSalToCurrentVersion/In",
           "ContentsRegex": "$SEC105/082.In",
           "Fixes": {
             "testKey": {
@@ -751,7 +751,7 @@
         },
         {
           "Id": "SEC105/083",
-          "Name": "CorrectUseOfSal/InBcount",
+          "Name": "UpdateSalToCurrentVersion/InBcount",
           "ContentsRegex": "$SEC105/083.InBcount",
           "Fixes": {
             "testKey": {
@@ -763,7 +763,7 @@
         },
         {
           "Id": "SEC105/084",
-          "Name": "CorrectUseOfSal/InBcountOpt",
+          "Name": "UpdateSalToCurrentVersion/InBcountOpt",
           "ContentsRegex": "$SEC105/084.InBcountOpt",
           "Fixes": {
             "testKey": {
@@ -775,7 +775,7 @@
         },
         {
           "Id": "SEC105/085",
-          "Name": "CorrectUseOfSal/InBcountZ",
+          "Name": "UpdateSalToCurrentVersion/InBcountZ",
           "ContentsRegex": "$SEC105/085.InBcountZ",
           "Fixes": {
             "testKey": {
@@ -787,7 +787,7 @@
         },
         {
           "Id": "SEC105/086",
-          "Name": "CorrectUseOfSal/InBound",
+          "Name": "UpdateSalToCurrentVersion/InBound",
           "ContentsRegex": "$SEC105/086.InBound",
           "Fixes": {
             "testKey": {
@@ -799,7 +799,7 @@
         },
         {
           "Id": "SEC105/087",
-          "Name": "CorrectUseOfSal/InEcount",
+          "Name": "UpdateSalToCurrentVersion/InEcount",
           "ContentsRegex": "$SEC105/087.InEcount",
           "Fixes": {
             "testKey": {
@@ -811,7 +811,7 @@
         },
         {
           "Id": "SEC105/088",
-          "Name": "CorrectUseOfSal/InEcountOpt",
+          "Name": "UpdateSalToCurrentVersion/InEcountOpt",
           "ContentsRegex": "$SEC105/088.InEcountOpt",
           "Fixes": {
             "testKey": {
@@ -823,7 +823,7 @@
         },
         {
           "Id": "SEC105/089",
-          "Name": "CorrectUseOfSal/InEcountOrZ",
+          "Name": "UpdateSalToCurrentVersion/InEcountOrZ",
           "ContentsRegex": "$SEC105/089.InEcountOrZ",
           "Fixes": {
             "testKey": {
@@ -835,7 +835,7 @@
         },
         {
           "Id": "SEC105/090",
-          "Name": "CorrectUseOfSal/InEcountZ",
+          "Name": "UpdateSalToCurrentVersion/InEcountZ",
           "ContentsRegex": "$SEC105/090.InEcountZ",
           "Fixes": {
             "testKey": {
@@ -847,7 +847,7 @@
         },
         {
           "Id": "SEC105/091",
-          "Name": "CorrectUseOfSal/InOpt",
+          "Name": "UpdateSalToCurrentVersion/InOpt",
           "ContentsRegex": "$SEC105/091.InOpt",
           "Fixes": {
             "testKey": {
@@ -859,7 +859,7 @@
         },
         {
           "Id": "SEC105/092",
-          "Name": "CorrectUseOfSal/InRange",
+          "Name": "UpdateSalToCurrentVersion/InRange",
           "ContentsRegex": "$SEC105/092.InRange",
           "Fixes": {
             "testKey": {
@@ -871,17 +871,17 @@
         },
         {
           "Id": "SEC105/093",
-          "Name": "CorrectUseOfSal/InXcount",
+          "Name": "UpdateSalToCurrentVersion/InXcount",
           "ContentsRegex": "$SEC105/093.InXcount"
         },
         {
           "Id": "SEC105/094",
-          "Name": "CorrectUseOfSal/InXcountOpt",
+          "Name": "UpdateSalToCurrentVersion/InXcountOpt",
           "ContentsRegex": "$SEC105/094.InXcountOpt"
         },
         {
           "Id": "SEC105/095",
-          "Name": "CorrectUseOfSal/InZ",
+          "Name": "UpdateSalToCurrentVersion/InZ",
           "ContentsRegex": "$SEC105/095.InZ",
           "Fixes": {
             "testKey": {
@@ -893,7 +893,7 @@
         },
         {
           "Id": "SEC105/096",
-          "Name": "CorrectUseOfSal/InZOpt",
+          "Name": "UpdateSalToCurrentVersion/InZOpt",
           "ContentsRegex": "$SEC105/096.InZOpt",
           "Fixes": {
             "testKey": {
@@ -905,12 +905,12 @@
         },
         {
           "Id": "SEC105/097",
-          "Name": "CorrectUseOfSal/InexpressibleReadableto",
+          "Name": "UpdateSalToCurrentVersion/InexpressibleReadableto",
           "ContentsRegex": "$SEC105/097.InexpressibleReadableto"
         },
         {
           "Id": "SEC105/098",
-          "Name": "CorrectUseOfSal/Inout",
+          "Name": "UpdateSalToCurrentVersion/Inout",
           "ContentsRegex": "$SEC105/098.Inout",
           "Fixes": {
             "testKey": {
@@ -922,7 +922,7 @@
         },
         {
           "Id": "SEC105/099",
-          "Name": "CorrectUseOfSal/InoutBcount",
+          "Name": "UpdateSalToCurrentVersion/InoutBcount",
           "ContentsRegex": "$SEC105/099.InoutBcount",
           "Fixes": {
             "testKey": {
@@ -934,7 +934,7 @@
         },
         {
           "Id": "SEC105/100",
-          "Name": "CorrectUseOfSal/InoutBcountFull",
+          "Name": "UpdateSalToCurrentVersion/InoutBcountFull",
           "ContentsRegex": "$SEC105/100.InoutBcountFull",
           "Fixes": {
             "testKey": {
@@ -946,7 +946,7 @@
         },
         {
           "Id": "SEC105/101",
-          "Name": "CorrectUseOfSal/InoutBcountFullOpt",
+          "Name": "UpdateSalToCurrentVersion/InoutBcountFullOpt",
           "ContentsRegex": "$SEC105/101.InoutBcountFullOpt",
           "Fixes": {
             "testKey": {
@@ -958,7 +958,7 @@
         },
         {
           "Id": "SEC105/102",
-          "Name": "CorrectUseOfSal/InoutBcountOpt",
+          "Name": "UpdateSalToCurrentVersion/InoutBcountOpt",
           "ContentsRegex": "$SEC105/102.InoutBcountOpt",
           "Fixes": {
             "testKey": {
@@ -970,7 +970,7 @@
         },
         {
           "Id": "SEC105/103",
-          "Name": "CorrectUseOfSal/InoutBcountPart",
+          "Name": "UpdateSalToCurrentVersion/InoutBcountPart",
           "ContentsRegex": "$SEC105/103.InoutBcountPart",
           "Fixes": {
             "testKey": {
@@ -982,7 +982,7 @@
         },
         {
           "Id": "SEC105/104",
-          "Name": "CorrectUseOfSal/InoutBcountPartOpt",
+          "Name": "UpdateSalToCurrentVersion/InoutBcountPartOpt",
           "ContentsRegex": "$SEC105/104.InoutBcountPartOpt",
           "Fixes": {
             "testKey": {
@@ -994,12 +994,12 @@
         },
         {
           "Id": "SEC105/105",
-          "Name": "CorrectUseOfSal/InoutBcountZ",
+          "Name": "UpdateSalToCurrentVersion/InoutBcountZ",
           "ContentsRegex": "$SEC105/105.InoutBcountZ"
         },
         {
           "Id": "SEC105/106",
-          "Name": "CorrectUseOfSal/InoutEcount",
+          "Name": "UpdateSalToCurrentVersion/InoutEcount",
           "ContentsRegex": "$SEC105/106.InoutEcount",
           "Fixes": {
             "testKey": {
@@ -1011,7 +1011,7 @@
         },
         {
           "Id": "SEC105/107",
-          "Name": "CorrectUseOfSal/InoutEcountFull",
+          "Name": "UpdateSalToCurrentVersion/InoutEcountFull",
           "ContentsRegex": "$SEC105/107.InoutEcountFull",
           "Fixes": {
             "testKey": {
@@ -1023,12 +1023,12 @@
         },
         {
           "Id": "SEC105/108",
-          "Name": "CorrectUseOfSal/InoutEcountFullOptManual",
+          "Name": "UpdateSalToCurrentVersion/InoutEcountFullOptManual",
           "ContentsRegex": "$SEC105/108.InoutEcountFullOptManual"
         },
         {
           "Id": "SEC105/109",
-          "Name": "CorrectUseOfSal/InoutEcountOpt",
+          "Name": "UpdateSalToCurrentVersion/InoutEcountOpt",
           "ContentsRegex": "$SEC105/109.InoutEcountOpt",
           "Fixes": {
             "testKey": {
@@ -1040,7 +1040,7 @@
         },
         {
           "Id": "SEC105/110",
-          "Name": "CorrectUseOfSal/InoutEcountPart",
+          "Name": "UpdateSalToCurrentVersion/InoutEcountPart",
           "ContentsRegex": "$SEC105/110.InoutEcountPart",
           "Fixes": {
             "testKey": {
@@ -1052,7 +1052,7 @@
         },
         {
           "Id": "SEC105/111",
-          "Name": "CorrectUseOfSal/InoutEcountPartOpt",
+          "Name": "UpdateSalToCurrentVersion/InoutEcountPartOpt",
           "ContentsRegex": "$SEC105/111.InoutEcountPartOpt",
           "Fixes": {
             "testKey": {
@@ -1064,7 +1064,7 @@
         },
         {
           "Id": "SEC105/112",
-          "Name": "CorrectUseOfSal/InoutEcountZ",
+          "Name": "UpdateSalToCurrentVersion/InoutEcountZ",
           "ContentsRegex": "$SEC105/112.InoutEcountZ",
           "Fixes": {
             "testKey": {
@@ -1076,7 +1076,7 @@
         },
         {
           "Id": "SEC105/113",
-          "Name": "CorrectUseOfSal/InoutOpt",
+          "Name": "UpdateSalToCurrentVersion/InoutOpt",
           "ContentsRegex": "$SEC105/113.InoutOpt",
           "Fixes": {
             "testKey": {
@@ -1088,17 +1088,17 @@
         },
         {
           "Id": "SEC105/114",
-          "Name": "CorrectUseOfSal/InoutXcount",
+          "Name": "UpdateSalToCurrentVersion/InoutXcount",
           "ContentsRegex": "$SEC105/114.InoutXcount"
         },
         {
           "Id": "SEC105/115",
-          "Name": "CorrectUseOfSal/InoutXcountOpt",
+          "Name": "UpdateSalToCurrentVersion/InoutXcountOpt",
           "ContentsRegex": "$SEC105/115.InoutXcountOpt"
         },
         {
           "Id": "SEC105/116",
-          "Name": "CorrectUseOfSal/InoutZ",
+          "Name": "UpdateSalToCurrentVersion/InoutZ",
           "ContentsRegex": "$SEC105/116.InoutZ",
           "Fixes": {
             "testKey": {
@@ -1110,12 +1110,12 @@
         },
         {
           "Id": "SEC105/117",
-          "Name": "CorrectUseOfSal/InternalKernelDriver",
+          "Name": "UpdateSalToCurrentVersion/InternalKernelDriver",
           "ContentsRegex": "$SEC105/117.InternalKernelDriver"
         },
         {
           "Id": "SEC105/118",
-          "Name": "CorrectUseOfSal/KernelDriver",
+          "Name": "UpdateSalToCurrentVersion/KernelDriver",
           "ContentsRegex": "$SEC105/118.KernelDriver",
           "Fixes": {
             "testKey": {
@@ -1127,32 +1127,32 @@
         },
         {
           "Id": "SEC105/119",
-          "Name": "CorrectUseOfSal/Maybenull",
+          "Name": "UpdateSalToCurrentVersion/Maybenull",
           "ContentsRegex": "$SEC105/119.Maybenull"
         },
         {
           "Id": "SEC105/120",
-          "Name": "CorrectUseOfSal/Maybevalid",
+          "Name": "UpdateSalToCurrentVersion/Maybevalid",
           "ContentsRegex": "$SEC105/120.Maybevalid"
         },
         {
           "Id": "SEC105/121",
-          "Name": "CorrectUseOfSal/Notnull",
+          "Name": "UpdateSalToCurrentVersion/Notnull",
           "ContentsRegex": "$SEC105/121.Notnull"
         },
         {
           "Id": "SEC105/122",
-          "Name": "CorrectUseOfSal/Notvalid",
+          "Name": "UpdateSalToCurrentVersion/Notvalid",
           "ContentsRegex": "$SEC105/122.Notvalid"
         },
         {
           "Id": "SEC105/123",
-          "Name": "CorrectUseOfSal/Null",
+          "Name": "UpdateSalToCurrentVersion/Null",
           "ContentsRegex": "$SEC105/123.Null"
         },
         {
           "Id": "SEC105/124",
-          "Name": "CorrectUseOfSal/Nullnullterminated",
+          "Name": "UpdateSalToCurrentVersion/Nullnullterminated",
           "ContentsRegex": "$SEC105/124.Nullnullterminated",
           "Fixes": {
             "testKey": {
@@ -1164,7 +1164,7 @@
         },
         {
           "Id": "SEC105/125",
-          "Name": "CorrectUseOfSal/Nullterminated",
+          "Name": "UpdateSalToCurrentVersion/Nullterminated",
           "ContentsRegex": "$SEC105/125.Nullterminated",
           "Fixes": {
             "testKey": {
@@ -1176,7 +1176,7 @@
         },
         {
           "Id": "SEC105/126",
-          "Name": "CorrectUseOfSal/OnFailure",
+          "Name": "UpdateSalToCurrentVersion/OnFailure",
           "ContentsRegex": "$SEC105/126.OnFailure",
           "Fixes": {
             "testKey": {
@@ -1188,7 +1188,7 @@
         },
         {
           "Id": "SEC105/127",
-          "Name": "CorrectUseOfSal/Out",
+          "Name": "UpdateSalToCurrentVersion/Out",
           "ContentsRegex": "$SEC105/127.Out",
           "Fixes": {
             "testKey": {
@@ -1200,12 +1200,12 @@
         },
         {
           "Id": "SEC105/128",
-          "Name": "CorrectUseOfSal/OutAwcount",
+          "Name": "UpdateSalToCurrentVersion/OutAwcount",
           "ContentsRegex": "$SEC105/128.OutAwcount"
         },
         {
           "Id": "SEC105/129",
-          "Name": "CorrectUseOfSal/OutBcount",
+          "Name": "UpdateSalToCurrentVersion/OutBcount",
           "ContentsRegex": "$SEC105/129.OutBcount",
           "Fixes": {
             "testKey": {
@@ -1217,7 +1217,7 @@
         },
         {
           "Id": "SEC105/130",
-          "Name": "CorrectUseOfSal/OutBcountFull",
+          "Name": "UpdateSalToCurrentVersion/OutBcountFull",
           "ContentsRegex": "$SEC105/130.OutBcountFull",
           "Fixes": {
             "testKey": {
@@ -1229,7 +1229,7 @@
         },
         {
           "Id": "SEC105/131",
-          "Name": "CorrectUseOfSal/OutBcountFullOpt",
+          "Name": "UpdateSalToCurrentVersion/OutBcountFullOpt",
           "ContentsRegex": "$SEC105/131.OutBcountFullOpt",
           "Fixes": {
             "testKey": {
@@ -1241,7 +1241,7 @@
         },
         {
           "Id": "SEC105/132",
-          "Name": "CorrectUseOfSal/OutBcountOpt",
+          "Name": "UpdateSalToCurrentVersion/OutBcountOpt",
           "ContentsRegex": "$SEC105/132.OutBcountOpt",
           "Fixes": {
             "testKey": {
@@ -1253,7 +1253,7 @@
         },
         {
           "Id": "SEC105/133",
-          "Name": "CorrectUseOfSal/OutBcountPart",
+          "Name": "UpdateSalToCurrentVersion/OutBcountPart",
           "ContentsRegex": "$SEC105/133.OutBcountPart",
           "Fixes": {
             "testKey": {
@@ -1265,7 +1265,7 @@
         },
         {
           "Id": "SEC105/134",
-          "Name": "CorrectUseOfSal/OutBcountPartOpt",
+          "Name": "UpdateSalToCurrentVersion/OutBcountPartOpt",
           "ContentsRegex": "$SEC105/134.OutBcountPartOpt",
           "Fixes": {
             "testKey": {
@@ -1277,17 +1277,17 @@
         },
         {
           "Id": "SEC105/135",
-          "Name": "CorrectUseOfSal/OutBcountPartZ",
+          "Name": "UpdateSalToCurrentVersion/OutBcountPartZ",
           "ContentsRegex": "$SEC105/135.OutBcountPartZ"
         },
         {
           "Id": "SEC105/136",
-          "Name": "CorrectUseOfSal/OutBcountZOpt",
+          "Name": "UpdateSalToCurrentVersion/OutBcountZOpt",
           "ContentsRegex": "$SEC105/136.OutBcountZOpt"
         },
         {
           "Id": "SEC105/137",
-          "Name": "CorrectUseOfSal/OutEcount",
+          "Name": "UpdateSalToCurrentVersion/OutEcount",
           "ContentsRegex": "$SEC105/137.OutEcount",
           "Fixes": {
             "testKey": {
@@ -1299,7 +1299,7 @@
         },
         {
           "Id": "SEC105/138",
-          "Name": "CorrectUseOfSal/OutEcountFull",
+          "Name": "UpdateSalToCurrentVersion/OutEcountFull",
           "ContentsRegex": "$SEC105/138.OutEcountFull",
           "Fixes": {
             "testKey": {
@@ -1311,7 +1311,7 @@
         },
         {
           "Id": "SEC105/139",
-          "Name": "CorrectUseOfSal/OutEcountFullOpt",
+          "Name": "UpdateSalToCurrentVersion/OutEcountFullOpt",
           "ContentsRegex": "$SEC105/139.OutEcountFullOpt",
           "Fixes": {
             "testKey": {
@@ -1323,12 +1323,12 @@
         },
         {
           "Id": "SEC105/140",
-          "Name": "CorrectUseOfSal/OutEcountFullZ",
+          "Name": "UpdateSalToCurrentVersion/OutEcountFullZ",
           "ContentsRegex": "$SEC105/140.OutEcountFullZ"
         },
         {
           "Id": "SEC105/141",
-          "Name": "CorrectUseOfSal/OutEcountOpt",
+          "Name": "UpdateSalToCurrentVersion/OutEcountOpt",
           "ContentsRegex": "$SEC105/141.OutEcountOpt",
           "Fixes": {
             "testKey": {
@@ -1340,7 +1340,7 @@
         },
         {
           "Id": "SEC105/142",
-          "Name": "CorrectUseOfSal/OutEcountPart",
+          "Name": "UpdateSalToCurrentVersion/OutEcountPart",
           "ContentsRegex": "$SEC105/142.OutEcountPart",
           "Fixes": {
             "testKey": {
@@ -1352,7 +1352,7 @@
         },
         {
           "Id": "SEC105/143",
-          "Name": "CorrectUseOfSal/OutEcountPartOpt",
+          "Name": "UpdateSalToCurrentVersion/OutEcountPartOpt",
           "ContentsRegex": "$SEC105/143.OutEcountPartOpt",
           "Fixes": {
             "testKey": {
@@ -1364,17 +1364,17 @@
         },
         {
           "Id": "SEC105/144",
-          "Name": "CorrectUseOfSal/OutEcountPartZ",
+          "Name": "UpdateSalToCurrentVersion/OutEcountPartZ",
           "ContentsRegex": "$SEC105/144.OutEcountPartZ"
         },
         {
           "Id": "SEC105/145",
-          "Name": "CorrectUseOfSal/OutEcountPartZOpt",
+          "Name": "UpdateSalToCurrentVersion/OutEcountPartZOpt",
           "ContentsRegex": "$SEC105/145.OutEcountPartZOpt"
         },
         {
           "Id": "SEC105/146",
-          "Name": "CorrectUseOfSal/OutEcountZ",
+          "Name": "UpdateSalToCurrentVersion/OutEcountZ",
           "ContentsRegex": "$SEC105/146.OutEcountZ",
           "Fixes": {
             "testKey": {
@@ -1386,7 +1386,7 @@
         },
         {
           "Id": "SEC105/147",
-          "Name": "CorrectUseOfSal/OutEcountZOpt",
+          "Name": "UpdateSalToCurrentVersion/OutEcountZOpt",
           "ContentsRegex": "$SEC105/147.OutEcountZOpt",
           "Fixes": {
             "testKey": {
@@ -1398,7 +1398,7 @@
         },
         {
           "Id": "SEC105/148",
-          "Name": "CorrectUseOfSal/OutOpt",
+          "Name": "UpdateSalToCurrentVersion/OutOpt",
           "ContentsRegex": "$SEC105/148.OutOpt",
           "Fixes": {
             "testKey": {
@@ -1410,7 +1410,7 @@
         },
         {
           "Id": "SEC105/149",
-          "Name": "CorrectUseOfSal/OutRange",
+          "Name": "UpdateSalToCurrentVersion/OutRange",
           "ContentsRegex": "$SEC105/149.OutRange",
           "Fixes": {
             "testKey": {
@@ -1422,7 +1422,7 @@
         },
         {
           "Id": "SEC105/150",
-          "Name": "CorrectUseOfSal/OutValidated",
+          "Name": "UpdateSalToCurrentVersion/OutValidated",
           "ContentsRegex": "$SEC105/150.OutValidated",
           "Fixes": {
             "testKey": {
@@ -1434,37 +1434,37 @@
         },
         {
           "Id": "SEC105/151",
-          "Name": "CorrectUseOfSal/OutValidated",
+          "Name": "UpdateSalToCurrentVersion/OutValidated",
           "ContentsRegex": "$SEC105/151.OutValidated"
         },
         {
           "Id": "SEC105/152",
-          "Name": "CorrectUseOfSal/OutXcount",
+          "Name": "UpdateSalToCurrentVersion/OutXcount",
           "ContentsRegex": "$SEC105/152.OutXcount"
         },
         {
           "Id": "SEC105/153",
-          "Name": "CorrectUseOfSal/OutXcountOpt",
+          "Name": "UpdateSalToCurrentVersion/OutXcountOpt",
           "ContentsRegex": "$SEC105/153.OutXcountOpt"
         },
         {
           "Id": "SEC105/154",
-          "Name": "CorrectUseOfSal/OutXcountPartOpt",
+          "Name": "UpdateSalToCurrentVersion/OutXcountPartOpt",
           "ContentsRegex": "$SEC105/154.OutXcountPartOpt"
         },
         {
           "Id": "SEC105/155",
-          "Name": "CorrectUseOfSal/OutZ",
+          "Name": "UpdateSalToCurrentVersion/OutZ",
           "ContentsRegex": "$SEC105/155.OutZ"
         },
         {
           "Id": "SEC105/156",
-          "Name": "CorrectUseOfSal/OutZOpt",
+          "Name": "UpdateSalToCurrentVersion/OutZOpt",
           "ContentsRegex": "$SEC105/156.OutZOpt"
         },
         {
           "Id": "SEC105/157",
-          "Name": "CorrectUseOfSal/PossiblyNotnullterminated",
+          "Name": "UpdateSalToCurrentVersion/PossiblyNotnullterminated",
           "ContentsRegex": "$SEC105/157.PossiblyNotnullterminated",
           "Fixes": {
             "testKey": {
@@ -1476,17 +1476,17 @@
         },
         {
           "Id": "SEC105/158",
-          "Name": "CorrectUseOfSal/Post",
+          "Name": "UpdateSalToCurrentVersion/Post",
           "ContentsRegex": "$SEC105/158.Post"
         },
         {
           "Id": "SEC105/159",
-          "Name": "CorrectUseOfSal/PostInvalid",
+          "Name": "UpdateSalToCurrentVersion/PostInvalid",
           "ContentsRegex": "$SEC105/159.PostInvalid"
         },
         {
           "Id": "SEC105/160",
-          "Name": "CorrectUseOfSal/PostNullnullterminated",
+          "Name": "UpdateSalToCurrentVersion/PostNullnullterminated",
           "ContentsRegex": "$SEC105/160.PostNullnullterminated",
           "Fixes": {
             "testKey": {
@@ -1498,27 +1498,27 @@
         },
         {
           "Id": "SEC105/161",
-          "Name": "CorrectUseOfSal/Pre",
+          "Name": "UpdateSalToCurrentVersion/Pre",
           "ContentsRegex": "$SEC105/161.Pre"
         },
         {
           "Id": "SEC105/162",
-          "Name": "CorrectUseOfSal/Precond",
+          "Name": "UpdateSalToCurrentVersion/Precond",
           "ContentsRegex": "$SEC105/162.Precond"
         },
         {
           "Id": "SEC105/163",
-          "Name": "CorrectUseOfSal/PrefastOperatorNewNull",
+          "Name": "UpdateSalToCurrentVersion/PrefastOperatorNewNull",
           "ContentsRegex": "$SEC105/163.PrefastOperatorNewNull"
         },
         {
           "Id": "SEC105/164",
-          "Name": "CorrectUseOfSal/Range",
+          "Name": "UpdateSalToCurrentVersion/Range",
           "ContentsRegex": "$SEC105/164.Range"
         },
         {
           "Id": "SEC105/165",
-          "Name": "CorrectUseOfSal/Refparam",
+          "Name": "UpdateSalToCurrentVersion/Refparam",
           "ContentsRegex": "$SEC105/165.Refparam",
           "Fixes": {
             "testKey": {
@@ -1530,7 +1530,7 @@
         },
         {
           "Id": "SEC105/166",
-          "Name": "CorrectUseOfSal/Reserved",
+          "Name": "UpdateSalToCurrentVersion/Reserved",
           "ContentsRegex": "$SEC105/166.Reserved",
           "Fixes": {
             "testKey": {
@@ -1542,17 +1542,17 @@
         },
         {
           "Id": "SEC105/167",
-          "Name": "CorrectUseOfSal/SalHFullVer",
+          "Name": "UpdateSalToCurrentVersion/SalHFullVer",
           "ContentsRegex": "$SEC105/167.SalHFullVer"
         },
         {
           "Id": "SEC105/168",
-          "Name": "CorrectUseOfSal/Specstrings",
+          "Name": "UpdateSalToCurrentVersion/Specstrings",
           "ContentsRegex": "$SEC105/168.Specstrings"
         },
         {
           "Id": "SEC105/169",
-          "Name": "CorrectUseOfSal/StructBcount",
+          "Name": "UpdateSalToCurrentVersion/StructBcount",
           "ContentsRegex": "$SEC105/169.StructBcount",
           "Fixes": {
             "testKey": {
@@ -1564,12 +1564,12 @@
         },
         {
           "Id": "SEC105/170",
-          "Name": "CorrectUseOfSal/StructXcount",
+          "Name": "UpdateSalToCurrentVersion/StructXcount",
           "ContentsRegex": "$SEC105/170.StructXcount"
         },
         {
           "Id": "SEC105/171",
-          "Name": "CorrectUseOfSal/Success",
+          "Name": "UpdateSalToCurrentVersion/Success",
           "ContentsRegex": "$SEC105/171.Success",
           "Fixes": {
             "testKey": {
@@ -1581,12 +1581,12 @@
         },
         {
           "Id": "SEC105/172",
-          "Name": "CorrectUseOfSal/Typefix",
+          "Name": "UpdateSalToCurrentVersion/Typefix",
           "ContentsRegex": "$SEC105/172.Typefix"
         },
         {
           "Id": "SEC105/173",
-          "Name": "CorrectUseOfSal/UserCode",
+          "Name": "UpdateSalToCurrentVersion/UserCode",
           "ContentsRegex": "$SEC105/173.UserCode",
           "Fixes": {
             "testKey": {
@@ -1598,7 +1598,7 @@
         },
         {
           "Id": "SEC105/174",
-          "Name": "CorrectUseOfSal/UserDriver",
+          "Name": "UpdateSalToCurrentVersion/UserDriver",
           "ContentsRegex": "$SEC105/174.UserDriver",
           "Fixes": {
             "testKey": {
@@ -1610,22 +1610,22 @@
         },
         {
           "Id": "SEC105/175",
-          "Name": "CorrectUseOfSal/Writableto",
+          "Name": "UpdateSalToCurrentVersion/Writableto",
           "ContentsRegex": "$SEC105/175.Writableto"
         },
         {
           "Id": "SEC105/176",
-          "Name": "CorrectUseOfSal/Valid",
+          "Name": "UpdateSalToCurrentVersion/Valid",
           "ContentsRegex": "$SEC105/176.Valid"
         },
         {
           "Id": "SEC105/177",
-          "Name": "CorrectUseOfSal/Xcount",
+          "Name": "UpdateSalToCurrentVersion/Xcount",
           "ContentsRegex": "$SEC105/177.Xcount"
         },
         {
           "Id": "SEC105/178",
-          "Name": "CorrectUseOfSal/GuardedBy",
+          "Name": "UpdateSalToCurrentVersion/GuardedBy",
           "ContentsRegex": "$SEC105/178.GuardedBy",
           "Fixes": {
             "testKey": {
@@ -1637,7 +1637,7 @@
         },
         {
           "Id": "SEC105/179",
-          "Name": "CorrectUseOfSal/WriteGuardedBy",
+          "Name": "UpdateSalToCurrentVersion/WriteGuardedBy",
           "ContentsRegex": "$SEC105/179.WriteGuardedBy",
           "Fixes": {
             "testKey": {
@@ -1649,7 +1649,7 @@
         },
         {
           "Id": "SEC105/180",
-          "Name": "CorrectUseOfSal/Interlocked",
+          "Name": "UpdateSalToCurrentVersion/Interlocked",
           "ContentsRegex": "$SEC105/180.Interlocked",
           "Fixes": {
             "testKey": {
@@ -1661,7 +1661,7 @@
         },
         {
           "Id": "SEC105/181",
-          "Name": "CorrectUseOfSal/RequiresLockHeld",
+          "Name": "UpdateSalToCurrentVersion/RequiresLockHeld",
           "ContentsRegex": "$SEC105/181.RequiresLockHeld",
           "Fixes": {
             "testKey": {
@@ -1673,7 +1673,7 @@
         },
         {
           "Id": "SEC105/182",
-          "Name": "CorrectUseOfSal/RequiresExclusiveLockHeld",
+          "Name": "UpdateSalToCurrentVersion/RequiresExclusiveLockHeld",
           "ContentsRegex": "$SEC105/182.RequiresExclusiveLockHeld",
           "Fixes": {
             "testKey": {
@@ -1685,7 +1685,7 @@
         },
         {
           "Id": "SEC105/183",
-          "Name": "CorrectUseOfSal/RequiresSharedLockHeld",
+          "Name": "UpdateSalToCurrentVersion/RequiresSharedLockHeld",
           "ContentsRegex": "$SEC105/183.RequiresSharedLockHeld",
           "Fixes": {
             "testKey": {
@@ -1697,7 +1697,7 @@
         },
         {
           "Id": "SEC105/184",
-          "Name": "CorrectUseOfSal/RequiresLockNotHeld",
+          "Name": "UpdateSalToCurrentVersion/RequiresLockNotHeld",
           "ContentsRegex": "$SEC105/184.RequiresLockNotHeld",
           "Fixes": {
             "testKey": {
@@ -1709,7 +1709,7 @@
         },
         {
           "Id": "SEC105/185",
-          "Name": "CorrectUseOfSal/RequiresNoLocksHeld",
+          "Name": "UpdateSalToCurrentVersion/RequiresNoLocksHeld",
           "ContentsRegex": "$SEC105/185.RequiresNoLocksHeld",
           "Fixes": {
             "testKey": {
@@ -1721,7 +1721,7 @@
         },
         {
           "Id": "SEC105/186",
-          "Name": "CorrectUseOfSal/AcquiresLock",
+          "Name": "UpdateSalToCurrentVersion/AcquiresLock",
           "ContentsRegex": "$SEC105/186.AcquiresLock",
           "Fixes": {
             "testKey": {
@@ -1733,7 +1733,7 @@
         },
         {
           "Id": "SEC105/187",
-          "Name": "CorrectUseOfSal/AcquiresExclusiveLock",
+          "Name": "UpdateSalToCurrentVersion/AcquiresExclusiveLock",
           "ContentsRegex": "$SEC105/187.AcquiresExclusiveLock",
           "Fixes": {
             "testKey": {
@@ -1745,7 +1745,7 @@
         },
         {
           "Id": "SEC105/188",
-          "Name": "CorrectUseOfSal/AcquiresSharedLock",
+          "Name": "UpdateSalToCurrentVersion/AcquiresSharedLock",
           "ContentsRegex": "$SEC105/188.AcquiresSharedLock",
           "Fixes": {
             "testKey": {
@@ -1757,7 +1757,7 @@
         },
         {
           "Id": "SEC105/189",
-          "Name": "CorrectUseOfSal/ReleasesLockAutomatic",
+          "Name": "UpdateSalToCurrentVersion/ReleasesLockAutomatic",
           "ContentsRegex": "$SEC105/189.ReleasesLockAutomatic",
           "Fixes": {
             "testKey": {
@@ -1769,7 +1769,7 @@
         },
         {
           "Id": "SEC105/190",
-          "Name": "CorrectUseOfSal/ReleasesExclusiveLock",
+          "Name": "UpdateSalToCurrentVersion/ReleasesExclusiveLock",
           "ContentsRegex": "$SEC105/190.ReleasesExclusiveLock",
           "Fixes": {
             "testKey": {
@@ -1781,7 +1781,7 @@
         },
         {
           "Id": "SEC105/191",
-          "Name": "CorrectUseOfSal/ReleasesSharedLock",
+          "Name": "UpdateSalToCurrentVersion/ReleasesSharedLock",
           "ContentsRegex": "$SEC105/191.ReleasesSharedLock",
           "Fixes": {
             "testKey": {
@@ -1793,7 +1793,7 @@
         },
         {
           "Id": "SEC105/192",
-          "Name": "CorrectUseOfSal/HasLockProperty",
+          "Name": "UpdateSalToCurrentVersion/HasLockProperty",
           "ContentsRegex": "$SEC105/192.HasLockProperty",
           "Fixes": {
             "testKey": {
@@ -1805,7 +1805,7 @@
         },
         {
           "Id": "SEC105/193",
-          "Name": "CorrectUseOfSal/DeclareLockLevel",
+          "Name": "UpdateSalToCurrentVersion/DeclareLockLevel",
           "ContentsRegex": "$SEC105/193.DeclareLockLevel",
           "Fixes": {
             "testKey": {
@@ -1817,7 +1817,7 @@
         },
         {
           "Id": "SEC105/194",
-          "Name": "CorrectUseOfSal/HasLockLevel",
+          "Name": "UpdateSalToCurrentVersion/HasLockLevel",
           "ContentsRegex": "$SEC105/194.HasLockLevel",
           "Fixes": {
             "testKey": {
@@ -1829,12 +1829,12 @@
         },
         {
           "Id": "SEC105/195",
-          "Name": "CorrectUseOfSal/InternalLockLevelOrder",
+          "Name": "UpdateSalToCurrentVersion/InternalLockLevelOrder",
           "ContentsRegex": "$SEC105/195.InternalLockLevelOrder"
         },
         {
           "Id": "SEC105/196",
-          "Name": "CorrectUseOfSal/LockLevelOrder",
+          "Name": "UpdateSalToCurrentVersion/LockLevelOrder",
           "ContentsRegex": "$SEC105/196.LockLevelOrder",
           "Fixes": {
             "testKey": {
@@ -1846,7 +1846,7 @@
         },
         {
           "Id": "SEC105/197",
-          "Name": "CorrectUseOfSal/NoCompetingThread",
+          "Name": "UpdateSalToCurrentVersion/NoCompetingThread",
           "ContentsRegex": "$SEC105/197.NoCompetingThread",
           "Fixes": {
             "testKey": {
@@ -1858,7 +1858,7 @@
         },
         {
           "Id": "SEC105/198",
-          "Name": "CorrectUseOfSal/AnalysisAssumeLockAcquired",
+          "Name": "UpdateSalToCurrentVersion/AnalysisAssumeLockAcquired",
           "ContentsRegex": "$SEC105/198.AnalysisAssumeLockAcquired",
           "Fixes": {
             "testKey": {
@@ -1870,7 +1870,7 @@
         },
         {
           "Id": "SEC105/199",
-          "Name": "CorrectUseOfSal/AnalysisAssumeLockReleased",
+          "Name": "UpdateSalToCurrentVersion/AnalysisAssumeLockReleased",
           "ContentsRegex": "$SEC105/199.AnalysisAssumeLockReleased",
           "Fixes": {
             "testKey": {
@@ -1882,7 +1882,7 @@
         },
         {
           "Id": "SEC105/200",
-          "Name": "CorrectUseOfSal/FunctionIgnoreLockChecking",
+          "Name": "UpdateSalToCurrentVersion/FunctionIgnoreLockChecking",
           "ContentsRegex": "$SEC105/200.FunctionIgnoreLockChecking",
           "Fixes": {
             "testKey": {
@@ -1894,7 +1894,7 @@
         },
         {
           "Id": "SEC105/201",
-          "Name": "CorrectUseOfSal/AnalysisSuppressLockChecking",
+          "Name": "UpdateSalToCurrentVersion/AnalysisSuppressLockChecking",
           "ContentsRegex": "$SEC105/201.AnalysisSuppressLockChecking",
           "Fixes": {
             "testKey": {
@@ -1906,7 +1906,7 @@
         },
         {
           "Id": "SEC105/202",
-          "Name": "CorrectUseOfSal/DrvAcquirescancelspinlock",
+          "Name": "UpdateSalToCurrentVersion/DrvAcquirescancelspinlock",
           "ContentsRegex": "$SEC105/202.DrvAcquirescancelspinlock",
           "Fixes": {
             "testKey": {
@@ -1918,7 +1918,7 @@
         },
         {
           "Id": "SEC105/203",
-          "Name": "CorrectUseOfSal/DrvReleasescancelspinlock",
+          "Name": "UpdateSalToCurrentVersion/DrvReleasescancelspinlock",
           "ContentsRegex": "$SEC105/203.DrvReleasescancelspinlock",
           "Fixes": {
             "testKey": {
@@ -1930,7 +1930,7 @@
         },
         {
           "Id": "SEC105/204",
-          "Name": "CorrectUseOfSal/DrvMustholdcancelspinlock",
+          "Name": "UpdateSalToCurrentVersion/DrvMustholdcancelspinlock",
           "ContentsRegex": "$SEC105/204.DrvMustholdcancelspinlock",
           "Fixes": {
             "testKey": {
@@ -1942,7 +1942,7 @@
         },
         {
           "Id": "SEC105/205",
-          "Name": "CorrectUseOfSal/DrvNeverholdcancelspinlock",
+          "Name": "UpdateSalToCurrentVersion/DrvNeverholdcancelspinlock",
           "ContentsRegex": "$SEC105/205.DrvNeverholdcancelspinlock",
           "Fixes": {
             "testKey": {
@@ -1954,7 +1954,7 @@
         },
         {
           "Id": "SEC105/206",
-          "Name": "CorrectUseOfSal/DrvAcquirescriticalregion",
+          "Name": "UpdateSalToCurrentVersion/DrvAcquirescriticalregion",
           "ContentsRegex": "$SEC105/206.DrvAcquirescriticalregion",
           "Fixes": {
             "testKey": {
@@ -1966,7 +1966,7 @@
         },
         {
           "Id": "SEC105/207",
-          "Name": "CorrectUseOfSal/DrvReleasescriticalregion",
+          "Name": "UpdateSalToCurrentVersion/DrvReleasescriticalregion",
           "ContentsRegex": "$SEC105/207.DrvReleasescriticalregion",
           "Fixes": {
             "testKey": {
@@ -1978,7 +1978,7 @@
         },
         {
           "Id": "SEC105/208",
-          "Name": "CorrectUseOfSal/DrvMustholdcriticalregion",
+          "Name": "UpdateSalToCurrentVersion/DrvMustholdcriticalregion",
           "ContentsRegex": "$SEC105/208.DrvMustholdcriticalregion",
           "Fixes": {
             "testKey": {
@@ -1990,7 +1990,7 @@
         },
         {
           "Id": "SEC105/209",
-          "Name": "CorrectUseOfSal/DrvNeverholdcriticalregion",
+          "Name": "UpdateSalToCurrentVersion/DrvNeverholdcriticalregion",
           "ContentsRegex": "$SEC105/209.DrvNeverholdcriticalregion",
           "Fixes": {
             "testKey": {
@@ -2002,7 +2002,7 @@
         },
         {
           "Id": "SEC105/210",
-          "Name": "CorrectUseOfSal/DrvAcquirespriorityregion",
+          "Name": "UpdateSalToCurrentVersion/DrvAcquirespriorityregion",
           "ContentsRegex": "$SEC105/210.DrvAcquirespriorityregion",
           "Fixes": {
             "testKey": {
@@ -2014,7 +2014,7 @@
         },
         {
           "Id": "SEC105/211",
-          "Name": "CorrectUseOfSal/DrvReleasespriorityregion",
+          "Name": "UpdateSalToCurrentVersion/DrvReleasespriorityregion",
           "ContentsRegex": "$SEC105/211.DrvReleasespriorityregion",
           "Fixes": {
             "testKey": {
@@ -2026,7 +2026,7 @@
         },
         {
           "Id": "SEC105/212",
-          "Name": "CorrectUseOfSal/DrvMustholdpriorityregion",
+          "Name": "UpdateSalToCurrentVersion/DrvMustholdpriorityregion",
           "ContentsRegex": "$SEC105/212.DrvMustholdpriorityregion",
           "Fixes": {
             "testKey": {
@@ -2038,7 +2038,7 @@
         },
         {
           "Id": "SEC105/213",
-          "Name": "CorrectUseOfSal/DrvNeverholdpriorityregion",
+          "Name": "UpdateSalToCurrentVersion/DrvNeverholdpriorityregion",
           "ContentsRegex": "$SEC105/213.DrvNeverholdpriorityregion",
           "Fixes": {
             "testKey": {
@@ -2050,7 +2050,7 @@
         },
         {
           "Id": "SEC105/214",
-          "Name": "CorrectUseOfSal/DrvInterlocked",
+          "Name": "UpdateSalToCurrentVersion/DrvInterlocked",
           "ContentsRegex": "$SEC105/214.DrvInterlocked",
           "Fixes": {
             "testKey": {
@@ -2062,67 +2062,67 @@
         },
         {
           "Id": "SEC105/215",
-          "Name": "CorrectUseOfSal/DrvAcquiresresource",
+          "Name": "UpdateSalToCurrentVersion/DrvAcquiresresource",
           "ContentsRegex": "$SEC105/215.DrvAcquiresresource"
         },
         {
           "Id": "SEC105/216",
-          "Name": "CorrectUseOfSal/DrvReleasesresource",
+          "Name": "UpdateSalToCurrentVersion/DrvReleasesresource",
           "ContentsRegex": "$SEC105/216.DrvReleasesresource"
         },
         {
           "Id": "SEC105/217",
-          "Name": "CorrectUseOfSal/DrvAcquiresresourceglobal",
+          "Name": "UpdateSalToCurrentVersion/DrvAcquiresresourceglobal",
           "ContentsRegex": "$SEC105/217.DrvAcquiresresourceglobal"
         },
         {
           "Id": "SEC105/218",
-          "Name": "CorrectUseOfSal/DrvReleasesresourceglobal",
+          "Name": "UpdateSalToCurrentVersion/DrvReleasesresourceglobal",
           "ContentsRegex": "$SEC105/218.DrvReleasesresourceglobal"
         },
         {
           "Id": "SEC105/219",
-          "Name": "CorrectUseOfSal/DrvMusthold",
+          "Name": "UpdateSalToCurrentVersion/DrvMusthold",
           "ContentsRegex": "$SEC105/219.DrvMusthold"
         },
         {
           "Id": "SEC105/220",
-          "Name": "CorrectUseOfSal/DrvMustholdglobal",
+          "Name": "UpdateSalToCurrentVersion/DrvMustholdglobal",
           "ContentsRegex": "$SEC105/220.DrvMustholdglobal"
         },
         {
           "Id": "SEC105/221",
-          "Name": "CorrectUseOfSal/DrvNeverhold",
+          "Name": "UpdateSalToCurrentVersion/DrvNeverhold",
           "ContentsRegex": "$SEC105/221.DrvNeverhold"
         },
         {
           "Id": "SEC105/222",
-          "Name": "CorrectUseOfSal/DrvNeverholdglobal",
+          "Name": "UpdateSalToCurrentVersion/DrvNeverholdglobal",
           "ContentsRegex": "$SEC105/222.DrvNeverholdglobal"
         },
         {
           "Id": "SEC105/223",
-          "Name": "CorrectUseOfSal/DrvAcquiresexclusiveresource",
+          "Name": "UpdateSalToCurrentVersion/DrvAcquiresexclusiveresource",
           "ContentsRegex": "$SEC105/223.DrvAcquiresexclusiveresource"
         },
         {
           "Id": "SEC105/224",
-          "Name": "CorrectUseOfSal/DrvReleasesexclusiveresource",
+          "Name": "UpdateSalToCurrentVersion/DrvReleasesexclusiveresource",
           "ContentsRegex": "$SEC105/224.DrvReleasesexclusiveresource"
         },
         {
           "Id": "SEC105/225",
-          "Name": "CorrectUseOfSal/DrvAcquiresexclusiveresourceglobal",
+          "Name": "UpdateSalToCurrentVersion/DrvAcquiresexclusiveresourceglobal",
           "ContentsRegex": "$SEC105/225.DrvAcquiresexclusiveresourceglobal"
         },
         {
           "Id": "SEC105/226",
-          "Name": "CorrectUseOfSal/DrvReleasesexclusiveresourceglobal",
+          "Name": "UpdateSalToCurrentVersion/DrvReleasesexclusiveresourceglobal",
           "ContentsRegex": "$SEC105/226.DrvReleasesexclusiveresourceglobal"
         },
         {
           "Id": "SEC105/227",
-          "Name": "CorrectUseOfSal/DrvAt",
+          "Name": "UpdateSalToCurrentVersion/DrvAt",
           "ContentsRegex": "$SEC105/227.DrvAt",
           "Fixes": {
             "testKey": {
@@ -2134,7 +2134,7 @@
         },
         {
           "Id": "SEC105/228",
-          "Name": "CorrectUseOfSal/DrvValueis",
+          "Name": "UpdateSalToCurrentVersion/DrvValueis",
           "ContentsRegex": "$SEC105/228.DrvValueis",
           "Fixes": {
             "testKey": {
@@ -2146,7 +2146,7 @@
         },
         {
           "Id": "SEC105/229",
-          "Name": "CorrectUseOfSal/DrvWhen",
+          "Name": "UpdateSalToCurrentVersion/DrvWhen",
           "ContentsRegex": "$SEC105/229.DrvWhen",
           "Fixes": {
             "testKey": {
@@ -2158,7 +2158,7 @@
         },
         {
           "Id": "SEC105/230",
-          "Name": "CorrectUseOfSal/DrvSetsirql",
+          "Name": "UpdateSalToCurrentVersion/DrvSetsirql",
           "ContentsRegex": "$SEC105/230.DrvSetsirql",
           "Fixes": {
             "testKey": {
@@ -2170,7 +2170,7 @@
         },
         {
           "Id": "SEC105/231",
-          "Name": "CorrectUseOfSal/DrvRaisesirql",
+          "Name": "UpdateSalToCurrentVersion/DrvRaisesirql",
           "ContentsRegex": "$SEC105/231.DrvRaisesirql",
           "Fixes": {
             "testKey": {
@@ -2182,7 +2182,7 @@
         },
         {
           "Id": "SEC105/232",
-          "Name": "CorrectUseOfSal/DrvRequiresirql",
+          "Name": "UpdateSalToCurrentVersion/DrvRequiresirql",
           "ContentsRegex": "$SEC105/232.DrvRequiresirql",
           "Fixes": {
             "testKey": {
@@ -2194,7 +2194,7 @@
         },
         {
           "Id": "SEC105/233",
-          "Name": "CorrectUseOfSal/DrvMaxirql",
+          "Name": "UpdateSalToCurrentVersion/DrvMaxirql",
           "ContentsRegex": "$SEC105/233.DrvMaxirql",
           "Fixes": {
             "testKey": {
@@ -2206,7 +2206,7 @@
         },
         {
           "Id": "SEC105/234",
-          "Name": "CorrectUseOfSal/DrvMinirql",
+          "Name": "UpdateSalToCurrentVersion/DrvMinirql",
           "ContentsRegex": "$SEC105/234.DrvMinirql",
           "Fixes": {
             "testKey": {
@@ -2218,7 +2218,7 @@
         },
         {
           "Id": "SEC105/235",
-          "Name": "CorrectUseOfSal/DrvSavesirql",
+          "Name": "UpdateSalToCurrentVersion/DrvSavesirql",
           "ContentsRegex": "$SEC105/235.DrvSavesirql",
           "Fixes": {
             "testKey": {
@@ -2230,7 +2230,7 @@
         },
         {
           "Id": "SEC105/236",
-          "Name": "CorrectUseOfSal/DrvSavesirqlglobal",
+          "Name": "UpdateSalToCurrentVersion/DrvSavesirqlglobal",
           "ContentsRegex": "$SEC105/236.DrvSavesirqlglobal",
           "Fixes": {
             "testKey": {
@@ -2242,7 +2242,7 @@
         },
         {
           "Id": "SEC105/237",
-          "Name": "CorrectUseOfSal/DrvRestoresirql",
+          "Name": "UpdateSalToCurrentVersion/DrvRestoresirql",
           "ContentsRegex": "$SEC105/237.DrvRestoresirql",
           "Fixes": {
             "testKey": {
@@ -2254,7 +2254,7 @@
         },
         {
           "Id": "SEC105/238",
-          "Name": "CorrectUseOfSal/DrvRestoresirqlglobal",
+          "Name": "UpdateSalToCurrentVersion/DrvRestoresirqlglobal",
           "ContentsRegex": "$SEC105/238.DrvRestoresirqlglobal",
           "Fixes": {
             "testKey": {
@@ -2266,7 +2266,7 @@
         },
         {
           "Id": "SEC105/239",
-          "Name": "CorrectUseOfSal/DrvMinfunctionirql",
+          "Name": "UpdateSalToCurrentVersion/DrvMinfunctionirql",
           "ContentsRegex": "$SEC105/239.DrvMinfunctionirql",
           "Fixes": {
             "testKey": {
@@ -2278,7 +2278,7 @@
         },
         {
           "Id": "SEC105/240",
-          "Name": "CorrectUseOfSal/DrvMaxfunctionirql",
+          "Name": "UpdateSalToCurrentVersion/DrvMaxfunctionirql",
           "ContentsRegex": "$SEC105/240.DrvMaxfunctionirql",
           "Fixes": {
             "testKey": {
@@ -2290,7 +2290,7 @@
         },
         {
           "Id": "SEC105/241",
-          "Name": "CorrectUseOfSal/DrvSameirql",
+          "Name": "UpdateSalToCurrentVersion/DrvSameirql",
           "ContentsRegex": "$SEC105/241.DrvSameirql",
           "Fixes": {
             "testKey": {
@@ -2302,7 +2302,7 @@
         },
         {
           "Id": "SEC105/242",
-          "Name": "CorrectUseOfSal/DrvUsecancelirql",
+          "Name": "UpdateSalToCurrentVersion/DrvUsecancelirql",
           "ContentsRegex": "$SEC105/242.DrvUsecancelirql",
           "Fixes": {
             "testKey": {
@@ -2314,7 +2314,7 @@
         },
         {
           "Id": "SEC105/243",
-          "Name": "CorrectUseOfSal/DrvIscancelirql",
+          "Name": "UpdateSalToCurrentVersion/DrvIscancelirql",
           "ContentsRegex": "$SEC105/243.DrvIscancelirql",
           "Fixes": {
             "testKey": {
@@ -2326,7 +2326,7 @@
         },
         {
           "Id": "SEC105/244",
-          "Name": "CorrectUseOfSal/DrvCleardoinit",
+          "Name": "UpdateSalToCurrentVersion/DrvCleardoinit",
           "ContentsRegex": "$SEC105/244.DrvCleardoinit",
           "Fixes": {
             "testKey": {
@@ -2338,7 +2338,7 @@
         },
         {
           "Id": "SEC105/245",
-          "Name": "CorrectUseOfSal/DrvIogetdmaadapter",
+          "Name": "UpdateSalToCurrentVersion/DrvIogetdmaadapter",
           "ContentsRegex": "$SEC105/245.DrvIogetdmaadapter",
           "Fixes": {
             "testKey": {
@@ -2350,7 +2350,7 @@
         },
         {
           "Id": "SEC105/246",
-          "Name": "CorrectUseOfSal/DrvFloatsaved",
+          "Name": "UpdateSalToCurrentVersion/DrvFloatsaved",
           "ContentsRegex": "$SEC105/246.DrvFloatsaved",
           "Fixes": {
             "testKey": {
@@ -2362,7 +2362,7 @@
         },
         {
           "Id": "SEC105/247",
-          "Name": "CorrectUseOfSal/DrvFloatrestored",
+          "Name": "UpdateSalToCurrentVersion/DrvFloatrestored",
           "ContentsRegex": "$SEC105/247.DrvFloatrestored",
           "Fixes": {
             "testKey": {
@@ -2374,7 +2374,7 @@
         },
         {
           "Id": "SEC105/248",
-          "Name": "CorrectUseOfSal/DrvFloatused",
+          "Name": "UpdateSalToCurrentVersion/DrvFloatused",
           "ContentsRegex": "$SEC105/248.DrvFloatused",
           "Fixes": {
             "testKey": {
@@ -2386,7 +2386,7 @@
         },
         {
           "Id": "SEC105/249",
-          "Name": "CorrectUseOfSal/DrvDispatchtype",
+          "Name": "UpdateSalToCurrentVersion/DrvDispatchtype",
           "ContentsRegex": "$SEC105/249.DrvDispatchtype",
           "Fixes": {
             "testKey": {
@@ -2398,7 +2398,7 @@
         },
         {
           "Id": "SEC105/250",
-          "Name": "CorrectUseOfSal/DrvFunctionclass",
+          "Name": "UpdateSalToCurrentVersion/DrvFunctionclass",
           "ContentsRegex": "$SEC105/250.DrvFunctionclass",
           "Fixes": {
             "testKey": {
@@ -2410,32 +2410,32 @@
         },
         {
           "Id": "SEC105/251",
-          "Name": "CorrectUseOfSal/DrvFormatstring",
+          "Name": "UpdateSalToCurrentVersion/DrvFormatstring",
           "ContentsRegex": "$SEC105/251.DrvFormatstring"
         },
         {
           "Id": "SEC105/252",
-          "Name": "CorrectUseOfSal/DrvDeref",
+          "Name": "UpdateSalToCurrentVersion/DrvDeref",
           "ContentsRegex": "$SEC105/252.DrvDeref"
         },
         {
           "Id": "SEC105/253",
-          "Name": "CorrectUseOfSal/DrvRet",
+          "Name": "UpdateSalToCurrentVersion/DrvRet",
           "ContentsRegex": "$SEC105/253.DrvRet"
         },
         {
           "Id": "SEC105/254",
-          "Name": "CorrectUseOfSal/DrvFun",
+          "Name": "UpdateSalToCurrentVersion/DrvFun",
           "ContentsRegex": "$SEC105/254.DrvFun"
         },
         {
           "Id": "SEC105/255",
-          "Name": "CorrectUseOfSal/DrvOutDeref",
+          "Name": "UpdateSalToCurrentVersion/DrvOutDeref",
           "ContentsRegex": "$SEC105/255.DrvOutDeref"
         },
         {
           "Id": "SEC105/256",
-          "Name": "CorrectUseOfSal/DrvArg",
+          "Name": "UpdateSalToCurrentVersion/DrvArg",
           "ContentsRegex": "$SEC105/256.DrvArg",
           "Fixes": {
             "testKey": {
@@ -2447,7 +2447,7 @@
         },
         {
           "Id": "SEC105/257",
-          "Name": "CorrectUseOfSal/DrvConstant",
+          "Name": "UpdateSalToCurrentVersion/DrvConstant",
           "ContentsRegex": "$SEC105/257.DrvConstant",
           "Fixes": {
             "testKey": {
@@ -2459,7 +2459,7 @@
         },
         {
           "Id": "SEC105/258",
-          "Name": "CorrectUseOfSal/DrvNonconstant",
+          "Name": "UpdateSalToCurrentVersion/DrvNonconstant",
           "ContentsRegex": "$SEC105/258.DrvNonconstant",
           "Fixes": {
             "testKey": {
@@ -2471,12 +2471,12 @@
         },
         {
           "Id": "SEC105/259",
-          "Name": "CorrectUseOfSal/DrvIn",
+          "Name": "UpdateSalToCurrentVersion/DrvIn",
           "ContentsRegex": "$SEC105/259.DrvIn"
         },
         {
           "Id": "SEC105/260",
-          "Name": "CorrectUseOfSal/DrvIsobjectpointer",
+          "Name": "UpdateSalToCurrentVersion/DrvIsobjectpointer",
           "ContentsRegex": "$SEC105/260.DrvIsobjectpointer",
           "Fixes": {
             "testKey": {
@@ -2488,12 +2488,12 @@
         },
         {
           "Id": "SEC105/261",
-          "Name": "CorrectUseOfSal/DrvNotpointer",
+          "Name": "UpdateSalToCurrentVersion/DrvNotpointer",
           "ContentsRegex": "$SEC105/261.DrvNotpointer"
         },
         {
           "Id": "SEC105/262",
-          "Name": "CorrectUseOfSal/DrvIntry",
+          "Name": "UpdateSalToCurrentVersion/DrvIntry",
           "ContentsRegex": "$SEC105/262.DrvIntry",
           "Fixes": {
             "testKey": {
@@ -2505,37 +2505,37 @@
         },
         {
           "Id": "SEC105/263",
-          "Name": "CorrectUseOfSal/DrvModeImpl",
+          "Name": "UpdateSalToCurrentVersion/DrvModeImpl",
           "ContentsRegex": "$SEC105/263.DrvModeImpl"
         },
         {
           "Id": "SEC105/264",
-          "Name": "CorrectUseOfSal/DrvStricttype",
+          "Name": "UpdateSalToCurrentVersion/DrvStricttype",
           "ContentsRegex": "$SEC105/264.DrvStricttype"
         },
         {
           "Id": "SEC105/265",
-          "Name": "CorrectUseOfSal/DrvStricttypematch",
+          "Name": "UpdateSalToCurrentVersion/DrvStricttypematch",
           "ContentsRegex": "$SEC105/265.DrvStricttypematch"
         },
         {
           "Id": "SEC105/266",
-          "Name": "CorrectUseOfSal/DrvTypecond",
+          "Name": "UpdateSalToCurrentVersion/DrvTypecond",
           "ContentsRegex": "$SEC105/266.DrvTypecond"
         },
         {
           "Id": "SEC105/267",
-          "Name": "CorrectUseOfSal/DrvTypeconst",
+          "Name": "UpdateSalToCurrentVersion/DrvTypeconst",
           "ContentsRegex": "$SEC105/267.DrvTypeconst"
         },
         {
           "Id": "SEC105/268",
-          "Name": "CorrectUseOfSal/DrvTypeexpr",
+          "Name": "UpdateSalToCurrentVersion/DrvTypeexpr",
           "ContentsRegex": "$SEC105/268.DrvTypeexpr"
         },
         {
           "Id": "SEC105/269",
-          "Name": "CorrectUseOfSal/DerefOut",
+          "Name": "UpdateSalToCurrentVersion/DerefOut",
           "ContentsRegex": "$SEC105/269.DerefOut",
           "Fixes": {
             "testKey": {
@@ -2547,7 +2547,7 @@
         },
         {
           "Id": "SEC105/270",
-          "Name": "CorrectUseOfSal/DerefOptOut",
+          "Name": "UpdateSalToCurrentVersion/DerefOptOut",
           "ContentsRegex": "$SEC105/270.DerefOptOut",
           "Fixes": {
             "testKey": {
@@ -2559,7 +2559,7 @@
         },
         {
           "Id": "SEC105/271",
-          "Name": "CorrectUseOfSal/DerefOutOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOutOpt",
           "ContentsRegex": "$SEC105/271.DerefOutOpt",
           "Fixes": {
             "testKey": {
@@ -2571,7 +2571,7 @@
         },
         {
           "Id": "SEC105/272",
-          "Name": "CorrectUseOfSal/DerefOptOutOpt",
+          "Name": "UpdateSalToCurrentVersion/DerefOptOutOpt",
           "ContentsRegex": "$SEC105/272.DerefOptOutOpt",
           "Fixes": {
             "testKey": {
@@ -2583,67 +2583,67 @@
         },
         {
           "Id": "SEC105/273",
-          "Name": "CorrectUseOfSal/DerefInoutZBytecapC",
+          "Name": "UpdateSalToCurrentVersion/DerefInoutZBytecapC",
           "ContentsRegex": "$SEC105/273.DerefInoutZBytecapC"
         },
         {
           "Id": "SEC105/274",
-          "Name": "CorrectUseOfSal/DerefInoutZCapC",
+          "Name": "UpdateSalToCurrentVersion/DerefInoutZCapC",
           "ContentsRegex": "$SEC105/274.DerefInoutZCapC"
         },
         {
           "Id": "SEC105/275",
-          "Name": "CorrectUseOfSal/DerefOutZBytecapC",
+          "Name": "UpdateSalToCurrentVersion/DerefOutZBytecapC",
           "ContentsRegex": "$SEC105/275.DerefOutZBytecapC"
         },
         {
           "Id": "SEC105/276",
-          "Name": "CorrectUseOfSal/DerefOutZCapC",
+          "Name": "UpdateSalToCurrentVersion/DerefOutZCapC",
           "ContentsRegex": "$SEC105/276.DerefOutZCapC"
         },
         {
           "Id": "SEC105/277",
-          "Name": "CorrectUseOfSal/DerefPostCap",
+          "Name": "UpdateSalToCurrentVersion/DerefPostCap",
           "ContentsRegex": "$SEC105/277.DerefPostCap"
         },
         {
           "Id": "SEC105/278",
-          "Name": "CorrectUseOfSal/DerefPostCount",
+          "Name": "UpdateSalToCurrentVersion/DerefPostCount",
           "ContentsRegex": "$SEC105/278.DerefPostCount"
         },
         {
           "Id": "SEC105/279",
-          "Name": "CorrectUseOfSal/DerefPostCountC",
+          "Name": "UpdateSalToCurrentVersion/DerefPostCountC",
           "ContentsRegex": "$SEC105/279.DerefPostCountC"
         },
         {
           "Id": "SEC105/280",
-          "Name": "CorrectUseOfSal/DerefPostOptBytecountC",
+          "Name": "UpdateSalToCurrentVersion/DerefPostOptBytecountC",
           "ContentsRegex": "$SEC105/280.DerefPostOptBytecountC"
         },
         {
           "Id": "SEC105/281",
-          "Name": "CorrectUseOfSal/DerefPostOptBytecountX",
+          "Name": "UpdateSalToCurrentVersion/DerefPostOptBytecountX",
           "ContentsRegex": "$SEC105/281.DerefPostOptBytecountX"
         },
         {
           "Id": "SEC105/282",
-          "Name": "CorrectUseOfSal/DerefPostOptCap",
+          "Name": "UpdateSalToCurrentVersion/DerefPostOptCap",
           "ContentsRegex": "$SEC105/282.DerefPostOptCap"
         },
         {
           "Id": "SEC105/283",
-          "Name": "CorrectUseOfSal/DerefPostOptZCap",
+          "Name": "UpdateSalToCurrentVersion/DerefPostOptZCap",
           "ContentsRegex": "$SEC105/283.DerefPostOptZCap"
         },
         {
           "Id": "SEC105/284",
-          "Name": "CorrectUseOfSal/DerefPostZCap",
+          "Name": "UpdateSalToCurrentVersion/DerefPostZCap",
           "ContentsRegex": "$SEC105/284.DerefPostZCap"
         },
         {
           "Id": "SEC105/285",
-          "Name": "CorrectUseOfSal/InBytecount",
+          "Name": "UpdateSalToCurrentVersion/InBytecount",
           "ContentsRegex": "$SEC105/285.InBytecount",
           "Fixes": {
             "testKey": {
@@ -2655,7 +2655,7 @@
         },
         {
           "Id": "SEC105/286",
-          "Name": "CorrectUseOfSal/InBytecountC",
+          "Name": "UpdateSalToCurrentVersion/InBytecountC",
           "ContentsRegex": "$SEC105/286.InBytecountC",
           "Fixes": {
             "testKey": {
@@ -2667,12 +2667,12 @@
         },
         {
           "Id": "SEC105/287",
-          "Name": "CorrectUseOfSal/InBytecountX",
+          "Name": "UpdateSalToCurrentVersion/InBytecountX",
           "ContentsRegex": "$SEC105/287.InBytecountX"
         },
         {
           "Id": "SEC105/288",
-          "Name": "CorrectUseOfSal/InCount",
+          "Name": "UpdateSalToCurrentVersion/InCount",
           "ContentsRegex": "$SEC105/288.InCount",
           "Fixes": {
             "testKey": {
@@ -2684,7 +2684,7 @@
         },
         {
           "Id": "SEC105/289",
-          "Name": "CorrectUseOfSal/InCountC",
+          "Name": "UpdateSalToCurrentVersion/InCountC",
           "ContentsRegex": "$SEC105/289.InCountC",
           "Fixes": {
             "testKey": {
@@ -2696,12 +2696,12 @@
         },
         {
           "Id": "SEC105/290",
-          "Name": "CorrectUseOfSal/InCountX",
+          "Name": "UpdateSalToCurrentVersion/InCountX",
           "ContentsRegex": "$SEC105/290.InCountX"
         },
         {
           "Id": "SEC105/291",
-          "Name": "CorrectUseOfSal/InOptBytecount",
+          "Name": "UpdateSalToCurrentVersion/InOptBytecount",
           "ContentsRegex": "$SEC105/291.InOptBytecount",
           "Fixes": {
             "testKey": {
@@ -2713,7 +2713,7 @@
         },
         {
           "Id": "SEC105/292",
-          "Name": "CorrectUseOfSal/InOptCount",
+          "Name": "UpdateSalToCurrentVersion/InOptCount",
           "ContentsRegex": "$SEC105/292.InOptCount",
           "Fixes": {
             "testKey": {
@@ -2725,7 +2725,7 @@
         },
         {
           "Id": "SEC105/293",
-          "Name": "CorrectUseOfSal/InOptCountC",
+          "Name": "UpdateSalToCurrentVersion/InOptCountC",
           "ContentsRegex": "$SEC105/293.InOptCountC",
           "Fixes": {
             "testKey": {
@@ -2737,7 +2737,7 @@
         },
         {
           "Id": "SEC105/294",
-          "Name": "CorrectUseOfSal/InOptZCount",
+          "Name": "UpdateSalToCurrentVersion/InOptZCount",
           "ContentsRegex": "$SEC105/294.InOptZCount",
           "Fixes": {
             "testKey": {
@@ -2749,7 +2749,7 @@
         },
         {
           "Id": "SEC105/295",
-          "Name": "CorrectUseOfSal/InPtrdiffCount",
+          "Name": "UpdateSalToCurrentVersion/InPtrdiffCount",
           "ContentsRegex": "$SEC105/295.InPtrdiffCount",
           "Fixes": {
             "testKey": {
@@ -2761,7 +2761,7 @@
         },
         {
           "Id": "SEC105/296",
-          "Name": "CorrectUseOfSal/InZCount",
+          "Name": "UpdateSalToCurrentVersion/InZCount",
           "ContentsRegex": "$SEC105/296.InZCount",
           "Fixes": {
             "testKey": {
@@ -2773,7 +2773,7 @@
         },
         {
           "Id": "SEC105/297",
-          "Name": "CorrectUseOfSal/InZCountC",
+          "Name": "UpdateSalToCurrentVersion/InZCountC",
           "ContentsRegex": "$SEC105/297.InZCountC",
           "Fixes": {
             "testKey": {
@@ -2785,7 +2785,7 @@
         },
         {
           "Id": "SEC105/298",
-          "Name": "CorrectUseOfSal/InoutBytecap",
+          "Name": "UpdateSalToCurrentVersion/InoutBytecap",
           "ContentsRegex": "$SEC105/298.InoutBytecap",
           "Fixes": {
             "testKey": {
@@ -2797,12 +2797,12 @@
         },
         {
           "Id": "SEC105/299",
-          "Name": "CorrectUseOfSal/InoutBytecapX",
+          "Name": "UpdateSalToCurrentVersion/InoutBytecapX",
           "ContentsRegex": "$SEC105/299.InoutBytecapX"
         },
         {
           "Id": "SEC105/300",
-          "Name": "CorrectUseOfSal/InoutCap",
+          "Name": "UpdateSalToCurrentVersion/InoutCap",
           "ContentsRegex": "$SEC105/300.InoutCap",
           "Fixes": {
             "testKey": {
@@ -2814,7 +2814,7 @@
         },
         {
           "Id": "SEC105/301",
-          "Name": "CorrectUseOfSal/InoutCapC",
+          "Name": "UpdateSalToCurrentVersion/InoutCapC",
           "ContentsRegex": "$SEC105/301.InoutCapC",
           "Fixes": {
             "testKey": {
@@ -2826,7 +2826,7 @@
         },
         {
           "Id": "SEC105/302",
-          "Name": "CorrectUseOfSal/InoutCount",
+          "Name": "UpdateSalToCurrentVersion/InoutCount",
           "ContentsRegex": "$SEC105/302.InoutCount",
           "Fixes": {
             "testKey": {
@@ -2838,7 +2838,7 @@
         },
         {
           "Id": "SEC105/303",
-          "Name": "CorrectUseOfSal/InoutCountC",
+          "Name": "UpdateSalToCurrentVersion/InoutCountC",
           "ContentsRegex": "$SEC105/303.InoutCountC",
           "Fixes": {
             "testKey": {
@@ -2850,7 +2850,7 @@
         },
         {
           "Id": "SEC105/304",
-          "Name": "CorrectUseOfSal/InoutOptBytecap",
+          "Name": "UpdateSalToCurrentVersion/InoutOptBytecap",
           "ContentsRegex": "$SEC105/304.InoutOptBytecap",
           "Fixes": {
             "testKey": {
@@ -2862,7 +2862,7 @@
         },
         {
           "Id": "SEC105/305",
-          "Name": "CorrectUseOfSal/InoutOptCap",
+          "Name": "UpdateSalToCurrentVersion/InoutOptCap",
           "ContentsRegex": "$SEC105/305.InoutOptCap",
           "Fixes": {
             "testKey": {
@@ -2874,7 +2874,7 @@
         },
         {
           "Id": "SEC105/306",
-          "Name": "CorrectUseOfSal/InoutOptCapC",
+          "Name": "UpdateSalToCurrentVersion/InoutOptCapC",
           "ContentsRegex": "$SEC105/306.InoutOptCapC",
           "Fixes": {
             "testKey": {
@@ -2886,17 +2886,17 @@
         },
         {
           "Id": "SEC105/307",
-          "Name": "CorrectUseOfSal/InoutOptZBytecap",
+          "Name": "UpdateSalToCurrentVersion/InoutOptZBytecap",
           "ContentsRegex": "$SEC105/307.InoutOptZBytecap"
         },
         {
           "Id": "SEC105/308",
-          "Name": "CorrectUseOfSal/InoutZBytecap",
+          "Name": "UpdateSalToCurrentVersion/InoutZBytecap",
           "ContentsRegex": "$SEC105/308.InoutZBytecap"
         },
         {
           "Id": "SEC105/309",
-          "Name": "CorrectUseOfSal/InoutZCap",
+          "Name": "UpdateSalToCurrentVersion/InoutZCap",
           "ContentsRegex": "$SEC105/309.InoutZCap",
           "Fixes": {
             "testKey": {
@@ -2908,7 +2908,7 @@
         },
         {
           "Id": "SEC105/310",
-          "Name": "CorrectUseOfSal/InoutZCapC",
+          "Name": "UpdateSalToCurrentVersion/InoutZCapC",
           "ContentsRegex": "$SEC105/310.InoutZCapC",
           "Fixes": {
             "testKey": {
@@ -2920,7 +2920,7 @@
         },
         {
           "Id": "SEC105/311",
-          "Name": "CorrectUseOfSal/OutBytecap",
+          "Name": "UpdateSalToCurrentVersion/OutBytecap",
           "ContentsRegex": "$SEC105/311.OutBytecap",
           "Fixes": {
             "testKey": {
@@ -2932,7 +2932,7 @@
         },
         {
           "Id": "SEC105/312",
-          "Name": "CorrectUseOfSal/OutBytecapC",
+          "Name": "UpdateSalToCurrentVersion/OutBytecapC",
           "ContentsRegex": "$SEC105/312.OutBytecapC",
           "Fixes": {
             "testKey": {
@@ -2944,7 +2944,7 @@
         },
         {
           "Id": "SEC105/313",
-          "Name": "CorrectUseOfSal/OutBytecapPostBytecount",
+          "Name": "UpdateSalToCurrentVersion/OutBytecapPostBytecount",
           "ContentsRegex": "$SEC105/313.OutBytecapPostBytecount",
           "Fixes": {
             "testKey": {
@@ -2956,12 +2956,12 @@
         },
         {
           "Id": "SEC105/314",
-          "Name": "CorrectUseOfSal/OutBytecapX",
+          "Name": "UpdateSalToCurrentVersion/OutBytecapX",
           "ContentsRegex": "$SEC105/314.OutBytecapX"
         },
         {
           "Id": "SEC105/315",
-          "Name": "CorrectUseOfSal/OutBytecapcount",
+          "Name": "UpdateSalToCurrentVersion/OutBytecapcount",
           "ContentsRegex": "$SEC105/315.OutBytecapcount",
           "Fixes": {
             "testKey": {
@@ -2973,7 +2973,7 @@
         },
         {
           "Id": "SEC105/316",
-          "Name": "CorrectUseOfSal/OutCap",
+          "Name": "UpdateSalToCurrentVersion/OutCap",
           "ContentsRegex": "$SEC105/316.OutCap",
           "Fixes": {
             "testKey": {
@@ -2985,7 +2985,7 @@
         },
         {
           "Id": "SEC105/317",
-          "Name": "CorrectUseOfSal/OutCapC",
+          "Name": "UpdateSalToCurrentVersion/OutCapC",
           "ContentsRegex": "$SEC105/317.OutCapC",
           "Fixes": {
             "testKey": {
@@ -2997,12 +2997,12 @@
         },
         {
           "Id": "SEC105/318",
-          "Name": "CorrectUseOfSal/OutCapM",
+          "Name": "UpdateSalToCurrentVersion/OutCapM",
           "ContentsRegex": "$SEC105/318.OutCapM"
         },
         {
           "Id": "SEC105/319",
-          "Name": "CorrectUseOfSal/OutCapPostCount",
+          "Name": "UpdateSalToCurrentVersion/OutCapPostCount",
           "ContentsRegex": "$SEC105/319.OutCapPostCount",
           "Fixes": {
             "testKey": {
@@ -3014,12 +3014,12 @@
         },
         {
           "Id": "SEC105/320",
-          "Name": "CorrectUseOfSal/OutCapX",
+          "Name": "UpdateSalToCurrentVersion/OutCapX",
           "ContentsRegex": "$SEC105/320.OutCapX"
         },
         {
           "Id": "SEC105/321",
-          "Name": "CorrectUseOfSal/OutCapcount",
+          "Name": "UpdateSalToCurrentVersion/OutCapcount",
           "ContentsRegex": "$SEC105/321.OutCapcount",
           "Fixes": {
             "testKey": {
@@ -3031,12 +3031,12 @@
         },
         {
           "Id": "SEC105/322",
-          "Name": "CorrectUseOfSal/OutCapcountX",
+          "Name": "UpdateSalToCurrentVersion/OutCapcountX",
           "ContentsRegex": "$SEC105/322.OutCapcountX"
         },
         {
           "Id": "SEC105/323",
-          "Name": "CorrectUseOfSal/OutOptBytecap",
+          "Name": "UpdateSalToCurrentVersion/OutOptBytecap",
           "ContentsRegex": "$SEC105/323.OutOptBytecap",
           "Fixes": {
             "testKey": {
@@ -3048,7 +3048,7 @@
         },
         {
           "Id": "SEC105/324",
-          "Name": "CorrectUseOfSal/OutOptBytecapPostBytecount",
+          "Name": "UpdateSalToCurrentVersion/OutOptBytecapPostBytecount",
           "ContentsRegex": "$SEC105/324.OutOptBytecapPostBytecount",
           "Fixes": {
             "testKey": {
@@ -3060,7 +3060,7 @@
         },
         {
           "Id": "SEC105/325",
-          "Name": "CorrectUseOfSal/OutOptBytecapcount",
+          "Name": "UpdateSalToCurrentVersion/OutOptBytecapcount",
           "ContentsRegex": "$SEC105/325.OutOptBytecapcount",
           "Fixes": {
             "testKey": {
@@ -3072,7 +3072,7 @@
         },
         {
           "Id": "SEC105/326",
-          "Name": "CorrectUseOfSal/OutOptCap",
+          "Name": "UpdateSalToCurrentVersion/OutOptCap",
           "ContentsRegex": "$SEC105/326.OutOptCap",
           "Fixes": {
             "testKey": {
@@ -3084,7 +3084,7 @@
         },
         {
           "Id": "SEC105/327",
-          "Name": "CorrectUseOfSal/OutOptCapC",
+          "Name": "UpdateSalToCurrentVersion/OutOptCapC",
           "ContentsRegex": "$SEC105/327.OutOptCapC",
           "Fixes": {
             "testKey": {
@@ -3096,12 +3096,12 @@
         },
         {
           "Id": "SEC105/328",
-          "Name": "CorrectUseOfSal/OutOptCapX",
+          "Name": "UpdateSalToCurrentVersion/OutOptCapX",
           "ContentsRegex": "$SEC105/328.OutOptCapX"
         },
         {
           "Id": "SEC105/329",
-          "Name": "CorrectUseOfSal/OutOptCapPostCount",
+          "Name": "UpdateSalToCurrentVersion/OutOptCapPostCount",
           "ContentsRegex": "$SEC105/329.OutOptCapPostCount",
           "Fixes": {
             "testKey": {
@@ -3113,7 +3113,7 @@
         },
         {
           "Id": "SEC105/330",
-          "Name": "CorrectUseOfSal/OutOptCapcount",
+          "Name": "UpdateSalToCurrentVersion/OutOptCapcount",
           "ContentsRegex": "$SEC105/330.OutOptCapcount",
           "Fixes": {
             "testKey": {
@@ -3125,17 +3125,17 @@
         },
         {
           "Id": "SEC105/331",
-          "Name": "CorrectUseOfSal/OutOptZBytecap",
+          "Name": "UpdateSalToCurrentVersion/OutOptZBytecap",
           "ContentsRegex": "$SEC105/331.OutOptZBytecap"
         },
         {
           "Id": "SEC105/332",
-          "Name": "CorrectUseOfSal/OutOptZBytecapC",
+          "Name": "UpdateSalToCurrentVersion/OutOptZBytecapC",
           "ContentsRegex": "$SEC105/332.OutOptZBytecapC"
         },
         {
           "Id": "SEC105/333",
-          "Name": "CorrectUseOfSal/OutOptZCap",
+          "Name": "UpdateSalToCurrentVersion/OutOptZCap",
           "ContentsRegex": "$SEC105/333.OutOptZCap",
           "Fixes": {
             "testKey": {
@@ -3147,7 +3147,7 @@
         },
         {
           "Id": "SEC105/334",
-          "Name": "CorrectUseOfSal/OutOptZCapPostCount",
+          "Name": "UpdateSalToCurrentVersion/OutOptZCapPostCount",
           "ContentsRegex": "$SEC105/334.OutOptZCapPostCount",
           "Fixes": {
             "testKey": {
@@ -3159,17 +3159,17 @@
         },
         {
           "Id": "SEC105/335",
-          "Name": "CorrectUseOfSal/OutZBytecap",
+          "Name": "UpdateSalToCurrentVersion/OutZBytecap",
           "ContentsRegex": "$SEC105/335.OutZBytecap"
         },
         {
           "Id": "SEC105/336",
-          "Name": "CorrectUseOfSal/OutZBytecapC",
+          "Name": "UpdateSalToCurrentVersion/OutZBytecapC",
           "ContentsRegex": "$SEC105/336.OutZBytecapC"
         },
         {
           "Id": "SEC105/337",
-          "Name": "CorrectUseOfSal/OutZCap",
+          "Name": "UpdateSalToCurrentVersion/OutZCap",
           "ContentsRegex": "$SEC105/337.OutZCap",
           "Fixes": {
             "testKey": {
@@ -3181,7 +3181,7 @@
         },
         {
           "Id": "SEC105/338",
-          "Name": "CorrectUseOfSal/OutZCapC",
+          "Name": "UpdateSalToCurrentVersion/OutZCapC",
           "ContentsRegex": "$SEC105/338.OutZCapC",
           "Fixes": {
             "testKey": {
@@ -3193,7 +3193,7 @@
         },
         {
           "Id": "SEC105/339",
-          "Name": "CorrectUseOfSal/OutZCapPostCount",
+          "Name": "UpdateSalToCurrentVersion/OutZCapPostCount",
           "ContentsRegex": "$SEC105/339.OutZCapPostCount",
           "Fixes": {
             "testKey": {
@@ -3205,12 +3205,12 @@
         },
         {
           "Id": "SEC105/340",
-          "Name": "CorrectUseOfSal/OutZCapX",
+          "Name": "UpdateSalToCurrentVersion/OutZCapX",
           "ContentsRegex": "$SEC105/340.OutZCapX"
         },
         {
           "Id": "SEC105/341",
-          "Name": "CorrectUseOfSal/OutZCapcount",
+          "Name": "UpdateSalToCurrentVersion/OutZCapcount",
           "ContentsRegex": "$SEC105/341.OutZCapcount",
           "Fixes": {
             "testKey": {
@@ -3222,7 +3222,7 @@
         },
         {
           "Id": "SEC105/342",
-          "Name": "CorrectUseOfSal/PostBytecount",
+          "Name": "UpdateSalToCurrentVersion/PostBytecount",
           "ContentsRegex": "$SEC105/342.PostBytecount",
           "Fixes": {
             "testKey": {
@@ -3234,7 +3234,7 @@
         },
         {
           "Id": "SEC105/343",
-          "Name": "CorrectUseOfSal/PostBytecountC",
+          "Name": "UpdateSalToCurrentVersion/PostBytecountC",
           "ContentsRegex": "$SEC105/343.PostBytecountC",
           "Fixes": {
             "testKey": {
@@ -3246,12 +3246,12 @@
         },
         {
           "Id": "SEC105/344",
-          "Name": "CorrectUseOfSal/PostBytecountX",
+          "Name": "UpdateSalToCurrentVersion/PostBytecountX",
           "ContentsRegex": "$SEC105/344.PostBytecountX"
         },
         {
           "Id": "SEC105/345",
-          "Name": "CorrectUseOfSal/PostCount",
+          "Name": "UpdateSalToCurrentVersion/PostCount",
           "ContentsRegex": "$SEC105/345.PostCount",
           "Fixes": {
             "testKey": {
@@ -3263,7 +3263,7 @@
         },
         {
           "Id": "SEC105/346",
-          "Name": "CorrectUseOfSal/PostCountC",
+          "Name": "UpdateSalToCurrentVersion/PostCountC",
           "ContentsRegex": "$SEC105/346.PostCountC",
           "Fixes": {
             "testKey": {
@@ -3275,7 +3275,7 @@
         },
         {
           "Id": "SEC105/347",
-          "Name": "CorrectUseOfSal/PostZCount",
+          "Name": "UpdateSalToCurrentVersion/PostZCount",
           "ContentsRegex": "$SEC105/347.PostZCount",
           "Fixes": {
             "testKey": {
@@ -3287,12 +3287,12 @@
         },
         {
           "Id": "SEC105/348",
-          "Name": "CorrectUseOfSal/PreCapFor",
+          "Name": "UpdateSalToCurrentVersion/PreCapFor",
           "ContentsRegex": "$SEC105/348.PreCapFor"
         },
         {
           "Id": "SEC105/349",
-          "Name": "CorrectUseOfSal/PreCount",
+          "Name": "UpdateSalToCurrentVersion/PreCount",
           "ContentsRegex": "$SEC105/349.PreCount",
           "Fixes": {
             "testKey": {
@@ -3304,27 +3304,27 @@
         },
         {
           "Id": "SEC105/350",
-          "Name": "CorrectUseOfSal/PreOptBytecountX",
+          "Name": "UpdateSalToCurrentVersion/PreOptBytecountX",
           "ContentsRegex": "$SEC105/350.PreOptBytecountX"
         },
         {
           "Id": "SEC105/351",
-          "Name": "CorrectUseOfSal/PrepostBytecountX",
+          "Name": "UpdateSalToCurrentVersion/PrepostBytecountX",
           "ContentsRegex": "$SEC105/351.PrepostBytecountX"
         },
         {
           "Id": "SEC105/352",
-          "Name": "CorrectUseOfSal/PrepostCount",
+          "Name": "UpdateSalToCurrentVersion/PrepostCount",
           "ContentsRegex": "$SEC105/352.PrepostCount"
         },
         {
           "Id": "SEC105/353",
-          "Name": "CorrectUseOfSal/PrepostOptBytecountX",
+          "Name": "UpdateSalToCurrentVersion/PrepostOptBytecountX",
           "ContentsRegex": "$SEC105/353.PrepostOptBytecountX"
         },
         {
           "Id": "SEC105/354",
-          "Name": "CorrectUseOfSal/RetBytecap",
+          "Name": "UpdateSalToCurrentVersion/RetBytecap",
           "ContentsRegex": "$SEC105/354.RetBytecap",
           "Fixes": {
             "testKey": {
@@ -3336,7 +3336,7 @@
         },
         {
           "Id": "SEC105/355",
-          "Name": "CorrectUseOfSal/RetCap",
+          "Name": "UpdateSalToCurrentVersion/RetCap",
           "ContentsRegex": "$SEC105/355.RetCap",
           "Fixes": {
             "testKey": {
@@ -3348,12 +3348,12 @@
         },
         {
           "Id": "SEC105/356",
-          "Name": "CorrectUseOfSal/RetCountX",
+          "Name": "UpdateSalToCurrentVersion/RetCountX",
           "ContentsRegex": "$SEC105/356.RetCountX"
         },
         {
           "Id": "SEC105/357",
-          "Name": "CorrectUseOfSal/RetOptBytecap",
+          "Name": "UpdateSalToCurrentVersion/RetOptBytecap",
           "ContentsRegex": "$SEC105/357.RetOptBytecap",
           "Fixes": {
             "testKey": {
@@ -3365,17 +3365,17 @@
         },
         {
           "Id": "SEC105/358",
-          "Name": "CorrectUseOfSal/RetOptBytecapX",
+          "Name": "UpdateSalToCurrentVersion/RetOptBytecapX",
           "ContentsRegex": "$SEC105/358.RetOptBytecapX"
         },
         {
           "Id": "SEC105/359",
-          "Name": "CorrectUseOfSal/RetOptBytecountX",
+          "Name": "UpdateSalToCurrentVersion/RetOptBytecountX",
           "ContentsRegex": "$SEC105/359.RetOptBytecountX"
         },
         {
           "Id": "SEC105/360",
-          "Name": "CorrectUseOfSal/RetOptCount",
+          "Name": "UpdateSalToCurrentVersion/RetOptCount",
           "ContentsRegex": "$SEC105/360.RetOptCount",
           "Fixes": {
             "testKey": {
@@ -3387,7 +3387,7 @@
         },
         {
           "Id": "SEC105/361",
-          "Name": "CorrectUseOfSal/RetOptZCap",
+          "Name": "UpdateSalToCurrentVersion/RetOptZCap",
           "ContentsRegex": "$SEC105/361.RetOptZCap",
           "Fixes": {
             "testKey": {
@@ -3399,7 +3399,7 @@
         },
         {
           "Id": "SEC105/362",
-          "Name": "CorrectUseOfSal/SAPreAccessSARead",
+          "Name": "UpdateSalToCurrentVersion/SAPreAccessSARead",
           "ContentsRegex": "$SEC105/362.SAPreAccessSARead",
           "Fixes": {
             "testKey": {
@@ -3411,7 +3411,7 @@
         },
         {
           "Id": "SEC105/363",
-          "Name": "CorrectUseOfSal/SAPreAccessSAWrite",
+          "Name": "UpdateSalToCurrentVersion/SAPreAccessSAWrite",
           "ContentsRegex": "$SEC105/363.SAPreAccessSAWrite",
           "Fixes": {
             "testKey": {
@@ -3423,7 +3423,7 @@
         },
         {
           "Id": "SEC105/364",
-          "Name": "CorrectUseOfSal/SAPreDeref0NullSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref0NullSAMaybe",
           "ContentsRegex": "$SEC105/364.SAPreDeref0NullSAMaybe",
           "Fixes": {
             "testKey": {
@@ -3435,7 +3435,7 @@
         },
         {
           "Id": "SEC105/365",
-          "Name": "CorrectUseOfSal/SAPreDeref0NullTerminatedSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref0NullTerminatedSAYes",
           "ContentsRegex": "$SEC105/365.SAPreDeref0NullTerminatedSAYes",
           "Fixes": {
             "testKey": {
@@ -3447,7 +3447,7 @@
         },
         {
           "Id": "SEC105/366",
-          "Name": "CorrectUseOfSal/SAPreDeref0NullTerminatedSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref0NullTerminatedSAYes",
           "ContentsRegex": "$SEC105/366.SAPreDeref0NullTerminatedSAYes",
           "Fixes": {
             "testKey": {
@@ -3459,7 +3459,7 @@
         },
         {
           "Id": "SEC105/367",
-          "Name": "CorrectUseOfSal/SAPreDeref0ValidSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref0ValidSANo",
           "ContentsRegex": "$SEC105/367.SAPreDeref0ValidSANo",
           "Fixes": {
             "testKey": {
@@ -3471,7 +3471,7 @@
         },
         {
           "Id": "SEC105/368",
-          "Name": "CorrectUseOfSal/SAPreDeref0ValidElements1",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref0ValidElements1",
           "ContentsRegex": "$SEC105/368.SAPreDeref0ValidElements1",
           "Fixes": {
             "testKey": {
@@ -3483,7 +3483,7 @@
         },
         {
           "Id": "SEC105/369",
-          "Name": "CorrectUseOfSal/SAPreDeref0ValidElements1",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref0ValidElements1",
           "ContentsRegex": "$SEC105/369.SAPreDeref0ValidElements1",
           "Fixes": {
             "testKey": {
@@ -3495,7 +3495,7 @@
         },
         {
           "Id": "SEC105/370",
-          "Name": "CorrectUseOfSal/SAPreDeref0ValidElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref0ValidElementsConst1",
           "ContentsRegex": "$SEC105/370.SAPreDeref0ValidElementsConst1",
           "Fixes": {
             "testKey": {
@@ -3507,7 +3507,7 @@
         },
         {
           "Id": "SEC105/371",
-          "Name": "CorrectUseOfSal/SAPreDeref0WritableBytes1",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref0WritableBytes1",
           "ContentsRegex": "$SEC105/371.SAPreDeref0WritableBytes1",
           "Fixes": {
             "testKey": {
@@ -3519,7 +3519,7 @@
         },
         {
           "Id": "SEC105/372",
-          "Name": "CorrectUseOfSal/SAPreDeref0WritableElements1",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref0WritableElements1",
           "ContentsRegex": "$SEC105/372.SAPreDeref0WritableElements1",
           "Fixes": {
             "testKey": {
@@ -3531,7 +3531,7 @@
         },
         {
           "Id": "SEC105/373",
-          "Name": "CorrectUseOfSal/SAPreDeref0WritableElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref0WritableElementsConst1",
           "ContentsRegex": "$SEC105/373.SAPreDeref0WritableElementsConst1",
           "Fixes": {
             "testKey": {
@@ -3543,7 +3543,7 @@
         },
         {
           "Id": "SEC105/374",
-          "Name": "CorrectUseOfSal/SAPreDeref1AccessSAWrite",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1AccessSAWrite",
           "ContentsRegex": "$SEC105/374.SAPreDeref1AccessSAWrite",
           "Fixes": {
             "testKey": {
@@ -3555,7 +3555,7 @@
         },
         {
           "Id": "SEC105/375",
-          "Name": "CorrectUseOfSal/SAPreDeref1AccessSARead",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1AccessSARead",
           "ContentsRegex": "$SEC105/375.SAPreDeref1AccessSARead",
           "Fixes": {
             "testKey": {
@@ -3567,7 +3567,7 @@
         },
         {
           "Id": "SEC105/376",
-          "Name": "CorrectUseOfSal/SAPreDeref1AccessSAReadWrite",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1AccessSAReadWrite",
           "ContentsRegex": "$SEC105/376.SAPreDeref1AccessSAReadWrite",
           "Fixes": {
             "testKey": {
@@ -3579,7 +3579,7 @@
         },
         {
           "Id": "SEC105/377",
-          "Name": "CorrectUseOfSal/SAPreDeref1NullSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1NullSAYes",
           "ContentsRegex": "$SEC105/377.SAPreDeref1NullSAYes",
           "Fixes": {
             "testKey": {
@@ -3591,7 +3591,7 @@
         },
         {
           "Id": "SEC105/378",
-          "Name": "CorrectUseOfSal/SAPreDeref1NullTerminatedSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1NullTerminatedSAYes",
           "ContentsRegex": "$SEC105/378.SAPreDeref1NullTerminatedSAYes",
           "Fixes": {
             "testKey": {
@@ -3603,7 +3603,7 @@
         },
         {
           "Id": "SEC105/379",
-          "Name": "CorrectUseOfSal/SAPreDeref1ValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1ValidSAYes",
           "ContentsRegex": "$SEC105/379.SAPreDeref1ValidSAYes",
           "Fixes": {
             "testKey": {
@@ -3615,7 +3615,7 @@
         },
         {
           "Id": "SEC105/380",
-          "Name": "CorrectUseOfSal/SAPreDeref1ValidSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1ValidSANo",
           "ContentsRegex": "$SEC105/380.SAPreDeref1ValidSANo",
           "Fixes": {
             "testKey": {
@@ -3627,7 +3627,7 @@
         },
         {
           "Id": "SEC105/381",
-          "Name": "CorrectUseOfSal/SAPreDeref1ValidSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1ValidSANo",
           "ContentsRegex": "$SEC105/381.SAPreDeref1ValidSANo",
           "Fixes": {
             "testKey": {
@@ -3639,7 +3639,7 @@
         },
         {
           "Id": "SEC105/382",
-          "Name": "CorrectUseOfSal/SAPreDeref1ValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1ValidSAYes",
           "ContentsRegex": "$SEC105/382.SAPreDeref1ValidSAYes",
           "Fixes": {
             "testKey": {
@@ -3651,7 +3651,7 @@
         },
         {
           "Id": "SEC105/383",
-          "Name": "CorrectUseOfSal/SAPreDeref1NullSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1NullSANo",
           "ContentsRegex": "$SEC105/383.SAPreDeref1NullSANo",
           "Fixes": {
             "testKey": {
@@ -3663,7 +3663,7 @@
         },
         {
           "Id": "SEC105/384",
-          "Name": "CorrectUseOfSal/SAPreDeref1ValidSAYesAccessSARead",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1ValidSAYesAccessSARead",
           "ContentsRegex": "$SEC105/384.SAPreDeref1ValidSAYesAccessSARead",
           "Fixes": {
             "testKey": {
@@ -3675,7 +3675,7 @@
         },
         {
           "Id": "SEC105/385",
-          "Name": "CorrectUseOfSal/SAPreDeref1ValidBytesConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1ValidBytesConst1",
           "ContentsRegex": "$SEC105/385.SAPreDeref1ValidBytesConst1",
           "Fixes": {
             "testKey": {
@@ -3687,7 +3687,7 @@
         },
         {
           "Id": "SEC105/386",
-          "Name": "CorrectUseOfSal/SAPreDeref1ValidElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1ValidElementsConst1",
           "ContentsRegex": "$SEC105/386.SAPreDeref1ValidElementsConst1",
           "Fixes": {
             "testKey": {
@@ -3699,7 +3699,7 @@
         },
         {
           "Id": "SEC105/387",
-          "Name": "CorrectUseOfSal/SAPreDeref1ValidElementsConst1ElementSizeConst2",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1ValidElementsConst1ElementSizeConst2",
           "ContentsRegex": "$SEC105/387.SAPreDeref1ValidElementsConst1ElementSizeConst2",
           "Fixes": {
             "testKey": {
@@ -3711,7 +3711,7 @@
         },
         {
           "Id": "SEC105/388",
-          "Name": "CorrectUseOfSal/SAPreDeref1WritableBytes1",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1WritableBytes1",
           "ContentsRegex": "$SEC105/388.SAPreDeref1WritableBytes1",
           "Fixes": {
             "testKey": {
@@ -3723,7 +3723,7 @@
         },
         {
           "Id": "SEC105/389",
-          "Name": "CorrectUseOfSal/SAPreDeref2ValidSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref2ValidSANo",
           "ContentsRegex": "$SEC105/389.SAPreDeref2ValidSANo",
           "Fixes": {
             "testKey": {
@@ -3735,7 +3735,7 @@
         },
         {
           "Id": "SEC105/390",
-          "Name": "CorrectUseOfSal/SAPreNullSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSAYes",
           "ContentsRegex": "$SEC105/390.SAPreNullSAYes",
           "Fixes": {
             "testKey": {
@@ -3747,7 +3747,7 @@
         },
         {
           "Id": "SEC105/391",
-          "Name": "CorrectUseOfSal/SAPreNullSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSANo",
           "ContentsRegex": "$SEC105/391.SAPreNullSANo",
           "Fixes": {
             "testKey": {
@@ -3759,7 +3759,7 @@
         },
         {
           "Id": "SEC105/392",
-          "Name": "CorrectUseOfSal/SAPreNullSANoNullTerminatedSAYesWritableElements1",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSANoNullTerminatedSAYesWritableElements1",
           "ContentsRegex": "$SEC105/392.SAPreNullSANoNullTerminatedSAYesWritableElements1",
           "Fixes": {
             "testKey": {
@@ -3771,7 +3771,7 @@
         },
         {
           "Id": "SEC105/393",
-          "Name": "CorrectUseOfSal/SAPreNullSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSAMaybe",
           "ContentsRegex": "$SEC105/393.SAPreNullSAMaybe",
           "Fixes": {
             "testKey": {
@@ -3783,7 +3783,7 @@
         },
         {
           "Id": "SEC105/394",
-          "Name": "CorrectUseOfSal/SAPreNullSANoNotref1",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSANoNotref1",
           "ContentsRegex": "$SEC105/394.SAPreNullSANoNotref1",
           "Fixes": {
             "testKey": {
@@ -3795,7 +3795,7 @@
         },
         {
           "Id": "SEC105/395",
-          "Name": "CorrectUseOfSal/SAPreNullSAYesValidSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSAYesValidSANo",
           "ContentsRegex": "$SEC105/395.SAPreNullSAYesValidSANo",
           "Fixes": {
             "testKey": {
@@ -3807,7 +3807,7 @@
         },
         {
           "Id": "SEC105/396",
-          "Name": "CorrectUseOfSal/SAPreNullSANoValidSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSANoValidSANo",
           "ContentsRegex": "$SEC105/396.SAPreNullSANoValidSANo",
           "Fixes": {
             "testKey": {
@@ -3819,7 +3819,7 @@
         },
         {
           "Id": "SEC105/397",
-          "Name": "CorrectUseOfSal/SAPreNullSAMaybeValidSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSAMaybeValidSANo",
           "ContentsRegex": "$SEC105/397.SAPreNullSAMaybeValidSANo",
           "Fixes": {
             "testKey": {
@@ -3831,7 +3831,7 @@
         },
         {
           "Id": "SEC105/398",
-          "Name": "CorrectUseOfSal/SAPreNullSAYesValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSAYesValidSAYes",
           "ContentsRegex": "$SEC105/398.SAPreNullSAYesValidSAYes",
           "Fixes": {
             "testKey": {
@@ -3843,7 +3843,7 @@
         },
         {
           "Id": "SEC105/399",
-          "Name": "CorrectUseOfSal/SAPreNullSAYesWritableBytesParam1",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSAYesWritableBytesParam1",
           "ContentsRegex": "$SEC105/399.SAPreNullSAYesWritableBytesParam1",
           "Fixes": {
             "testKey": {
@@ -3855,7 +3855,7 @@
         },
         {
           "Id": "SEC105/400",
-          "Name": "CorrectUseOfSal/SAPreNullSAYesSAPreWritableElementsParam1",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSAYesSAPreWritableElementsParam1",
           "ContentsRegex": "$SEC105/400.SAPreNullSAYesSAPreWritableElementsParam1",
           "Fixes": {
             "testKey": {
@@ -3867,7 +3867,7 @@
         },
         {
           "Id": "SEC105/401",
-          "Name": "CorrectUseOfSal/SAPreValidElementsParam1ElementSizeParam2",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidElementsParam1ElementSizeParam2",
           "ContentsRegex": "$SEC105/401.SAPreValidElementsParam1ElementSizeParam2",
           "Fixes": {
             "testKey": {
@@ -3879,7 +3879,7 @@
         },
         {
           "Id": "SEC105/402",
-          "Name": "CorrectUseOfSal/SAPreNullSANoWritableElements1",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSANoWritableElements1",
           "ContentsRegex": "$SEC105/402.SAPreNullSANoWritableElements1",
           "Fixes": {
             "testKey": {
@@ -3891,7 +3891,7 @@
         },
         {
           "Id": "SEC105/403",
-          "Name": "CorrectUseOfSal/SAPreNullSANoWritableElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullSANoWritableElementsConst1",
           "ContentsRegex": "$SEC105/403.SAPreNullSANoWritableElementsConst1",
           "Fixes": {
             "testKey": {
@@ -3903,7 +3903,7 @@
         },
         {
           "Id": "SEC105/404",
-          "Name": "CorrectUseOfSal/SAPreNullTerminatedSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullTerminatedSAYes",
           "ContentsRegex": "$SEC105/404.SAPreNullTerminatedSAYes",
           "Fixes": {
             "testKey": {
@@ -3915,7 +3915,7 @@
         },
         {
           "Id": "SEC105/405",
-          "Name": "CorrectUseOfSal/SAPreNullTerminatedSAYesNullSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullTerminatedSAYesNullSAMaybe",
           "ContentsRegex": "$SEC105/405.SAPreNullTerminatedSAYesNullSAMaybe",
           "Fixes": {
             "testKey": {
@@ -3927,7 +3927,7 @@
         },
         {
           "Id": "SEC105/406",
-          "Name": "CorrectUseOfSal/SAPreNullTerminatedSAYesValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullTerminatedSAYesValidSAYes",
           "ContentsRegex": "$SEC105/406.SAPreNullTerminatedSAYesValidSAYes",
           "Fixes": {
             "testKey": {
@@ -3939,7 +3939,7 @@
         },
         {
           "Id": "SEC105/407",
-          "Name": "CorrectUseOfSal/SAPreNullTerminatedSANoNullSANoValidElementsConst1WritableElementsConst2",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullTerminatedSANoNullSANoValidElementsConst1WritableElementsConst2",
           "ContentsRegex": "$SEC105/407.SAPreNullTerminatedSANoNullSANoValidElementsConst1WritableElementsConst2",
           "Fixes": {
             "testKey": {
@@ -3951,7 +3951,7 @@
         },
         {
           "Id": "SEC105/408",
-          "Name": "CorrectUseOfSal/SAPreNullTerminatedSANoValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullTerminatedSANoValidSAYes",
           "ContentsRegex": "$SEC105/408.SAPreNullTerminatedSANoValidSAYes",
           "Fixes": {
             "testKey": {
@@ -3963,7 +3963,7 @@
         },
         {
           "Id": "SEC105/409",
-          "Name": "CorrectUseOfSal/SAPreElementSizeConst1ValidElementsConst2",
+          "Name": "UpdateSalToCurrentVersion/SAPreElementSizeConst1ValidElementsConst2",
           "ContentsRegex": "$SEC105/409.SAPreElementSizeConst1ValidElementsConst2",
           "Fixes": {
             "testKey": {
@@ -3975,7 +3975,7 @@
         },
         {
           "Id": "SEC105/410",
-          "Name": "CorrectUseOfSal/SAPreElementSizeConst1WritableElementsConst2",
+          "Name": "UpdateSalToCurrentVersion/SAPreElementSizeConst1WritableElementsConst2",
           "ContentsRegex": "$SEC105/410.SAPreElementSizeConst1WritableElementsConst2",
           "Fixes": {
             "testKey": {
@@ -3987,7 +3987,7 @@
         },
         {
           "Id": "SEC105/411",
-          "Name": "CorrectUseOfSal/SAFormatStringStyleprintf",
+          "Name": "UpdateSalToCurrentVersion/SAFormatStringStyleprintf",
           "ContentsRegex": "$SEC105/411.SAFormatStringStyleprintf",
           "Fixes": {
             "testKey": {
@@ -3999,7 +3999,7 @@
         },
         {
           "Id": "SEC105/412",
-          "Name": "CorrectUseOfSal/SAFormatStringStylescanf",
+          "Name": "UpdateSalToCurrentVersion/SAFormatStringStylescanf",
           "ContentsRegex": "$SEC105/412.SAFormatStringStylescanf",
           "Fixes": {
             "testKey": {
@@ -4011,7 +4011,7 @@
         },
         {
           "Id": "SEC105/413",
-          "Name": "CorrectUseOfSal/SAPreValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidSAYes",
           "ContentsRegex": "$SEC105/413.SAPreValidSAYes",
           "Fixes": {
             "testKey": {
@@ -4023,7 +4023,7 @@
         },
         {
           "Id": "SEC105/414",
-          "Name": "CorrectUseOfSal/SAPreValidSAYesNullSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidSAYesNullSANo",
           "ContentsRegex": "$SEC105/414.SAPreValidSAYesNullSANo",
           "Fixes": {
             "testKey": {
@@ -4035,7 +4035,7 @@
         },
         {
           "Id": "SEC105/415",
-          "Name": "CorrectUseOfSal/SAPreValidSAYesNullSANoValidElementsParam1",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidSAYesNullSANoValidElementsParam1",
           "ContentsRegex": "$SEC105/415.SAPreValidSAYesNullSANoValidElementsParam1",
           "Fixes": {
             "testKey": {
@@ -4047,7 +4047,7 @@
         },
         {
           "Id": "SEC105/416",
-          "Name": "CorrectUseOfSal/SAPreValidSAYesNullSANoWritableElements1",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidSAYesNullSANoWritableElements1",
           "ContentsRegex": "$SEC105/416.SAPreValidSAYesNullSANoWritableElements1",
           "Fixes": {
             "testKey": {
@@ -4059,7 +4059,7 @@
         },
         {
           "Id": "SEC105/417",
-          "Name": "CorrectUseOfSal/SAPreValidBytesConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidBytesConst1",
           "ContentsRegex": "$SEC105/417.SAPreValidBytesConst1",
           "Fixes": {
             "testKey": {
@@ -4071,7 +4071,7 @@
         },
         {
           "Id": "SEC105/418",
-          "Name": "CorrectUseOfSal/SAPreValidBytesConst1Condition2",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidBytesConst1Condition2",
           "ContentsRegex": "$SEC105/418.SAPreValidBytesConst1Condition2",
           "Fixes": {
             "testKey": {
@@ -4083,7 +4083,7 @@
         },
         {
           "Id": "SEC105/419",
-          "Name": "CorrectUseOfSal/SAPreValidBytes1",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidBytes1",
           "ContentsRegex": "$SEC105/419.SAPreValidBytes1",
           "Fixes": {
             "testKey": {
@@ -4095,7 +4095,7 @@
         },
         {
           "Id": "SEC105/420",
-          "Name": "CorrectUseOfSal/SAPreValidElements1",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidElements1",
           "ContentsRegex": "$SEC105/420.SAPreValidElements1",
           "Fixes": {
             "testKey": {
@@ -4107,7 +4107,7 @@
         },
         {
           "Id": "SEC105/421",
-          "Name": "CorrectUseOfSal/SAPreValidElementsLength1",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidElementsLength1",
           "ContentsRegex": "$SEC105/421.SAPreValidElementsLength1",
           "Fixes": {
             "testKey": {
@@ -4119,7 +4119,7 @@
         },
         {
           "Id": "SEC105/422",
-          "Name": "CorrectUseOfSal/SAPreValidElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidElementsConst1",
           "ContentsRegex": "$SEC105/422.SAPreValidElementsConst1",
           "Fixes": {
             "testKey": {
@@ -4131,7 +4131,7 @@
         },
         {
           "Id": "SEC105/423",
-          "Name": "CorrectUseOfSal/SAPreValidElementsConst1WritableElementsConst2NullSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidElementsConst1WritableElementsConst2NullSANo",
           "ContentsRegex": "$SEC105/423.SAPreValidElementsConst1WritableElementsConst2NullSANo",
           "Fixes": {
             "testKey": {
@@ -4143,7 +4143,7 @@
         },
         {
           "Id": "SEC105/424",
-          "Name": "CorrectUseOfSal/SAPreWritableElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPreWritableElementsConst1",
           "ContentsRegex": "$SEC105/424.SAPreWritableElementsConst1",
           "Fixes": {
             "testKey": {
@@ -4155,7 +4155,7 @@
         },
         {
           "Id": "SEC105/425",
-          "Name": "CorrectUseOfSal/SAPreWritableElementsConst1Notref1",
+          "Name": "UpdateSalToCurrentVersion/SAPreWritableElementsConst1Notref1",
           "ContentsRegex": "$SEC105/425.SAPreWritableElementsConst1Notref1",
           "Fixes": {
             "testKey": {
@@ -4167,7 +4167,7 @@
         },
         {
           "Id": "SEC105/426",
-          "Name": "CorrectUseOfSal/SAPreWritableElementsConst1NullSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreWritableElementsConst1NullSANo",
           "ContentsRegex": "$SEC105/426.SAPreWritableElementsConst1NullSANo",
           "Fixes": {
             "testKey": {
@@ -4179,7 +4179,7 @@
         },
         {
           "Id": "SEC105/427",
-          "Name": "CorrectUseOfSal/SAPreWritableBytes1",
+          "Name": "UpdateSalToCurrentVersion/SAPreWritableBytes1",
           "ContentsRegex": "$SEC105/427.SAPreWritableBytes1",
           "Fixes": {
             "testKey": {
@@ -4191,7 +4191,7 @@
         },
         {
           "Id": "SEC105/428",
-          "Name": "CorrectUseOfSal/SAPreWritableBytesConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPreWritableBytesConst1",
           "ContentsRegex": "$SEC105/428.SAPreWritableBytesConst1",
           "Fixes": {
             "testKey": {
@@ -4203,7 +4203,7 @@
         },
         {
           "Id": "SEC105/429",
-          "Name": "CorrectUseOfSal/SAPreWritableElements1",
+          "Name": "UpdateSalToCurrentVersion/SAPreWritableElements1",
           "ContentsRegex": "$SEC105/429.SAPreWritableElements1",
           "Fixes": {
             "testKey": {
@@ -4215,7 +4215,7 @@
         },
         {
           "Id": "SEC105/430",
-          "Name": "CorrectUseOfSal/SAPreWritableElementsL1",
+          "Name": "UpdateSalToCurrentVersion/SAPreWritableElementsL1",
           "ContentsRegex": "$SEC105/430.SAPreWritableElementsL1",
           "Fixes": {
             "testKey": {
@@ -4227,7 +4227,7 @@
         },
         {
           "Id": "SEC105/431",
-          "Name": "CorrectUseOfSal/SAPreWritableBytesLength1",
+          "Name": "UpdateSalToCurrentVersion/SAPreWritableBytesLength1",
           "ContentsRegex": "$SEC105/431.SAPreWritableBytesLength1",
           "Fixes": {
             "testKey": {
@@ -4239,7 +4239,7 @@
         },
         {
           "Id": "SEC105/432",
-          "Name": "CorrectUseOfSal/SAPreWritableElementsLength1",
+          "Name": "UpdateSalToCurrentVersion/SAPreWritableElementsLength1",
           "ContentsRegex": "$SEC105/432.SAPreWritableElementsLength1",
           "Fixes": {
             "testKey": {
@@ -4251,7 +4251,7 @@
         },
         {
           "Id": "SEC105/433",
-          "Name": "CorrectUseOfSal/SAPreAttributeValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreAttributeValidSAYes",
           "ContentsRegex": "$SEC105/433.SAPreAttributeValidSAYes",
           "Fixes": {
             "testKey": {
@@ -4263,7 +4263,7 @@
         },
         {
           "Id": "SEC105/434",
-          "Name": "CorrectUseOfSal/SAPreValidBytesConst1SAPostValidBytesConst2",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidBytesConst1SAPostValidBytesConst2",
           "ContentsRegex": "$SEC105/434.SAPreValidBytesConst1SAPostValidBytesConst2",
           "Fixes": {
             "testKey": {
@@ -4275,7 +4275,7 @@
         },
         {
           "Id": "SEC105/435",
-          "Name": "CorrectUseOfSal/SAPreValidBytes1SAPostElementSize2WritableElementsConst3",
+          "Name": "UpdateSalToCurrentVersion/SAPreValidBytes1SAPostElementSize2WritableElementsConst3",
           "ContentsRegex": "$SEC105/435.SAPreValidBytes1SAPostElementSize2WritableElementsConst3",
           "Fixes": {
             "testKey": {
@@ -4287,7 +4287,7 @@
         },
         {
           "Id": "SEC105/436",
-          "Name": "CorrectUseOfSal/SAPreElementSize1WritableElementsConst2SAPostValidBytes3",
+          "Name": "UpdateSalToCurrentVersion/SAPreElementSize1WritableElementsConst2SAPostValidBytes3",
           "ContentsRegex": "$SEC105/436.SAPreElementSize1WritableElementsConst2SAPostValidBytes3",
           "Fixes": {
             "testKey": {
@@ -4299,7 +4299,7 @@
         },
         {
           "Id": "SEC105/437",
-          "Name": "CorrectUseOfSal/SAPreWritableElements1SAPostValidElements2",
+          "Name": "UpdateSalToCurrentVersion/SAPreWritableElements1SAPostValidElements2",
           "ContentsRegex": "$SEC105/437.SAPreWritableElements1SAPostValidElements2",
           "Fixes": {
             "testKey": {
@@ -4311,7 +4311,7 @@
         },
         {
           "Id": "SEC105/438",
-          "Name": "CorrectUseOfSal/SAPreNullMaybeSAPostValidElementsParam1",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullMaybeSAPostValidElementsParam1",
           "ContentsRegex": "$SEC105/438.SAPreNullMaybeSAPostValidElementsParam1",
           "Fixes": {
             "testKey": {
@@ -4323,7 +4323,7 @@
         },
         {
           "Id": "SEC105/439",
-          "Name": "CorrectUseOfSal/SAPreTainted1",
+          "Name": "UpdateSalToCurrentVersion/SAPreTainted1",
           "ContentsRegex": "$SEC105/439.SAPreTainted1",
           "Fixes": {
             "testKey": {
@@ -4335,7 +4335,7 @@
         },
         {
           "Id": "SEC105/440",
-          "Name": "CorrectUseOfSal/PreTaintedSAYesSANo",
+          "Name": "UpdateSalToCurrentVersion/PreTaintedSAYesSANo",
           "ContentsRegex": "$SEC105/440.PreTaintedSAYesSANo",
           "Fixes": {
             "testKey": {
@@ -4347,7 +4347,7 @@
         },
         {
           "Id": "SEC105/441",
-          "Name": "CorrectUseOfSal/SAPreDeref0NullTerminatedSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref0NullTerminatedSANo",
           "ContentsRegex": "$SEC105/441.SAPreDeref0NullTerminatedSANo",
           "Fixes": {
             "testKey": {
@@ -4359,7 +4359,7 @@
         },
         {
           "Id": "SEC105/442",
-          "Name": "CorrectUseOfSal/SAPreDeref0NullTerminatedSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref0NullTerminatedSAMaybe",
           "ContentsRegex": "$SEC105/442.SAPreDeref0NullTerminatedSAMaybe",
           "Fixes": {
             "testKey": {
@@ -4371,7 +4371,7 @@
         },
         {
           "Id": "SEC105/443",
-          "Name": "CorrectUseOfSal/SAPreDeref1NullTerminatedSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1NullTerminatedSANo",
           "ContentsRegex": "$SEC105/443.SAPreDeref1NullTerminatedSANo",
           "Fixes": {
             "testKey": {
@@ -4383,7 +4383,7 @@
         },
         {
           "Id": "SEC105/444",
-          "Name": "CorrectUseOfSal/SAPreDeref1NullTerminatedSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/SAPreDeref1NullTerminatedSAMaybe",
           "ContentsRegex": "$SEC105/444.SAPreDeref1NullTerminatedSAMaybe",
           "Fixes": {
             "testKey": {
@@ -4395,7 +4395,7 @@
         },
         {
           "Id": "SEC105/445",
-          "Name": "CorrectUseOfSal/SAPreNullTerminatedSAMaybeValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullTerminatedSAMaybeValidSAYes",
           "ContentsRegex": "$SEC105/445.SAPreNullTerminatedSAMaybeValidSAYes",
           "Fixes": {
             "testKey": {
@@ -4407,7 +4407,7 @@
         },
         {
           "Id": "SEC105/446",
-          "Name": "CorrectUseOfSal/SAPreNullTerminatedSANoSAPostNullTerminatedSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullTerminatedSANoSAPostNullTerminatedSANo",
           "ContentsRegex": "$SEC105/446.SAPreNullTerminatedSANoSAPostNullTerminatedSANo",
           "Fixes": {
             "testKey": {
@@ -4419,7 +4419,7 @@
         },
         {
           "Id": "SEC105/447",
-          "Name": "CorrectUseOfSal/SAPreNullTerminatedSANONullSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullTerminatedSANONullSANo",
           "ContentsRegex": "$SEC105/447.SAPreNullTerminatedSANONullSANo",
           "Fixes": {
             "testKey": {
@@ -4431,7 +4431,7 @@
         },
         {
           "Id": "SEC105/448",
-          "Name": "CorrectUseOfSal/SAPreNullTerminatedSANONullSANoValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullTerminatedSANONullSANoValidSAYes",
           "ContentsRegex": "$SEC105/448.SAPreNullTerminatedSANONullSANoValidSAYes",
           "Fixes": {
             "testKey": {
@@ -4443,22 +4443,22 @@
         },
         {
           "Id": "SEC105/449",
-          "Name": "CorrectUseOfSal/SAPreNullTerminatedCOMINGNullSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullTerminatedCOMINGNullSANo",
           "ContentsRegex": "$SEC105/449.SAPreNullTerminatedCOMINGNullSANo"
         },
         {
           "Id": "SEC105/450",
-          "Name": "CorrectUseOfSal/SAPreNullTerminatedCOMINGNullSANoValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPreNullTerminatedCOMINGNullSANoValidSAYes",
           "ContentsRegex": "$SEC105/450.SAPreNullTerminatedCOMINGNullSANoValidSAYes"
         },
         {
           "Id": "SEC105/451",
-          "Name": "CorrectUseOfSal/SAPreElementSizeConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPreElementSizeConst1",
           "ContentsRegex": "$SEC105/451.SAPreElementSizeConst1"
         },
         {
           "Id": "SEC105/452",
-          "Name": "CorrectUseOfSal/SAPostAccessSAWrite",
+          "Name": "UpdateSalToCurrentVersion/SAPostAccessSAWrite",
           "ContentsRegex": "$SEC105/452.SAPostAccessSAWrite",
           "Fixes": {
             "testKey": {
@@ -4470,7 +4470,7 @@
         },
         {
           "Id": "SEC105/453",
-          "Name": "CorrectUseOfSal/SAPostDeref0NullTerminatedSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref0NullTerminatedSAYes",
           "ContentsRegex": "$SEC105/453.SAPostDeref0NullTerminatedSAYes",
           "Fixes": {
             "testKey": {
@@ -4482,7 +4482,7 @@
         },
         {
           "Id": "SEC105/454",
-          "Name": "CorrectUseOfSal/SAPostDeref0ValidSAYesNullTerminatedSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref0ValidSAYesNullTerminatedSAYes",
           "ContentsRegex": "$SEC105/454.SAPostDeref0ValidSAYesNullTerminatedSAYes",
           "Fixes": {
             "testKey": {
@@ -4494,7 +4494,7 @@
         },
         {
           "Id": "SEC105/455",
-          "Name": "CorrectUseOfSal/SAPostDeref0ValidSAYesNullTerminatedSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref0ValidSAYesNullTerminatedSANo",
           "ContentsRegex": "$SEC105/455.SAPostDeref0ValidSAYesNullTerminatedSANo",
           "Fixes": {
             "testKey": {
@@ -4506,7 +4506,7 @@
         },
         {
           "Id": "SEC105/456",
-          "Name": "CorrectUseOfSal/SAPostDeref0ValidBytesConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref0ValidBytesConst1",
           "ContentsRegex": "$SEC105/456.SAPostDeref0ValidBytesConst1",
           "Fixes": {
             "testKey": {
@@ -4518,7 +4518,7 @@
         },
         {
           "Id": "SEC105/457",
-          "Name": "CorrectUseOfSal/SAPostDeref0ValidElements1",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref0ValidElements1",
           "ContentsRegex": "$SEC105/457.SAPostDeref0ValidElements1",
           "Fixes": {
             "testKey": {
@@ -4530,7 +4530,7 @@
         },
         {
           "Id": "SEC105/458",
-          "Name": "CorrectUseOfSal/SAPostDeref0ValidElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref0ValidElementsConst1",
           "ContentsRegex": "$SEC105/458.SAPostDeref0ValidElementsConst1",
           "Fixes": {
             "testKey": {
@@ -4542,7 +4542,7 @@
         },
         {
           "Id": "SEC105/459",
-          "Name": "CorrectUseOfSal/SAPostDeref0WritableElements1",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref0WritableElements1",
           "ContentsRegex": "$SEC105/459.SAPostDeref0WritableElements1",
           "Fixes": {
             "testKey": {
@@ -4554,7 +4554,7 @@
         },
         {
           "Id": "SEC105/460",
-          "Name": "CorrectUseOfSal/SAPostDeref0WritableElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref0WritableElementsConst1",
           "ContentsRegex": "$SEC105/460.SAPostDeref0WritableElementsConst1",
           "Fixes": {
             "testKey": {
@@ -4566,7 +4566,7 @@
         },
         {
           "Id": "SEC105/461",
-          "Name": "CorrectUseOfSal/SAPostDeref0WritableElementsConst1ElementSizeConst2",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref0WritableElementsConst1ElementSizeConst2",
           "ContentsRegex": "$SEC105/461.SAPostDeref0WritableElementsConst1ElementSizeConst2",
           "Fixes": {
             "testKey": {
@@ -4578,7 +4578,7 @@
         },
         {
           "Id": "SEC105/462",
-          "Name": "CorrectUseOfSal/SAPostDeref1NullSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1NullSANo",
           "ContentsRegex": "$SEC105/462.SAPostDeref1NullSANo",
           "Fixes": {
             "testKey": {
@@ -4590,7 +4590,7 @@
         },
         {
           "Id": "SEC105/463",
-          "Name": "CorrectUseOfSal/SAPostDeref1NullSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1NullSANo",
           "ContentsRegex": "$SEC105/463.SAPostDeref1NullSANo",
           "Fixes": {
             "testKey": {
@@ -4602,7 +4602,7 @@
         },
         {
           "Id": "SEC105/464",
-          "Name": "CorrectUseOfSal/SAPostDeref1NullTerminatedSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1NullTerminatedSAYes",
           "ContentsRegex": "$SEC105/464.SAPostDeref1NullTerminatedSAYes",
           "Fixes": {
             "testKey": {
@@ -4614,7 +4614,7 @@
         },
         {
           "Id": "SEC105/465",
-          "Name": "CorrectUseOfSal/SAPostDeref1NullTerminatedSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1NullTerminatedSAYes",
           "ContentsRegex": "$SEC105/465.SAPostDeref1NullTerminatedSAYes",
           "Fixes": {
             "testKey": {
@@ -4626,7 +4626,7 @@
         },
         {
           "Id": "SEC105/466",
-          "Name": "CorrectUseOfSal/SAPostDeref1ValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1ValidSAYes",
           "ContentsRegex": "$SEC105/466.SAPostDeref1ValidSAYes",
           "Fixes": {
             "testKey": {
@@ -4638,7 +4638,7 @@
         },
         {
           "Id": "SEC105/467",
-          "Name": "CorrectUseOfSal/SAPostDeref1ValidBytes1",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1ValidBytes1",
           "ContentsRegex": "$SEC105/467.SAPostDeref1ValidBytes1",
           "Fixes": {
             "testKey": {
@@ -4650,7 +4650,7 @@
         },
         {
           "Id": "SEC105/468",
-          "Name": "CorrectUseOfSal/SAPostDeref1WritableElements1",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1WritableElements1",
           "ContentsRegex": "$SEC105/468.SAPostDeref1WritableElements1",
           "Fixes": {
             "testKey": {
@@ -4662,7 +4662,7 @@
         },
         {
           "Id": "SEC105/469",
-          "Name": "CorrectUseOfSal/SAPostDeref1WritableElements1ElementSizeConst2",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1WritableElements1ElementSizeConst2",
           "ContentsRegex": "$SEC105/469.SAPostDeref1WritableElements1ElementSizeConst2",
           "Fixes": {
             "testKey": {
@@ -4674,7 +4674,7 @@
         },
         {
           "Id": "SEC105/470",
-          "Name": "CorrectUseOfSal/SAPostDeref1WritableElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1WritableElementsConst1",
           "ContentsRegex": "$SEC105/470.SAPostDeref1WritableElementsConst1",
           "Fixes": {
             "testKey": {
@@ -4686,7 +4686,7 @@
         },
         {
           "Id": "SEC105/471",
-          "Name": "CorrectUseOfSal/SAPostDeref1ValidSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1ValidSANo",
           "ContentsRegex": "$SEC105/471.SAPostDeref1ValidSANo",
           "Fixes": {
             "testKey": {
@@ -4698,7 +4698,7 @@
         },
         {
           "Id": "SEC105/472",
-          "Name": "CorrectUseOfSal/SAPostDeref2ValidSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref2ValidSANo",
           "ContentsRegex": "$SEC105/472.SAPostDeref2ValidSANo",
           "Fixes": {
             "testKey": {
@@ -4710,7 +4710,7 @@
         },
         {
           "Id": "SEC105/473",
-          "Name": "CorrectUseOfSal/SAPostDeref2ValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref2ValidSAYes",
           "ContentsRegex": "$SEC105/473.SAPostDeref2ValidSAYes",
           "Fixes": {
             "testKey": {
@@ -4722,7 +4722,7 @@
         },
         {
           "Id": "SEC105/474",
-          "Name": "CorrectUseOfSal/SAPostNullSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPostNullSAYes",
           "ContentsRegex": "$SEC105/474.SAPostNullSAYes",
           "Fixes": {
             "testKey": {
@@ -4734,7 +4734,7 @@
         },
         {
           "Id": "SEC105/475",
-          "Name": "CorrectUseOfSal/SAPostNullSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPostNullSANo",
           "ContentsRegex": "$SEC105/475.SAPostNullSANo",
           "Fixes": {
             "testKey": {
@@ -4746,7 +4746,7 @@
         },
         {
           "Id": "SEC105/476",
-          "Name": "CorrectUseOfSal/SAPostValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPostValidSAYes",
           "ContentsRegex": "$SEC105/476.SAPostValidSAYes",
           "Fixes": {
             "testKey": {
@@ -4758,7 +4758,7 @@
         },
         {
           "Id": "SEC105/477",
-          "Name": "CorrectUseOfSal/SAPostValidBytes1",
+          "Name": "UpdateSalToCurrentVersion/SAPostValidBytes1",
           "ContentsRegex": "$SEC105/477.SAPostValidBytes1",
           "Fixes": {
             "testKey": {
@@ -4770,7 +4770,7 @@
         },
         {
           "Id": "SEC105/478",
-          "Name": "CorrectUseOfSal/SAPostValidBytesParam1",
+          "Name": "UpdateSalToCurrentVersion/SAPostValidBytesParam1",
           "ContentsRegex": "$SEC105/478.SAPostValidBytesParam1",
           "Fixes": {
             "testKey": {
@@ -4782,7 +4782,7 @@
         },
         {
           "Id": "SEC105/479",
-          "Name": "CorrectUseOfSal/SAPostValidBytesLength1",
+          "Name": "UpdateSalToCurrentVersion/SAPostValidBytesLength1",
           "ContentsRegex": "$SEC105/479.SAPostValidBytesLength1",
           "Fixes": {
             "testKey": {
@@ -4794,7 +4794,7 @@
         },
         {
           "Id": "SEC105/480",
-          "Name": "CorrectUseOfSal/SAPostValidElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPostValidElementsConst1",
           "ContentsRegex": "$SEC105/480.SAPostValidElementsConst1",
           "Fixes": {
             "testKey": {
@@ -4806,7 +4806,7 @@
         },
         {
           "Id": "SEC105/481",
-          "Name": "CorrectUseOfSal/SAPostValidElements1",
+          "Name": "UpdateSalToCurrentVersion/SAPostValidElements1",
           "ContentsRegex": "$SEC105/481.SAPostValidElements1",
           "Fixes": {
             "testKey": {
@@ -4818,7 +4818,7 @@
         },
         {
           "Id": "SEC105/482",
-          "Name": "CorrectUseOfSal/SAPostValidElementsLength1",
+          "Name": "UpdateSalToCurrentVersion/SAPostValidElementsLength1",
           "ContentsRegex": "$SEC105/482.SAPostValidElementsLength1",
           "Fixes": {
             "testKey": {
@@ -4830,7 +4830,7 @@
         },
         {
           "Id": "SEC105/483",
-          "Name": "CorrectUseOfSal/SAPostWritableElementsParam1",
+          "Name": "UpdateSalToCurrentVersion/SAPostWritableElementsParam1",
           "ContentsRegex": "$SEC105/483.SAPostWritableElementsParam1",
           "Fixes": {
             "testKey": {
@@ -4842,7 +4842,7 @@
         },
         {
           "Id": "SEC105/484",
-          "Name": "CorrectUseOfSal/SAPostValidBytesConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPostValidBytesConst1",
           "ContentsRegex": "$SEC105/484.SAPostValidBytesConst1",
           "Fixes": {
             "testKey": {
@@ -4854,7 +4854,7 @@
         },
         {
           "Id": "SEC105/485",
-          "Name": "CorrectUseOfSal/SAPostValidBytesConst1Condition2",
+          "Name": "UpdateSalToCurrentVersion/SAPostValidBytesConst1Condition2",
           "ContentsRegex": "$SEC105/485.SAPostValidBytesConst1Condition2",
           "Fixes": {
             "testKey": {
@@ -4866,7 +4866,7 @@
         },
         {
           "Id": "SEC105/486",
-          "Name": "CorrectUseOfSal/SAPostDeref1ValidBytesConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1ValidBytesConst1",
           "ContentsRegex": "$SEC105/486.SAPostDeref1ValidBytesConst1",
           "Fixes": {
             "testKey": {
@@ -4878,7 +4878,7 @@
         },
         {
           "Id": "SEC105/487",
-          "Name": "CorrectUseOfSal/SAPostDeref1ValidElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1ValidElementsConst1",
           "ContentsRegex": "$SEC105/487.SAPostDeref1ValidElementsConst1",
           "Fixes": {
             "testKey": {
@@ -4890,7 +4890,7 @@
         },
         {
           "Id": "SEC105/488",
-          "Name": "CorrectUseOfSal/SAPostAttributeValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPostAttributeValidSAYes",
           "ContentsRegex": "$SEC105/488.SAPostAttributeValidSAYes",
           "Fixes": {
             "testKey": {
@@ -4902,7 +4902,7 @@
         },
         {
           "Id": "SEC105/489",
-          "Name": "CorrectUseOfSal/SAPost1",
+          "Name": "UpdateSalToCurrentVersion/SAPost1",
           "ContentsRegex": "$SEC105/489.SAPost1",
           "Fixes": {
             "testKey": {
@@ -4914,7 +4914,7 @@
         },
         {
           "Id": "SEC105/490",
-          "Name": "CorrectUseOfSal/SAPostNullSANoMyAttribute1",
+          "Name": "UpdateSalToCurrentVersion/SAPostNullSANoMyAttribute1",
           "ContentsRegex": "$SEC105/490.SAPostNullSANoMyAttribute1",
           "Fixes": {
             "testKey": {
@@ -4926,7 +4926,7 @@
         },
         {
           "Id": "SEC105/491",
-          "Name": "CorrectUseOfSal/PostNullSANoDeref1",
+          "Name": "UpdateSalToCurrentVersion/PostNullSANoDeref1",
           "ContentsRegex": "$SEC105/491.PostNullSANoDeref1",
           "Fixes": {
             "testKey": {
@@ -4938,7 +4938,7 @@
         },
         {
           "Id": "SEC105/492",
-          "Name": "CorrectUseOfSal/PostNullSANoDeref2",
+          "Name": "UpdateSalToCurrentVersion/PostNullSANoDeref2",
           "ContentsRegex": "$SEC105/492.PostNullSANoDeref2",
           "Fixes": {
             "testKey": {
@@ -4950,7 +4950,7 @@
         },
         {
           "Id": "SEC105/493",
-          "Name": "CorrectUseOfSal/VCAttributesPostValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/VCAttributesPostValidSAYes",
           "ContentsRegex": "$SEC105/493.VCAttributesPostValidSAYes",
           "Fixes": {
             "testKey": {
@@ -4962,7 +4962,7 @@
         },
         {
           "Id": "SEC105/494",
-          "Name": "CorrectUseOfSal/VCAttributesPostAttributeValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/VCAttributesPostAttributeValidSAYes",
           "ContentsRegex": "$SEC105/494.VCAttributesPostAttributeValidSAYes",
           "Fixes": {
             "testKey": {
@@ -4974,7 +4974,7 @@
         },
         {
           "Id": "SEC105/495",
-          "Name": "CorrectUseOfSal/VCAttributesSAPostValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/VCAttributesSAPostValidSAYes",
           "ContentsRegex": "$SEC105/495.VCAttributesSAPostValidSAYes",
           "Fixes": {
             "testKey": {
@@ -4986,7 +4986,7 @@
         },
         {
           "Id": "SEC105/496",
-          "Name": "CorrectUseOfSal/VCAttributesSAPostAttributeValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/VCAttributesSAPostAttributeValidSAYes",
           "ContentsRegex": "$SEC105/496.VCAttributesSAPostAttributeValidSAYes",
           "Fixes": {
             "testKey": {
@@ -4998,7 +4998,7 @@
         },
         {
           "Id": "SEC105/497",
-          "Name": "CorrectUseOfSal/SAPostDeref0NullTerminatedSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref0NullTerminatedSANo",
           "ContentsRegex": "$SEC105/497.SAPostDeref0NullTerminatedSANo",
           "Fixes": {
             "testKey": {
@@ -5010,7 +5010,7 @@
         },
         {
           "Id": "SEC105/498",
-          "Name": "CorrectUseOfSal/SAPostDeref0NullTerminatedSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref0NullTerminatedSAMaybe",
           "ContentsRegex": "$SEC105/498.SAPostDeref0NullTerminatedSAMaybe",
           "Fixes": {
             "testKey": {
@@ -5022,7 +5022,7 @@
         },
         {
           "Id": "SEC105/499",
-          "Name": "CorrectUseOfSal/SAPostDeref1NullTerminatedSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1NullTerminatedSANo",
           "ContentsRegex": "$SEC105/499.SAPostDeref1NullTerminatedSANo",
           "Fixes": {
             "testKey": {
@@ -5034,7 +5034,7 @@
         },
         {
           "Id": "SEC105/500",
-          "Name": "CorrectUseOfSal/SAPostDeref1NullTerminatedSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref1NullTerminatedSAMaybe",
           "ContentsRegex": "$SEC105/500.SAPostDeref1NullTerminatedSAMaybe",
           "Fixes": {
             "testKey": {
@@ -5046,7 +5046,7 @@
         },
         {
           "Id": "SEC105/501",
-          "Name": "CorrectUseOfSal/SAPostDeref0NullTerminatedSANo",
+          "Name": "UpdateSalToCurrentVersion/SAPostDeref0NullTerminatedSANo",
           "ContentsRegex": "$SEC105/501.SAPostDeref0NullTerminatedSANo",
           "Fixes": {
             "testKey": {
@@ -5058,27 +5058,27 @@
         },
         {
           "Id": "SEC105/502",
-          "Name": "CorrectUseOfSal/SAPostNeedsReleaseSAYes",
+          "Name": "UpdateSalToCurrentVersion/SAPostNeedsReleaseSAYes",
           "ContentsRegex": "$SEC105/502.SAPostNeedsReleaseSAYes"
         },
         {
           "Id": "SEC105/503",
-          "Name": "CorrectUseOfSal/SAPostValidSAUnchanged",
+          "Name": "UpdateSalToCurrentVersion/SAPostValidSAUnchanged",
           "ContentsRegex": "$SEC105/503.SAPostValidSAUnchanged"
         },
         {
           "Id": "SEC105/504",
-          "Name": "CorrectUseOfSal/SAPostPROPERTYvalue1value2",
+          "Name": "UpdateSalToCurrentVersion/SAPostPROPERTYvalue1value2",
           "ContentsRegex": "$SEC105/504.SAPostPROPERTYvalue1value2"
         },
         {
           "Id": "SEC105/505",
-          "Name": "CorrectUseOfSal/SAPostElementSizeParam1",
+          "Name": "UpdateSalToCurrentVersion/SAPostElementSizeParam1",
           "ContentsRegex": "$SEC105/505.SAPostElementSizeParam1"
         },
         {
           "Id": "SEC105/506",
-          "Name": "CorrectUseOfSal/Pre",
+          "Name": "UpdateSalToCurrentVersion/Pre",
           "ContentsRegex": "$SEC105/506.Pre",
           "Fixes": {
             "testKey": {
@@ -5090,7 +5090,7 @@
         },
         {
           "Id": "SEC105/507",
-          "Name": "CorrectUseOfSal/Pre1",
+          "Name": "UpdateSalToCurrentVersion/Pre1",
           "ContentsRegex": "$SEC105/507.Pre1",
           "Fixes": {
             "testKey": {
@@ -5102,7 +5102,7 @@
         },
         {
           "Id": "SEC105/508",
-          "Name": "CorrectUseOfSal/PreAccessSAYes",
+          "Name": "UpdateSalToCurrentVersion/PreAccessSAYes",
           "ContentsRegex": "$SEC105/508.PreAccessSAYes",
           "Fixes": {
             "testKey": {
@@ -5114,7 +5114,7 @@
         },
         {
           "Id": "SEC105/509",
-          "Name": "CorrectUseOfSal/PreAccessSANo",
+          "Name": "UpdateSalToCurrentVersion/PreAccessSANo",
           "ContentsRegex": "$SEC105/509.PreAccessSANo",
           "Fixes": {
             "testKey": {
@@ -5126,7 +5126,7 @@
         },
         {
           "Id": "SEC105/510",
-          "Name": "CorrectUseOfSal/PreAccessSAReadWrite",
+          "Name": "UpdateSalToCurrentVersion/PreAccessSAReadWrite",
           "ContentsRegex": "$SEC105/510.PreAccessSAReadWrite",
           "Fixes": {
             "testKey": {
@@ -5138,7 +5138,7 @@
         },
         {
           "Id": "SEC105/511",
-          "Name": "CorrectUseOfSal/PreAccessSAReadSAWrite",
+          "Name": "UpdateSalToCurrentVersion/PreAccessSAReadSAWrite",
           "ContentsRegex": "$SEC105/511.PreAccessSAReadSAWrite",
           "Fixes": {
             "testKey": {
@@ -5150,7 +5150,7 @@
         },
         {
           "Id": "SEC105/512",
-          "Name": "CorrectUseOfSal/PreAccessSAReadSANoAccess",
+          "Name": "UpdateSalToCurrentVersion/PreAccessSAReadSANoAccess",
           "ContentsRegex": "$SEC105/512.PreAccessSAReadSANoAccess",
           "Fixes": {
             "testKey": {
@@ -5162,7 +5162,7 @@
         },
         {
           "Id": "SEC105/513",
-          "Name": "CorrectUseOfSal/PreAccessSAReadWriteSANoAccess",
+          "Name": "UpdateSalToCurrentVersion/PreAccessSAReadWriteSANoAccess",
           "ContentsRegex": "$SEC105/513.PreAccessSAReadWriteSANoAccess",
           "Fixes": {
             "testKey": {
@@ -5174,7 +5174,7 @@
         },
         {
           "Id": "SEC105/514",
-          "Name": "CorrectUseOfSal/PreDeref0",
+          "Name": "UpdateSalToCurrentVersion/PreDeref0",
           "ContentsRegex": "$SEC105/514.PreDeref0",
           "Fixes": {
             "testKey": {
@@ -5186,7 +5186,7 @@
         },
         {
           "Id": "SEC105/515",
-          "Name": "CorrectUseOfSal/PreDeref0AccessWrite",
+          "Name": "UpdateSalToCurrentVersion/PreDeref0AccessWrite",
           "ContentsRegex": "$SEC105/515.PreDeref0AccessWrite",
           "Fixes": {
             "testKey": {
@@ -5198,7 +5198,7 @@
         },
         {
           "Id": "SEC105/516",
-          "Name": "CorrectUseOfSal/PreDeref1",
+          "Name": "UpdateSalToCurrentVersion/PreDeref1",
           "ContentsRegex": "$SEC105/516.PreDeref1",
           "Fixes": {
             "testKey": {
@@ -5210,7 +5210,7 @@
         },
         {
           "Id": "SEC105/517",
-          "Name": "CorrectUseOfSal/PreDeref1AccessRead",
+          "Name": "UpdateSalToCurrentVersion/PreDeref1AccessRead",
           "ContentsRegex": "$SEC105/517.PreDeref1AccessRead",
           "Fixes": {
             "testKey": {
@@ -5222,7 +5222,7 @@
         },
         {
           "Id": "SEC105/518",
-          "Name": "CorrectUseOfSal/PreDeref1AccessRead",
+          "Name": "UpdateSalToCurrentVersion/PreDeref1AccessRead",
           "ContentsRegex": "$SEC105/518.PreDeref1AccessRead",
           "Fixes": {
             "testKey": {
@@ -5234,7 +5234,7 @@
         },
         {
           "Id": "SEC105/519",
-          "Name": "CorrectUseOfSal/PreDeref1AccessWrite",
+          "Name": "UpdateSalToCurrentVersion/PreDeref1AccessWrite",
           "ContentsRegex": "$SEC105/519.PreDeref1AccessWrite",
           "Fixes": {
             "testKey": {
@@ -5246,7 +5246,7 @@
         },
         {
           "Id": "SEC105/520",
-          "Name": "CorrectUseOfSal/PreDeref1AccessReadWrite",
+          "Name": "UpdateSalToCurrentVersion/PreDeref1AccessReadWrite",
           "ContentsRegex": "$SEC105/520.PreDeref1AccessReadWrite",
           "Fixes": {
             "testKey": {
@@ -5258,7 +5258,7 @@
         },
         {
           "Id": "SEC105/521",
-          "Name": "CorrectUseOfSal/PreDeref2AccessWrite",
+          "Name": "UpdateSalToCurrentVersion/PreDeref2AccessWrite",
           "ContentsRegex": "$SEC105/521.PreDeref2AccessWrite",
           "Fixes": {
             "testKey": {
@@ -5270,7 +5270,7 @@
         },
         {
           "Id": "SEC105/522",
-          "Name": "CorrectUseOfSal/PreDeref3AccessWrite",
+          "Name": "UpdateSalToCurrentVersion/PreDeref3AccessWrite",
           "ContentsRegex": "$SEC105/522.PreDeref3AccessWrite",
           "Fixes": {
             "testKey": {
@@ -5282,7 +5282,7 @@
         },
         {
           "Id": "SEC105/523",
-          "Name": "CorrectUseOfSal/PreDeref1NullSAYes",
+          "Name": "UpdateSalToCurrentVersion/PreDeref1NullSAYes",
           "ContentsRegex": "$SEC105/523.PreDeref1NullSAYes",
           "Fixes": {
             "testKey": {
@@ -5294,7 +5294,7 @@
         },
         {
           "Id": "SEC105/524",
-          "Name": "CorrectUseOfSal/PreDeref0ValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/PreDeref0ValidSAYes",
           "ContentsRegex": "$SEC105/524.PreDeref0ValidSAYes",
           "Fixes": {
             "testKey": {
@@ -5306,7 +5306,7 @@
         },
         {
           "Id": "SEC105/525",
-          "Name": "CorrectUseOfSal/PreDeref1ValidYes",
+          "Name": "UpdateSalToCurrentVersion/PreDeref1ValidYes",
           "ContentsRegex": "$SEC105/525.PreDeref1ValidYes",
           "Fixes": {
             "testKey": {
@@ -5318,7 +5318,7 @@
         },
         {
           "Id": "SEC105/526",
-          "Name": "CorrectUseOfSal/PreDeref2ValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/PreDeref2ValidSAYes",
           "ContentsRegex": "$SEC105/526.PreDeref2ValidSAYes",
           "Fixes": {
             "testKey": {
@@ -5330,7 +5330,7 @@
         },
         {
           "Id": "SEC105/527",
-          "Name": "CorrectUseOfSal/PreDeref3ValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/PreDeref3ValidSAYes",
           "ContentsRegex": "$SEC105/527.PreDeref3ValidSAYes",
           "Fixes": {
             "testKey": {
@@ -5342,7 +5342,7 @@
         },
         {
           "Id": "SEC105/528",
-          "Name": "CorrectUseOfSal/PreDeref4ValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/PreDeref4ValidSAYes",
           "ContentsRegex": "$SEC105/528.PreDeref4ValidSAYes",
           "Fixes": {
             "testKey": {
@@ -5354,7 +5354,7 @@
         },
         {
           "Id": "SEC105/529",
-          "Name": "CorrectUseOfSal/PreNullYesValidYes",
+          "Name": "UpdateSalToCurrentVersion/PreNullYesValidYes",
           "ContentsRegex": "$SEC105/529.PreNullYesValidYes",
           "Fixes": {
             "testKey": {
@@ -5366,7 +5366,7 @@
         },
         {
           "Id": "SEC105/530",
-          "Name": "CorrectUseOfSal/PreNullYesValidNo",
+          "Name": "UpdateSalToCurrentVersion/PreNullYesValidNo",
           "ContentsRegex": "$SEC105/530.PreNullYesValidNo",
           "Fixes": {
             "testKey": {
@@ -5378,7 +5378,7 @@
         },
         {
           "Id": "SEC105/531",
-          "Name": "CorrectUseOfSal/PreNullNo",
+          "Name": "UpdateSalToCurrentVersion/PreNullNo",
           "ContentsRegex": "$SEC105/531.PreNullNo",
           "Fixes": {
             "testKey": {
@@ -5390,7 +5390,7 @@
         },
         {
           "Id": "SEC105/532",
-          "Name": "CorrectUseOfSal/PreNullNoValidNo",
+          "Name": "UpdateSalToCurrentVersion/PreNullNoValidNo",
           "ContentsRegex": "$SEC105/532.PreNullNoValidNo",
           "Fixes": {
             "testKey": {
@@ -5402,7 +5402,7 @@
         },
         {
           "Id": "SEC105/533",
-          "Name": "CorrectUseOfSal/PreNullMaybeValidNo",
+          "Name": "UpdateSalToCurrentVersion/PreNullMaybeValidNo",
           "ContentsRegex": "$SEC105/533.PreNullMaybeValidNo",
           "Fixes": {
             "testKey": {
@@ -5414,7 +5414,7 @@
         },
         {
           "Id": "SEC105/534",
-          "Name": "CorrectUseOfSal/PreNullSAYesSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/PreNullSAYesSAMaybe",
           "ContentsRegex": "$SEC105/534.PreNullSAYesSAMaybe",
           "Fixes": {
             "testKey": {
@@ -5426,7 +5426,7 @@
         },
         {
           "Id": "SEC105/535",
-          "Name": "CorrectUseOfSal/PreNullYesNullNo",
+          "Name": "UpdateSalToCurrentVersion/PreNullYesNullNo",
           "ContentsRegex": "$SEC105/535.PreNullYesNullNo",
           "Fixes": {
             "testKey": {
@@ -5438,7 +5438,7 @@
         },
         {
           "Id": "SEC105/536",
-          "Name": "CorrectUseOfSal/PreNullTerminatedSARead",
+          "Name": "UpdateSalToCurrentVersion/PreNullTerminatedSARead",
           "ContentsRegex": "$SEC105/536.PreNullTerminatedSARead",
           "Fixes": {
             "testKey": {
@@ -5450,7 +5450,7 @@
         },
         {
           "Id": "SEC105/537",
-          "Name": "CorrectUseOfSal/PreValidSANo",
+          "Name": "UpdateSalToCurrentVersion/PreValidSANo",
           "ContentsRegex": "$SEC105/537.PreValidSANo",
           "Fixes": {
             "testKey": {
@@ -5462,7 +5462,7 @@
         },
         {
           "Id": "SEC105/538",
-          "Name": "CorrectUseOfSal/PreValidSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/PreValidSAMaybe",
           "ContentsRegex": "$SEC105/538.PreValidSAMaybe",
           "Fixes": {
             "testKey": {
@@ -5474,7 +5474,7 @@
         },
         {
           "Id": "SEC105/539",
-          "Name": "CorrectUseOfSal/PreValidSAYesSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/PreValidSAYesSAMaybe",
           "ContentsRegex": "$SEC105/539.PreValidSAYesSAMaybe",
           "Fixes": {
             "testKey": {
@@ -5486,7 +5486,7 @@
         },
         {
           "Id": "SEC105/540",
-          "Name": "CorrectUseOfSal/PreValidYes",
+          "Name": "UpdateSalToCurrentVersion/PreValidYes",
           "ContentsRegex": "$SEC105/540.PreValidYes",
           "Fixes": {
             "testKey": {
@@ -5498,7 +5498,7 @@
         },
         {
           "Id": "SEC105/541",
-          "Name": "CorrectUseOfSal/PreValidYesNullTerminatedYes",
+          "Name": "UpdateSalToCurrentVersion/PreValidYesNullTerminatedYes",
           "ContentsRegex": "$SEC105/541.PreValidYesNullTerminatedYes",
           "Fixes": {
             "testKey": {
@@ -5510,7 +5510,7 @@
         },
         {
           "Id": "SEC105/542",
-          "Name": "CorrectUseOfSal/PreValidYesNullTerminatedNo",
+          "Name": "UpdateSalToCurrentVersion/PreValidYesNullTerminatedNo",
           "ContentsRegex": "$SEC105/542.PreValidYesNullTerminatedNo",
           "Fixes": {
             "testKey": {
@@ -5522,7 +5522,7 @@
         },
         {
           "Id": "SEC105/543",
-          "Name": "CorrectUseOfSal/VCAttributesPreValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/VCAttributesPreValidSAYes",
           "ContentsRegex": "$SEC105/543.VCAttributesPreValidSAYes",
           "Fixes": {
             "testKey": {
@@ -5534,7 +5534,7 @@
         },
         {
           "Id": "SEC105/544",
-          "Name": "CorrectUseOfSal/VCAttributesPreAttributeValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/VCAttributesPreAttributeValidSAYes",
           "ContentsRegex": "$SEC105/544.VCAttributesPreAttributeValidSAYes",
           "Fixes": {
             "testKey": {
@@ -5546,7 +5546,7 @@
         },
         {
           "Id": "SEC105/545",
-          "Name": "CorrectUseOfSal/VCAttributesSAPreValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/VCAttributesSAPreValidSAYes",
           "ContentsRegex": "$SEC105/545.VCAttributesSAPreValidSAYes",
           "Fixes": {
             "testKey": {
@@ -5558,7 +5558,7 @@
         },
         {
           "Id": "SEC105/546",
-          "Name": "CorrectUseOfSal/VCAttributesSAPreAttributeValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/VCAttributesSAPreAttributeValidSAYes",
           "ContentsRegex": "$SEC105/546.VCAttributesSAPreAttributeValidSAYes",
           "Fixes": {
             "testKey": {
@@ -5570,7 +5570,7 @@
         },
         {
           "Id": "SEC105/547",
-          "Name": "CorrectUseOfSal/PreDeref1NullTerminatedSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/PreDeref1NullTerminatedSAMaybe",
           "ContentsRegex": "$SEC105/547.PreDeref1NullTerminatedSAMaybe",
           "Fixes": {
             "testKey": {
@@ -5582,7 +5582,7 @@
         },
         {
           "Id": "SEC105/548",
-          "Name": "CorrectUseOfSal/PreNullTerminatedSAYesSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/PreNullTerminatedSAYesSAMaybe",
           "ContentsRegex": "$SEC105/548.PreNullTerminatedSAYesSAMaybe",
           "Fixes": {
             "testKey": {
@@ -5594,7 +5594,7 @@
         },
         {
           "Id": "SEC105/549",
-          "Name": "CorrectUseOfSal/PreDeref1AccessWrite",
+          "Name": "UpdateSalToCurrentVersion/PreDeref1AccessWrite",
           "ContentsRegex": "$SEC105/549.PreDeref1AccessWrite",
           "Fixes": {
             "testKey": {
@@ -5606,12 +5606,12 @@
         },
         {
           "Id": "SEC105/550",
-          "Name": "CorrectUseOfSal/PreDerefINTMINAccessWrite",
+          "Name": "UpdateSalToCurrentVersion/PreDerefINTMINAccessWrite",
           "ContentsRegex": "$SEC105/550.PreDerefINTMINAccessWrite"
         },
         {
           "Id": "SEC105/551",
-          "Name": "CorrectUseOfSal/PreDeref1ValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/PreDeref1ValidSAYes",
           "ContentsRegex": "$SEC105/551.PreDeref1ValidSAYes",
           "Fixes": {
             "testKey": {
@@ -5623,32 +5623,32 @@
         },
         {
           "Id": "SEC105/552",
-          "Name": "CorrectUseOfSal/PreDerefderefAccess1",
+          "Name": "UpdateSalToCurrentVersion/PreDerefderefAccess1",
           "ContentsRegex": "$SEC105/552.PreDerefderefAccess1"
         },
         {
           "Id": "SEC105/553",
-          "Name": "CorrectUseOfSal/PreDerefderefNull1",
+          "Name": "UpdateSalToCurrentVersion/PreDerefderefNull1",
           "ContentsRegex": "$SEC105/553.PreDerefderefNull1"
         },
         {
           "Id": "SEC105/554",
-          "Name": "CorrectUseOfSal/PreDerefderefValidvalidValuePreDerefderefderefNNullnullValue",
+          "Name": "UpdateSalToCurrentVersion/PreDerefderefValidvalidValuePreDerefderefderefNNullnullValue",
           "ContentsRegex": "$SEC105/554.PreDerefderefValidvalidValuePreDerefderefderefNNullnullValue"
         },
         {
           "Id": "SEC105/555",
-          "Name": "CorrectUseOfSal/PreNeedsRelease1",
+          "Name": "UpdateSalToCurrentVersion/PreNeedsRelease1",
           "ContentsRegex": "$SEC105/555.PreNeedsRelease1"
         },
         {
           "Id": "SEC105/556",
-          "Name": "CorrectUseOfSal/PreValidSANoAccess",
+          "Name": "UpdateSalToCurrentVersion/PreValidSANoAccess",
           "ContentsRegex": "$SEC105/556.PreValidSANoAccess"
         },
         {
           "Id": "SEC105/557",
-          "Name": "CorrectUseOfSal/Post",
+          "Name": "UpdateSalToCurrentVersion/Post",
           "ContentsRegex": "$SEC105/557.Post",
           "Fixes": {
             "testKey": {
@@ -5660,7 +5660,7 @@
         },
         {
           "Id": "SEC105/558",
-          "Name": "CorrectUseOfSal/Post12",
+          "Name": "UpdateSalToCurrentVersion/Post12",
           "ContentsRegex": "$SEC105/558.Post12",
           "Fixes": {
             "testKey": {
@@ -5672,7 +5672,7 @@
         },
         {
           "Id": "SEC105/559",
-          "Name": "CorrectUseOfSal/Post1NullYes",
+          "Name": "UpdateSalToCurrentVersion/Post1NullYes",
           "ContentsRegex": "$SEC105/559.Post1NullYes",
           "Fixes": {
             "testKey": {
@@ -5684,7 +5684,7 @@
         },
         {
           "Id": "SEC105/560",
-          "Name": "CorrectUseOfSal/PostAccessRead",
+          "Name": "UpdateSalToCurrentVersion/PostAccessRead",
           "ContentsRegex": "$SEC105/560.PostAccessRead",
           "Fixes": {
             "testKey": {
@@ -5696,7 +5696,7 @@
         },
         {
           "Id": "SEC105/561",
-          "Name": "CorrectUseOfSal/PostAccessSAWriteSANoAccess",
+          "Name": "UpdateSalToCurrentVersion/PostAccessSAWriteSANoAccess",
           "ContentsRegex": "$SEC105/561.PostAccessSAWriteSANoAccess",
           "Fixes": {
             "testKey": {
@@ -5708,7 +5708,7 @@
         },
         {
           "Id": "SEC105/562",
-          "Name": "CorrectUseOfSal/PostDeref1",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1",
           "ContentsRegex": "$SEC105/562.PostDeref1",
           "Fixes": {
             "testKey": {
@@ -5720,7 +5720,7 @@
         },
         {
           "Id": "SEC105/563",
-          "Name": "CorrectUseOfSal/PostDeref2",
+          "Name": "UpdateSalToCurrentVersion/PostDeref2",
           "ContentsRegex": "$SEC105/563.PostDeref2",
           "Fixes": {
             "testKey": {
@@ -5732,7 +5732,7 @@
         },
         {
           "Id": "SEC105/564",
-          "Name": "CorrectUseOfSal/PostDeref0AccessWrite",
+          "Name": "UpdateSalToCurrentVersion/PostDeref0AccessWrite",
           "ContentsRegex": "$SEC105/564.PostDeref0AccessWrite",
           "Fixes": {
             "testKey": {
@@ -5744,7 +5744,7 @@
         },
         {
           "Id": "SEC105/565",
-          "Name": "CorrectUseOfSal/PostDeref1AccessWrite",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1AccessWrite",
           "ContentsRegex": "$SEC105/565.PostDeref1AccessWrite",
           "Fixes": {
             "testKey": {
@@ -5756,7 +5756,7 @@
         },
         {
           "Id": "SEC105/566",
-          "Name": "CorrectUseOfSal/PostDeref2AccessRead",
+          "Name": "UpdateSalToCurrentVersion/PostDeref2AccessRead",
           "ContentsRegex": "$SEC105/566.PostDeref2AccessRead",
           "Fixes": {
             "testKey": {
@@ -5768,7 +5768,7 @@
         },
         {
           "Id": "SEC105/567",
-          "Name": "CorrectUseOfSal/PostDeref2AccessWrite",
+          "Name": "UpdateSalToCurrentVersion/PostDeref2AccessWrite",
           "ContentsRegex": "$SEC105/567.PostDeref2AccessWrite",
           "Fixes": {
             "testKey": {
@@ -5780,7 +5780,7 @@
         },
         {
           "Id": "SEC105/568",
-          "Name": "CorrectUseOfSal/PostDeref3AccessWrite",
+          "Name": "UpdateSalToCurrentVersion/PostDeref3AccessWrite",
           "ContentsRegex": "$SEC105/568.PostDeref3AccessWrite",
           "Fixes": {
             "testKey": {
@@ -5792,7 +5792,7 @@
         },
         {
           "Id": "SEC105/569",
-          "Name": "CorrectUseOfSal/PostDeref1ValidYes",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1ValidYes",
           "ContentsRegex": "$SEC105/569.PostDeref1ValidYes",
           "Fixes": {
             "testKey": {
@@ -5804,7 +5804,7 @@
         },
         {
           "Id": "SEC105/570",
-          "Name": "CorrectUseOfSal/PostNullYes",
+          "Name": "UpdateSalToCurrentVersion/PostNullYes",
           "ContentsRegex": "$SEC105/570.PostNullYes",
           "Fixes": {
             "testKey": {
@@ -5816,7 +5816,7 @@
         },
         {
           "Id": "SEC105/571",
-          "Name": "CorrectUseOfSal/PostNullYesNullNo",
+          "Name": "UpdateSalToCurrentVersion/PostNullYesNullNo",
           "ContentsRegex": "$SEC105/571.PostNullYesNullNo",
           "Fixes": {
             "testKey": {
@@ -5828,7 +5828,7 @@
         },
         {
           "Id": "SEC105/572",
-          "Name": "CorrectUseOfSal/PostNullSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/PostNullSAMaybe",
           "ContentsRegex": "$SEC105/572.PostNullSAMaybe",
           "Fixes": {
             "testKey": {
@@ -5840,7 +5840,7 @@
         },
         {
           "Id": "SEC105/573",
-          "Name": "CorrectUseOfSal/PostNullSAMaybeDeref1",
+          "Name": "UpdateSalToCurrentVersion/PostNullSAMaybeDeref1",
           "ContentsRegex": "$SEC105/573.PostNullSAMaybeDeref1",
           "Fixes": {
             "testKey": {
@@ -5852,7 +5852,7 @@
         },
         {
           "Id": "SEC105/574",
-          "Name": "CorrectUseOfSal/PostValidNo",
+          "Name": "UpdateSalToCurrentVersion/PostValidNo",
           "ContentsRegex": "$SEC105/574.PostValidNo",
           "Fixes": {
             "testKey": {
@@ -5864,7 +5864,7 @@
         },
         {
           "Id": "SEC105/575",
-          "Name": "CorrectUseOfSal/PostValidSANo",
+          "Name": "UpdateSalToCurrentVersion/PostValidSANo",
           "ContentsRegex": "$SEC105/575.PostValidSANo",
           "Fixes": {
             "testKey": {
@@ -5876,7 +5876,7 @@
         },
         {
           "Id": "SEC105/576",
-          "Name": "CorrectUseOfSal/PostWritableBytes1",
+          "Name": "UpdateSalToCurrentVersion/PostWritableBytes1",
           "ContentsRegex": "$SEC105/576.PostWritableBytes1",
           "Fixes": {
             "testKey": {
@@ -5888,7 +5888,7 @@
         },
         {
           "Id": "SEC105/577",
-          "Name": "CorrectUseOfSal/PostWritableBytesConst1",
+          "Name": "UpdateSalToCurrentVersion/PostWritableBytesConst1",
           "ContentsRegex": "$SEC105/577.PostWritableBytesConst1",
           "Fixes": {
             "testKey": {
@@ -5900,7 +5900,7 @@
         },
         {
           "Id": "SEC105/578",
-          "Name": "CorrectUseOfSal/PostWritableBytesConst1Deref1",
+          "Name": "UpdateSalToCurrentVersion/PostWritableBytesConst1Deref1",
           "ContentsRegex": "$SEC105/578.PostWritableBytesConst1Deref1",
           "Fixes": {
             "testKey": {
@@ -5912,7 +5912,7 @@
         },
         {
           "Id": "SEC105/579",
-          "Name": "CorrectUseOfSal/PostDeref1WritableBytesConst1",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1WritableBytesConst1",
           "ContentsRegex": "$SEC105/579.PostDeref1WritableBytesConst1",
           "Fixes": {
             "testKey": {
@@ -5924,7 +5924,7 @@
         },
         {
           "Id": "SEC105/580",
-          "Name": "CorrectUseOfSal/PostWritableBytes1Deref1",
+          "Name": "UpdateSalToCurrentVersion/PostWritableBytes1Deref1",
           "ContentsRegex": "$SEC105/580.PostWritableBytes1Deref1",
           "Fixes": {
             "testKey": {
@@ -5936,7 +5936,7 @@
         },
         {
           "Id": "SEC105/581",
-          "Name": "CorrectUseOfSal/PostValidBytesConst1Deref2",
+          "Name": "UpdateSalToCurrentVersion/PostValidBytesConst1Deref2",
           "ContentsRegex": "$SEC105/581.PostValidBytesConst1Deref2",
           "Fixes": {
             "testKey": {
@@ -5948,7 +5948,7 @@
         },
         {
           "Id": "SEC105/582",
-          "Name": "CorrectUseOfSal/PostWritableElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/PostWritableElementsConst1",
           "ContentsRegex": "$SEC105/582.PostWritableElementsConst1",
           "Fixes": {
             "testKey": {
@@ -5960,7 +5960,7 @@
         },
         {
           "Id": "SEC105/583",
-          "Name": "CorrectUseOfSal/PostWritableElementsConst1Deref1",
+          "Name": "UpdateSalToCurrentVersion/PostWritableElementsConst1Deref1",
           "ContentsRegex": "$SEC105/583.PostWritableElementsConst1Deref1",
           "Fixes": {
             "testKey": {
@@ -5972,7 +5972,7 @@
         },
         {
           "Id": "SEC105/584",
-          "Name": "CorrectUseOfSal/PostDeref1WritableElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1WritableElementsConst1",
           "ContentsRegex": "$SEC105/584.PostDeref1WritableElementsConst1",
           "Fixes": {
             "testKey": {
@@ -5984,7 +5984,7 @@
         },
         {
           "Id": "SEC105/585",
-          "Name": "CorrectUseOfSal/PostWritableElements1Deref1",
+          "Name": "UpdateSalToCurrentVersion/PostWritableElements1Deref1",
           "ContentsRegex": "$SEC105/585.PostWritableElements1Deref1",
           "Fixes": {
             "testKey": {
@@ -5996,7 +5996,7 @@
         },
         {
           "Id": "SEC105/586",
-          "Name": "CorrectUseOfSal/PostWritableElements1",
+          "Name": "UpdateSalToCurrentVersion/PostWritableElements1",
           "ContentsRegex": "$SEC105/586.PostWritableElements1",
           "Fixes": {
             "testKey": {
@@ -6008,7 +6008,7 @@
         },
         {
           "Id": "SEC105/587",
-          "Name": "CorrectUseOfSal/PostDeref1ValidElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1ValidElementsConst1",
           "ContentsRegex": "$SEC105/587.PostDeref1ValidElementsConst1",
           "Fixes": {
             "testKey": {
@@ -6020,7 +6020,7 @@
         },
         {
           "Id": "SEC105/588",
-          "Name": "CorrectUseOfSal/PostDeref1Tainted1",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1Tainted1",
           "ContentsRegex": "$SEC105/588.PostDeref1Tainted1",
           "Fixes": {
             "testKey": {
@@ -6032,7 +6032,7 @@
         },
         {
           "Id": "SEC105/589",
-          "Name": "CorrectUseOfSal/PostValidSAMaybeDeref1",
+          "Name": "UpdateSalToCurrentVersion/PostValidSAMaybeDeref1",
           "ContentsRegex": "$SEC105/589.PostValidSAMaybeDeref1",
           "Fixes": {
             "testKey": {
@@ -6044,82 +6044,82 @@
         },
         {
           "Id": "SEC105/590",
-          "Name": "CorrectUseOfSal/PostAccess1",
+          "Name": "UpdateSalToCurrentVersion/PostAccess1",
           "ContentsRegex": "$SEC105/590.PostAccess1"
         },
         {
           "Id": "SEC105/591",
-          "Name": "CorrectUseOfSal/PostDeref1Access1",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1Access1",
           "ContentsRegex": "$SEC105/591.PostDeref1Access1"
         },
         {
           "Id": "SEC105/592",
-          "Name": "CorrectUseOfSal/PostDeref1NeedsRelease1",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1NeedsRelease1",
           "ContentsRegex": "$SEC105/592.PostDeref1NeedsRelease1"
         },
         {
           "Id": "SEC105/593",
-          "Name": "CorrectUseOfSal/PostDeref1PROPERTY2",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1PROPERTY2",
           "ContentsRegex": "$SEC105/593.PostDeref1PROPERTY2"
         },
         {
           "Id": "SEC105/594",
-          "Name": "CorrectUseOfSal/PostDeref1PROPERTY2",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1PROPERTY2",
           "ContentsRegex": "$SEC105/594.PostDeref1PROPERTY2"
         },
         {
           "Id": "SEC105/595",
-          "Name": "CorrectUseOfSal/PostDeref1Access2",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1Access2",
           "ContentsRegex": "$SEC105/595.PostDeref1Access2"
         },
         {
           "Id": "SEC105/596",
-          "Name": "CorrectUseOfSal/PostDeref1Null2",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1Null2",
           "ContentsRegex": "$SEC105/596.PostDeref1Null2"
         },
         {
           "Id": "SEC105/597",
-          "Name": "CorrectUseOfSal/PostDeref1property12",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1property12",
           "ContentsRegex": "$SEC105/597.PostDeref1property12"
         },
         {
           "Id": "SEC105/598",
-          "Name": "CorrectUseOfSal/PostDeref1property22",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1property22",
           "ContentsRegex": "$SEC105/598.PostDeref1property22"
         },
         {
           "Id": "SEC105/599",
-          "Name": "CorrectUseOfSal/PostDeref1Valid2",
+          "Name": "UpdateSalToCurrentVersion/PostDeref1Valid2",
           "ContentsRegex": "$SEC105/599.PostDeref1Valid2"
         },
         {
           "Id": "SEC105/600",
-          "Name": "CorrectUseOfSal/PostNeedsRelease1",
+          "Name": "UpdateSalToCurrentVersion/PostNeedsRelease1",
           "ContentsRegex": "$SEC105/600.PostNeedsRelease1"
         },
         {
           "Id": "SEC105/601",
-          "Name": "CorrectUseOfSal/PostPROPERTY1",
+          "Name": "UpdateSalToCurrentVersion/PostPROPERTY1",
           "ContentsRegex": "$SEC105/601.PostPROPERTY1"
         },
         {
           "Id": "SEC105/602",
-          "Name": "CorrectUseOfSal/PostPROPERTY1",
+          "Name": "UpdateSalToCurrentVersion/PostPROPERTY1",
           "ContentsRegex": "$SEC105/602.PostPROPERTY1"
         },
         {
           "Id": "SEC105/603",
-          "Name": "CorrectUseOfSal/PostPROPERTY1Deref2",
+          "Name": "UpdateSalToCurrentVersion/PostPROPERTY1Deref2",
           "ContentsRegex": "$SEC105/603.PostPROPERTY1Deref2"
         },
         {
           "Id": "SEC105/604",
-          "Name": "CorrectUseOfSal/PostPROPERTY1Deref2",
+          "Name": "UpdateSalToCurrentVersion/PostPROPERTY1Deref2",
           "ContentsRegex": "$SEC105/604.PostPROPERTY1Deref2"
         },
         {
           "Id": "SEC105/605",
-          "Name": "CorrectUseOfSal/ReturnValuePostAccessSARead",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostAccessSARead",
           "ContentsRegex": "$SEC105/605.ReturnValuePostAccessSARead",
           "Fixes": {
             "testKey": {
@@ -6131,7 +6131,7 @@
         },
         {
           "Id": "SEC105/606",
-          "Name": "CorrectUseOfSal/ReturnValuePostAccessSAReadSARead",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostAccessSAReadSARead",
           "ContentsRegex": "$SEC105/606.ReturnValuePostAccessSAReadSARead",
           "Fixes": {
             "testKey": {
@@ -6143,7 +6143,7 @@
         },
         {
           "Id": "SEC105/607",
-          "Name": "CorrectUseOfSal/ReturnValuePostNullSAYes",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostNullSAYes",
           "ContentsRegex": "$SEC105/607.ReturnValuePostNullSAYes",
           "Fixes": {
             "testKey": {
@@ -6155,7 +6155,7 @@
         },
         {
           "Id": "SEC105/608",
-          "Name": "CorrectUseOfSal/ReturnValuePostNullSANoDeref0",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostNullSANoDeref0",
           "ContentsRegex": "$SEC105/608.ReturnValuePostNullSANoDeref0",
           "Fixes": {
             "testKey": {
@@ -6167,7 +6167,7 @@
         },
         {
           "Id": "SEC105/609",
-          "Name": "CorrectUseOfSal/ReturnValuePostNullSANoDeref1",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostNullSANoDeref1",
           "ContentsRegex": "$SEC105/609.ReturnValuePostNullSANoDeref1",
           "Fixes": {
             "testKey": {
@@ -6179,7 +6179,7 @@
         },
         {
           "Id": "SEC105/610",
-          "Name": "CorrectUseOfSal/ReturnValuePostNullSAMaybeDeref2",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostNullSAMaybeDeref2",
           "ContentsRegex": "$SEC105/610.ReturnValuePostNullSAMaybeDeref2",
           "Fixes": {
             "testKey": {
@@ -6191,7 +6191,7 @@
         },
         {
           "Id": "SEC105/611",
-          "Name": "CorrectUseOfSal/ReturnValuePostValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostValidSAYes",
           "ContentsRegex": "$SEC105/611.ReturnValuePostValidSAYes",
           "Fixes": {
             "testKey": {
@@ -6203,7 +6203,7 @@
         },
         {
           "Id": "SEC105/612",
-          "Name": "CorrectUseOfSal/ReturnValuePostWritableBytesConst1",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostWritableBytesConst1",
           "ContentsRegex": "$SEC105/612.ReturnValuePostWritableBytesConst1",
           "Fixes": {
             "testKey": {
@@ -6215,7 +6215,7 @@
         },
         {
           "Id": "SEC105/613",
-          "Name": "CorrectUseOfSal/ReturnValuePostValidBytesConst1",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostValidBytesConst1",
           "ContentsRegex": "$SEC105/613.ReturnValuePostValidBytesConst1",
           "Fixes": {
             "testKey": {
@@ -6227,7 +6227,7 @@
         },
         {
           "Id": "SEC105/614",
-          "Name": "CorrectUseOfSal/ReturnValuePostValidElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostValidElementsConst1",
           "ContentsRegex": "$SEC105/614.ReturnValuePostValidElementsConst1",
           "Fixes": {
             "testKey": {
@@ -6239,7 +6239,7 @@
         },
         {
           "Id": "SEC105/615",
-          "Name": "CorrectUseOfSal/ReturnValuePostWritableElementsConst1",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostWritableElementsConst1",
           "ContentsRegex": "$SEC105/615.ReturnValuePostWritableElementsConst1",
           "Fixes": {
             "testKey": {
@@ -6251,7 +6251,7 @@
         },
         {
           "Id": "SEC105/616",
-          "Name": "CorrectUseOfSal/ReturnValuePostNullTerminatedSANo",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostNullTerminatedSANo",
           "ContentsRegex": "$SEC105/616.ReturnValuePostNullTerminatedSANo",
           "Fixes": {
             "testKey": {
@@ -6263,7 +6263,7 @@
         },
         {
           "Id": "SEC105/617",
-          "Name": "CorrectUseOfSal/ReturnValuePostDeref0ReturnValuePostValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostDeref0ReturnValuePostValidSAYes",
           "ContentsRegex": "$SEC105/617.ReturnValuePostDeref0ReturnValuePostValidSAYes",
           "Fixes": {
             "testKey": {
@@ -6275,7 +6275,7 @@
         },
         {
           "Id": "SEC105/618",
-          "Name": "CorrectUseOfSal/ReturnValueSAPostNullSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/ReturnValueSAPostNullSAMaybe",
           "ContentsRegex": "$SEC105/618.ReturnValueSAPostNullSAMaybe",
           "Fixes": {
             "testKey": {
@@ -6287,7 +6287,7 @@
         },
         {
           "Id": "SEC105/619",
-          "Name": "CorrectUseOfSal/ReturnValueSAPostDeref0NullSAYes",
+          "Name": "UpdateSalToCurrentVersion/ReturnValueSAPostDeref0NullSAYes",
           "ContentsRegex": "$SEC105/619.ReturnValueSAPostDeref0NullSAYes",
           "Fixes": {
             "testKey": {
@@ -6299,7 +6299,7 @@
         },
         {
           "Id": "SEC105/620",
-          "Name": "CorrectUseOfSal/ReturnValueSAPostNullSAMaybeValidElements1",
+          "Name": "UpdateSalToCurrentVersion/ReturnValueSAPostNullSAMaybeValidElements1",
           "ContentsRegex": "$SEC105/620.ReturnValueSAPostNullSAMaybeValidElements1",
           "Fixes": {
             "testKey": {
@@ -6311,7 +6311,7 @@
         },
         {
           "Id": "SEC105/621",
-          "Name": "CorrectUseOfSal/ReturnValueSAPostDeref1NullSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/ReturnValueSAPostDeref1NullSAMaybe",
           "ContentsRegex": "$SEC105/621.ReturnValueSAPostDeref1NullSAMaybe",
           "Fixes": {
             "testKey": {
@@ -6323,7 +6323,7 @@
         },
         {
           "Id": "SEC105/622",
-          "Name": "CorrectUseOfSal/ReturnValueSAPostDeref0NullSANo",
+          "Name": "UpdateSalToCurrentVersion/ReturnValueSAPostDeref0NullSANo",
           "ContentsRegex": "$SEC105/622.ReturnValueSAPostDeref0NullSANo",
           "Fixes": {
             "testKey": {
@@ -6335,7 +6335,7 @@
         },
         {
           "Id": "SEC105/623",
-          "Name": "CorrectUseOfSal/ReturnValueSAPostMustCheckSAYes",
+          "Name": "UpdateSalToCurrentVersion/ReturnValueSAPostMustCheckSAYes",
           "ContentsRegex": "$SEC105/623.ReturnValueSAPostMustCheckSAYes",
           "Fixes": {
             "testKey": {
@@ -6347,7 +6347,7 @@
         },
         {
           "Id": "SEC105/624",
-          "Name": "CorrectUseOfSal/ReturnValuePostAccessSAReadWrite",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostAccessSAReadWrite",
           "ContentsRegex": "$SEC105/624.ReturnValuePostAccessSAReadWrite",
           "Fixes": {
             "testKey": {
@@ -6359,7 +6359,7 @@
         },
         {
           "Id": "SEC105/625",
-          "Name": "CorrectUseOfSal/ReturnValuePostAccessSAReadWriteDeref1",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostAccessSAReadWriteDeref1",
           "ContentsRegex": "$SEC105/625.ReturnValuePostAccessSAReadWriteDeref1",
           "Fixes": {
             "testKey": {
@@ -6371,7 +6371,7 @@
         },
         {
           "Id": "SEC105/626",
-          "Name": "CorrectUseOfSal/ReturnValuePostAccessSAWrite",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostAccessSAWrite",
           "ContentsRegex": "$SEC105/626.ReturnValuePostAccessSAWrite",
           "Fixes": {
             "testKey": {
@@ -6383,7 +6383,7 @@
         },
         {
           "Id": "SEC105/627",
-          "Name": "CorrectUseOfSal/ReturnValuePostAccessSAReadWriteSARead",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostAccessSAReadWriteSARead",
           "ContentsRegex": "$SEC105/627.ReturnValuePostAccessSAReadWriteSARead",
           "Fixes": {
             "testKey": {
@@ -6395,7 +6395,7 @@
         },
         {
           "Id": "SEC105/628",
-          "Name": "CorrectUseOfSal/ReturnValuePostValidSAMaybeDeref1",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostValidSAMaybeDeref1",
           "ContentsRegex": "$SEC105/628.ReturnValuePostValidSAMaybeDeref1",
           "Fixes": {
             "testKey": {
@@ -6407,7 +6407,7 @@
         },
         {
           "Id": "SEC105/629",
-          "Name": "CorrectUseOfSal/ReturnValueSAPostDeref1NullSAYesNullTerminatedSANo",
+          "Name": "UpdateSalToCurrentVersion/ReturnValueSAPostDeref1NullSAYesNullTerminatedSANo",
           "ContentsRegex": "$SEC105/629.ReturnValueSAPostDeref1NullSAYesNullTerminatedSANo",
           "Fixes": {
             "testKey": {
@@ -6419,22 +6419,22 @@
         },
         {
           "Id": "SEC105/630",
-          "Name": "CorrectUseOfSal/ReturnValuePostAccessSAMaybe",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostAccessSAMaybe",
           "ContentsRegex": "$SEC105/630.ReturnValuePostAccessSAMaybe"
         },
         {
           "Id": "SEC105/631",
-          "Name": "CorrectUseOfSal/ReturnValuePostAccessSANoAccess",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostAccessSANoAccess",
           "ContentsRegex": "$SEC105/631.ReturnValuePostAccessSANoAccess"
         },
         {
           "Id": "SEC105/632",
-          "Name": "CorrectUseOfSal/ReturnValuePostAccessSANoAccessSANoAccess",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostAccessSANoAccessSANoAccess",
           "ContentsRegex": "$SEC105/632.ReturnValuePostAccessSANoAccessSANoAccess"
         },
         {
           "Id": "SEC105/633",
-          "Name": "CorrectUseOfSal/ReturnValuePostDeref1ValidSAYes",
+          "Name": "UpdateSalToCurrentVersion/ReturnValuePostDeref1ValidSAYes",
           "ContentsRegex": "$SEC105/633.ReturnValuePostDeref1ValidSAYes"
         }
       ]

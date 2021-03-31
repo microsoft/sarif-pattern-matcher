@@ -4,21 +4,20 @@
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SalAnalyzer
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SalModernization
 {
-    public class CorrectUseOfSalTests : EndToEndTestsSalAnalyzer
+    public class UpdateSalToCurrentVersionTests : EndToEndTestsSalModernization
     {
-        public CorrectUseOfSalTests(ITestOutputHelper outputHelper) : base(outputHelper)
+        public UpdateSalToCurrentVersionTests(ITestOutputHelper outputHelper) : base(outputHelper)
         {
         }
 
         protected override string RuleId => "SEC105";
 
-        // TODO the test project is targeting netcoreapp3.1
         protected override string Framework => "netstandard2.0";
 
         [Fact]
-        public void CorrectUseOfSal_EndToEndFunctionalTests()
+        public void UpdateSalToCurrentVersion_EndToEndFunctionalTests()
             => RunAllTests();
     }
 }

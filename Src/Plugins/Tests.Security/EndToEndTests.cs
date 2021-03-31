@@ -133,6 +133,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected void RunAllTests()
         {
+            string testVar = ProductTestDataDirectory;
+
             Directory.Exists(ProductTestDataDirectory).Should().BeTrue();
 
             string testsDirectory = Path.Combine(ProductTestDataDirectory, @"Inputs\");
