@@ -98,14 +98,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             }
 
             string scanTarget = groups["scanTargetFullPath"];
-            string secret = $"{scanTarget}#{fingerprint}";
+            string key = $"{scanTarget}#{fingerprint}";
 
-            if (validator.PerFileFingerprintCache.Contains(secret))
+            if (validator.PerFileFingerprintCache.Contains(key))
             {
                 return ValidationState.NoMatch;
             }
 
-            validator.PerFileFingerprintCache.Add(secret);
+            validator.PerFileFingerprintCache.Add(key);
 
             return state;
         }

@@ -74,9 +74,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=LTAI01234567890123456789][platform=AlibabaCloud]",
-            "ValidationFingerprint/v1": "[acct=LTAI01234567890123456789][pwd=111111111101234567890123456789]",
-            "ValidationFingerprintHash/v1": "d1034b48889192078939ad8783cdf7dfb41d4417c47bf2040318104220d0f7e2"
+            "AssetFingerprint/v1": "[account=LTAI01234567890123456789][platform=AlibabaCloud]",
+            "ValidationFingerprint/v1": "[account=LTAI01234567890123456789][secret=111111111101234567890123456789]",
+            "ValidationFingerprintHash/v1": "631c30f17c49f738835020a0d4cb9c0671811dcb0851f5cfe0e3736641939c5c"
           },
           "rank": 41.04
         },
@@ -117,9 +117,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=LTAI012345678901][platform=AlibabaCloud]",
-            "ValidationFingerprint/v1": "[acct=LTAI012345678901][pwd=222222222201234567890123456789]",
-            "ValidationFingerprintHash/v1": "80ec50d39d2fd4bb838b9c5e4b305bff66e353e5e25e5adbbf1e6e4c78115d85"
+            "AssetFingerprint/v1": "[account=LTAI012345678901][platform=AlibabaCloud]",
+            "ValidationFingerprint/v1": "[account=LTAI012345678901][secret=222222222201234567890123456789]",
+            "ValidationFingerprintHash/v1": "821b50d3e6952165141f1304d9b2956db8637572390145a24620228760ffaee6"
           },
           "rank": 41.04
         }

@@ -99,7 +99,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     default:
                     {
                         message += $" An unexpected response code was returned attempting to " +
-                                  $"validate: '{response.StatusCode}'";
+                                   $"validate: '{response.StatusCode}'";
                         break;
                     }
                 }
@@ -149,7 +149,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             [JsonProperty("token")]
             public string Token { get; set; }
 
-            [JsonProperty("secret")]
+            [JsonProperty("key")]
             public string Key { get; set; }
 
             [JsonProperty("cidr_whitelist")]

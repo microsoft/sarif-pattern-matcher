@@ -75,8 +75,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Twilio]",
-            "ValidationFingerprint/v1": "[key=SK11111111110123456789012345678901]",
-            "ValidationFingerprintHash/v1": "1d0defa9a7091884a2006e1a7c1ff1cdaf9cbd5e16b349f61ed7effc30252132"
+            "ValidationFingerprint/v1": "[secret=SK11111111110123456789012345678901]",
+            "ValidationFingerprintHash/v1": "4089baba3337080da9ea52d6a99f31959752c1b6c43b8decc9cabf76753872fd"
           },
           "rank": 43.75
         },
@@ -118,8 +118,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Twilio]",
-            "ValidationFingerprint/v1": "[key=SK22222222220123456789012345678901]",
-            "ValidationFingerprintHash/v1": "a2edec278362f1bf43b06ef402e7c7c41e7d162e901f6e27336002b8ff0e14c2"
+            "ValidationFingerprint/v1": "[secret=SK22222222220123456789012345678901]",
+            "ValidationFingerprintHash/v1": "134a06770fee91ed61fa3b52a93f7c5309ebd6b0fdecea550ee3b90cd0f72bf5"
           },
           "rank": 44.72
         }

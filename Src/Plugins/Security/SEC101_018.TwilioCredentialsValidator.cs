@@ -93,14 +93,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     case HttpStatusCode.Unauthorized:
                     {
-                        return ValidationState.Unauthorized;
+                        return ReturnUnauthorizedAccess(ref message, asset: id);
                     }
 
                     default:
                     {
-                        message += $" An unexpected response code was returned attempting to " +
-                                   $"validate: '{response.StatusCode}'";
-                        break;
+                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
+                        return ValidationState.Unknown;
                     }
                 }
             }
@@ -108,8 +107,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }

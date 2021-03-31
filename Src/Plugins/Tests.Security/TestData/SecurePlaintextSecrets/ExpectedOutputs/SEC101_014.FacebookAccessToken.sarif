@@ -75,8 +75,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Facebook]",
-            "ValidationFingerprint/v1": "[key=EAACEdEose0cBAtestjunk111111]",
-            "ValidationFingerprintHash/v1": "126f91a306e3ec6654d32df313a53be4ff09461f61cbee419406f5ce7c7103df"
+            "ValidationFingerprint/v1": "[secret=EAACEdEose0cBAtestjunk111111]",
+            "ValidationFingerprintHash/v1": "edfa7f059db84fd0c3a1dbc8011f86849725f19c20f18bfb8e21a2cf690c5752"
           },
           "rank": 52.85
         },
@@ -118,8 +118,8 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Facebook]",
-            "ValidationFingerprint/v1": "[key=EAACEdEose0cBAtestjunk22222222]",
-            "ValidationFingerprintHash/v1": "09746c32db4adc8aac3e99c29373df1fc0a274b10ed0dbc7bfc003e9a3ea11b5"
+            "ValidationFingerprint/v1": "[secret=EAACEdEose0cBAtestjunk22222222]",
+            "ValidationFingerprintHash/v1": "f882ac7a29fbe83f340fb4040af4c2a19a2cc156aca6bbb95dc833142571916e"
           },
           "rank": 51.28
         }

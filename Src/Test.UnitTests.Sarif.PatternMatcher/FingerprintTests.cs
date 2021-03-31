@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public void Fingerprint_KeyNamesMatchProperties()
         {
             // Invariant: every string property on the fingerprint
-            // should have a corresponding secret name string constant.
+            // should have a corresponding key name string constant.
 
             var unexpectedConditions = new List<string>();
 
@@ -38,7 +38,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (!expectedKeyNames.Contains(fi.Name))
                 {
                     unexpectedConditions.Add(
-                        $"{Environment.NewLine}Could not find property matching existing secret name field: {fi.Name}.");
+                        $"{Environment.NewLine}Could not find property matching existing key name field: {fi.Name}.");
                     continue;
                 }
                 expectedKeyNames.Remove(fi.Name);
@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             foreach (string keyName in expectedKeyNames)
             {
                 unexpectedConditions.Add(
-                    $"{Environment.NewLine}Could not find secret name field to match existing property: {keyName}.");
+                    $"{Environment.NewLine}Could not find key name field to match existing property: {keyName}.");
             }
 
             unexpectedConditions.Should().BeEmpty();
@@ -67,7 +67,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (keyNames.Contains(fieldValue))
                 {
                     duplicatedFieldNames.Add(
-                        $"{Environment.NewLine}Field '{fi.Name}' has a value which is shared by another secret name field: '{fieldValue}'.");
+                        $"{Environment.NewLine}Field '{fi.Name}' has a value which is shared by another key name field: '{fieldValue}'.");
                 }
                 keyNames.Add(fieldValue);
             }
@@ -182,18 +182,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 var fingerprint = new Fingerprint();
 
                 FieldInfo fi = type.GetField($"{pi.Name}KeyName");
-                string secret = (string)fi.GetValue(fingerprint);
+                string key = (string)fi.GetValue(fingerprint);
 
                 object boxed = fingerprint;
                 MethodInfo mi = type.GetMethod("SetProperty");
-                mi.Invoke(boxed, new[] { secret, expected });
+                mi.Invoke(boxed, new[] { key, expected });
                 fingerprint = (Fingerprint)boxed;
 
                 string actual = (string)pi.GetGetMethod().Invoke(fingerprint, null);
                 if (actual != expected)
                 {
                     failedTestCases.Add(
-                        $"{Environment.NewLine}SetProperty(\"{secret}\", {expected}) did not persist " +
+                        $"{Environment.NewLine}SetProperty(\"{key}\", {expected}) did not persist " +
                         $"property value which was observed to be '{actual}'."
                     );
                 }
@@ -321,7 +321,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private static readonly FingerprintTestCase[] s_workingTestCases = new[]
         {
             new FingerprintTestCase {
-                Title = "Single secret (Host).",
+                Title = "Single key (Host).",
                 Text = $"[{Fingerprint.HostKeyName}=Host]",
                 Expected = new Fingerprint { Host = "Host" }},
 
