@@ -92,9 +92,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Environment.CurrentDirectory = Path.GetDirectoryName(location);
                 }
 
-                validationState =
-                    (ValidationState)isValidStaticMethodInfo.Invoke(
-                        obj: null, arguments);
+                try
+                {
+                    validationState =
+                        (ValidationState)isValidStaticMethodInfo.Invoke(
+                            obj: null, arguments);
+                }
+                catch (TargetInvocationException e)
+                {
+                    throw e.InnerException;
+                }
             }
             finally
             {
@@ -133,9 +140,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Environment.CurrentDirectory = Path.GetDirectoryName(location);
                 }
 
-                validationText =
-                    (ValidationState)isValidDynamicMethodInfo.Invoke(
-                        obj: null, arguments);
+                try
+                {
+                    validationText =
+                        (ValidationState)isValidDynamicMethodInfo.Invoke(
+                            obj: null, arguments);
+                }
+                catch (TargetInvocationException e)
+                {
+                    throw e.InnerException;
+                }
             }
             finally
             {
@@ -165,7 +179,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Environment.CurrentDirectory = Path.GetDirectoryName(location);
                 }
 
-                shouldCacheMethodInfo.Invoke(obj: null, arguments);
+                try
+                {
+                    shouldCacheMethodInfo.Invoke(obj: null, arguments);
+                }
+                catch (TargetInvocationException e)
+                {
+                    throw e.InnerException;
+                }
             }
             finally
             {

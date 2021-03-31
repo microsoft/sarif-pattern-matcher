@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private static readonly HashSet<string> WellKnownKeys = new HashSet<string>
         {
-            // This is a well-known key used as example from stripe website (check examples section). https://stripe.com/payments
+            // This is a well-known secret used as example from stripe website (check examples section). https://stripe.com/payments
             "sk_test_BQokikJOvBiI2HlWgH4olfQ2",
         };
 
@@ -56,19 +56,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("key", out string key))
+            if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
-            if (WellKnownKeys.Contains(key))
+            if (WellKnownKeys.Contains(secret))
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint
             {
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.Stripe),
             };
 
@@ -79,18 +79,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            string key = fingerprint.Key;
+            string secret = fingerprint.Secret;
 
-            string keyKind = key.Contains("_test_") ? "test" : "live production";
+            string keyKind = secret.Contains("_test_") ? "test" : "live production";
 
             try
             {
-                message = $"The detected secret is a {keyKind} key.";
+                message = $"The detected secret is a {keyKind} secret.";
 
                 using HttpClient client = CreateHttpClient();
 
                 client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", key);
+                    new AuthenticationHeaderValue("Bearer", secret);
 
                 using HttpResponseMessage response = client
                     .GetAsync($"https://api.stripe.com/v1/customers")

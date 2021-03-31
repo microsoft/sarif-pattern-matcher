@@ -62,7 +62,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             {
                 Uri = uri,
                 Account = account,
-                Password = password,
+                Secret = password,
                 Platform = nameof(AssetPlatform.Cloudant),
             };
 
@@ -77,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 
             string uri = fingerprint.Uri;
             string account = fingerprint.Account;
-            string password = fingerprint.Password;
+            string password = fingerprint.Secret;
 
             try
             {

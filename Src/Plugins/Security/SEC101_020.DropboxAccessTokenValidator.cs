@@ -50,19 +50,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("refine", out string key))
+            if (!groups.TryGetNonEmptyValue("refine", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
-            if (!ContainsDigitAndChar(key))
+            if (!ContainsDigitAndChar(secret))
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint()
             {
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.Dropbox),
             };
 
@@ -74,9 +74,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             const string NoAccessMessage = "Your app is not permitted to access this endpoint";
             const string DisabledMessage = "This app is currently disabled.";
 
-            string key = fingerprint.Key;
+            string secret = fingerprint.Secret;
             using HttpClient httpClient = CreateHttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
             try
             {
@@ -105,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         // Request was successful but AccessToken does not have access.
                         if (body.Contains(NoAccessMessage))
                         {
-                            return key.Length == 64
+                            return secret.Length == 64
                                 ? ValidationState.AuthorizedError // No expiration token.
                                 : ValidationState.AuthorizedWarning; // Short expiration token (4h).
                         }

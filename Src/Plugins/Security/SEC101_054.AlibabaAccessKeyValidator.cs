@@ -69,7 +69,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Platform = nameof(AssetPlatform.AlibabaCloud),
                 Account = account,
-                Password = password,
+                Secret = password,
             };
 
             return ValidationState.Unknown;
@@ -80,7 +80,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref Dictionary<string, string> options)
         {
             string account = fingerprint.Account;
-            string password = fingerprint.Password;
+            string password = fingerprint.Secret;
 
             try
             {

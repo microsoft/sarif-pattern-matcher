@@ -61,7 +61,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             fingerprint = new Fingerprint()
             {
                 Account = account,
-                Password = password,
+                Secret = password,
                 Host = host,
             };
 
@@ -74,7 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         {
             string host = fingerprint.Host;
             string account = fingerprint.Account;
-            string password = fingerprint.Password;
+            string password = fingerprint.Secret;
 
             try
             {

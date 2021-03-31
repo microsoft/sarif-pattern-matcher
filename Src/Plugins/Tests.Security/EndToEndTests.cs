@@ -50,8 +50,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             foreach (string inputResourceName in inputResourceNames)
             {
-                string key = inputResourceName.Substring("Inputs.".Length);
-                results[key] = ConstructTestOutputFromInputResource(inputResourceName, parameter);
+                string secret = inputResourceName.Substring("Inputs.".Length);
+                results[secret] = ConstructTestOutputFromInputResource(inputResourceName, parameter);
             }
 
             return results;

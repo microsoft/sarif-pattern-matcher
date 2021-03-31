@@ -51,11 +51,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            string key = groups["key"];
+            string secret = groups["secret"];
 
             fingerprint = new Fingerprint
             {
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.SendGrid),
             };
 
@@ -67,7 +67,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref Dictionary<string, string> options)
         {
             string account = "apikey";
-            string key = fingerprint.Key;
+            string secret = fingerprint.Secret;
             const string host = "smtp.sendgrid.net";
 
             string response = string.Empty;
@@ -99,9 +99,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     account = Convert.ToBase64String(Encoding.UTF8.GetBytes(account));
                     Send(reader, writer, out response, $"{account}\r\n", "334");
 
-                    // Base64-encode the api key. 235 is authorized, 535 is not.
-                    key = Convert.ToBase64String(Encoding.UTF8.GetBytes(key));
-                    Send(reader, writer, out response, $"{key}\r\n", "235");
+                    // Base64-encode the api secret. 235 is authorized, 535 is not.
+                    secret = Convert.ToBase64String(Encoding.UTF8.GetBytes(secret));
+                    Send(reader, writer, out response, $"{secret}\r\n", "235");
                 }
             }
             catch (InvalidOperationException e)

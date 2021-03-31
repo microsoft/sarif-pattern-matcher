@@ -51,7 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             fingerprint = default;
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("key", out string key))
+                !groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
@@ -59,7 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint = new Fingerprint
             {
                 Id = id,
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.Slack),
             };
 
@@ -71,13 +71,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref Dictionary<string, string> options)
         {
             string id = fingerprint.Id;
-            string key = fingerprint.Key;
+            string secret = fingerprint.Secret;
             string uri = fingerprint.Uri;
 
             // This will let previous fingerprint to keep working.
             if (string.IsNullOrEmpty(uri))
             {
-                uri = $"https://hooks.slack.com/services/{id}/{key}";
+                uri = $"https://hooks.slack.com/services/{id}/{secret}";
             }
 
             using HttpClient client = CreateHttpClient();

@@ -51,7 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             fingerprint = new Fingerprint
             {
-                Key = matchedPattern,
+                Secret = matchedPattern,
                 Platform = nameof(AssetPlatform.Google),
             };
 
@@ -72,7 +72,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             const string EnableBilling = "RequestDenied: You must enable Billing on the Google Cloud Project at https://console.cloud.google.com/project/_/billing/enable Learn more at https://developers.google.com/maps/gmp-get-started";
             const string Deleted = "RequestDenied: This API project was not found. This API project may have been deleted or may not be authorized to use this API. You may need to enable the API under APIs in the console";
 
-            string apiKey = fingerprint.Key;
+            string apiKey = fingerprint.Secret;
 
             var request = new DirectionsRequest
             {

@@ -39,14 +39,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             fingerprint = default;
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("key", out string key))
+                !groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
             // It is highly likely we do not have a key if we can't
             // find at least one letter and digit within the pattern.
-            if (!ContainsDigitAndChar(key))
+            if (!ContainsDigitAndChar(secret))
             {
                 return ValidationState.NoMatch;
             }
@@ -54,7 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint = new Fingerprint()
             {
                 Id = id,
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.GitHub),
             };
 

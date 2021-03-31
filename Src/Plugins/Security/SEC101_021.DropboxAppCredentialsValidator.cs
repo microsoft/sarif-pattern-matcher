@@ -51,13 +51,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("key", out string key) ||
+            if (!groups.TryGetNonEmptyValue("id", out string id) ||
                 !groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
-            if (!ContainsDigitAndChar(key) ||
+            if (!ContainsDigitAndChar(id) ||
                 !ContainsDigitAndChar(secret))
             {
                 return ValidationState.NoMatch;
@@ -65,8 +65,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             fingerprint = new Fingerprint()
             {
-                Id = key,
-                Key = secret,
+                Id = id,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.Dropbox),
             };
 
@@ -76,8 +76,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             string id = fingerprint.Id;
-            string key = fingerprint.Key;
-            string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, key)));
+            string secret = fingerprint.Secret;
+            string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
             using HttpClient httpClient = CreateHttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
             httpClient.DefaultRequestHeaders.Add("Dropbox-API-Arg", @"{""resource"": {"".tag"": ""path"",""path"": ""/a.docx""},""format"": ""jpeg"",""size"": ""w64h64"",""mode"": ""strict""}");

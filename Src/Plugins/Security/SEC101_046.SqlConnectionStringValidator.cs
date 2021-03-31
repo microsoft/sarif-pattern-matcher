@@ -121,7 +121,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Host = host,
                 Resource = database,
                 Account = account,
-                Password = password,
+                Secret = password,
                 Platform = SharedUtilities.GetDatabasePlatformFromHost(host, out _),
             };
 
@@ -134,7 +134,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string host = fingerprint.Host;
             string account = fingerprint.Account;
-            string password = fingerprint.Password;
+            string password = fingerprint.Secret;
             string database = fingerprint.Resource;
 
             if (DomainFilteringHelper.LocalhostList.Contains(host))

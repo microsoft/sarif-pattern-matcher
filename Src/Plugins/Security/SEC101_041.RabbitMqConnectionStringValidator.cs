@@ -62,7 +62,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint = new Fingerprint()
             {
                 Account = account,
-                Password = password,
+                Secret = password,
                 Host = host,
                 Resource = resource,
             };
@@ -74,7 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string host = fingerprint.Host;
             string account = fingerprint.Account;
-            string password = fingerprint.Password;
+            string password = fingerprint.Secret;
             string resource = fingerprint.Resource;
 
             if (DomainFilteringHelper.LocalhostList.Contains(host))

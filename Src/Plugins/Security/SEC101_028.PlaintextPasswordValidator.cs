@@ -45,7 +45,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             fingerprint = new Fingerprint()
             {
-                Password = password,
+                Secret = password,
             };
 
             return ValidationState.AuthorizedWarning;

@@ -14,21 +14,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
     public struct Fingerprint
     {
         public const string IdKeyName = "id";
-        public const string KeyKeyName = "key";
         public const string UriKeyName = "uri";
-        public const string HmacKeyName = "hmac";
         public const string HostKeyName = "host";
         public const string PortKeyName = "port";
-        public const string AccountKeyName = "acct";
-        public const string PasswordKeyName = "pwd";
-        public const string KeyNameKeyName = "keyName";
+        public const string AccountKeyName = "account";
+        public const string SecretKeyName = "secret";
         public const string PlatformKeyName = "platform";
         public const string ResourceKeyName = "resource";
-        public const string SasTokenKeyName = "sasToken";
         public const string ThumbprintKeyName = "thumbprint";
-        public const string PersonalAccessTokenKeyName = "pat";
-        public const string SymmetricKey128BitKeyName = "skey/128";
-        public const string SymmetricKey256BitKeyName = "skey/256";
 
         private const char RightBracketReplacement = '\t';
         private const string HashKey = "7B2FD4B8B55B49428DBFB22C9E61D817";
@@ -48,21 +41,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         private static readonly HashSet<string> s_secretKeys =
             new HashSet<string>(new string[]
             {
-                KeyKeyName,
-                HmacKeyName,
-                PasswordKeyName,
-                SasTokenKeyName,
-                PersonalAccessTokenKeyName,
-                SymmetricKey128BitKeyName,
-                SymmetricKey256BitKeyName,
+                SecretKeyName,
             });
 
         public Fingerprint(string fingerprintText, bool validate = true)
         {
             SecretSymbolSetCount = 0;
 
-            Account = Hmac = Host = Port = Id = Key = KeyName = Password = Uri = Platform = Resource = null;
-            SasToken = PersonalAccessToken = SymmetricKey128Bit = SymmetricKey256Bit = Thumbprint = null;
+            Id = Host = Uri = Port = Account = Secret = Platform = Resource = Thumbprint = null;
+
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
 
@@ -101,11 +88,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string Id { get; set; }
 
-        public string Key { get; set; }
+        public string Secret { get; set; }
 
         public string Uri { get; set; }
-
-        public string Hmac { get; set; }
 
         public string Host { get; set; }
 
@@ -113,23 +98,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string Account { get; set; }
 
-        public string KeyName { get; set; }
-
-        public string Password { get; set; }
-
-        public string SasToken { get; set; }
-
         public string Platform { get; set; }
 
         public string Resource { get; set; }
 
         public string Thumbprint { get; set; }
-
-        public string SymmetricKey128Bit { get; set; }
-
-        public string SymmetricKey256Bit { get; set; }
-
-        public string PersonalAccessToken { get; set; }
 
         /// <summary>
         /// Gets or sets a value that is the count of the valid symbols that
@@ -207,36 +180,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             int symbolSetCount = Base64EncodingSymbolSet.Length;
 
-            if (!string.IsNullOrEmpty(this.SymmetricKey128Bit))
-            {
-                return ShannonEntropy(this.SymmetricKey128Bit, symbolSetCount) * 100;
-            }
-
-            if (!string.IsNullOrEmpty(this.SymmetricKey256Bit))
-            {
-                return ShannonEntropy(this.SymmetricKey256Bit, symbolSetCount) * 100;
-            }
-
             symbolSetCount = SecretSymbolSetCount > 0 ? SecretSymbolSetCount : 128;
 
-            if (!string.IsNullOrEmpty(this.Key))
+            if (!string.IsNullOrEmpty(this.Secret))
             {
-                return ShannonEntropy(this.Key, symbolSetCount) * 100;
+                return ShannonEntropy(this.Secret, symbolSetCount) * 100;
             }
 
-            if (!string.IsNullOrEmpty(this.Hmac))
+            if (!string.IsNullOrEmpty(this.Secret))
             {
-                return ShannonEntropy(this.Hmac, symbolSetCount) * 100;
-            }
-
-            if (!string.IsNullOrEmpty(this.Password))
-            {
-                return ShannonEntropy(this.Password, symbolSetCount) * 100;
-            }
-
-            if (!string.IsNullOrEmpty(this.PersonalAccessToken))
-            {
-                return ShannonEntropy(this.PersonalAccessToken, symbolSetCount) * 100;
+                return ShannonEntropy(this.Secret, symbolSetCount) * 100;
             }
 
             return -1.0;
@@ -249,21 +202,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             switch (keyName)
             {
                 case IdKeyName: { Id = value; break; }
-                case KeyKeyName: { Key = value; break; }
+                case SecretKeyName: { Secret = value; break; }
                 case UriKeyName: { Uri = value; break; }
-                case HmacKeyName: { Hmac = value; break; }
                 case HostKeyName: { Host = value; break; }
                 case PortKeyName: { Port = value; break; }
                 case AccountKeyName: { Account = value; break; }
-                case KeyNameKeyName: { KeyName = value; break; }
-                case PasswordKeyName: { Password = value; break; }
-                case SasTokenKeyName: { SasToken = value; break; }
                 case PlatformKeyName: { Platform = value; break; }
                 case ResourceKeyName: { Resource = value; break; }
                 case ThumbprintKeyName: { Thumbprint = value; break; }
-                case SymmetricKey128BitKeyName: { SymmetricKey128Bit = value; break; }
-                case SymmetricKey256BitKeyName: { SymmetricKey256Bit = value; break; }
-                case PersonalAccessTokenKeyName: { PersonalAccessToken = value; break; }
                 default: throw new ArgumentOutOfRangeException(nameof(keyName));
             }
         }
@@ -279,22 +225,82 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             return obj is Fingerprint equatable &&
                 Id == equatable.Id &&
-                Key == equatable.Key &&
+                Secret == equatable.Secret &&
                 Uri == equatable.Uri &&
-                Hmac == equatable.Hmac &&
                 Host == equatable.Host &&
                 Port == equatable.Port &&
                 Account == equatable.Account &&
-                KeyName == equatable.KeyName &&
-                Password == equatable.Password &&
-                SasToken == equatable.SasToken &&
+                Secret == equatable.Secret &&
+                Secret == equatable.Secret &&
                 Platform == equatable.Platform &&
                 Resource == equatable.Resource &&
-                Thumbprint == equatable.Thumbprint &&
-                SymmetricKey128Bit == equatable.SymmetricKey128Bit &&
-                SymmetricKey256Bit == equatable.SymmetricKey256Bit &&
-                PersonalAccessToken == equatable.PersonalAccessToken;
+                Thumbprint == equatable.Thumbprint;
         }
+
+        public override int GetHashCode()
+        {
+            int result = 17;
+            unchecked
+            {
+                if (this.Id != null)
+                {
+                    result = (result * 31) + this.Id.GetHashCode();
+                }
+
+                if (this.Secret != null)
+                {
+                    result = (result * 31) + this.Secret.GetHashCode();
+                }
+
+                if (this.Uri != null)
+                {
+                    result = (result * 31) + this.Uri.GetHashCode();
+                }
+
+                if (this.Host != null)
+                {
+                    result = (result * 31) + this.Host.GetHashCode();
+                }
+
+                if (this.Port != null)
+                {
+                    result = (result * 31) + this.Port.GetHashCode();
+                }
+
+                if (this.Account != null)
+                {
+                    result = (result * 31) + this.Account.GetHashCode();
+                }
+
+                if (this.Secret != null)
+                {
+                    result = (result * 31) + this.Secret.GetHashCode();
+                }
+
+                if (this.Secret != null)
+                {
+                    result = (result * 31) + this.Secret.GetHashCode();
+                }
+
+                if (this.Platform != null)
+                {
+                    result = (result * 31) + this.Platform.GetHashCode();
+                }
+
+                if (this.Resource != null)
+                {
+                    result = (result * 31) + this.Resource.GetHashCode();
+                }
+
+                if (this.Thumbprint != null)
+                {
+                    result = (result * 31) + this.Thumbprint.GetHashCode();
+                }
+            }
+
+            return result;
+        }
+
 
         internal static string ToString(Fingerprint f, ISet<string> denyList)
         {
@@ -308,11 +314,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 components.Add(AccountKeyName, $"[{AccountKeyName}={f.Account.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(f.Hmac) && !denyList.Contains(HmacKeyName))
-            {
-                components.Add(HmacKeyName, $"[{HmacKeyName}={f.Hmac.Trim()}]");
-            }
-
             if (!string.IsNullOrEmpty(f.Host) && !denyList.Contains(HostKeyName))
             {
                 components.Add(HostKeyName, $"[{HostKeyName}={f.Host.Trim()}]");
@@ -323,24 +324,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 components.Add(IdKeyName, $"[{IdKeyName}={f.Id.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(f.Key) && !denyList.Contains(KeyKeyName))
+            if (!string.IsNullOrEmpty(f.Secret) && !denyList.Contains(SecretKeyName))
             {
-                components.Add(KeyKeyName, $"[{KeyKeyName}={f.Key.Trim()}]");
-            }
-
-            if (!string.IsNullOrEmpty(f.KeyName) && !denyList.Contains(KeyNameKeyName))
-            {
-                components.Add(KeyNameKeyName, $"[{KeyNameKeyName}={f.KeyName.Trim()}]");
-            }
-
-            if (!string.IsNullOrEmpty(f.Password) && !denyList.Contains(PasswordKeyName))
-            {
-                components.Add(PasswordKeyName, $"[{PasswordKeyName}={f.Password.Trim()}]");
-            }
-
-            if (!string.IsNullOrEmpty(f.PersonalAccessToken) && !denyList.Contains(PersonalAccessTokenKeyName))
-            {
-                components.Add(PersonalAccessTokenKeyName, $"[{PersonalAccessTokenKeyName}={f.PersonalAccessToken.Trim()}]");
+                components.Add(SecretKeyName, $"[{SecretKeyName}={f.Secret.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Platform) && !denyList.Contains(PlatformKeyName))
@@ -356,21 +342,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             if (!string.IsNullOrEmpty(f.Resource) && !denyList.Contains(ResourceKeyName))
             {
                 components.Add(ResourceKeyName, $"[{ResourceKeyName}={f.Resource.Trim()}]");
-            }
-
-            if (!string.IsNullOrEmpty(f.SasToken) && !denyList.Contains(SasTokenKeyName))
-            {
-                components.Add(SasTokenKeyName, $"[{SasTokenKeyName}={f.SasToken.Trim()}]");
-            }
-
-            if (!string.IsNullOrEmpty(f.SymmetricKey128Bit) && !denyList.Contains(SymmetricKey128BitKeyName))
-            {
-                components.Add(SymmetricKey128BitKeyName, $"[{SymmetricKey128BitKeyName}={f.SymmetricKey128Bit.Trim()}]");
-            }
-
-            if (!string.IsNullOrEmpty(f.SymmetricKey256Bit) && !denyList.Contains(SymmetricKey256BitKeyName))
-            {
-                components.Add(SymmetricKey256BitKeyName, $"[{SymmetricKey256BitKeyName}={f.SymmetricKey256Bit.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Thumbprint) && !denyList.Contains(ThumbprintKeyName))

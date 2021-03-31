@@ -207,11 +207,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 int index = line.IndexOf('=');
                 if (index == -1) { ThrowInvalidSharedStringsEntry(line); }
 
-                string key = line.Substring(0, index);
-                if (!key.StartsWith("$")) { ThrowInvalidSharedStringsEntry(line); }
+                string secret = line.Substring(0, index);
+                if (!secret.StartsWith("$")) { ThrowInvalidSharedStringsEntry(line); }
 
-                string value = line.Substring(key.Length + "=".Length);
-                result[key] = value;
+                string value = line.Substring(secret.Length + "=".Length);
+                result[secret] = value;
             }
 
             return result;
@@ -294,9 +294,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     continue;
                 }
 
-                foreach (string key in sharedStrings.Keys)
+                foreach (string secret in sharedStrings.Keys)
                 {
-                    text = text.Replace(key, sharedStrings[key]);
+                    text = text.Replace(secret, sharedStrings[secret]);
                 }
             }
 
@@ -307,7 +307,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             throw new InvalidOperationException(
                 $"Malformed shared strings entry. Every shared string should consist of a " +
-                $"key name (prefixed with $) followed by an equals sign and the string value " +
+                $"secret name (prefixed with $) followed by an equals sign and the string value " +
                 $"(e.g., $MyKey=MyValue). The malformed line was: {line}");
         }
     }

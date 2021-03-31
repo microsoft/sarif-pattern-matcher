@@ -52,14 +52,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("key", out string key))
+            if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint
             {
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.Npm),
             };
 
@@ -70,14 +70,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            string key = fingerprint.Key;
+            string secret = fingerprint.Secret;
 
             try
             {
                 using HttpClient client = CreateHttpClient();
 
                 client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", key);
+                    new AuthenticationHeaderValue("Bearer", secret);
 
                 using HttpResponseMessage response = client
                     .GetAsync($"https://registry.npmjs.com/-/npm/v1/tokens", HttpCompletionOption.ResponseHeadersRead)
@@ -88,7 +88,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
-                        return CheckInformation(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), key, ref message);
+                        return CheckInformation(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), secret, ref message);
                     }
 
                     case HttpStatusCode.Unauthorized:
@@ -112,14 +112,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return ValidationState.Unknown;
         }
 
-        private static ValidationState CheckInformation(string content, string key, ref string message)
+        private static ValidationState CheckInformation(string content, string secret, ref string message)
         {
             TokensRoot tokensRoot = JsonConvert.DeserializeObject<TokensRoot>(content);
             if (tokensRoot?.Tokens?.Count > 0)
             {
                 foreach (Object obj in tokensRoot.Tokens)
                 {
-                    if (!key.Contains(obj.Token))
+                    if (!secret.Contains(obj.Token))
                     {
                         continue;
                     }
@@ -149,7 +149,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             [JsonProperty("token")]
             public string Token { get; set; }
 
-            [JsonProperty("key")]
+            [JsonProperty("secret")]
             public string Key { get; set; }
 
             [JsonProperty("cidr_whitelist")]

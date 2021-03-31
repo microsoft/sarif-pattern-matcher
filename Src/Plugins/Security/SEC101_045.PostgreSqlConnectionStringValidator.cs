@@ -91,7 +91,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Port = port,
                 Resource = database,
                 Account = account,
-                Password = password,
+                Secret = password,
             };
 
             return ValidationState.Unknown;
@@ -104,7 +104,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string host = fingerprint.Host;
             string port = fingerprint.Port;
             string account = fingerprint.Account;
-            string password = fingerprint.Password;
+            string password = fingerprint.Secret;
             string database = fingerprint.Resource;
 
             if (DomainFilteringHelper.LocalhostList.Contains(host))
