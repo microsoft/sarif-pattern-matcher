@@ -19,25 +19,17 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<SpamFiles Include="$(MSBuildThisFileDirectory)*.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="SEC105.UpdateSalToCurrentVersion.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <SpamFiles Remove="SEC105.UpdateSalToCurrentVersion.json" />
-  </ItemGroup>
 	
-  <Target Name="CopyingSpam" AfterTargets="Build">
-	<Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\SalModernization\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
-	<Copy SourceFiles="SalModernization.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\SalModernization\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
-  </Target>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
+	</ItemGroup>
+	
+	
+	<Target Name="CopyingSpam" AfterTargets="Build">
+		<ItemGroup>
+			<SpamFiles Include="SEC105.UpdateSalToCurrentVersion.json" />
+		</ItemGroup>
+		<Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\SalModernization\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="SalModernization.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\SalModernization\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+	</Target>
 </Project>
