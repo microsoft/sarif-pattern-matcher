@@ -19,10 +19,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void HttpAuthorizationRequestHeaderValidator_Test()
         {
-            string fingerprintText = string.Format("[host={0}][key={1}][resource={2}]", TestHost, TestKey, TestResource);
+            string fingerprintText = string.Format("[host={0}][resource={1}][secret={2}]", TestHost, TestResource, TestKey);
             var fingerprint = new Fingerprint(fingerprintText);
             string message = null;
-            Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
+            var keyValuePairs = new Dictionary<string, string>();
 
             ValidationState actualValidationState = HttpAuthorizationRequestHeaderValidator.IsValidDynamic(ref fingerprint, ref message, ref keyValuePairs);
             Assert.Equal(ExpectedValidationState, actualValidationState);

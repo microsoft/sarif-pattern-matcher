@@ -49,14 +49,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetValue("key", out string key))
+            if (!groups.TryGetValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint
             {
-                PersonalAccessToken = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.Square),
             };
 
@@ -67,7 +67,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            string pat = fingerprint.PersonalAccessToken;
+            string pat = fingerprint.Secret;
 
             try
             {

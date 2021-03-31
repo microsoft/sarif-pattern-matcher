@@ -210,8 +210,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string key = line.Substring(0, index);
                 if (!key.StartsWith("$")) { ThrowInvalidSharedStringsEntry(line); }
 
-                string value = line.Substring(key.Length + "=".Length);
-                result[key] = value;
+                result[key] = line.Substring(key.Length + "=".Length);
             }
 
             return result;

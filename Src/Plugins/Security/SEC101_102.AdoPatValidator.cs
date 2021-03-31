@@ -102,7 +102,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 fingerprint = new Fingerprint()
                 {
-                    PersonalAccessToken = pat,
+                    Secret = pat,
                     Platform = nameof(AssetPlatform.AzureDevOps),
                 };
             }

@@ -96,6 +96,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     (ValidationState)isValidStaticMethodInfo.Invoke(
                         obj: null, arguments);
             }
+            catch (TargetInvocationException e)
+            {
+                throw e.InnerException;
+            }
             finally
             {
                 Environment.CurrentDirectory = currentDirectory;
@@ -137,6 +141,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     (ValidationState)isValidDynamicMethodInfo.Invoke(
                         obj: null, arguments);
             }
+            catch (TargetInvocationException e)
+            {
+                throw e.InnerException;
+            }
             finally
             {
                 Environment.CurrentDirectory = currentDirectory;
@@ -166,6 +174,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
 
                 shouldCacheMethodInfo.Invoke(obj: null, arguments);
+            }
+            catch (TargetInvocationException e)
+            {
+                throw e.InnerException;
             }
             finally
             {

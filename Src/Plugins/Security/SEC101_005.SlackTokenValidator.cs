@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             fingerprint = new Fingerprint
             {
-                Key = matchedPattern,
+                Secret = matchedPattern,
                 Platform = nameof(AssetPlatform.Slack),
             };
 
@@ -60,7 +60,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             var client = new WebClient();
             var data = new NameValueCollection();
 
-            data["token"] = fingerprint.Key;
+            data["token"] = fingerprint.Secret;
 
             byte[] bytes = client.UploadValues("https://slack.com/api/auth.test",
                                                   "POST",

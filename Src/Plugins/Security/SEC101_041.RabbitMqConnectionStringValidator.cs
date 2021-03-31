@@ -50,8 +50,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             fingerprint = default;
             if (!groups.TryGetNonEmptyValue("host", out string host) ||
+                !groups.TryGetNonEmptyValue("secret", out string secret) ||
                 !groups.TryGetNonEmptyValue("account", out string account) ||
-                !groups.TryGetNonEmptyValue("password", out string password) ||
                 !groups.TryGetNonEmptyValue("resource", out string resource))
             {
                 return ValidationState.NoMatch;
@@ -61,9 +61,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             fingerprint = new Fingerprint()
             {
-                Account = account,
-                Password = password,
                 Host = host,
+                Secret = secret,
+                Account = account,
                 Resource = resource,
             };
 
@@ -74,7 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string host = fingerprint.Host;
             string account = fingerprint.Account;
-            string password = fingerprint.Password;
+            string password = fingerprint.Secret;
             string resource = fingerprint.Resource;
 
             if (DomainFilteringHelper.LocalhostList.Contains(host))
