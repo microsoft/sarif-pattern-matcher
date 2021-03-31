@@ -21,60 +21,60 @@
   $BinaryFiles=(?i)\.(bmp|dll|exe|gif|jpe?g|lock|pack|png|psd|tar\.gz|tiff?|ttf|wmf|xcf|zip)$
   $SourceFiles=(?i)\.(azure|bat|c|cmd|config|cpp|cs|cscfg|definitions|dtsx|h|hxx|hpp|ini|java|jsx?|json|keys|kt|loadtest|m|md|php|properties|ps1|psm1|pubxml|py|resx|sample|sql|ste|swift|test|tsx?|txt|waz|xml)$
 
-# $FacebookAppCredentials=(?si)(((facebook|fb)(.{0,20})?[`'"\s>](?<id>[0-9]{13,17})[^0-9].{1,500}?)|((facebook|fb)(.{0,20})?[`'"\s>](?<key>[0-9a-f]{32})([^0-9a-f]?)).{1,500}?){2}
+# $FacebookAppCredentials=(?si)(((facebook|fb)(.{0,20})?[`'"\s>](?<id>[0-9]{13,17})[^0-9].{1,500}?)|((facebook|fb)(.{0,20})?[`'"\s>](?<secret>[0-9a-f]{32})([^0-9a-f]?)).{1,500}?){2}
 
-  $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?<host>(http|ftp|https):\/\/[\w_-]+(?:(?:\.[\w_-]+)+))(?<resource>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= "']+(basic)[\s\r\n]{0,10}(?<key>[a-z0-9\/+_.=]{10,})
-  $SEC101/002.GoogleOAuthCredentials=(?s)\b(?<id>[0-9]{12}\-[0-9a-z]{32})\.apps\.googleusercontent\.com.{1,500}?\b(?i)(?<key>[0-9a-z\-]{24})
+  $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?<host>(http|ftp|https):\/\/[\w_-]+(?:(?:\.[\w_-]+)+))(?<resource>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= "']+(basic)[\s\r\n]{0,10}(?<secret>[a-z0-9\/+_.=]{10,})
+  $SEC101/002.GoogleOAuthCredentials=(?s)\b(?<id>[0-9]{12}\-[0-9a-z]{32})\.apps\.googleusercontent\.com.{1,500}?\b(?i)(?<secret>[0-9a-z\-]{24})
   $SEC101/003.GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
-  $SEC101/004.FacebookAppCredentials=(?si)facebook.{1,50}\b(?<id>[0-9]{15}).{1,500}?\b(?<key>[0-9a-f]{32})
+  $SEC101/004.FacebookAppCredentials=(?si)facebook.{1,50}\b(?<id>[0-9]{15}).{1,500}?\b(?<secret>[0-9a-f]{32})
   $SEC101/005.SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
-  $SEC101/006.GitHubPat=(?si)(?<refine>github.{0,50}[^0-9a-z](?<key>[0-9a-z]{40}))([^0-9a-z]|$)
-  $SEC101/007.GitHubAppCredentials=(?s)((\b(?<id>Iv1\.[0-9a-z]{16}).{1,50}?)|(\b(?i)(?<key>[0-9a-z]{35,40})\b.{0,50}?)){2}
-  $SEC101/008.AwsCredentials=(?s)\b(?<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}).{1,500}?\b(?i)(?<key>[0-9a-z\/+]{40})
-  $SEC101/009.LinkedInCredentials=(?si)linkedin(.{0,50})?\b(?-i)(?<id>[0-9a-z]{14})\b.{0,50}?\b(?i)(?<key>[0-9a-z]{16})\b
-  $SEC101/010.SquarePat=(?si)(?<refine>square.{0,50}[^0-9a-z](?<key>(?-i)EAAAE[\w\-]{59}))([^0-9a-z]|$)
-  $SEC101/011.SquareCredentials=(?s)((\b(?<id>sq0idp\-[\w\-]{22}).{1,50}?)|(\b(?<key>sq0csp-(?i)[0-9a-z\-_]{43}).{0,50}?)){2}
-  $SEC101/012.SlackWebhook=(?i)https:\/\/hooks\.slack\.com\/services\/(?<id>T[0-9a-z_]{8,10})\/(?<key>B[0-9a-z_]{8,10}\/[0-9a-z_]{24})
-  $SEC101/013/PrivateKeyBlob.CryptographicPrivateKey=(?i)(^|[^0-9a-z+\/=])(?<key>[0-9a-z+\/=]{412})([^0-9a-z+\/=]|$)
-  $SEC101/013/RsaKeyPair.CryptographicPrivateKey=(?is)<RSAKeyPair>.+?<D>(?<key>.+?)<\/D>.+?<\/RSAKeyPair>
-  $SEC101/013/PemCer.CryptographicPrivateKey=(?si)-{5}BEGIN CERTIFICATE-{5}\n?(?<key>[^:]*?)-{5}END CERTIFICATE-{5}
-  $SEC101/013/Putty.CryptographicPrivateKey=(?is)PuTTY-User-Key-File-2.+?Private-Lines:\s*[0-9]+\s*(?<key>.+?)Private-MAC:\s[0-9a-z]+([^0-9a-d]|$)
-  $SEC101/013/Pem.CryptographicPrivateKey=(?si)-{5}BEGIN (DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (KEY BLOCK|KEY)-{5}.*?(VERSION: [^\n]+\n)*\n(?<key>[^:]*?)-{5}END (DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (KEY BLOCK|KEY)-{5}
+  $SEC101/006.GitHubPat=(?si)(?<refine>github.{0,50}[^0-9a-z](?<secret>[0-9a-z]{40}))([^0-9a-z]|$)
+  $SEC101/007.GitHubAppCredentials=(?s)((\b(?<id>Iv1\.[0-9a-z]{16}).{1,50}?)|(\b(?i)(?<secret>[0-9a-z]{35,40})\b.{0,50}?)){2}
+  $SEC101/008.AwsCredentials=(?s)\b(?<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}).{1,500}?\b(?i)(?<secret>[0-9a-z\/+]{40})
+  $SEC101/009.LinkedInCredentials=(?si)linkedin(.{0,50})?\b(?-i)(?<id>[0-9a-z]{14})\b.{0,50}?\b(?i)(?<secret>[0-9a-z]{16})\b
+  $SEC101/010.SquarePat=(?si)(?<refine>square.{0,50}[^0-9a-z](?<secret>(?-i)EAAAE[\w\-]{59}))([^0-9a-z]|$)
+  $SEC101/011.SquareCredentials=(?s)((\b(?<id>sq0idp\-[\w\-]{22}).{1,50}?)|(\b(?<secret>sq0csp-(?i)[0-9a-z\-_]{43}).{0,50}?)){2}
+  $SEC101/012.SlackWebhook=(?i)https:\/\/hooks\.slack\.com\/services\/(?<id>T[0-9a-z_]{8,10})\/(?<secret>B[0-9a-z_]{8,10}\/[0-9a-z_]{24})
+  $SEC101/013/PrivateKeyBlob.CryptographicPrivateKey=(?i)(^|[^0-9a-z+\/=])(?<secret>[0-9a-z+\/=]{412})([^0-9a-z+\/=]|$)
+  $SEC101/013/RsaKeyPair.CryptographicPrivateKey=(?is)<RSAKeyPair>.+?<D>(?<secret>.+?)<\/D>.+?<\/RSAKeyPair>
+  $SEC101/013/PemCer.CryptographicPrivateKey=(?si)-{5}BEGIN CERTIFICATE-{5}\n?(?<secret>[^:]*?)-{5}END CERTIFICATE-{5}
+  $SEC101/013/Putty.CryptographicPrivateKey=(?is)PuTTY-User-Key-File-2.+?Private-Lines:\s*[0-9]+\s*(?<secret>.+?)Private-MAC:\s[0-9a-z]+([^0-9a-d]|$)
+  $SEC101/013/Pem.CryptographicPrivateKey=(?si)-{5}BEGIN (DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (KEY BLOCK|KEY)-{5}.*?(VERSION: [^\n]+\n)*\n(?<secret>[^:]*?)-{5}END (DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (KEY BLOCK|KEY)-{5}
   $SEC101/014.FacebookAccessToken=\b(?<refine>EAACEdEose0cBA(?i)[0-9a-z]+)
   $SEC101/015.AkamaiCredentials=(?si)(?<host>https:\/\/[\w\-\.]+\.akamaiapis\.net).{0,150}((client_token.{0,10}\b(?<id>akab[\w\-]+).{0,50})|(access_token.{0,10}\b(?<resource>akab[\w\-]+).{0,200})|((client_secret).{0,10}\b(?<secret>[a-z0-9\/\\+]{43}=))){3}
-  $SEC101/016.StripeApiKey=\b(?<refine>(?<key>(?:r|s)k_(live|test)_(?i)[0-9a-z]{24,99}))([^0-9a-z]|$)
-  $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?<refine>(?<key>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}))[^0-9A-Za-z]
-  $SEC101/018.TwilioCredentials=(?si)twilio.{1,50}\b(?<id>AC[0-9a-z]{32}).{1,500}?\b(?<key>[0-9a-f]{32})
+  $SEC101/016.StripeApiKey=\b(?<refine>(?<secret>(?:r|s)k_(live|test)_(?i)[0-9a-z]{24,99}))([^0-9a-z]|$)
+  $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?<refine>(?<secret>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}))[^0-9A-Za-z]
+  $SEC101/018.TwilioCredentials=(?si)twilio.{1,50}\b(?<id>AC[0-9a-z]{32}).{1,500}?\b(?<secret>[0-9a-f]{32})
   $SEC101/019.PicaticApiKey=\b(?<refine>sk_(live|test)_[0-9a-z]{32})(?i)([^0-9a-z]|$)
   $SEC101/020.DropboxAccessTokenNoExpiration=(?si)dropbox.{1,50}[^0-9a-z](?<refine>[0-9a-z_-]{64})([^0-9a-z]|$)
   $SEC101/020.DropboxAccessTokenShortExpiration=(?si)dropbox.{1,50}\b(?<refine>sl\.(?i)[0-9a-z-_]{135,139})(?i)([^0-9a-z]|$)
-  $SEC101/021.DropboxAppCredentials=(?si)dropbox.{0,50}key.{0,10}[^0-9a-z](?<key>(?-i)[0-9a-z]{15})([^0-9a-z]|$).{0,50}secret.{0,10}[^0-9a-z](?<secret>(?-i)[0-9a-z]{15})([^0-9a-z]|$)
-  $SEC101/022.PayPalBraintreeAccessToken=access_token\$production\$(?<refine>(?<key>[0-9a-z]{16}\$[0-9a-f]{32}))
+  $SEC101/021.DropboxAppCredentials=(?si)dropbox.{0,50}key.{0,10}[^0-9a-z](?<id>(?-i)[0-9a-z]{15})([^0-9a-z]|$).{0,50}secret.{0,10}[^0-9a-z](?<secret>(?-i)[0-9a-z]{15})([^0-9a-z]|$)
+  $SEC101/022.PayPalBraintreeAccessToken=access_token\$production\$(?<refine>(?<secret>[0-9a-z]{16}\$[0-9a-f]{32}))
   $SEC101/023.AmazonMwsAuthToken=\b(?<refine>amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)
-  $SEC101/024.TwilioApiKey=\b(?<refine>(?<key>SK(?i)[0-9a-f]{32}))([^0-9a-f]|$)
-  $SEC101/025.SendGridApiKey=\b(?<refine>(?<key>SG\.(?i)[0-9a-z\-_]{22}\.(?i)[0-9a-z\-_]{43}))([^0-9a-f]|$)
-  $SEC101/026.MailgunApiKey=(?is)((^|[^0-9a-z\-])(?<key>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8}).{0,50}?|[^0-9a-z](?<account>[0-9a-z]+?\.mailgun\.org).{0,50}?){2}
-  $SEC101/027.MailChimpApiKey=\b(?<refine>(?<key>[0-9a-f]{32}-us[0-9]{12}))
-  $SEC101/028.PlaintextPassword=(?i)ConvertTo-SecureString\s*(-[S]tring)?\s*["'](?<password>[^"')(]*)["']
-  $SEC101/031.NuGetApiKey=\b(?<refine>(?<key>oy2[0-9a-z]{43}))(^[0-9a-z]|$)
-  $SEC101/041.RabbitMqConnectionString=(?i)(?<refine>amqps?:\/\/(?<account>[^:]+):(?<password>[^@]+)@(?<host>[\w_\-\:]+)\/(?<resource>[\w]+))([^0-9a-z]|$)
+  $SEC101/024.TwilioApiKey=\b(?<refine>(?<secret>SK(?i)[0-9a-f]{32}))([^0-9a-f]|$)
+  $SEC101/025.SendGridApiKey=\b(?<refine>(?<secret>SG\.(?i)[0-9a-z\-_]{22}\.(?i)[0-9a-z\-_]{43}))([^0-9a-f]|$)
+  $SEC101/026.MailgunApiKey=(?is)((^|[^0-9a-z\-])(?<secret>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8}).{0,50}?|[^0-9a-z](?<account>[0-9a-z]+?\.mailgun\.org).{0,50}?){2}
+  $SEC101/027.MailChimpApiKey=\b(?<refine>(?<secret>[0-9a-f]{32}-us[0-9]{12}))
+  $SEC101/028.PlaintextPassword=(?i)ConvertTo-SecureString\s*(-[S]tring)?\s*["'](?<secret>[^"')(]*)["']
+  $SEC101/031.NuGetApiKey=\b(?<refine>(?<secret>oy2[0-9a-z]{43}))(^[0-9a-z]|$)
+  $SEC101/041.RabbitMqConnectionString=(?i)(?<refine>amqps?:\/\/(?<account>[^:]+):(?<secret>[^@]+)@(?<host>[\w_\-\:]+)\/(?<resource>[\w]+))([^0-9a-z]|$)
   $SEC101/042.DynatraceToken=\b(?<refine>dt0(?i)[a-z]{1}[0-9]{2}\.[0-9A-Z]{24}\.[0-9A-Z]{64})
   $SEC101/043.ShopifySharedSecret=\b(?<refine>shpss_(?i)[0-9a-f]{32})
   $SEC101/044.ShopifyAccessToken=\b(?<refine>(shpat|shpca|shppa)_(?i)[0-9a-f]{32})
-  $SEC101/045.PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<account>[^,;"<\s]+)|(password|pwd)\s*=\s*(?<password>[^,;"<\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+)))?
+  $SEC101/045.PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<account>[^,;"<\s]+)|(password|pwd)\s*=\s*(?<secret>[^,;"<\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+)))?
   $SEC101/046.SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*[^;"<]{0,50}|(initial catalog|database)\s*=\s*[^;"<]{0,50}|(user id|uid)\s*=\s*[^;"<]{0,50}|(password|pwd)\s*=\s*[^;"<]{0,50}).+?){4}
-  $SEC101/046.SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;"<]+);(((database\s*=\s*(?<database>[^;"<]{1,128}))|(user\s*=\s*(?<account>[^@]+)@[^;"<]+)|(password\s*=\s*(?<password>[^;"<]+))).{1,50}?){3}
-  $SEC101/046.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;"<]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<account>[^"]+)",\s*"(?<password>[^"]+)"
-  $SEC101/047.MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<account>[a-z\@\-]{1,120})(?i))|(Pwd=(?<password>[^;"]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
-  $SEC101/047.MySqlConnectionStringPlainJdbc=(jdbc:mysql:\/\/(?<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?<url>[^,(]+),\s*"(?<account>[\w@-]{1,200})",\s*"(?<password>[^"';<>=]{7,200})"
-  $SEC101/048.CloudantConnectionStringPython=(?is)cloudant\s*\(\s*"(?<account>[\w-]+)"\s*\,\s*"(?<password>[\w]{64})"\s*\,\s*.{0,200}url="(?<uri>https:\/\/[\w.-]+\.cloudant.com)
+  $SEC101/046.SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;"<]+);(((database\s*=\s*(?<database>[^;"<]{1,128}))|(user\s*=\s*(?<account>[^@]+)@[^;"<]+)|(password\s*=\s*(?<secret>[^;"<]+))).{1,50}?){3}
+  $SEC101/046.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;"<]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<account>[^"]+)",\s*"(?<secret>[^"]+)"
+  $SEC101/047.MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<account>[a-z\@\-]{1,120})(?i))|(Pwd=(?<secret>[^;"]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
+  $SEC101/047.MySqlConnectionStringPlainJdbc=(jdbc:mysql:\/\/(?<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?<url>[^,(]+),\s*"(?<account>[\w@-]{1,200})",\s*"(?<secret>[^"';<>=]{7,200})"
+  $SEC101/048.CloudantConnectionStringPython=(?is)cloudant\s*\(\s*"(?<account>[\w-]+)"\s*\,\s*"(?<secret>[\w]{64})"\s*\,\s*.{0,200}url="(?<uri>https:\/\/[\w.-]+\.cloudant.com)
   $SEC101/048.CloudantConnectionStringUrl=(?<uri>(?i)https:\/\/([\w-]{1,63}\.)?[\w-]{1,63}:([\w]{64}|[a-z]{24})@[\w-]{1,50}\.cloudant\.com)
-  $SEC101/049.CredentialObjectConstructor=(PSCredential|SqlCredential)\s*\(\s*"(?<account>[^"]*)"\s*,\s*"(?<password>[^"]*)"
-  $SEC101/049.CredentialObjectInitializer=(?s)(PSCredential|SqlCredential)\s*\(\)\s*{\s*.{0,50}User(Name|Id)\s*=\s*"(?<account>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<password>[^"]*)"
-  $SEC101/050.MongoDbConnectionString=(?i)mongodb([^:]{0,50})?:\/\/(?<account>[0-9a-z]+):(?<password>[^@]+)@(?<host>[^\/;"<]+)
-  $SEC101/051.GpgCredential=(?is)gpg[._-](gen_key_input|sign|decrypt_file)\s*\(\s*(name_email\s*=\s*["'](?<account>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?<password>[^"']*)["']
-  $SEC101/053.GoogleServiceAccountKeyConsoleFormat="private_key":\s*"-----BEGIN PRIVATE KEY-----\\n(?s)(?<key>[^"]+)(?-s)\\n-----END PRIVATE KEY-----\\n(?s).{1,200}(?-s)"client_id"\s*:\s*"(?<account>[\w.-]+)"
-  $SEC101/053.GoogleServiceAccountKeyConsoleRestFormat="name": "projects\/[\w-]+\/serviceAccounts\/[\w@.-]+\/keys\/(?<key>[^"]+)",
-  $SEC101/054.AlibabaAccessKey=\b(?<account>LTAI([a-zA-Z0-9]{12}|[a-zA-Z0-9]{20}))\b(?s).{0,50}(?-s)\b(?<password>[\w]{30})\b
+  $SEC101/049.CredentialObjectConstructor=(PSCredential|SqlCredential)\s*\(\s*"(?<account>[^"]*)"\s*,\s*"(?<secret>[^"]*)"
+  $SEC101/049.CredentialObjectInitializer=(?s)(PSCredential|SqlCredential)\s*\(\)\s*{\s*.{0,50}User(Name|Id)\s*=\s*"(?<account>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<secret>[^"]*)"
+  $SEC101/050.MongoDbConnectionString=(?i)mongodb([^:]{0,50})?:\/\/(?<account>[0-9a-z]+):(?<secret>[^@]+)@(?<host>[^\/;"<]+)
+  $SEC101/051.GpgCredential=(?is)gpg[._-](gen_key_input|sign|decrypt_file)\s*\(\s*(name_email\s*=\s*["'](?<account>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?<secret>[^"']*)["']
+  $SEC101/053.GoogleServiceAccountKeyConsoleFormat="private_key":\s*"-----BEGIN PRIVATE KEY-----\\n(?s)(?<secret>[^"]+)(?-s)\\n-----END PRIVATE KEY-----\\n(?s).{1,200}(?-s)"client_id"\s*:\s*"(?<account>[\w.-]+)"
+  $SEC101/053.GoogleServiceAccountKeyConsoleRestFormat="name": "projects\/[\w-]+\/serviceAccounts\/[\w@.-]+\/keys\/(?<secret>[^"]+)",
+  $SEC101/054.AlibabaAccessKey=\b(?<account>LTAI([a-zA-Z0-9]{12}|[a-zA-Z0-9]{20}))\b(?s).{0,50}(?-s)\b(?<secret>[\w]{30})\b
   $SEC101/102.AdoPat=\b(?<pat>[2-7a-z]{52})(\b|$)
   

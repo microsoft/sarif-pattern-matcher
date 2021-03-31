@@ -53,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             // We need uri and neither account nor password, or uri and both account and password.  Use XOR
             if (!groups.TryGetNonEmptyValue("uri", out string uri) ||
                 (groups.TryGetNonEmptyValue("account", out string account) ^
-                groups.TryGetNonEmptyValue("password", out string password)))
+                groups.TryGetNonEmptyValue("secret", out string secret)))
             {
                 return ValidationState.NoMatch;
             }
@@ -62,7 +62,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             {
                 Uri = uri,
                 Account = account,
-                Secret = password,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.Cloudant),
             };
 

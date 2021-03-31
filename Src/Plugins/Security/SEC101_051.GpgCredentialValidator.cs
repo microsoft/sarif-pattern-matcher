@@ -38,7 +38,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("password", out string password))
+            if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
@@ -48,7 +48,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint = new Fingerprint()
             {
                 Account = account,
-                Secret = password,
+                Secret = secret,
             };
 
             return ValidationState.Unknown;

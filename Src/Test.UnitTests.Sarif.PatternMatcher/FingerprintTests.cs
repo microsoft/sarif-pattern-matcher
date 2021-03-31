@@ -313,7 +313,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void Fingerprint_ShouldParseNormally()
         {
-            string fingerprintText = "[acct=[a]][id=[]123][port=123][pwd=pwd[]]";
+            string fingerprintText = "[account=[a]][id=[]123][port=123][secret=secret[]]";
             var fingerprint = new Fingerprint(fingerprintText);
             fingerprint.ToString().Should().Be(fingerprintText);
         }
