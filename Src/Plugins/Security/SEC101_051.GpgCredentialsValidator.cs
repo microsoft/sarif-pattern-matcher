@@ -8,13 +8,13 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class GpgCredentialValidator : ValidatorBase
+    public class GpgCredentialsValidator : ValidatorBase
     {
-        internal static GpgCredentialValidator Instance;
+        internal static GpgCredentialsValidator Instance;
 
-        static GpgCredentialValidator()
+        static GpgCredentialsValidator()
         {
-            Instance = new GpgCredentialValidator();
+            Instance = new GpgCredentialsValidator();
         }
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
@@ -43,11 +43,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationState.NoMatch;
             }
 
-            groups.TryGetNonEmptyValue("account", out string account);
+            groups.TryGetNonEmptyValue("id", out string id);
 
             fingerprint = new Fingerprint()
             {
-                Account = account,
+                Id = id,
                 Secret = secret,
             };
 

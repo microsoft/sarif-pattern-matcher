@@ -46,16 +46,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("secret", out string secret) ||
-                !groups.TryGetNonEmptyValue("account", out string account))
+            if (!groups.TryGetNonEmptyValue("id", out string id) ||
+                !groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint
             {
+                Id = id,
                 Secret = secret,
-                Account = account,
                 Platform = nameof(AssetPlatform.Mailgun),
             };
 
@@ -66,8 +66,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
+            string id = fingerprint.Id;
             string secret = fingerprint.Secret;
-            string account = fingerprint.Account;
 
             try
             {
@@ -84,7 +84,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 content.Add(new StringContent(Guid.NewGuid().ToString()), "subject");
 
                 using HttpResponseMessage response = client
-                    .PostAsync($"https://api.mailgun.net/v3/{account}/messages", content)
+                    .PostAsync($"https://api.mailgun.net/v3/{id}/messages", content)
                     .GetAwaiter()
                     .GetResult();
 
@@ -92,25 +92,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.BadRequest:
                     {
-                        return ReturnAuthorizedAccess(ref message, asset: account);
+                        return ReturnAuthorizedAccess(ref message, asset: id);
                     }
 
                     case HttpStatusCode.Unauthorized:
                     {
-                        return ReturnUnauthorizedAccess(ref message, asset: account);
+                        return ReturnUnauthorizedAccess(ref message, asset: id);
                     }
 
                     default:
                     {
                         message = $"An unexpected response code was returned attempting to " +
-                                  $"validate the '{account}' account: '{response.StatusCode}'";
+                                  $"validate the '{id}' account: '{response.StatusCode}'";
                         break;
                     }
                 }
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e, asset: account);
+                return ReturnUnhandledException(ref message, e, asset: id);
             }
 
             return ValidationState.Unknown;

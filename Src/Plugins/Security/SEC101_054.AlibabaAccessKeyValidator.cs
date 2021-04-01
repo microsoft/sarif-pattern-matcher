@@ -59,17 +59,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("secret", out string secret) ||
-                !groups.TryGetNonEmptyValue("account", out string account))
+            if (!groups.TryGetNonEmptyValue("id", out string id) ||
+                !groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint()
             {
-                Platform = nameof(AssetPlatform.AlibabaCloud),
-                Account = account,
+                Id = id,
                 Secret = secret,
+                Platform = nameof(AssetPlatform.AlibabaCloud),
             };
 
             return ValidationState.Unknown;
@@ -79,7 +79,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            string account = fingerprint.Account;
+            string account = fingerprint.Id;
             string password = fingerprint.Secret;
 
             try

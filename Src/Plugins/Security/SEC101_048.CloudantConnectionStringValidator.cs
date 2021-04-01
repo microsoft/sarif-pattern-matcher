@@ -52,16 +52,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 
             // We need uri and neither account nor password, or uri and both account and password.  Use XOR
             if (!groups.TryGetNonEmptyValue("uri", out string uri) ||
-                (groups.TryGetNonEmptyValue("account", out string account) ^
-                groups.TryGetNonEmptyValue("secret", out string secret)))
+                (groups.TryGetNonEmptyValue("id", out string id) ^ groups.TryGetNonEmptyValue("secret", out string secret)))
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint()
             {
+                Id = id,
                 Uri = uri,
-                Account = account,
                 Secret = secret,
                 Platform = nameof(AssetPlatform.Cloudant),
             };
@@ -75,14 +74,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         {
             // TODO: Create a unit test for this. https://github.com/microsoft/sarif-pattern-matcher/issues/258
 
+            string id = fingerprint.Id;
             string uri = fingerprint.Uri;
-            string account = fingerprint.Account;
             string password = fingerprint.Secret;
 
             try
             {
                 // At this point account and password must be either both full or both empty.  Only check one
-                if (string.IsNullOrWhiteSpace(account))
+                if (string.IsNullOrWhiteSpace(id))
                 {
                     using (HttpClient client = CreateHttpClient())
                     using (HttpResponseMessage response = client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult())
@@ -97,12 +96,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 }
                 else
                 {
-                    HttpClientHandler handler = new HttpClientHandler();
-                    handler.Credentials = new NetworkCredential(account, password);
-                    using (HttpClient client = new HttpClient(handler)
+                    var handler = new HttpClientHandler();
+                    handler.Credentials = new NetworkCredential(id, password);
+
+                    using var client = new HttpClient(handler)
                     {
                         BaseAddress = new Uri(uri),
-                    })
+                    };
+
                     using (HttpResponseMessage response = client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult())
                     {
                         if (response.StatusCode == HttpStatusCode.OK)

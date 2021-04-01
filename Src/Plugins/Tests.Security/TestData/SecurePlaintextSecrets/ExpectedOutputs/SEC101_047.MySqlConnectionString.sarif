@@ -115,9 +115,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@servername][host=your-host][port=3306][resource=your-database]",
-            "ValidationFingerprint/v1": "[account=username@servername][host=your-host][port=3306][resource=your-database][secret=your-password]",
-            "ValidationFingerprintHash/v1": "69c4fb0d168453080aeed75aeff65b3cb11656532d33455bcae13c9018e5ccef"
+            "AssetFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database]",
+            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database][secret=your-password]",
+            "ValidationFingerprintHash/v1": "13d576ae0015f206d780b428702eb5db1c7a1a9d1dddc00d9cd45244766fac8a"
           },
           "rank": 46.27
         },
@@ -158,9 +158,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@servername][host=your-host][port=3306][resource=your-database]",
-            "ValidationFingerprint/v1": "[account=username@servername][host=your-host][port=3306][resource=your-database][secret=password_11]",
-            "ValidationFingerprintHash/v1": "ee84fd500875bfc5417db3a80d4c9ca87fab93782ef9ea863fd80e05b96af537"
+            "AssetFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database]",
+            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database][secret=password_11]",
+            "ValidationFingerprintHash/v1": "bf6c9dd12d51a4b0403ad7fb5186d42a4ca2eaad93470aef8d9f2499571669ba"
           },
           "rank": 44.23
         },
@@ -201,9 +201,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@servername][host=your-host][platform=SqlOnPremise][resource=your-database]",
-            "ValidationFingerprint/v1": "[account=username@servername][host=your-host][resource=your-database][secret=your-password]",
-            "ValidationFingerprintHash/v1": "11cf2e897da391453aa32ab7617f9a2066775a0e532b4981ad835cdda09ec4f2"
+            "AssetFingerprint/v1": "[host=your-host][id=username@servername][platform=SqlOnPremise][resource=your-database]",
+            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][resource=your-database][secret=your-password]",
+            "ValidationFingerprintHash/v1": "7dfa5ccb4f4e5c7b00d778adcf153a6093e2f83afaed3e57f1d8d3f592ede760"
           },
           "rank": 46.27
         },
@@ -244,9 +244,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@servername][host=your-host][platform=SqlOnPremise][resource=your-database]",
-            "ValidationFingerprint/v1": "[account=username@servername][host=your-host][resource=your-database][secret=password_11]",
-            "ValidationFingerprintHash/v1": "e5a6439f7eaae097f45382eaa31f18bb7909d3bd59b20f451a61cb26c03c7088"
+            "AssetFingerprint/v1": "[host=your-host][id=username@servername][platform=SqlOnPremise][resource=your-database]",
+            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][resource=your-database][secret=password_11]",
+            "ValidationFingerprintHash/v1": "5f715907a3363e3a57f6bf3ecf76e7806a223d0f5cc81c9a491da62a7a0becc3"
           },
           "rank": 44.23
         },
@@ -287,9 +287,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][port=3306][resource=catalog_db]",
-            "ValidationFingerprint/v1": "[account=username@some-database-name][host=some-database-name.mysql.database.azure.com][port=3306][resource=catalog_db][secret=password_1]",
-            "ValidationFingerprintHash/v1": "4ec45b0600a43cf05c0b452672310d81054fd1a44686c2e8c5c5b7de2f90d17c"
+            "AssetFingerprint/v1": "[host=some-database-name.mysql.database.azure.com][id=username@some-database-name][platform=Azure][port=3306][resource=catalog_db]",
+            "ValidationFingerprint/v1": "[host=some-database-name.mysql.database.azure.com][id=username@some-database-name][port=3306][resource=catalog_db][secret=password_1]",
+            "ValidationFingerprintHash/v1": "8b4d4b950c2cf1b11a0e8dfd04e2d9bb0cf231591b2ed4995b4b20f8e33422a7"
           },
           "rank": 44.6
         },
@@ -330,9 +330,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][port=3306][resource=catalog_db]",
-            "ValidationFingerprint/v1": "[account=username@some-database-name][host=some-database-name.mysql.database.azure.com][port=3306][resource=catalog_db][secret=password_2]",
-            "ValidationFingerprintHash/v1": "a8f8bd203b48b7068a49eacfd01c9f4f4e4507b9f76b726c22d57ce239a83b02"
+            "AssetFingerprint/v1": "[host=some-database-name.mysql.database.azure.com][id=username@some-database-name][platform=Azure][port=3306][resource=catalog_db]",
+            "ValidationFingerprint/v1": "[host=some-database-name.mysql.database.azure.com][id=username@some-database-name][port=3306][resource=catalog_db][secret=password_2]",
+            "ValidationFingerprintHash/v1": "4ab8f3265474eff0351b5aa2e9dff6837e98b78d4066460e5756f385bb0a291f"
           },
           "rank": 44.6
         },
@@ -373,9 +373,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][resource=catalog_db]",
-            "ValidationFingerprint/v1": "[account=username@some-database-name][host=some-database-name.mysql.database.azure.com][resource=catalog_db][secret=password_2]",
-            "ValidationFingerprintHash/v1": "29554b09b97a28ff19ab75925b849781b7b6150010f5e0ac1c89b5404aba4f07"
+            "AssetFingerprint/v1": "[host=some-database-name.mysql.database.azure.com][id=username@some-database-name][platform=Azure][resource=catalog_db]",
+            "ValidationFingerprint/v1": "[host=some-database-name.mysql.database.azure.com][id=username@some-database-name][resource=catalog_db][secret=password_2]",
+            "ValidationFingerprintHash/v1": "f662d37d4bfb96aae2599f52fd3b86fbcf453fc920a451614231f0854ce3618b"
           },
           "rank": 44.6
         },
@@ -416,9 +416,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][port=3306][resource=catalog_db]",
-            "ValidationFingerprint/v1": "[account=username@some-database-name][host=some-database-name.mysql.database.azure.com][port=3306][resource=catalog_db][secret=password_3]",
-            "ValidationFingerprintHash/v1": "4c622e7ed4b3177619a96031087297602d6c8d6389cee34ea6febf8d5d6b5582"
+            "AssetFingerprint/v1": "[host=some-database-name.mysql.database.azure.com][id=username@some-database-name][platform=Azure][port=3306][resource=catalog_db]",
+            "ValidationFingerprint/v1": "[host=some-database-name.mysql.database.azure.com][id=username@some-database-name][port=3306][resource=catalog_db][secret=password_3]",
+            "ValidationFingerprintHash/v1": "0edc54ad1c168ff554e983b96837985b04414a118a57f7a0cb7cd3a33cbe0d6f"
           },
           "rank": 44.6
         },
@@ -459,9 +459,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@some-database-name][host=some-database-name.mysql.database.azure.com][platform=Azure][resource=catalog_db]",
-            "ValidationFingerprint/v1": "[account=username@some-database-name][host=some-database-name.mysql.database.azure.com][resource=catalog_db][secret=password_4]",
-            "ValidationFingerprintHash/v1": "d7b2aed5f9ef42ca254b41e1e4eead39ac3e0c2560b97bb93354ab064b718999"
+            "AssetFingerprint/v1": "[host=some-database-name.mysql.database.azure.com][id=username@some-database-name][platform=Azure][resource=catalog_db]",
+            "ValidationFingerprint/v1": "[host=some-database-name.mysql.database.azure.com][id=username@some-database-name][resource=catalog_db][secret=password_4]",
+            "ValidationFingerprintHash/v1": "6d8882b5bb8c3c5830ac779534cfa37d9353d4ee0f687c5f679b799ed20072e0"
           },
           "rank": 44.6
         },
@@ -502,9 +502,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@servername][host=your-host][platform=SqlOnPremise][port=3306][resource=your-database]",
-            "ValidationFingerprint/v1": "[account=username@servername][host=your-host][port=3306][resource=your-database][secret=your-password]",
-            "ValidationFingerprintHash/v1": "69c4fb0d168453080aeed75aeff65b3cb11656532d33455bcae13c9018e5ccef"
+            "AssetFingerprint/v1": "[host=your-host][id=username@servername][platform=SqlOnPremise][port=3306][resource=your-database]",
+            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database][secret=your-password]",
+            "ValidationFingerprintHash/v1": "13d576ae0015f206d780b428702eb5db1c7a1a9d1dddc00d9cd45244766fac8a"
           },
           "rank": 46.27
         },
@@ -545,9 +545,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@servername][host=your-host][platform=SqlOnPremise][port=3306][resource=your-database]",
-            "ValidationFingerprint/v1": "[account=username@servername][host=your-host][port=3306][resource=your-database][secret=password_11]",
-            "ValidationFingerprintHash/v1": "ee84fd500875bfc5417db3a80d4c9ca87fab93782ef9ea863fd80e05b96af537"
+            "AssetFingerprint/v1": "[host=your-host][id=username@servername][platform=SqlOnPremise][port=3306][resource=your-database]",
+            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database][secret=password_11]",
+            "ValidationFingerprintHash/v1": "bf6c9dd12d51a4b0403ad7fb5186d42a4ca2eaad93470aef8d9f2499571669ba"
           },
           "rank": 44.23
         },
@@ -588,9 +588,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@some-database-name][host=some-database-name.mysql.database.azure.com:3306][platform=Azure]",
-            "ValidationFingerprint/v1": "[account=username@some-database-name][host=some-database-name.mysql.database.azure.com:3306][secret=PASSword_5]",
-            "ValidationFingerprintHash/v1": "bf0321bf83bd381f66e6c554d5e4bb32ae3c2340bd3d766a9c79ec66a86cd939"
+            "AssetFingerprint/v1": "[host=some-database-name.mysql.database.azure.com:3306][id=username@some-database-name][platform=Azure]",
+            "ValidationFingerprint/v1": "[host=some-database-name.mysql.database.azure.com:3306][id=username@some-database-name][secret=PASSword_5]",
+            "ValidationFingerprintHash/v1": "2192301f7d7b3ef23419e5d9735b082704d93f6bb7ebd1347f9c6347a25305eb"
           },
           "rank": 44.6
         },
@@ -631,9 +631,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=username@some-database-name]",
-            "ValidationFingerprint/v1": "[account=username@some-database-name][secret=PASSword_5]",
-            "ValidationFingerprintHash/v1": "508c1c519ee63e75d61a0cd6c5044fd0d9edddebb8fc676b47b2b828aa020d7f"
+            "AssetFingerprint/v1": "[id=username@some-database-name]",
+            "ValidationFingerprint/v1": "[id=username@some-database-name][secret=PASSword_5]",
+            "ValidationFingerprintHash/v1": "817e363bd054ed2b0cb169e372d5fa20d3b81a4cc615fa7645f5924c36e3057b"
           },
           "rank": 44.6
         },
@@ -674,9 +674,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=cleardbusername1]",
-            "ValidationFingerprint/v1": "[account=cleardbusername1][secret=cleardb_PASSWORD1]",
-            "ValidationFingerprintHash/v1": "f550703918c73016f195c9515ba8c7bb516c2bdaa8017dff9524dcd1573a228e"
+            "AssetFingerprint/v1": "[id=cleardbusername1]",
+            "ValidationFingerprint/v1": "[id=cleardbusername1][secret=cleardb_PASSWORD1]",
+            "ValidationFingerprintHash/v1": "39722c758e6a1efd7d569b3c4dd58012c78aca5abd8ae36a472ccbb07de98b77"
           },
           "rank": 56.71
         }

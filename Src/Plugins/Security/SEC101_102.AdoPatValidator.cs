@@ -87,14 +87,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
 #pragma warning restore IDE0060
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("pat", out string pat))
+            if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
             ValidationState state =
-                IsChecksumValid(pat, ChecksumPat) ||
-                IsChecksumValid(pat, ChecksumAdoAppSecret) ?
+                IsChecksumValid(secret, ChecksumPat) ||
+                IsChecksumValid(secret, ChecksumAdoAppSecret) ?
                     ValidationState.Unknown :
                     ValidationState.NoMatch;
 
@@ -102,7 +102,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 fingerprint = new Fingerprint()
                 {
-                    Secret = pat,
+                    Secret = secret,
                     Platform = nameof(AssetPlatform.AzureDevOps),
                 };
             }
