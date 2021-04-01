@@ -13,9 +13,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         {
             return Parser.Default.ParseArguments<
                 AnalyzeOptions,
+                ExportRulesMetatadaOptions,
                 ValidateOptions>(args)
               .MapResult(
                 (AnalyzeOptions options) => new AnalyzeCommand().Run(options),
+                (ExportRulesMetatadaOptions options) => new ExportRulesMetatadaCommand().Run(options),
                 (ValidateOptions options) => new ValidateCommand().Run(options),
                 _ => CommandBase.FAILURE);
         }
