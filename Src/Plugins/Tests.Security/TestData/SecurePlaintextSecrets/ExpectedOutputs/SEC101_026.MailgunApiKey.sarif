@@ -74,9 +74,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=deadbeef0deadbeef0deadbeef.mailgun.org][platform=Mailgun]",
-            "ValidationFingerprint/v1": "[account=deadbeef0deadbeef0deadbeef.mailgun.org][secret=0deadbeef00deadbeef00deadbeef000-deadbeef-deadbeef]",
-            "ValidationFingerprintHash/v1": "bbe2941bcd180b026041312dea0ff6cf693a5096ba13d785588b1f2d1687dcc7"
+            "AssetFingerprint/v1": "[id=deadbeef0deadbeef0deadbeef.mailgun.org][platform=Mailgun]",
+            "ValidationFingerprint/v1": "[id=deadbeef0deadbeef0deadbeef.mailgun.org][secret=0deadbeef00deadbeef00deadbeef000-deadbeef-deadbeef]",
+            "ValidationFingerprintHash/v1": "8ebdc2f17679dc77bf194ee36bed1c3365beab4d3d6c22b011eca3e4264a886b"
           },
           "rank": 37.01
         }

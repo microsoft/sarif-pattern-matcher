@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     {
                         fingerprint = new Fingerprint()
                         {
-                            Account = parts[0],
+                            Id = parts[0],
                             Host = parts[1],
                         };
                     }

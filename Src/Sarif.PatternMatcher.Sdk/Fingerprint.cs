@@ -17,7 +17,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public const string UriKeyName = "uri";
         public const string HostKeyName = "host";
         public const string PortKeyName = "port";
-        public const string AccountKeyName = "account";
         public const string SecretKeyName = "secret";
         public const string PlatformKeyName = "platform";
         public const string ResourceKeyName = "resource";
@@ -48,7 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             SecretSymbolSetCount = 0;
 
-            Id = Host = Uri = Port = Account = Secret = Platform = Resource = Thumbprint = null;
+            Id = Host = Uri = Port = Id = Secret = Platform = Resource = Thumbprint = null;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -88,19 +87,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string Id { get; set; }
 
-        public string Secret { get; set; }
-
         public string Uri { get; set; }
 
         public string Host { get; set; }
 
         public string Port { get; set; }
 
-        public string Account { get; set; }
-
-        public string Platform { get; set; }
+        public string Secret { get; set; }
 
         public string Resource { get; set; }
+
+        public string Platform { get; set; }
 
         public string Thumbprint { get; set; }
 
@@ -201,7 +198,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 case UriKeyName: { Uri = value; break; }
                 case HostKeyName: { Host = value; break; }
                 case PortKeyName: { Port = value; break; }
-                case AccountKeyName: { Account = value; break; }
                 case PlatformKeyName: { Platform = value; break; }
                 case ResourceKeyName: { Resource = value; break; }
                 case ThumbprintKeyName: { Thumbprint = value; break; }
@@ -224,7 +220,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 Uri == equatable.Uri &&
                 Host == equatable.Host &&
                 Port == equatable.Port &&
-                Account == equatable.Account &&
+                Id == equatable.Id &&
                 Platform == equatable.Platform &&
                 Resource == equatable.Resource &&
                 Thumbprint == equatable.Thumbprint;
@@ -255,9 +251,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     result = (result * 31) + this.Port.GetHashCode();
                 }
 
-                if (this.Account != null)
+                if (this.Id != null)
                 {
-                    result = (result * 31) + this.Account.GetHashCode();
+                    result = (result * 31) + this.Id.GetHashCode();
                 }
 
                 if (this.Secret != null)
@@ -291,11 +287,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             var components = new Dictionary<string, string>(3);
 
             // These need to remain in alphabetical order.
-            if (!string.IsNullOrEmpty(f.Account) && !denyList.Contains(AccountKeyName))
-            {
-                components.Add(AccountKeyName, $"[{AccountKeyName}={f.Account.Trim()}]");
-            }
-
             if (!string.IsNullOrEmpty(f.Host) && !denyList.Contains(HostKeyName))
             {
                 components.Add(HostKeyName, $"[{HostKeyName}={f.Host.Trim()}]");
@@ -304,11 +295,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             if (!string.IsNullOrEmpty(f.Id) && !denyList.Contains(IdKeyName))
             {
                 components.Add(IdKeyName, $"[{IdKeyName}={f.Id.Trim()}]");
-            }
-
-            if (!string.IsNullOrEmpty(f.Secret) && !denyList.Contains(SecretKeyName))
-            {
-                components.Add(SecretKeyName, $"[{SecretKeyName}={f.Secret.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Platform) && !denyList.Contains(PlatformKeyName))
@@ -324,6 +310,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             if (!string.IsNullOrEmpty(f.Resource) && !denyList.Contains(ResourceKeyName))
             {
                 components.Add(ResourceKeyName, $"[{ResourceKeyName}={f.Resource.Trim()}]");
+            }
+
+            if (!string.IsNullOrEmpty(f.Secret) && !denyList.Contains(SecretKeyName))
+            {
+                components.Add(SecretKeyName, $"[{SecretKeyName}={f.Secret.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Thumbprint) && !denyList.Contains(ThumbprintKeyName))
