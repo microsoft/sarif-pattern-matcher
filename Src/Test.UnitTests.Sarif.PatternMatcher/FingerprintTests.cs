@@ -313,7 +313,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void Fingerprint_ShouldParseNormally()
         {
-            string fingerprintText = "[account=[a]][id=[]123][port=123][secret=secret[]]";
+            string fingerprintText = "[id=[]123][port=123][secret=secret[]]";
             var fingerprint = new Fingerprint(fingerprintText);
             fingerprint.ToString().Should().Be(fingerprintText);
         }
@@ -326,9 +326,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Expected = new Fingerprint { Host = "Host" }},
 
             new FingerprintTestCase {
-                Title = "Two keys (Account & Host) in alphabetical order.",
-                Text = $"[{Fingerprint.AccountKeyName}=Account][{Fingerprint.HostKeyName}=Host]",
-                Expected = new Fingerprint { Host = "Host", Account = "Account" }},
+                Title = "Two keys (Host & Id) in alphabetical order.",
+                Text = $"[{Fingerprint.HostKeyName}=Host][{Fingerprint.IdKeyName}=Id]",
+                Expected = new Fingerprint { Host = "Host", Id = "Id" }},
         };
 
         private static readonly FingerprintTestCase[] s_exceptionalTestCases = new[]
@@ -340,7 +340,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             new FingerprintTestCase {
                 Title = "Missing terminal right bracket.",
-                Text = $"[{Fingerprint.AccountKeyName}=Account][{Fingerprint.HostKeyName}=Host",
+                Text = $"[{Fingerprint.IdKeyName}=Id][{Fingerprint.HostKeyName}=Host]",
                 ExceptionType = typeof(ArgumentException) },
 
             new FingerprintTestCase {
@@ -349,8 +349,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 ExceptionType = typeof(ArgumentException) },
 
             new FingerprintTestCase {
-                Title = "Two keys (Host and Account) in non-alphabetical order.",
-                Text = $"[{Fingerprint.HostKeyName}=Host][{Fingerprint.AccountKeyName}=Account]",
+                Title = "Two keys (Host and Id) in non-alphabetical order.",
+                Text = $"[{Fingerprint.IdKeyName}=Id][{Fingerprint.HostKeyName}=Host",
                 ExceptionType = typeof(ArgumentException) },
 
             new FingerprintTestCase {

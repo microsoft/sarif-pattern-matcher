@@ -49,9 +49,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("host", out string host) ||
+
+            if (!groups.TryGetNonEmptyValue("id", out string id) ||
+                !groups.TryGetNonEmptyValue("host", out string host) ||
                 !groups.TryGetNonEmptyValue("secret", out string secret) ||
-                !groups.TryGetNonEmptyValue("account", out string account) ||
                 !groups.TryGetNonEmptyValue("resource", out string resource))
             {
                 return ValidationState.NoMatch;
@@ -61,9 +62,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             fingerprint = new Fingerprint()
             {
+                Id = id,
                 Host = host,
                 Secret = secret,
-                Account = account,
                 Resource = resource,
             };
 
@@ -73,7 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             string host = fingerprint.Host;
-            string account = fingerprint.Account;
+            string account = fingerprint.Id;
             string password = fingerprint.Secret;
             string resource = fingerprint.Resource;
 
