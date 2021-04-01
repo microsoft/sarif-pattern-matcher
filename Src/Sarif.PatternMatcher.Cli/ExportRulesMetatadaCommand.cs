@@ -132,7 +132,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                             builder.AppendLine($"{match.Id} | " +
                                                $"{match.Name} | " +
-                                               $"{(validationPair?.IsValidDynamic != null ? "OK" : "-")}");
+                                               $"{(validationPair?.IsValidDynamic != null ? "Y" : "-")}");
 
                             hash.Add(key);
                         }
