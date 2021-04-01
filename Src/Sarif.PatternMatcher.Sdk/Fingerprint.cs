@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             SecretSymbolSetCount = 0;
 
-            Id = Host = Uri = Port = Id = Secret = Platform = Resource = Thumbprint = null;
+            Id = Host = Uri = Port = Secret = Platform = Resource = Thumbprint = null;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -220,7 +220,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 Uri == equatable.Uri &&
                 Host == equatable.Host &&
                 Port == equatable.Port &&
-                Id == equatable.Id &&
                 Platform == equatable.Platform &&
                 Resource == equatable.Resource &&
                 Thumbprint == equatable.Thumbprint;
@@ -249,11 +248,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 if (this.Port != null)
                 {
                     result = (result * 31) + this.Port.GetHashCode();
-                }
-
-                if (this.Id != null)
-                {
-                    result = (result * 31) + this.Id.GetHashCode();
                 }
 
                 if (this.Secret != null)
