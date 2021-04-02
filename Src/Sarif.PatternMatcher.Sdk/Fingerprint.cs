@@ -35,6 +35,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         private static readonly HashSet<string> s_assetOnlyKeys =
             new HashSet<string>(new string[]
             {
+                PartKeyName,
                 PlatformKeyName,
             });
 
