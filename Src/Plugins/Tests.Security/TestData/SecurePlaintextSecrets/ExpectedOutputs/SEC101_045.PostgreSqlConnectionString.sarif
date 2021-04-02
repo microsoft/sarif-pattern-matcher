@@ -74,9 +74,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=my_user][host=my_host][port=5555][resource=my_db]",
-            "ValidationFingerprint/v1": "[account=my_user][host=my_host][port=5555][resource=my_db][secret=my_pw_1]",
-            "ValidationFingerprintHash/v1": "8c105f2a80a4628fbabc7543be4c3bbb3b8115a7446d1bae10509a89c8e225a3"
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db]",
+            "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db][secret=my_pw_1]",
+            "ValidationFingerprintHash/v1": "26398ed84db620c4b93af7bbc1c663924da5b5c0a5120a189c5e110df6e6eb83"
           },
           "rank": 36.02
         },
@@ -117,9 +117,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=my_user][host=my_host][port=5555][resource=my_db]",
-            "ValidationFingerprint/v1": "[account=my_user][host=my_host][port=5555][resource=my_db][secret=my_pw_2]",
-            "ValidationFingerprintHash/v1": "b22c8d2f95ac67db792fae905cc19eb3aec93edd4c5e7a101673aea9528e57d5"
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db]",
+            "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db][secret=my_pw_2]",
+            "ValidationFingerprintHash/v1": "4d770bdcc8d78f2ad3588f70ac74c9ce9d103fa7ed40f0981d2f8c0227c484bf"
           },
           "rank": 36.02
         },
@@ -160,9 +160,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=my_user][host=my_host][port=5555]",
-            "ValidationFingerprint/v1": "[account=my_user][host=my_host][port=5555][secret=my_pw_3]",
-            "ValidationFingerprintHash/v1": "47e58cb39c0a6b9c684a1e98ceaf5694dd982704d6f218c21c9b015fb490e6f8"
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555]",
+            "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][secret=my_pw_3]",
+            "ValidationFingerprintHash/v1": "90a3fcb57ace80a4fe7a1343d09aa011d5bb5ea7d7e64f8d60697f9030dd8bb8"
           },
           "rank": 36.02
         },
@@ -203,9 +203,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=my_user][host=my_host][port=5555]",
-            "ValidationFingerprint/v1": "[account=my_user][host=my_host][port=5555][secret=my_pw_4]",
-            "ValidationFingerprintHash/v1": "ddef36c5d660899db259590fc685b9511ecb08bf55c9ff3200d96f255d5803a3"
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555]",
+            "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][secret=my_pw_4]",
+            "ValidationFingerprintHash/v1": "480870613ba213cbea424a9d39c4b4976fb3ada28346ed286684fd9b1805610c"
           },
           "rank": 36.02
         },
@@ -246,9 +246,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=my_user][host=my_host][port=5555]",
-            "ValidationFingerprint/v1": "[account=my_user][host=my_host][port=5555][secret=my_pw_5]",
-            "ValidationFingerprintHash/v1": "5b4b7cb6e0fe6c913a9c12b2c16f0c5f5a6457c16f5b463d48593703ec71c6ae"
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555]",
+            "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][secret=my_pw_5]",
+            "ValidationFingerprintHash/v1": "422091febe3f2012854d1a2cae14844568f6973122d37b8b0401f9ec9cf32381"
           },
           "rank": 36.02
         },
@@ -289,9 +289,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=my_user][host=my_host]",
-            "ValidationFingerprint/v1": "[account=my_user][host=my_host][secret=my_pw_5]",
-            "ValidationFingerprintHash/v1": "44cf40b2220ecd4feba7eb4b4d852a1da93cf98564194ce56f522cffbe83013d"
+            "AssetFingerprint/v1": "[host=my_host][id=my_user]",
+            "ValidationFingerprint/v1": "[host=my_host][id=my_user][secret=my_pw_5]",
+            "ValidationFingerprintHash/v1": "62699f9469245fcd726072ab32c94b2db498784e7897761c2c201e9c84d15263"
           },
           "rank": 36.02
         },
@@ -332,9 +332,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=my_user][host=my_host][port=5555]",
-            "ValidationFingerprint/v1": "[account=my_user][host=my_host][port=5555][secret=my_pw_6]",
-            "ValidationFingerprintHash/v1": "542b02e7963e1a83da60fd4c7f0c264672a9e9afe77dacfe1bba9cf91484b3e9"
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555]",
+            "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][secret=my_pw_6]",
+            "ValidationFingerprintHash/v1": "88928ee160f7377ba74cd226933ff51d569149d3d5a313b6efa01b45f93426a1"
           },
           "rank": 36.02
         },
@@ -375,9 +375,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=my_user][host=my_host][port=5555][resource=my_db]",
-            "ValidationFingerprint/v1": "[account=my_user][host=my_host][port=5555][resource=my_db][secret=my_pw_7]",
-            "ValidationFingerprintHash/v1": "856fb4272a1e7473fc9409ac863602e8aab7f68c59e7f4ec5069f91dac2118ce"
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db]",
+            "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db][secret=my_pw_7]",
+            "ValidationFingerprintHash/v1": "fc1843ad5044c97192eea0f7cdb06e013cd3271f1191bb6134d627a8875c983c"
           },
           "rank": 36.02
         },
@@ -418,9 +418,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=my_user][host=my_host][port=5555]",
-            "ValidationFingerprint/v1": "[account=my_user][host=my_host][port=5555][secret=my_pw_7]",
-            "ValidationFingerprintHash/v1": "8494581b558d032c07548c4a8e505bc1172d1ab663e0bb01343a5667ebdaa4d8"
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555]",
+            "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][secret=my_pw_7]",
+            "ValidationFingerprintHash/v1": "8083529e9e26321f5065eb13ff72f77a08bf863f08e163861915fbfa3bc589c5"
           },
           "rank": 36.02
         },
@@ -461,9 +461,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=my_user][host=my_host][port=5555][resource=my_db]",
-            "ValidationFingerprint/v1": "[account=my_user][host=my_host][port=5555][resource=my_db][secret=my_pw_8]",
-            "ValidationFingerprintHash/v1": "fba4f55f4c9571b5e90cb9f3ee5500045a4d6f7ad8ac8093653032bc2508f794"
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db]",
+            "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db][secret=my_pw_8]",
+            "ValidationFingerprintHash/v1": "c74920bcd7e030643010fd0386a947a609f631440e2a9898da8cf3c05d8baeed"
           },
           "rank": 36.02
         },
@@ -504,9 +504,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=my_user][host=my_host][port=5555][resource=my_db]",
-            "ValidationFingerprint/v1": "[account=my_user][host=my_host][port=5555][resource=my_db][secret=my_pw_9]",
-            "ValidationFingerprintHash/v1": "9cffa331d3da070696d8371e7fd3f0ee460a9215bfb530d631ac2cb16f5b1fe0"
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db]",
+            "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db][secret=my_pw_9]",
+            "ValidationFingerprintHash/v1": "07bbf43078a3822e8ce323a0bbb935c3fd1a1e7b8eb5f02f0d907788edc999f7"
           },
           "rank": 36.02
         }

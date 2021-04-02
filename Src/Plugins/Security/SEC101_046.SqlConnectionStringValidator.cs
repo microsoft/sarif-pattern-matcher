@@ -74,27 +74,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint = default;
             matchedPattern = matchedPattern.Trim();
 
-            string host, database, account, secret;
+            string id, host, secret, database;
 
-            if (groups.ContainsKey("host") && groups.ContainsKey("database") && groups.ContainsKey("account") && groups.ContainsKey("secret"))
+            if (groups.ContainsKey("id") &&
+                groups.ContainsKey("host") &&
+                groups.ContainsKey("secret") &&
+                groups.ContainsKey("database"))
             {
+                id = groups["id"];
                 host = groups["host"];
-                account = groups["account"];
-                database = groups["database"];
                 secret = groups["secret"];
+                database = groups["database"];
             }
             else
             {
+                id = ParseExpression(RegexEngine, matchedPattern, AccountExpression);
                 host = ParseExpression(RegexEngine, matchedPattern, HostExpression);
-                account = ParseExpression(RegexEngine, matchedPattern, AccountExpression);
-                database = ParseExpression(RegexEngine, matchedPattern, DatabaseExpression);
                 secret = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
+                database = ParseExpression(RegexEngine, matchedPattern, DatabaseExpression);
             }
 
-            if (string.IsNullOrWhiteSpace(host) ||
-                string.IsNullOrWhiteSpace(database) ||
-                string.IsNullOrWhiteSpace(account) ||
-                string.IsNullOrWhiteSpace(secret))
+            if (string.IsNullOrWhiteSpace(id) ||
+                string.IsNullOrWhiteSpace(host) ||
+                string.IsNullOrWhiteSpace(secret) ||
+                string.IsNullOrWhiteSpace(database))
             {
                 return ValidationState.NoMatch;
             }
@@ -108,20 +111,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return exclusionResult;
             }
 
-            if (database.Length > 128 ||
-                account.Length > 128 ||
+            if (id.Length > 128 ||
+                host.Length > 128 ||
                 secret.Length > 128 ||
-                host.Length > 128)
+                database.Length > 128)
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint()
             {
+                Id = id,
                 Host = host,
-                Resource = database,
-                Account = account,
                 Secret = secret,
+                Resource = database,
                 Platform = SharedUtilities.GetDatabasePlatformFromHost(host, out _),
             };
 
@@ -133,7 +136,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        ref Dictionary<string, string> options)
         {
             string host = fingerprint.Host;
-            string account = fingerprint.Account;
+            string account = fingerprint.Id;
             string password = fingerprint.Secret;
             string database = fingerprint.Resource;
 

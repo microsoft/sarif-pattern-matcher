@@ -77,9 +77,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[account=apikey-v2-username1111165BB6673E1B79482A8C][platform=Cloudant][uri=https://host1111-47eb-45ce-b125-4a4e1b5a4f7e-bluemix.cloudant.com]",
-            "ValidationFingerprint/v1": "[account=apikey-v2-username1111165BB6673E1B79482A8C][secret=password1111123956157d94b25d574586f26d1211e8e589646b4713d5de4801][uri=https://host1111-47eb-45ce-b125-4a4e1b5a4f7e-bluemix.cloudant.com]",
-            "ValidationFingerprintHash/v1": "14bba676ab493b845b1f9c7578a7ce34a7c387081449cabcb93b5f14a1668c99"
+            "AssetFingerprint/v1": "[id=apikey-v2-username1111165BB6673E1B79482A8C][platform=Cloudant][uri=https://host1111-47eb-45ce-b125-4a4e1b5a4f7e-bluemix.cloudant.com]",
+            "ValidationFingerprint/v1": "[id=apikey-v2-username1111165BB6673E1B79482A8C][secret=password1111123956157d94b25d574586f26d1211e8e589646b4713d5de4801][uri=https://host1111-47eb-45ce-b125-4a4e1b5a4f7e-bluemix.cloudant.com]",
+            "ValidationFingerprintHash/v1": "c94ef0c11648a6c6f012e71c28440272d1497296e7020e197131532a0c1d9054"
           },
           "rank": 56.09
         },

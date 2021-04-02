@@ -51,18 +51,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("account", out string account) ||
-                !groups.TryGetNonEmptyValue("secret", out string secret) ||
-                !groups.TryGetNonEmptyValue("host", out string host))
+            if (!groups.TryGetNonEmptyValue("id", out string id) ||
+                !groups.TryGetNonEmptyValue("host", out string host) ||
+                !groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint()
             {
-                Account = account,
-                Secret = secret,
+                Id = id,
                 Host = host,
+                Secret = secret,
             };
 
             return ValidationState.Unknown;
@@ -72,13 +72,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
+            string id = fingerprint.Id;
             string host = fingerprint.Host;
-            string account = fingerprint.Account;
             string password = fingerprint.Secret;
 
             try
             {
-                var dbClient = new MongoClient($"mongodb+srv://{account}:{password}@{host}/?connectTimeoutMS=3000");
+                var dbClient = new MongoClient($"mongodb+srv://{id}:{password}@{host}/?connectTimeoutMS=3000");
                 List<BsonDocument> databases = dbClient.ListDatabases().ToList();
                 message = $"The following databases are compromised: {string.Join(",", databases.Select(q => $"'{q["name"].AsString}'"))}";
                 return ValidationState.AuthorizedError;

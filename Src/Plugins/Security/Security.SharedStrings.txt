@@ -53,28 +53,28 @@
   $SEC101/023.AmazonMwsAuthToken=\b(?<refine>amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)
   $SEC101/024.TwilioApiKey=\b(?<refine>(?<secret>SK(?i)[0-9a-f]{32}))([^0-9a-f]|$)
   $SEC101/025.SendGridApiKey=\b(?<refine>(?<secret>SG\.(?i)[0-9a-z\-_]{22}\.(?i)[0-9a-z\-_]{43}))([^0-9a-f]|$)
-  $SEC101/026.MailgunApiKey=(?is)((^|[^0-9a-z\-])(?<secret>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8}).{0,50}?|[^0-9a-z](?<account>[0-9a-z]+?\.mailgun\.org).{0,50}?){2}
+  $SEC101/026.MailgunApiKey=(?is)((^|[^0-9a-z\-])(?<secret>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8}).{0,50}?|[^0-9a-z](?<id>[0-9a-z]+?\.mailgun\.org).{0,50}?){2}
   $SEC101/027.MailChimpApiKey=\b(?<refine>(?<secret>[0-9a-f]{32}-us[0-9]{12}))
   $SEC101/028.PlaintextPassword=(?i)ConvertTo-SecureString\s*(-[S]tring)?\s*["'](?<secret>[^"')(]*)["']
   $SEC101/031.NuGetApiKey=\b(?<refine>(?<secret>oy2[0-9a-z]{43}))(^[0-9a-z]|$)
-  $SEC101/041.RabbitMqConnectionString=(?i)(?<refine>amqps?:\/\/(?<account>[^:]+):(?<secret>[^@]+)@(?<host>[\w_\-\:]+)\/(?<resource>[\w]+))([^0-9a-z]|$)
+  $SEC101/041.RabbitMqConnectionString=(?i)(?<refine>amqps?:\/\/(?<id>[^:]+):(?<secret>[^@]+)@(?<host>[\w_\-\:]+)\/(?<resource>[\w]+))([^0-9a-z]|$)
   $SEC101/042.DynatraceToken=\b(?<refine>dt0(?i)[a-z]{1}[0-9]{2}\.[0-9A-Z]{24}\.[0-9A-Z]{64})
   $SEC101/043.ShopifySharedSecret=\b(?<refine>shpss_(?i)[0-9a-f]{32})
   $SEC101/044.ShopifyAccessToken=\b(?<refine>(shpat|shpca|shppa)_(?i)[0-9a-f]{32})
-  $SEC101/045.PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<account>[^,;"<\s]+)|(password|pwd)\s*=\s*(?<secret>[^,;"<\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+)))?
+  $SEC101/045.PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<id>[^,;"<\s]+)|(password|pwd)\s*=\s*(?<secret>[^,;"<\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+)))?
   $SEC101/046.SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*[^;"<]{0,50}|(initial catalog|database)\s*=\s*[^;"<]{0,50}|(user id|uid)\s*=\s*[^;"<]{0,50}|(password|pwd)\s*=\s*[^;"<]{0,50}).+?){4}
-  $SEC101/046.SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;"<]+);(((database\s*=\s*(?<database>[^;"<]{1,128}))|(user\s*=\s*(?<account>[^@]+)@[^;"<]+)|(password\s*=\s*(?<secret>[^;"<]+))).{1,50}?){3}
-  $SEC101/046.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;"<]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<account>[^"]+)",\s*"(?<secret>[^"]+)"
-  $SEC101/047.MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<account>[a-z\@\-]{1,120})(?i))|(Pwd=(?<secret>[^;"]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
-  $SEC101/047.MySqlConnectionStringPlainJdbc=(jdbc:mysql:\/\/(?<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?<url>[^,(]+),\s*"(?<account>[\w@-]{1,200})",\s*"(?<secret>[^"';<>=]{7,200})"
-  $SEC101/048.CloudantConnectionStringPython=(?is)cloudant\s*\(\s*"(?<account>[\w-]+)"\s*\,\s*"(?<secret>[\w]{64})"\s*\,\s*.{0,200}url="(?<uri>https:\/\/[\w.-]+\.cloudant.com)
+  $SEC101/046.SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;"<]+);(((database\s*=\s*(?<database>[^;"<]{1,128}))|(user\s*=\s*(?<id>[^@]+)@[^;"<]+)|(password\s*=\s*(?<secret>[^;"<]+))).{1,50}?){3}
+  $SEC101/046.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;"<]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<id>[^"]+)",\s*"(?<secret>[^"]+)"
+  $SEC101/047.MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<id>[a-z\@\-]{1,120})(?i))|(Pwd=(?<secret>[^;"]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
+  $SEC101/047.MySqlConnectionStringPlainJdbc=(jdbc:mysql:\/\/(?<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?<url>[^,(]+),\s*"(?<id>[\w@-]{1,200})",\s*"(?<secret>[^"';<>=]{7,200})"
+  $SEC101/048.CloudantConnectionStringPython=(?is)cloudant\s*\(\s*"(?<id>[\w-]+)"\s*\,\s*"(?<secret>[\w]{64})"\s*\,\s*.{0,200}url="(?<uri>https:\/\/[\w.-]+\.cloudant.com)
   $SEC101/048.CloudantConnectionStringUrl=(?<uri>(?i)https:\/\/([\w-]{1,63}\.)?[\w-]{1,63}:([\w]{64}|[a-z]{24})@[\w-]{1,50}\.cloudant\.com)
-  $SEC101/049.CredentialObjectConstructor=(PSCredential|SqlCredential)\s*\(\s*"(?<account>[^"]*)"\s*,\s*"(?<secret>[^"]*)"
-  $SEC101/049.CredentialObjectInitializer=(?s)(PSCredential|SqlCredential)\s*\(\)\s*{\s*.{0,50}User(Name|Id)\s*=\s*"(?<account>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<secret>[^"]*)"
-  $SEC101/050.MongoDbConnectionString=(?i)mongodb([^:]{0,50})?:\/\/(?<account>[0-9a-z]+):(?<secret>[^@]+)@(?<host>[^\/;"<]+)
-  $SEC101/051.GpgCredential=(?is)gpg[._-](gen_key_input|sign|decrypt_file)\s*\(\s*(name_email\s*=\s*["'](?<account>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?<secret>[^"']*)["']
-  $SEC101/053.GoogleServiceAccountKeyConsoleFormat="private_key":\s*"-----BEGIN PRIVATE KEY-----\\n(?s)(?<secret>[^"]+)(?-s)\\n-----END PRIVATE KEY-----\\n(?s).{1,200}(?-s)"client_id"\s*:\s*"(?<account>[\w.-]+)"
+  $SEC101/049.CredentialObjectConstructor=(PSCredential|SqlCredential)\s*\(\s*"(?<id>[^"]*)"\s*,\s*"(?<secret>[^"]*)"
+  $SEC101/049.CredentialObjectInitializer=(?s)(PSCredential|SqlCredential)\s*\(\)\s*{\s*.{0,50}User(Name|Id)\s*=\s*"(?<id>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<secret>[^"]*)"
+  $SEC101/050.MongoDbConnectionString=(?i)mongodb([^:]{0,50})?:\/\/(?<id>[0-9a-z]+):(?<secret>[^@]+)@(?<host>[^\/;"<]+)
+  $SEC101/051.GpgCredentials=(?is)gpg[._-](gen_key_input|sign|decrypt_file)\s*\(\s*(name_email\s*=\s*["'](?<id>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?<secret>[^"']*)["']
+  $SEC101/053.GoogleServiceAccountKeyConsoleFormat="private_key":\s*"-----BEGIN PRIVATE KEY-----\\n(?s)(?<secret>[^"]+)(?-s)\\n-----END PRIVATE KEY-----\\n(?s).{1,200}(?-s)"client_id"\s*:\s*"(?<id>[\w.-]+)"
   $SEC101/053.GoogleServiceAccountKeyConsoleRestFormat="name": "projects\/[\w-]+\/serviceAccounts\/[\w@.-]+\/keys\/(?<secret>[^"]+)",
-  $SEC101/054.AlibabaAccessKey=\b(?<account>LTAI([a-zA-Z0-9]{12}|[a-zA-Z0-9]{20}))\b(?s).{0,50}(?-s)\b(?<secret>[\w]{30})\b
-  $SEC101/102.AdoPat=\b(?<pat>[2-7a-z]{52})(\b|$)
+  $SEC101/054.AlibabaAccessKey=\b(?<id>LTAI([a-zA-Z0-9]{12}|[a-zA-Z0-9]{20}))\b(?s).{0,50}(?-s)\b(?<secret>[\w]{30})\b
+  $SEC101/102.AdoPat=\b(?<secret>[2-7a-z]{52})(\b|$)
   
