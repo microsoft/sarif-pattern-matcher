@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/045",
-              "name": "DoNotExposePlaintextSecrets/PostgreSqlConnectionString",
+              "id": "SEC101/036",
+              "name": "DoNotExposePlaintextSecrets/MySqlConnectionString",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -22,14 +22,17 @@
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
-                "Ado": {
+                "Odbc": {
+                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                },
+                "Jdbc": {
                   "text": "'{0}' contains {1}{2}{3}{4}{5}."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             },
             {
-              "id": "SEC101/046",
+              "id": "SEC101/037",
               "name": "DoNotExposePlaintextSecrets/SqlConnectionString",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
@@ -51,8 +54,8 @@
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             },
             {
-              "id": "SEC101/047",
-              "name": "DoNotExposePlaintextSecrets/MySqlConnectionString",
+              "id": "SEC101/038",
+              "name": "DoNotExposePlaintextSecrets/PostgreSqlConnectionString",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -60,10 +63,7 @@
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
-                "Odbc": {
-                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
-                },
-                "Jdbc": {
+                "Ado": {
                   "text": "'{0}' contains {1}{2}{3}{4}{5}."
                 }
               },
@@ -79,185 +79,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/045",
+          "ruleId": "SEC101/036",
           "ruleIndex": 0,
           "level": "note",
           "message": {
-            "id": "Ado",
-            "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO PostgreSQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 30,
-                  "startColumn": 1,
-                  "endLine": 30,
-                  "endColumn": 97,
-                  "charOffset": 2752,
-                  "charLength": 96,
-                  "snippet": {
-                    "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database]",
-            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database][secret=your-password]",
-            "ValidationFingerprintHash/v1": "13d576ae0015f206d780b428702eb5db1c7a1a9d1dddc00d9cd45244766fac8a"
-          },
-          "rank": 46.27
-        },
-        {
-          "ruleId": "SEC101/045",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Ado",
-            "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO PostgreSQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 32,
-                  "startColumn": 22,
-                  "endLine": 32,
-                  "endColumn": 116,
-                  "charOffset": 2892,
-                  "charLength": 94,
-                  "snippet": {
-                    "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=password_11;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database]",
-            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database][secret=password_11]",
-            "ValidationFingerprintHash/v1": "bf6c9dd12d51a4b0403ad7fb5186d42a4ca2eaad93470aef8d9f2499571669ba"
-          },
-          "rank": 44.23
-        },
-        {
-          "ruleId": "SEC101/046",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 30,
-                  "startColumn": 1,
-                  "endLine": 30,
-                  "endColumn": 97,
-                  "charOffset": 2752,
-                  "charLength": 96,
-                  "snippet": {
-                    "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=your-host][id=username@servername][platform=SqlOnPremise][resource=your-database]",
-            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][resource=your-database][secret=your-password]",
-            "ValidationFingerprintHash/v1": "7dfa5ccb4f4e5c7b00d778adcf153a6093e2f83afaed3e57f1d8d3f592ede760"
-          },
-          "rank": 46.27
-        },
-        {
-          "ruleId": "SEC101/046",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Odbc",
-            "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 32,
-                  "startColumn": 22,
-                  "endLine": 32,
-                  "endColumn": 116,
-                  "charOffset": 2892,
-                  "charLength": 94,
-                  "snippet": {
-                    "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=password_11;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=your-host][id=username@servername][platform=SqlOnPremise][resource=your-database]",
-            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][resource=your-database][secret=password_11]",
-            "ValidationFingerprintHash/v1": "5f715907a3363e3a57f6bf3ecf76e7806a223d0f5cc81c9a491da62a7a0becc3"
-          },
-          "rank": 44.23
-        },
-        {
-          "ruleId": "SEC101/047",
-          "ruleIndex": 2,
-          "level": "note",
-          "message": {
-            "id": "Odbc",
-            "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
+              "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC MySQL connection string",
@@ -269,7 +97,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -294,13 +122,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/047",
-          "ruleIndex": 2,
+          "ruleId": "SEC101/036",
+          "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
+              "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC MySQL connection string",
@@ -312,7 +140,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -337,13 +165,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/047",
-          "ruleIndex": 2,
+          "ruleId": "SEC101/036",
+          "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
+              "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC MySQL connection string",
@@ -355,7 +183,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -380,13 +208,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/047",
-          "ruleIndex": 2,
+          "ruleId": "SEC101/036",
+          "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
+              "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC MySQL connection string",
@@ -398,7 +226,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -423,13 +251,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/047",
-          "ruleIndex": 2,
+          "ruleId": "SEC101/036",
+          "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
+              "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC MySQL connection string",
@@ -441,7 +269,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -466,13 +294,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/047",
-          "ruleIndex": 2,
+          "ruleId": "SEC101/036",
+          "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
+              "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC MySQL connection string",
@@ -484,7 +312,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -509,13 +337,13 @@
           "rank": 46.27
         },
         {
-          "ruleId": "SEC101/047",
-          "ruleIndex": 2,
+          "ruleId": "SEC101/036",
+          "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
+              "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC MySQL connection string",
@@ -527,7 +355,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -552,13 +380,13 @@
           "rank": 44.23
         },
         {
-          "ruleId": "SEC101/047",
-          "ruleIndex": 2,
+          "ruleId": "SEC101/036",
+          "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
+              "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
               "",
               "JDBC MySQL connection string",
@@ -570,7 +398,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -595,13 +423,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/047",
-          "ruleIndex": 2,
+          "ruleId": "SEC101/036",
+          "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
+              "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
               "",
               "JDBC MySQL connection string",
@@ -613,7 +441,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -638,13 +466,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/047",
-          "ruleIndex": 2,
+          "ruleId": "SEC101/036",
+          "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [
-              "SEC101_047.MySqlConnectionString.ps1",
+              "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
               "",
               "JDBC MySQL connection string",
@@ -656,7 +484,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.MySqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -679,6 +507,178 @@
             "ValidationFingerprintHash/v1": "39722c758e6a1efd7d569b3c4dd58012c78aca5abd8ae36a472ccbb07de98b77"
           },
           "rank": 56.71
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_036.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 1,
+                  "endLine": 30,
+                  "endColumn": 97,
+                  "charOffset": 2752,
+                  "charLength": 96,
+                  "snippet": {
+                    "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=your-host][id=username@servername][platform=SqlOnPremise][resource=your-database]",
+            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][resource=your-database][secret=your-password]",
+            "ValidationFingerprintHash/v1": "7dfa5ccb4f4e5c7b00d778adcf153a6093e2f83afaed3e57f1d8d3f592ede760"
+          },
+          "rank": 46.27
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Odbc",
+            "arguments": [
+              "SEC101_036.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 22,
+                  "endLine": 32,
+                  "endColumn": 116,
+                  "charOffset": 2892,
+                  "charLength": 94,
+                  "snippet": {
+                    "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=password_11;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=your-host][id=username@servername][platform=SqlOnPremise][resource=your-database]",
+            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][resource=your-database][secret=password_11]",
+            "ValidationFingerprintHash/v1": "5f715907a3363e3a57f6bf3ecf76e7806a223d0f5cc81c9a491da62a7a0becc3"
+          },
+          "rank": 44.23
+        },
+        {
+          "ruleId": "SEC101/038",
+          "ruleIndex": 2,
+          "level": "note",
+          "message": {
+            "id": "Ado",
+            "arguments": [
+              "SEC101_036.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 1,
+                  "endLine": 30,
+                  "endColumn": 97,
+                  "charOffset": 2752,
+                  "charLength": 96,
+                  "snippet": {
+                    "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database]",
+            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database][secret=your-password]",
+            "ValidationFingerprintHash/v1": "13d576ae0015f206d780b428702eb5db1c7a1a9d1dddc00d9cd45244766fac8a"
+          },
+          "rank": 46.27
+        },
+        {
+          "ruleId": "SEC101/038",
+          "ruleIndex": 2,
+          "level": "note",
+          "message": {
+            "id": "Ado",
+            "arguments": [
+              "SEC101_036.MySqlConnectionString.ps1",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 22,
+                  "endLine": 32,
+                  "endColumn": 116,
+                  "charOffset": 2892,
+                  "charLength": 94,
+                  "snippet": {
+                    "text": "Server=your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=password_11;"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database]",
+            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][port=3306][resource=your-database][secret=password_11]",
+            "ValidationFingerprintHash/v1": "bf6c9dd12d51a4b0403ad7fb5186d42a4ca2eaad93470aef8d9f2499571669ba"
+          },
+          "rank": 44.23
         }
       ],
       "columnKind": "utf16CodeUnits"
