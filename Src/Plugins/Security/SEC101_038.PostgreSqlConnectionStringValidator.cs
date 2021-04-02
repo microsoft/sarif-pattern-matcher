@@ -149,6 +149,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     }
                 }
 
+                if (e is TimeoutException)
+                {
+                    // default timeout is more than long enough to establish a connection, if we
+                    // timeout, it's more likely that the server silently rejected our attempt to connect
+                    return ReturnUnknownAuthorization(ref message, asset: host);
+                }
+
                 return ReturnUnhandledException(ref message, e.InnerException ?? e, asset: host);
             }
 

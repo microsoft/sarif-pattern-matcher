@@ -13,7 +13,7 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/045",
+              "id": "SEC101/038",
               "name": "DoNotExposePlaintextSecrets/PostgreSqlConnectionString",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
@@ -38,13 +38,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/045",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
-              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "SEC101_038.PostgreSqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO PostgreSQL connection string",
@@ -56,7 +56,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -81,13 +81,13 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/045",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
-              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "SEC101_038.PostgreSqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO PostgreSQL connection string",
@@ -99,7 +99,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -124,13 +124,13 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/045",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
-              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "SEC101_038.PostgreSqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO PostgreSQL connection string",
@@ -142,7 +142,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -167,13 +167,13 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/045",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
-              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "SEC101_038.PostgreSqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO PostgreSQL connection string",
@@ -185,7 +185,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -210,13 +210,13 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/045",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
-              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "SEC101_038.PostgreSqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO PostgreSQL connection string",
@@ -228,7 +228,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -253,13 +253,13 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/045",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
-              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "SEC101_038.PostgreSqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO PostgreSQL connection string",
@@ -271,7 +271,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -296,13 +296,13 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/045",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
-              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "SEC101_038.PostgreSqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO PostgreSQL connection string",
@@ -314,7 +314,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -339,13 +339,13 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/045",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
-              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "SEC101_038.PostgreSqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO PostgreSQL connection string",
@@ -357,7 +357,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -382,13 +382,13 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/045",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
-              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "SEC101_038.PostgreSqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO PostgreSQL connection string",
@@ -400,7 +400,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -425,13 +425,13 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/045",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
-              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "SEC101_038.PostgreSqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO PostgreSQL connection string",
@@ -443,7 +443,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -468,13 +468,13 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/045",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Ado",
             "arguments": [
-              "SEC101_045.PostgreSqlConnectionString.ps1",
+              "SEC101_038.PostgreSqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO PostgreSQL connection string",
@@ -486,7 +486,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostgreSqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
