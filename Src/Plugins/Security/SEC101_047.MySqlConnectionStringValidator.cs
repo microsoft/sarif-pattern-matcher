@@ -62,7 +62,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("account", out string account) ||
+            if (!groups.TryGetNonEmptyValue("id", out string id) ||
                 !groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
@@ -74,7 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 
             fingerprint = new Fingerprint()
             {
-                Account = account,
+                Id = id,
                 Secret = secret,
             };
 
@@ -100,9 +100,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 return exclusionResult;
             }
 
+            fingerprint.Port = port;
             fingerprint.Host = host.Replace("\"", string.Empty).Replace(",", ";");
             fingerprint.Resource = database;
-            fingerprint.Port = port;
             fingerprint.Platform = SharedUtilities.GetDatabasePlatformFromHost(fingerprint.Host, out _);
 
             return ValidationState.Unknown;
@@ -115,7 +115,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             string host = fingerprint.Host;
             string database = fingerprint.Resource;
             string port = fingerprint.Port;
-            string account = fingerprint.Account;
+            string account = fingerprint.Id;
             string password = fingerprint.Secret;
 
             if (string.IsNullOrWhiteSpace(host) ||

@@ -43,12 +43,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationState.NoMatch;
             }
 
-            // We might not succuessfully get account/client id
-            groups.TryGetNonEmptyValue("account", out string account);
+            // We might not successfully retrieve the account id.
+            groups.TryGetNonEmptyValue("id", out string id);
 
             fingerprint = new Fingerprint()
             {
-                Account = account,
+                Id = id,
                 Secret = secret,
             };
 
