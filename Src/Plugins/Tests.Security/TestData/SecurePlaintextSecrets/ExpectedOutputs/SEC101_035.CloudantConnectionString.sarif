@@ -13,7 +13,7 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/048",
+              "id": "SEC101/035",
               "name": "DoNotExposePlaintextSecrets/CloudantConnectionString",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
@@ -41,13 +41,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/048",
+          "ruleId": "SEC101/035",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Python",
             "arguments": [
-              "SEC101_048.CloudantConnectionString.ps1",
+              "SEC101_035.CloudantConnectionString.ps1",
               "an apparent ",
               "",
               "Cloudant connection string",
@@ -59,7 +59,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_048.CloudantConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_035.CloudantConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -84,13 +84,13 @@
           "rank": 56.09
         },
         {
-          "ruleId": "SEC101/048",
+          "ruleId": "SEC101/035",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Url",
             "arguments": [
-              "SEC101_048.CloudantConnectionString.ps1",
+              "SEC101_035.CloudantConnectionString.ps1",
               "an apparent ",
               "",
               "Cloudant connection string",
@@ -102,7 +102,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_048.CloudantConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_035.CloudantConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -126,13 +126,13 @@
           }
         },
         {
-          "ruleId": "SEC101/048",
+          "ruleId": "SEC101/035",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Url",
             "arguments": [
-              "SEC101_048.CloudantConnectionString.ps1",
+              "SEC101_035.CloudantConnectionString.ps1",
               "an apparent ",
               "",
               "Cloudant connection string",
@@ -144,7 +144,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_048.CloudantConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_035.CloudantConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
