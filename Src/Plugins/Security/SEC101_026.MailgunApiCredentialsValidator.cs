@@ -13,9 +13,9 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class MailgunApiKeyValidator : ValidatorBase
+    public class MailgunApiCredentialsValidator : ValidatorBase
     {
-        internal static MailgunApiKeyValidator Instance = new MailgunApiKeyValidator();
+        internal static MailgunApiCredentialsValidator Instance = new MailgunApiCredentialsValidator();
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,

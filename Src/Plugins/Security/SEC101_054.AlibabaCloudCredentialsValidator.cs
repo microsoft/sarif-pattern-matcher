@@ -16,17 +16,17 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class AlibabaAccessKeyValidator : ValidatorBase
+    public class AlibabaCloudCredentialsValidator : ValidatorBase
     {
-        internal static AlibabaAccessKeyValidator Instance;
+        internal static AlibabaCloudCredentialsValidator Instance;
 
         private const string KeyNotFound = "InvalidAccessKeyId.NotFound";
         private const string InvalidSecret = "SDK.InvalidAccessKeySecret";
         private const string ProductKeyInvalidFormat = "The productKey format is incorrect.";
 
-        static AlibabaAccessKeyValidator()
+        static AlibabaCloudCredentialsValidator()
         {
-            Instance = new AlibabaAccessKeyValidator();
+            Instance = new AlibabaCloudCredentialsValidator();
         }
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
