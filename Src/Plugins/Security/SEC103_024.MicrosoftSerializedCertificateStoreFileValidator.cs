@@ -10,30 +10,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public static class MicrosoftSerializedCertificateStoreFileValidator
     {
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
 #pragma warning disable IDE0060 // Remove unused parameter
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
 #pragma warning restore IDE0060// Remove unused parameter
-                                           ref string fingerprintText,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
-            string thumbprint = null;
+            fingerprint = default;
 
-            string state =
-                CertificateHelper.TryLoadCertificateCollection(matchedPattern,
-                                                               ref thumbprint,
+            return CertificateHelper.TryLoadCertificateCollection(matchedPattern,
+                                                               ref fingerprint,
                                                                ref message);
-
-            if (thumbprint != null)
-            {
-                fingerprintText = new Fingerprint()
-                {
-                    Thumbprint = thumbprint,
-                }.ToString();
-            }
-
-            return state;
         }
     }
 }

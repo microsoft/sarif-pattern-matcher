@@ -91,9 +91,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Stripe]",
-            "ValidationFingerprint/v1": "[key=sk_test_01234567890123456789012345678901]",
-            "ValidationFingerprintHash/v1": "7a343129a5469e625344b48a5ff92e3ea97c4388f932872eefd085144502959d"
-          }
+            "ValidationFingerprint/v1": "[secret=sk_test_01234567890123456789012345678901]",
+            "ValidationFingerprintHash/v1": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567"
+          },
+          "rank": 54.59
         },
         {
           "ruleId": "SEC101/016",
@@ -133,9 +134,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Stripe]",
-            "ValidationFingerprint/v1": "[key=sk_live_01234567890123456789012345678901]",
-            "ValidationFingerprintHash/v1": "e7818db412638ca2c5eacfe7b4e7951d89f0d65e2ea6c424258f2de4291af395"
-          }
+            "ValidationFingerprint/v1": "[secret=sk_live_01234567890123456789012345678901]",
+            "ValidationFingerprintHash/v1": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91"
+          },
+          "rank": 56.01
         },
         {
           "ruleId": "SEC101/019",
@@ -175,9 +177,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Picatic]",
-            "ValidationFingerprint/v1": "[key=sk_test_01234567890123456789012345678901]",
-            "ValidationFingerprintHash/v1": "7a343129a5469e625344b48a5ff92e3ea97c4388f932872eefd085144502959d"
-          }
+            "ValidationFingerprint/v1": "[secret=sk_test_01234567890123456789012345678901]",
+            "ValidationFingerprintHash/v1": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567"
+          },
+          "rank": 54.59
         },
         {
           "ruleId": "SEC101/019",
@@ -217,9 +220,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Picatic]",
-            "ValidationFingerprint/v1": "[key=sk_live_01234567890123456789012345678901]",
-            "ValidationFingerprintHash/v1": "e7818db412638ca2c5eacfe7b4e7951d89f0d65e2ea6c424258f2de4291af395"
-          }
+            "ValidationFingerprint/v1": "[secret=sk_live_01234567890123456789012345678901]",
+            "ValidationFingerprintHash/v1": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91"
+          },
+          "rank": 56.01
         }
       ],
       "columnKind": "utf16CodeUnits"

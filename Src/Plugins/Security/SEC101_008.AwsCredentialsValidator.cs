@@ -30,21 +30,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             RegexEngine.IsMatch(string.Empty, AwsUserExpression);
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
                                  ref failureLevel,
-                                 ref fingerprint,
-                                 ref message);
+                                 ref message,
+                                 out fingerprint);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -52,40 +52,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
+            fingerprint = default;
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("key", out string key))
+                !groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
-            fingerprintText = new Fingerprint
+            fingerprint = new Fingerprint
             {
                 Id = id,
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.Aws),
-            }.ToString();
+            };
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            var fingerprint = new Fingerprint(fingerprintText);
-
             string id = fingerprint.Id;
-            string key = fingerprint.Key;
+            string secret = fingerprint.Secret;
 
             try
             {
-                var iamClient = new AmazonIdentityManagementServiceClient(id, key);
+                var iamClient = new AmazonIdentityManagementServiceClient(id, secret);
 
                 GetAccountAuthorizationDetailsRequest request;
                 GetAccountAuthorizationDetailsResponse response;
@@ -114,26 +113,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             message = $"the compromised AWS identity is '{iamUser}";
                         }
 
-                        return nameof(ValidationState.AuthorizedError);
+                        return ValidationState.AuthorizedError;
                     }
 
                     case "InvalidClientTokenId":
                     case "SignatureDoesNotMatch":
                     {
-                        return nameof(ValidationState.NoMatch);
+                        return ValidationState.NoMatch;
                     }
                 }
 
                 message = $"An unexpected exception was caught attempting to authenticate AWS id '{id}': {e.Message}";
-                return nameof(ValidationState.Unknown);
+                return ValidationState.Unknown;
             }
             catch (Exception e)
             {
                 message = $"An unexpected exception was caught attempting to authentic AWS id '{id}': {e.Message}";
-                return nameof(ValidationState.Unknown);
+                return ValidationState.Unknown;
             }
 
-            return nameof(ValidationState.AuthorizedError);
+            return ValidationState.AuthorizedError;
         }
 
         private string BuildAuthorizedMessage(string id, GetAccountAuthorizationDetailsResponse response)

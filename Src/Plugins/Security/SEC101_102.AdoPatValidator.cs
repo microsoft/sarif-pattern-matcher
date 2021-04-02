@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
@@ -78,29 +79,32 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
 #pragma warning disable IDE0060 // Remove unused parameter
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprintText,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
 #pragma warning restore IDE0060
+            fingerprint = default;
+            if (!groups.TryGetNonEmptyValue("pat", out string pat))
+            {
+                return ValidationState.NoMatch;
+            }
 
-            string pat = matchedPattern;
-
-            string state =
+            ValidationState state =
                 IsChecksumValid(pat, ChecksumPat) ||
                 IsChecksumValid(pat, ChecksumAdoAppSecret) ?
-                    nameof(ValidationState.Unknown) :
-                    nameof(ValidationState.NoMatch);
+                    ValidationState.Unknown :
+                    ValidationState.NoMatch;
 
-            if (state != nameof(ValidationState.NoMatch))
+            if (state != ValidationState.NoMatch)
             {
-                fingerprintText = new Fingerprint()
+                fingerprint = new Fingerprint()
                 {
-                    PersonalAccessToken = pat,
+                    Secret = pat,
                     Platform = nameof(AssetPlatform.AzureDevOps),
-                }.ToString();
+                };
             }
 
             return state;

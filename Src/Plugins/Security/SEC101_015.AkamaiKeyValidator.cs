@@ -3,24 +3,22 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
-using Newtonsoft.Json;
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class MailChimpApiKeyValidator : ValidatorBase
+    public class AkamaiCredentialsValidator : ValidatorBase
     {
-        internal static MailChimpApiKeyValidator Instance;
+        internal static AkamaiCredentialsValidator Instance;
 
-        static MailChimpApiKeyValidator()
+        static AkamaiCredentialsValidator()
         {
-            Instance = new MailChimpApiKeyValidator();
+            Instance = new AkamaiCredentialsValidator();
         }
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
@@ -52,58 +50,66 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetNonEmptyValue("secret", out string secret))
+            if (!groups.TryGetNonEmptyValue("id", out string id) ||
+                !groups.TryGetNonEmptyValue("host", out string host) ||
+                !groups.TryGetNonEmptyValue("secret", out string secret) ||
+                !groups.TryGetNonEmptyValue("resource", out string resource))
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint()
             {
+                Id = id,
                 Secret = secret,
-                Platform = nameof(AssetPlatform.MailChimp),
+                Resource = resource,
+                Host = host,
             };
 
             return ValidationState.Unknown;
         }
 
-        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                       ref string message,
-                                                       ref Dictionary<string, string> options)
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
+            string id = fingerprint.Id;
+            string host = fingerprint.Host;
             string secret = fingerprint.Secret;
+            string resource = fingerprint.Resource;
 
             try
             {
-                using HttpClient client = CreateHttpClient();
-                string[] keys = secret.Split('-');
+                string timestamp = $"{DateTime.UtcNow:yyyyMMddTHH:mm:ss}";
+                string header = $"client_token={id};access_token={resource};timestamp={timestamp}+0000;nonce={Guid.NewGuid()}";
+                string textToSign = $"EG1-HMAC-SHA256 {header};";
 
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Basic", keys[0]);
+                // Generating signing key based on timestamp.
+                using var hmac = new HMACSHA256(Convert.FromBase64String(secret));
+                string signingKey = Convert.ToBase64String(hmac.ComputeHash(Convert.FromBase64String(timestamp)));
 
-                using HttpResponseMessage response = client
-                    .GetAsync($"https://{keys[1]}.api.mailchimp.com/3.0/?fields=account_name", HttpCompletionOption.ResponseHeadersRead)
+                // Generating signature based on textToSign and signingKey.
+                using var hmacSignature = new HMACSHA256(Convert.FromBase64String(signingKey));
+                string signature = Convert.ToBase64String(hmacSignature.ComputeHash(Convert.FromBase64String(textToSign)));
+
+                using HttpClient httpClient = CreateHttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    $"EG1-HMAC-SHA256",
+                    $"{header};signature={signature}");
+
+                using HttpResponseMessage httpResponse = httpClient
+                    .GetAsync($"{host}/ccu/v2/queues/default")
                     .GetAwaiter()
                     .GetResult();
-
-                switch (response.StatusCode)
+                switch (httpResponse.StatusCode)
                 {
-                    case HttpStatusCode.OK:
+                    case System.Net.HttpStatusCode.OK:
                     {
-                        string content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                        Account account = JsonConvert.DeserializeObject<Account>(content);
-
-                        return ReturnAuthorizedAccess(ref message, asset: account.AccountName);
-                    }
-
-                    case HttpStatusCode.Unauthorized:
-                    {
-                        return ValidationState.Unauthorized;
+                        return ValidationState.AuthorizedError;
                     }
 
                     default:
                     {
-                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
-                        break;
+                        message = CreateUnexpectedResponseCodeMessage(httpResponse.StatusCode);
+                        return ValidationState.Unknown;
                     }
                 }
             }
@@ -111,14 +117,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
-        }
-
-        private class Account
-        {
-            [JsonProperty("account_name")]
-            public string AccountName { get; set; }
         }
     }
 }

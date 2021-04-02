@@ -21,21 +21,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new GoogleApiKeyValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
                                  ref failureLevel,
-                                 ref fingerprint,
-                                 ref message);
+                                 ref message,
+                                 out fingerprint);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -43,22 +43,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
-            fingerprintText = new Fingerprint
+            fingerprint = new Fingerprint
             {
-                Key = matchedPattern,
+                Secret = matchedPattern,
                 Platform = nameof(AssetPlatform.Google),
-            }.ToString();
+            };
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
@@ -72,9 +72,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             const string EnableBilling = "RequestDenied: You must enable Billing on the Google Cloud Project at https://console.cloud.google.com/project/_/billing/enable Learn more at https://developers.google.com/maps/gmp-get-started";
             const string Deleted = "RequestDenied: This API project was not found. This API project may have been deleted or may not be authorized to use this API. You may need to enable the API under APIs in the console";
 
-            var fingerprint = new Fingerprint(fingerprintText);
-
-            string apiKey = fingerprint.Key;
+            string apiKey = fingerprint.Secret;
 
             var request = new DirectionsRequest
             {
@@ -95,19 +93,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         e.Message.StartsWith(IPNotAuthorized) ||
                         e.Message.StartsWith(RefererRestrictions))
                     {
-                        return nameof(ValidationState.Unauthorized);
+                        return ValidationState.Unauthorized;
                     }
 
                     if (e.Message.StartsWith(Deleted) ||
                         e.Message.StartsWith(Expired))
                     {
-                        return nameof(ValidationState.Expired);
+                        return ValidationState.Expired;
                     }
 
                     if (e.Message.StartsWith(EnableBilling))
                     {
                         // The API is enabled but billing has not been configured.
-                        return nameof(ValidationState.AuthorizedError);
+                        return ValidationState.AuthorizedError;
                     }
 
                     if (e.Message.StartsWith(KeyNotAuthorized) ||
@@ -116,21 +114,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         // What this condition means is that the API key is recognized.
                         // It is not authorized for the Directions API, but this isn't
                         // what we're verifying here.
-                        return nameof(ValidationState.AuthorizedError);
+                        return ValidationState.AuthorizedError;
                     }
 
                     if (e.Message.StartsWith(Invalid))
                     {
-                        return nameof(ValidationState.NoMatch);
+                        return ValidationState.NoMatch;
                     }
                 }
 
                 message = $"An unexpected exception was caught attempting to validate api key: {e.Message}";
-                return nameof(ValidationState.Unknown);
+                return ValidationState.Unknown;
             }
 
             // This condition indicates the API key is recognized and can access Directions API.
-            return nameof(ValidationState.AuthorizedError);
+            return ValidationState.AuthorizedError;
         }
     }
 }

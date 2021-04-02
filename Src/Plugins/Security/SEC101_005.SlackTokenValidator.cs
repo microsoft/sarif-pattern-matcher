@@ -16,21 +16,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static SlackTokenValidator Instance = new SlackTokenValidator();
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
                                  ref failureLevel,
-                                 ref fingerprint,
-                                 ref message);
+                                 ref message,
+                                 out fingerprint);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -38,31 +38,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
-            fingerprintText = new Fingerprint
+            fingerprint = new Fingerprint
             {
-                Key = matchedPattern,
+                Secret = matchedPattern,
                 Platform = nameof(AssetPlatform.Slack),
-            }.ToString();
+            };
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            var fingerprint = new Fingerprint(fingerprintText);
-
             var client = new WebClient();
             var data = new NameValueCollection();
 
-            data["token"] = fingerprint.Key;
+            data["token"] = fingerprint.Secret;
 
             byte[] bytes = client.UploadValues("https://slack.com/api/auth.test",
                                                   "POST",
@@ -72,26 +70,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             if (json.Contains("invalid_auth"))
             {
-                return nameof(ValidationState.Unauthorized);
+                return ValidationState.Unauthorized;
             }
 
             AuthTestResponse response = JsonSerializer.Deserialize<AuthTestResponse>(json);
 
             switch (response.Error)
             {
-                case "token_revoked": { return nameof(ValidationState.Expired); }
-                case "invalid_auth": { return nameof(ValidationState.Unauthorized); }
+                case "token_revoked": { return ValidationState.Expired; }
+                case "invalid_auth": { return ValidationState.Unauthorized; }
             }
 
             if (!string.IsNullOrEmpty(response.Error))
             {
                 message = $"An unexpected error was observed " +
                           $"attempting to validate token: '{response.Error}'";
-                return nameof(ValidationState.Unknown);
+                return ValidationState.Unknown;
             }
 
             message = BuildAuthTestResponseMessage(response);
-            return nameof(ValidationState.AuthorizedError);
+            return ValidationState.AuthorizedError;
         }
 
         private string BuildAuthTestResponseMessage(AuthTestResponse response)

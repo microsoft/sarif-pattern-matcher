@@ -32,21 +32,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             RegexEngine = RE2Regex.Instance;
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
                                  ref failureLevel,
-                                 ref fingerprint,
-                                 ref message);
+                                 ref message,
+                                 out fingerprint);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -54,22 +54,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
+            fingerprint = default;
             if (!groups.TryGetNonEmptyValue("host", out string host) ||
-                !groups.TryGetNonEmptyValue("account", out string account) ||
-                !groups.TryGetNonEmptyValue("password", out string password))
+                !groups.TryGetNonEmptyValue("secret", out string secret) ||
+                !groups.TryGetNonEmptyValue("account", out string account))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             if (host == "tcp")
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
@@ -77,39 +78,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             host = DomainFilteringHelper.StandardizeLocalhostName(host);
 
-            string exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
+            ValidationState exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
 
-            if (exclusionResult == nameof(ValidationState.NoMatch))
+            if (exclusionResult == ValidationState.NoMatch)
             {
                 return exclusionResult;
             }
 
-            fingerprintText = new Fingerprint()
+            fingerprint = new Fingerprint()
             {
                 Host = host,
                 Port = port,
-                Resource = database,
+                Secret = secret,
                 Account = account,
-                Password = password,
-            }.ToString();
+                Resource = database,
+            };
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            var fingerprint = new Fingerprint(fingerprintText, false);
             string host = fingerprint.Host;
             string port = fingerprint.Port;
             string account = fingerprint.Account;
-            string password = fingerprint.Password;
+            string password = fingerprint.Secret;
             string database = fingerprint.Resource;
 
             if (DomainFilteringHelper.LocalhostList.Contains(host))
             {
-                return nameof(ValidationState.Unknown);
+                return ValidationState.Unknown;
             }
 
             var connectionStringBuilder = new StringBuilder();
@@ -152,7 +152,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e.InnerException ?? e, asset: host);
             }
 
-            return nameof(ValidationState.AuthorizedError);
+            return ValidationState.AuthorizedError;
         }
     }
 }

@@ -75,9 +75,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Npm]",
-            "ValidationFingerprint/v1": "[key=338a0fd3-7378-4ce1-8432-bbfc0f6777ca]",
-            "ValidationFingerprintHash/v1": "a32dbf216fbf08fff9da376f55efd8a93d072f7663536e355b9e24c56e56bb9f"
-          }
+            "ValidationFingerprint/v1": "[secret=338a0fd3-7378-4ce1-8432-bbfc0f6777ca]",
+            "ValidationFingerprintHash/v1": "748c862ce66f04dd431cef753972f4901ff7b960faea29c5a0df580abe855ca3"
+          },
+          "rank": 52.63
         },
         {
           "ruleId": "SEC101/017",
@@ -117,9 +118,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Npm]",
-            "ValidationFingerprint/v1": "[key=338a0fd3-7378-4ce1-8432-bbfc0f6777cb]",
-            "ValidationFingerprintHash/v1": "558b670be8d781a4ddb6d720ce8709d964f5b56328b44682248e599c985070a5"
-          }
+            "ValidationFingerprint/v1": "[secret=338a0fd3-7378-4ce1-8432-bbfc0f6777cb]",
+            "ValidationFingerprintHash/v1": "1336f4b9b15c79836867464c8d6448eaad30eacd48e0f513d9f9f97fe6280cc4"
+          },
+          "rank": 52.33
         }
       ],
       "columnKind": "utf16CodeUnits"

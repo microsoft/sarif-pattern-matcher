@@ -16,6 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             "localhost",
             "(local)",
             "127.0.0.1",
+            ".",
         };
 
         public static string StandardizeLocalhostName(string hostName)
@@ -28,11 +29,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             return hostName;
         }
 
-        public static string HostExclusion(string host, IEnumerable<string> hostList = null)
+        public static ValidationState HostExclusion(string host, IEnumerable<string> hostList = null)
         {
             if (hostList == null || !hostList.Any())
             {
-                return nameof(ValidationState.Unknown);
+                return ValidationState.Unknown;
             }
 
             string lowerHost = host.ToLower();
@@ -42,11 +43,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             {
                 if (lowerHost.Contains(hostToExclude.ToLower()))
                 {
-                    return nameof(ValidationState.NoMatch);
+                    return ValidationState.NoMatch;
                 }
             }
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
     }
 }

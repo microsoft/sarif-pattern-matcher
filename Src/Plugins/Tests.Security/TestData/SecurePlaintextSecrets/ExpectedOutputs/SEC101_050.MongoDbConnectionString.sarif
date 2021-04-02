@@ -49,7 +49,7 @@
               "",
               "MongoDb connection string",
               "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+              ""
             ]
           },
           "locations": [
@@ -63,21 +63,22 @@
                   "startLine": 1,
                   "startColumn": 1,
                   "endLine": 1,
-                  "endColumn": 67,
+                  "endColumn": 48,
                   "charOffset": 0,
-                  "charLength": 66,
+                  "charLength": 47,
                   "snippet": {
-                    "text": "mongodb://dbuser1:<password>@database.com:10250/database?ssl=true\r"
+                    "text": "mongodb://dbuser1:<password>@database.com:10250"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=dbuser1][host=database.com:10250]",
-            "ValidationFingerprint/v1": "[acct=dbuser1][host=database.com:10250][pwd=<password>]",
-            "ValidationFingerprintHash/v1": "3028affffa1468bb27dd05d7cf73297593f13bbc04351a87bdf1ff9bc1284367"
-          }
+            "AssetFingerprint/v1": "[account=dbuser1][host=database.com:10250]",
+            "ValidationFingerprint/v1": "[account=dbuser1][host=database.com:10250][secret=<password>]",
+            "ValidationFingerprintHash/v1": "c5350e0dd88a845e3b93c826b700fc3448a7688c744b9715258b4e4a1f8d7b97"
+          },
+          "rank": 44.6
         },
         {
           "ruleId": "SEC101/050",
@@ -91,7 +92,7 @@
               "",
               "MongoDb connection string",
               "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+              ""
             ]
           },
           "locations": [
@@ -105,21 +106,22 @@
                   "startLine": 3,
                   "startColumn": 1,
                   "endLine": 3,
-                  "endColumn": 56,
-                  "charOffset": 69,
-                  "charLength": 55,
+                  "endColumn": 46,
+                  "charOffset": 60,
+                  "charLength": 45,
                   "snippet": {
-                    "text": "mongodb+srv://dbuser2:<password>@database.com/database\r"
+                    "text": "mongodb+srv://dbuser2:<password>@database.com"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=dbuser2][host=database.com]",
-            "ValidationFingerprint/v1": "[acct=dbuser2][host=database.com][pwd=<password>]",
-            "ValidationFingerprintHash/v1": "db4d837ab3cbc67e77f1eace68dc1d98a244810e2c5c7a2e36fa89a4a5c743fe"
-          }
+            "AssetFingerprint/v1": "[account=dbuser2][host=database.com]",
+            "ValidationFingerprint/v1": "[account=dbuser2][host=database.com][secret=<password>]",
+            "ValidationFingerprintHash/v1": "252e59a4585064aa03dc86c7eed5f692912f66f618f8ae97eb29413e4d610779"
+          },
+          "rank": 44.6
         },
         {
           "ruleId": "SEC101/050",
@@ -133,7 +135,7 @@
               "",
               "MongoDb connection string",
               "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+              ""
             ]
           },
           "locations": [
@@ -145,23 +147,67 @@
                 },
                 "region": {
                   "startLine": 5,
-                  "startColumn": 1,
+                  "startColumn": 13,
                   "endLine": 5,
-                  "endColumn": 47,
-                  "charOffset": 127,
-                  "charLength": 46,
+                  "endColumn": 58,
+                  "charOffset": 122,
+                  "charLength": 45,
                   "snippet": {
-                    "text": "mongodb+srv://dbuser3:<password>@database.com/"
+                    "text": "mongodb+srv://dbuser3:<password>@database.com"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=dbuser3][host=database.com]",
-            "ValidationFingerprint/v1": "[acct=dbuser3][host=database.com][pwd=<password>]",
-            "ValidationFingerprintHash/v1": "1f745dcb33df5d43f70cb5bb84b69566fdae28cc3a4549f982d0cefcc414edaf"
-          }
+            "AssetFingerprint/v1": "[account=dbuser3][host=database.com]",
+            "ValidationFingerprint/v1": "[account=dbuser3][host=database.com][secret=<password>]",
+            "ValidationFingerprintHash/v1": "2a557dd7c025b72a1c0290c94ebe53f91b4b70df04bf069b623d56bf51f8bd26"
+          },
+          "rank": 44.6
+        },
+        {
+          "ruleId": "SEC101/050",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_050.MongoDbConnectionString.ps1",
+              "an apparent ",
+              "",
+              "MongoDb connection string",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.MongoDbConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 2,
+                  "endLine": 7,
+                  "endColumn": 55,
+                  "charOffset": 173,
+                  "charLength": 53,
+                  "snippet": {
+                    "text": "mongodb>mongodb+srv://dbuser4:<password>@database.com"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[account=dbuser4][host=database.com]",
+            "ValidationFingerprint/v1": "[account=dbuser4][host=database.com][secret=<password>]",
+            "ValidationFingerprintHash/v1": "c079131407d37c44f20ee3c2e2ab8acda428ef3e98a604bd5e532a6bf8e7de56"
+          },
+          "rank": 44.6
         }
       ],
       "columnKind": "utf16CodeUnits"

@@ -8,14 +8,7 @@
     <ToolCommandName>spam</ToolCommandName>
     <AssemblyName>spam</AssemblyName>
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Cli</RootNamespace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TargetFramework>net48</TargetFramework>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <PackAsTool>true</PackAsTool>    
+    <PackAsTool>true</PackAsTool>
   </PropertyGroup>
 
   <PropertyGroup Label="AssemblyAttributes">
@@ -26,7 +19,6 @@
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.7.82" />
     <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
-
   </ItemGroup>
 
   <ItemGroup>

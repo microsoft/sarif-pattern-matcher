@@ -75,9 +75,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=GitHub]",
-            "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f1812843]",
-            "ValidationFingerprintHash/v1": "582af51f7ade8f37b6e43b05d5f4d70bb2fdbb45cfb14abbfccd97ec4b5a2fa5"
-          }
+            "ValidationFingerprint/v1": "[secret=ff34885a8624460a855540c6592698d2f1812843]",
+            "ValidationFingerprintHash/v1": "25799b447c11c0dec40e393f9b0349fbdf11bbb5bb8c2e6c698dbbd1bbe7cb7c"
+          },
+          "rank": 49.73
         },
         {
           "ruleId": "SEC101/006",
@@ -117,9 +118,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=GitHub]",
-            "ValidationFingerprint/v1": "[pat=dead885a8624460a855540c6592698d2f1812843]",
-            "ValidationFingerprintHash/v1": "28c28e7d487cb8b5a9fc76072637aad7ad74325cf4a40e7374cadc4c66d93797"
-          }
+            "ValidationFingerprint/v1": "[secret=dead885a8624460a855540c6592698d2f1812843]",
+            "ValidationFingerprintHash/v1": "84c67c32a414e0b735e075eed493dacf7d8f87ea2eab7548c748132818acb099"
+          },
+          "rank": 50.75
         },
         {
           "ruleId": "SEC101/006",
@@ -159,9 +161,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=GitHub]",
-            "ValidationFingerprint/v1": "[pat=ff34885a8624460a855540c6592698d2f181dead]",
-            "ValidationFingerprintHash/v1": "7958a7093006f8fb16c3a45e6bbbecbd4d0543667e7f31b930cef13b0bb3ab8e"
-          }
+            "ValidationFingerprint/v1": "[secret=ff34885a8624460a855540c6592698d2f181dead]",
+            "ValidationFingerprintHash/v1": "60358100a680426014c92b68f1ccfea4e8a0366a96b4c28e97f092c829c925a5"
+          },
+          "rank": 51.69
         }
       ],
       "columnKind": "utf16CodeUnits"

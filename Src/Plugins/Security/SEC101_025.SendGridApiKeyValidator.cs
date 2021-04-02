@@ -22,21 +22,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new SendGridApiKeyValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
                                  ref failureLevel,
-                                 ref fingerprint,
-                                 ref message);
+                                 ref message,
+                                 out fingerprint);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -44,31 +44,33 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
-            string key = groups["key"];
-
-            fingerprintText = new Fingerprint
+            fingerprint = default;
+            if (!groups.TryGetValue("secret", out string secret))
             {
-                Key = key,
-                Platform = nameof(AssetPlatform.SendGrid),
-            }.ToString();
+                return ValidationState.NoMatch;
+            }
 
-            return nameof(ValidationState.Unknown);
+            fingerprint = new Fingerprint
+            {
+                Secret = secret,
+                Platform = nameof(AssetPlatform.SendGrid),
+            };
+
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            var fingerprint = new Fingerprint(fingerprintText);
-
             string account = "apikey";
-            string key = fingerprint.Key;
+            string secret = fingerprint.Secret;
             const string host = "smtp.sendgrid.net";
 
             string response = string.Empty;
@@ -100,9 +102,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     account = Convert.ToBase64String(Encoding.UTF8.GetBytes(account));
                     Send(reader, writer, out response, $"{account}\r\n", "334");
 
-                    // Base64-encode the api key. 235 is authorized, 535 is not.
-                    key = Convert.ToBase64String(Encoding.UTF8.GetBytes(key));
-                    Send(reader, writer, out response, $"{key}\r\n", "235");
+                    // Base64-encode the api secret. 235 is authorized, 535 is not.
+                    secret = Convert.ToBase64String(Encoding.UTF8.GetBytes(secret));
+                    Send(reader, writer, out response, $"{secret}\r\n", "235");
                 }
             }
             catch (InvalidOperationException e)
@@ -112,14 +114,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     message = $"An unexpected server response was received: '{response}'";
                 }
 
-                return e.Message;
+                return (ValidationState)Enum.Parse(typeof(ValidationState), e.Message);
             }
             catch (Exception e)
             {
                 return ReturnUnhandledException(ref message, e);
             }
 
-            return nameof(ValidationState.AuthorizedError);
+            return ValidationState.AuthorizedError;
         }
 
         private static string Send(StreamReader reader,

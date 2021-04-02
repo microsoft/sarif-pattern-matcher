@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private static readonly HashSet<string> WellKnownKeys = new HashSet<string>
         {
-            // This is a well-known key used as example from stripe website (check examples section). https://stripe.com/payments
+            // This is a well-known secret used as example from stripe website (check examples section). https://stripe.com/payments
             "sk_test_BQokikJOvBiI2HlWgH4olfQ2",
         };
 
@@ -27,21 +27,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new StripeApiKeyValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
                                  ref failureLevel,
-                                 ref fingerprint,
-                                 ref message);
+                                 ref message,
+                                 out fingerprint);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -49,52 +49,51 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
-            if (!groups.TryGetNonEmptyValue("key", out string key))
+            fingerprint = default;
+            if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
-            if (WellKnownKeys.Contains(key))
+            if (WellKnownKeys.Contains(secret))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
-            fingerprintText = new Fingerprint
+            fingerprint = new Fingerprint
             {
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.Stripe),
-            }.ToString();
+            };
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            var fingerprint = new Fingerprint(fingerprintText);
+            string secret = fingerprint.Secret;
 
-            string key = fingerprint.Key;
-
-            string keyKind = key.Contains("_test_") ? "test" : "live production";
+            string keyKind = secret.Contains("_test_") ? "test" : "live production";
 
             try
             {
-                message = $"The detected secret is a {keyKind} key.";
+                message = $"The detected secret is a {keyKind} secret.";
 
                 using HttpClient client = CreateHttpClient();
 
                 client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", key);
+                    new AuthenticationHeaderValue("Bearer", secret);
 
                 using HttpResponseMessage response = client
-                    .GetAsync($"https://api.stripe.com/v1/customers")
+                    .GetAsync($"https://api.stripe.com/v1/customers", HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
@@ -102,12 +101,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
-                        return nameof(ValidationState.AuthorizedError);
+                        return ValidationState.AuthorizedError;
                     }
 
                     case HttpStatusCode.Unauthorized:
                     {
-                        return nameof(ValidationState.Unauthorized);
+                        return ValidationState.Unauthorized;
                     }
 
                     default:
@@ -123,7 +122,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e);
             }
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
     }
 }

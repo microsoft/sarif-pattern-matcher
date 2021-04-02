@@ -60,66 +60,25 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 1,
+                  "startLine": 2,
                   "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 37,
-                  "charOffset": 0,
-                  "charLength": 36,
+                  "endLine": 2,
+                  "endColumn": 36,
+                  "charOffset": 17,
+                  "charLength": 35,
                   "snippet": {
-                    "text": "amqp://user:password@host/database1\r"
+                    "text": "amqp://user:password@host/database1"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=user][host=host][resource=database1]",
-            "ValidationFingerprint/v1": "[acct=user][host=host][pwd=password][resource=database1]",
-            "ValidationFingerprintHash/v1": "a6f1c12d3e4399407fd6a5805c6f44499d95fbbfe74f8d67475269d6655ad695"
-          }
-        },
-        {
-          "ruleId": "SEC101/041",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "SEC101_041.RabbitMqConnectionString.ps1",
-              "an apparent ",
-              "",
-              "RabbitMq connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
+            "AssetFingerprint/v1": "[account=user][host=host][resource=database1]",
+            "ValidationFingerprint/v1": "[account=user][host=host][resource=database1][secret=password]",
+            "ValidationFingerprintHash/v1": "6fca3c991627de637acae53a73a1510f1e6bdf0f36d2b8810d32c0aa51f80b67"
           },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_041.RabbitMqConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 1,
-                  "endLine": 3,
-                  "endColumn": 37,
-                  "charOffset": 39,
-                  "charLength": 36,
-                  "snippet": {
-                    "text": "amqp://user:password@host/database2\""
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[acct=user][host=host][resource=database2]",
-            "ValidationFingerprint/v1": "[acct=user][host=host][pwd=password][resource=database2]",
-            "ValidationFingerprintHash/v1": "ef155284baee0ded3ef82c7489e9457197f26dea1ec08d894e82391dce2674d6"
-          }
+          "rank": 39.29
         },
         {
           "ruleId": "SEC101/041",
@@ -145,23 +104,110 @@
                 },
                 "region": {
                   "startLine": 5,
-                  "startColumn": 1,
+                  "startColumn": 2,
                   "endLine": 5,
-                  "endColumn": 38,
-                  "charOffset": 79,
-                  "charLength": 37,
+                  "endColumn": 37,
+                  "charOffset": 83,
+                  "charLength": 35,
                   "snippet": {
-                    "text": "amqps://user:password@host/database3\""
+                    "text": "amqp://user:password@host/database2"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[acct=user][host=host][resource=database3]",
-            "ValidationFingerprint/v1": "[acct=user][host=host][pwd=password][resource=database3]",
-            "ValidationFingerprintHash/v1": "c6ab3b95d6897462e61e03b0ab284f2e35c3b0aa0df63f1b8d8f4f742f37d828"
-          }
+            "AssetFingerprint/v1": "[account=user][host=host][resource=database2]",
+            "ValidationFingerprint/v1": "[account=user][host=host][resource=database2][secret=password]",
+            "ValidationFingerprintHash/v1": "b53861c88e635199c2cbec85eae8ce73e3560703e46ed7e89c6396b23c9bd2b8"
+          },
+          "rank": 39.29
+        },
+        {
+          "ruleId": "SEC101/041",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_041.RabbitMqConnectionString.ps1",
+              "an apparent ",
+              "",
+              "RabbitMq connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_041.RabbitMqConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 6,
+                  "endLine": 8,
+                  "endColumn": 42,
+                  "charOffset": 152,
+                  "charLength": 36,
+                  "snippet": {
+                    "text": "amqps://user:password@host/database3"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[account=user][host=host][resource=database3]",
+            "ValidationFingerprint/v1": "[account=user][host=host][resource=database3][secret=password]",
+            "ValidationFingerprintHash/v1": "cfa38e5cdcc8cbc9427e4c73d1cdfc253fb6bc80114b2aaa85ec2ae3e3ea43d9"
+          },
+          "rank": 39.29
+        },
+        {
+          "ruleId": "SEC101/041",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_041.RabbitMqConnectionString.ps1",
+              "an apparent ",
+              "",
+              "RabbitMq connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_041.RabbitMqConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 1,
+                  "endLine": 11,
+                  "endColumn": 41,
+                  "charOffset": 225,
+                  "charLength": 40,
+                  "snippet": {
+                    "text": "amqp://user:password@host:1234/database4"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[account=user][host=host:1234][resource=database4]",
+            "ValidationFingerprint/v1": "[account=user][host=host:1234][resource=database4][secret=password]",
+            "ValidationFingerprintHash/v1": "3c3fda13d68dbf5447329bc749ad6f243626e235cdc2ff0e4cc4a8f17d86a83d"
+          },
+          "rank": 39.29
         }
       ],
       "columnKind": "utf16CodeUnits"

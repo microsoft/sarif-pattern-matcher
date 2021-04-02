@@ -3,17 +3,18 @@
 
 using System.Collections.Generic;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class GoogleOAuthCredentialsValidator : ValidatorBase
+    public class PlaintextPasswordValidator : ValidatorBase
     {
-        internal static GoogleOAuthCredentialsValidator Instance;
+        internal static PlaintextPasswordValidator Instance;
 
-        static GoogleOAuthCredentialsValidator()
+        static PlaintextPasswordValidator()
         {
-            Instance = new GoogleOAuthCredentialsValidator();
+            Instance = new PlaintextPasswordValidator();
         }
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
@@ -22,12 +23,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                            ref string message,
                                            out Fingerprint fingerprint)
         {
-            return ValidatorBase.IsValidStatic(Instance,
-                                               ref matchedPattern,
-                                               ref groups,
-                                               ref failureLevel,
-                                               ref message,
-                                               out fingerprint);
+            return IsValidStatic(Instance,
+                                 ref matchedPattern,
+                                 ref groups,
+                                 ref failureLevel,
+                                 ref message,
+                                 out fingerprint);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
@@ -37,20 +38,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                       out Fingerprint fingerprint)
         {
             fingerprint = default;
-            if (!groups.TryGetValue("id", out string id) ||
-                !groups.TryGetValue("secret", out string secret))
+            if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
-            fingerprint = new Fingerprint
+            fingerprint = new Fingerprint()
             {
-                Id = id,
                 Secret = secret,
-                Platform = nameof(AssetPlatform.Google),
             };
 
-            return ValidationState.Unknown;
+            return ValidationState.AuthorizedWarning;
         }
     }
 }

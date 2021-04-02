@@ -17,47 +17,48 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new GitHubAppCredentialsValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return ValidatorBase.IsValidStatic(Instance,
                                                ref matchedPattern,
                                                ref groups,
                                                ref failureLevel,
-                                               ref fingerprint,
-                                               ref message);
+                                               ref message,
+                                               out fingerprint);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
+            fingerprint = default;
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("key", out string key))
+                !groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
             // It is highly likely we do not have a key if we can't
             // find at least one letter and digit within the pattern.
-            if (!ContainsDigitAndChar(key))
+            if (!ContainsDigitAndChar(secret))
             {
-                return nameof(ValidationState.NoMatch);
+                return ValidationState.NoMatch;
             }
 
-            fingerprintText = new Fingerprint()
+            fingerprint = new Fingerprint()
             {
                 Id = id,
-                Key = key,
+                Secret = secret,
                 Platform = nameof(AssetPlatform.GitHub),
-            }.ToString();
+            };
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
     }
 }

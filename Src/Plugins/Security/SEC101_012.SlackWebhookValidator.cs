@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
@@ -20,21 +21,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new SlackWebhookValidator();
         }
 
-        public static string IsValidStatic(ref string matchedPattern,
+        public static ValidationState IsValidStatic(ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
                                            ref string failureLevel,
-                                           ref string fingerprint,
-                                           ref string message)
+                                           ref string message,
+                                           out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
                                  ref failureLevel,
-                                 ref fingerprint,
-                                 ref message);
+                                 ref message,
+                                 out fingerprint);
         }
 
-        public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
@@ -42,28 +43,42 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref options);
         }
 
-        protected override string IsValidStaticHelper(ref string matchedPattern,
+        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
                                                       ref string failureLevel,
-                                                      ref string fingerprintText,
-                                                      ref string message)
+                                                      ref string message,
+                                                      out Fingerprint fingerprint)
         {
-            fingerprintText = new Fingerprint
+            fingerprint = default;
+            if (!groups.TryGetNonEmptyValue("id", out string id) ||
+                !groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                Uri = matchedPattern,
-                Platform = nameof(AssetPlatform.Slack),
-            }.ToString();
+                return ValidationState.NoMatch;
+            }
 
-            return nameof(ValidationState.Unknown);
+            fingerprint = new Fingerprint
+            {
+                Id = id,
+                Secret = secret,
+                Platform = nameof(AssetPlatform.Slack),
+            };
+
+            return ValidationState.Unknown;
         }
 
-        protected override string IsValidDynamicHelper(ref string fingerprintText,
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                        ref string message,
                                                        ref Dictionary<string, string> options)
         {
-            var fingerprint = new Fingerprint(fingerprintText);
-
+            string id = fingerprint.Id;
+            string secret = fingerprint.Secret;
             string uri = fingerprint.Uri;
+
+            // This will let previous fingerprint to keep working.
+            if (string.IsNullOrEmpty(uri))
+            {
+                uri = $"https://hooks.slack.com/services/{id}/{secret}";
+            }
 
             using HttpClient client = CreateHttpClient();
 
@@ -82,19 +97,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     case HttpStatusCode.BadRequest:
                     {
                         // We authenticated and our bogus payload was read.
-                        return nameof(ValidationState.AuthorizedError);
+                        return ValidationState.AuthorizedError;
                     }
 
                     case HttpStatusCode.NotFound:
                     {
                         // The slack app itself could not be found.
                         message = "The specified Slack app could not be found.";
-                        return nameof(ValidationState.UnknownHost);
+                        return ValidationState.UnknownHost;
                     }
 
                     case HttpStatusCode.Forbidden:
                     {
-                        return nameof(ValidationState.Unauthorized);
+                        return ValidationState.Unauthorized;
                     }
 
                     default:
@@ -109,7 +124,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e);
             }
 
-            return nameof(ValidationState.Unknown);
+            return ValidationState.Unknown;
         }
     }
 }
