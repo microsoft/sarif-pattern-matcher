@@ -16,6 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public const string IdKeyName = "id";
         public const string UriKeyName = "uri";
         public const string HostKeyName = "host";
+        public const string PartKeyName = "part";
         public const string PortKeyName = "port";
         public const string SecretKeyName = "secret";
         public const string PlatformKeyName = "platform";
@@ -47,7 +48,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             SecretSymbolSetCount = 0;
 
-            Id = Host = Uri = Port = Secret = Platform = Resource = Thumbprint = null;
+            // Validation fingerprint properties.
+            Id = Host = Uri = Port = Secret = Resource = Thumbprint = null;
+
+            // Asset fingerprint properties.
+            Platform = ResourceType = ResourceProvider = null;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -97,9 +102,48 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string Resource { get; set; }
 
+        public string Thumbprint { get; set; }
+
+        // The following properties are relevant to asset fingerprints only.
+        public string Part
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(ResourceType) &&
+                    !string.IsNullOrWhiteSpace(ResourceProvider))
+                {
+                    return ResourceProvider + "/" + ResourceType;
+                }
+
+                if (!string.IsNullOrWhiteSpace(ResourceType) ||
+                    !string.IsNullOrWhiteSpace(ResourceProvider))
+                {
+                    throw new InvalidOperationException();
+                }
+
+                return null;
+            }
+
+            set
+            {
+                string[] tokens = value?.Split('/');
+
+                if (tokens?.Length != 2)
+                {
+                    throw new ArgumentException(
+                        $"Value could not be parsed into resource provider and type: {value}");
+                }
+
+                ResourceProvider = tokens[0];
+                ResourceType = tokens[1];
+            }
+        }
+
         public string Platform { get; set; }
 
-        public string Thumbprint { get; set; }
+        public string ResourceType { get; set; }
+
+        public string ResourceProvider { get; set; }
 
         /// <summary>
         /// Gets or sets a value that is the count of the valid symbols that
@@ -197,6 +241,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 case SecretKeyName: { Secret = value; break; }
                 case UriKeyName: { Uri = value; break; }
                 case HostKeyName: { Host = value; break; }
+                case PartKeyName: { Part = value; break; }
                 case PortKeyName: { Port = value; break; }
                 case PlatformKeyName: { Platform = value; break; }
                 case ResourceKeyName: { Resource = value; break; }
@@ -219,8 +264,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 Secret == equatable.Secret &&
                 Uri == equatable.Uri &&
                 Host == equatable.Host &&
-                Port == equatable.Port &&
+                Part == equatable.Part &&
                 Platform == equatable.Platform &&
+                Port == equatable.Port &&
+                Secret == equatable.Secret &&
                 Resource == equatable.Resource &&
                 Thumbprint == equatable.Thumbprint;
         }
@@ -245,6 +292,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     result = (result * 31) + this.Host.GetHashCode();
                 }
 
+                if (this.Part != null)
+                {
+                    result = (result * 31) + this.Part.GetHashCode();
+                }
+
+                if (this.Platform != null)
+                {
+                    result = (result * 31) + this.Platform.GetHashCode();
+                }
+
                 if (this.Port != null)
                 {
                     result = (result * 31) + this.Port.GetHashCode();
@@ -253,11 +310,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 if (this.Secret != null)
                 {
                     result = (result * 31) + this.Secret.GetHashCode();
-                }
-
-                if (this.Platform != null)
-                {
-                    result = (result * 31) + this.Platform.GetHashCode();
                 }
 
                 if (this.Resource != null)
@@ -289,6 +341,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             if (!string.IsNullOrEmpty(f.Id) && !denyList.Contains(IdKeyName))
             {
                 components.Add(IdKeyName, $"[{IdKeyName}={f.Id.Trim()}]");
+            }
+
+            if (!string.IsNullOrEmpty(f.Part) && !denyList.Contains(PartKeyName))
+            {
+                components.Add(PartKeyName, $"[{PartKeyName}={f.Part.Trim()}]");
             }
 
             if (!string.IsNullOrEmpty(f.Platform) && !denyList.Contains(PlatformKeyName))
