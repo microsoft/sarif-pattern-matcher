@@ -13,7 +13,7 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/046",
+              "id": "SEC101/037",
               "name": "DoNotExposePlaintextSecrets/SqlConnectionString",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
@@ -44,13 +44,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -62,7 +62,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -87,13 +87,13 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -105,7 +105,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -130,13 +130,13 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -148,7 +148,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -173,13 +173,13 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -191,7 +191,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -216,13 +216,13 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -234,7 +234,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -259,13 +259,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -277,7 +277,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -302,13 +302,13 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -320,7 +320,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -345,13 +345,13 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -363,7 +363,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -388,13 +388,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -406,7 +406,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -431,13 +431,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -449,7 +449,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -474,13 +474,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -492,7 +492,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -517,13 +517,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Odbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -535,7 +535,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -560,13 +560,13 @@
           "rank": 32.09
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "JDBC SQL connection string",
@@ -578,7 +578,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -603,13 +603,13 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "JDBC SQL connection string",
@@ -621,7 +621,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -646,13 +646,13 @@
           "rank": 41.74
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "JDBC SQL connection string",
@@ -664,7 +664,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -689,13 +689,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Jdbc",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "JDBC SQL connection string",
@@ -707,7 +707,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -732,13 +732,13 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/046",
+          "ruleId": "SEC101/037",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Php",
             "arguments": [
-              "SEC101_046.SqlConnectionString.ps1",
+              "SEC101_037.SqlConnectionString.ps1",
               "an apparent ",
               "",
               "PHP SQL connection string",
@@ -750,7 +750,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_046.SqlConnectionString.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
