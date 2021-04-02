@@ -47,7 +47,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             SecretSymbolSetCount = 0;
 
-            Id = Host = Uri = Port = Secret = Platform = Resource = Thumbprint = null;
+            // Validation fingerprint properties.
+            Id = Host = Uri = Port = Secret = Resource = Thumbprint = null;
+
+            // Asset fingerprint properties.
+            Platform = ResourceType = ResourceProvider = null;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -97,9 +101,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string Resource { get; set; }
 
+        public string Thumbprint { get; set; }
+
+        // The following properties are relevant to asset fingerprints only.
         public string Platform { get; set; }
 
-        public string Thumbprint { get; set; }
+        public string ResourceProvider { get; set; }
+
+        public string ResourceType { get; set; }
 
         /// <summary>
         /// Gets or sets a value that is the count of the valid symbols that
@@ -220,6 +229,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 Uri == equatable.Uri &&
                 Host == equatable.Host &&
                 Port == equatable.Port &&
+                Secret== equatable.Secret &&
                 Platform == equatable.Platform &&
                 Resource == equatable.Resource &&
                 Thumbprint == equatable.Thumbprint;
