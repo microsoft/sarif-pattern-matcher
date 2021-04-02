@@ -23,7 +23,7 @@
 
 # $FacebookAppCredentials=(?si)(((facebook|fb)(.{0,20})?[`'"\s>](?<id>[0-9]{13,17})[^0-9].{1,500}?)|((facebook|fb)(.{0,20})?[`'"\s>](?<secret>[0-9a-f]{32})([^0-9a-f]?)).{1,500}?){2}
 
-  $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?<host>(http|ftp|https):\/\/[\w_-]+(?:(?:\.[\w_-]+)+))(?<resource>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= "']+(basic)[\s\r\n]{0,10}(?<secret>[a-z0-9\/+_.=]{10,})
+  $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?<host>(http|ftp|https):\/\/[\w_.-]{1,200})(?<resource>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= "']+(basic)[\s\r\n]{0,10}(?<secret>[^'"><;]{10,})
   $SEC101/002.GoogleOAuthCredentials=(?s)\b(?<id>[0-9]{12}\-[0-9a-z]{32})\.apps\.googleusercontent\.com.{1,500}?\b(?i)(?<secret>[0-9a-z\-]{24})
   $SEC101/003.GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
   $SEC101/004.FacebookAppCredentials=(?si)facebook.{1,50}\b(?<id>[0-9]{15}).{1,500}?\b(?<secret>[0-9a-f]{32})
@@ -53,7 +53,7 @@
   $SEC101/023.AmazonMwsAuthToken=\b(?<refine>amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)
   $SEC101/024.TwilioApiKey=\b(?<refine>(?<secret>SK(?i)[0-9a-f]{32}))([^0-9a-f]|$)
   $SEC101/025.SendGridApiKey=\b(?<refine>(?<secret>SG\.(?i)[0-9a-z\-_]{22}\.(?i)[0-9a-z\-_]{43}))([^0-9a-f]|$)
-  $SEC101/026.MailgunApiKey=(?is)((^|[^0-9a-z\-])(?<secret>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8}).{0,50}?|[^0-9a-z](?<id>[0-9a-z]+?\.mailgun\.org).{0,50}?){2}
+  $SEC101/026.MailgunApiCredentials=(?is)((^|[^0-9a-z\-])(?<secret>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8}).{0,50}?|[^0-9a-z](?<id>[0-9a-z]+?\.mailgun\.org).{0,50}?){2}
   $SEC101/027.MailChimpApiKey=\b(?<refine>(?<secret>[0-9a-f]{32}-us[0-9]{12}))
   $SEC101/028.PlaintextPassword=(?i)ConvertTo-SecureString\s*(-[S]tring)?\s*["'](?<secret>[^"')(]*)["']
   $SEC101/031.NuGetApiKey=\b(?<refine>(?<secret>oy2[0-9a-z]{43}))(^[0-9a-z]|$)
@@ -75,6 +75,6 @@
   $SEC101/051.GpgCredentials=(?is)gpg[._-](gen_key_input|sign|decrypt_file)\s*\(\s*(name_email\s*=\s*["'](?<id>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?<secret>[^"']*)["']
   $SEC101/053.GoogleServiceAccountKeyConsoleFormat="private_key":\s*"-----BEGIN PRIVATE KEY-----\\n(?s)(?<secret>[^"]+)(?-s)\\n-----END PRIVATE KEY-----\\n(?s).{1,200}(?-s)"client_id"\s*:\s*"(?<id>[\w.-]+)"
   $SEC101/053.GoogleServiceAccountKeyConsoleRestFormat="name": "projects\/[\w-]+\/serviceAccounts\/[\w@.-]+\/keys\/(?<secret>[^"]+)",
-  $SEC101/054.AlibabaAccessKey=\b(?<id>LTAI([a-zA-Z0-9]{12}|[a-zA-Z0-9]{20}))\b(?s).{0,50}(?-s)\b(?<secret>[\w]{30})\b
+  $SEC101/054.AlibabaCloudCredentials=\b(?<id>LTAI([a-zA-Z0-9]{12}|[a-zA-Z0-9]{20}))\b(?s).{0,50}(?-s)\b(?<secret>[\w]{30})\b
   $SEC101/102.AdoPat=\b(?<secret>[2-7a-z]{52})(\b|$)
   
