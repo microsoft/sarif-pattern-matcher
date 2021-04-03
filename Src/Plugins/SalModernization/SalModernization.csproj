@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.common.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.product.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.plugins.props" />
+  
+  <PropertyGroup Label="AssemblyAttributes">
+    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.SalModernization</RootNamespace>
+    <PackageId>Sarif.PatternMatcher.SalModernization</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="SalModernization.SharedStrings.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SEC105.UpdateSalToCurrentVersion.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
+	</ItemGroup>
+	
+	
+	<Target Name="CopyingSpam" AfterTargets="Build">
+		<ItemGroup>
+			<SecurityFile Include="$(OutputPath)SalModernization.dll" />
+			<SpamFiles Include="SEC105.UpdateSalToCurrentVersion.json" />
+		</ItemGroup>
+		<Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\SalModernization\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="@(SecurityFile)" DestinationFolder="$(SolutionDir).spam\SalModernization\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" ContinueOnError="true" />
+		<Copy SourceFiles="SalModernization.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\SalModernization\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+	</Target>
+</Project>
