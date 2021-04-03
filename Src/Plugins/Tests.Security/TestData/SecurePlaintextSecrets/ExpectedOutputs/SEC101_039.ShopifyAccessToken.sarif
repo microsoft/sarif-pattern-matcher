@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/053",
-              "name": "DoNotExposePlaintextSecrets/GoogleServiceAccountKey",
+              "id": "SEC101/039",
+              "name": "DoNotExposePlaintextSecrets/ShopifyAccessToken",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -38,16 +38,16 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/053",
+          "ruleId": "SEC101/039",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_053.GoogleServiceAccountKey.ps1",
+              "SEC101_039.ShopifyAccessToken.ps1",
               "an apparent ",
               "",
-              "Google service account key",
+              "Shopify access token",
               "",
               ""
             ]
@@ -56,41 +56,41 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_053.GoogleServiceAccountKey.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_039.ShopifyAccessToken.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 7,
-                  "startColumn": 3,
-                  "endLine": 9,
-                  "endColumn": 28,
-                  "charOffset": 193,
-                  "charLength": 169,
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 39,
+                  "charOffset": 0,
+                  "charLength": 38,
                   "snippet": {
-                    "text": "\"private_key\": \"-----BEGIN PRIVATE KEY-----\\n11111111\\n-----END PRIVATE KEY-----\\n\",\r\n  \"client_email\": \"service-account-email1@server.com\",\r\n  \"client_id\": \"client-id1\""
+                    "text": "shpat_11111111110123456789012345678901"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[id=client-id1]",
-            "ValidationFingerprint/v1": "[id=client-id1][secret=11111111]",
-            "ValidationFingerprintHash/v1": "28cff84ac92e687ba8cf617854a17b26516408b92951a9f26f2526def18ce612"
+            "AssetFingerprint/v1": "[platform=Shopify]",
+            "ValidationFingerprint/v1": "[secret=shpat_11111111110123456789012345678901]",
+            "ValidationFingerprintHash/v1": "44b02244ed103c0dba6bc8e2eccb37772cd24d4db0371fd1b29c671d83b6838f"
           },
-          "rank": 0.0
+          "rank": 49.08
         },
         {
-          "ruleId": "SEC101/053",
+          "ruleId": "SEC101/039",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_053.GoogleServiceAccountKey.ps1",
+              "SEC101_039.ShopifyAccessToken.ps1",
               "an apparent ",
               "",
-              "Google service account key",
+              "Shopify access token",
               "",
               ""
             ]
@@ -99,41 +99,41 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_053.GoogleServiceAccountKey.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_039.ShopifyAccessToken.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 26,
-                  "startColumn": 61,
-                  "endLine": 26,
-                  "endColumn": 277,
-                  "charOffset": 1049,
-                  "charLength": 216,
+                  "startLine": 3,
+                  "startColumn": 2,
+                  "endLine": 3,
+                  "endColumn": 40,
+                  "charOffset": 43,
+                  "charLength": 38,
                   "snippet": {
-                    "text": "\"private_key\": \"-----BEGIN PRIVATE KEY-----\\n33333333333333333333three/three\\three+three\\n-----END PRIVATE KEY-----\\n\",   \"client_email\": \"email@server.stuff.otherstuff.com\",   \"client_id\": \"333333333333333333333333\""
+                    "text": "shpca_22222222220123456789012345678901"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[id=333333333333333333333333]",
-            "ValidationFingerprint/v1": "[id=333333333333333333333333][secret=33333333333333333333three/three\\three+three]",
-            "ValidationFingerprintHash/v1": "bffa60c2c9b8c26d7969f9b53fefc4f516a7cc4d8b8fcacb1b16026563c08a3a"
+            "AssetFingerprint/v1": "[platform=Shopify]",
+            "ValidationFingerprint/v1": "[secret=shpca_22222222220123456789012345678901]",
+            "ValidationFingerprintHash/v1": "9f414c7bd38a02bb5e8d7b0a20da82370b9ef354aff990749be8538780a945ee"
           },
-          "rank": 32.85
+          "rank": 49.96
         },
         {
-          "ruleId": "SEC101/053",
+          "ruleId": "SEC101/039",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_053.GoogleServiceAccountKey.ps1",
+              "SEC101_039.ShopifyAccessToken.ps1",
               "an apparent ",
               "",
-              "Google service account key",
+              "Shopify access token",
               "",
               ""
             ]
@@ -142,29 +142,29 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_053.GoogleServiceAccountKey.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_039.ShopifyAccessToken.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 17,
-                  "startColumn": 3,
-                  "endLine": 17,
-                  "endColumn": 96,
-                  "charOffset": 678,
-                  "charLength": 93,
+                  "startLine": 5,
+                  "startColumn": 2,
+                  "endLine": 5,
+                  "endColumn": 40,
+                  "charOffset": 87,
+                  "charLength": 38,
                   "snippet": {
-                    "text": "\"name\": \"projects/project-id1/serviceAccounts/service-account-email2@server.com/keys/keyId2\","
+                    "text": "shppa_33333333330123456789012345678901"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=keyId2]",
-            "ValidationFingerprintHash/v1": "7c573df2a776b0077615cf96e144a21a226b0f5364e9dbb551f504d38a29b103"
+            "AssetFingerprint/v1": "[platform=Shopify]",
+            "ValidationFingerprint/v1": "[secret=shppa_33333333330123456789012345678901]",
+            "ValidationFingerprintHash/v1": "6928bc4f432e9e9e8b9062bb8053da186c70de097cc4a0e7e8aad26ab0501169"
           },
-          "rank": 36.93
+          "rank": 49.21
         }
       ],
       "columnKind": "utf16CodeUnits"

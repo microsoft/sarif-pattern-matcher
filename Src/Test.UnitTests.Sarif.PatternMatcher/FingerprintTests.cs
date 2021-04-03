@@ -27,9 +27,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             Type type = typeof(Fingerprint);
 
-            foreach (PropertyInfo pi in type.GetProperties())
+            foreach (PropertyInfo pi in GetTestableFingerprintProperties())
             {
-                if (pi.PropertyType != typeof(string)) { continue; }
                 expectedKeyNames.Add(pi.Name + "KeyName");
             }
 
@@ -86,10 +85,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             Type type = typeof(Fingerprint);
 
-            foreach (PropertyInfo pi in type.GetProperties())
+            foreach (PropertyInfo pi in GetTestableFingerprintProperties())
             {
-                if (pi.PropertyType != typeof(string)) { continue; }
-                string guidText = Guid.NewGuid().ToString();
+                string guidText = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString();
                 object boxed = fingerprint;
                 pi.SetMethod.Invoke(boxed, new[] { guidText });
                 fingerprint = (Fingerprint)boxed;
@@ -130,11 +128,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var toStringUnexpectedConditions = new List<string>();
             var roundTrippingUnexpectedConditions = new List<string>();
 
-            foreach (PropertyInfo pi in type.GetProperties())
+            foreach (PropertyInfo pi in GetTestableFingerprintProperties())
             {
-                if (pi.PropertyType != typeof(string)) { continue; }
                 var fingerprint = new Fingerprint();
-                string guidText = Guid.NewGuid().ToString();
+                string guidText = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString();
                 object boxed = fingerprint;
                 pi.SetMethod.Invoke(boxed, new[] { guidText });
                 fingerprint = (Fingerprint)boxed;
@@ -175,10 +172,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var failedTestCases = new List<string>();
 
             Type type = typeof(Fingerprint);
-            foreach (PropertyInfo pi in type.GetProperties())
+            foreach (PropertyInfo pi in GetTestableFingerprintProperties())
             {
-                if (pi.PropertyType != typeof(string)) { continue; }
-                string expected = Guid.NewGuid().ToString();
+                string expected = Guid.NewGuid().ToString() + "/" + Guid.NewGuid().ToString();
                 var fingerprint = new Fingerprint();
 
                 FieldInfo fi = type.GetField($"{pi.Name}KeyName");
@@ -200,6 +196,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             failedTestCases.Should().BeEmpty();
+        }
+
+        private IEnumerable<PropertyInfo> GetTestableFingerprintProperties()
+        {
+            foreach (PropertyInfo pi in typeof(Fingerprint).GetProperties())
+            {
+                if (pi.PropertyType != typeof(string)) { continue; }
+
+                // These properties are tested exclusively through 
+                // the 'Part' property;
+                if (pi.Name == "ResourceType" ||
+                    pi.Name == "ResourceProvider")
+                {
+                    continue;
+                }
+
+                yield return pi;
+            }
+            yield break;
         }
 
         [Fact]
@@ -329,6 +344,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Title = "Two keys (Host & Id) in alphabetical order.",
                 Text = $"[{Fingerprint.HostKeyName}=Host][{Fingerprint.IdKeyName}=Id]",
                 Expected = new Fingerprint { Host = "Host", Id = "Id" }},
+
+            new FingerprintTestCase {
+                Title = "Resource provider and type.",
+                Text = $"[{Fingerprint.PartKeyName}=ResourceProvider/ResourceType]",
+                Expected = new Fingerprint { ResourceProvider = "ResourceProvider", ResourceType = "ResourceType" }},
         };
 
         private static readonly FingerprintTestCase[] s_exceptionalTestCases = new[]
@@ -357,6 +377,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Title = "Key name (NON_EXISTENT) does not exist.",
                 Text = $"[NON_EXISTENT=RandomValue]",
                 ExceptionType = typeof(ArgumentException) },
+
+            new FingerprintTestCase {
+                Title = "Resource type but no provider.",
+                Text = $"[{Fingerprint.PartKeyName}=ResourceType/]",
+                ExceptionType = typeof(InvalidOperationException) },
+
+            new FingerprintTestCase {
+                Title = "Resource provider but no type.",
+                Text = $"[{Fingerprint.PartKeyName}=/ResourceType]",
+                ExceptionType = typeof(InvalidOperationException) },
         };
 
         private string GetKeyNameForProperty(string propertyName)
