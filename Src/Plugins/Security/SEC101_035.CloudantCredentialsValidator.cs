@@ -11,13 +11,13 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 {
-    public class CloudantConnectionStringValidator : ValidatorBase
+    public class CloudantCredentialsValidator : ValidatorBase
     {
-        internal static CloudantConnectionStringValidator Instance;
+        internal static CloudantCredentialsValidator Instance;
 
-        static CloudantConnectionStringValidator()
+        static CloudantCredentialsValidator()
         {
-            Instance = new CloudantConnectionStringValidator();
+            Instance = new CloudantCredentialsValidator();
         }
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
@@ -51,17 +51,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             fingerprint = default;
 
             // We need uri and neither account nor password, or uri and both account and password.  Use XOR
-            if (!groups.TryGetNonEmptyValue("uri", out string uri) ||
-                (groups.TryGetNonEmptyValue("id", out string id) ^ groups.TryGetNonEmptyValue("secret", out string secret)))
+            if (!groups.TryGetNonEmptyValue("id", out string id) ||
+                !groups.TryGetNonEmptyValue("host", out string host) ||
+                !groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
+            groups.TryGetNonEmptyValue("resource", out string resource);
+
             fingerprint = new Fingerprint()
             {
                 Id = id,
-                Uri = uri,
+                Host = host,
                 Secret = secret,
+                Resource = resource,
                 Platform = nameof(AssetPlatform.Cloudant),
             };
 
@@ -75,44 +79,40 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             // TODO: Create a unit test for this. https://github.com/microsoft/sarif-pattern-matcher/issues/258
 
             string id = fingerprint.Id;
-            string uri = fingerprint.Uri;
-            string password = fingerprint.Secret;
+            string host = fingerprint.Host;
+            string secret = fingerprint.Secret;
+            string resource = fingerprint.Resource ?? id;
+
+            string uri = null;
 
             try
             {
-                // At this point account and password must be either both full or both empty.  Only check one
-                if (string.IsNullOrWhiteSpace(id))
+                string asset = $"{resource}.{host}";
+                uri = $"https://{asset}";
+
+                var handler = new HttpClientHandler();
+                handler.Credentials = new NetworkCredential(id, secret);
+
+                using var client = new HttpClient(handler)
                 {
-                    using (HttpClient client = CreateHttpClient())
-                    using (HttpResponseMessage response = client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult())
-                    {
-                        if (response.StatusCode == HttpStatusCode.OK)
-                        {
-                            return ReturnAuthorizedAccess(ref message, uri);
-                        }
+                    BaseAddress = new Uri(uri),
+                };
 
-                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode, uri);
-                    }
-                }
-                else
+                using (HttpResponseMessage response = client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult())
                 {
-                    var handler = new HttpClientHandler();
-                    handler.Credentials = new NetworkCredential(id, password);
+                    string text = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-                    using var client = new HttpClient(handler)
+                    if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        BaseAddress = new Uri(uri),
-                    };
-
-                    using (HttpResponseMessage response = client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult())
-                    {
-                        if (response.StatusCode == HttpStatusCode.OK)
-                        {
-                            return ReturnAuthorizedAccess(ref message, uri);
-                        }
-
-                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode, uri);
+                        return ReturnAuthorizedAccess(ref message, asset);
                     }
+
+                    if (response.StatusCode == HttpStatusCode.ServiceUnavailable)
+                    {
+                        return ReturnUnknownHost(ref message, asset);
+                    }
+
+                    message = CreateUnexpectedResponseCodeMessage(response.StatusCode, uri);
                 }
             }
             catch (Exception e)
