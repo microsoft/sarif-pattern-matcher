@@ -82,15 +82,33 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             string host = fingerprint.Host;
             string secret = fingerprint.Secret;
             string resource = fingerprint.Resource ?? id;
-
-            string uri = null;
+            string asset = $"{resource}.{host}";
 
             try
             {
-                string asset = $"{resource}.{host}";
-                uri = $"https://{asset}";
+                string uri = $"https://{asset}";
 
                 var handler = new HttpClientHandler();
+                handler.Credentials = new NetworkCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+
+                using var clientWithNoCredentials = new HttpClient(handler)
+                {
+                    BaseAddress = new Uri(uri),
+                };
+
+                using HttpResponseMessage responseWithNoCredentials = clientWithNoCredentials
+                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
+                    .GetAwaiter()
+                    .GetResult();
+
+                if (responseWithNoCredentials.StatusCode == HttpStatusCode.OK)
+                {
+                    // If we succeed with a known invalid id + secret combination,
+                    // some level of anonymous access must be configured.
+                    return ValidationState.NoMatch;
+                }
+
+                handler = new HttpClientHandler();
                 handler.Credentials = new NetworkCredential(id, secret);
 
                 using var client = new HttpClient(handler)
@@ -98,29 +116,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                     BaseAddress = new Uri(uri),
                 };
 
-                using (HttpResponseMessage response = client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult())
-                {
-                    string text = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                using HttpResponseMessage response = clientWithNoCredentials
+                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
+                    .GetAwaiter()
+                    .GetResult();
 
-                    if (response.StatusCode == HttpStatusCode.OK)
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
                     {
                         return ReturnAuthorizedAccess(ref message, asset);
                     }
 
-                    if (response.StatusCode == HttpStatusCode.ServiceUnavailable)
+                    case HttpStatusCode.ServiceUnavailable:
                     {
                         return ReturnUnknownHost(ref message, asset);
                     }
 
-                    message = CreateUnexpectedResponseCodeMessage(response.StatusCode, uri);
+                    case HttpStatusCode.Unauthorized:
+                    {
+                        return ReturnUnauthorizedAccess(ref message, asset);
+                    }
+
+                    default:
+                    {
+                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode, uri);
+                        return ValidationState.Unknown;
+                    }
                 }
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e, asset: uri);
+                return ReturnUnhandledException(ref message, e, asset);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }
