@@ -12,11 +12,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         public static ValidationState IsValidStatic(ref string matchedPattern,
 #pragma warning disable IDE0060 // Remove unused parameter
-                                           ref Dictionary<string, string> groups,
-                                           ref string failureLevel,
+                                                    ref Dictionary<string, string> groups,
+                                                    ref string failureLevel,
 #pragma warning restore IDE0060// Remove unused parameter
-                                           ref string message,
-                                           out Fingerprint fingerprint)
+                                                    ref string message,
+                                                    out Fingerprint fingerprint)
         {
             fingerprint = default;
 

@@ -24,10 +24,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
-                                           ref Dictionary<string, string> groups,
-                                           ref string failureLevel,
-                                           ref string message,
-                                           out Fingerprint fingerprint)
+                                                    ref Dictionary<string, string> groups,
+                                                    ref string failureLevel,
+                                                    ref string message,
+                                                    out Fingerprint fingerprint)
         {
             return ValidatorBase.IsValidStatic(Instance,
                                                ref matchedPattern,
@@ -38,12 +38,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
-                                                      ref Dictionary<string, string> groups,
-                                                      ref string failureLevel,
-                                                      ref string message,
-                                                      out Fingerprint fingerprint)
+                                                               ref Dictionary<string, string> groups,
+                                                               ref string failureLevel,
+                                                               ref string message,
+                                                               out Fingerprint fingerprint)
         {
             fingerprint = default;
+
             if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;

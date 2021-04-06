@@ -12,12 +12,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public static class PfxCryptographicKeyfileValidator
     {
         public static ValidationState IsValidStatic(ref string matchedPattern,
-                                           ref Dictionary<string, string> groups,
+                                                    ref Dictionary<string, string> groups,
 #pragma warning disable IDE0060 // Remove unused parameter
-                                           ref string failureLevel,
+                                                    ref string failureLevel,
 #pragma warning restore IDE0060
-                                           ref string message,
-                                           out Fingerprint fingerprint)
+                                                    ref string message,
+                                                    out Fingerprint fingerprint)
         {
             fingerprint = default;
 

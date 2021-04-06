@@ -22,10 +22,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
-                                           ref Dictionary<string, string> groups,
-                                           ref string failureLevel,
-                                           ref string message,
-                                           out Fingerprint fingerprint)
+                                                    ref Dictionary<string, string> groups,
+                                                    ref string failureLevel,
+                                                    ref string message,
+                                                    out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -44,10 +44,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
-                                                      ref Dictionary<string, string> groups,
-                                                      ref string failureLevel,
-                                                      ref string message,
-                                                      out Fingerprint fingerprint)
+                                                               ref Dictionary<string, string> groups,
+                                                               ref string failureLevel,
+                                                               ref string message,
+                                                               out Fingerprint fingerprint)
         {
             fingerprint = new Fingerprint
             {
@@ -59,8 +59,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                       ref string message,
-                                                       ref Dictionary<string, string> options)
+                                                                ref string message,
+                                                                ref Dictionary<string, string> options)
         {
             const string Invalid = "RequestDenied: The provided API key is invalid";
             const string Expired = "RequestDenied: The provided API key is expired";
