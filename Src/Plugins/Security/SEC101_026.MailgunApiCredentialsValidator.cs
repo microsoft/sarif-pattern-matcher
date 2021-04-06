@@ -18,10 +18,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static MailgunApiCredentialsValidator Instance = new MailgunApiCredentialsValidator();
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
-                                           ref Dictionary<string, string> groups,
-                                           ref string failureLevel,
-                                           ref string message,
-                                           out Fingerprint fingerprint)
+                                                    ref Dictionary<string, string> groups,
+                                                    ref string failureLevel,
+                                                    ref string message,
+                                                    out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -40,12 +40,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
-                                                      ref Dictionary<string, string> groups,
-                                                      ref string failureLevel,
-                                                      ref string message,
-                                                      out Fingerprint fingerprint)
+                                                               ref Dictionary<string, string> groups,
+                                                               ref string failureLevel,
+                                                               ref string message,
+                                                               out Fingerprint fingerprint)
         {
             fingerprint = default;
+
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
                 !groups.TryGetNonEmptyValue("secret", out string secret))
             {
@@ -63,8 +64,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                       ref string message,
-                                                       ref Dictionary<string, string> options)
+                                                                ref string message,
+                                                                ref Dictionary<string, string> options)
         {
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;

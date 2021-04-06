@@ -80,13 +80,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 #pragma warning disable IDE0060 // Remove unused parameter
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
-                                           ref Dictionary<string, string> groups,
-                                           ref string failureLevel,
-                                           ref string message,
-                                           out Fingerprint fingerprint)
+                                                    ref Dictionary<string, string> groups,
+                                                    ref string failureLevel,
+                                                    ref string message,
+                                                    out Fingerprint fingerprint)
         {
 #pragma warning restore IDE0060
             fingerprint = default;
+
             if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
