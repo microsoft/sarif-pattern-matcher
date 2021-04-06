@@ -47,7 +47,7 @@
               "SEC101_006.GitHubPat.ps1",
               "an apparent ",
               "",
-              "GitHub personal access token (PAT)",
+              "GitHub personal access token (legacy format)",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -90,7 +90,7 @@
               "SEC101_006.GitHubPat.ps1",
               "an apparent ",
               "",
-              "GitHub personal access token (PAT)",
+              "GitHub personal access token (legacy format)",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -133,7 +133,7 @@
               "SEC101_006.GitHubPat.ps1",
               "an apparent ",
               "",
-              "GitHub personal access token (PAT)",
+              "GitHub personal access token (legacy format)",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -176,7 +176,7 @@
               "SEC101_006.GitHubPat.ps1",
               "an apparent ",
               "",
-              "GitHub personal access token (2021-04-05 version)",
+              "GitHub personal access token",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -219,7 +219,7 @@
               "SEC101_006.GitHubPat.ps1",
               "an apparent ",
               "",
-              "GitHub personal access token (2021-04-05 version)",
+              "GitHub personal access token",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]

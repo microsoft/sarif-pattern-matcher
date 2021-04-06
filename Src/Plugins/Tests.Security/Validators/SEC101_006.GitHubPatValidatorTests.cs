@@ -14,12 +14,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void GitHubPatValidator_TestStatic()
         {
-            ValidationState expectedValidationState = ValidationState.NoMatch;
+            ValidationState expectedValidationState = ValidationState.Unknown;
 
-            string matchedPattern = "ghp_stuff"; // Insert new GitHub PAT here
+            string matchedPattern = "ghp_stuffchecksum"; // Insert new GitHub PAT here
             Dictionary<string, string> groups = new Dictionary<string, string>();
-            groups.Add("secret", "");
-            groups.Add("checksum", "");
+            groups.Add("secret", "stuff");
+            groups.Add("checksum", "checksum");
+            groups.Add("scanTargetFullPath", "GitHitPatTest");
 
             string failureLevel = null;
 
@@ -37,7 +38,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         {
             ValidationState expectedValidationState = ValidationState.Unauthorized;
 
-            string fingerprintText = "[platform=GitHub][secret=dummy]";
+            string fingerprintText = "[platform=GitHub][secret=ghp_000000000001234567890123456789012345]";
             Fingerprint fingerprint = new Fingerprint(fingerprintText);
             string message = null;
             Dictionary<string, string> options = new Dictionary<string, string>();

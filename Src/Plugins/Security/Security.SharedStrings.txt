@@ -28,8 +28,8 @@
   $SEC101/003.GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
   $SEC101/004.FacebookAppCredentials=(?si)facebook.{1,50}\b(?<id>[0-9]{15}).{1,500}?\b(?<secret>[0-9a-f]{32})
   $SEC101/005.SlackToken=\b(?<refine>xox(?<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
-  $SEC101/006.GitHubPat_2021_04_05=gh(p|o|u|s|r)_(?<secret>[\w]{30})(?<checksum>[\w]{6})
-  $SEC101/006.GitHubPat=(?si)(?<refine>github.{0,50}[^0-9a-z](?<secret>[0-9a-z]{40}))([^0-9a-z]|$)
+  $SEC101/006.GitHubPatLegacy=(?si)(?<refine>github.{0,50}[^0-9a-z](?<secret>[0-9a-z]{40}))([^0-9a-z]|$)
+  $SEC101/006.GitHubPatCurrent=gh(p|o|u|s|r)_(?<secret>[\w]{30})(?<checksum>[\w]{6})
   $SEC101/007.GitHubAppCredentials=(?s)((\b(?<id>Iv1\.[0-9a-z]{16}).{1,50}?)|(\b(?i)(?<secret>[0-9a-z]{35,40})\b.{0,50}?)){2}
   $SEC101/008.AwsCredentials=(?s)\b(?<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}).{1,500}?\b(?i)(?<secret>[0-9a-z\/+]{40})
   $SEC101/009.LinkedInCredentials=(?si)linkedin(.{0,50})?\b(?-i)(?<id>[0-9a-z]{14})\b.{0,50}?\b(?i)(?<secret>[0-9a-z]{16})\b
