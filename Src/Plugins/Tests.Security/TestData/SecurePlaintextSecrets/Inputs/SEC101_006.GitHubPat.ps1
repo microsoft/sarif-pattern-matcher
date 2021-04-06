@@ -1,3 +1,5 @@
+# ************ Below caught in $SEC101/006.GitHubPat
+
 # Xml style
 <GithubToken>
 	ff34885a8624460a855540c6592698d2f1812843
@@ -19,3 +21,11 @@ https://github.com/microsoft/sarif-pattern-matcher/tree/7af498925c89a9e8c07fb8a6
 
 # This should trigger, but it should report as NoMatch
 GitHubTriggersShouldReturnBothSourceRepoAndPullRequestTriggers
+
+# ************ Below caught in $SEC101/006.GitHubPat_2021_04_05
+
+# Personal access token
+ghp_000000000001234567890123456789012345
+
+# Refresh token
+ghr_111111111101234567890123456789012345

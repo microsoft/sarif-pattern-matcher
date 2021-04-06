@@ -57,6 +57,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationState.NoMatch;
             }
 
+            if (groups.TryGetNonEmptyValue("checksum", out string checksum))
+            {
+                // TODO: #365 Utilize checksum https://github.com/microsoft/sarif-pattern-matcher/issues/365
+
+                fingerprint = new Fingerprint
+                {
+                    Secret = matchedPattern,
+                    Platform = nameof(AssetPlatform.GitHub),
+                };
+
+                return ValidationState.Unknown;
+            }
+
             // It is highly likely we do not have a key if we can't
             // find at least one letter and digit within the pattern.
             if (!ContainsDigitAndChar(pat))
@@ -108,10 +121,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (AuthorizationException)
             {
+                // The token is either invalid or has been killed
                 return ValidationState.Unauthorized;
+            }
+            catch (ForbiddenException)
+            {
+                // The token is valid but doesn't have read/user access. Write only perhaps?
+                return ValidationState.AuthorizedError;
             }
             catch (Exception e)
             {
+                // ¯\_(ツ)_/¯
                 message = $"An unexpected exception was caught attempting to validate PAT: {e.Message}";
                 return ValidationState.Unknown;
             }
