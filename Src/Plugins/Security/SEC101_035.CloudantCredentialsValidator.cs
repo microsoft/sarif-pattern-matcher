@@ -9,7 +9,7 @@ using System.Net.Http;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class CloudantCredentialsValidator : ValidatorBase
     {
@@ -21,10 +21,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         }
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
-                                           ref Dictionary<string, string> groups,
-                                           ref string failureLevel,
-                                           ref string message,
-                                           out Fingerprint fingerprint)
+                                                    ref Dictionary<string, string> groups,
+                                                    ref string failureLevel,
+                                                    ref string message,
+                                                    out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -43,10 +43,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
-                                                      ref Dictionary<string, string> groups,
-                                                      ref string failureLevel,
-                                                      ref string message,
-                                                      out Fingerprint fingerprint)
+                                                               ref Dictionary<string, string> groups,
+                                                               ref string failureLevel,
+                                                               ref string message,
+                                                               out Fingerprint fingerprint)
         {
             fingerprint = default;
 
@@ -73,8 +73,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                       ref string message,
-                                                       ref Dictionary<string, string> options)
+                                                                ref string message,
+                                                                ref Dictionary<string, string> options)
         {
             // TODO: Create a unit test for this. https://github.com/microsoft/sarif-pattern-matcher/issues/258
 
@@ -88,8 +88,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             {
                 string uri = $"https://{asset}";
 
-                var handler = new HttpClientHandler();
-                handler.Credentials = new NetworkCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+                var handler = new HttpClientHandler
+                {
+                    Credentials = new NetworkCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString()),
+                };
 
                 using var clientWithNoCredentials = new HttpClient(handler)
                 {
@@ -108,15 +110,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                     return ValidationState.NoMatch;
                 }
 
-                handler = new HttpClientHandler();
-                handler.Credentials = new NetworkCredential(id, secret);
+                handler = new HttpClientHandler
+                {
+                    Credentials = new NetworkCredential(id, secret),
+                };
 
                 using var client = new HttpClient(handler)
                 {
                     BaseAddress = new Uri(uri),
                 };
 
-                using HttpResponseMessage response = clientWithNoCredentials
+                using HttpResponseMessage response = client
                     .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
