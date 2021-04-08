@@ -23,9 +23,11 @@
     </Content>
     <Content Include="..\..\..\refs\Octokit.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>lib\</PackagePath>
     </Content>
     <Content Include="..\..\..\refs\aliyun-net-sdk-Iot.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>lib\</PackagePath>
     </Content>
   </ItemGroup>
 
