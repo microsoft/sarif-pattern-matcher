@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
@@ -11,23 +12,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
     internal class ImportAndAnalyzeCommand : CommandBase
     {
+        private const string FolderName = "SarifPatternMatcherCli";
+        private static readonly List<string> Files = new List<string>();
+
         public int Run(ImportAndAnalyzeOptions options)
         {
+            string basePath = Path.Combine(Path.GetTempPath(), FolderName);
             string sarifPath = string.Empty;
 
             try
             {
-                if (!options.Validate())
+                if (!FileSystem.DirectoryExists(basePath))
+                {
+                    FileSystem.DirectoryCreateDirectory(basePath);
+                }
+
+                if (ImportDataFromKusto(options, basePath, out sarifPath) == FAILURE)
                 {
                     return FAILURE;
                 }
 
-                if (ImportDataFromKusto(options, out sarifPath) == FAILURE)
-                {
-                    return FAILURE;
-                }
-
-                if (SaveResults(options, sarifPath) == FAILURE)
+                if (SaveResults(sarifPath, basePath) == FAILURE)
                 {
                     return FAILURE;
                 }
@@ -41,25 +46,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             }
             finally
             {
-                if (FileSystem.FileExists(sarifPath))
+                if (!options.RetainDownloadedContent)
                 {
-                    FileSystem.FileDelete(sarifPath);
-                }
-
-                if (FileSystem.DirectoryExists(options.TempFolder))
-                {
-                    FileSystem.DirectoryDelete(options.TempFolder);
+                    foreach (string file in Files)
+                    {
+                        if (FileSystem.FileExists(file))
+                        {
+                            FileSystem.FileDelete(file);
+                        }
+                    }
                 }
             }
         }
 
-        private static int ImportDataFromKusto(ImportAndAnalyzeOptions options, out string sarifPath)
+        private static int ImportDataFromKusto(ImportAndAnalyzeOptions options, string basePath, out string sarifPath)
         {
-            sarifPath = Path.Combine(options.TempFolder, "kusto.sarif");
+            sarifPath = Path.Combine(basePath, "kusto.sarif");
+            Files.Add(sarifPath);
 
             var kustoOptions = new KustoOptions
             {
-                HostAddress = options.HostAddress,
+                HostAddress = options.Host,
                 Database = options.Database,
                 Query = options.Query,
                 OutputFilePath = sarifPath,
@@ -70,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return kustoResult != 0 ? FAILURE : SUCCESS;
         }
 
-        private int SaveResults(ImportAndAnalyzeOptions options, string sarifPath)
+        private int SaveResults(string sarifPath, string basePath)
         {
             var sarifLog = SarifLog.Load(sarifPath);
 
@@ -94,7 +101,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         {
                             if (!string.IsNullOrEmpty(location.PhysicalLocation?.ContextRegion?.Snippet?.Text))
                             {
-                                FileSystem.FileWriteAllText(Path.Combine(options.TempFolder, $"{Guid.NewGuid()}.txt"), location.PhysicalLocation?.ContextRegion?.Snippet?.Text);
+                                string path = Path.Combine(basePath, $"{Guid.NewGuid()}.txt");
+                                FileSystem.FileWriteAllText(path, location.PhysicalLocation?.ContextRegion?.Snippet?.Text);
+                                Files.Add(path);
                             }
                         }
                     }

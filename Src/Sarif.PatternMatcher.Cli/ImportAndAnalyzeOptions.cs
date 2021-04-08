@@ -5,40 +5,31 @@ using CommandLine;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
-    [Verb("import", HelpText = "Export rules metadata to a markdown file.")]
+    [Verb("import-analyze", HelpText = "Export rules metadata to a markdown file.")]
     internal class ImportAndAnalyzeOptions : AnalyzeOptions
     {
         [Option(
-            "temp-folder",
-            HelpText = "A temp folder path to save all files.")]
-        public string TempFolder { get; set; }
-
-        [Option(
-            "host-address",
-            HelpText = "The host address from where we will fetch the data.",
+            "host",
+            HelpText = "The database host from which we will retrieve data to scan. " +
+                       "Create AppClientId, AppSecrent, and AuthorityId as environment variables.",
             Required = true)]
-        public string HostAddress { get; set; }
+        public string Host { get; set; }
 
         [Option(
             "database",
-            HelpText = "The database that we will connect.",
+            HelpText = "The database from which we will retrieve content to scan.",
             Required = true)]
         public string Database { get; set; }
 
         [Option(
             "query",
-            HelpText = "The query that will be used to generate the SARIF.",
+            HelpText = "The query that will be used to retrieve content to scan.",
             Required = true)]
         public string Query { get; set; }
 
-        public bool Validate()
-        {
-            if (string.IsNullOrEmpty(TempFolder))
-            {
-                return false;
-            }
-
-            return true;
-        }
+        [Option(
+            "retain-downloaded-content",
+            HelpText = "If set to true, the downloaded files won't be deleted.")]
+        public bool RetainDownloadedContent { get; set; }
     }
 }
