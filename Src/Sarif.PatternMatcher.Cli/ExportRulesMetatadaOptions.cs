@@ -7,7 +7,7 @@ using CommandLine;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
-    [Verb("export-rules", HelpText = "Export rules metadata to a SARIF or SonarQube XML file.")]
+    [Verb("export-rules", HelpText = "Export rules metadata to a markdown file.")]
     internal class ExportRulesMetatadaOptions
     {
         [Value(
