@@ -26,7 +26,7 @@
       DestinationFolder="$(SolutionDir)\.spam\Security\" />
 
     <Copy
-      SourceFiles="$(MSBuildThisFileDirectory)..\lib\Octokit.dll"
-      DestinationFolder="$(OutputPath)" />
+      SourceFiles="$(MSBuildThisFileDirectory)..\lib\netstandard2.0\Octokit.dll"
+      DestinationFolder="$(SolutionDir)\.spam\Security\" />
   </Target>
 </Project>

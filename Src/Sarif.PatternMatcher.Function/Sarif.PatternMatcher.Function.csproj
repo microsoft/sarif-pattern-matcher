@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.app.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
-  
+
   <PropertyGroup>
     <IsPackable>false</IsPackable>
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="3.0.10" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.2" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.11" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
@@ -26,17 +27,17 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\Plugins\Security\Security.csproj" />
     <ProjectReference Include="..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
   </ItemGroup>
-  
+
   <!--copy rule json files to bin folder, need to be in the same folder of security.dll-->
   <ItemGroup>
     <RuleFiles Include="$(OutDir)SEC*.json" />
     <SecurityTextFile Include="$(OutDir)Security.SharedStrings.txt" />
-  </ItemGroup>    
+  </ItemGroup>
   <Target Name="CopyFilesAfterBuild" AfterTargets="AfterBuild">
     <Copy SourceFiles="@(RuleFiles)" DestinationFolder="$(OutDir)\bin\" />
     <Copy SourceFiles="@(SecurityTextFile)" DestinationFolder="$(OutDir)\bin\" />
