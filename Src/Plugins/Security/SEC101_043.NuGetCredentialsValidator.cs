@@ -141,11 +141,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     switch (responseWithNoCredentials.StatusCode)
                     {
                         case HttpStatusCode.OK:
+                        {
                             // Credentials not needed, this method of verification is indeterminate.
                             highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unknown);
                             break;
+                        }
+
                         case HttpStatusCode.Unauthorized:
                         case HttpStatusCode.Forbidden:
+                        {
                             // Credentials may resolve this, try again with them.
                             byte[] byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
                             client.DefaultRequestHeaders.Authorization =
@@ -159,24 +163,36 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                 switch (responseWithCredentials.StatusCode)
                                 {
                                     case HttpStatusCode.OK:
+                                    {
                                         // Credentials resolved the forbidden/unauthorized message we received.
                                         return ReturnAuthorizedAccess(ref message, username);
+                                    }
+
                                     case HttpStatusCode.Forbidden:
                                     case HttpStatusCode.Unauthorized:
+                                    {
                                         // Credentials didn't fix the error, but it may be that we're missing
                                         // something in the request.
                                         highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unauthorized);
                                         break;
+                                    }
+
                                     default:
+                                    {
                                         highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unknown);
                                         break;
+                                    }
                                 }
                             }
 
                             break;
+                        }
+
                         default:
+                        {
                             highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unknown);
                             break;
+                        }
                     }
                 }
             }
@@ -193,8 +209,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     return ReturnUnknownAuthorization(ref message, username);
             }
         }
-
-
 
         private static List<string> ExtractHostsHelper(string hostXmlAsString)
         {
