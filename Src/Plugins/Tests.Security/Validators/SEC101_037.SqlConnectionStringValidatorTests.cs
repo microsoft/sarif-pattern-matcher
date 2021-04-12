@@ -11,7 +11,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     public class SqlConnectionStringValidatorTests
     {
-        private const ValidationState ExpectedValidationState = ValidationState.UnknownHost;
+        private const ValidationState ExpectedValidationState = ValidationState.Unknown;
 
         [Fact]
         public void SqlConnectionStringValidatorTests_Test()

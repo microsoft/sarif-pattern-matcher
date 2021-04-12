@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
@@ -53,6 +54,31 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref fingerprint,
                                   ref message,
                                   ref options);
+        }
+
+        internal static List<string> ExtractHosts(string hostXmlAsString)
+        {
+            try
+            {
+                return ExtractHostsHelper(hostXmlAsString);
+            }
+            catch (XmlException)
+            {
+                // Maybe it's escaped? Try to unescape it...
+                try
+                {
+                    string attemptTwoString = Regex.Unescape(hostXmlAsString).Replace(Environment.NewLine, string.Empty);
+
+                    // Environment.NewLine is \r\n, and it will miss \n alone, so...
+                    attemptTwoString = attemptTwoString.Replace("\n", string.Empty);
+                    return ExtractHostsHelper(attemptTwoString);
+                }
+                catch
+                {
+                    // Still gotta return an empty list even if parsing failed
+                    return new List<string>();
+                }
+            }
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
@@ -168,30 +194,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
         }
 
-        protected List<string> ExtractHosts(string hostXmlAsString)
-        {
-            try
-            {
-                return ExtractHostsHelper(hostXmlAsString);
-            }
-            catch (XmlException)
-            {
-                // Maybe it's escaped? Try to unescape it...
-                try
-                {
-                    string attemptTwoString = Regex.Unescape(hostXmlAsString).Replace(Environment.NewLine, string.Empty);
 
-                    // Environment.NewLine is \r\n, and it will miss \n alone, so...
-                    attemptTwoString = attemptTwoString.Replace("\n", string.Empty);
-                    return ExtractHostsHelper(attemptTwoString);
-                }
-                catch
-                {
-                    // Still gotta return an empty list even if parsing failed
-                    return new List<string>();
-                }
-            }
-        }
 
         private static List<string> ExtractHostsHelper(string hostXmlAsString)
         {

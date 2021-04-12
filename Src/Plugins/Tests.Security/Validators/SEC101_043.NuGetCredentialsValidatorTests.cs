@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    public class NuGetCredentialsValidatorTests : NuGetCredentialsValidator
+    public class NuGetCredentialsValidatorTests
     {
         private const ValidationState ExpectedValidationState = ValidationState.Unknown;
 
@@ -37,7 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
        <add key = ""Test Source"" value = ""c:\packages"" />
       </packageSources> ";
 
-            List<string> hosts = ExtractHosts(xmlString);
+            List<string> hosts = NuGetCredentialsValidator.ExtractHosts(xmlString);
 
             Assert.Equal(3, hosts.Count());
             Assert.Contains("https://api.nuget.org/v3/index.json", hosts);
@@ -50,7 +50,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         {
             string xmlString = @"<packageSources>\nstuff\n<\/packageSources>";
 
-            List<string> hosts = ExtractHosts(xmlString);
+            List<string> hosts = NuGetCredentialsValidator.ExtractHosts(xmlString);
 
             Assert.Single(hosts);
             Assert.Contains("stuff", hosts);
