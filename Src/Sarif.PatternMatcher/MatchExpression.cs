@@ -13,6 +13,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string Name { get; set; }
 
+        public string DeprecatedName { get; set; }
+
         public string Message { get; set; }
 
         public FailureLevel Level { get; set; }
