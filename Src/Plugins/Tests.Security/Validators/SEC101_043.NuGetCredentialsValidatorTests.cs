@@ -2,6 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
@@ -9,7 +11,7 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    public class NuGetCredentialsValidatorTests
+    public class NuGetCredentialsValidatorTests : NuGetCredentialsValidator
     {
         private const ValidationState ExpectedValidationState = ValidationState.Unknown;
 
@@ -23,6 +25,35 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             ValidationState actualValidationState = NuGetCredentialsValidator.IsValidDynamic(ref fingerprint, ref message, ref keyValuePairs);
             Assert.Equal(ExpectedValidationState, actualValidationState);
+        }
+
+        [Fact]
+        public void ExtractHostsWorksOnCommonFormat()
+        {
+            string xmlString = @"<packageSources>
+    <add key=""nuget.org"" value=""https://api.nuget.org/v3/index.json"" protocolVersion=""3"" />
+    <add key = ""Contoso"" value = ""https://contoso.com/packages/"" />
+   
+       <add key = ""Test Source"" value = ""c:\packages"" />
+      </packageSources> ";
+
+            List<string> hosts = ExtractHosts(xmlString);
+
+            Assert.Equal(3, hosts.Count());
+            Assert.Contains("https://api.nuget.org/v3/index.json", hosts);
+            Assert.Contains("https://contoso.com/packages/", hosts);
+            Assert.Contains(@"c:\packages", hosts);
+        }
+
+        [Fact]
+        public void ExtractHostsWorksOnUnCommonFormat()
+        {
+            string xmlString = @"<packageSources>\nstuff\n<\/packageSources>";
+
+            List<string> hosts = ExtractHosts(xmlString);
+
+            Assert.Single(hosts);
+            Assert.Contains("stuff", hosts);
         }
     }
 }

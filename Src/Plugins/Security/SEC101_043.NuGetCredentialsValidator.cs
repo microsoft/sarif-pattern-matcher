@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
@@ -16,6 +17,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class NuGetCredentialsValidator : ValidatorBase
     {
+        internal static NuGetCredentialsValidator Instance;
+
         // We can't count on the int values of the enumerations being ordered as we want,
         // so order them manually
         private readonly Dictionary<ValidationState, int> badResponseSorting = new Dictionary<ValidationState, int>()
@@ -24,8 +27,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             { ValidationState.UnknownHost, 1 },
             { ValidationState.Unauthorized, 2 },
         };
-
-        internal static NuGetCredentialsValidator Instance;
 
         static NuGetCredentialsValidator()
         {
@@ -93,19 +94,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string username = fingerprint.Id;
             string password = fingerprint.Secret;
 
-            var hostXml = new XmlDocument();
+            IEnumerable<string> hosts = ExtractHosts(hostXmlAsString);
 
-            hostXml.LoadXml(hostXmlAsString);
-
-            // hostXml looks like "<packageSources>...</packageSources>
-            var hosts = hostXml?.ChildNodes[0] // <packageSources>...
-                            ?.ChildNodes.Cast<XmlNode>().Where(x => x.Name.Equals("add", StringComparison.OrdinalIgnoreCase)) // <add ... >  <clear/> (the first node)
-                                .Select(x => x.Attributes["value"]?.Value ?? x.Attributes["Value"]?.Value).ToList(); // <add key="name of host" value="http://nugetfeedUrl.com" /> (we're looking for URL)
-
-            // Uusually there will probably only be a single host.
+            // Usually there will only be a single host.
             // In any case, attempt to pass the credentials to each host one by one.
             using HttpClient client = CreateHttpClient();
-            int highestResponse = -1;
+            int highestResponse = 0;
             foreach (string host in hosts)
             {
                 if (!Uri.IsWellFormedUriString(host, UriKind.Absolute))
@@ -148,6 +142,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                         highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unauthorized);
                                         break;
                                     default:
+                                        highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unknown);
                                         break;
                                 }
                             }
@@ -171,6 +166,54 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 default:
                     return ReturnUnknownAuthorization(ref message, username);
             }
+        }
+
+        protected List<string> ExtractHosts(string hostXmlAsString)
+        {
+            try
+            {
+                return ExtractHostsHelper(hostXmlAsString);
+            }
+            catch (XmlException)
+            {
+                // Maybe it's escaped? Try to unescape it...
+                try
+                {
+                    string attemptTwoString = Regex.Unescape(hostXmlAsString).Replace(Environment.NewLine, string.Empty);
+
+                    // Environment.NewLine is \r\n, and it will miss \n alone, so...
+                    attemptTwoString = attemptTwoString.Replace("\n", string.Empty);
+                    return ExtractHostsHelper(attemptTwoString);
+                }
+                catch
+                {
+                    // Still gotta return an empty list even if parsing failed
+                    return new List<string>();
+                }
+            }
+        }
+
+        private static List<string> ExtractHostsHelper(string hostXmlAsString)
+        {
+            var hostXml = new XmlDocument();
+            hostXml.LoadXml(hostXmlAsString);
+
+            // First attempt the most common format for package sources: <packageSources><add key="..." value="{the thing we're interested in}" /></packageSources>
+            var returnList = hostXml?.ChildNodes[0] // <packageSources>...
+                            ?.ChildNodes.Cast<XmlNode>().Where(x => x.Name.Equals("add", StringComparison.OrdinalIgnoreCase)) // <add ... >  <clear/> (the first node)
+                                .Select(x => x.Attributes["value"]?.Value ?? x.Attributes["Value"]?.Value).ToList(); // <add key="name of host" value="http://nugetfeedUrl.com" /> (we're looking for URL)
+
+            if (returnList == null || returnList.Count() == 0)
+            {
+                // Sometimes it looks like <packageSources>{the thing we're interested in}</packageSources>
+                string host = hostXml?.ChildNodes[0]?.InnerText;
+                returnList = new List<string>()
+                {
+                    host,
+                };
+            }
+
+            return returnList ?? new List<string>();
         }
 
         private int AssignHighestResponse(int highestResponseSoFar, ValidationState response)
