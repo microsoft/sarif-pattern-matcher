@@ -92,9 +92,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
             string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
 
-            host = DomainFilteringHelper.StandardizeLocalhostName(host);
+            host = FilteringHelpers.StandardizeLocalhostName(host);
 
-            ValidationState exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
+            ValidationState exclusionResult = FilteringHelpers.HostExclusion(host, HostsToExclude);
 
             if (exclusionResult == ValidationState.NoMatch)
             {
@@ -121,7 +121,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             if (string.IsNullOrWhiteSpace(host) ||
                 string.IsNullOrWhiteSpace(database) ||
-                DomainFilteringHelper.LocalhostList.Contains(host))
+                FilteringHelpers.LocalhostList.Contains(host))
             {
                 return ValidationState.Unknown;
             }

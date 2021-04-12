@@ -5,12 +5,12 @@
 </packageSources>
 <packageSourceCredentials>
     <Contoso>
-        <add key="Username" value="user@contoso.com" />
-        <add key="Password" value="..." />
+        <add key="Username" value="user1111@contoso.com" />
+        <add key="Password" value="1111_Oneoneone" />
     </Contoso>
     <Test_x0020_Source>
-        <add key="Username" value="user" />
-        <add key="Password" value="..." />
+        <add key="Username" value="user2222" />
+        <add key="Password" value="2222_Twotwotwo" />
     </Test_x0020_Source>
 </packageSourceCredentials>
 
@@ -21,16 +21,16 @@
 </packageSources>
 <packageSourceCredentials>
     <Contoso>
-        <add key="Username" value="user@contoso.com" />
-        <add key="ClearTextPassword" value="%ContosoPassword%" />
+        <add key="Username" value="user4444@contoso.com" />
+        <add key="ClearTextPassword" value="%passwordVariable4444_Fourfour%" />
     </Contoso>
     <Test_x0020_Source>
-        <add key="Username" value="user" />
-        <add key="ClearTextPassword" value="%TestSourcePassword%" />
+        <add key="Username" value="user5555" />
+        <add key="ClearTextPassword" value="%passwordVariable5555_Fivefive%" />
     </Test_x0020_Source>
 </packageSourceCredentials>
 
 <packageSources>\nstuff\n<\/packageSources>\n
-<packageSourceCredentials >\n      <buildxl>\n          <add key=\"Username\" value=\"domino\" />\n          <add key=\"Password\" value=\"$(place.variable.name)\" />
+<packageSourceCredentials >\n      <buildxl>\n          <add key=\"Username\" value=\"user6666\" />\n          <add key=\"Password\" value=\"$(passwordVariable6666_Sixsixsix)\" />
 
-<configuration><packageSources><add key=\"dummyKey\" value=\"https://location.visualstudio.com/_packaging/dummyKey/nuget/v3/index.json\" /></packageSources><packageSourceCredentials><dummyKey><add key=\"Username\" value=\"dummyUserName\" /><add key=\"ClearTextPassword\" value=\"dummyPassword\" /></dummyKey></packageSourceCredentials></configuration>
+<configuration><packageSources><add key=\"dummyKey\" value=\"https://location.visualstudio.com/_packaging/dummyKey/nuget/v3/index.json\" /></packageSources><packageSourceCredentials><dummyKey><add key=\"Username\" value=\"user7777\" /><add key=\"ClearTextPassword\" value=\"7777_Sevensevenseven\" /></dummyKey></packageSourceCredentials></configuration>

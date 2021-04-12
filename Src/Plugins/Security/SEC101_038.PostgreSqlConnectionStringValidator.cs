@@ -77,9 +77,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
             string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
 
-            host = DomainFilteringHelper.StandardizeLocalhostName(host);
+            host = FilteringHelpers.StandardizeLocalhostName(host);
 
-            ValidationState exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
+            ValidationState exclusionResult = FilteringHelpers.HostExclusion(host, HostsToExclude);
 
             if (exclusionResult == ValidationState.NoMatch)
             {
@@ -108,7 +108,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string password = fingerprint.Secret;
             string database = fingerprint.Resource;
 
-            if (DomainFilteringHelper.LocalhostList.Contains(host))
+            if (FilteringHelpers.LocalhostList.Contains(host))
             {
                 return ValidationState.Unknown;
             }

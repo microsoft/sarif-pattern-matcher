@@ -16,6 +16,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class NuGetCredentialsValidator : ValidatorBase
     {
+        // We can't count on the int values of the enumerations being ordered as we want,
+        // so order them manually
+        private readonly Dictionary<ValidationState, int> badResponseSorting = new Dictionary<ValidationState, int>()
+        {
+            { ValidationState.Unknown, 0 },
+            { ValidationState.UnknownHost, 1 },
+            { ValidationState.Unauthorized, 2 },
+        };
+
         internal static NuGetCredentialsValidator Instance;
 
         static NuGetCredentialsValidator()
@@ -53,22 +62,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             fingerprint = default;
 
-            if (!groups.TryGetNonEmptyValue("secret", out string secret) ||
-                !groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("host", out string host))
+            if (!groups.TryGetNonEmptyValue("id", out string id) ||
+                !groups.TryGetNonEmptyValue("host", out string host) ||
+                !groups.TryGetNonEmptyValue("secret", out string secret))
             {
                 return ValidationState.NoMatch;
             }
 
-            if (StaticStringHelper.LikelyPowershellVariable(secret))
+            if (FilteringHelpers.LikelyPowershellVariable(secret))
             {
                 return ValidationState.NoMatch;
             }
 
             fingerprint = new Fingerprint
             {
-                Host = host, // technically, this is XML which could contain multiple hosts.
                 Id = id,
+                Host = host, // technically, this is XML which could contain multiple hosts.
                 Secret = secret,
                 Platform = nameof(AssetPlatform.NuGet),
             };
@@ -76,79 +85,97 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return ValidationState.Unknown;
         }
 
-        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
+                                                                ref string message,
+                                                                ref Dictionary<string, string> options)
         {
             string hostXmlAsString = fingerprint.Host;
             string username = fingerprint.Id;
             string password = fingerprint.Secret;
 
-            XmlDocument hostXml = new XmlDocument();
+            var hostXml = new XmlDocument();
+
             hostXml.LoadXml(hostXmlAsString);
 
             // hostXml looks like "<packageSources>...</packageSources>
-            List<string> hosts = hostXml
-                                    ?.ChildNodes[0] // <packageSources>...
-                                        ?.ChildNodes.Cast<XmlNode>().Where(x => x.Name.Equals("add", System.StringComparison.OrdinalIgnoreCase)) // <add ... >  <clear/> (the first node)
-                                            .Select(x => x.Attributes["value"]?.Value ?? x.Attributes["Value"]?.Value).ToList(); // <add key="name of host" value="http://nugetfeedUrl.com" /> (we're looking for URL)
+            var hosts = hostXml?.ChildNodes[0] // <packageSources>...
+                            ?.ChildNodes.Cast<XmlNode>().Where(x => x.Name.Equals("add", StringComparison.OrdinalIgnoreCase)) // <add ... >  <clear/> (the first node)
+                                .Select(x => x.Attributes["value"]?.Value ?? x.Attributes["Value"]?.Value).ToList(); // <add key="name of host" value="http://nugetfeedUrl.com" /> (we're looking for URL)
 
             // Uusually there will probably only be a single host.
             // In any case, attempt to pass the credentials to each host one by one.
-            using (HttpClient httpClientNoCredentials = CreateHttpClient())
-            using (HttpClient httpClientWithCredentials = CreateHttpClient())
+            using HttpClient client = CreateHttpClient();
+            int highestResponse = -1;
+            foreach (string host in hosts)
             {
-                byte[] byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
-                httpClientWithCredentials.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
-
-                foreach (string host in hosts)
+                if (!Uri.IsWellFormedUriString(host, UriKind.Absolute))
                 {
-                    if (!Uri.IsWellFormedUriString(host, UriKind.Absolute))
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    using (HttpResponseMessage responseWithNoCredentials = httpClientNoCredentials
-                    .GetAsync(host, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult())
+                using (HttpResponseMessage responseWithNoCredentials = client
+                .GetAsync(host, HttpCompletionOption.ResponseHeadersRead)
+                .GetAwaiter()
+                .GetResult())
+                {
+                    switch (responseWithNoCredentials.StatusCode)
                     {
-                        switch (responseWithNoCredentials.StatusCode)
-                        {
-                            case HttpStatusCode.OK:
-                                // Credentials not needed, this method of verification is indeterminate.
-                                return ReturnUnknownAuthorization(ref message, username);
-                            case HttpStatusCode.Unauthorized:
-                            case HttpStatusCode.Forbidden:
-                                // Credentials may resolve this, try again with them.
-                                using (HttpResponseMessage responseWithCredentials = httpClientWithCredentials
-                                .GetAsync(host, HttpCompletionOption.ResponseHeadersRead)
-                                .GetAwaiter()
-                                .GetResult())
+                        case HttpStatusCode.OK:
+                            // Credentials not needed, this method of verification is indeterminate.
+                            highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unknown);
+                            break;
+                        case HttpStatusCode.Unauthorized:
+                        case HttpStatusCode.Forbidden:
+                            // Credentials may resolve this, try again with them.
+                            byte[] byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
+                            client.DefaultRequestHeaders.Authorization =
+                                new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+                            using (HttpResponseMessage responseWithCredentials = client
+                            .GetAsync(host, HttpCompletionOption.ResponseHeadersRead)
+                            .GetAwaiter()
+                            .GetResult())
+                            {
+                                switch (responseWithCredentials.StatusCode)
                                 {
-                                    switch (responseWithCredentials.StatusCode)
-                                    {
-                                        case HttpStatusCode.OK:
-                                            // Credentials resolved the forbidden/unauthorized message we received.
-                                            return ReturnAuthorizedAccess(ref message, username);
-                                        case HttpStatusCode.Forbidden:
-                                        case HttpStatusCode.Unauthorized:
-                                            // Credentials didn't fix the error, but it may be that we're missing
-                                            // something in the request.
-                                            return ReturnUnauthorizedAccess(ref message, username);
-                                        default:
-                                            break;
-                                    }
+                                    case HttpStatusCode.OK:
+                                        // Credentials resolved the forbidden/unauthorized message we received.
+                                        return ReturnAuthorizedAccess(ref message, username);
+                                    case HttpStatusCode.Forbidden:
+                                    case HttpStatusCode.Unauthorized:
+                                        // Credentials didn't fix the error, but it may be that we're missing
+                                        // something in the request.
+                                        highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unauthorized);
+                                        break;
+                                    default:
+                                        break;
                                 }
+                            }
 
-                                break;
-                            default:
-                                break;
-                        }
+                            break;
+                        default:
+                            highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unknown);
+                            break;
                     }
                 }
             }
 
-            return ValidationState.Unknown;
+            switch (highestResponse)
+            {
+                case 0:
+                    return ReturnUnknownAuthorization(ref message, username);
+                case 1:
+                    return ReturnUnknownHost(ref message, username);
+                case 2:
+                    return ReturnUnauthorizedAccess(ref message, username);
+                default:
+                    return ReturnUnknownAuthorization(ref message, username);
+            }
+        }
+
+        private int AssignHighestResponse(int highestResponseSoFar, ValidationState response)
+        {
+            return Math.Max(highestResponseSoFar, badResponseSorting[response]);
         }
     }
 }
