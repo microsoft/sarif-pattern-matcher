@@ -7,12 +7,12 @@ using CommandLine;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
-    [Verb("export-rules", HelpText = "Export rules metadata to a markdown file.")]
+    [Verb("export-rules", HelpText = "Export rules metadata to a markdown (*.md) file.")]
     internal class ExportRulesMetatadaOptions
     {
         [Value(
             0,
-            HelpText = "Output path for exported analysis options. Use .md to produce a markdow rule descriptor file.",
+            HelpText = "Output path for exported rules data as markdown (*.md).",
             Required = true)]
         public string OutputFilePath { get; set; }
 

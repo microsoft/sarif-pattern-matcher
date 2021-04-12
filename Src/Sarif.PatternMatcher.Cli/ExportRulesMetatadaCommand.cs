@@ -112,11 +112,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 builder.AppendLine($"## {searchDefinition.ValidatorsAssemblyName} ({searchDefinition.Definitions.Count})");
                 builder.AppendLine();
 
+                bool hasOneOrMoreDeprecatedRuleNames = false;
+
+                foreach (SearchDefinition definition in searchDefinition.Definitions)
+                {
+                    foreach (MatchExpression match in definition.MatchExpressions)
+                    {
+                        if (!string.IsNullOrWhiteSpace(match.DeprecatedName))
+                        {
+                            hasOneOrMoreDeprecatedRuleNames = true;
+                            break;
+                        }
+                    }
+                }
+
+                string deprecatedNameColumn = hasOneOrMoreDeprecatedRuleNames ? " | Deprecated Name" : string.Empty;
+                string deprecatedNameUnderbar = hasOneOrMoreDeprecatedRuleNames ? " | ---" : string.Empty;
+
                 foreach (SearchDefinition definition in searchDefinition.Definitions.OrderBy(d => d.Id))
                 {
                     builder.AppendLine($"### {definition.Id}.{definition.Name} ({definition.MatchExpressions.GroupBy(g => g.Id).Count()})");
-                    builder.AppendLine("ID | Name | Validation");
-                    builder.AppendLine("---| --- | ---");
+                    builder.AppendLine($"Id | Name | Validation{deprecatedNameColumn}");
+                    builder.AppendLine($"---| --- | ---{deprecatedNameUnderbar}");
 
                     foreach (MatchExpression match in definition.MatchExpressions.OrderBy(m => m.Id))
                     {
@@ -130,9 +147,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                 validationPair = ValidatorsCache.GetValidationMethods(match.Name, validators.RuleNameToValidationMethods);
                             }
 
+                            string deprecatedNameContent = hasOneOrMoreDeprecatedRuleNames ?
+                                $" | {match.DeprecatedName ?? "-"}" :
+                                string.Empty;
+
                             builder.AppendLine($"{match.Id} | " +
                                                $"{match.Name} | " +
-                                               $"{(validationPair?.IsValidDynamic != null ? "Y" : "-")}");
+                                               $"{(validationPair?.IsValidDynamic != null ? "Y" : "-")}" +
+                                               deprecatedNameContent);
 
                             hash.Add(key);
                         }
