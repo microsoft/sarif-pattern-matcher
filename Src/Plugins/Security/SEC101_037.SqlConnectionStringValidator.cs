@@ -125,8 +125,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Host = host,
                 Secret = secret,
                 Resource = database,
-                Platform = SharedUtilities.GetDatabasePlatformFromHost(host, out _),
             };
+
+            SharedUtilities.PopulateAssetFingerprint(host, ref fingerprint);
 
             return ValidationState.Unknown;
         }

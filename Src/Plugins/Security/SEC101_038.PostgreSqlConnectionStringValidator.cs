@@ -95,6 +95,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Resource = database,
             };
 
+            SharedUtilities.PopulateAssetFingerprint(host, ref fingerprint);
+
             return ValidationState.Unknown;
         }
 
