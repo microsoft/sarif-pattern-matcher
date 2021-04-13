@@ -104,7 +104,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint.Port = port;
             fingerprint.Host = host.Replace("\"", string.Empty).Replace(",", ";");
             fingerprint.Resource = database;
-            fingerprint.Platform = SharedUtilities.GetDatabasePlatformFromHost(fingerprint.Host, out _);
+
+            SharedUtilities.PopulateAssetFingerprint(host, ref fingerprint);
 
             return ValidationState.Unknown;
         }
