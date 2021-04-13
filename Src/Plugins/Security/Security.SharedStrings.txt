@@ -62,7 +62,7 @@
   $SEC101/030.GoogleServiceAccountKeyConsoleRestFormat="name": "projects\/[\w-]+\/serviceAccounts\/[\w@.-]+\/keys\/(?<secret>[^"]+)",
   $SEC101/031.NuGetApiKey=\b(?<refine>(?<secret>oy2[0-9a-z]{43}))(^[0-9a-z]|$)
   $SEC101/032.GpgCredentials=(?is)gpg[._-](gen_key_input|sign|decrypt_file)\s*\(\s*(name_email\s*=\s*["'](?<id>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?<secret>[^"']*)["']
-  $SEC101/033.MongoDbConnectionString=(?i)mongodb([^:]{0,50})?:\/\/(?<id>[0-9a-z]+):(?<secret>[^@]+)@(?<host>[^\/;"<]+)
+  $SEC101/033.MongoDbConnectionString=(?i)mongodb([^:]{0,50})?:\/\/(?<id>[0-9a-z]+):(?<secret>[^@\s]{1,200})@(?<host>[^\/;"<]+)
   $SEC101/034.CredentialObjectConstructor=(PSCredential|SqlCredential)\s*\(\s*"(?<id>[^"]*)"\s*,\s*"(?<secret>[^"]*)"
   $SEC101/034.CredentialObjectInitializer=(?s)(PSCredential|SqlCredential)\s*\(\)\s*{\s*.{0,50}User(Name|Id)\s*=\s*"(?<id>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<secret>[^"]*)"  
   $SEC101/035.CloudantCredentialsPython=(?is)cloudant\s*\(\s*"(?<id>[\w-]+)"\s*\,\s*"(?<secret>[\w]{64})"\s*\,\s*.{0,200}url=\s*"https:\/\/(?<resource>[\w.-]+)\.(?<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
