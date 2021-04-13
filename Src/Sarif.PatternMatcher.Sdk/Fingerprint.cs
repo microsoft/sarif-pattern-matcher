@@ -51,7 +51,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             SecretSymbolSetCount = 0;
 
             // Validation fingerprint properties.
-            Id = Host = Path = Scheme = Port = Secret = Resource = Thumbprint = null;
+            Id = Host = Path = Port = Secret = Resource = Thumbprint = null;
+            Scheme = string.Empty;
 
             // Asset fingerprint properties.
             Platform = Part = null;
@@ -341,7 +342,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 components.Add(ResourceKeyName, $"[{ResourceKeyName}={f.Resource.Trim()}]");
             }
 
-            if (!string.IsNullOrEmpty(f.Scheme) && !denyList.Contains(SchemeKeyName))
+            if (!string.IsNullOrEmpty(f.Scheme) && !denyList.Contains(SchemeKeyName) && !f.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
             {
                 components.Add(SchemeKeyName, $"[{SchemeKeyName}={f.Scheme.Trim()}]");
             }
