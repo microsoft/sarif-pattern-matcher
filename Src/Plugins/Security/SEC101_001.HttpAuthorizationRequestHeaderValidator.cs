@@ -76,9 +76,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options)
         {
             string host = fingerprint.Host;
-            string scheme = fingerprint.Scheme ?? "https://";
+            string scheme = fingerprint.Scheme ?? "https";
             string path = fingerprint.Path ?? string.Empty;
-            string uri = scheme + host + path;
+            string uri = scheme + "://" + host + path;
 
             try
             {
