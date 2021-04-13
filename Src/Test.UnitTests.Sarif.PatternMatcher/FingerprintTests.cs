@@ -348,7 +348,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             new FingerprintTestCase {
                 Title = "Resource provider and type.",
                 Text = $"[{Fingerprint.PartKeyName}=ResourceType]",
-                Expected = new Fingerprint { ResourceType = "ResourceType" }},
+                Expected = new Fingerprint { Part = "ResourceType" }},
         };
 
         private static readonly FingerprintTestCase[] s_exceptionalTestCases = new[]

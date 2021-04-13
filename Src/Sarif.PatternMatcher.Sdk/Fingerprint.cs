@@ -53,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             Id = Host = Uri = Port = Secret = Resource = Thumbprint = null;
 
             // Asset fingerprint properties.
-            Platform = ResourceType = ResourceProvider = null;
+            Platform = Part = null;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -97,6 +97,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string Host { get; set; }
 
+        public string Part { get; set; }
+
         public string Port { get; set; }
 
         public string Secret { get; set; }
@@ -105,18 +107,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string Thumbprint { get; set; }
 
-        // The following properties are relevant to asset fingerprints only.
-        public string Part
-        {
-            get => !string.IsNullOrWhiteSpace(ResourceType) ? ResourceType : null;
-            set => ResourceType = value;
-        }
-
         public string Platform { get; set; }
-
-        public string ResourceType { get; set; }
-
-        public string ResourceProvider { get; set; }
 
         /// <summary>
         /// Gets or sets a value that is the count of the valid symbols that
@@ -234,13 +225,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             return obj is Fingerprint equatable &&
                 Id == equatable.Id &&
-                Secret == equatable.Secret &&
                 Uri == equatable.Uri &&
                 Host == equatable.Host &&
                 Part == equatable.Part &&
-                Platform == equatable.Platform &&
                 Port == equatable.Port &&
                 Secret == equatable.Secret &&
+                Secret == equatable.Secret &&
+                Platform == equatable.Platform &&
                 Resource == equatable.Resource &&
                 Thumbprint == equatable.Thumbprint;
         }
