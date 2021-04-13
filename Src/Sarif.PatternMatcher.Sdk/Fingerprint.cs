@@ -51,8 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             SecretSymbolSetCount = 0;
 
             // Validation fingerprint properties.
-            Id = Host = Path = Port = Secret = Resource = Thumbprint = null;
-            Scheme = string.Empty;
+            Id = Host = Path = Port = Scheme = Secret = Resource = Thumbprint = null;
 
             // Asset fingerprint properties.
             Platform = Part = null;
