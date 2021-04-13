@@ -364,8 +364,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 ExceptionType = typeof(ArgumentException) },
 
             new FingerprintTestCase {
-                Title = "Duplicated keys (Uri & Uri).",
-                Text = $"[{Fingerprint.UriKeyName}=Uri][{Fingerprint.UriKeyName}=Uri]",
+                Title = "Duplicated keys (Path & Path).",
+                Text = $"[{Fingerprint.PathKeyName}=Path][{Fingerprint.PathKeyName}=Path]",
                 ExceptionType = typeof(ArgumentException) },
 
             new FingerprintTestCase {

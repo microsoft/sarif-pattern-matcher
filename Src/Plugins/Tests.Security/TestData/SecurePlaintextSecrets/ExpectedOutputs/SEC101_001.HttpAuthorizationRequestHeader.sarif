@@ -74,9 +74,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=https://example.com]",
-            "ValidationFingerprint/v1": "[host=https://example.com][secret=SomeAuthorizationKey1111111]",
-            "ValidationFingerprintHash/v1": "d14ab28fe321441f47b1793cbf4c38ca900e94869a5d065fee8ee4b6ecbe67ce"
+            "AssetFingerprint/v1": "[host=example.com][scheme=https]",
+            "ValidationFingerprint/v1": "[host=example.com][scheme=https][secret=SomeAuthorizationKey1111111]",
+            "ValidationFingerprintHash/v1": "1b9f90ed013da8e7ff2e6aac2004a8d247657c3cf9a40b6737d6377357996d00"
           },
           "rank": 51.84
         },
@@ -117,9 +117,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=https://example.com][resource=?some=parameters&that=should&appear=inresults]",
-            "ValidationFingerprint/v1": "[host=https://example.com][resource=?some=parameters&that=should&appear=inresults][secret=SomeAuthorizationKey2222222]",
-            "ValidationFingerprintHash/v1": "536307c752c5b5bf5ad715bd9481e4c0b2446952836b2c116ff78295af2b4470"
+            "AssetFingerprint/v1": "[host=example.com][path=?some=parameters&that=should&appear=inresults][scheme=https]",
+            "ValidationFingerprint/v1": "[host=example.com][path=?some=parameters&that=should&appear=inresults][scheme=https][secret=SomeAuthorizationKey2222222]",
+            "ValidationFingerprintHash/v1": "7cf9f342633b654a61e77fa95d69886c9e1df6e27d64ed297968a51eee5c5dd3"
           },
           "rank": 51.84
         },
@@ -160,9 +160,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=https://example.com]",
-            "ValidationFingerprint/v1": "[host=https://example.com][secret=SomeAuthorizationKey3333333=]",
-            "ValidationFingerprintHash/v1": "840f9aa00c41945b81942ed25195355b422e94da1c3ae95ef7e5bea635a390a3"
+            "AssetFingerprint/v1": "[host=example.com][scheme=https]",
+            "ValidationFingerprint/v1": "[host=example.com][scheme=https][secret=SomeAuthorizationKey3333333=]",
+            "ValidationFingerprintHash/v1": "4311d68f53bf9650c5adbc48d726933d152236e1912d17a7c6f65841920a9707"
           },
           "rank": 53.16
         },
@@ -203,9 +203,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=https://example.com]",
-            "ValidationFingerprint/v1": "[host=https://example.com][secret=SomeAuthorizationKey4444444]",
-            "ValidationFingerprintHash/v1": "431b553d57eadd24b965baaae500972beac5d970f602b5537b3b4497f83d8c45"
+            "AssetFingerprint/v1": "[host=example.com][scheme=https]",
+            "ValidationFingerprint/v1": "[host=example.com][scheme=https][secret=SomeAuthorizationKey4444444]",
+            "ValidationFingerprintHash/v1": "d60add151828b6af4b3b97c4f2fd12ecba4405113b658052325c527d3ac05c35"
           },
           "rank": 51.84
         },
@@ -246,9 +246,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=http://we.want.that.site.com][resource=/16]",
-            "ValidationFingerprint/v1": "[host=http://we.want.that.site.com][resource=/16][secret=6666666b29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29uZw==]",
-            "ValidationFingerprintHash/v1": "6f34c197be689f765e47969fb657d960ffa450669e613d4da2add9a306691401"
+            "AssetFingerprint/v1": "[host=we.want.that.site.com][path=/16][scheme=http]",
+            "ValidationFingerprint/v1": "[host=we.want.that.site.com][path=/16][scheme=http][secret=6666666b29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29uZw==]",
+            "ValidationFingerprintHash/v1": "2e15426e76483150597c0611c0ad9a2b180046aeb5e1611a455f23d2e55eb4b3"
           },
           "rank": 32.62
         }
