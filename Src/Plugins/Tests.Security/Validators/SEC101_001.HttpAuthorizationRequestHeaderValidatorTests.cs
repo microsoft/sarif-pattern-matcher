@@ -11,15 +11,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     public class HttpAuthorizationRequestHeaderValidatorTests
     {
-        private const string TestHost = "http://www.host.com";
+        private const string TestScheme = "http";
         private const string TestKey = "somekey";
+        private const string TestHost = "www.host.com";
         private const string TestResource = "/some-path";
         private const ValidationState ExpectedValidationState = ValidationState.NoMatch;
 
         [Fact]
         public void HttpAuthorizationRequestHeaderValidator_Test()
         {
-            string fingerprintText = string.Format("[host={0}][resource={1}][secret={2}]", TestHost, TestResource, TestKey);
+            string fingerprintText = string.Format("[host={0}][resource={1}][scheme={2}][secret={3}]", TestHost, TestResource, TestScheme, TestKey);
             var fingerprint = new Fingerprint(fingerprintText);
             string message = null;
             var keyValuePairs = new Dictionary<string, string>();

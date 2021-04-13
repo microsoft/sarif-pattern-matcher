@@ -72,14 +72,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options)
         {
             string id = fingerprint.Id;
-            string uri = fingerprint.Uri;
             string secret = fingerprint.Secret;
-
-            // This will let previous fingerprint to keep working.
-            if (string.IsNullOrEmpty(uri))
-            {
-                uri = $"https://hooks.slack.com/services/{id}/{secret}";
-            }
+            string uri = $"https://hooks.slack.com/services/{id}/{secret}";
 
             using HttpClient client = CreateHttpClient();
 
