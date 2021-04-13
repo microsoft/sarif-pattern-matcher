@@ -108,36 +108,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         // The following properties are relevant to asset fingerprints only.
         public string Part
         {
-            get
-            {
-                if (!string.IsNullOrWhiteSpace(ResourceType) &&
-                    !string.IsNullOrWhiteSpace(ResourceProvider))
-                {
-                    return ResourceProvider + "/" + ResourceType;
-                }
-
-                if (!string.IsNullOrWhiteSpace(ResourceType) ||
-                    !string.IsNullOrWhiteSpace(ResourceProvider))
-                {
-                    throw new InvalidOperationException();
-                }
-
-                return null;
-            }
-
-            set
-            {
-                string[] tokens = value?.Split('/');
-
-                if (tokens?.Length != 2)
-                {
-                    throw new ArgumentException(
-                        $"Value could not be parsed into resource provider and type: {value}");
-                }
-
-                ResourceProvider = tokens[0];
-                ResourceType = tokens[1];
-            }
+            get => !string.IsNullOrWhiteSpace(ResourceType) ? ResourceType : null;
+            set => ResourceType = value;
         }
 
         public string Platform { get; set; }

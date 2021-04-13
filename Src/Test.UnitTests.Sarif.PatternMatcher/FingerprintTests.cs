@@ -204,7 +204,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 if (pi.PropertyType != typeof(string)) { continue; }
 
-                // These properties are tested exclusively through 
+                // These properties are tested exclusively through
                 // the 'Part' property;
                 if (pi.Name == "ResourceType" ||
                     pi.Name == "ResourceProvider")
@@ -347,8 +347,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             new FingerprintTestCase {
                 Title = "Resource provider and type.",
-                Text = $"[{Fingerprint.PartKeyName}=ResourceProvider/ResourceType]",
-                Expected = new Fingerprint { ResourceProvider = "ResourceProvider", ResourceType = "ResourceType" }},
+                Text = $"[{Fingerprint.PartKeyName}=ResourceType]",
+                Expected = new Fingerprint { ResourceType = "ResourceType" }},
         };
 
         private static readonly FingerprintTestCase[] s_exceptionalTestCases = new[]
@@ -377,16 +377,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Title = "Key name (NON_EXISTENT) does not exist.",
                 Text = $"[NON_EXISTENT=RandomValue]",
                 ExceptionType = typeof(ArgumentException) },
-
-            new FingerprintTestCase {
-                Title = "Resource type but no provider.",
-                Text = $"[{Fingerprint.PartKeyName}=ResourceType/]",
-                ExceptionType = typeof(InvalidOperationException) },
-
-            new FingerprintTestCase {
-                Title = "Resource provider but no type.",
-                Text = $"[{Fingerprint.PartKeyName}=/ResourceType]",
-                ExceptionType = typeof(InvalidOperationException) },
         };
 
         private string GetKeyNameForProperty(string propertyName)
