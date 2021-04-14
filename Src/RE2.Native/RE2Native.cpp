@@ -153,37 +153,6 @@ extern "C" __declspec(dllexport) int Matches(int regexIndex, String8 text, int f
 }
 
 // pattern must use RE2 syntax
-extern "C" __declspec(dllexport) bool Matches3(String8 pattern, String8 text, Match2* matches, uint32_t* matchesLength)
-{
-	// Compile RE2 from pattern
-	re2::RE2::Options options;
-	options.set_case_sensitive(false);
-	re2::StringPiece patternSp(pattern.Array + pattern.Index, pattern.Length);
-	re2::RE2 re(patternSp, options);
-
-	// Convert wrap search text in a string piece
-	re2::StringPiece textSp(text.Array + text.Index, text.Length);
-
-	// Extract number of submatch groups
-	*matchesLength = re.NumberOfCapturingGroups() + 1;
-
-	// Allocate submatch array
-	std::vector<re2::StringPiece> submatches(*matchesLength);
-
-	// Execute regex
-	bool isMatch = re.Match(textSp, 0, textSp.length(), re2::RE2::UNANCHORED, submatches.data(), *matchesLength);
-
-	if (isMatch)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-// pattern must use RE2 syntax
 extern "C" __declspec(dllexport) void GetRegexSetup(
 	_In_  StringUtf8 pattern,
 	_Out_ uint64_t* numCapturingGroups,
