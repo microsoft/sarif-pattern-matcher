@@ -15,6 +15,11 @@
       <Project>{f0d53c69-f483-3aba-8eb9-e41cf742cab4}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GroupNameHeader.h" />
+    <ClInclude Include="StringUtf8.h" />
+    <ClInclude Include="Submatch.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <!-- RE2.Native depends on the VC 2015 Runtime -->
     <VCProjectVersion>15.0</VCProjectVersion>

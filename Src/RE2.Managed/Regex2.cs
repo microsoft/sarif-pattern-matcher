@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -183,6 +184,90 @@ namespace Microsoft.RE2.Managed
             {
                 ParsedRegexes.TryTake(out ParsedRegexCache _);
                 Interlocked.Decrement(ref _regexThreadCacheCount);
+            }
+        }
+
+        public static unsafe void GetRegexSetup(string pattern, out ulong numCapturingGroups, out ulong numNamedCapturingGroups, out ulong numSubmatches, out ulong groupNameHeadersBufferSize, out ulong groupNamesBufferSize, out ulong submatchesBufferSize)
+        {
+            byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
+
+            fixed (byte* patternUtf8BytesPtr = patternUtf8Bytes)
+            {
+                fixed (ulong* numCapturingGroupsPtr = &numCapturingGroups)
+                fixed (ulong* numNamedCapturingGroupsPtr = &numNamedCapturingGroups)
+                fixed (ulong* numSubmatchesPtr = &numSubmatches)
+                fixed (ulong* groupNameHeadersBufferSizePtr = &groupNameHeadersBufferSize)
+                fixed (ulong* groupNamesBufferSizePtr = &groupNamesBufferSize)
+                fixed (ulong* submatchesBufferSizePtr = &submatchesBufferSize)
+                {
+                    NativeMethods.GetRegexSetup(new StringUtf8(patternUtf8BytesPtr, (ulong)pattern.Length), numCapturingGroupsPtr, numNamedCapturingGroupsPtr, numSubmatchesPtr, groupNameHeadersBufferSizePtr, groupNamesBufferSizePtr, submatchesBufferSizePtr);
+                }
+            }
+        }
+
+        public static unsafe bool Matches4(
+            string pattern,
+            string text,
+            out Dictionary<string, ulong> groupName2Index,
+            out Dictionary<ulong, string> index2GroupName,
+            out List<string> submatchStrings)
+        {
+            GetRegexSetup(
+                pattern,
+                out ulong numCapturingGroups,
+                out ulong numNamedCapturingGroups,
+                out ulong _,
+                out ulong _,
+                out ulong groupNamesBufferSize,
+                out ulong _);
+            ulong numSubmatches = numCapturingGroups + 1;
+
+            byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
+            byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
+            GroupNameHeader[] groupNameHeaders = new GroupNameHeader[numNamedCapturingGroups];
+            byte[] groupNamesBuffer = new byte[groupNamesBufferSize];
+            Submatch[] submatches = new Submatch[numSubmatches];
+
+            fixed (byte* patternUtf8BytesPtr = patternUtf8Bytes)
+            fixed (byte* textUtf8BytesPtr = textUtf8Bytes)
+            fixed (GroupNameHeader* groupNameHeadersPtr = groupNameHeaders)
+            fixed (byte* groupNamesBufferPtr = groupNamesBuffer)
+            fixed (Submatch* submatchesPtr = submatches)
+            {
+                bool isMatch = NativeMethods.Matches4(new StringUtf8(patternUtf8BytesPtr, (ulong)pattern.Length), new StringUtf8(textUtf8BytesPtr, (ulong)text.Length), groupNameHeadersPtr, groupNamesBufferPtr, submatchesPtr);
+                if (isMatch)
+                {
+                    groupName2Index = new Dictionary<string, ulong>();
+                    index2GroupName = new Dictionary<ulong, string>();
+
+                    // Build GroupName-Index maps
+                    ulong groupNameStringIndex = 0;
+                    foreach (GroupNameHeader groupNameHeader in groupNameHeaders)
+                    {
+                        string groupName = Encoding.UTF8.GetString(groupNamesBuffer, (int)groupNameStringIndex, (int)groupNameHeader.Length);
+                        groupName2Index[groupName] = groupNameHeader.Index;
+                        index2GroupName[groupNameHeader.Index] = groupName;
+                        groupNameStringIndex += groupNameHeader.Length;
+                    }
+
+                    // Build submatch list
+                    submatchStrings = new List<string>();
+                    foreach (Submatch submatch in submatches)
+                    {
+                        Console.WriteLine(submatch.Index);
+                        string submatchString = Encoding.UTF8.GetString(textUtf8Bytes, (int)submatch.Index, (int)submatch.Length);
+                        submatchStrings.Add(submatchString);
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    groupName2Index = null;
+                    index2GroupName = null;
+                    submatchStrings = null;
+                    return false;
+                }
             }
         }
 
