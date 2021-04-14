@@ -187,7 +187,7 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        public static unsafe void GetRegexSetup(string pattern, out ulong numCapturingGroups, out ulong numNamedCapturingGroups, out ulong numSubmatches, out ulong groupNameHeadersBufferSize, out ulong groupNamesBufferSize, out ulong submatchesBufferSize)
+        public static unsafe void GetRegexSetup(string pattern, out ulong numCapturingGroups, out ulong numNamedCapturingGroups, out ulong groupNamesBufferSize)
         {
             byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
 
@@ -195,12 +195,9 @@ namespace Microsoft.RE2.Managed
             {
                 fixed (ulong* numCapturingGroupsPtr = &numCapturingGroups)
                 fixed (ulong* numNamedCapturingGroupsPtr = &numNamedCapturingGroups)
-                fixed (ulong* numSubmatchesPtr = &numSubmatches)
-                fixed (ulong* groupNameHeadersBufferSizePtr = &groupNameHeadersBufferSize)
                 fixed (ulong* groupNamesBufferSizePtr = &groupNamesBufferSize)
-                fixed (ulong* submatchesBufferSizePtr = &submatchesBufferSize)
                 {
-                    NativeMethods.GetRegexSetup(new StringUtf8(patternUtf8BytesPtr, (ulong)pattern.Length), numCapturingGroupsPtr, numNamedCapturingGroupsPtr, numSubmatchesPtr, groupNameHeadersBufferSizePtr, groupNamesBufferSizePtr, submatchesBufferSizePtr);
+                    NativeMethods.GetRegexSetup(new StringUtf8(patternUtf8BytesPtr, (ulong)pattern.Length), numCapturingGroupsPtr, numNamedCapturingGroupsPtr, groupNamesBufferSizePtr);
                 }
             }
         }
@@ -216,10 +213,7 @@ namespace Microsoft.RE2.Managed
                 pattern,
                 out ulong numCapturingGroups,
                 out ulong numNamedCapturingGroups,
-                out ulong _,
-                out ulong _,
-                out ulong groupNamesBufferSize,
-                out ulong _);
+                out ulong groupNamesBufferSize);
             ulong numSubmatches = numCapturingGroups + 1;
 
             byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);

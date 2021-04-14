@@ -188,30 +188,21 @@ namespace Microsoft.RE2.Managed
         {
             ulong numCapturingGroups;
             ulong numNamedCapturingGroups;
-            ulong numSubmatches;
-            ulong groupNameHeadersBufferSize;
             ulong groupNamesBufferSize;
-            ulong submatchesBufferSize;
 
             Regex2.GetRegexSetup(
                 @"abc",
-                out numCapturingGroups, out numNamedCapturingGroups, out numSubmatches, out groupNameHeadersBufferSize, out groupNamesBufferSize, out submatchesBufferSize);
+                out numCapturingGroups, out numNamedCapturingGroups, out groupNamesBufferSize);
             Assert.Equal(0ul, numCapturingGroups);
             Assert.Equal(0ul, numNamedCapturingGroups);
-            Assert.Equal(1ul, numSubmatches);
-            Assert.Equal(0ul, groupNameHeadersBufferSize);
             Assert.Equal(0ul, groupNamesBufferSize);
-            Assert.Equal(16ul, submatchesBufferSize);
 
             Regex2.GetRegexSetup(
                 @"(?P<g1>a)(b)(?P<g2>c)",
-                out numCapturingGroups, out numNamedCapturingGroups, out numSubmatches, out groupNameHeadersBufferSize, out groupNamesBufferSize, out submatchesBufferSize);
+                out numCapturingGroups, out numNamedCapturingGroups, out groupNamesBufferSize);
             Assert.Equal(3ul, numCapturingGroups);
             Assert.Equal(2ul, numNamedCapturingGroups);
-            Assert.Equal(4ul, numSubmatches);
-            Assert.Equal(32ul, groupNameHeadersBufferSize);
             Assert.Equal(4ul, groupNamesBufferSize);
-            Assert.Equal(64ul, submatchesBufferSize);
         }
 
         [Fact]

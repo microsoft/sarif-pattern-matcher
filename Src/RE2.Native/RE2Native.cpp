@@ -157,10 +157,7 @@ extern "C" __declspec(dllexport) void GetRegexSetup(
 	_In_  StringUtf8 pattern,
 	_Out_ uint64_t* numCapturingGroups,
 	_Out_ uint64_t* numNamedCapturingGroups,
-	_Out_ uint64_t* numSubmatches,
-	_Out_ uint64_t* groupNameHeadersBufferSize,
-	_Out_ uint64_t* groupNamesBufferSize,
-	_Out_ uint64_t* submatchesBufferSize)
+	_Out_ uint64_t* groupNamesBufferSize)
 {
 	// Compile RE2 from pattern.
 	re2::RE2::Options options;
@@ -169,8 +166,6 @@ extern "C" __declspec(dllexport) void GetRegexSetup(
 
 	*numCapturingGroups = re.NumberOfCapturingGroups();
 	*numNamedCapturingGroups = re.NamedCapturingGroups().size();
-	*numSubmatches = (*numCapturingGroups) + 1;
-	*groupNameHeadersBufferSize = (*numNamedCapturingGroups) * sizeof(GroupNameHeader);
 	
 	*groupNamesBufferSize = 0;
 	for (auto const& pair : re.NamedCapturingGroups())
@@ -178,8 +173,6 @@ extern "C" __declspec(dllexport) void GetRegexSetup(
 		std::string groupName = pair.first;
 		(*groupNamesBufferSize) += groupName.length();
 	}
-	
-	*submatchesBufferSize = (*numSubmatches) * sizeof(Submatch);
 }
 
 // pattern must use RE2 syntax
