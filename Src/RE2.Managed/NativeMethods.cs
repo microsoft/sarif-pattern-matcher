@@ -88,11 +88,11 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        public static unsafe bool Matches4(StringUtf8 pattern, StringUtf8 text, GroupNameHeader* groupNameHeaders, byte* groupNamesBuffer, Submatch* submatches)
+        public static unsafe bool MatchesNamedGroups(StringUtf8 pattern, StringUtf8 text, GroupNameHeader* groupNameHeaders, byte* groupNamesBuffer, Submatch* submatches)
         {
             if (Environment.Is64BitProcess)
             {
-                return NativeMethodsX64.Matches4(pattern, text, groupNameHeaders, groupNamesBuffer, submatches);
+                return NativeMethodsX64.MatchesNamedGroups(pattern, text, groupNameHeaders, groupNamesBuffer, submatches);
             }
             else
             {
@@ -149,7 +149,7 @@ namespace Microsoft.RE2.Managed
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
-            public static unsafe extern bool Matches4(StringUtf8 pattern, StringUtf8 text, GroupNameHeader* groupNameHeaders, byte* groupNamesBuffer, Submatch* submatches);
+            public static unsafe extern bool MatchesNamedGroups(StringUtf8 pattern, StringUtf8 text, GroupNameHeader* groupNameHeaders, byte* groupNamesBuffer, Submatch* submatches);
         }
     }
 }

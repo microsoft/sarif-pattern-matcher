@@ -202,7 +202,7 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        public static unsafe bool Matches4(
+        public static unsafe bool Matches(
             string pattern,
             string text,
             out Dictionary<string, ulong> groupName2Index,
@@ -228,7 +228,7 @@ namespace Microsoft.RE2.Managed
             fixed (byte* groupNamesBufferPtr = groupNamesBuffer)
             fixed (Submatch* submatchesPtr = submatches)
             {
-                bool isMatch = NativeMethods.Matches4(new StringUtf8(patternUtf8BytesPtr, (ulong)pattern.Length), new StringUtf8(textUtf8BytesPtr, (ulong)text.Length), groupNameHeadersPtr, groupNamesBufferPtr, submatchesPtr);
+                bool isMatch = NativeMethods.MatchesNamedGroups(new StringUtf8(patternUtf8BytesPtr, (ulong)pattern.Length), new StringUtf8(textUtf8BytesPtr, (ulong)text.Length), groupNameHeadersPtr, groupNamesBufferPtr, submatchesPtr);
                 if (isMatch)
                 {
                     groupName2Index = new Dictionary<string, ulong>();

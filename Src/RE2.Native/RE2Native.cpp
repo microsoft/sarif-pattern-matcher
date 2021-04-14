@@ -176,7 +176,7 @@ extern "C" __declspec(dllexport) void GetRegexSetup(
 }
 
 // pattern must use RE2 syntax
-extern "C" __declspec(dllexport) bool Matches4(
+extern "C" __declspec(dllexport) bool MatchesNamedGroups(
 	_In_    StringUtf8 pattern,
 	_In_	StringUtf8 text,
 	_Inout_ GroupNameHeader* groupNameHeaders,

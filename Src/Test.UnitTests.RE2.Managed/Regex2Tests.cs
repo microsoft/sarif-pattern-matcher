@@ -184,7 +184,7 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void TestGetRegexSetup()
+        public void Regex2_GetRegexSetup()
         {
             ulong numCapturingGroups;
             ulong numNamedCapturingGroups;
@@ -206,24 +206,24 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void TestMatches4()
+        public void Regex2_MatchWithNamedGroups()
         {
             bool isMatch;
             Dictionary<string, ulong> groupName2Index;
             Dictionary<ulong, string> index2GroupName;
             List<string> submatchStrings;
 
-            isMatch = Regex2.Matches4(@"abc", "def", out _, out _, out _);
+            isMatch = Regex2.Matches(@"abc", "def", out _, out _, out _);
             Assert.False(isMatch);
 
-            isMatch = Regex2.Matches4(@"abc", "abc", out groupName2Index, out index2GroupName, out submatchStrings);
+            isMatch = Regex2.Matches(@"abc", "abc", out groupName2Index, out index2GroupName, out submatchStrings);
             Assert.True(isMatch);
             Assert.Empty(groupName2Index);
             Assert.Empty(index2GroupName);
             Assert.Single(submatchStrings);
             Assert.Equal("abc", submatchStrings[0]);
 
-            isMatch = Regex2.Matches4(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out groupName2Index, out index2GroupName, out submatchStrings);
+            isMatch = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out groupName2Index, out index2GroupName, out submatchStrings);
             Assert.True(isMatch);
             Assert.Equal(2, groupName2Index.Count);
             Assert.Equal(2, index2GroupName.Count);
