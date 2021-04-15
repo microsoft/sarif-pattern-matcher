@@ -609,13 +609,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 ValidationState state = _validators.Validate(reportingDescriptor.Name,
-                                context,
-                                ref filePath,
-                                ref groups,
-                                ref levelText,
-                                ref validatorMessage,
-                                out fingerprint,
-                                out bool pluginSupportsDynamicValidation);
+                                                             context,
+                                                             ref filePath,
+                                                             ref groups,
+                                                             ref levelText,
+                                                             ref validatorMessage,
+                                                             out fingerprint,
+                                                             out bool pluginSupportsDynamicValidation);
 
                 if (!Enum.TryParse<FailureLevel>(levelText, out level))
                 {

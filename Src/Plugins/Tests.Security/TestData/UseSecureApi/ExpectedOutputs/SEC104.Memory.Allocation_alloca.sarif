@@ -68,7 +68,13 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=D62A0E587857E47344ED096CC889828D53B1AB3EA83E005D277AC18A2AB80B4F]",
+            "ValidationFingerprintHash/v1": "b344d33a3519f593c86ad5274421711b348eb2b250a69bdb4b6d3600bc069563"
+          },
+          "rank": 54.99
         }
       ],
       "columnKind": "utf16CodeUnits"
