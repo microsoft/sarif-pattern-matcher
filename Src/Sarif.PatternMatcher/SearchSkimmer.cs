@@ -616,7 +616,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                              ref validatorMessage,
                                                              out fingerprint,
                                                              out bool pluginSupportsDynamicValidation);
- 
+
                 if (!Enum.TryParse<FailureLevel>(levelText, out level))
                 {
                     // An illegal failure level '{0}' was returned running check '{1}' against '{2}'.
