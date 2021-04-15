@@ -20,8 +20,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 return;
             }
 
-            var fingerprint = new Fingerprint(fingerprintText);
             string message = null;
+            var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
             MySqlConnectionStringValidator.IsValidDynamic(ref fingerprint, ref message, ref keyValuePairs);

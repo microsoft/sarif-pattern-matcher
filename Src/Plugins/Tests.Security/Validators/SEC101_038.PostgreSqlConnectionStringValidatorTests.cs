@@ -17,8 +17,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         public void PostgreSqlConnectionStringValidator_Test()
         {
             string fingerprintText = "[host=99.9.9.99][id=accoutName][resource=database][secret=password]";
-            var fingerprint = new Fingerprint(fingerprintText);
+
             string message = null;
+            var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
             ValidationState actualValidationState = PostgreSqlConnectionStringValidator.IsValidDynamic(ref fingerprint, ref message, ref keyValuePairs);
