@@ -24,6 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
             "database.windows.net",
+            "database.chinacloudapi.cn", // Azure China domain
             "postgres.database.azure.com",
         };
 
@@ -145,7 +146,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 if (e is MySqlException mysqlException)
                 {
-                    if (mysqlException.ErrorCode == MySqlErrorCode.AccessDenied)
+                    // ErrorCode = 9000: Client with IP address is not allowed to connect to this MySQL server.
+                    if (mysqlException.ErrorCode == (MySqlErrorCode)9000 ||
+                        mysqlException.ErrorCode == MySqlErrorCode.AccessDenied)
                     {
                         return ReturnUnauthorizedAccess(ref message, asset: host);
                     }

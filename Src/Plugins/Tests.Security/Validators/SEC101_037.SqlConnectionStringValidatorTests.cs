@@ -17,8 +17,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         public void SqlConnectionStringValidatorTests_Test()
         {
             string fingerprintText = "[host=server][id=account][resource=database][secret=password]";
-            var fingerprint = new Fingerprint(fingerprintText);
             string message = null;
+            var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
             ValidationState actualValidationState = SqlConnectionStringValidator.IsValidDynamic(ref fingerprint, ref message, ref keyValuePairs);
