@@ -187,21 +187,6 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        public static unsafe void GetRegexSetup(string pattern, out ulong numCapturingGroups, out ulong numNamedCapturingGroups, out ulong groupNamesBufferSize)
-        {
-            byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
-
-            fixed (byte* patternUtf8BytesPtr = patternUtf8Bytes)
-            {
-                fixed (ulong* numCapturingGroupsPtr = &numCapturingGroups)
-                fixed (ulong* numNamedCapturingGroupsPtr = &numNamedCapturingGroups)
-                fixed (ulong* groupNamesBufferSizePtr = &groupNamesBufferSize)
-                {
-                    NativeMethods.GetRegexSetup(new StringUtf8(patternUtf8BytesPtr, (ulong)pattern.Length), numCapturingGroupsPtr, numNamedCapturingGroupsPtr, groupNamesBufferSizePtr);
-                }
-            }
-        }
-
         public static unsafe bool Matches(
             string pattern,
             string text,
@@ -209,7 +194,7 @@ namespace Microsoft.RE2.Managed
             out Dictionary<ulong, string> index2GroupName,
             out List<string> submatchStrings)
         {
-            GetRegexSetup(
+            GetNamedGroupsSetup(
                 pattern,
                 out ulong numCapturingGroups,
                 out ulong numNamedCapturingGroups,
@@ -261,6 +246,21 @@ namespace Microsoft.RE2.Managed
                     index2GroupName = null;
                     submatchStrings = null;
                     return false;
+                }
+            }
+        }
+
+        private static unsafe void GetNamedGroupsSetup(string pattern, out ulong numCapturingGroups, out ulong numNamedCapturingGroups, out ulong groupNamesBufferSize)
+        {
+            byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
+
+            fixed (byte* patternUtf8BytesPtr = patternUtf8Bytes)
+            {
+                fixed (ulong* numCapturingGroupsPtr = &numCapturingGroups)
+                fixed (ulong* numNamedCapturingGroupsPtr = &numNamedCapturingGroups)
+                fixed (ulong* groupNamesBufferSizePtr = &groupNamesBufferSize)
+                {
+                    NativeMethods.GetNamedGroupsSetup(new StringUtf8(patternUtf8BytesPtr, (ulong)pattern.Length), numCapturingGroupsPtr, numNamedCapturingGroupsPtr, groupNamesBufferSizePtr);
                 }
             }
         }

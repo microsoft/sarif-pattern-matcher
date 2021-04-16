@@ -184,28 +184,6 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void Regex2_GetRegexSetup()
-        {
-            ulong numCapturingGroups;
-            ulong numNamedCapturingGroups;
-            ulong groupNamesBufferSize;
-
-            Regex2.GetRegexSetup(
-                @"abc",
-                out numCapturingGroups, out numNamedCapturingGroups, out groupNamesBufferSize);
-            Assert.Equal(0ul, numCapturingGroups);
-            Assert.Equal(0ul, numNamedCapturingGroups);
-            Assert.Equal(0ul, groupNamesBufferSize);
-
-            Regex2.GetRegexSetup(
-                @"(?P<g1>a)(b)(?P<g2>c)",
-                out numCapturingGroups, out numNamedCapturingGroups, out groupNamesBufferSize);
-            Assert.Equal(3ul, numCapturingGroups);
-            Assert.Equal(2ul, numNamedCapturingGroups);
-            Assert.Equal(4ul, groupNamesBufferSize);
-        }
-
-        [Fact]
         public void Regex2_MatchWithNamedGroups()
         {
             bool isMatch;
