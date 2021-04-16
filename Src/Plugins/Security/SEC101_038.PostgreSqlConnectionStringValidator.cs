@@ -23,7 +23,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
             "database.windows.net",
+            "database.chinacloudapi.cn", // Azure China domain
             "mysql.database.azure.com",
+            "mysqldb.chinacloudapi.cn", // Azure China domain
+            "mysql.database.chinacloudapi.cn", // Azure China domain
         };
 
         static PostgreSqlConnectionStringValidator()

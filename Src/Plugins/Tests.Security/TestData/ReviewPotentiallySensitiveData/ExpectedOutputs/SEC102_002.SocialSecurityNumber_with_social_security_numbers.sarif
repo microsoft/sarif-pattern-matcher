@@ -68,7 +68,13 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=626B314E07BDE35B105543A8A75E2D257C9D4B2EB75B8BC7166489B6B01D19D3]",
+            "ValidationFingerprintHash/v1": "7550a76d0dcf856cd9325ff0f8dd10dfe306d35aa0f0973726381cbf0ae70a16"
+          },
+          "rank": 54.3
         },
         {
           "ruleId": "SEC102/002",
@@ -101,7 +107,13 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=626B314E07BDE35B105543A8A75E2D257C9D4B2EB75B8BC7166489B6B01D19D3]",
+            "ValidationFingerprintHash/v1": "7550a76d0dcf856cd9325ff0f8dd10dfe306d35aa0f0973726381cbf0ae70a16"
+          },
+          "rank": 54.3
         },
         {
           "ruleId": "SEC102/002",
@@ -134,7 +146,13 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=626B314E07BDE35B105543A8A75E2D257C9D4B2EB75B8BC7166489B6B01D19D3]",
+            "ValidationFingerprintHash/v1": "7550a76d0dcf856cd9325ff0f8dd10dfe306d35aa0f0973726381cbf0ae70a16"
+          },
+          "rank": 54.3
         },
         {
           "ruleId": "SEC102/002",
@@ -167,7 +185,13 @@
                 }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=626B314E07BDE35B105543A8A75E2D257C9D4B2EB75B8BC7166489B6B01D19D3]",
+            "ValidationFingerprintHash/v1": "7550a76d0dcf856cd9325ff0f8dd10dfe306d35aa0f0973726381cbf0ae70a16"
+          },
+          "rank": 54.3
         }
       ],
       "columnKind": "utf16CodeUnits"

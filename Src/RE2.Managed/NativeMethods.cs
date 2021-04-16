@@ -76,7 +76,7 @@ namespace Microsoft.RE2.Managed
                 : NativeMethodsX86.Matches(regexIndex, text, fromTextIndex, matches, matchesLength, timeoutMilliseconds);
         }
 
-        public static unsafe void GetRegexSetup(StringUtf8 pattern, ulong* numCapturingGroups, ulong* numNamedCapturingGroups, ulong* groupNamesBufferSize)
+        public static unsafe void GetNamedGroupsSetup(StringUtf8 pattern, ulong* numCapturingGroups, ulong* numNamedCapturingGroups, ulong* groupNamesBufferSize)
         {
             if (Environment.Is64BitProcess)
             {
