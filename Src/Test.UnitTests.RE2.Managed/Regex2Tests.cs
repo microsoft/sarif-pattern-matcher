@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -180,6 +181,43 @@ namespace Microsoft.RE2.Managed
             // Matching should work again
             Assert.True(Regex2.IsMatch(String8.Convert("AA", ref buffer), "(?i)A(?-i)A"));
             Assert.Single(Regex2.ParsedRegexes);
+        }
+
+        [Fact]
+        public void Regex2_MatchWithNamedGroups()
+        {
+            bool isMatch;
+            Dictionary<string, ulong> groupName2Index;
+            Dictionary<ulong, string> index2GroupName;
+            List<string> submatchStrings;
+
+            isMatch = Regex2.Matches(@"abc", "def", out _, out _, out _);
+            Assert.False(isMatch);
+
+            isMatch = Regex2.Matches(@"abc", "abc", out groupName2Index, out index2GroupName, out submatchStrings);
+            Assert.True(isMatch);
+            Assert.Empty(groupName2Index);
+            Assert.Empty(index2GroupName);
+            Assert.Single(submatchStrings);
+            Assert.Equal("abc", submatchStrings[0]);
+
+            isMatch = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out groupName2Index, out index2GroupName, out submatchStrings);
+            Assert.True(isMatch);
+            Assert.Equal(2, groupName2Index.Count);
+            Assert.Equal(2, index2GroupName.Count);
+            Assert.Equal(4, submatchStrings.Count);
+            Assert.True(groupName2Index.ContainsKey("g1"));
+            Assert.Equal(1ul, groupName2Index["g1"]);
+            Assert.True(groupName2Index.ContainsKey("g2"));
+            Assert.Equal(3ul, groupName2Index["g2"]);
+            Assert.True(index2GroupName.ContainsKey(1));
+            Assert.Equal("g1", index2GroupName[1]);
+            Assert.True(index2GroupName.ContainsKey(3));
+            Assert.Equal("g2", index2GroupName[3]);
+            Assert.Equal("abc", submatchStrings[0]);
+            Assert.Equal("a", submatchStrings[1]);
+            Assert.Equal("b", submatchStrings[2]);
+            Assert.Equal("c", submatchStrings[3]);
         }
 
         private string MatchToString(Match2 match, String8 content)

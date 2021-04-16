@@ -6,9 +6,14 @@
 #include <vector>
 #include <chrono>
 #include <thread>
+#include <cstdint>
 #include "re2.h"
 #include "Match2.h"
 #include "String8.h"
+
+#include "GroupNameHeader.h"
+#include "Submatch.h"
+#include "StringUtf8.h"
 
 // System.Text.RegularExpressions.RegexOptions
 const int RegexOptions_IgnoreCase = 0x1;
@@ -145,4 +150,95 @@ extern "C" __declspec(dllexport) int Matches(int regexIndex, String8 text, int f
 
 	// Return the number of matches found
 	return nextMatchIndex;
+}
+
+// pattern must use RE2 syntax
+extern "C" __declspec(dllexport) void GetRegexSetup(
+	_In_  StringUtf8 pattern,
+	_Out_ uint64_t* numCapturingGroups,
+	_Out_ uint64_t* numNamedCapturingGroups,
+	_Out_ uint64_t* groupNamesBufferSize)
+{
+	// Compile RE2 from pattern.
+	re2::RE2::Options options;
+	re2::StringPiece patternSp(reinterpret_cast<char*>(pattern.Bytes), pattern.Length);
+	re2::RE2 re(patternSp, options);
+
+	*numCapturingGroups = re.NumberOfCapturingGroups();
+	*numNamedCapturingGroups = re.NamedCapturingGroups().size();
+	
+	*groupNamesBufferSize = 0;
+	for (auto const& pair : re.NamedCapturingGroups())
+	{
+		std::string groupName = pair.first;
+		(*groupNamesBufferSize) += groupName.length();
+	}
+}
+
+// pattern must use RE2 syntax
+extern "C" __declspec(dllexport) bool MatchesNamedGroups(
+	_In_    StringUtf8 pattern,
+	_In_	StringUtf8 text,
+	_Inout_ GroupNameHeader* groupNameHeaders,
+	_Inout_ uint8_t* groupNamesBuffer,
+	_Inout_ Submatch* submatches)
+{
+	// Convert StringUtf8 to string piece.
+	re2::StringPiece patternSp(reinterpret_cast<char*>(pattern.Bytes), pattern.Length);
+	re2::StringPiece textSp(reinterpret_cast<char*>(text.Bytes), text.Length);
+
+	// Compile RE2 regex from pattern.
+	re2::RE2::Options options;
+	re2::RE2 re(patternSp, options);
+
+	// Build group names buffer.
+	//- Iterate through group names and indices.
+	for (auto const& pair : re.CapturingGroupNames())
+	{
+		//- Extract index and group name.
+		int index = pair.first;
+		std::string groupName = pair.second;
+
+		//- Write group name header.
+		groupNameHeaders->Index = index;
+		groupNameHeaders->Length = groupName.length();
+		
+		//- Advance pointer to next entry.
+		groupNameHeaders += 1;
+
+		//- Write group name string.
+		std::memcpy(groupNamesBuffer, groupName.data(), groupName.length());
+		
+		//- Advance pointer to next entry.
+		groupNamesBuffer += groupName.length();
+	}
+
+	// Execute match on text using pattern.
+	int numSubmatches = re.NumberOfCapturingGroups() + 1;
+	std::vector<re2::StringPiece> submatchesSp(numSubmatches);
+	bool isMatch = re.Match(textSp, 0, textSp.length(), re2::RE2::UNANCHORED, submatchesSp.data(), numSubmatches);
+
+	if (isMatch)
+	{
+		// Build submatches buffer.
+		for (auto const& submatchSp : submatchesSp)
+		{
+			//- Convert submatches to substrings.
+			uint64_t index = submatchSp.data() - textSp.data();
+			uint64_t length = submatchSp.length();
+
+			//- Write submatch entry.
+			submatches->Index = index;
+			submatches->Length = length;
+
+			//- Advance pointer to next entry.
+			submatches += 1;
+		}
+
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
