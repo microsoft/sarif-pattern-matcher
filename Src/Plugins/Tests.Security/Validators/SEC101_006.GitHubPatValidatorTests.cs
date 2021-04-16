@@ -22,9 +22,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             groups.Add("checksum", "checksum");
             groups.Add("scanTargetFullPath", "GitHitPatTest");
 
-            string failureLevel = null;
-
             string message = null;
+            string failureLevel = null;
 
             ValidationState actualValidationState = GitHubPatValidator.IsValidStatic(ref matchedPattern, ref groups, ref failureLevel, ref message, out Fingerprint fingerprint);
 
@@ -39,9 +38,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             ValidationState expectedValidationState = ValidationState.Unauthorized;
 
             string fingerprintText = "[platform=GitHub][secret=ghp_000000000001234567890123456789012345]";
-            Fingerprint fingerprint = new Fingerprint(fingerprintText);
+
             string message = null;
-            Dictionary<string, string> options = new Dictionary<string, string>();
+            var fingerprint = new Fingerprint(fingerprintText);
+            var options = new Dictionary<string, string>();
 
             ValidationState actualValidationState = GitHubPatValidator.IsValidDynamic(ref fingerprint, ref message, ref options);
 

@@ -9,21 +9,22 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    public class PostgreSqlConnectionStringValidatorTests
+    public class SlackTokenValidatorTests
     {
-        private const ValidationState ExpectedValidationState = ValidationState.Unknown;
-
         [Fact]
-        public void PostgreSqlConnectionStringValidator_Test()
+        public void SlackTokenValidator_Test()
         {
-            string fingerprintText = "[host=99.9.9.99][id=accoutName][resource=database][secret=password]";
+            string fingerprintText = "";
+            if (string.IsNullOrEmpty(fingerprintText))
+            {
+                return;
+            }
 
             string message = null;
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            ValidationState actualValidationState = PostgreSqlConnectionStringValidator.IsValidDynamic(ref fingerprint, ref message, ref keyValuePairs);
-            Assert.Equal(ExpectedValidationState, actualValidationState);
+            SlackTokenValidator.IsValidDynamic(ref fingerprint, ref message, ref keyValuePairs);
         }
     }
 }

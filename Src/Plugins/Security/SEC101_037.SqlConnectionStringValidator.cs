@@ -26,6 +26,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             "postgres.database.azure.com",
             "mysql.database.azure.com",
+            "mysqldb.chinacloudapi.cn", // Azure China domain
+            "mysql.database.chinacloudapi.cn", // Azure China domain
         };
 
         static SqlConnectionStringValidator()

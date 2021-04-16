@@ -12,13 +12,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
     internal class ImportAndAnalyzeCommand : CommandBase
     {
-        private const string FolderName = "SarifPatternMatcherCli";
+        private const string FolderName = "SarifPatternMatcherCli\\";
         private static readonly List<string> Files = new List<string>();
 
         public int Run(ImportAndAnalyzeOptions options)
         {
             string basePath = Path.Combine(Path.GetTempPath(), FolderName);
-            string sarifPath = string.Empty;
 
             try
             {
@@ -27,6 +26,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     FileSystem.DirectoryCreateDirectory(basePath);
                 }
 
+                string sarifPath;
                 if (ImportDataFromKusto(options, basePath, out sarifPath) == FAILURE)
                 {
                     return FAILURE;
@@ -37,6 +37,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     return FAILURE;
                 }
 
+                // This is needed to scan the temp folder.
+                options.TargetFileSpecifiers = new List<string> { basePath };
+                options.Recurse = false;
                 return new AnalyzeCommand().Run(options);
             }
             catch (Exception ex)

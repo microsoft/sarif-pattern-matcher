@@ -77,7 +77,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             switch (response.Error)
             {
-                case "token_revoked": { return ValidationState.Expired; }
+                case "token_revoked":
+                case "account_inactive": { return ValidationState.Expired; }
                 case "invalid_auth": { return ValidationState.Unauthorized; }
             }
 
