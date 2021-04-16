@@ -495,6 +495,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 ValidationState state = 0;
                 Fingerprint fingerprint = default;
+                ResultLevelKind resultLevelKind = default;
                 string validatorMessage = null;
                 string validationPrefix = string.Empty;
                 string validationSuffix = string.Empty;
@@ -505,8 +506,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                 context,
                                                 ref refinedMatchedPattern,
                                                 ref groups,
-                                                ref levelText,
                                                 ref validatorMessage,
+                                                out resultLevelKind,
                                                 out fingerprint,
                                                 out bool pluginSupportsDynamicValidation);
 
@@ -600,6 +601,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             Fingerprint fingerprint = default;
+            ResultLevelKind resultLevelKind = default;
             string validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
             string filePath = context.TargetUri.IsAbsoluteUri
@@ -612,8 +614,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                              context,
                                                              ref filePath,
                                                              ref groups,
-                                                             ref levelText,
                                                              ref validatorMessage,
+                                                             out resultLevelKind,
                                                              out fingerprint,
                                                              out bool pluginSupportsDynamicValidation);
 

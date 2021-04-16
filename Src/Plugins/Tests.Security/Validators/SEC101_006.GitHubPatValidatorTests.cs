@@ -23,9 +23,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             groups.Add("scanTargetFullPath", "GitHitPatTest");
 
             string message = null;
-            string failureLevel = null;
 
-            ValidationState actualValidationState = GitHubPatValidator.IsValidStatic(ref matchedPattern, ref groups, ref failureLevel, ref message, out Fingerprint fingerprint);
+            ValidationState actualValidationState = GitHubPatValidator.IsValidStatic(ref matchedPattern, ref groups, ref message, out _, out Fingerprint fingerprint);
 
             Assert.Equal(matchedPattern, fingerprint.Secret);
             Assert.Equal(AssetPlatform.GitHub.ToString(), fingerprint.Platform);
