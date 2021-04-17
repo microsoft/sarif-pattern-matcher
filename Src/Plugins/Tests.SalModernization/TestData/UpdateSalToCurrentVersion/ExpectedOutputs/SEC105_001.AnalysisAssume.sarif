@@ -13,81 +13,81 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC105/001",
-              "name": "UpdateSalToCurrentVersion/Allocator",
+              "id": "SEC105/001/001",
+              "name": "DeleteObsoleteAnnotation",
               "fullDescription": {
-                "text": "Update SAL to current version"
+                "text": "Obsolete or redundant SAL annotation."
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL."
+                  "text": "'{0}' contains a call to the SAL v1 '{1}' annotation and should be removed as it is obsolete or redundant in SAL v2."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             },
             {
-              "id": "SEC105/002",
-              "name": "UpdateSalToCurrentVersion/AnalysisAssume",
+              "id": "SEC105/002/001",
+              "name": "ReplaceObsoleteAnnotation",
               "fullDescription": {
-                "text": "Update SAL to current version"
+                "text": "SAL 1 can be replaced with SAL 2."
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL."
+                  "text": "'{0}' contains a call to the SAL v1 '{1}' annotation and should be replaced for '{2}'."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             },
             {
-              "id": "SEC105/119",
-              "name": "UpdateSalToCurrentVersion/Maybenull",
+              "id": "SEC105/003/051",
+              "name": "ConvertObsoleteAnnotation",
               "fullDescription": {
-                "text": "Update SAL to current version"
+                "text": "Conversion from SAL 1 to SAL 2 cannot be automatically done."
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL."
+                  "text": "'{0}' contains a call to the SAL v1 '{1}' annotation and should be converted manually."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             },
             {
-              "id": "SEC105/121",
-              "name": "UpdateSalToCurrentVersion/Notnull",
+              "id": "SEC105/003/053",
+              "name": "ConvertObsoleteAnnotation",
               "fullDescription": {
-                "text": "Update SAL to current version"
+                "text": "Conversion from SAL 1 to SAL 2 cannot be automatically done."
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL."
+                  "text": "'{0}' contains a call to the SAL v1 '{1}' annotation and should be converted manually."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             },
             {
-              "id": "SEC105/159",
-              "name": "UpdateSalToCurrentVersion/PostInvalid",
+              "id": "SEC105/003/075",
+              "name": "ConvertObsoleteAnnotation",
               "fullDescription": {
-                "text": "Update SAL to current version"
+                "text": "Conversion from SAL 1 to SAL 2 cannot be automatically done."
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL."
+                  "text": "'{0}' contains a call to the SAL v1 '{1}' annotation and should be converted manually."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -102,12 +102,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC105/001",
+          "ruleId": "SEC105/001/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
+              "SEC105_001.AnalysisAssume.cpp",
+              "__allocator"
             ]
           },
           "locations": [
@@ -140,7 +141,7 @@
           "fixes": [
             {
               "description": {
-                "text": "Delete Allocator"
+                "text": "Delete '__allocator'."
               },
               "artifactChanges": [
                 {
@@ -165,12 +166,13 @@
           ]
         },
         {
-          "ruleId": "SEC105/001",
+          "ruleId": "SEC105/001/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
+              "SEC105_001.AnalysisAssume.cpp",
+              "__allocator"
             ]
           },
           "locations": [
@@ -203,7 +205,7 @@
           "fixes": [
             {
               "description": {
-                "text": "Delete Allocator"
+                "text": "Delete '__allocator'."
               },
               "artifactChanges": [
                 {
@@ -228,12 +230,14 @@
           ]
         },
         {
-          "ruleId": "SEC105/002",
+          "ruleId": "SEC105/002/001",
           "ruleIndex": 1,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
+              "SEC105_001.AnalysisAssume.cpp",
+              "__analysis_assume",
+              "_Analysis_assume_"
             ]
           },
           "locations": [
@@ -266,7 +270,7 @@
           "fixes": [
             {
               "description": {
-                "text": "Automatic AnalysisAssume"
+                "text": "Replace '__analysis_assume' for '_Analysis_assume_'."
               },
               "artifactChanges": [
                 {
@@ -291,12 +295,13 @@
           ]
         },
         {
-          "ruleId": "SEC105/119",
+          "ruleId": "SEC105/003/051",
           "ruleIndex": 2,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
+              "SEC105_001.AnalysisAssume.cpp",
+              "__maybenull"
             ]
           },
           "locations": [
@@ -328,12 +333,13 @@
           "rank": 54.42
         },
         {
-          "ruleId": "SEC105/121",
+          "ruleId": "SEC105/003/053",
           "ruleIndex": 3,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
+              "SEC105_001.AnalysisAssume.cpp",
+              "__notnull"
             ]
           },
           "locations": [
@@ -365,12 +371,13 @@
           "rank": 54.42
         },
         {
-          "ruleId": "SEC105/159",
+          "ruleId": "SEC105/003/075",
           "ruleIndex": 4,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
+              "SEC105_001.AnalysisAssume.cpp",
+              "__post_invalid"
             ]
           },
           "locations": [
@@ -402,12 +409,13 @@
           "rank": 54.42
         },
         {
-          "ruleId": "SEC105/159",
+          "ruleId": "SEC105/003/075",
           "ruleIndex": 4,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
+              "SEC105_001.AnalysisAssume.cpp",
+              "__post_invalid"
             ]
           },
           "locations": [
