@@ -13,7 +13,7 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC105/001/001",
+              "id": "SEC105/001",
               "name": "DeleteObsoleteAnnotation",
               "fullDescription": {
                 "text": "Obsolete or redundant SAL annotation."
@@ -29,7 +29,7 @@
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             },
             {
-              "id": "SEC105/002/001",
+              "id": "SEC105/002",
               "name": "ReplaceObsoleteAnnotation",
               "fullDescription": {
                 "text": "SAL 1 can be replaced with SAL 2."
@@ -45,39 +45,7 @@
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             },
             {
-              "id": "SEC105/003/051",
-              "name": "ConvertObsoleteAnnotation",
-              "fullDescription": {
-                "text": "Conversion from SAL 1 to SAL 2 cannot be automatically done."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Default": {
-                  "text": "'{0}' contains a call to the SAL v1 '{1}' annotation and should be converted manually."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            },
-            {
-              "id": "SEC105/003/053",
-              "name": "ConvertObsoleteAnnotation",
-              "fullDescription": {
-                "text": "Conversion from SAL 1 to SAL 2 cannot be automatically done."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Default": {
-                  "text": "'{0}' contains a call to the SAL v1 '{1}' annotation and should be converted manually."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            },
-            {
-              "id": "SEC105/003/075",
+              "id": "SEC105/003",
               "name": "ConvertObsoleteAnnotation",
               "fullDescription": {
                 "text": "Conversion from SAL 1 to SAL 2 cannot be automatically done."
@@ -102,7 +70,7 @@
       ],
       "results": [
         {
-          "ruleId": "SEC105/001/001",
+          "ruleId": "SEC105/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
@@ -166,7 +134,7 @@
           ]
         },
         {
-          "ruleId": "SEC105/001/001",
+          "ruleId": "SEC105/001",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
@@ -230,7 +198,7 @@
           ]
         },
         {
-          "ruleId": "SEC105/002/001",
+          "ruleId": "SEC105/002",
           "ruleIndex": 1,
           "message": {
             "id": "Default",
@@ -295,7 +263,7 @@
           ]
         },
         {
-          "ruleId": "SEC105/003/051",
+          "ruleId": "SEC105/003",
           "ruleIndex": 2,
           "message": {
             "id": "Default",
@@ -333,8 +301,8 @@
           "rank": 54.42
         },
         {
-          "ruleId": "SEC105/003/053",
-          "ruleIndex": 3,
+          "ruleId": "SEC105/003",
+          "ruleIndex": 2,
           "message": {
             "id": "Default",
             "arguments": [
@@ -371,8 +339,8 @@
           "rank": 54.42
         },
         {
-          "ruleId": "SEC105/003/075",
-          "ruleIndex": 4,
+          "ruleId": "SEC105/003",
+          "ruleIndex": 2,
           "message": {
             "id": "Default",
             "arguments": [
@@ -409,8 +377,8 @@
           "rank": 54.42
         },
         {
-          "ruleId": "SEC105/003/075",
-          "ruleIndex": 4,
+          "ruleId": "SEC105/003",
+          "ruleIndex": 2,
           "message": {
             "id": "Default",
             "arguments": [

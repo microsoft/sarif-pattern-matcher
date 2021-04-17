@@ -11,7 +11,6 @@
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
-          "Id": "SEC105/001/001",
           "ContentsRegex": "$SEC105/001/001.__allocator",
           "MessageArguments": { "obsoleteApi": "__allocator" },
           "Fixes": {
@@ -23,7 +22,6 @@
           }
         },
         {
-          "Id": "SEC105/001/002",
           "ContentsRegex": "$SEC105/001/002.__bound",
           "MessageArguments": { "obsoleteApi": "__bound" },
           "Fixes": {
@@ -35,7 +33,6 @@
           }
         },
         {
-          "Id": "SEC105/001/003",
           "ContentsRegex": "$SEC105/001/003.__gdi_entry",
           "MessageArguments": { "obsoleteApi": "__gdi_entry" },
           "Fixes": {
@@ -47,7 +44,6 @@
           }
         },
         {
-          "Id": "SEC105/001/004",
           "ContentsRegex": "$SEC105/001/004.__in_bound",
           "MessageArguments": { "obsoleteApi": "__in_bound" },
           "Fixes": {
@@ -59,7 +55,6 @@
           }
         },
         {
-          "Id": "SEC105/001/005",
           "ContentsRegex": "$SEC105/001/005.__possibly_notnullterminated",
           "MessageArguments": { "obsoleteApi": "__possibly_notnullterminated" },
           "Fixes": {
@@ -71,7 +66,6 @@
           }
         },
         {
-          "Id": "SEC105/001/006",
           "ContentsRegex": "$SEC105/001/006.__refparam",
           "MessageArguments": { "obsoleteApi": "__refparam" },
           "Fixes": {
@@ -83,7 +77,6 @@
           }
         },
         {
-          "Id": "SEC105/001/007",
           "ContentsRegex": "$SEC105/001/007.Pre",
           "MessageArguments": { "obsoleteApi": "[Pre()]" },
           "Fixes": {
@@ -95,7 +88,6 @@
           }
         },
         {
-          "Id": "SEC105/001/008",
           "ContentsRegex": "$SEC105/001/008.Pre1",
           "MessageArguments": { "obsoleteApi": "[Pre(1)]" },
           "Fixes": {
@@ -107,7 +99,6 @@
           }
         },
         {
-          "Id": "SEC105/001/009",
           "ContentsRegex": "$SEC105/001/009.PreAccessSAYes",
           "MessageArguments": { "obsoleteApi": "[Pre(Access=SA_Yes)]" },
           "Fixes": {
@@ -119,7 +110,6 @@
           }
         },
         {
-          "Id": "SEC105/001/010",
           "ContentsRegex": "$SEC105/001/010.PreAccessSANo",
           "MessageArguments": { "obsoleteApi": "[Pre(Access=SA_No)]" },
           "Fixes": {
@@ -131,7 +121,6 @@
           }
         },
         {
-          "Id": "SEC105/001/011",
           "ContentsRegex": "$SEC105/001/011.PreDeref0",
           "MessageArguments": { "obsoleteApi": "[Pre( Deref=0 )]" },
           "Fixes": {
@@ -143,7 +132,6 @@
           }
         },
         {
-          "Id": "SEC105/001/012",
           "ContentsRegex": "$SEC105/001/012.PreDeref1",
           "MessageArguments": { "obsoleteApi": "[Pre(Deref=1)]" },
           "Fixes": {
@@ -155,7 +143,6 @@
           }
         },
         {
-          "Id": "SEC105/001/013",
           "ContentsRegex": "$SEC105/001/013.PreNullTerminatedSARead",
           "MessageArguments": { "obsoleteApi": "[Pre(NullTerminated=SA_Read)]" },
           "Fixes": {
@@ -167,7 +154,6 @@
           }
         },
         {
-          "Id": "SEC105/001/014",
           "ContentsRegex": "$SEC105/001/014.Post",
           "MessageArguments": { "obsoleteApi": "[Post()]" },
           "Fixes": {
@@ -179,7 +165,6 @@
           }
         },
         {
-          "Id": "SEC105/001/015",
           "ContentsRegex": "$SEC105/001/015.Post12",
           "MessageArguments": { "obsoleteApi": "[Post(1,2)]" },
           "Fixes": {
@@ -191,7 +176,6 @@
           }
         },
         {
-          "Id": "SEC105/001/016",
           "ContentsRegex": "$SEC105/001/016.PostDeref1",
           "MessageArguments": { "obsoleteApi": "[Post( Deref=1 )]" },
           "Fixes": {
@@ -203,7 +187,6 @@
           }
         },
         {
-          "Id": "SEC105/001/017",
           "ContentsRegex": "$SEC105/001/017.PostDeref2",
           "MessageArguments": { "obsoleteApi": "[Post( Deref=2 )]" },
           "Fixes": {
@@ -225,7 +208,6 @@
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
-          "Id": "SEC105/002/001",
           "ContentsRegex": "$SEC105/002/001.__analysis_assume",
           "MessageArguments": {
             "obsoleteApi": "__analysis_assume",
@@ -240,7 +222,6 @@
           }
         },
         {
-          "Id": "SEC105/002/002",
           "ContentsRegex": "$SEC105/002/002.__byte_readableTo",
           "MessageArguments": {
             "obsoleteApi": "__byte_readableTo",
@@ -255,7 +236,6 @@
           }
         },
         {
-          "Id": "SEC105/002/003",
           "ContentsRegex": "$SEC105/002/003.__byte_writableTo",
           "MessageArguments": {
             "obsoleteApi": "__byte_writableTo",
@@ -270,7 +250,6 @@
           }
         },
         {
-          "Id": "SEC105/002/004",
           "ContentsRegex": "$SEC105/002/004.__checkReturn",
           "MessageArguments": {
             "obsoleteApi": "__checkReturn",
@@ -285,7 +264,6 @@
           }
         },
         {
-          "Id": "SEC105/002/005",
           "ContentsRegex": "$SEC105/002/005.__deref_in",
           "MessageArguments": {
             "obsoleteApi": "__deref_in",
@@ -300,7 +278,6 @@
           }
         },
         {
-          "Id": "SEC105/002/006",
           "ContentsRegex": "$SEC105/002/006.__deref_inout",
           "MessageArguments": {
             "obsoleteApi": "__deref_inout",
@@ -315,7 +292,6 @@
           }
         },
         {
-          "Id": "SEC105/002/007",
           "ContentsRegex": "$SEC105/002/007.__deref_inout_opt",
           "MessageArguments": {
             "obsoleteApi": "__deref_inout_opt",
@@ -330,7 +306,6 @@
           }
         },
         {
-          "Id": "SEC105/002/008",
           "ContentsRegex": "$SEC105/002/008.__deref_opt_inout",
           "MessageArguments": {
             "obsoleteApi": "__deref_opt_inout",
@@ -345,7 +320,6 @@
           }
         },
         {
-          "Id": "SEC105/002/009",
           "ContentsRegex": "$SEC105/002/009.__deref_opt_inout_opt",
           "MessageArguments": {
             "obsoleteApi": "__deref_opt_inout_opt",
@@ -360,7 +334,6 @@
           }
         },
         {
-          "Id": "SEC105/002/010",
           "ContentsRegex": "$SEC105/002/010.__deref_opt_out",
           "MessageArguments": {
             "obsoleteApi": "__deref_opt_out",
@@ -375,7 +348,6 @@
           }
         },
         {
-          "Id": "SEC105/002/011",
           "ContentsRegex": "$SEC105/002/011.__deref_opt_out_bcount_opt",
           "MessageArguments": {
             "obsoleteApi": "__deref_opt_out_bcount_opt",
@@ -390,7 +362,6 @@
           }
         },
         {
-          "Id": "SEC105/002/012",
           "ContentsRegex": "$SEC105/002/012.__deref_opt_out_opt",
           "MessageArguments": {
             "obsoleteApi": "__deref_opt_out_opt",
@@ -405,7 +376,6 @@
           }
         },
         {
-          "Id": "SEC105/002/013",
           "ContentsRegex": "$SEC105/002/013.__deref_opt_out_z",
           "MessageArguments": {
             "obsoleteApi": "__deref_opt_out_z",
@@ -420,7 +390,6 @@
           }
         },
         {
-          "Id": "SEC105/002/014",
           "ContentsRegex": "$SEC105/002/014.__deref_opt_out_z_opt",
           "MessageArguments": {
             "obsoleteApi": "__deref_opt_out_z_opt",
@@ -435,7 +404,6 @@
           }
         },
         {
-          "Id": "SEC105/002/015",
           "ContentsRegex": "$SEC105/002/015.__deref_out",
           "MessageArguments": {
             "obsoleteApi": "__deref_out",
@@ -450,7 +418,6 @@
           }
         },
         {
-          "Id": "SEC105/002/016",
           "ContentsRegex": "$SEC105/002/016.__deref_out_bcount",
           "MessageArguments": {
             "obsoleteApi": "__deref_out_bcount",
@@ -465,7 +432,6 @@
           }
         },
         {
-          "Id": "SEC105/002/017",
           "ContentsRegex": "$SEC105/002/017.__deref_out_bcount_opt",
           "MessageArguments": {
             "obsoleteApi": "__deref_out_bcount_opt",
@@ -480,7 +446,6 @@
           }
         },
         {
-          "Id": "SEC105/002/018",
           "ContentsRegex": "$SEC105/002/018.__deref_out_bcount_part",
           "MessageArguments": {
             "obsoleteApi": "__deref_out_bcount_part",
@@ -495,7 +460,6 @@
           }
         },
         {
-          "Id": "SEC105/002/019",
           "ContentsRegex": "$SEC105/002/019.__deref_out_ecount",
           "MessageArguments": {
             "obsoleteApi": "__deref_out_ecount",
@@ -510,7 +474,6 @@
           }
         },
         {
-          "Id": "SEC105/002/020",
           "ContentsRegex": "$SEC105/002/020.__deref_out_ecount_opt",
           "MessageArguments": {
             "obsoleteApi": "__deref_out_ecount_opt",
@@ -525,7 +488,6 @@
           }
         },
         {
-          "Id": "SEC105/002/021",
           "ContentsRegex": "$SEC105/002/021.__deref_out_ecount_part",
           "MessageArguments": {
             "obsoleteApi": "__deref_out_ecount_part",
@@ -540,7 +502,6 @@
           }
         },
         {
-          "Id": "SEC105/002/022",
           "ContentsRegex": "$SEC105/002/022.__deref_out_opt",
           "MessageArguments": {
             "obsoleteApi": "__deref_out_opt",
@@ -555,7 +516,6 @@
           }
         },
         {
-          "Id": "SEC105/002/023",
           "ContentsRegex": "$SEC105/002/023.__deref_out_range",
           "MessageArguments": {
             "obsoleteApi": "__deref_out_range",
@@ -570,7 +530,6 @@
           }
         },
         {
-          "Id": "SEC105/002/024",
           "ContentsRegex": "$SEC105/002/024.__deref_out_z",
           "MessageArguments": {
             "obsoleteApi": "__deref_out_z",
@@ -585,7 +544,6 @@
           }
         },
         {
-          "Id": "SEC105/002/025",
           "ContentsRegex": "$SEC105/002/025.__deref_out_z_opt",
           "MessageArguments": {
             "obsoleteApi": "__deref_out_z_opt",
@@ -600,7 +558,6 @@
           }
         },
         {
-          "Id": "SEC105/002/026",
           "ContentsRegex": "$SEC105/002/026.__elem_readableTo",
           "MessageArguments": {
             "obsoleteApi": "__elem_readableTo",
@@ -615,7 +572,6 @@
           }
         },
         {
-          "Id": "SEC105/002/027",
           "ContentsRegex": "$SEC105/002/027.__elem_writableTo",
           "MessageArguments": {
             "obsoleteApi": "__elem_writableTo",
@@ -630,7 +586,6 @@
           }
         },
         {
-          "Id": "SEC105/002/028",
           "ContentsRegex": "$SEC105/002/028.__field_bcount",
           "MessageArguments": {
             "obsoleteApi": "__field_bcount",
@@ -645,7 +600,6 @@
           }
         },
         {
-          "Id": "SEC105/002/029",
           "ContentsRegex": "$SEC105/002/029.__field_bcount_full",
           "MessageArguments": {
             "obsoleteApi": "__field_bcount_full",
@@ -660,7 +614,6 @@
           }
         },
         {
-          "Id": "SEC105/002/030",
           "ContentsRegex": "$SEC105/002/030.__field_bcount_opt",
           "MessageArguments": {
             "obsoleteApi": "__field_bcount_opt",
@@ -675,7 +628,6 @@
           }
         },
         {
-          "Id": "SEC105/002/031",
           "ContentsRegex": "$SEC105/002/031.__field_bcount_part",
           "MessageArguments": {
             "obsoleteApi": "__field_bcount_part",
@@ -690,7 +642,6 @@
           }
         },
         {
-          "Id": "SEC105/002/032",
           "ContentsRegex": "$SEC105/002/032.__field_bcount_part_opt",
           "MessageArguments": {
             "obsoleteApi": "__field_bcount_part_opt",
@@ -705,7 +656,6 @@
           }
         },
         {
-          "Id": "SEC105/002/033",
           "ContentsRegex": "$SEC105/002/033.__field_ecount",
           "MessageArguments": {
             "obsoleteApi": "__field_ecount",
@@ -720,7 +670,6 @@
           }
         },
         {
-          "Id": "SEC105/002/034",
           "ContentsRegex": "$SEC105/002/034.__field_ecount_full",
           "MessageArguments": {
             "obsoleteApi": "__field_ecount_full",
@@ -735,7 +684,6 @@
           }
         },
         {
-          "Id": "SEC105/002/035",
           "ContentsRegex": "$SEC105/002/035.__field_ecount_opt",
           "MessageArguments": {
             "obsoleteApi": "__field_ecount_opt",
@@ -750,7 +698,6 @@
           }
         },
         {
-          "Id": "SEC105/002/036",
           "ContentsRegex": "$SEC105/002/036.__field_ecount_part",
           "MessageArguments": {
             "obsoleteApi": "__field_ecount_part",
@@ -765,7 +712,6 @@
           }
         },
         {
-          "Id": "SEC105/002/037",
           "ContentsRegex": "$SEC105/002/037.__field_nullterminated",
           "MessageArguments": {
             "obsoleteApi": "__field_nullterminated",
@@ -780,7 +726,6 @@
           }
         },
         {
-          "Id": "SEC105/002/038",
           "ContentsRegex": "$SEC105/002/038.__field_range",
           "MessageArguments": {
             "obsoleteApi": "__field_range",
@@ -795,7 +740,6 @@
           }
         },
         {
-          "Id": "SEC105/002/039",
           "ContentsRegex": "$SEC105/002/039.__in",
           "MessageArguments": {
             "obsoleteApi": "__in",
@@ -810,7 +754,6 @@
           }
         },
         {
-          "Id": "SEC105/002/040",
           "ContentsRegex": "$SEC105/002/040.__in_bcount",
           "MessageArguments": {
             "obsoleteApi": "__in_bcount",
@@ -825,7 +768,6 @@
           }
         },
         {
-          "Id": "SEC105/002/041",
           "ContentsRegex": "$SEC105/002/041.__in_bcount_opt",
           "MessageArguments": {
             "obsoleteApi": "__in_bcount_opt",
@@ -840,7 +782,6 @@
           }
         },
         {
-          "Id": "SEC105/002/042",
           "ContentsRegex": "$SEC105/002/042.__in_ecount",
           "MessageArguments": {
             "obsoleteApi": "__in_ecount",
@@ -855,7 +796,6 @@
           }
         },
         {
-          "Id": "SEC105/002/043",
           "ContentsRegex": "$SEC105/002/043.__in_ecount_opt",
           "MessageArguments": {
             "obsoleteApi": "__in_ecount_opt",
@@ -870,7 +810,6 @@
           }
         },
         {
-          "Id": "SEC105/002/044",
           "ContentsRegex": "$SEC105/002/044.__in_ecount_or_z",
           "MessageArguments": {
             "obsoleteApi": "__in_ecount_or_z",
@@ -885,7 +824,6 @@
           }
         },
         {
-          "Id": "SEC105/002/045",
           "ContentsRegex": "$SEC105/002/045.__in_opt",
           "MessageArguments": {
             "obsoleteApi": "__in_opt",
@@ -900,7 +838,6 @@
           }
         },
         {
-          "Id": "SEC105/002/046",
           "ContentsRegex": "$SEC105/002/046.__in_range",
           "MessageArguments": {
             "obsoleteApi": "__in_range",
@@ -915,7 +852,6 @@
           }
         },
         {
-          "Id": "SEC105/002/047",
           "ContentsRegex": "$SEC105/002/047.__in_z",
           "MessageArguments": {
             "obsoleteApi": "__in_z",
@@ -930,7 +866,6 @@
           }
         },
         {
-          "Id": "SEC105/002/048",
           "ContentsRegex": "$SEC105/002/048.__in_z_opt",
           "MessageArguments": {
             "obsoleteApi": "__in_z_opt",
@@ -945,7 +880,6 @@
           }
         },
         {
-          "Id": "SEC105/002/049",
           "ContentsRegex": "$SEC105/002/049.__inout",
           "MessageArguments": {
             "obsoleteApi": "__inout",
@@ -960,7 +894,6 @@
           }
         },
         {
-          "Id": "SEC105/002/050",
           "ContentsRegex": "$SEC105/002/050.__inout_bcount",
           "MessageArguments": {
             "obsoleteApi": "__inout_bcount",
@@ -975,7 +908,6 @@
           }
         },
         {
-          "Id": "SEC105/002/051",
           "ContentsRegex": "$SEC105/002/051.__inout_bcount_opt",
           "MessageArguments": {
             "obsoleteApi": "__inout_bcount_opt",
@@ -990,7 +922,6 @@
           }
         },
         {
-          "Id": "SEC105/002/052",
           "ContentsRegex": "$SEC105/002/052.__inout_bcount_part",
           "MessageArguments": {
             "obsoleteApi": "__inout_bcount_part",
@@ -1005,7 +936,6 @@
           }
         },
         {
-          "Id": "SEC105/002/053",
           "ContentsRegex": "$SEC105/002/053.__inout_bcount_part_opt",
           "MessageArguments": {
             "obsoleteApi": "__inout_bcount_part_opt",
@@ -1020,7 +950,6 @@
           }
         },
         {
-          "Id": "SEC105/002/054",
           "ContentsRegex": "$SEC105/002/054.__inout_ecount",
           "MessageArguments": {
             "obsoleteApi": "__inout_ecount",
@@ -1035,7 +964,6 @@
           }
         },
         {
-          "Id": "SEC105/002/055",
           "ContentsRegex": "$SEC105/002/055.__inout_ecount_opt",
           "MessageArguments": {
             "obsoleteApi": "__inout_ecount_opt",
@@ -1050,7 +978,6 @@
           }
         },
         {
-          "Id": "SEC105/002/056",
           "ContentsRegex": "$SEC105/002/056.__inout_ecount_part",
           "MessageArguments": {
             "obsoleteApi": "__inout_ecount_part",
@@ -1065,7 +992,6 @@
           }
         },
         {
-          "Id": "SEC105/002/057",
           "ContentsRegex": "$SEC105/002/057.__inout_ecount_part_opt",
           "MessageArguments": {
             "obsoleteApi": "__inout_ecount_part_opt",
@@ -1080,7 +1006,6 @@
           }
         },
         {
-          "Id": "SEC105/002/058",
           "ContentsRegex": "$SEC105/002/058.__inout_ecount_z",
           "MessageArguments": {
             "obsoleteApi": "__inout_ecount_z",
@@ -1095,7 +1020,6 @@
           }
         },
         {
-          "Id": "SEC105/002/059",
           "ContentsRegex": "$SEC105/002/059.__inout_opt",
           "MessageArguments": {
             "obsoleteApi": "__inout_opt",
@@ -1110,7 +1034,6 @@
           }
         },
         {
-          "Id": "SEC105/002/060",
           "ContentsRegex": "$SEC105/002/060.__inout_z",
           "MessageArguments": {
             "obsoleteApi": "__inout_z",
@@ -1125,7 +1048,6 @@
           }
         },
         {
-          "Id": "SEC105/002/061",
           "ContentsRegex": "$SEC105/002/061.__kernel_driver",
           "MessageArguments": {
             "obsoleteApi": "__kernel_driver",
@@ -1140,7 +1062,6 @@
           }
         },
         {
-          "Id": "SEC105/002/062",
           "ContentsRegex": "$SEC105/002/062.__on_failure",
           "MessageArguments": {
             "obsoleteApi": "__on_failure",
@@ -1155,7 +1076,6 @@
           }
         },
         {
-          "Id": "SEC105/002/063",
           "ContentsRegex": "$SEC105/002/063.__out",
           "MessageArguments": {
             "obsoleteApi": "__out",
@@ -1170,7 +1090,6 @@
           }
         },
         {
-          "Id": "SEC105/002/064",
           "ContentsRegex": "$SEC105/002/064.__out_bcount",
           "MessageArguments": {
             "obsoleteApi": "__out_bcount",
@@ -1185,7 +1104,6 @@
           }
         },
         {
-          "Id": "SEC105/002/065",
           "ContentsRegex": "$SEC105/002/065.__out_bcount_opt",
           "MessageArguments": {
             "obsoleteApi": "__out_bcount_opt",
@@ -1200,7 +1118,6 @@
           }
         },
         {
-          "Id": "SEC105/002/066",
           "ContentsRegex": "$SEC105/002/066.__out_bcount_part",
           "MessageArguments": {
             "obsoleteApi": "__out_bcount_part",
@@ -1215,7 +1132,6 @@
           }
         },
         {
-          "Id": "SEC105/002/067",
           "ContentsRegex": "$SEC105/002/067.__out_bcount_part_opt",
           "MessageArguments": {
             "obsoleteApi": "__out_bcount_part_opt",
@@ -1230,7 +1146,6 @@
           }
         },
         {
-          "Id": "SEC105/002/068",
           "ContentsRegex": "$SEC105/002/068.__out_ecount",
           "MessageArguments": {
             "obsoleteApi": "__out_ecount",
@@ -1245,7 +1160,6 @@
           }
         },
         {
-          "Id": "SEC105/002/069",
           "ContentsRegex": "$SEC105/002/069.__out_ecount_opt",
           "MessageArguments": {
             "obsoleteApi": "__out_ecount_opt",
@@ -1260,7 +1174,6 @@
           }
         },
         {
-          "Id": "SEC105/002/070",
           "ContentsRegex": "$SEC105/002/070.__out_ecount_part",
           "MessageArguments": {
             "obsoleteApi": "__out_ecount_part",
@@ -1275,7 +1188,6 @@
           }
         },
         {
-          "Id": "SEC105/002/071",
           "ContentsRegex": "$SEC105/002/071.__out_ecount_part_opt",
           "MessageArguments": {
             "obsoleteApi": "__out_ecount_part_opt",
@@ -1290,7 +1202,6 @@
           }
         },
         {
-          "Id": "SEC105/002/072",
           "ContentsRegex": "$SEC105/002/072.__out_ecount_z",
           "MessageArguments": {
             "obsoleteApi": "__out_ecount_z",
@@ -1305,7 +1216,6 @@
           }
         },
         {
-          "Id": "SEC105/002/073",
           "ContentsRegex": "$SEC105/002/073.__out_ecount_z_opt",
           "MessageArguments": {
             "obsoleteApi": "__out_ecount_z_opt",
@@ -1320,7 +1230,6 @@
           }
         },
         {
-          "Id": "SEC105/002/074",
           "ContentsRegex": "$SEC105/002/074.__out_opt",
           "MessageArguments": {
             "obsoleteApi": "__out_opt",
@@ -1335,7 +1244,6 @@
           }
         },
         {
-          "Id": "SEC105/002/075",
           "ContentsRegex": "$SEC105/002/075.__out_range",
           "MessageArguments": {
             "obsoleteApi": "__out_range",
@@ -1350,7 +1258,6 @@
           }
         },
         {
-          "Id": "SEC105/002/076",
           "ContentsRegex": "$SEC105/002/076.__post_nullnullterminated",
           "MessageArguments": {
             "obsoleteApi": "__post_nullnullterminated",
@@ -1365,7 +1272,6 @@
           }
         },
         {
-          "Id": "SEC105/002/077",
           "ContentsRegex": "$SEC105/002/077.__reserved",
           "MessageArguments": {
             "obsoleteApi": "__reserved",
@@ -1380,7 +1286,6 @@
           }
         },
         {
-          "Id": "SEC105/002/078",
           "ContentsRegex": "$SEC105/002/078.__struct_bcount",
           "MessageArguments": {
             "obsoleteApi": "__struct_bcount",
@@ -1395,7 +1300,6 @@
           }
         },
         {
-          "Id": "SEC105/002/079",
           "ContentsRegex": "$SEC105/002/079.__user_code",
           "MessageArguments": {
             "obsoleteApi": "__user_code",
@@ -1410,7 +1314,6 @@
           }
         },
         {
-          "Id": "SEC105/002/080",
           "ContentsRegex": "$SEC105/002/080.__user_driver",
           "MessageArguments": {
             "obsoleteApi": "__user_driver",
@@ -1425,7 +1328,6 @@
           }
         },
         {
-          "Id": "SEC105/002/081",
           "ContentsRegex": "$SEC105/002/081.__guarded_by",
           "MessageArguments": {
             "obsoleteApi": "__guarded_by",
@@ -1440,7 +1342,6 @@
           }
         },
         {
-          "Id": "SEC105/002/082",
           "ContentsRegex": "$SEC105/002/082.__write_guarded_by",
           "MessageArguments": {
             "obsoleteApi": "__write_guarded_by",
@@ -1455,7 +1356,6 @@
           }
         },
         {
-          "Id": "SEC105/002/083",
           "ContentsRegex": "$SEC105/002/083.__interlocked",
           "MessageArguments": {
             "obsoleteApi": "__interlocked",
@@ -1470,7 +1370,6 @@
           }
         },
         {
-          "Id": "SEC105/002/084",
           "ContentsRegex": "$SEC105/002/084.__requires_lock_held",
           "MessageArguments": {
             "obsoleteApi": "__requires_lock_held",
@@ -1485,7 +1384,6 @@
           }
         },
         {
-          "Id": "SEC105/002/085",
           "ContentsRegex": "$SEC105/002/085.__requires_exclusive_lock_held",
           "MessageArguments": {
             "obsoleteApi": "__requires_exclusive_lock_held",
@@ -1500,7 +1398,6 @@
           }
         },
         {
-          "Id": "SEC105/002/086",
           "ContentsRegex": "$SEC105/002/086.__requires_shared_lock_held",
           "MessageArguments": {
             "obsoleteApi": "__requires_shared_lock_held",
@@ -1515,7 +1412,6 @@
           }
         },
         {
-          "Id": "SEC105/002/087",
           "ContentsRegex": "$SEC105/002/087.__requires_lock_not_held",
           "MessageArguments": {
             "obsoleteApi": "__requires_lock_not_held",
@@ -1530,7 +1426,6 @@
           }
         },
         {
-          "Id": "SEC105/002/088",
           "ContentsRegex": "$SEC105/002/088.__requires_no_locks_held",
           "MessageArguments": {
             "obsoleteApi": "__requires_no_locks_held",
@@ -1545,7 +1440,6 @@
           }
         },
         {
-          "Id": "SEC105/002/089",
           "ContentsRegex": "$SEC105/002/089.__acquires_lock",
           "MessageArguments": {
             "obsoleteApi": "__acquires_lock",
@@ -1560,7 +1454,6 @@
           }
         },
         {
-          "Id": "SEC105/002/090",
           "ContentsRegex": "$SEC105/002/090.__acquires_exclusive_lock",
           "MessageArguments": {
             "obsoleteApi": "__acquires_exclusive_lock",
@@ -1575,7 +1468,6 @@
           }
         },
         {
-          "Id": "SEC105/002/091",
           "ContentsRegex": "$SEC105/002/091.__acquires_shared_lock",
           "MessageArguments": {
             "obsoleteApi": "__acquires_shared_lock",
@@ -1590,7 +1482,6 @@
           }
         },
         {
-          "Id": "SEC105/002/092",
           "ContentsRegex": "$SEC105/002/092.__releases_lock",
           "MessageArguments": {
             "obsoleteApi": "__releases_lock",
@@ -1605,7 +1496,6 @@
           }
         },
         {
-          "Id": "SEC105/002/093",
           "ContentsRegex": "$SEC105/002/093.__releases_exclusive_lock",
           "MessageArguments": {
             "obsoleteApi": "__releases_exclusive_lock",
@@ -1620,7 +1510,6 @@
           }
         },
         {
-          "Id": "SEC105/002/094",
           "ContentsRegex": "$SEC105/002/094.__releases_shared_lock",
           "MessageArguments": {
             "obsoleteApi": "__releases_shared_lock",
@@ -1635,7 +1524,6 @@
           }
         },
         {
-          "Id": "SEC105/002/095",
           "ContentsRegex": "$SEC105/002/095.__has_lock_property",
           "MessageArguments": {
             "obsoleteApi": "__has_lock_property",
@@ -1650,7 +1538,6 @@
           }
         },
         {
-          "Id": "SEC105/002/096",
           "ContentsRegex": "$SEC105/002/096.__declare_lock_level",
           "MessageArguments": {
             "obsoleteApi": "__declare_lock_level",
@@ -1665,7 +1552,6 @@
           }
         },
         {
-          "Id": "SEC105/002/097",
           "ContentsRegex": "$SEC105/002/097.__has_lock_level",
           "MessageArguments": {
             "obsoleteApi": "__has_lock_level",
@@ -1680,7 +1566,6 @@
           }
         },
         {
-          "Id": "SEC105/002/098",
           "ContentsRegex": "$SEC105/002/098.__lock_level_order",
           "MessageArguments": {
             "obsoleteApi": "__lock_level_order",
@@ -1695,7 +1580,6 @@
           }
         },
         {
-          "Id": "SEC105/002/099",
           "ContentsRegex": "$SEC105/002/099.__no_competing_thread",
           "MessageArguments": {
             "obsoleteApi": "__no_competing_thread",
@@ -1710,7 +1594,6 @@
           }
         },
         {
-          "Id": "SEC105/002/100",
           "ContentsRegex": "$SEC105/002/100.__analysis_assume_lock_acquired",
           "MessageArguments": {
             "obsoleteApi": "__analysis_assume_lock_acquired",
@@ -1725,7 +1608,6 @@
           }
         },
         {
-          "Id": "SEC105/002/101",
           "ContentsRegex": "$SEC105/002/101.__analysis_assume_lock_released",
           "MessageArguments": {
             "obsoleteApi": "__analysis_assume_lock_released",
@@ -1740,7 +1622,6 @@
           }
         },
         {
-          "Id": "SEC105/002/102",
           "ContentsRegex": "$SEC105/002/102.__function_ignore_lock_checking",
           "MessageArguments": {
             "obsoleteApi": "__function_ignore_lock_checking",
@@ -1755,7 +1636,6 @@
           }
         },
         {
-          "Id": "SEC105/002/103",
           "ContentsRegex": "$SEC105/002/103.__analysis_suppress_lock_checking",
           "MessageArguments": {
             "obsoleteApi": "__analysis_suppress_lock_checking",
@@ -1770,7 +1650,6 @@
           }
         },
         {
-          "Id": "SEC105/002/104",
           "ContentsRegex": "$SEC105/002/104.__drv_acquiresCancelSpinLock",
           "MessageArguments": {
             "obsoleteApi": "__drv_acquiresCancelSpinLock",
@@ -1785,7 +1664,6 @@
           }
         },
         {
-          "Id": "SEC105/002/105",
           "ContentsRegex": "$SEC105/002/105.__drv_releasesCancelSpinLock",
           "MessageArguments": {
             "obsoleteApi": "__drv_releasesCancelSpinLock",
@@ -1800,7 +1678,6 @@
           }
         },
         {
-          "Id": "SEC105/002/106",
           "ContentsRegex": "$SEC105/002/106.__drv_mustHoldCancelSpinLock",
           "MessageArguments": {
             "obsoleteApi": "__drv_mustHoldCancelSpinLock",
@@ -1815,7 +1692,6 @@
           }
         },
         {
-          "Id": "SEC105/002/107",
           "ContentsRegex": "$SEC105/002/107.__drv_neverHoldCancelSpinLock",
           "MessageArguments": {
             "obsoleteApi": "__drv_neverHoldCancelSpinLock",
@@ -1830,7 +1706,6 @@
           }
         },
         {
-          "Id": "SEC105/002/108",
           "ContentsRegex": "$SEC105/002/108.__drv_acquiresCriticalRegion",
           "MessageArguments": {
             "obsoleteApi": "__drv_acquiresCriticalRegion",
@@ -1845,7 +1720,6 @@
           }
         },
         {
-          "Id": "SEC105/002/109",
           "ContentsRegex": "$SEC105/002/109.__drv_releasesCriticalRegion",
           "MessageArguments": {
             "obsoleteApi": "__drv_releasesCriticalRegion",
@@ -1860,7 +1734,6 @@
           }
         },
         {
-          "Id": "SEC105/002/110",
           "ContentsRegex": "$SEC105/002/110.__drv_mustHoldCriticalRegion",
           "MessageArguments": {
             "obsoleteApi": "__drv_mustHoldCriticalRegion",
@@ -1875,7 +1748,6 @@
           }
         },
         {
-          "Id": "SEC105/002/111",
           "ContentsRegex": "$SEC105/002/111.__drv_neverHoldCriticalRegion",
           "MessageArguments": {
             "obsoleteApi": "__drv_neverHoldCriticalRegion",
@@ -1890,7 +1762,6 @@
           }
         },
         {
-          "Id": "SEC105/002/112",
           "ContentsRegex": "$SEC105/002/112.__drv_acquiresPriorityRegion",
           "MessageArguments": {
             "obsoleteApi": "__drv_acquiresPriorityRegion",
@@ -1905,7 +1776,6 @@
           }
         },
         {
-          "Id": "SEC105/002/113",
           "ContentsRegex": "$SEC105/002/113.__drv_releasesPriorityRegion",
           "MessageArguments": {
             "obsoleteApi": "__drv_releasesPriorityRegion",
@@ -1920,7 +1790,6 @@
           }
         },
         {
-          "Id": "SEC105/002/114",
           "ContentsRegex": "$SEC105/002/114.__drv_mustHoldPriorityRegion",
           "MessageArguments": {
             "obsoleteApi": "__drv_mustHoldPriorityRegion",
@@ -1935,7 +1804,6 @@
           }
         },
         {
-          "Id": "SEC105/002/115",
           "ContentsRegex": "$SEC105/002/115.__drv_neverHoldPriorityRegion",
           "MessageArguments": {
             "obsoleteApi": "__drv_neverHoldPriorityRegion",
@@ -1950,7 +1818,6 @@
           }
         },
         {
-          "Id": "SEC105/002/116",
           "ContentsRegex": "$SEC105/002/116.__drv_interlocked",
           "MessageArguments": {
             "obsoleteApi": "__drv_interlocked",
@@ -1965,7 +1832,6 @@
           }
         },
         {
-          "Id": "SEC105/002/117",
           "ContentsRegex": "$SEC105/002/117.__drv_at",
           "MessageArguments": {
             "obsoleteApi": "__drv_at",
@@ -1980,7 +1846,6 @@
           }
         },
         {
-          "Id": "SEC105/002/118",
           "ContentsRegex": "$SEC105/002/118.__drv_when",
           "MessageArguments": {
             "obsoleteApi": "__drv_when",
@@ -1995,7 +1860,6 @@
           }
         },
         {
-          "Id": "SEC105/002/119",
           "ContentsRegex": "$SEC105/002/119.__drv_setsIRQL",
           "MessageArguments": {
             "obsoleteApi": "__drv_setsIRQL",
@@ -2010,7 +1874,6 @@
           }
         },
         {
-          "Id": "SEC105/002/120",
           "ContentsRegex": "$SEC105/002/120.__drv_raisesIRQL",
           "MessageArguments": {
             "obsoleteApi": "__drv_raisesIRQL",
@@ -2025,7 +1888,6 @@
           }
         },
         {
-          "Id": "SEC105/002/121",
           "ContentsRegex": "$SEC105/002/121.__drv_requiresIRQL",
           "MessageArguments": {
             "obsoleteApi": "__drv_requiresIRQL",
@@ -2040,7 +1902,6 @@
           }
         },
         {
-          "Id": "SEC105/002/122",
           "ContentsRegex": "$SEC105/002/122.__drv_maxIRQL",
           "MessageArguments": {
             "obsoleteApi": "__drv_maxIRQL",
@@ -2055,7 +1916,6 @@
           }
         },
         {
-          "Id": "SEC105/002/123",
           "ContentsRegex": "$SEC105/002/123.__drv_minIRQL",
           "MessageArguments": {
             "obsoleteApi": "__drv_minIRQL",
@@ -2070,7 +1930,6 @@
           }
         },
         {
-          "Id": "SEC105/002/124",
           "ContentsRegex": "$SEC105/002/124.__drv_savesIRQL",
           "MessageArguments": {
             "obsoleteApi": "__drv_savesIRQL",
@@ -2085,7 +1944,6 @@
           }
         },
         {
-          "Id": "SEC105/002/125",
           "ContentsRegex": "$SEC105/002/125.__drv_savesIRQLGlobal",
           "MessageArguments": {
             "obsoleteApi": "__drv_savesIRQLGlobal",
@@ -2100,7 +1958,6 @@
           }
         },
         {
-          "Id": "SEC105/002/126",
           "ContentsRegex": "$SEC105/002/126.__drv_restoresIRQL",
           "MessageArguments": {
             "obsoleteApi": "__drv_restoresIRQL",
@@ -2115,7 +1972,6 @@
           }
         },
         {
-          "Id": "SEC105/002/127",
           "ContentsRegex": "$SEC105/002/127.__drv_restoresIRQLGlobal",
           "MessageArguments": {
             "obsoleteApi": "__drv_restoresIRQLGlobal",
@@ -2130,7 +1986,6 @@
           }
         },
         {
-          "Id": "SEC105/002/128",
           "ContentsRegex": "$SEC105/002/128.__drv_minFunctionIRQL",
           "MessageArguments": {
             "obsoleteApi": "__drv_minFunctionIRQL",
@@ -2145,7 +2000,6 @@
           }
         },
         {
-          "Id": "SEC105/002/129",
           "ContentsRegex": "$SEC105/002/129.__drv_maxFunctionIRQL",
           "MessageArguments": {
             "obsoleteApi": "__drv_maxFunctionIRQL",
@@ -2160,7 +2014,6 @@
           }
         },
         {
-          "Id": "SEC105/002/130",
           "ContentsRegex": "$SEC105/002/130.__drv_sameIRQL",
           "MessageArguments": {
             "obsoleteApi": "__drv_sameIRQL",
@@ -2175,7 +2028,6 @@
           }
         },
         {
-          "Id": "SEC105/002/131",
           "ContentsRegex": "$SEC105/002/131.__drv_useCancelIRQL",
           "MessageArguments": {
             "obsoleteApi": "__drv_useCancelIRQL",
@@ -2190,7 +2042,6 @@
           }
         },
         {
-          "Id": "SEC105/002/132",
           "ContentsRegex": "$SEC105/002/132.__drv_isCancelIRQL",
           "MessageArguments": {
             "obsoleteApi": "__drv_isCancelIRQL",
@@ -2205,7 +2056,6 @@
           }
         },
         {
-          "Id": "SEC105/002/133",
           "ContentsRegex": "$SEC105/002/133.__drv_clearDoInit",
           "MessageArguments": {
             "obsoleteApi": "__drv_clearDoInit",
@@ -2220,7 +2070,6 @@
           }
         },
         {
-          "Id": "SEC105/002/134",
           "ContentsRegex": "$SEC105/002/134.__drv_IoGetDmaAdapter",
           "MessageArguments": {
             "obsoleteApi": "__drv_IoGetDmaAdapter",
@@ -2235,7 +2084,6 @@
           }
         },
         {
-          "Id": "SEC105/002/135",
           "ContentsRegex": "$SEC105/002/135.__drv_floatSaved",
           "MessageArguments": {
             "obsoleteApi": "__drv_floatSaved",
@@ -2250,7 +2098,6 @@
           }
         },
         {
-          "Id": "SEC105/002/136",
           "ContentsRegex": "$SEC105/002/136.__drv_floatRestored",
           "MessageArguments": {
             "obsoleteApi": "__drv_floatRestored",
@@ -2265,7 +2112,6 @@
           }
         },
         {
-          "Id": "SEC105/002/137",
           "ContentsRegex": "$SEC105/002/137.__drv_floatUsed",
           "MessageArguments": {
             "obsoleteApi": "__drv_floatUsed",
@@ -2280,7 +2126,6 @@
           }
         },
         {
-          "Id": "SEC105/002/138",
           "ContentsRegex": "$SEC105/002/138.__drv_dispatchType",
           "MessageArguments": {
             "obsoleteApi": "__drv_dispatchType",
@@ -2295,7 +2140,6 @@
           }
         },
         {
-          "Id": "SEC105/002/139",
           "ContentsRegex": "$SEC105/002/139.__drv_functionClass",
           "MessageArguments": {
             "obsoleteApi": "__drv_functionClass",
@@ -2310,7 +2154,6 @@
           }
         },
         {
-          "Id": "SEC105/002/140",
           "ContentsRegex": "$SEC105/002/140.__drv_arg",
           "MessageArguments": {
             "obsoleteApi": "__drv_arg",
@@ -2325,7 +2168,6 @@
           }
         },
         {
-          "Id": "SEC105/002/141",
           "ContentsRegex": "$SEC105/002/141.__drv_constant",
           "MessageArguments": {
             "obsoleteApi": "__drv_constant",
@@ -2340,7 +2182,6 @@
           }
         },
         {
-          "Id": "SEC105/002/142",
           "ContentsRegex": "$SEC105/002/142.__drv_nonConstant",
           "MessageArguments": {
             "obsoleteApi": "__drv_nonConstant",
@@ -2355,7 +2196,6 @@
           }
         },
         {
-          "Id": "SEC105/002/143",
           "ContentsRegex": "$SEC105/002/143.__drv_isObjectPointer",
           "MessageArguments": {
             "obsoleteApi": "__drv_isObjectPointer",
@@ -2370,7 +2210,6 @@
           }
         },
         {
-          "Id": "SEC105/002/144",
           "ContentsRegex": "$SEC105/002/144.__drv_inTry",
           "MessageArguments": {
             "obsoleteApi": "__drv_inTry",
@@ -2385,7 +2224,6 @@
           }
         },
         {
-          "Id": "SEC105/002/145",
           "ContentsRegex": "$SEC105/002/145._Deref_out_",
           "MessageArguments": {
             "obsoleteApi": "_Deref_out_",
@@ -2400,7 +2238,6 @@
           }
         },
         {
-          "Id": "SEC105/002/146",
           "ContentsRegex": "$SEC105/002/146._Deref_opt_out_",
           "MessageArguments": {
             "obsoleteApi": "_Deref_opt_out_",
@@ -2415,7 +2252,6 @@
           }
         },
         {
-          "Id": "SEC105/002/147",
           "ContentsRegex": "$SEC105/002/147._Deref_out_opt_",
           "MessageArguments": {
             "obsoleteApi": "_Deref_out_opt_",
@@ -2430,7 +2266,6 @@
           }
         },
         {
-          "Id": "SEC105/002/148",
           "ContentsRegex": "$SEC105/002/148._Deref_opt_out_opt_",
           "MessageArguments": {
             "obsoleteApi": "_Deref_opt_out_opt_",
@@ -2445,7 +2280,6 @@
           }
         },
         {
-          "Id": "SEC105/002/149",
           "ContentsRegex": "$SEC105/002/149._In_bytecount_",
           "MessageArguments": {
             "obsoleteApi": "_In_bytecount_",
@@ -2460,7 +2294,6 @@
           }
         },
         {
-          "Id": "SEC105/002/150",
           "ContentsRegex": "$SEC105/002/150._In_bytecount_c_",
           "MessageArguments": {
             "obsoleteApi": "_In_bytecount_c_",
@@ -2475,7 +2308,6 @@
           }
         },
         {
-          "Id": "SEC105/002/151",
           "ContentsRegex": "$SEC105/002/151._In_count_",
           "MessageArguments": {
             "obsoleteApi": "_In_count_",
@@ -2490,7 +2322,6 @@
           }
         },
         {
-          "Id": "SEC105/002/152",
           "ContentsRegex": "$SEC105/002/152._In_count_c_",
           "MessageArguments": {
             "obsoleteApi": "_In_count_c_",
@@ -2505,7 +2336,6 @@
           }
         },
         {
-          "Id": "SEC105/002/153",
           "ContentsRegex": "$SEC105/002/153._In_opt_bytecount_",
           "MessageArguments": {
             "obsoleteApi": "_In_opt_bytecount_",
@@ -2520,7 +2350,6 @@
           }
         },
         {
-          "Id": "SEC105/002/154",
           "ContentsRegex": "$SEC105/002/154._In_opt_count_",
           "MessageArguments": {
             "obsoleteApi": "_In_opt_count_",
@@ -2535,7 +2364,6 @@
           }
         },
         {
-          "Id": "SEC105/002/155",
           "ContentsRegex": "$SEC105/002/155._In_opt_count_c_",
           "MessageArguments": {
             "obsoleteApi": "_In_opt_count_c_",
@@ -2550,7 +2378,6 @@
           }
         },
         {
-          "Id": "SEC105/002/156",
           "ContentsRegex": "$SEC105/002/156._In_opt_z_count_",
           "MessageArguments": {
             "obsoleteApi": "_In_opt_z_count_",
@@ -2565,7 +2392,6 @@
           }
         },
         {
-          "Id": "SEC105/002/157",
           "ContentsRegex": "$SEC105/002/157._In_ptrdiff_count_",
           "MessageArguments": {
             "obsoleteApi": "_In_ptrdiff_count_",
@@ -2580,7 +2406,6 @@
           }
         },
         {
-          "Id": "SEC105/002/158",
           "ContentsRegex": "$SEC105/002/158._In_z_count_",
           "MessageArguments": {
             "obsoleteApi": "_In_z_count_",
@@ -2595,7 +2420,6 @@
           }
         },
         {
-          "Id": "SEC105/002/159",
           "ContentsRegex": "$SEC105/002/159._In_z_count_c_",
           "MessageArguments": {
             "obsoleteApi": "_In_z_count_c_",
@@ -2610,7 +2434,6 @@
           }
         },
         {
-          "Id": "SEC105/002/160",
           "ContentsRegex": "$SEC105/002/160._Inout_bytecap_",
           "MessageArguments": {
             "obsoleteApi": "_Inout_bytecap_",
@@ -2625,7 +2448,6 @@
           }
         },
         {
-          "Id": "SEC105/002/161",
           "ContentsRegex": "$SEC105/002/161._Inout_cap_",
           "MessageArguments": {
             "obsoleteApi": "_Inout_cap_",
@@ -2640,7 +2462,6 @@
           }
         },
         {
-          "Id": "SEC105/002/162",
           "ContentsRegex": "$SEC105/002/162._Inout_cap_c_",
           "MessageArguments": {
             "obsoleteApi": "_Inout_cap_c_",
@@ -2655,7 +2476,6 @@
           }
         },
         {
-          "Id": "SEC105/002/163",
           "ContentsRegex": "$SEC105/002/163._Inout_count_",
           "MessageArguments": {
             "obsoleteApi": "_Inout_count_",
@@ -2670,7 +2490,6 @@
           }
         },
         {
-          "Id": "SEC105/002/164",
           "ContentsRegex": "$SEC105/002/164._Inout_count_c_",
           "MessageArguments": {
             "obsoleteApi": "_Inout_count_c_",
@@ -2685,7 +2504,6 @@
           }
         },
         {
-          "Id": "SEC105/002/165",
           "ContentsRegex": "$SEC105/002/165._Inout_opt_bytecap_",
           "MessageArguments": {
             "obsoleteApi": "_Inout_opt_bytecap_",
@@ -2700,7 +2518,6 @@
           }
         },
         {
-          "Id": "SEC105/002/166",
           "ContentsRegex": "$SEC105/002/166._Inout_opt_cap_",
           "MessageArguments": {
             "obsoleteApi": "_Inout_opt_cap_",
@@ -2715,7 +2532,6 @@
           }
         },
         {
-          "Id": "SEC105/002/167",
           "ContentsRegex": "$SEC105/002/167._Inout_opt_cap_c_",
           "MessageArguments": {
             "obsoleteApi": "_Inout_opt_cap_c_",
@@ -2730,7 +2546,6 @@
           }
         },
         {
-          "Id": "SEC105/002/168",
           "ContentsRegex": "$SEC105/002/168._Inout_z_cap_",
           "MessageArguments": {
             "obsoleteApi": "_Inout_z_cap_",
@@ -2745,7 +2560,6 @@
           }
         },
         {
-          "Id": "SEC105/002/169",
           "ContentsRegex": "$SEC105/002/169._Inout_z_cap_c_",
           "MessageArguments": {
             "obsoleteApi": "_Inout_z_cap_c_",
@@ -2760,7 +2574,6 @@
           }
         },
         {
-          "Id": "SEC105/002/170",
           "ContentsRegex": "$SEC105/002/170._Out_bytecap_",
           "MessageArguments": {
             "obsoleteApi": "_Out_bytecap_",
@@ -2775,7 +2588,6 @@
           }
         },
         {
-          "Id": "SEC105/002/171",
           "ContentsRegex": "$SEC105/002/171._Out_bytecap_c_",
           "MessageArguments": {
             "obsoleteApi": "_Out_bytecap_c_",
@@ -2790,7 +2602,6 @@
           }
         },
         {
-          "Id": "SEC105/002/172",
           "ContentsRegex": "$SEC105/002/172._Out_bytecap_post_bytecount_",
           "MessageArguments": {
             "obsoleteApi": "_Out_bytecap_post_bytecount_",
@@ -2805,7 +2616,6 @@
           }
         },
         {
-          "Id": "SEC105/002/173",
           "ContentsRegex": "$SEC105/002/173._Out_bytecapcount_",
           "MessageArguments": {
             "obsoleteApi": "_Out_bytecapcount_",
@@ -2820,7 +2630,6 @@
           }
         },
         {
-          "Id": "SEC105/002/174",
           "ContentsRegex": "$SEC105/002/174._Out_cap_",
           "MessageArguments": {
             "obsoleteApi": "_Out_cap_",
@@ -2835,7 +2644,6 @@
           }
         },
         {
-          "Id": "SEC105/002/175",
           "ContentsRegex": "$SEC105/002/175._Out_cap_c_",
           "MessageArguments": {
             "obsoleteApi": "_Out_cap_c_",
@@ -2850,7 +2658,6 @@
           }
         },
         {
-          "Id": "SEC105/002/176",
           "ContentsRegex": "$SEC105/002/176._Out_cap_post_count_",
           "MessageArguments": {
             "obsoleteApi": "_Out_cap_post_count_",
@@ -2865,7 +2672,6 @@
           }
         },
         {
-          "Id": "SEC105/002/177",
           "ContentsRegex": "$SEC105/002/177._Out_capcount_",
           "MessageArguments": {
             "obsoleteApi": "_Out_capcount_",
@@ -2880,7 +2686,6 @@
           }
         },
         {
-          "Id": "SEC105/002/178",
           "ContentsRegex": "$SEC105/002/178._Out_opt_bytecap_",
           "MessageArguments": {
             "obsoleteApi": "_Out_opt_bytecap_",
@@ -2895,7 +2700,6 @@
           }
         },
         {
-          "Id": "SEC105/002/179",
           "ContentsRegex": "$SEC105/002/179._Out_opt_bytecap_post_bytecount_",
           "MessageArguments": {
             "obsoleteApi": "_Out_opt_bytecap_post_bytecount_",
@@ -2910,7 +2714,6 @@
           }
         },
         {
-          "Id": "SEC105/002/180",
           "ContentsRegex": "$SEC105/002/180._Out_opt_bytecapcount_",
           "MessageArguments": {
             "obsoleteApi": "_Out_opt_bytecapcount_",
@@ -2925,7 +2728,6 @@
           }
         },
         {
-          "Id": "SEC105/002/181",
           "ContentsRegex": "$SEC105/002/181._Out_opt_cap_",
           "MessageArguments": {
             "obsoleteApi": "_Out_opt_cap_",
@@ -2940,7 +2742,6 @@
           }
         },
         {
-          "Id": "SEC105/002/182",
           "ContentsRegex": "$SEC105/002/182._Out_opt_cap_c_",
           "MessageArguments": {
             "obsoleteApi": "_Out_opt_cap_c_",
@@ -2955,7 +2756,6 @@
           }
         },
         {
-          "Id": "SEC105/002/183",
           "ContentsRegex": "$SEC105/002/183._Out_opt_cap_post_count_",
           "MessageArguments": {
             "obsoleteApi": "_Out_opt_cap_post_count_",
@@ -2970,7 +2770,6 @@
           }
         },
         {
-          "Id": "SEC105/002/184",
           "ContentsRegex": "$SEC105/002/184._Out_opt_capcount_",
           "MessageArguments": {
             "obsoleteApi": "_Out_opt_capcount_",
@@ -2985,7 +2784,6 @@
           }
         },
         {
-          "Id": "SEC105/002/185",
           "ContentsRegex": "$SEC105/002/185._Out_opt_z_cap_",
           "MessageArguments": {
             "obsoleteApi": "_Out_opt_z_cap_",
@@ -3000,7 +2798,6 @@
           }
         },
         {
-          "Id": "SEC105/002/186",
           "ContentsRegex": "$SEC105/002/186._Out_z_cap_",
           "MessageArguments": {
             "obsoleteApi": "_Out_z_cap_",
@@ -3015,7 +2812,6 @@
           }
         },
         {
-          "Id": "SEC105/002/187",
           "ContentsRegex": "$SEC105/002/187._Out_z_cap_c_",
           "MessageArguments": {
             "obsoleteApi": "_Out_z_cap_c_",
@@ -3030,7 +2826,6 @@
           }
         },
         {
-          "Id": "SEC105/002/188",
           "ContentsRegex": "$SEC105/002/188._Post_bytecount_",
           "MessageArguments": {
             "obsoleteApi": "_Post_bytecount_",
@@ -3045,7 +2840,6 @@
           }
         },
         {
-          "Id": "SEC105/002/189",
           "ContentsRegex": "$SEC105/002/189._Post_bytecount_c_",
           "MessageArguments": {
             "obsoleteApi": "_Post_bytecount_c_",
@@ -3060,7 +2854,6 @@
           }
         },
         {
-          "Id": "SEC105/002/190",
           "ContentsRegex": "$SEC105/002/190._Post_count_",
           "MessageArguments": {
             "obsoleteApi": "_Post_count_",
@@ -3075,7 +2868,6 @@
           }
         },
         {
-          "Id": "SEC105/002/191",
           "ContentsRegex": "$SEC105/002/191._Post_count_c_",
           "MessageArguments": {
             "obsoleteApi": "_Post_count_c_",
@@ -3090,7 +2882,6 @@
           }
         },
         {
-          "Id": "SEC105/002/192",
           "ContentsRegex": "$SEC105/002/192._Post_z_count_",
           "MessageArguments": {
             "obsoleteApi": "_Post_z_count_",
@@ -3105,7 +2896,6 @@
           }
         },
         {
-          "Id": "SEC105/002/193",
           "ContentsRegex": "$SEC105/002/193._Pre_count_",
           "MessageArguments": {
             "obsoleteApi": "_Pre_count_",
@@ -3120,7 +2910,6 @@
           }
         },
         {
-          "Id": "SEC105/002/194",
           "ContentsRegex": "$SEC105/002/194._Ret_bytecap_",
           "MessageArguments": {
             "obsoleteApi": "_Ret_bytecap_",
@@ -3135,7 +2924,6 @@
           }
         },
         {
-          "Id": "SEC105/002/195",
           "ContentsRegex": "$SEC105/002/195._Ret_cap_",
           "MessageArguments": {
             "obsoleteApi": "_Ret_cap_",
@@ -3150,7 +2938,6 @@
           }
         },
         {
-          "Id": "SEC105/002/196",
           "ContentsRegex": "$SEC105/002/196._Ret_opt_bytecap_",
           "MessageArguments": {
             "obsoleteApi": "_Ret_opt_bytecap_",
@@ -3165,7 +2952,6 @@
           }
         },
         {
-          "Id": "SEC105/002/197",
           "ContentsRegex": "$SEC105/002/197._Ret_opt_count_",
           "MessageArguments": {
             "obsoleteApi": "_Ret_opt_count_",
@@ -3180,7 +2966,6 @@
           }
         },
         {
-          "Id": "SEC105/002/198",
           "ContentsRegex": "$SEC105/002/198._Ret_opt_z_cap_",
           "MessageArguments": {
             "obsoleteApi": "_Ret_opt_z_cap_",
@@ -3195,7 +2980,6 @@
           }
         },
         {
-          "Id": "SEC105/002/199",
           "ContentsRegex": "$SEC105/002/199.SAPreAccessSARead",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Access=SA_Read )]",
@@ -3210,7 +2994,6 @@
           }
         },
         {
-          "Id": "SEC105/002/200",
           "ContentsRegex": "$SEC105/002/200.SAPreAccessSAWrite",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Access=SA_Write)]",
@@ -3225,7 +3008,6 @@
           }
         },
         {
-          "Id": "SEC105/002/201",
           "ContentsRegex": "$SEC105/002/201.SAPreDeref0NullSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(0), Null=SA_Maybe )]",
@@ -3240,7 +3022,6 @@
           }
         },
         {
-          "Id": "SEC105/002/202",
           "ContentsRegex": "$SEC105/002/202.SAPreDeref0NullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(0), NullTerminated=SA_Yes )]",
@@ -3255,7 +3036,6 @@
           }
         },
         {
-          "Id": "SEC105/002/203",
           "ContentsRegex": "$SEC105/002/203.SAPreDeref0NullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=0, NullTerminated=SA_Yes )]",
@@ -3270,7 +3050,6 @@
           }
         },
         {
-          "Id": "SEC105/002/204",
           "ContentsRegex": "$SEC105/002/204.SAPreDeref0ValidSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Deref=0, Valid=SA_No)]",
@@ -3285,7 +3064,6 @@
           }
         },
         {
-          "Id": "SEC105/002/205",
           "ContentsRegex": "$SEC105/002/205.SAPreDeref0ValidElements1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre (Deref=0, ValidElements=\"%1\")]",
@@ -3300,7 +3078,6 @@
           }
         },
         {
-          "Id": "SEC105/002/206",
           "ContentsRegex": "$SEC105/002/206.SAPreDeref0ValidElements1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(0), ValidElements = \"%1\" )]",
@@ -3315,7 +3092,6 @@
           }
         },
         {
-          "Id": "SEC105/002/207",
           "ContentsRegex": "$SEC105/002/207.SAPreDeref0ValidElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(0), ValidElementsConst=(%1) )]",
@@ -3330,7 +3106,6 @@
           }
         },
         {
-          "Id": "SEC105/002/208",
           "ContentsRegex": "$SEC105/002/208.SAPreDeref0WritableBytes1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Deref=0, WritableBytes = \"%1\")]",
@@ -3345,7 +3120,6 @@
           }
         },
         {
-          "Id": "SEC105/002/209",
           "ContentsRegex": "$SEC105/002/209.SAPreDeref0WritableElements1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(0), WritableElements = \"%1\" )]",
@@ -3360,7 +3134,6 @@
           }
         },
         {
-          "Id": "SEC105/002/210",
           "ContentsRegex": "$SEC105/002/210.SAPreDeref0WritableElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(0), WritableElementsConst=(%1) )]",
@@ -3375,7 +3148,6 @@
           }
         },
         {
-          "Id": "SEC105/002/211",
           "ContentsRegex": "$SEC105/002/211.SAPreDeref1AccessSAWrite",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=1, Access=SA_Write )]",
@@ -3390,7 +3162,6 @@
           }
         },
         {
-          "Id": "SEC105/002/212",
           "ContentsRegex": "$SEC105/002/212.SAPreDeref1AccessSARead",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=1, Access=SA_Read )]",
@@ -3405,7 +3176,6 @@
           }
         },
         {
-          "Id": "SEC105/002/213",
           "ContentsRegex": "$SEC105/002/213.SAPreDeref1AccessSAReadWrite",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=1, Access=SA_ReadWrite )]",
@@ -3420,7 +3190,6 @@
           }
         },
         {
-          "Id": "SEC105/002/214",
           "ContentsRegex": "$SEC105/002/214.SAPreDeref1NullSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(1), Null=SA_Yes )]",
@@ -3435,7 +3204,6 @@
           }
         },
         {
-          "Id": "SEC105/002/215",
           "ContentsRegex": "$SEC105/002/215.SAPreDeref1NullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(1), NullTerminated=SA_Yes )]",
@@ -3450,7 +3218,6 @@
           }
         },
         {
-          "Id": "SEC105/002/216",
           "ContentsRegex": "$SEC105/002/216.SAPreDeref1ValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(1), Valid=SA_Yes )]",
@@ -3465,7 +3232,6 @@
           }
         },
         {
-          "Id": "SEC105/002/217",
           "ContentsRegex": "$SEC105/002/217.SAPreDeref1ValidSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(1), Valid=SA_No )]",
@@ -3480,7 +3246,6 @@
           }
         },
         {
-          "Id": "SEC105/002/218",
           "ContentsRegex": "$SEC105/002/218.SAPreDeref1ValidSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Deref=1,Valid=SA_No)]",
@@ -3495,7 +3260,6 @@
           }
         },
         {
-          "Id": "SEC105/002/219",
           "ContentsRegex": "$SEC105/002/219.SAPreDeref1ValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Deref=1, Valid=SA_Yes)]",
@@ -3510,7 +3274,6 @@
           }
         },
         {
-          "Id": "SEC105/002/220",
           "ContentsRegex": "$SEC105/002/220.SAPreDeref1NullSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(1), Null=SA_No )]",
@@ -3525,7 +3288,6 @@
           }
         },
         {
-          "Id": "SEC105/002/221",
           "ContentsRegex": "$SEC105/002/221.SAPreDeref1ValidSAYesAccessSARead",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Deref=1,Valid=SA_Yes,Access=SA_Read)]",
@@ -3540,7 +3302,6 @@
           }
         },
         {
-          "Id": "SEC105/002/222",
           "ContentsRegex": "$SEC105/002/222.SAPreDeref1ValidBytesConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Deref=1, ValidBytesConst=%1)]",
@@ -3555,7 +3316,6 @@
           }
         },
         {
-          "Id": "SEC105/002/223",
           "ContentsRegex": "$SEC105/002/223.SAPreDeref1ValidElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Deref=1, ValidElementsConst=%1)]",
@@ -3570,7 +3330,6 @@
           }
         },
         {
-          "Id": "SEC105/002/224",
           "ContentsRegex": "$SEC105/002/224.SAPreDeref1ValidElementsConst1ElementSizeConst2",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Deref=1,ValidElementsConst=%1,ElementSizeConst=%2)]",
@@ -3585,7 +3344,6 @@
           }
         },
         {
-          "Id": "SEC105/002/225",
           "ContentsRegex": "$SEC105/002/225.SAPreDeref1WritableBytes1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Deref=1, WritableBytes = \"%1\")]",
@@ -3600,7 +3358,6 @@
           }
         },
         {
-          "Id": "SEC105/002/226",
           "ContentsRegex": "$SEC105/002/226.SAPreDeref2ValidSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Deref=2,Valid=SA_No)]",
@@ -3615,7 +3372,6 @@
           }
         },
         {
-          "Id": "SEC105/002/227",
           "ContentsRegex": "$SEC105/002/227.SAPreNullSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_Yes)]",
@@ -3630,7 +3386,6 @@
           }
         },
         {
-          "Id": "SEC105/002/228",
           "ContentsRegex": "$SEC105/002/228.SAPreNullSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_No)]",
@@ -3645,7 +3400,6 @@
           }
         },
         {
-          "Id": "SEC105/002/229",
           "ContentsRegex": "$SEC105/002/229.SAPreNullSANoNullTerminatedSAYesWritableElements1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_No,NullTerminated=SA_Yes,WritableElements=\"%1\")]",
@@ -3660,7 +3414,6 @@
           }
         },
         {
-          "Id": "SEC105/002/230",
           "ContentsRegex": "$SEC105/002/230.SAPreNullSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_Maybe)]",
@@ -3675,7 +3428,6 @@
           }
         },
         {
-          "Id": "SEC105/002/231",
           "ContentsRegex": "$SEC105/002/231.SAPreNullSANoNotref1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_No,Notref=1)]",
@@ -3690,7 +3442,6 @@
           }
         },
         {
-          "Id": "SEC105/002/232",
           "ContentsRegex": "$SEC105/002/232.SAPreNullSAYesValidSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_Yes, Valid=SA_No)]",
@@ -3705,7 +3456,6 @@
           }
         },
         {
-          "Id": "SEC105/002/233",
           "ContentsRegex": "$SEC105/002/233.SAPreNullSANoValidSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_No, Valid=SA_No)]",
@@ -3720,7 +3470,6 @@
           }
         },
         {
-          "Id": "SEC105/002/234",
           "ContentsRegex": "$SEC105/002/234.SAPreNullSAMaybeValidSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_Maybe, Valid=SA_No)]",
@@ -3735,7 +3484,6 @@
           }
         },
         {
-          "Id": "SEC105/002/235",
           "ContentsRegex": "$SEC105/002/235.SAPreNullSAYesValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_Yes, Valid=SA_Yes)]",
@@ -3750,7 +3498,6 @@
           }
         },
         {
-          "Id": "SEC105/002/236",
           "ContentsRegex": "$SEC105/002/236.SAPreNullSAYesWritableBytesParam1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_Yes,WritableBytesParam=\"%1\")]",
@@ -3765,7 +3512,6 @@
           }
         },
         {
-          "Id": "SEC105/002/237",
           "ContentsRegex": "$SEC105/002/237.SAPreNullSAYesSAPreWritableElementsParam1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_Yes),SA_Pre(WritableElementsParam=\"%1\")]",
@@ -3780,7 +3526,6 @@
           }
         },
         {
-          "Id": "SEC105/002/238",
           "ContentsRegex": "$SEC105/002/238.SAPreValidElementsParam1ElementSizeParam2",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(ValidElementsParam=\"%1\", ElementSizeParam=\"%2\")]",
@@ -3795,7 +3540,6 @@
           }
         },
         {
-          "Id": "SEC105/002/239",
           "ContentsRegex": "$SEC105/002/239.SAPreNullSANoWritableElements1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_No,WritableElements=\"%1\")]",
@@ -3810,7 +3554,6 @@
           }
         },
         {
-          "Id": "SEC105/002/240",
           "ContentsRegex": "$SEC105/002/240.SAPreNullSANoWritableElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=SA_No,WritableElementsConst=%1)]",
@@ -3825,7 +3568,6 @@
           }
         },
         {
-          "Id": "SEC105/002/241",
           "ContentsRegex": "$SEC105/002/241.SAPreNullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(NullTerminated=SA_Yes)]",
@@ -3840,7 +3582,6 @@
           }
         },
         {
-          "Id": "SEC105/002/242",
           "ContentsRegex": "$SEC105/002/242.SAPreNullTerminatedSAYesNullSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(NullTerminated=SA_Yes,Null=SA_Maybe)]",
@@ -3855,7 +3596,6 @@
           }
         },
         {
-          "Id": "SEC105/002/243",
           "ContentsRegex": "$SEC105/002/243.SAPreNullTerminatedSAYesValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(NullTerminated=SA_Yes, Valid=SA_Yes)]",
@@ -3870,7 +3610,6 @@
           }
         },
         {
-          "Id": "SEC105/002/244",
           "ContentsRegex": "$SEC105/002/244.SAPreNullTerminatedSANoNullSANoValidElementsConst1WritableElementsConst2",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(NullTerminated=SA_No, Null=SA_No, ValidElementsConst=%1, WritableElementsConst=%2)]",
@@ -3885,7 +3624,6 @@
           }
         },
         {
-          "Id": "SEC105/002/245",
           "ContentsRegex": "$SEC105/002/245.SAPreNullTerminatedSANoValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(NullTerminated=SA_No, Valid=SA_Yes)]",
@@ -3900,7 +3638,6 @@
           }
         },
         {
-          "Id": "SEC105/002/246",
           "ContentsRegex": "$SEC105/002/246.SAPreElementSizeConst1ValidElementsConst2",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(ElementSizeConst=%1, ValidElementsConst=%2)]",
@@ -3915,7 +3652,6 @@
           }
         },
         {
-          "Id": "SEC105/002/247",
           "ContentsRegex": "$SEC105/002/247.SAPreElementSizeConst1WritableElementsConst2",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(ElementSizeConst=%1, WritableElementsConst=%2)]",
@@ -3930,7 +3666,6 @@
           }
         },
         {
-          "Id": "SEC105/002/248",
           "ContentsRegex": "$SEC105/002/248.SAFormatStringStyleprintf",
           "MessageArguments": {
             "obsoleteApi": "[SA_FormatString(Style=\"printf\")]",
@@ -3945,7 +3680,6 @@
           }
         },
         {
-          "Id": "SEC105/002/249",
           "ContentsRegex": "$SEC105/002/249.SAFormatStringStylescanf",
           "MessageArguments": {
             "obsoleteApi": "[SA_FormatString( Style=\"scanf\" )]",
@@ -3960,7 +3694,6 @@
           }
         },
         {
-          "Id": "SEC105/002/250",
           "ContentsRegex": "$SEC105/002/250.SAPreValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Valid=SA_Yes )]",
@@ -3975,7 +3708,6 @@
           }
         },
         {
-          "Id": "SEC105/002/251",
           "ContentsRegex": "$SEC105/002/251.SAPreValidSAYesNullSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Valid=SA_Yes, Null=SA_No)]",
@@ -3990,7 +3722,6 @@
           }
         },
         {
-          "Id": "SEC105/002/252",
           "ContentsRegex": "$SEC105/002/252.SAPreValidSAYesNullSANoValidElementsParam1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Valid=SA_Yes, Null=SA_No, ValidElementsParam=%1)]",
@@ -4005,7 +3736,6 @@
           }
         },
         {
-          "Id": "SEC105/002/253",
           "ContentsRegex": "$SEC105/002/253.SAPreValidSAYesNullSANoWritableElements1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Valid=SA_Yes, Null=SA_No, WritableElements=\"%1\")]",
@@ -4020,7 +3750,6 @@
           }
         },
         {
-          "Id": "SEC105/002/254",
           "ContentsRegex": "$SEC105/002/254.SAPreValidBytesConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( ValidBytesConst=%1 )]",
@@ -4035,7 +3764,6 @@
           }
         },
         {
-          "Id": "SEC105/002/255",
           "ContentsRegex": "$SEC105/002/255.SAPreValidBytesConst1Condition2",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( ValidBytesConst=%1, Condition=\"%2\" )]",
@@ -4050,7 +3778,6 @@
           }
         },
         {
-          "Id": "SEC105/002/256",
           "ContentsRegex": "$SEC105/002/256.SAPreValidBytes1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre (ValidBytes=\"%1\")]",
@@ -4065,7 +3792,6 @@
           }
         },
         {
-          "Id": "SEC105/002/257",
           "ContentsRegex": "$SEC105/002/257.SAPreValidElements1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre (ValidElements=\"%1\")]",
@@ -4080,7 +3806,6 @@
           }
         },
         {
-          "Id": "SEC105/002/258",
           "ContentsRegex": "$SEC105/002/258.SAPreValidElementsLength1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre (ValidElementsLength=\"%1\")]",
@@ -4095,7 +3820,6 @@
           }
         },
         {
-          "Id": "SEC105/002/259",
           "ContentsRegex": "$SEC105/002/259.SAPreValidElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( ValidElementsConst=%1 )]",
@@ -4110,7 +3834,6 @@
           }
         },
         {
-          "Id": "SEC105/002/260",
           "ContentsRegex": "$SEC105/002/260.SAPreValidElementsConst1WritableElementsConst2NullSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(ValidElementsConst=%1, WritableElementsConst=%2, Null=SA_No)]",
@@ -4125,7 +3848,6 @@
           }
         },
         {
-          "Id": "SEC105/002/261",
           "ContentsRegex": "$SEC105/002/261.SAPreWritableElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(WritableElementsConst =%1)]",
@@ -4140,7 +3862,6 @@
           }
         },
         {
-          "Id": "SEC105/002/262",
           "ContentsRegex": "$SEC105/002/262.SAPreWritableElementsConst1Notref1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(WritableElementsConst=%1,Notref=1)]",
@@ -4155,7 +3876,6 @@
           }
         },
         {
-          "Id": "SEC105/002/263",
           "ContentsRegex": "$SEC105/002/263.SAPreWritableElementsConst1NullSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(WritableElementsConst=%1, Null=SA_No)]",
@@ -4170,7 +3890,6 @@
           }
         },
         {
-          "Id": "SEC105/002/264",
           "ContentsRegex": "$SEC105/002/264.SAPreWritableBytes1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre (WritableBytes=\"%1\")]",
@@ -4185,7 +3904,6 @@
           }
         },
         {
-          "Id": "SEC105/002/265",
           "ContentsRegex": "$SEC105/002/265.SAPreWritableBytesConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(WritableBytesConst=%1)]",
@@ -4200,7 +3918,6 @@
           }
         },
         {
-          "Id": "SEC105/002/266",
           "ContentsRegex": "$SEC105/002/266.SAPreWritableElements1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(WritableElements=\"%1\")]",
@@ -4215,7 +3932,6 @@
           }
         },
         {
-          "Id": "SEC105/002/267",
           "ContentsRegex": "$SEC105/002/267.SAPreWritableElementsL1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(WritableElements=L\"%1\")]",
@@ -4230,7 +3946,6 @@
           }
         },
         {
-          "Id": "SEC105/002/268",
           "ContentsRegex": "$SEC105/002/268.SAPreWritableBytesLength1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre (WritableBytesLength=\"%1\")]",
@@ -4245,7 +3960,6 @@
           }
         },
         {
-          "Id": "SEC105/002/269",
           "ContentsRegex": "$SEC105/002/269.SAPreWritableElementsLength1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre (WritableElementsLength=\"%1\")]",
@@ -4260,7 +3974,6 @@
           }
         },
         {
-          "Id": "SEC105/002/270",
           "ContentsRegex": "$SEC105/002/270.SAPreAttributeValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_PreAttribute(Valid=SA_Yes)]",
@@ -4275,7 +3988,6 @@
           }
         },
         {
-          "Id": "SEC105/002/271",
           "ContentsRegex": "$SEC105/002/271.SAPreValidBytesConst1SAPostValidBytesConst2",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( ValidBytesConst=%1 ), SA_Post( ValidBytesConst=%2 )]",
@@ -4290,7 +4002,6 @@
           }
         },
         {
-          "Id": "SEC105/002/272",
           "ContentsRegex": "$SEC105/002/272.SAPreValidBytes1SAPostElementSize2WritableElementsConst3",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(ValidBytes=\"%1\"), SA_Post(ElementSize=\"%2\", WritableElementsConst=%3)]",
@@ -4305,7 +4016,6 @@
           }
         },
         {
-          "Id": "SEC105/002/273",
           "ContentsRegex": "$SEC105/002/273.SAPreElementSize1WritableElementsConst2SAPostValidBytes3",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(ElementSize=\"%1\", WritableElementsConst=%2), SA_Post(ValidBytes=\"%3\")]",
@@ -4320,7 +4030,6 @@
           }
         },
         {
-          "Id": "SEC105/002/274",
           "ContentsRegex": "$SEC105/002/274.SAPreWritableElements1SAPostValidElements2",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(WritableElements=\"%1\"), SA_Post(ValidElements=\"%2\")]",
@@ -4335,7 +4044,6 @@
           }
         },
         {
-          "Id": "SEC105/002/275",
           "ContentsRegex": "$SEC105/002/275.SAPreNullMaybeSAPostValidElementsParam1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(Null=Maybe), SA_Post(ValidElementsParam=\"%1\")]",
@@ -4350,7 +4058,6 @@
           }
         },
         {
-          "Id": "SEC105/002/276",
           "ContentsRegex": "$SEC105/002/276.SAPreTainted1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre (Tainted=%1)]",
@@ -4365,7 +4072,6 @@
           }
         },
         {
-          "Id": "SEC105/002/277",
           "ContentsRegex": "$SEC105/002/277.PreTaintedSAYesSANo",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Tainted=(SA_Yes | SA_No))]",
@@ -4380,7 +4086,6 @@
           }
         },
         {
-          "Id": "SEC105/002/278",
           "ContentsRegex": "$SEC105/002/278.SAPreDeref0NullTerminatedSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(0), NullTerminated=SA_No )]",
@@ -4395,7 +4100,6 @@
           }
         },
         {
-          "Id": "SEC105/002/279",
           "ContentsRegex": "$SEC105/002/279.SAPreDeref0NullTerminatedSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(0), NullTerminated=SA_Maybe )]",
@@ -4410,7 +4114,6 @@
           }
         },
         {
-          "Id": "SEC105/002/280",
           "ContentsRegex": "$SEC105/002/280.SAPreDeref1NullTerminatedSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(1), NullTerminated=SA_No )]",
@@ -4425,7 +4128,6 @@
           }
         },
         {
-          "Id": "SEC105/002/281",
           "ContentsRegex": "$SEC105/002/281.SAPreDeref1NullTerminatedSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre( Deref=(1), NullTerminated=SA_Maybe )]",
@@ -4440,7 +4142,6 @@
           }
         },
         {
-          "Id": "SEC105/002/282",
           "ContentsRegex": "$SEC105/002/282.SAPreNullTerminatedSAMaybeValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(NullTerminated=SA_Maybe, Valid=SA_Yes)]",
@@ -4455,7 +4156,6 @@
           }
         },
         {
-          "Id": "SEC105/002/283",
           "ContentsRegex": "$SEC105/002/283.SAPreNullTerminatedSANoSAPostNullTerminatedSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(NullTerminated=SA_No), SA_Post(NullTerminated=SA_No)]",
@@ -4470,7 +4170,6 @@
           }
         },
         {
-          "Id": "SEC105/002/284",
           "ContentsRegex": "$SEC105/002/284.SAPreNullTerminatedSANONullSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(NullTerminated=SA_NO, Null=SA_No)]",
@@ -4485,7 +4184,6 @@
           }
         },
         {
-          "Id": "SEC105/002/285",
           "ContentsRegex": "$SEC105/002/285.SAPreNullTerminatedSANONullSANoValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Pre(NullTerminated=SA_NO, Null=SA_No, Valid=SA_Yes)]",
@@ -4500,7 +4198,6 @@
           }
         },
         {
-          "Id": "SEC105/002/286",
           "ContentsRegex": "$SEC105/002/286.SAPostAccessSAWrite",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post (Access=SA_Write)]",
@@ -4515,7 +4212,6 @@
           }
         },
         {
-          "Id": "SEC105/002/287",
           "ContentsRegex": "$SEC105/002/287.SAPostDeref0NullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(0), NullTerminated=SA_Yes )]",
@@ -4530,7 +4226,6 @@
           }
         },
         {
-          "Id": "SEC105/002/288",
           "ContentsRegex": "$SEC105/002/288.SAPostDeref0ValidSAYesNullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(0), Valid=SA_Yes, NullTerminated=SA_Yes )]",
@@ -4545,7 +4240,6 @@
           }
         },
         {
-          "Id": "SEC105/002/289",
           "ContentsRegex": "$SEC105/002/289.SAPostDeref0ValidSAYesNullTerminatedSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(0), Valid=SA_Yes, NullTerminated=SA_No )]",
@@ -4560,7 +4254,6 @@
           }
         },
         {
-          "Id": "SEC105/002/290",
           "ContentsRegex": "$SEC105/002/290.SAPostDeref0ValidBytesConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(0), ValidBytesConst=(%1) )]",
@@ -4575,7 +4268,6 @@
           }
         },
         {
-          "Id": "SEC105/002/291",
           "ContentsRegex": "$SEC105/002/291.SAPostDeref0ValidElements1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(0), ValidElements = \"%1\" )]",
@@ -4590,7 +4282,6 @@
           }
         },
         {
-          "Id": "SEC105/002/292",
           "ContentsRegex": "$SEC105/002/292.SAPostDeref0ValidElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(0), ValidElementsConst=(%1) )]",
@@ -4605,7 +4296,6 @@
           }
         },
         {
-          "Id": "SEC105/002/293",
           "ContentsRegex": "$SEC105/002/293.SAPostDeref0WritableElements1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(0), WritableElements = \"%1\" )]",
@@ -4620,7 +4310,6 @@
           }
         },
         {
-          "Id": "SEC105/002/294",
           "ContentsRegex": "$SEC105/002/294.SAPostDeref0WritableElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(0), WritableElementsConst=(%1) )]",
@@ -4635,7 +4324,6 @@
           }
         },
         {
-          "Id": "SEC105/002/295",
           "ContentsRegex": "$SEC105/002/295.SAPostDeref0WritableElementsConst1ElementSizeConst2",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(0), WritableElementsConst=(%1), ElementSizeConst=%2 )]",
@@ -4650,7 +4338,6 @@
           }
         },
         {
-          "Id": "SEC105/002/296",
           "ContentsRegex": "$SEC105/002/296.SAPostDeref1NullSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(1), Null=SA_No )]",
@@ -4665,7 +4352,6 @@
           }
         },
         {
-          "Id": "SEC105/002/297",
           "ContentsRegex": "$SEC105/002/297.SAPostDeref1NullSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(Deref=1, Null=SA_No)]",
@@ -4680,7 +4366,6 @@
           }
         },
         {
-          "Id": "SEC105/002/298",
           "ContentsRegex": "$SEC105/002/298.SAPostDeref1NullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=1, NullTerminated=SA_Yes )]",
@@ -4695,7 +4380,6 @@
           }
         },
         {
-          "Id": "SEC105/002/299",
           "ContentsRegex": "$SEC105/002/299.SAPostDeref1NullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(1), NullTerminated=SA_Yes )]",
@@ -4710,7 +4394,6 @@
           }
         },
         {
-          "Id": "SEC105/002/300",
           "ContentsRegex": "$SEC105/002/300.SAPostDeref1ValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(1), Valid=SA_Yes )]",
@@ -4725,7 +4408,6 @@
           }
         },
         {
-          "Id": "SEC105/002/301",
           "ContentsRegex": "$SEC105/002/301.SAPostDeref1ValidBytes1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(1), ValidBytes = \"%1\" )]",
@@ -4740,7 +4422,6 @@
           }
         },
         {
-          "Id": "SEC105/002/302",
           "ContentsRegex": "$SEC105/002/302.SAPostDeref1WritableElements1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(1), WritableElements = \"%1\" )]",
@@ -4755,7 +4436,6 @@
           }
         },
         {
-          "Id": "SEC105/002/303",
           "ContentsRegex": "$SEC105/002/303.SAPostDeref1WritableElements1ElementSizeConst2",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(1), WritableElements = \"%1\", ElementSizeConst = %2 )]",
@@ -4770,7 +4450,6 @@
           }
         },
         {
-          "Id": "SEC105/002/304",
           "ContentsRegex": "$SEC105/002/304.SAPostDeref1WritableElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(1), WritableElementsConst=(%1) )]",
@@ -4785,7 +4464,6 @@
           }
         },
         {
-          "Id": "SEC105/002/305",
           "ContentsRegex": "$SEC105/002/305.SAPostDeref1ValidSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(Deref=1, Valid=SA_No)]",
@@ -4800,7 +4478,6 @@
           }
         },
         {
-          "Id": "SEC105/002/306",
           "ContentsRegex": "$SEC105/002/306.SAPostDeref2ValidSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(Deref=2,Valid=SA_No)]",
@@ -4815,7 +4492,6 @@
           }
         },
         {
-          "Id": "SEC105/002/307",
           "ContentsRegex": "$SEC105/002/307.SAPostDeref2ValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(Deref=2,Valid=SA_Yes)]",
@@ -4830,7 +4506,6 @@
           }
         },
         {
-          "Id": "SEC105/002/308",
           "ContentsRegex": "$SEC105/002/308.SAPostNullSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(Null=SA_Yes)]",
@@ -4845,7 +4520,6 @@
           }
         },
         {
-          "Id": "SEC105/002/309",
           "ContentsRegex": "$SEC105/002/309.SAPostNullSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(Null=SA_No)]",
@@ -4860,7 +4534,6 @@
           }
         },
         {
-          "Id": "SEC105/002/310",
           "ContentsRegex": "$SEC105/002/310.SAPostValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(Valid=SA_Yes)]",
@@ -4875,7 +4548,6 @@
           }
         },
         {
-          "Id": "SEC105/002/311",
           "ContentsRegex": "$SEC105/002/311.SAPostValidBytes1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(ValidBytes=\"%1\")]",
@@ -4890,7 +4562,6 @@
           }
         },
         {
-          "Id": "SEC105/002/312",
           "ContentsRegex": "$SEC105/002/312.SAPostValidBytesParam1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(ValidBytesParam=\"%1\")]",
@@ -4905,7 +4576,6 @@
           }
         },
         {
-          "Id": "SEC105/002/313",
           "ContentsRegex": "$SEC105/002/313.SAPostValidBytesLength1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(ValidBytesLength=\"%1\")]",
@@ -4920,7 +4590,6 @@
           }
         },
         {
-          "Id": "SEC105/002/314",
           "ContentsRegex": "$SEC105/002/314.SAPostValidElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(ValidElementsConst=%1)]",
@@ -4935,7 +4604,6 @@
           }
         },
         {
-          "Id": "SEC105/002/315",
           "ContentsRegex": "$SEC105/002/315.SAPostValidElements1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( ValidElements=\"%1\" )]",
@@ -4950,7 +4618,6 @@
           }
         },
         {
-          "Id": "SEC105/002/316",
           "ContentsRegex": "$SEC105/002/316.SAPostValidElementsLength1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(ValidElementsLength=\"%1\")]",
@@ -4965,7 +4632,6 @@
           }
         },
         {
-          "Id": "SEC105/002/317",
           "ContentsRegex": "$SEC105/002/317.SAPostWritableElementsParam1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(WritableElementsParam=\"%1\")]",
@@ -4980,7 +4646,6 @@
           }
         },
         {
-          "Id": "SEC105/002/318",
           "ContentsRegex": "$SEC105/002/318.SAPostValidBytesConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( ValidBytesConst=(%1) )]",
@@ -4995,7 +4660,6 @@
           }
         },
         {
-          "Id": "SEC105/002/319",
           "ContentsRegex": "$SEC105/002/319.SAPostValidBytesConst1Condition2",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( ValidBytesConst=%1, Condition=\"%2\" )]",
@@ -5010,7 +4674,6 @@
           }
         },
         {
-          "Id": "SEC105/002/320",
           "ContentsRegex": "$SEC105/002/320.SAPostDeref1ValidBytesConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=1, ValidBytesConst=(%1) )]",
@@ -5025,7 +4688,6 @@
           }
         },
         {
-          "Id": "SEC105/002/321",
           "ContentsRegex": "$SEC105/002/321.SAPostDeref1ValidElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(1), ValidElementsConst = \"%1\" )]",
@@ -5040,7 +4702,6 @@
           }
         },
         {
-          "Id": "SEC105/002/322",
           "ContentsRegex": "$SEC105/002/322.SAPostAttributeValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[SA_PostAttribute(Valid=SA_Yes)]",
@@ -5055,7 +4716,6 @@
           }
         },
         {
-          "Id": "SEC105/002/323",
           "ContentsRegex": "$SEC105/002/323.SAPost1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post=1]",
@@ -5070,7 +4730,6 @@
           }
         },
         {
-          "Id": "SEC105/002/324",
           "ContentsRegex": "$SEC105/002/324.SAPostNullSANoMyAttribute1",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(Null=SA_No), MyAttribute=1]",
@@ -5085,7 +4744,6 @@
           }
         },
         {
-          "Id": "SEC105/002/325",
           "ContentsRegex": "$SEC105/002/325.PostNullSANoDeref1",
           "MessageArguments": {
             "obsoleteApi": "[Post(Null=SA_No, Deref=1)]",
@@ -5100,7 +4758,6 @@
           }
         },
         {
-          "Id": "SEC105/002/326",
           "ContentsRegex": "$SEC105/002/326.PostNullSANoDeref2",
           "MessageArguments": {
             "obsoleteApi": "[Post(Null=SA_No, Deref=2)]",
@@ -5115,7 +4772,6 @@
           }
         },
         {
-          "Id": "SEC105/002/327",
           "ContentsRegex": "$SEC105/002/327.vcattributesPostValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[vc_attributes::Post(Valid=SA_Yes)]",
@@ -5130,7 +4786,6 @@
           }
         },
         {
-          "Id": "SEC105/002/328",
           "ContentsRegex": "$SEC105/002/328.vcattributesPostAttributeValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[vc_attributes::PostAttribute(Valid=SA_Yes)]",
@@ -5145,7 +4800,6 @@
           }
         },
         {
-          "Id": "SEC105/002/329",
           "ContentsRegex": "$SEC105/002/329.vcattributesSAPostValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[vc_attributes::SA_Post(Valid=SA_Yes)]",
@@ -5160,7 +4814,6 @@
           }
         },
         {
-          "Id": "SEC105/002/330",
           "ContentsRegex": "$SEC105/002/330.vcattributesSAPostAttributeValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[vc_attributes::SA_PostAttribute(Valid=SA_Yes)]",
@@ -5175,7 +4828,6 @@
           }
         },
         {
-          "Id": "SEC105/002/331",
           "ContentsRegex": "$SEC105/002/331.SAPostDeref0NullTerminatedSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(0), NullTerminated=SA_No )]",
@@ -5190,7 +4842,6 @@
           }
         },
         {
-          "Id": "SEC105/002/332",
           "ContentsRegex": "$SEC105/002/332.SAPostDeref0NullTerminatedSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(0), NullTerminated=SA_Maybe )]",
@@ -5205,7 +4856,6 @@
           }
         },
         {
-          "Id": "SEC105/002/333",
           "ContentsRegex": "$SEC105/002/333.SAPostDeref1NullTerminatedSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=(1), NullTerminated=SA_No )]",
@@ -5220,7 +4870,6 @@
           }
         },
         {
-          "Id": "SEC105/002/334",
           "ContentsRegex": "$SEC105/002/334.SAPostDeref1NullTerminatedSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post(Deref=1, NullTerminated=SA_Maybe) ]",
@@ -5235,7 +4884,6 @@
           }
         },
         {
-          "Id": "SEC105/002/335",
           "ContentsRegex": "$SEC105/002/335.SAPostDeref0NullTerminatedSANo",
           "MessageArguments": {
             "obsoleteApi": "[SA_Post( Deref=0, NullTerminated=SA_No )]",
@@ -5250,7 +4898,6 @@
           }
         },
         {
-          "Id": "SEC105/002/336",
           "ContentsRegex": "$SEC105/002/336.PreAccessSAReadWrite",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Access=SA_ReadWrite)]",
@@ -5265,7 +4912,6 @@
           }
         },
         {
-          "Id": "SEC105/002/337",
           "ContentsRegex": "$SEC105/002/337.PreAccessSAReadSAWrite",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Access=(SA_Read | SA_Write))]",
@@ -5280,7 +4926,6 @@
           }
         },
         {
-          "Id": "SEC105/002/338",
           "ContentsRegex": "$SEC105/002/338.PreAccessSAReadSANoAccess",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Access=SA_Read | SA_NoAccess)]",
@@ -5295,7 +4940,6 @@
           }
         },
         {
-          "Id": "SEC105/002/339",
           "ContentsRegex": "$SEC105/002/339.PreAccessSAReadWriteSANoAccess",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Access=SA_ReadWrite | SA_NoAccess)]",
@@ -5310,7 +4954,6 @@
           }
         },
         {
-          "Id": "SEC105/002/340",
           "ContentsRegex": "$SEC105/002/340.PreDeref0AccessWrite",
           "MessageArguments": {
             "obsoleteApi": "[Pre( Deref=0, Access=Write )]",
@@ -5325,7 +4968,6 @@
           }
         },
         {
-          "Id": "SEC105/002/341",
           "ContentsRegex": "$SEC105/002/341.PreDeref1AccessRead",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Deref=1, Access=Read)]",
@@ -5340,7 +4982,6 @@
           }
         },
         {
-          "Id": "SEC105/002/342",
           "ContentsRegex": "$SEC105/002/342.PreDeref1AccessRead",
           "MessageArguments": {
             "obsoleteApi": "[Pre( Deref=1, Access=Read )]",
@@ -5355,7 +4996,6 @@
           }
         },
         {
-          "Id": "SEC105/002/343",
           "ContentsRegex": "$SEC105/002/343.PreDeref1AccessWrite",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Deref=1, Access=Write)]",
@@ -5370,7 +5010,6 @@
           }
         },
         {
-          "Id": "SEC105/002/344",
           "ContentsRegex": "$SEC105/002/344.PreDeref1AccessReadWrite",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Deref=1, Access=ReadWrite )]",
@@ -5385,7 +5024,6 @@
           }
         },
         {
-          "Id": "SEC105/002/345",
           "ContentsRegex": "$SEC105/002/345.PreDeref2AccessWrite",
           "MessageArguments": {
             "obsoleteApi": "[Pre( Deref=2, Access=Write )]",
@@ -5400,7 +5038,6 @@
           }
         },
         {
-          "Id": "SEC105/002/346",
           "ContentsRegex": "$SEC105/002/346.PreDeref3AccessWrite",
           "MessageArguments": {
             "obsoleteApi": "[Pre( Deref=3, Access=Write )]",
@@ -5415,7 +5052,6 @@
           }
         },
         {
-          "Id": "SEC105/002/347",
           "ContentsRegex": "$SEC105/002/347.PreDeref1NullSAYes",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Deref=1, Null=SA_Yes)]",
@@ -5430,7 +5066,6 @@
           }
         },
         {
-          "Id": "SEC105/002/348",
           "ContentsRegex": "$SEC105/002/348.PreDeref0ValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Deref=0, Valid=SA_Yes)]",
@@ -5445,7 +5080,6 @@
           }
         },
         {
-          "Id": "SEC105/002/349",
           "ContentsRegex": "$SEC105/002/349.PreDeref1ValidYes",
           "MessageArguments": {
             "obsoleteApi": "[Pre( Deref=1, Valid=Yes )]",
@@ -5460,7 +5094,6 @@
           }
         },
         {
-          "Id": "SEC105/002/350",
           "ContentsRegex": "$SEC105/002/350.PreDeref2ValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Deref=2, Valid=SA_Yes)]",
@@ -5475,7 +5108,6 @@
           }
         },
         {
-          "Id": "SEC105/002/351",
           "ContentsRegex": "$SEC105/002/351.PreDeref3ValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Deref=3, Valid=SA_Yes)]",
@@ -5490,7 +5122,6 @@
           }
         },
         {
-          "Id": "SEC105/002/352",
           "ContentsRegex": "$SEC105/002/352.PreDeref4ValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Deref=4, Valid=SA_Yes)]",
@@ -5505,7 +5136,6 @@
           }
         },
         {
-          "Id": "SEC105/002/353",
           "ContentsRegex": "$SEC105/002/353.PreNullYesValidYes",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Null=Yes, Valid=Yes)]",
@@ -5520,7 +5150,6 @@
           }
         },
         {
-          "Id": "SEC105/002/354",
           "ContentsRegex": "$SEC105/002/354.PreNullYesValidNo",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Null=Yes, Valid=No)]",
@@ -5535,7 +5164,6 @@
           }
         },
         {
-          "Id": "SEC105/002/355",
           "ContentsRegex": "$SEC105/002/355.PreNullNo",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Null=No)]",
@@ -5550,7 +5178,6 @@
           }
         },
         {
-          "Id": "SEC105/002/356",
           "ContentsRegex": "$SEC105/002/356.PreNullNoValidNo",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Null=No, Valid=No)]",
@@ -5565,7 +5192,6 @@
           }
         },
         {
-          "Id": "SEC105/002/357",
           "ContentsRegex": "$SEC105/002/357.PreNullMaybeValidNo",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Null=Maybe, Valid=No)]",
@@ -5580,7 +5206,6 @@
           }
         },
         {
-          "Id": "SEC105/002/358",
           "ContentsRegex": "$SEC105/002/358.PreNullSAYesSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Null=(SA_Yes | SA_Maybe))]",
@@ -5595,7 +5220,6 @@
           }
         },
         {
-          "Id": "SEC105/002/359",
           "ContentsRegex": "$SEC105/002/359.PreNullYesNullNo",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Null=Yes, Null=No)]",
@@ -5610,7 +5234,6 @@
           }
         },
         {
-          "Id": "SEC105/002/360",
           "ContentsRegex": "$SEC105/002/360.PreValidSANo",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Valid=SA_No)]",
@@ -5625,7 +5248,6 @@
           }
         },
         {
-          "Id": "SEC105/002/361",
           "ContentsRegex": "$SEC105/002/361.PreValidSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Valid=SA_Maybe)]",
@@ -5640,7 +5262,6 @@
           }
         },
         {
-          "Id": "SEC105/002/362",
           "ContentsRegex": "$SEC105/002/362.PreValidSAYesSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Valid=(SA_Yes | SA_Maybe))]",
@@ -5655,7 +5276,6 @@
           }
         },
         {
-          "Id": "SEC105/002/363",
           "ContentsRegex": "$SEC105/002/363.PreValidYes",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Valid=Yes)]",
@@ -5670,7 +5290,6 @@
           }
         },
         {
-          "Id": "SEC105/002/364",
           "ContentsRegex": "$SEC105/002/364.PreValidYesNullTerminatedYes",
           "MessageArguments": {
             "obsoleteApi": "[Pre( Valid=Yes, NullTerminated=Yes )]",
@@ -5685,7 +5304,6 @@
           }
         },
         {
-          "Id": "SEC105/002/365",
           "ContentsRegex": "$SEC105/002/365.PreValidYesNullTerminatedNo",
           "MessageArguments": {
             "obsoleteApi": "[Pre( Valid=Yes, NullTerminated=No )]",
@@ -5700,7 +5318,6 @@
           }
         },
         {
-          "Id": "SEC105/002/366",
           "ContentsRegex": "$SEC105/002/366.vcattributesPreValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[vc_attributes::Pre(Valid=SA_Yes)]",
@@ -5715,7 +5332,6 @@
           }
         },
         {
-          "Id": "SEC105/002/367",
           "ContentsRegex": "$SEC105/002/367.vcattributesPreAttributeValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[vc_attributes::PreAttribute(Valid=SA_Yes)]",
@@ -5730,7 +5346,6 @@
           }
         },
         {
-          "Id": "SEC105/002/368",
           "ContentsRegex": "$SEC105/002/368.vcattributesSAPreValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[vc_attributes::SA_Pre(Valid=SA_Yes)]",
@@ -5745,7 +5360,6 @@
           }
         },
         {
-          "Id": "SEC105/002/369",
           "ContentsRegex": "$SEC105/002/369.vcattributesSAPreAttributeValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[vc_attributes::SA_PreAttribute(Valid=SA_Yes)]",
@@ -5760,7 +5374,6 @@
           }
         },
         {
-          "Id": "SEC105/002/370",
           "ContentsRegex": "$SEC105/002/370.PreDeref1NullTerminatedSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Deref=1, NullTerminated=SA_Maybe)]",
@@ -5775,7 +5388,6 @@
           }
         },
         {
-          "Id": "SEC105/002/371",
           "ContentsRegex": "$SEC105/002/371.PreNullTerminatedSAYesSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[Pre(NullTerminated=(SA_Yes | SA_Maybe))]",
@@ -5790,7 +5402,6 @@
           }
         },
         {
-          "Id": "SEC105/002/372",
           "ContentsRegex": "$SEC105/002/372.PreDeref1AccessWrite",
           "MessageArguments": {
             "obsoleteApi": "[Pre( Deref=-1, Access=Write )]",
@@ -5805,7 +5416,6 @@
           }
         },
         {
-          "Id": "SEC105/002/373",
           "ContentsRegex": "$SEC105/002/373.PreDeref1ValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[Pre(Deref=-1, Valid=SA_Yes)]",
@@ -5820,7 +5430,6 @@
           }
         },
         {
-          "Id": "SEC105/002/374",
           "ContentsRegex": "$SEC105/002/374.Post1NullYes",
           "MessageArguments": {
             "obsoleteApi": "[Post(1, Null=Yes)]",
@@ -5835,7 +5444,6 @@
           }
         },
         {
-          "Id": "SEC105/002/375",
           "ContentsRegex": "$SEC105/002/375.PostAccessRead",
           "MessageArguments": {
             "obsoleteApi": "[Post( Access=Read )]",
@@ -5850,7 +5458,6 @@
           }
         },
         {
-          "Id": "SEC105/002/376",
           "ContentsRegex": "$SEC105/002/376.PostAccessSAWriteSANoAccess",
           "MessageArguments": {
             "obsoleteApi": "[Post(Access=SA_Write | SA_NoAccess)]",
@@ -5865,7 +5472,6 @@
           }
         },
         {
-          "Id": "SEC105/002/377",
           "ContentsRegex": "$SEC105/002/377.PostDeref0AccessWrite",
           "MessageArguments": {
             "obsoleteApi": "[Post( Deref=0, Access=Write )]",
@@ -5880,7 +5486,6 @@
           }
         },
         {
-          "Id": "SEC105/002/378",
           "ContentsRegex": "$SEC105/002/378.PostDeref1AccessWrite",
           "MessageArguments": {
             "obsoleteApi": "[Post( Deref=1, Access=Write )]",
@@ -5895,7 +5500,6 @@
           }
         },
         {
-          "Id": "SEC105/002/379",
           "ContentsRegex": "$SEC105/002/379.PostDeref2AccessRead",
           "MessageArguments": {
             "obsoleteApi": "[Post( Deref=2, Access=Read )]",
@@ -5910,7 +5514,6 @@
           }
         },
         {
-          "Id": "SEC105/002/380",
           "ContentsRegex": "$SEC105/002/380.PostDeref2AccessWrite",
           "MessageArguments": {
             "obsoleteApi": "[Post( Deref=2, Access=Write )]",
@@ -5925,7 +5528,6 @@
           }
         },
         {
-          "Id": "SEC105/002/381",
           "ContentsRegex": "$SEC105/002/381.PostDeref3AccessWrite",
           "MessageArguments": {
             "obsoleteApi": "[Post( Deref=3, Access=Write )]",
@@ -5940,7 +5542,6 @@
           }
         },
         {
-          "Id": "SEC105/002/382",
           "ContentsRegex": "$SEC105/002/382.PostDeref1ValidYes",
           "MessageArguments": {
             "obsoleteApi": "[Post( Deref=1, Valid=Yes )]",
@@ -5955,7 +5556,6 @@
           }
         },
         {
-          "Id": "SEC105/002/383",
           "ContentsRegex": "$SEC105/002/383.PostNullYes",
           "MessageArguments": {
             "obsoleteApi": "[Post(Null=Yes)]",
@@ -5970,7 +5570,6 @@
           }
         },
         {
-          "Id": "SEC105/002/384",
           "ContentsRegex": "$SEC105/002/384.PostNullYesNullNo",
           "MessageArguments": {
             "obsoleteApi": "[Post(Null=Yes, Null=No)]",
@@ -5985,7 +5584,6 @@
           }
         },
         {
-          "Id": "SEC105/002/385",
           "ContentsRegex": "$SEC105/002/385.PostNullSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[Post(Null=SA_Maybe)]",
@@ -6000,7 +5598,6 @@
           }
         },
         {
-          "Id": "SEC105/002/386",
           "ContentsRegex": "$SEC105/002/386.PostNullSAMaybeDeref1",
           "MessageArguments": {
             "obsoleteApi": "[Post(Null=SA_Maybe, Deref=1)]",
@@ -6015,7 +5612,6 @@
           }
         },
         {
-          "Id": "SEC105/002/387",
           "ContentsRegex": "$SEC105/002/387.PostValidNo",
           "MessageArguments": {
             "obsoleteApi": "[Post( Valid=No )]",
@@ -6030,7 +5626,6 @@
           }
         },
         {
-          "Id": "SEC105/002/388",
           "ContentsRegex": "$SEC105/002/388.PostValidSANo",
           "MessageArguments": {
             "obsoleteApi": "[Post(Valid=SA_No)]",
@@ -6045,7 +5640,6 @@
           }
         },
         {
-          "Id": "SEC105/002/389",
           "ContentsRegex": "$SEC105/002/389.PostWritableBytes1",
           "MessageArguments": {
             "obsoleteApi": "[Post(WritableBytes=\"%1\")]",
@@ -6060,7 +5654,6 @@
           }
         },
         {
-          "Id": "SEC105/002/390",
           "ContentsRegex": "$SEC105/002/390.PostWritableBytesConst1",
           "MessageArguments": {
             "obsoleteApi": "[Post(WritableBytesConst=%1)]",
@@ -6075,7 +5668,6 @@
           }
         },
         {
-          "Id": "SEC105/002/391",
           "ContentsRegex": "$SEC105/002/391.PostWritableBytesConst1Deref1",
           "MessageArguments": {
             "obsoleteApi": "[Post(WritableBytesConst=%1, Deref=1)]",
@@ -6090,7 +5682,6 @@
           }
         },
         {
-          "Id": "SEC105/002/392",
           "ContentsRegex": "$SEC105/002/392.PostDeref1WritableBytesConst1",
           "MessageArguments": {
             "obsoleteApi": "[Post(Deref=1, WritableBytesConst=%1)]",
@@ -6105,7 +5696,6 @@
           }
         },
         {
-          "Id": "SEC105/002/393",
           "ContentsRegex": "$SEC105/002/393.PostWritableBytes1Deref1",
           "MessageArguments": {
             "obsoleteApi": "[Post(WritableBytes=\"%1\", Deref=1)]",
@@ -6120,7 +5710,6 @@
           }
         },
         {
-          "Id": "SEC105/002/394",
           "ContentsRegex": "$SEC105/002/394.PostValidBytesConst1Deref2",
           "MessageArguments": {
             "obsoleteApi": "[Post(ValidBytesConst=%1, Deref=2)]",
@@ -6135,7 +5724,6 @@
           }
         },
         {
-          "Id": "SEC105/002/395",
           "ContentsRegex": "$SEC105/002/395.PostWritableElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[Post(WritableElementsConst=%1)]",
@@ -6150,7 +5738,6 @@
           }
         },
         {
-          "Id": "SEC105/002/396",
           "ContentsRegex": "$SEC105/002/396.PostWritableElementsConst1Deref1",
           "MessageArguments": {
             "obsoleteApi": "[Post(WritableElementsConst=%1, Deref=1)]",
@@ -6165,7 +5752,6 @@
           }
         },
         {
-          "Id": "SEC105/002/397",
           "ContentsRegex": "$SEC105/002/397.PostDeref1WritableElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[Post(Deref=1, WritableElementsConst=%1)]",
@@ -6180,7 +5766,6 @@
           }
         },
         {
-          "Id": "SEC105/002/398",
           "ContentsRegex": "$SEC105/002/398.PostWritableElements1Deref1",
           "MessageArguments": {
             "obsoleteApi": "[Post(WritableElements=\"%1\", Deref=1)]",
@@ -6195,7 +5780,6 @@
           }
         },
         {
-          "Id": "SEC105/002/399",
           "ContentsRegex": "$SEC105/002/399.PostWritableElements1",
           "MessageArguments": {
             "obsoleteApi": "[Post(WritableElements=\"%1\")]",
@@ -6210,7 +5794,6 @@
           }
         },
         {
-          "Id": "SEC105/002/400",
           "ContentsRegex": "$SEC105/002/400.PostDeref1ValidElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[Post(Deref=1, ValidElementsConst=%1)]",
@@ -6225,7 +5808,6 @@
           }
         },
         {
-          "Id": "SEC105/002/401",
           "ContentsRegex": "$SEC105/002/401.PostDeref1Tainted1",
           "MessageArguments": {
             "obsoleteApi": "[Post(Deref=1, Tainted=%1)]",
@@ -6240,7 +5822,6 @@
           }
         },
         {
-          "Id": "SEC105/002/402",
           "ContentsRegex": "$SEC105/002/402.PostValidSAMaybeDeref1",
           "MessageArguments": {
             "obsoleteApi": "[Post(Valid=SA_Maybe, Deref=1)]",
@@ -6255,7 +5836,6 @@
           }
         },
         {
-          "Id": "SEC105/002/403",
           "ContentsRegex": "$SEC105/002/403.returnvaluePostAccessSARead",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Access=SA_Read)]",
@@ -6270,7 +5850,6 @@
           }
         },
         {
-          "Id": "SEC105/002/404",
           "ContentsRegex": "$SEC105/002/404.returnvaluePostAccessSAReadSARead",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Access=(SA_Read | SA_Read))]",
@@ -6285,7 +5864,6 @@
           }
         },
         {
-          "Id": "SEC105/002/405",
           "ContentsRegex": "$SEC105/002/405.returnvaluePostNullSAYes",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Null=SA_Yes)]",
@@ -6300,7 +5878,6 @@
           }
         },
         {
-          "Id": "SEC105/002/406",
           "ContentsRegex": "$SEC105/002/406.returnvaluePostNullSANoDeref0",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Null=SA_No, Deref=0)]",
@@ -6315,7 +5892,6 @@
           }
         },
         {
-          "Id": "SEC105/002/407",
           "ContentsRegex": "$SEC105/002/407.returnvaluePostNullSANoDeref1",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Null=SA_No, Deref=1)]",
@@ -6330,7 +5906,6 @@
           }
         },
         {
-          "Id": "SEC105/002/408",
           "ContentsRegex": "$SEC105/002/408.returnvaluePostNullSAMaybeDeref2",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Null=SA_Maybe, Deref=2)]",
@@ -6345,7 +5920,6 @@
           }
         },
         {
-          "Id": "SEC105/002/409",
           "ContentsRegex": "$SEC105/002/409.returnvaluePostValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Valid=SA_Yes)]",
@@ -6360,7 +5934,6 @@
           }
         },
         {
-          "Id": "SEC105/002/410",
           "ContentsRegex": "$SEC105/002/410.returnvaluePostWritableBytesConst1",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(WritableBytesConst=%1)]",
@@ -6375,7 +5948,6 @@
           }
         },
         {
-          "Id": "SEC105/002/411",
           "ContentsRegex": "$SEC105/002/411.returnvaluePostValidBytesConst1",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(ValidBytesConst=%1)]",
@@ -6390,7 +5962,6 @@
           }
         },
         {
-          "Id": "SEC105/002/412",
           "ContentsRegex": "$SEC105/002/412.returnvaluePostValidElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(ValidElementsConst=%1)]",
@@ -6405,7 +5976,6 @@
           }
         },
         {
-          "Id": "SEC105/002/413",
           "ContentsRegex": "$SEC105/002/413.returnvaluePostWritableElementsConst1",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(WritableElementsConst=%1)]",
@@ -6420,7 +5990,6 @@
           }
         },
         {
-          "Id": "SEC105/002/414",
           "ContentsRegex": "$SEC105/002/414.returnvaluePostNullTerminatedSANo",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(NullTerminated=SA_No)]",
@@ -6435,7 +6004,6 @@
           }
         },
         {
-          "Id": "SEC105/002/415",
           "ContentsRegex": "$SEC105/002/415.returnvaluePostDeref0returnvaluePostValidSAYes",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Deref=0), returnvalue:Post(Valid=SA_Yes)]",
@@ -6450,7 +6018,6 @@
           }
         },
         {
-          "Id": "SEC105/002/416",
           "ContentsRegex": "$SEC105/002/416.returnvalueSAPostNullSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue: SA_Post(Null=SA_Maybe)]",
@@ -6465,7 +6032,6 @@
           }
         },
         {
-          "Id": "SEC105/002/417",
           "ContentsRegex": "$SEC105/002/417.returnvalueSAPostDeref0NullSAYes",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue: SA_Post( Deref=(0), Null=SA_Yes )]",
@@ -6480,7 +6046,6 @@
           }
         },
         {
-          "Id": "SEC105/002/418",
           "ContentsRegex": "$SEC105/002/418.returnvalueSAPostNullSAMaybeValidElements1",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue: SA_Post(Null=SA_Maybe, ValidElements=%1)]",
@@ -6495,7 +6060,6 @@
           }
         },
         {
-          "Id": "SEC105/002/419",
           "ContentsRegex": "$SEC105/002/419.returnvalueSAPostDeref1NullSAMaybe",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue: SA_Post( Deref=(1), Null=SA_Maybe )]",
@@ -6510,7 +6074,6 @@
           }
         },
         {
-          "Id": "SEC105/002/420",
           "ContentsRegex": "$SEC105/002/420.returnvalueSAPostDeref0NullSANo",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue: SA_Post( Deref=(0), Null=SA_No )]",
@@ -6525,7 +6088,6 @@
           }
         },
         {
-          "Id": "SEC105/002/421",
           "ContentsRegex": "$SEC105/002/421.returnvalueSAPostMustCheckSAYes",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue: SA_Post(MustCheck=SA_Yes)]",
@@ -6540,7 +6102,6 @@
           }
         },
         {
-          "Id": "SEC105/002/422",
           "ContentsRegex": "$SEC105/002/422.returnvaluePostAccessSAReadWrite",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Access=SA_ReadWrite)]",
@@ -6555,7 +6116,6 @@
           }
         },
         {
-          "Id": "SEC105/002/423",
           "ContentsRegex": "$SEC105/002/423.returnvaluePostAccessSAReadWriteDeref1",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Access=SA_ReadWrite, Deref=1)]",
@@ -6570,7 +6130,6 @@
           }
         },
         {
-          "Id": "SEC105/002/424",
           "ContentsRegex": "$SEC105/002/424.returnvaluePostAccessSAWrite",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Access=SA_Write)]",
@@ -6585,7 +6144,6 @@
           }
         },
         {
-          "Id": "SEC105/002/425",
           "ContentsRegex": "$SEC105/002/425.returnvaluePostAccessSAReadWriteSARead",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Access=(SA_ReadWrite | SA_Read))]",
@@ -6600,7 +6158,6 @@
           }
         },
         {
-          "Id": "SEC105/002/426",
           "ContentsRegex": "$SEC105/002/426.returnvaluePostValidSAMaybeDeref1",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue:Post(Valid=SA_Maybe, Deref=1)]",
@@ -6615,7 +6172,6 @@
           }
         },
         {
-          "Id": "SEC105/002/427",
           "ContentsRegex": "$SEC105/002/427.returnvalueSAPostDeref1NullSAYesNullTerminatedSANo",
           "MessageArguments": {
             "obsoleteApi": "[returnvalue: SA_Post( Deref=(1), Null=SA_Yes, NullTerminated=SA_No )]",
@@ -6640,927 +6196,742 @@
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
-          "Id": "SEC105/003/001",
           "ContentsRegex": "$SEC105/003/001.__assume_bound",
           "MessageArguments": { "obsoleteApi": "__assume_bound" }
         },
         {
-          "Id": "SEC105/003/002",
           "ContentsRegex": "$SEC105/003/002.__bcount",
           "MessageArguments": { "obsoleteApi": "__bcount" }
         },
         {
-          "Id": "SEC105/003/003",
           "ContentsRegex": "$SEC105/003/003.__bcount_opt",
           "MessageArguments": { "obsoleteApi": "__bcount_opt" }
         },
         {
-          "Id": "SEC105/003/004",
           "ContentsRegex": "$SEC105/003/004.__control_entrypoint",
           "MessageArguments": { "obsoleteApi": "__control_entrypoint" }
         },
         {
-          "Id": "SEC105/003/005",
           "ContentsRegex": "$SEC105/003/005.__data_entrypoint",
           "MessageArguments": { "obsoleteApi": "__data_entrypoint" }
         },
         {
-          "Id": "SEC105/003/006",
           "ContentsRegex": "$SEC105/003/006.__deref",
           "MessageArguments": { "obsoleteApi": "__deref" }
         },
         {
-          "Id": "SEC105/003/007",
           "ContentsRegex": "$SEC105/003/007.__deref_bcount",
           "MessageArguments": { "obsoleteApi": "__deref_bcount" }
         },
         {
-          "Id": "SEC105/003/008",
           "ContentsRegex": "$SEC105/003/008.__deref_ecount",
           "MessageArguments": { "obsoleteApi": "__deref_ecount" }
         },
         {
-          "Id": "SEC105/003/009",
           "ContentsRegex": "$SEC105/003/009.__deref_ecount_opt",
           "MessageArguments": { "obsoleteApi": "__deref_ecount_opt" }
         },
         {
-          "Id": "SEC105/003/010",
           "ContentsRegex": "$SEC105/003/010.__deref_in_bcount_opt",
           "MessageArguments": { "obsoleteApi": "__deref_in_bcount_opt" }
         },
         {
-          "Id": "SEC105/003/011",
           "ContentsRegex": "$SEC105/003/011.__deref_in_opt_out",
           "MessageArguments": { "obsoleteApi": "__deref_in_opt_out" }
         },
         {
-          "Id": "SEC105/003/012",
           "ContentsRegex": "$SEC105/003/012.__deref_in_range",
           "MessageArguments": { "obsoleteApi": "__deref_in_range" }
         },
         {
-          "Id": "SEC105/003/013",
           "ContentsRegex": "$SEC105/003/013.__deref_inout_bcount",
           "MessageArguments": { "obsoleteApi": "__deref_inout_bcount" }
         },
         {
-          "Id": "SEC105/003/014",
           "ContentsRegex": "$SEC105/003/014.__deref_inout_bcount_opt",
           "MessageArguments": { "obsoleteApi": "__deref_inout_bcount_opt" }
         },
         {
-          "Id": "SEC105/003/015",
           "ContentsRegex": "$SEC105/003/015.__deref_inout_bcount_part",
           "MessageArguments": { "obsoleteApi": "__deref_inout_bcount_part" }
         },
         {
-          "Id": "SEC105/003/016",
           "ContentsRegex": "$SEC105/003/016.__deref_inout_ecount",
           "MessageArguments": { "obsoleteApi": "__deref_inout_ecount" }
         },
         {
-          "Id": "SEC105/003/017",
           "ContentsRegex": "$SEC105/003/017.__deref_inout_ecount_part",
           "MessageArguments": { "obsoleteApi": "__deref_inout_ecount_part" }
         },
         {
-          "Id": "SEC105/003/018",
           "ContentsRegex": "$SEC105/003/018.__deref_inout_ecount_z",
           "MessageArguments": { "obsoleteApi": "__deref_inout_ecount_z" }
         },
         {
-          "Id": "SEC105/003/019",
           "ContentsRegex": "$SEC105/003/019.__deref_inout_range",
           "MessageArguments": { "obsoleteApi": "__deref_inout_range" }
         },
         {
-          "Id": "SEC105/003/020",
           "ContentsRegex": "$SEC105/003/020.__deref_inout_xcount",
           "MessageArguments": { "obsoleteApi": "__deref_inout_xcount" }
         },
         {
-          "Id": "SEC105/003/021",
           "ContentsRegex": "$SEC105/003/021.__deref_inout_z",
           "MessageArguments": { "obsoleteApi": "__deref_inout_z" }
         },
         {
-          "Id": "SEC105/003/022",
           "ContentsRegex": "$SEC105/003/022.__deref_opt_inout_bcount_full",
           "MessageArguments": { "obsoleteApi": "__deref_opt_inout_bcount_full" }
         },
         {
-          "Id": "SEC105/003/023",
           "ContentsRegex": "$SEC105/003/023.__deref_opt_inout_bcount_part_opt",
           "MessageArguments": { "obsoleteApi": "__deref_opt_inout_bcount_part_opt" }
         },
         {
-          "Id": "SEC105/003/024",
           "ContentsRegex": "$SEC105/003/024.__deref_opt_out_bcount",
           "MessageArguments": { "obsoleteApi": "__deref_opt_out_bcount" }
         },
         {
-          "Id": "SEC105/003/025",
           "ContentsRegex": "$SEC105/003/025.__deref_opt_out_bcount_full",
           "MessageArguments": { "obsoleteApi": "__deref_opt_out_bcount_full" }
         },
         {
-          "Id": "SEC105/003/026",
           "ContentsRegex": "$SEC105/003/026.__deref_opt_out_ecount",
           "MessageArguments": { "obsoleteApi": "__deref_opt_out_ecount" }
         },
         {
-          "Id": "SEC105/003/027",
           "ContentsRegex": "$SEC105/003/027.__deref_opt_out_xcount",
           "MessageArguments": { "obsoleteApi": "__deref_opt_out_xcount" }
         },
         {
-          "Id": "SEC105/003/028",
           "ContentsRegex": "$SEC105/003/028.__deref_out_bcount_full",
           "MessageArguments": { "obsoleteApi": "__deref_out_bcount_full" }
         },
         {
-          "Id": "SEC105/003/029",
           "ContentsRegex": "$SEC105/003/029.__deref_out_bcount_full_opt",
           "MessageArguments": { "obsoleteApi": "__deref_out_bcount_full_opt" }
         },
         {
-          "Id": "SEC105/003/030",
           "ContentsRegex": "$SEC105/003/030.__deref_out_ecount_full",
           "MessageArguments": { "obsoleteApi": "__deref_out_ecount_full" }
         },
         {
-          "Id": "SEC105/003/031",
           "ContentsRegex": "$SEC105/003/031.__deref_out_ecount_full_opt",
           "MessageArguments": { "obsoleteApi": "__deref_out_ecount_full_opt" }
         },
         {
-          "Id": "SEC105/003/032",
           "ContentsRegex": "$SEC105/003/032.__deref_out_ecount_z_opt",
           "MessageArguments": { "obsoleteApi": "__deref_out_ecount_z_opt" }
         },
         {
-          "Id": "SEC105/003/033",
           "ContentsRegex": "$SEC105/003/033.__deref_out_xcount",
           "MessageArguments": { "obsoleteApi": "__deref_out_xcount" }
         },
         {
-          "Id": "SEC105/003/034",
           "ContentsRegex": "$SEC105/003/034.__deref_out_xcount_part",
           "MessageArguments": { "obsoleteApi": "__deref_out_xcount_part" }
         },
         {
-          "Id": "SEC105/003/035",
           "ContentsRegex": "$SEC105/003/035.__ecount",
           "MessageArguments": { "obsoleteApi": "__ecount" }
         },
         {
-          "Id": "SEC105/003/036",
           "ContentsRegex": "$SEC105/003/036.__exceptthat",
           "MessageArguments": { "obsoleteApi": "__exceptthat" }
         },
         {
-          "Id": "SEC105/003/037",
           "ContentsRegex": "$SEC105/003/037.__format_string",
           "MessageArguments": { "obsoleteApi": "__format_string" }
         },
         {
-          "Id": "SEC105/003/038",
           "ContentsRegex": "$SEC105/003/038.__in_bcount_z",
           "MessageArguments": { "obsoleteApi": "__in_bcount_z" }
         },
         {
-          "Id": "SEC105/003/039",
           "ContentsRegex": "$SEC105/003/039.__in_ecount_z",
           "MessageArguments": { "obsoleteApi": "__in_ecount_z" }
         },
         {
-          "Id": "SEC105/003/040",
           "ContentsRegex": "$SEC105/003/040.__in_xcount",
           "MessageArguments": { "obsoleteApi": "__in_xcount" }
         },
         {
-          "Id": "SEC105/003/041",
           "ContentsRegex": "$SEC105/003/041.__in_xcount_opt",
           "MessageArguments": { "obsoleteApi": "__in_xcount_opt" }
         },
         {
-          "Id": "SEC105/003/042",
           "ContentsRegex": "$SEC105/003/042.__inexpressible_readableTo",
           "MessageArguments": { "obsoleteApi": "__inexpressible_readableTo" }
         },
         {
-          "Id": "SEC105/003/043",
           "ContentsRegex": "$SEC105/003/043.__inout_bcount_full",
           "MessageArguments": { "obsoleteApi": "__inout_bcount_full" }
         },
         {
-          "Id": "SEC105/003/044",
           "ContentsRegex": "$SEC105/003/044.__inout_bcount_full_opt",
           "MessageArguments": { "obsoleteApi": "__inout_bcount_full_opt" }
         },
         {
-          "Id": "SEC105/003/045",
           "ContentsRegex": "$SEC105/003/045.__inout_bcount_z",
           "MessageArguments": { "obsoleteApi": "__inout_bcount_z" }
         },
         {
-          "Id": "SEC105/003/046",
           "ContentsRegex": "$SEC105/003/046.__inout_ecount_full",
           "MessageArguments": { "obsoleteApi": "__inout_ecount_full" }
         },
         {
-          "Id": "SEC105/003/047",
           "ContentsRegex": "$SEC105/003/047.__inout_ecount_full_opt",
           "MessageArguments": { "obsoleteApi": "__inout_ecount_full_opt" }
         },
         {
-          "Id": "SEC105/003/048",
           "ContentsRegex": "$SEC105/003/048.__inout_xcount",
           "MessageArguments": { "obsoleteApi": "__inout_xcount" }
         },
         {
-          "Id": "SEC105/003/049",
           "ContentsRegex": "$SEC105/003/049.__inout_xcount_opt",
           "MessageArguments": { "obsoleteApi": "__inout_xcount_opt" }
         },
         {
-          "Id": "SEC105/003/050",
           "ContentsRegex": "$SEC105/003/050.__internal_kernel_driver",
           "MessageArguments": { "obsoleteApi": "__internal_kernel_driver" }
         },
         {
-          "Id": "SEC105/003/051",
           "ContentsRegex": "$SEC105/003/051.__maybenull",
           "MessageArguments": { "obsoleteApi": "__maybenull" }
         },
         {
-          "Id": "SEC105/003/052",
           "ContentsRegex": "$SEC105/003/052.__maybevalid",
           "MessageArguments": { "obsoleteApi": "__maybevalid" }
         },
         {
-          "Id": "SEC105/003/053",
           "ContentsRegex": "$SEC105/003/053.__notnull",
           "MessageArguments": { "obsoleteApi": "__notnull" }
         },
         {
-          "Id": "SEC105/003/054",
           "ContentsRegex": "$SEC105/003/054.__notvalid",
           "MessageArguments": { "obsoleteApi": "__notvalid" }
         },
         {
-          "Id": "SEC105/003/055",
           "ContentsRegex": "$SEC105/003/055.__null",
           "MessageArguments": { "obsoleteApi": "__null" }
         },
         {
-          "Id": "SEC105/003/056",
           "ContentsRegex": "$SEC105/003/056.__nullnullterminated",
           "MessageArguments": { "obsoleteApi": "__nullnullterminated" }
         },
         {
-          "Id": "SEC105/003/057",
           "ContentsRegex": "$SEC105/003/057.__nullterminated",
           "MessageArguments": { "obsoleteApi": "__nullterminated" }
         },
         {
-          "Id": "SEC105/003/058",
           "ContentsRegex": "$SEC105/003/058.__out_awcount",
           "MessageArguments": { "obsoleteApi": "__out_awcount" }
         },
         {
-          "Id": "SEC105/003/059",
           "ContentsRegex": "$SEC105/003/059.__out_bcount_full",
           "MessageArguments": { "obsoleteApi": "__out_bcount_full" }
         },
         {
-          "Id": "SEC105/003/060",
           "ContentsRegex": "$SEC105/003/060.__out_bcount_full_opt",
           "MessageArguments": { "obsoleteApi": "__out_bcount_full_opt" }
         },
         {
-          "Id": "SEC105/003/061",
           "ContentsRegex": "$SEC105/003/061.__out_bcount_part_z",
           "MessageArguments": { "obsoleteApi": "__out_bcount_part_z" }
         },
         {
-          "Id": "SEC105/003/062",
           "ContentsRegex": "$SEC105/003/062.__out_bcount_z_opt",
           "MessageArguments": { "obsoleteApi": "__out_bcount_z_opt" }
         },
         {
-          "Id": "SEC105/003/063",
           "ContentsRegex": "$SEC105/003/063.__out_ecount_full",
           "MessageArguments": { "obsoleteApi": "__out_ecount_full" }
         },
         {
-          "Id": "SEC105/003/064",
           "ContentsRegex": "$SEC105/003/064.__out_ecount_full_opt",
           "MessageArguments": { "obsoleteApi": "__out_ecount_full_opt" }
         },
         {
-          "Id": "SEC105/003/065",
           "ContentsRegex": "$SEC105/003/065.__out_ecount_full_z",
           "MessageArguments": { "obsoleteApi": "__out_ecount_full_z" }
         },
         {
-          "Id": "SEC105/003/066",
           "ContentsRegex": "$SEC105/003/066.__out_ecount_part_z",
           "MessageArguments": { "obsoleteApi": "__out_ecount_part_z" }
         },
         {
-          "Id": "SEC105/003/067",
           "ContentsRegex": "$SEC105/003/067.__out_ecount_part_z_opt",
           "MessageArguments": { "obsoleteApi": "__out_ecount_part_z_opt" }
         },
         {
-          "Id": "SEC105/003/068",
           "ContentsRegex": "$SEC105/003/068.__out_validated",
           "MessageArguments": { "obsoleteApi": "__out_validated" }
         },
         {
-          "Id": "SEC105/003/069",
           "ContentsRegex": "$SEC105/003/069.__out_xcount",
           "MessageArguments": { "obsoleteApi": "__out_xcount" }
         },
         {
-          "Id": "SEC105/003/070",
           "ContentsRegex": "$SEC105/003/070.__out_xcount_opt",
           "MessageArguments": { "obsoleteApi": "__out_xcount_opt" }
         },
         {
-          "Id": "SEC105/003/071",
           "ContentsRegex": "$SEC105/003/071.__out_xcount_part_opt",
           "MessageArguments": { "obsoleteApi": "__out_xcount_part_opt" }
         },
         {
-          "Id": "SEC105/003/072",
           "ContentsRegex": "$SEC105/003/072.__out_z",
           "MessageArguments": { "obsoleteApi": "__out_z" }
         },
         {
-          "Id": "SEC105/003/073",
           "ContentsRegex": "$SEC105/003/073.__out_z_opt",
           "MessageArguments": { "obsoleteApi": "__out_z_opt" }
         },
         {
-          "Id": "SEC105/003/074",
           "ContentsRegex": "$SEC105/003/074.__post",
           "MessageArguments": { "obsoleteApi": "__post" }
         },
         {
-          "Id": "SEC105/003/075",
           "ContentsRegex": "$SEC105/003/075.__post_invalid",
           "MessageArguments": { "obsoleteApi": "__post_invalid" }
         },
         {
-          "Id": "SEC105/003/076",
           "ContentsRegex": "$SEC105/003/076.__pre",
           "MessageArguments": { "obsoleteApi": "__pre" }
         },
         {
-          "Id": "SEC105/003/077",
           "ContentsRegex": "$SEC105/003/077.__precond",
           "MessageArguments": { "obsoleteApi": "__precond" }
         },
         {
-          "Id": "SEC105/003/078",
           "ContentsRegex": "$SEC105/003/078.__prefast_operator_new_null",
           "MessageArguments": { "obsoleteApi": "__prefast_operator_new_null" }
         },
         {
-          "Id": "SEC105/003/079",
           "ContentsRegex": "$SEC105/003/079.__range",
           "MessageArguments": { "obsoleteApi": "__range" }
         },
         {
-          "Id": "SEC105/003/080",
           "ContentsRegex": "$SEC105/003/080.__SAL_H_FULL_VER",
           "MessageArguments": { "obsoleteApi": "__SAL_H_FULL_VER" }
         },
         {
-          "Id": "SEC105/003/081",
           "ContentsRegex": "$SEC105/003/081.__specstrings",
           "MessageArguments": { "obsoleteApi": "__specstrings" }
         },
         {
-          "Id": "SEC105/003/082",
           "ContentsRegex": "$SEC105/003/082.__struct_xcount",
           "MessageArguments": { "obsoleteApi": "__struct_xcount" }
         },
         {
-          "Id": "SEC105/003/083",
           "ContentsRegex": "$SEC105/003/083.__success",
           "MessageArguments": { "obsoleteApi": "__success" }
         },
         {
-          "Id": "SEC105/003/084",
           "ContentsRegex": "$SEC105/003/084.__typefix",
           "MessageArguments": { "obsoleteApi": "__typefix" }
         },
         {
-          "Id": "SEC105/003/085",
           "ContentsRegex": "$SEC105/003/085.__writableTo",
           "MessageArguments": { "obsoleteApi": "__writableTo" }
         },
         {
-          "Id": "SEC105/003/086",
           "ContentsRegex": "$SEC105/003/086.__valid",
           "MessageArguments": { "obsoleteApi": "__valid" }
         },
         {
-          "Id": "SEC105/003/087",
           "ContentsRegex": "$SEC105/003/087.__xcount",
           "MessageArguments": { "obsoleteApi": "__xcount" }
         },
         {
-          "Id": "SEC105/003/088",
           "ContentsRegex": "$SEC105/003/088.__internal_lock_level_order",
           "MessageArguments": { "obsoleteApi": "__internal_lock_level_order" }
         },
         {
-          "Id": "SEC105/003/089",
           "ContentsRegex": "$SEC105/003/089.__drv_acquiresResource",
           "MessageArguments": { "obsoleteApi": "__drv_acquiresResource" }
         },
         {
-          "Id": "SEC105/003/090",
           "ContentsRegex": "$SEC105/003/090.__drv_releasesResource",
           "MessageArguments": { "obsoleteApi": "__drv_releasesResource" }
         },
         {
-          "Id": "SEC105/003/091",
           "ContentsRegex": "$SEC105/003/091.__drv_acquiresResourceGlobal",
           "MessageArguments": { "obsoleteApi": "__drv_acquiresResourceGlobal" }
         },
         {
-          "Id": "SEC105/003/092",
           "ContentsRegex": "$SEC105/003/092.__drv_releasesResourceGlobal",
           "MessageArguments": { "obsoleteApi": "__drv_releasesResourceGlobal" }
         },
         {
-          "Id": "SEC105/003/093",
           "ContentsRegex": "$SEC105/003/093.__drv_mustHold",
           "MessageArguments": { "obsoleteApi": "__drv_mustHold" }
         },
         {
-          "Id": "SEC105/003/094",
           "ContentsRegex": "$SEC105/003/094.__drv_mustHoldGlobal",
           "MessageArguments": { "obsoleteApi": "__drv_mustHoldGlobal" }
         },
         {
-          "Id": "SEC105/003/095",
           "ContentsRegex": "$SEC105/003/095.__drv_neverHold",
           "MessageArguments": { "obsoleteApi": "__drv_neverHold" }
         },
         {
-          "Id": "SEC105/003/096",
           "ContentsRegex": "$SEC105/003/096.__drv_neverHoldGlobal",
           "MessageArguments": { "obsoleteApi": "__drv_neverHoldGlobal" }
         },
         {
-          "Id": "SEC105/003/097",
           "ContentsRegex": "$SEC105/003/097.__drv_acquiresExclusiveResource",
           "MessageArguments": { "obsoleteApi": "__drv_acquiresExclusiveResource" }
         },
         {
-          "Id": "SEC105/003/098",
           "ContentsRegex": "$SEC105/003/098.__drv_releasesExclusiveResource",
           "MessageArguments": { "obsoleteApi": "__drv_releasesExclusiveResource" }
         },
         {
-          "Id": "SEC105/003/099",
           "ContentsRegex": "$SEC105/003/099.__drv_acquiresExclusiveResourceGlobal",
           "MessageArguments": { "obsoleteApi": "__drv_acquiresExclusiveResourceGlobal" }
         },
         {
-          "Id": "SEC105/003/100",
           "ContentsRegex": "$SEC105/003/100.__drv_releasesExclusiveResourceGlobal",
           "MessageArguments": { "obsoleteApi": "__drv_releasesExclusiveResourceGlobal" }
         },
         {
-          "Id": "SEC105/003/101",
           "ContentsRegex": "$SEC105/003/101.__drv_valueIs",
           "MessageArguments": { "obsoleteApi": "__drv_valueIs" }
         },
         {
-          "Id": "SEC105/003/102",
           "ContentsRegex": "$SEC105/003/102.__drv_formatString",
           "MessageArguments": { "obsoleteApi": "__drv_formatString" }
         },
         {
-          "Id": "SEC105/003/103",
           "ContentsRegex": "$SEC105/003/103.__drv_deref",
           "MessageArguments": { "obsoleteApi": "__drv_deref" }
         },
         {
-          "Id": "SEC105/003/104",
           "ContentsRegex": "$SEC105/003/104.__drv_ret",
           "MessageArguments": { "obsoleteApi": "__drv_ret" }
         },
         {
-          "Id": "SEC105/003/105",
           "ContentsRegex": "$SEC105/003/105.__drv_fun",
           "MessageArguments": { "obsoleteApi": "__drv_fun" }
         },
         {
-          "Id": "SEC105/003/106",
           "ContentsRegex": "$SEC105/003/106.__drv_out_deref",
           "MessageArguments": { "obsoleteApi": "__drv_out_deref" }
         },
         {
-          "Id": "SEC105/003/107",
           "ContentsRegex": "$SEC105/003/107.__drv_in",
           "MessageArguments": { "obsoleteApi": "__drv_in" }
         },
         {
-          "Id": "SEC105/003/108",
           "ContentsRegex": "$SEC105/003/108.__drv_notPointer",
           "MessageArguments": { "obsoleteApi": "__drv_notPointer" }
         },
         {
-          "Id": "SEC105/003/109",
           "ContentsRegex": "$SEC105/003/109.__drv_Mode_impl",
           "MessageArguments": { "obsoleteApi": "__drv_Mode_impl" }
         },
         {
-          "Id": "SEC105/003/110",
           "ContentsRegex": "$SEC105/003/110.__drv_strictType",
           "MessageArguments": { "obsoleteApi": "__drv_strictType" }
         },
         {
-          "Id": "SEC105/003/111",
           "ContentsRegex": "$SEC105/003/111.__drv_strictTypeMatch",
           "MessageArguments": { "obsoleteApi": "__drv_strictTypeMatch" }
         },
         {
-          "Id": "SEC105/003/112",
           "ContentsRegex": "$SEC105/003/112.__drv_typeCond",
           "MessageArguments": { "obsoleteApi": "__drv_typeCond" }
         },
         {
-          "Id": "SEC105/003/113",
           "ContentsRegex": "$SEC105/003/113.__drv_typeConst",
           "MessageArguments": { "obsoleteApi": "__drv_typeConst" }
         },
         {
-          "Id": "SEC105/003/114",
           "ContentsRegex": "$SEC105/003/114.__drv_typeExpr",
           "MessageArguments": { "obsoleteApi": "__drv_typeExpr" }
         },
         {
-          "Id": "SEC105/003/115",
           "ContentsRegex": "$SEC105/003/115._Deref_inout_z_bytecap_c_",
           "MessageArguments": { "obsoleteApi": "_Deref_inout_z_bytecap_c_" }
         },
         {
-          "Id": "SEC105/003/116",
           "ContentsRegex": "$SEC105/003/116._Deref_inout_z_cap_c_",
           "MessageArguments": { "obsoleteApi": "_Deref_inout_z_cap_c_" }
         },
         {
-          "Id": "SEC105/003/117",
           "ContentsRegex": "$SEC105/003/117._Deref_out_z_bytecap_c_",
           "MessageArguments": { "obsoleteApi": "_Deref_out_z_bytecap_c_" }
         },
         {
-          "Id": "SEC105/003/118",
           "ContentsRegex": "$SEC105/003/118._Deref_out_z_cap_c_",
           "MessageArguments": { "obsoleteApi": "_Deref_out_z_cap_c_" }
         },
         {
-          "Id": "SEC105/003/119",
           "ContentsRegex": "$SEC105/003/119._Deref_post_cap_",
           "MessageArguments": { "obsoleteApi": "_Deref_post_cap_" }
         },
         {
-          "Id": "SEC105/003/120",
           "ContentsRegex": "$SEC105/003/120._Deref_post_count_",
           "MessageArguments": { "obsoleteApi": "_Deref_post_count_" }
         },
         {
-          "Id": "SEC105/003/121",
           "ContentsRegex": "$SEC105/003/121._Deref_post_count_c_",
           "MessageArguments": { "obsoleteApi": "_Deref_post_count_c_" }
         },
         {
-          "Id": "SEC105/003/122",
           "ContentsRegex": "$SEC105/003/122._Deref_post_opt_bytecount_c_",
           "MessageArguments": { "obsoleteApi": "_Deref_post_opt_bytecount_c_" }
         },
         {
-          "Id": "SEC105/003/123",
           "ContentsRegex": "$SEC105/003/123._Deref_post_opt_bytecount_x_",
           "MessageArguments": { "obsoleteApi": "_Deref_post_opt_bytecount_x_" }
         },
         {
-          "Id": "SEC105/003/124",
           "ContentsRegex": "$SEC105/003/124._Deref_post_opt_cap_",
           "MessageArguments": { "obsoleteApi": "_Deref_post_opt_cap_" }
         },
         {
-          "Id": "SEC105/003/125",
           "ContentsRegex": "$SEC105/003/125._Deref_post_opt_z_cap_",
           "MessageArguments": { "obsoleteApi": "_Deref_post_opt_z_cap_" }
         },
         {
-          "Id": "SEC105/003/126",
           "ContentsRegex": "$SEC105/003/126._Deref_post_z_cap_",
           "MessageArguments": { "obsoleteApi": "_Deref_post_z_cap_" }
         },
         {
-          "Id": "SEC105/003/127",
           "ContentsRegex": "$SEC105/003/127._In_bytecount_x_",
           "MessageArguments": { "obsoleteApi": "_In_bytecount_x_" }
         },
         {
-          "Id": "SEC105/003/128",
           "ContentsRegex": "$SEC105/003/128._In_count_x_",
           "MessageArguments": { "obsoleteApi": "_In_count_x_" }
         },
         {
-          "Id": "SEC105/003/129",
           "ContentsRegex": "$SEC105/003/129._Inout_bytecap_x_",
           "MessageArguments": { "obsoleteApi": "_Inout_bytecap_x_" }
         },
         {
-          "Id": "SEC105/003/130",
           "ContentsRegex": "$SEC105/003/130._Inout_opt_z_bytecap_",
           "MessageArguments": { "obsoleteApi": "_Inout_opt_z_bytecap_" }
         },
         {
-          "Id": "SEC105/003/131",
           "ContentsRegex": "$SEC105/003/131._Inout_z_bytecap_",
           "MessageArguments": { "obsoleteApi": "_Inout_z_bytecap_" }
         },
         {
-          "Id": "SEC105/003/132",
           "ContentsRegex": "$SEC105/003/132._Out_bytecap_x_",
           "MessageArguments": { "obsoleteApi": "_Out_bytecap_x_" }
         },
         {
-          "Id": "SEC105/003/133",
           "ContentsRegex": "$SEC105/003/133._Out_cap_m_",
           "MessageArguments": { "obsoleteApi": "_Out_cap_m_" }
         },
         {
-          "Id": "SEC105/003/134",
           "ContentsRegex": "$SEC105/003/134._Out_cap_x_",
           "MessageArguments": { "obsoleteApi": "_Out_cap_x_" }
         },
         {
-          "Id": "SEC105/003/135",
           "ContentsRegex": "$SEC105/003/135._Out_capcount_x_",
           "MessageArguments": { "obsoleteApi": "_Out_capcount_x_" }
         },
         {
-          "Id": "SEC105/003/136",
           "ContentsRegex": "$SEC105/003/136._Out_opt_cap_x_",
           "MessageArguments": { "obsoleteApi": "_Out_opt_cap_x_" }
         },
         {
-          "Id": "SEC105/003/137",
           "ContentsRegex": "$SEC105/003/137._Out_opt_z_bytecap_",
           "MessageArguments": { "obsoleteApi": "_Out_opt_z_bytecap_" }
         },
         {
-          "Id": "SEC105/003/138",
           "ContentsRegex": "$SEC105/003/138._Out_opt_z_bytecap_c_",
           "MessageArguments": { "obsoleteApi": "_Out_opt_z_bytecap_c_" }
         },
         {
-          "Id": "SEC105/003/139",
           "ContentsRegex": "$SEC105/003/139._Out_opt_z_cap_post_count_",
           "MessageArguments": { "obsoleteApi": "_Out_opt_z_cap_post_count_" }
         },
         {
-          "Id": "SEC105/003/140",
           "ContentsRegex": "$SEC105/003/140._Out_z_bytecap_",
           "MessageArguments": { "obsoleteApi": "_Out_z_bytecap_" }
         },
         {
-          "Id": "SEC105/003/141",
           "ContentsRegex": "$SEC105/003/141._Out_z_bytecap_c_",
           "MessageArguments": { "obsoleteApi": "_Out_z_bytecap_c_" }
         },
         {
-          "Id": "SEC105/003/142",
           "ContentsRegex": "$SEC105/003/142._Out_z_cap_post_count_",
           "MessageArguments": { "obsoleteApi": "_Out_z_cap_post_count_" }
         },
         {
-          "Id": "SEC105/003/143",
           "ContentsRegex": "$SEC105/003/143._Out_z_cap_x_",
           "MessageArguments": { "obsoleteApi": "_Out_z_cap_x_" }
         },
         {
-          "Id": "SEC105/003/144",
           "ContentsRegex": "$SEC105/003/144._Out_z_capcount_",
           "MessageArguments": { "obsoleteApi": "_Out_z_capcount_" }
         },
         {
-          "Id": "SEC105/003/145",
           "ContentsRegex": "$SEC105/003/145._Post_bytecount_x_",
           "MessageArguments": { "obsoleteApi": "_Post_bytecount_x_" }
         },
         {
-          "Id": "SEC105/003/146",
           "ContentsRegex": "$SEC105/003/146._Pre_cap_for_",
           "MessageArguments": { "obsoleteApi": "_Pre_cap_for_" }
         },
         {
-          "Id": "SEC105/003/147",
           "ContentsRegex": "$SEC105/003/147._Pre_opt_bytecount_x_",
           "MessageArguments": { "obsoleteApi": "_Pre_opt_bytecount_x_" }
         },
         {
-          "Id": "SEC105/003/148",
           "ContentsRegex": "$SEC105/003/148._Prepost_bytecount_x_",
           "MessageArguments": { "obsoleteApi": "_Prepost_bytecount_x_" }
         },
         {
-          "Id": "SEC105/003/149",
           "ContentsRegex": "$SEC105/003/149._Prepost_count_",
           "MessageArguments": { "obsoleteApi": "_Prepost_count_" }
         },
         {
-          "Id": "SEC105/003/150",
           "ContentsRegex": "$SEC105/003/150._Prepost_opt_bytecount_x_",
           "MessageArguments": { "obsoleteApi": "_Prepost_opt_bytecount_x_" }
         },
         {
-          "Id": "SEC105/003/151",
           "ContentsRegex": "$SEC105/003/151._Ret_count_x_",
           "MessageArguments": { "obsoleteApi": "_Ret_count_x_" }
         },
         {
-          "Id": "SEC105/003/152",
           "ContentsRegex": "$SEC105/003/152._Ret_opt_bytecap_x_",
           "MessageArguments": { "obsoleteApi": "_Ret_opt_bytecap_x_" }
         },
         {
-          "Id": "SEC105/003/153",
           "ContentsRegex": "$SEC105/003/153._Ret_opt_bytecount_x_",
           "MessageArguments": { "obsoleteApi": "_Ret_opt_bytecount_x_" }
         },
         {
-          "Id": "SEC105/003/154",
           "ContentsRegex": "$SEC105/003/154.SAPreNullTerminatedCOMINGNullSANo",
           "MessageArguments": { "obsoleteApi": "[SA_Pre(NullTerminated=COMING, Null=SA_No)]" }
         },
         {
-          "Id": "SEC105/003/155",
           "ContentsRegex": "$SEC105/003/155.SAPreNullTerminatedCOMINGNullSANoValidSAYes",
           "MessageArguments": { "obsoleteApi": "[SA_Pre(NullTerminated=COMING, Null=SA_No, Valid=SA_Yes)]" }
         },
         {
-          "Id": "SEC105/003/156",
           "ContentsRegex": "$SEC105/003/156.SAPreElementSizeConst1",
           "MessageArguments": { "obsoleteApi": "[SA_Pre(ElementSizeConst=%1)]" }
         },
         {
-          "Id": "SEC105/003/157",
           "ContentsRegex": "$SEC105/003/157.SAPostNeedsReleaseSAYes",
           "MessageArguments": { "obsoleteApi": "[SA_Post(NeedsRelease=SA_Yes)]" }
         },
         {
-          "Id": "SEC105/003/158",
           "ContentsRegex": "$SEC105/003/158.SAPostValidSAUnchanged",
           "MessageArguments": { "obsoleteApi": "[SA_Post(Valid=SA_Unchanged)]" }
         },
         {
-          "Id": "SEC105/003/159",
           "ContentsRegex": "$SEC105/003/159.SAPostPROPERTYvalue1value2",
           "MessageArguments": { "obsoleteApi": "[SA_Post( PROPERTY=(value1 | value2) )]" }
         },
         {
-          "Id": "SEC105/003/160",
           "ContentsRegex": "$SEC105/003/160.SAPostElementSizeParam1",
           "MessageArguments": { "obsoleteApi": "[SA_Post(ElementSizeParam=\"%1\")]" }
         },
         {
-          "Id": "SEC105/003/161",
           "ContentsRegex": "$SEC105/003/161.PreDerefINTMINAccessWrite",
           "MessageArguments": { "obsoleteApi": "[Pre( Deref=INT_MIN, Access=Write )]" }
         },
         {
-          "Id": "SEC105/003/162",
           "ContentsRegex": "$SEC105/003/162.PreDerefderefAccess1",
           "MessageArguments": { "obsoleteApi": "[Pre( Deref=deref, Access=%1 )]" }
         },
         {
-          "Id": "SEC105/003/163",
           "ContentsRegex": "$SEC105/003/163.PreDerefderefNull1",
           "MessageArguments": { "obsoleteApi": "[Pre( Deref=deref, Null=%1 )]" }
         },
         {
-          "Id": "SEC105/003/164",
           "ContentsRegex": "$SEC105/003/164.PreDerefderefValidvalidValuePreDerefderefderefNNullnullValue",
           "MessageArguments": { "obsoleteApi": "[Pre( Deref=deref, Valid=validValue ), Pre( Deref=deref+derefN, Null=nullValue )]" }
         },
         {
-          "Id": "SEC105/003/165",
           "ContentsRegex": "$SEC105/003/165.PreNeedsRelease1",
           "MessageArguments": { "obsoleteApi": "[Pre( NeedsRelease=%1 )]" }
         },
         {
-          "Id": "SEC105/003/166",
           "ContentsRegex": "$SEC105/003/166.PreValidSANoAccess",
           "MessageArguments": { "obsoleteApi": "[Pre(Valid=SA_NoAccess)]" }
         },
         {
-          "Id": "SEC105/003/167",
           "ContentsRegex": "$SEC105/003/167.PostAccess1",
           "MessageArguments": { "obsoleteApi": "[Post( Access=%1 )]" }
         },
         {
-          "Id": "SEC105/003/168",
           "ContentsRegex": "$SEC105/003/168.PostDeref1Access1",
           "MessageArguments": { "obsoleteApi": "[Post( Deref=1, Access=%1 )]" }
         },
         {
-          "Id": "SEC105/003/169",
           "ContentsRegex": "$SEC105/003/169.PostDeref1NeedsRelease1",
           "MessageArguments": { "obsoleteApi": "[Post( Deref=1, NeedsRelease=%1 )]" }
         },
         {
-          "Id": "SEC105/003/170",
           "ContentsRegex": "$SEC105/003/170.PostDeref1PROPERTY2",
           "MessageArguments": { "obsoleteApi": "[Post(Deref=%1, PROPERTY=%2)]" }
         },
         {
-          "Id": "SEC105/003/171",
           "ContentsRegex": "$SEC105/003/171.PostDeref1PROPERTY2",
           "MessageArguments": { "obsoleteApi": "[Post(Deref=%1, PROPERTY=\"%2\")]" }
         },
         {
-          "Id": "SEC105/003/172",
           "ContentsRegex": "$SEC105/003/172.PostDeref1Access2",
           "MessageArguments": { "obsoleteApi": "[Post( Deref=%1, Access=%2 )]" }
         },
         {
-          "Id": "SEC105/003/173",
           "ContentsRegex": "$SEC105/003/173.PostDeref1Null2",
           "MessageArguments": { "obsoleteApi": "[Post( Deref=%1, Null=%2 )]" }
         },
         {
-          "Id": "SEC105/003/174",
           "ContentsRegex": "$SEC105/003/174.PostDeref1property12",
           "MessageArguments": { "obsoleteApi": "[Post(Deref=%1, property1=%2)]" }
         },
         {
-          "Id": "SEC105/003/175",
           "ContentsRegex": "$SEC105/003/175.PostDeref1property22",
           "MessageArguments": { "obsoleteApi": "[Post(Deref=%1, property2=%2)]" }
         },
         {
-          "Id": "SEC105/003/176",
           "ContentsRegex": "$SEC105/003/176.PostDeref1Valid2",
           "MessageArguments": { "obsoleteApi": "[Post( Deref=%1, Valid=%2 )]" }
         },
         {
-          "Id": "SEC105/003/177",
           "ContentsRegex": "$SEC105/003/177.PostNeedsRelease1",
           "MessageArguments": { "obsoleteApi": "[Post( NeedsRelease=%1 )]" }
         },
         {
-          "Id": "SEC105/003/178",
           "ContentsRegex": "$SEC105/003/178.PostPROPERTY1",
           "MessageArguments": { "obsoleteApi": "[Post(PROPERTY=%1)]" }
         },
         {
-          "Id": "SEC105/003/179",
           "ContentsRegex": "$SEC105/003/179.PostPROPERTY1",
           "MessageArguments": { "obsoleteApi": "[Post(PROPERTY=\"%1\")]" }
         },
         {
-          "Id": "SEC105/003/180",
           "ContentsRegex": "$SEC105/003/180.PostPROPERTY1Deref2",
           "MessageArguments": { "obsoleteApi": "[Post(PROPERTY=\"%1\", Deref=%2)]" }
         },
         {
-          "Id": "SEC105/003/181",
           "ContentsRegex": "$SEC105/003/181.PostPROPERTY1Deref2",
           "MessageArguments": { "obsoleteApi": "[Post(PROPERTY=%1, Deref=%2)]" }
         },
         {
-          "Id": "SEC105/003/182",
           "ContentsRegex": "$SEC105/003/182.returnvaluePostAccessSAMaybe",
           "MessageArguments": { "obsoleteApi": "[returnvalue:Post(Access=SA_Maybe)]" }
         },
         {
-          "Id": "SEC105/003/183",
           "ContentsRegex": "$SEC105/003/183.returnvaluePostAccessSANoAccess",
           "MessageArguments": { "obsoleteApi": "[returnvalue:Post(Access=SA_NoAccess)]" }
         },
         {
-          "Id": "SEC105/003/184",
           "ContentsRegex": "$SEC105/003/184.returnvaluePostAccessSANoAccessSANoAccess",
           "MessageArguments": { "obsoleteApi": "[returnvalue:Post(Access=(SA_NoAccess | SA_NoAccess))]" }
         },
         {
-          "Id": "SEC105/003/185",
           "ContentsRegex": "$SEC105/003/185.returnvaluePostDeref1ValidSAYes",
           "MessageArguments": { "obsoleteApi": "[returnvalue:Post(Deref='%1', Valid=SA_Yes)]" }
         }
