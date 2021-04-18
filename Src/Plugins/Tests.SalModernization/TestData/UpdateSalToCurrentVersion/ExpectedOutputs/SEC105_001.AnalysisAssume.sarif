@@ -23,7 +23,7 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains a call to the SAL v1 '{1}' annotation and should be removed as it is obsolete or redundant in SAL v2."
+                  "text": "'{0}' contains a use of the obsolete or redundant '{1}' annotation that should be removed."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -39,7 +39,7 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains a call to the SAL v1 '{1}' annotation and should be replaced for '{2}'."
+                  "text": "'{0}' contains a use of the obsolete or redundant '{1}' annotation and should be replaced for '{2}'."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -55,7 +55,7 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains a call to the SAL v1 '{1}' annotation and should be converted manually."
+                  "text": "'{0}' contains a use of the SAL v1 '{1} annotation that should be converted manually to the correct SAL v2 pattern."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
