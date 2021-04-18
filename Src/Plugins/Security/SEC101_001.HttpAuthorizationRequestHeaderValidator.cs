@@ -35,12 +35,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                  out fingerprint);
         }
 
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
+                                                     ref string message,
+                                                     ref Dictionary<string, string> options,
+                                                     out ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
-                                  ref options);
+                                  ref options,
+                                  out resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
@@ -74,8 +78,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                ref Dictionary<string, string> options)
+                                                                ref Dictionary<string, string> options,
+                                                                out ResultLevelKind resultLevelKind)
         {
+            resultLevelKind = new ResultLevelKind();
+
             string host = fingerprint.Host;
             string scheme = fingerprint.Scheme ?? "https";
             string path = fingerprint.Path ?? string.Empty;

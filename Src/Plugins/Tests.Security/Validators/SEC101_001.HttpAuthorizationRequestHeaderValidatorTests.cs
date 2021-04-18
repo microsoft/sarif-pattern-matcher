@@ -26,7 +26,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            ValidationState actualValidationState = HttpAuthorizationRequestHeaderValidator.IsValidDynamic(ref fingerprint, ref message, ref keyValuePairs);
+            ValidationState actualValidationState = HttpAuthorizationRequestHeaderValidator.IsValidDynamic(ref fingerprint,
+                                                                                                           ref message,
+                                                                                                           ref keyValuePairs,
+                                                                                                           out ResultLevelKind resultLevelKind);
             Assert.Equal(ExpectedValidationState, actualValidationState);
         }
     }
