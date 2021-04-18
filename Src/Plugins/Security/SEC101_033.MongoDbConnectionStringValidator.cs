@@ -72,8 +72,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                ref Dictionary<string, string> options)
+                                                                ref Dictionary<string, string> options,
+                                                                out ResultLevelKind resultLevelKind)
         {
+            resultLevelKind = new ResultLevelKind();
+
             string id = fingerprint.Id;
             string host = fingerprint.Host;
             string password = fingerprint.Secret;

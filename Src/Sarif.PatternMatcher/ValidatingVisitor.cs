@@ -55,7 +55,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     ValidatorsCache.ValidateDynamicHelper(validationPair.IsValidDynamic,
                                                           ref fingerprint,
                                                           ref message,
-                                                          ref options);
+                                                          ref options,
+                                                          out ResultLevelKind resultLevelKind);
 
                 string validationPrefix = node.Message.Arguments[1];
                 string validationSuffix = node.Message.Arguments[4];

@@ -42,7 +42,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var options = new Dictionary<string, string>();
 
-            ValidationState actualValidationState = GitHubPatValidator.IsValidDynamic(ref fingerprint, ref message, ref options);
+            ValidationState actualValidationState = GitHubPatValidator.IsValidDynamic(ref fingerprint,
+                                                                                      ref message,
+                                                                                      ref options,
+                                                                                      out ResultLevelKind resultLevelKind);
 
             Assert.Equal(expectedValidationState, actualValidationState);
         }
