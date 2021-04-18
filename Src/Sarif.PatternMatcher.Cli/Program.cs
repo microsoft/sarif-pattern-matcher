@@ -86,7 +86,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         case "Delete":
                             searchDefinition.Name = "RemoveObsoleteOrRedundantAnnotations";
                             searchDefinition.Description = "Obsolete or redundant SAL annotation.";
-                            searchDefinition.Message = "'{0:scanTarget}' contains a use of the obsolete or redundant '{1:obsoleteAnnotation}' annotation that should be removed.";
+                            searchDefinition.Message = "'{0:scanTarget}' contains a use of the obsolete or redundant SAL v1 '{1:obsoleteAnnotation}' annotation that should be removed.";
                             break;
 
                         case "Automatic":
@@ -98,7 +98,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         case "Manual":
                             searchDefinition.Name = "UpdateAnnotationsToCurrentVersion";
                             searchDefinition.Description = "Conversion from SAL 1 to SAL 2 cannot be automatically done.";
-                            searchDefinition.Message = "'{0:scanTarget}' contains a use of the SAL v1 '{1:obsoleteAnnotation} annotation that should be converted manually to the correct SAL v2 pattern.";
+                            searchDefinition.Message = "'{0:scanTarget}' contains a use of the SAL v1 '{1:obsoleteAnnotation}' annotation that should be converted manually to the correct SAL v2 pattern.";
                             break;
                     }
 
@@ -154,7 +154,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                         searchDefinition.MatchExpressions.Add(new MatchExpression
                         {
-                            SubId = name,
+                            //SubId = name,
                             ContentsRegex = $"${searchDefinition.Id}.{name}",
                             MessageArguments = new Dictionary<string, string>
                             {
@@ -179,7 +179,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                         searchDefinition.MatchExpressions.Add(new MatchExpression
                         {
-                            SubId = name,
+                            //SubId = name,
                             ContentsRegex = $"${searchDefinition.Id}.{name}",
                             MessageArguments = new Dictionary<string, string>
                             {
@@ -205,7 +205,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                         searchDefinition.MatchExpressions.Add(new MatchExpression
                         {
-                            SubId = name,
+                            //SubId = name,
                             ContentsRegex = $"${searchDefinition.Id}.{name}",
                             MessageArguments = new Dictionary<string, string>
                             {
