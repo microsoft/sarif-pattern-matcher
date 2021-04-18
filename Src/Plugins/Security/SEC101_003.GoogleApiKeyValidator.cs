@@ -23,15 +23,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
                                                     ref Dictionary<string, string> groups,
-                                                    ref string failureLevel,
                                                     ref string message,
+                                                    out ResultLevelKind resultLevelKind,
                                                     out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
-                                 ref failureLevel,
                                  ref message,
+                                 out resultLevelKind,
                                  out fingerprint);
         }
 
@@ -45,10 +45,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                                ref Dictionary<string, string> groups,
-                                                               ref string failureLevel,
                                                                ref string message,
+                                                               out ResultLevelKind resultLevelKind,
                                                                out Fingerprint fingerprint)
         {
+            resultLevelKind = default;
             fingerprint = new Fingerprint
             {
                 Secret = matchedPattern,
@@ -77,8 +78,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             var request = new DirectionsRequest
             {
                 Key = apiKey,
-                Origin = new Location("Seattle"),
-                Destination = new Location("Portland"),
+                Origin = new GoogleApi.Entities.Common.Location("Seattle"),
+                Destination = new GoogleApi.Entities.Common.Location("Portland"),
             };
 
             try
