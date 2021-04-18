@@ -11,5 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RE2.Managed\RE2.Managed.csproj" />
+    <ProjectReference Include="..\sarif-sdk\src\Sarif\Sarif.csproj" />
   </ItemGroup>
 </Project>

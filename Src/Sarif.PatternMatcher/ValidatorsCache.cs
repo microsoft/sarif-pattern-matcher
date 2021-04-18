@@ -67,19 +67,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public static ValidationState ValidateStaticHelper(MethodInfo isValidStaticMethodInfo,
                                                        ref string matchedPattern,
                                                        ref IDictionary<string, string> groups,
-                                                       ref string failureLevel,
                                                        ref string message,
+                                                       out ResultLevelKind resultLevelKind,
                                                        out Fingerprint fingerprint)
         {
             ValidationState validationState;
             fingerprint = default;
+            resultLevelKind = default;
 
             object[] arguments = new object[]
             {
                 matchedPattern,
                 groups,
-                failureLevel,
                 message,
+                resultLevelKind,
                 fingerprint,
             };
 
@@ -107,8 +108,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             matchedPattern = (string)arguments[0];
             groups = (Dictionary<string, string>)arguments[1];
-            failureLevel = (string)arguments[2];
-            message = (string)arguments[3];
+            message = (string)arguments[2];
+            resultLevelKind = (ResultLevelKind)arguments[3];
             fingerprint = (Fingerprint)arguments[4];
 
             return validationState;
@@ -189,20 +190,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                         AnalyzeContext context,
                                         ref string matchedPattern,
                                         ref IDictionary<string, string> groups,
-                                        ref string failureLevel,
                                         ref string message,
+                                        out ResultLevelKind resultLevelKind,
                                         out Fingerprint fingerprint,
                                         out bool pluginCanPerformDynamicAnalysis)
         {
-            pluginCanPerformDynamicAnalysis = false;
-
             return ValidateHelper(RuleNameToValidationMethods,
                                   ruleName,
                                   context,
                                   ref matchedPattern,
                                   ref groups,
-                                  ref failureLevel,
                                   ref message,
+                                  out resultLevelKind,
                                   out fingerprint,
                                   out pluginCanPerformDynamicAnalysis);
         }
@@ -212,14 +211,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                        AnalyzeContext context,
                                                        ref string matchedPattern,
                                                        ref IDictionary<string, string> groups,
-                                                       ref string failureLevel,
                                                        ref string message,
+                                                       out ResultLevelKind resultLevelKind,
                                                        out Fingerprint fingerprint,
                                                        out bool pluginCanPerformDynamicAnalysis)
         {
-            pluginCanPerformDynamicAnalysis = false;
-            fingerprint = default;
             message = null;
+            fingerprint = default;
+            resultLevelKind = default;
+            pluginCanPerformDynamicAnalysis = false;
 
             ValidationMethods validationMethods = GetValidationMethods(ruleName, ruleIdToMethodMap);
 
@@ -248,8 +248,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ValidationState result = ValidateStaticHelper(validationMethods.IsValidStatic,
                                                           ref matchedPattern,
                                                           ref groups,
-                                                          ref failureLevel,
                                                           ref message,
+                                                          out resultLevelKind,
                                                           out fingerprint);
 
             pluginCanPerformDynamicAnalysis = validationMethods.IsValidDynamic != null;
@@ -297,8 +297,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             {
                                 typeof(string).MakeByRefType(), // Matched pattern.
                                 typeof(Dictionary<string, string>).MakeByRefType(), // Regex groups.
-                                typeof(string).MakeByRefType(), // FailureLevel.
                                 typeof(string).MakeByRefType(), // Message.
+                                typeof(ResultLevelKind).MakeByRefType(), // ResultLevelKind.
                                 typeof(Fingerprint).MakeByRefType(), // Fingerprint.
                             },
                             null);
