@@ -82,7 +82,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string account = fingerprint.Id;
             string password = fingerprint.Secret;
@@ -99,8 +102,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 request.ProductKey = "<productKey>";
                 request.TopicFullName = "/<productKey>/<deviceName>/get";
                 byte[] payload = Encoding.Default.GetBytes("Invalid payload.");
-                string payloadStr = Convert.ToBase64String(payload);
-                request.MessageContent = payloadStr;
+                request.MessageContent = Convert.ToBase64String(payload);
                 request.Qos = 0;
                 PubResponse response = client.GetAcsResponse(request);
 
@@ -115,8 +117,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 switch (ce.ErrorCode)
                 {
                     case KeyNotFound:
+                    {
+                        resultLevelKind.Level = FailureLevel.None;
+
                         // Not even the client id we found is valid. Return no match.
                         return ValidationState.NoMatch;
+                    }
 
                     case InvalidSecret:
                         // The client ID is valid but the secret was not.
@@ -126,6 +132,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         return ReturnUnhandledException(ref message, ce, asset: account);
                 }
             }
+
+            resultLevelKind.Level = FailureLevel.Error;
 
             // If all goes well, we'll receive a "product format invalid" message in the response
             // which means authentication succeeded. Therefore the id and secret are valid.

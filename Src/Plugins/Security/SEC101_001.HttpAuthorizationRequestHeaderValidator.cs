@@ -81,7 +81,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string host = fingerprint.Host;
             string scheme = fingerprint.Scheme ?? "https";
@@ -102,6 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     responseDummy.StatusCode == HttpStatusCode.NotFound ||
                     responseDummy.StatusCode == HttpStatusCode.NonAuthoritativeInformation)
                 {
+                    resultLevelKind.Level = FailureLevel.None;
                     return ValidationState.NoMatch;
                 }
 
@@ -115,6 +119,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
+                        resultLevelKind.Level = FailureLevel.Error;
                         return ReturnAuthorizedAccess(ref message, asset: host);
                     }
 
@@ -129,6 +134,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         // If this happen, it means it does not matter if we add the authentication.
                         if (responseDummy.StatusCode == response.StatusCode)
                         {
+                            resultLevelKind.Level = FailureLevel.None;
                             return ValidationState.NoMatch;
                         }
 

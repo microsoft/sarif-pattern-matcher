@@ -63,7 +63,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             var client = new WebClient();
             var data = new NameValueCollection();
@@ -97,6 +100,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationState.Unknown;
             }
 
+            resultLevelKind.Level = FailureLevel.Error;
             message = BuildAuthTestResponseMessage(response);
             return ValidationState.AuthorizedError;
         }

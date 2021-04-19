@@ -110,7 +110,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string pat = fingerprint.Secret;
 
@@ -136,6 +139,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (ForbiddenException)
             {
+                resultLevelKind.Level = FailureLevel.Error;
+
                 // The token is valid but doesn't have read/user access. Write only perhaps?
                 return ValidationState.AuthorizedError;
             }
@@ -146,6 +151,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationState.Unknown;
             }
 
+            resultLevelKind.Level = FailureLevel.Error;
             return ValidationState.AuthorizedError;
         }
     }

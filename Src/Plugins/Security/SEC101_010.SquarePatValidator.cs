@@ -74,7 +74,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string pat = fingerprint.Secret;
 
@@ -94,6 +97,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
+                        resultLevelKind.Level = FailureLevel.Error;
                         return ValidationState.AuthorizedError;
                     }
 
@@ -104,9 +108,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message += $" An unexpected response code was returned attempting to " +
-                                   $"validate: '{response.StatusCode}'";
-                        break;
+                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
+                        return ValidationState.Unknown;
                     }
                 }
             }
@@ -114,8 +117,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }

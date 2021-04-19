@@ -75,7 +75,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string id = fingerprint.Id;
             string host = fingerprint.Host;
@@ -86,6 +89,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
                 var dbClient = new MongoClient($"mongodb+srv://{id}:{password}@{host}/?connectTimeoutMS=3000");
                 List<BsonDocument> databases = dbClient.ListDatabases().ToList();
                 message = $"The following databases are compromised: {string.Join(",", databases.Select(q => $"'{q["name"].AsString}'"))}";
+                resultLevelKind.Level = FailureLevel.Error;
                 return ValidationState.AuthorizedError;
             }
             catch (Exception e)

@@ -77,7 +77,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string secret = fingerprint.Secret;
 
@@ -97,7 +100,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
-                        return CheckInformation(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), secret, ref message);
+                        ValidationState state = CheckInformation(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(),
+                                                     secret,
+                                                     ref message,
+                                                     out FailureLevel failureLevel);
+
+                        resultLevelKind.Level = failureLevel;
+                        return state;
                     }
 
                     case HttpStatusCode.Unauthorized:
@@ -107,9 +116,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message += $" An unexpected response code was returned attempting to " +
-                                   $"validate: '{response.StatusCode}'";
-                        break;
+                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
+                        return ValidationState.Unknown;
                     }
                 }
             }
@@ -117,12 +125,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
 
-        private static ValidationState CheckInformation(string content, string secret, ref string message)
+        private static ValidationState CheckInformation(string content, string secret, ref string message, out FailureLevel failureLevel)
         {
+            failureLevel = FailureLevel.Error;
             TokensRoot tokensRoot = JsonConvert.DeserializeObject<TokensRoot>(content);
             if (tokensRoot?.Tokens?.Count > 0)
             {
@@ -135,6 +142,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     if (obj.Readonly)
                     {
+                        failureLevel = FailureLevel.Warning;
                         message = "The token has 'read' permissions.";
                         return ValidationState.AuthorizedWarning;
                     }

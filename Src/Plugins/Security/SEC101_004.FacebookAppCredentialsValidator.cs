@@ -76,7 +76,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
@@ -89,6 +92,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             if (state == ValidationState.AuthorizedError)
             {
+                resultLevelKind.Level = FailureLevel.Error;
                 return CheckInformation(id, obj.AccessToken, ref message);
             }
 

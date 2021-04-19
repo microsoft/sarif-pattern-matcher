@@ -84,7 +84,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                  ref Dictionary<string, string> options,
                                                                  out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
@@ -104,6 +107,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.InternalServerError:
                     {
+                        resultLevelKind.Level = FailureLevel.Error;
+
                         // The request is correct, but the header 'Dropbox-API-Arg' is wrong.
                         return ValidationState.AuthorizedError;
                     }
@@ -125,13 +130,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                         // We don't recognize this message.
                         message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
-                        break;
+                        return ValidationState.Unknown;
                     }
 
                     default:
                     {
                         message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
-                        break;
+                        return ValidationState.Unknown;
                     }
                 }
             }
@@ -139,8 +144,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }

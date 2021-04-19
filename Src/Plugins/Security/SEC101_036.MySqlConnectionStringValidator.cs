@@ -121,7 +121,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string host = fingerprint.Host;
             string port = fingerprint.Port;
@@ -170,6 +173,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e, asset: host);
             }
 
+            resultLevelKind.Level = FailureLevel.Error;
             return ValidationState.AuthorizedError;
         }
     }

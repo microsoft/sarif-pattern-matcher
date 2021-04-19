@@ -77,7 +77,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
@@ -99,6 +102,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.BadRequest:
                     {
+                        resultLevelKind.Level = FailureLevel.Error;
+
                         // We authenticated and our bogus payload was read.
                         return ValidationState.AuthorizedError;
                     }
@@ -118,7 +123,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     default:
                     {
                         message = CreateUnexpectedResponseCodeMessage(status);
-                        break;
+                        return ValidationState.Unknown;
                     }
                 }
             }
@@ -126,8 +131,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }

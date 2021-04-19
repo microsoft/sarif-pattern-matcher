@@ -144,7 +144,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string host = fingerprint.Host;
             string account = fingerprint.Id;
@@ -162,9 +165,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
 
             // Validating ConnectionString with database.
-            ValidationState validation = ValidateConnectionString(ref message, host, connString, out bool shouldRetry);
+            ValidationState validation = ValidateConnectionString(ref message, host, connString, out bool shouldRetry, out FailureLevel failureLevel);
             if (validation != ValidationState.Unknown || !shouldRetry)
             {
+                resultLevelKind.Level = failureLevel;
                 return validation;
             }
 
@@ -174,12 +178,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             message = $"the '{account}' account is compromised for server '{host}'";
 
             // Validating ConnectionString without database.
-            return ValidateConnectionString(ref message, host, connString, out shouldRetry);
+            ValidationState state = ValidateConnectionString(ref message, host, connString, out shouldRetry, out failureLevel);
+            resultLevelKind.Level = failureLevel;
+            return state;
         }
 
-        private static ValidationState ValidateConnectionString(ref string message, string host, string connString, out bool shouldRetry)
+        private static ValidationState ValidateConnectionString(ref string message, string host, string connString, out bool shouldRetry, out FailureLevel failureLevel)
         {
             shouldRetry = true;
+            failureLevel = FailureLevel.Note;
 
             try
             {
@@ -188,6 +195,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (ArgumentException)
             {
+                failureLevel = FailureLevel.None;
+
                 // This exception means that some illegal chars, etc.
                 // have snuck into the connection string
                 return ValidationState.NoMatch;
@@ -217,6 +226,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e, asset: host);
             }
 
+            failureLevel = FailureLevel.Error;
             return ValidationState.AuthorizedError;
         }
     }

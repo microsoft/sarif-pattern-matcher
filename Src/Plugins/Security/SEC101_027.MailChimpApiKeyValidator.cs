@@ -77,7 +77,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string secret = fingerprint.Secret;
 
@@ -100,6 +103,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     {
                         string content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                         Account account = JsonConvert.DeserializeObject<Account>(content);
+                        resultLevelKind.Level = FailureLevel.Error;
 
                         return ReturnAuthorizedAccess(ref message, asset: account.AccountName);
                     }
@@ -112,7 +116,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     default:
                     {
                         message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
-                        break;
+                        return ValidationState.Unknown;
                     }
                 }
             }
@@ -120,8 +124,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
 
         private class Account

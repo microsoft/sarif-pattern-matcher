@@ -82,7 +82,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             // TODO: Create a unit test for this. https://github.com/microsoft/sarif-pattern-matcher/issues/258
 
@@ -113,6 +116,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 if (responseWithNoCredentials.StatusCode == HttpStatusCode.OK)
                 {
+                    resultLevelKind.Level = FailureLevel.None;
+
                     // If we succeed with a known invalid id + secret combination,
                     // some level of anonymous access must be configured.
                     return ValidationState.NoMatch;
@@ -137,6 +142,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
+                        resultLevelKind.Level = FailureLevel.Error;
                         return ReturnAuthorizedAccess(ref message, asset);
                     }
 

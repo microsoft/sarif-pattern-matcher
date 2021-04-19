@@ -86,7 +86,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
@@ -122,12 +125,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             message = $"the compromised AWS identity is '{iamUser}";
                         }
 
+                        resultLevelKind.Level = FailureLevel.Error;
                         return ValidationState.AuthorizedError;
                     }
 
                     case "InvalidClientTokenId":
                     case "SignatureDoesNotMatch":
                     {
+                        resultLevelKind.Level = FailureLevel.None;
                         return ValidationState.NoMatch;
                     }
                 }
@@ -141,6 +146,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationState.Unknown;
             }
 
+            resultLevelKind.Level = FailureLevel.Error;
             return ValidationState.AuthorizedError;
         }
 

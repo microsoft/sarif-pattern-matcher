@@ -76,7 +76,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             string account = "apikey";
             string secret = fingerprint.Secret;
@@ -130,6 +133,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e);
             }
 
+            resultLevelKind.Level = FailureLevel.Error;
             return ValidationState.AuthorizedError;
         }
 

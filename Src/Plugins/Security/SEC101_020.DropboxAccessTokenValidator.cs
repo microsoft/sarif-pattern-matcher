@@ -80,7 +80,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref Dictionary<string, string> options,
                                                                 out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             const string NoAccessMessage = "Your app is not permitted to access this endpoint";
             const string DisabledMessage = "This app is currently disabled.";
@@ -100,6 +103,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
+                        resultLevelKind.Level = FailureLevel.Error;
                         return ValidationState.AuthorizedError;
                     }
 
@@ -116,14 +120,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         // Request was successful but AccessToken does not have access.
                         if (body.Contains(NoAccessMessage))
                         {
-                            return secret.Length == 64
-                                ? ValidationState.AuthorizedError // No expiration token.
-                                : ValidationState.AuthorizedWarning; // Short expiration token (4h).
+                            if (secret.Length == 64)
+                            {
+                                resultLevelKind.Level = FailureLevel.Error;
+
+                                // No expiration token.
+                                return ValidationState.AuthorizedError;
+                            }
+                            else
+                            {
+                                resultLevelKind.Level = FailureLevel.Warning;
+
+                                // Short expiration token (4h).
+                                return ValidationState.AuthorizedWarning;
+                            }
                         }
 
                         // We don't recognize this message.
                         message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
-                        break;
+                        return ValidationState.Unknown;
                     }
 
                     case HttpStatusCode.Unauthorized:
@@ -134,7 +149,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     default:
                     {
                         message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
-                        break;
+                        return ValidationState.Unknown;
                     }
                 }
             }
@@ -142,8 +157,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }

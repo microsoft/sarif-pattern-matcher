@@ -68,7 +68,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                  ref Dictionary<string, string> options,
                                                                  out ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Note,
+            };
 
             const string Invalid = "RequestDenied: The provided API key is invalid";
             const string Expired = "RequestDenied: The provided API key is expired";
@@ -112,6 +115,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     if (e.Message.StartsWith(EnableBilling))
                     {
+                        resultLevelKind.Level = FailureLevel.Error;
+
                         // The API is enabled but billing has not been configured.
                         return ValidationState.AuthorizedError;
                     }
@@ -119,6 +124,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     if (e.Message.StartsWith(KeyNotAuthorized) ||
                         e.Message.StartsWith(ProjectNotAuthorized))
                     {
+                        resultLevelKind.Level = FailureLevel.Error;
+
                         // What this condition means is that the API key is recognized.
                         // It is not authorized for the Directions API, but this isn't
                         // what we're verifying here.
@@ -127,6 +134,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     if (e.Message.StartsWith(Invalid))
                     {
+                        resultLevelKind.Level = FailureLevel.None;
                         return ValidationState.NoMatch;
                     }
                 }
@@ -134,6 +142,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 message = $"An unexpected exception was caught attempting to validate api key: {e.Message}";
                 return ValidationState.Unknown;
             }
+
+            resultLevelKind.Level = FailureLevel.Error;
 
             // This condition indicates the API key is recognized and can access Directions API.
             return ValidationState.AuthorizedError;
