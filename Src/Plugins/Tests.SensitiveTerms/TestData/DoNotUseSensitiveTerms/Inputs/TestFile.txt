@@ -1,0 +1,47 @@
+﻿	//$ REVIEW (artemli): potentially it's possible to range
+	// records with the same HAdfile, e.g. the records that
+	// are translated via LimitedMap get range 0, the records
+	// that belong somewhere to the client get range 1 and
+	// others get range 2, but is it worth it? The situation
+	// is an edge condition, so we are just preventing SD
+	// from getting into invalid state -- no guarantees about
+	// what record's selected.
+
+    // Edge <= 12 - 13+, Firefox <=18 - 45+, IE 10 - 11, Safari 5.1 - 9+, iOS 6 - 9.1
+
+
+    geo_locations = ["us-ca-sjc-azr", "us-va-ash-azr", "us-il-ch1-azr", "us-tx-sn1-azr", "us-fl-mia-edge"]
+  
+    // Draw the edge around the button
+    DrawEdge(pds->hDC, &rc, EDGE_ETCHED, BF_ADJUST|BF_RECT);
+    
+    {
+        "Id": "63710003-10e8-4da8-b50d-7105af5ef9a1",
+        "ParentId": "992af8ea-a75d-4a2f-a732-c1fd53194f45",
+        "ManagementGroupType": "Service",
+        "Path": "Cloud + AI Platform\\Microsoft Cloud Infrastructure and Operations\\GDCO Incident Management\\SGE - Equinix: Singapore",
+        "Name": "SGE - Equinix: Singapore",
+        "ShortName": "SGE",
+        "Description": "MCIO Global Data Center EDGE Operations APAC Region Equinix: Singapore Data Center",
+        "Status": 1,
+        "Admins": "beechool;nrubio;levid;cterps;v-vijp;v-surah;v-kunar;v-ribat",
+        "IsExternalFacing": false
+    }
+    
+    <ul>
+        <li>Please unset “Block third-party cookies” in the Chrome settings: chrome://settings/content/cookies</li>
+        <li>Use Edge browser</li>
+        <li>Disable uBlock extension in Chrome if you use it</li>
+    </ul>
+
+    Microsoft EDGE
+    MICROSOFT Edge.
+    MS edge
+    microsoft     edge
+    microsoft edging
+
+    He received an award in acknowledgement of his work.
+
+    shit!
+
+    The meltdown started when he mishit his third shot from roughly 80 yards out into the creek.

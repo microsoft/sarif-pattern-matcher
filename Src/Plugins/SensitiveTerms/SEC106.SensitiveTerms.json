@@ -1,0 +1,38 @@
+{
+  "ValidatorsAssemblyName": "SensitiveTerms.dll",
+  "SharedStringsFileName": "SensitiveTerms.SharedStrings.txt",
+  "Definitions": [
+    {
+      "Id": "SEC106",
+      "Name": "DoNotUseSensitiveTerms",
+      "Level": "Warning",
+      "FileNameAllowRegex": "$SourceFiles",
+      "Description": "Do not use sensitive terms in all files.",
+      "Message": "'{0:scanTarget}' contains sensitive term '{1:term}'.",
+      "MatchExpressions": [
+        {
+          "Id": "SEC106/001",
+          "Name": "DoNotUseSensitiveTerms/Edge",
+          "ContentsRegex": "$SEC106/001.Term.Edge",
+          "MessageArguments": { "term": "edge" }
+        }
+      ]
+    },
+    {
+      "Id": "SEC107",
+      "Name": "DoNotUseOffensiveTerms",
+      "Level": "Warning",
+      "FileNameAllowRegex": "$SourceFiles",
+      "Description": "Do not use offensive terms in all files.",
+      "Message": "'{0:scanTarget}' contains offensive term '{1:term}'.",
+      "MatchExpressions": [
+        {
+          "Id": "SEC107/001",
+          "Name": "DoNotUseOffensiveTerms/Shit",
+          "ContentsRegex": "$SEC107/001.Term.Shit",
+          "MessageArguments": { "term": "shit" }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <JsonFiles Include="$(MSBuildThisFileDirectory)..\content\SEC*.json"></JsonFiles>
+    <ConfigFile Include="$(MSBuildThisFileDirectory)..\content\SensitiveTerms.SharedStrings.txt"></ConfigFile>
+  </ItemGroup>
+
+  <Target Name="CopyUtilityScriptToProject" BeforeTargets="Build">
+    <Message Text="Copying files" />
+    <Copy
+      SourceFiles="@(JsonFiles)"
+      DestinationFolder="$(SolutionDir)\.spam\SensitiveTerms\" />
+    <Copy
+      SourceFiles="@(JsonFiles)"
+      DestinationFolder="$(OutputPath)" />
+
+    <Copy
+      SourceFiles="@(ConfigFile)"
+      DestinationFolder="$(SolutionDir)\.spam\SensitiveTerms\" />
+    <Copy
+      SourceFiles="@(ConfigFile)"
+      DestinationFolder="$(OutputPath)" />
+
+    <Copy
+      SourceFiles="$(MSBuildThisFileDirectory)..\lib\netstandard2.0\SensitiveTerms.dll"
+      DestinationFolder="$(SolutionDir)\.spam\SensitiveTerms\" />
+  </Target>
+</Project>
