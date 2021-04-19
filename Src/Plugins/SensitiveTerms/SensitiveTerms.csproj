@@ -21,6 +21,9 @@
     <Content Include="SEC106.SensitiveTerms.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="SEC107.OffensiveTerms.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -29,8 +32,8 @@
 
   <Target Name="CopyingSpam" AfterTargets="Build">
     <ItemGroup>
+      <SpamFiles Include="SEC*.json" />
       <SecurityFile Include="$(OutputPath)SensitiveTerms.dll" />
-      <SpamFiles Include="SEC106.SensitiveTerms.json" />
     </ItemGroup>
     <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\SensitiveTerms\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(SecurityFile)" DestinationFolder="$(SolutionDir).spam\SensitiveTerms\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" ContinueOnError="true" />

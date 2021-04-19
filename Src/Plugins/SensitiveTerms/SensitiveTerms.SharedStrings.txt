@@ -26,5 +26,6 @@
 # $SEC107/001.Term.Shit=(?i)(?<=\s|^|\W)shit(?=\s|$|\W)
 
 $SEC106/001.Term.Edge=(?i)(?:\s|\W|^)(edge)(?:\s|\W|$)
+
 $SEC107/001.Term.Shit=(?i)(?:\s|\W|^)(shit)(?:\s|\W|$)
 

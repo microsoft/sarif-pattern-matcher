@@ -6,9 +6,9 @@ using Xunit.Abstractions;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SensitiveTerms
 {
-    public class DoNotUseSensitiveTermsTests : SensitiveTermsEndToEndTests
+    public class SensitiveTermsTests : SensitiveTermsEndToEndTests
     {
-        public DoNotUseSensitiveTermsTests(ITestOutputHelper outputHelper) : base(outputHelper)
+        public SensitiveTermsTests(ITestOutputHelper outputHelper) : base(outputHelper)
         {
         }
 

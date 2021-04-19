@@ -17,22 +17,6 @@
           "MessageArguments": { "term": "edge" }
         }
       ]
-    },
-    {
-      "Id": "SEC107",
-      "Name": "DoNotUseOffensiveTerms",
-      "Level": "Warning",
-      "FileNameAllowRegex": "$SourceFiles",
-      "Description": "Do not use offensive terms in all files.",
-      "Message": "'{0:scanTarget}' contains offensive term '{1:term}'.",
-      "MatchExpressions": [
-        {
-          "Id": "SEC107/001",
-          "Name": "DoNotUseOffensiveTerms/Shit",
-          "ContentsRegex": "$SEC107/001.Term.Shit",
-          "MessageArguments": { "term": "shit" }
-        }
-      ]
     }
   ]
 }
