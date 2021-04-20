@@ -11,8 +11,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     public class SqlConnectionStringValidatorTests
     {
-        private const ValidationState ExpectedValidationState = ValidationState.Unknown;
-
         [Fact]
         public void SqlConnectionStringValidatorTests_Test()
         {
@@ -26,7 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                                                                                                 ref message,
                                                                                                 keyValuePairs,
                                                                                                 ref resultLevelKind);
-            Assert.Equal(ExpectedValidationState, actualValidationState);
+            Assert.True(actualValidationState == ValidationState.Unknown || actualValidationState == ValidationState.UnknownHost);
         }
     }
 }
