@@ -27,7 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             SlackTokenValidator.IsValidDynamic(ref fingerprint,
                                                ref message,
-                                               ref keyValuePairs,
+                                               keyValuePairs,
                                                ref resultLevelKind);
         }
     }

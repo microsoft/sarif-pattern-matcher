@@ -7,20 +7,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public class ValidationResult
     {
-        public static readonly IEnumerable<ValidationResult> NoMatch = new[]
-        {
-            new ValidationResult
-            {
-                Fingerprint = default,
-                ResultLevelKind = default,
-                ValidationState = ValidationState.NoMatch,
-            },
-        };
+        public string Message { get; set; }
 
         public Fingerprint Fingerprint { get; set; }
 
         public ResultLevelKind ResultLevelKind { get; set; }
 
         public ValidationState ValidationState { get; set; }
+
+        public static IEnumerable<ValidationResult> CreateNoMatch()
+        {
+            return new[]
+            {
+                new ValidationResult
+                {
+                    ValidationState = ValidationState.NoMatch,
+                },
+            };
+        }
     }
 }

@@ -24,22 +24,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  ref Dictionary<string, string> groups,
-                                                                  ref string message)
+                                                                  Dictionary<string, string> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
-                                 ref groups,
-                                 ref message);
+                                 groups);
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             ref Dictionary<string, string> groups,
-                                                                             ref string message)
+                                                                             Dictionary<string, string> groups)
         {
             if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return ValidationResult.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
             groups.TryGetValue("kind", out string kind);
@@ -63,6 +60,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             };
 
             ValidationState state = ValidationState.Unknown;
+            string message = string.Empty;
 
             switch (kind)
             {
@@ -78,7 +76,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         bytes[10] != 'A' ||
                         bytes[11] != '2')
                     {
-                        return ValidationResult.NoMatch;
+                        return ValidationResult.CreateNoMatch();
                     }
 
                     break;
@@ -111,7 +109,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     }
                     catch (FormatException)
                     {
-                        return ValidationResult.NoMatch;
+                        return ValidationResult.CreateNoMatch();
                     }
 
                     break;
@@ -120,8 +118,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
-                Fingerprint = fingerprint,
+                Message = message,
                 ValidationState = state,
+                Fingerprint = fingerprint,
             };
 
             return new[] { validationResult };

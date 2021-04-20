@@ -80,13 +80,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 #pragma warning disable IDE0060 // Remove unused parameter
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  ref Dictionary<string, string> groups,
-                                                                  ref string message)
+                                                                  Dictionary<string, string> groups)
         {
 #pragma warning restore IDE0060
             if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return ValidationResult.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
             ValidationState state =
@@ -97,7 +96,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             if (state == ValidationState.NoMatch)
             {
-                return ValidationResult.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
             var validationResult = new ValidationResult

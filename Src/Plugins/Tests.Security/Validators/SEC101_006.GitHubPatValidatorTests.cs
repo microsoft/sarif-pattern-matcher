@@ -22,9 +22,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             groups.Add("checksum", "checksum");
             groups.Add("scanTargetFullPath", "GitHitPatTest");
 
-            string message = null;
-
-            IEnumerable<ValidationResult> validationResults = GitHubPatValidator.IsValidStatic(ref matchedPattern, ref groups, ref message);
+            IEnumerable<ValidationResult> validationResults = GitHubPatValidator.IsValidStatic(ref matchedPattern, groups);
             foreach (ValidationResult validationResult in validationResults)
             {
                 Assert.Equal(matchedPattern, validationResult.Fingerprint.Secret);
@@ -47,7 +45,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             ValidationState actualValidationState = GitHubPatValidator.IsValidDynamic(ref fingerprint,
                                                                                       ref message,
-                                                                                      ref options,
+                                                                                      options,
                                                                                       ref resultLevelKind);
 
             Assert.Equal(expectedValidationState, actualValidationState);

@@ -24,7 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             ResultLevelKind resultLevelKind = default;
             var keyValuePairs = new Dictionary<string, string>();
 
-            ValidationState actualValidationState = NuGetCredentialsValidator.IsValidDynamic(ref fingerprint, ref message, ref keyValuePairs, ref resultLevelKind);
+            ValidationState actualValidationState = NuGetCredentialsValidator.IsValidDynamic(ref fingerprint, ref message, keyValuePairs, ref resultLevelKind);
             Assert.Equal(ExpectedValidationState, actualValidationState);
         }
 

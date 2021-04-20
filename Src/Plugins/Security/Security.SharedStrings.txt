@@ -79,6 +79,5 @@
   $SEC101/041.RabbitMqConnectionString=(?i)(?<refine>amqps?:\/\/(?<id>[^:]+):(?<secret>[^@]+)@(?<host>[\w_\-\:]+)\/(?<resource>[\w]+))([^0-9a-z]|$)
   $SEC101/042.DynatraceToken=\b(?<refine>dt0(?i)[a-z]{1}[0-9]{2}\.[0-9A-Z]{24}\.[0-9A-Z]{64})
   $SEC101/043.NuGetPackageSourceCredentialsXml=(?i)(?<host><\s*packageSources\s*>(?s).{0,500}?(?-s)<\\?\/packageSources\s*>)(?s).{0,200}?(?-s)[^\/]packageSourceCredentials\s*>(?s).{0,200}?(?-s)<\s*add[\s\w\\"]key=\s*\\?"Username\\?"[\s\w\\"]value\s*=\s*\\?"(?<id>[^"]+)\\?"(?s).{0,200}?(?-s)<\s*add[\s\w\\"]key=\s*\\?"(ClearText)?Password\\?"[\s\w\\"]value\s*=\s*\\?"(?<secret>[^"]+)\\?"
-# Todo #43 apiKeys  
   $SEC101/102.AdoPat=\b(?<secret>[2-7a-z]{52})(\b|$)
   

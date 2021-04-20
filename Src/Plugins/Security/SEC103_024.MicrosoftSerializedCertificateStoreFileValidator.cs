@@ -11,9 +11,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public static class MicrosoftSerializedCertificateStoreFileValidator
     {
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  ref Dictionary<string, string> groups,
-                                                                  ref string message)
+                                                                  Dictionary<string, string> groups)
         {
+            string message = string.Empty;
             Fingerprint fingerprint = default;
             ResultLevelKind resultLevelKind = default;
             ValidationState validationState = CertificateHelper.TryLoadCertificateCollection(matchedPattern,
@@ -22,6 +22,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
+                Message = message,
                 Fingerprint = fingerprint,
                 ResultLevelKind = resultLevelKind,
                 ValidationState = validationState,

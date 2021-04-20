@@ -30,13 +30,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  ref Dictionary<string, string> groups,
-                                                                  ref string message)
+                                                                  Dictionary<string, string> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
-                                 ref groups,
-                                 ref message);
+                                 groups);
         }
 
         // TODO: uncomment when Alibaba release a signed package/dll.
@@ -49,13 +47,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         // }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             ref Dictionary<string, string> groups,
-                                                                             ref string message)
+                                                                             Dictionary<string, string> groups)
         {
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
                 !groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return ValidationResult.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
             var validationResult = new ValidationResult
@@ -74,7 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                ref Dictionary<string, string> options,
+                                                                Dictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string account = fingerprint.Id;

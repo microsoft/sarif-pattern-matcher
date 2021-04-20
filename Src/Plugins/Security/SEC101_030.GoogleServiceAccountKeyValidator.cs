@@ -18,22 +18,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  ref Dictionary<string, string> groups,
-                                                                  ref string message)
+                                                                  Dictionary<string, string> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
-                                 ref groups,
-                                 ref message);
+                                 groups);
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             ref Dictionary<string, string> groups,
-                                                                             ref string message)
+                                                                             Dictionary<string, string> groups)
         {
             if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return ValidationResult.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
             // We might not successfully retrieve the account id.

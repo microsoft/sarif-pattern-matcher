@@ -22,30 +22,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  ref Dictionary<string, string> groups,
-                                                                  ref string message)
+                                                                  Dictionary<string, string> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
-                                 ref groups,
-                                 ref message);
+                                 groups);
         }
 
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                                      ref string message,
-                                                     ref Dictionary<string, string> options,
+                                                     Dictionary<string, string> options,
                                                      ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
-                                  ref options,
+                                  options,
                                   ref resultLevelKind);
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             ref Dictionary<string, string> groups,
-                                                                             ref string message)
+                                                                             Dictionary<string, string> groups)
         {
             var validationResult = new ValidationResult
             {
@@ -62,7 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                  ref string message,
-                                                                 ref Dictionary<string, string> options,
+                                                                 Dictionary<string, string> options,
                                                                  ref ResultLevelKind resultLevelKind)
         {
             const string Invalid = "RequestDenied: The provided API key is invalid";

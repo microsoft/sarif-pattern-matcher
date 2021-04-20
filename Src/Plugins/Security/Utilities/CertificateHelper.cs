@@ -22,7 +22,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             {
                 // If this certificate needs a password or it is a bundle, it will throw an exception.
                 using var certificate = new X509Certificate2(certificatePath);
-                fingerprint.Thumbprint = certificate.Thumbprint;
+                fingerprint = new Fingerprint
+                {
+                    Thumbprint = certificate.Thumbprint,
+                };
 
                 if (!certificate.HasPrivateKey)
                 {

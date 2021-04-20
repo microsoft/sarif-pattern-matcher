@@ -20,39 +20,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static NuGetCredentialsValidator Instance;
 
-        // We can't count on the int values of the enumerations being ordered as we want,
-        // so order them manually
-        private readonly Dictionary<ValidationState, int> badResponseSorting = new Dictionary<ValidationState, int>()
-        {
-            { ValidationState.Unknown, 0 },
-            { ValidationState.UnknownHost, 1 },
-            { ValidationState.Unauthorized, 2 },
-        };
-
         static NuGetCredentialsValidator()
         {
             Instance = new NuGetCredentialsValidator();
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  ref Dictionary<string, string> groups,
-                                                                  ref string message)
+                                                                  Dictionary<string, string> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
-                                 ref groups,
-                                 ref message);
+                                 groups);
         }
 
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                                      ref string message,
-                                                     ref Dictionary<string, string> options,
+                                                     Dictionary<string, string> options,
                                                      ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
-                                  ref options,
+                                  options,
                                   ref resultLevelKind);
         }
 
@@ -82,19 +71,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             ref Dictionary<string, string> groups,
-                                                                             ref string message)
+                                                                             Dictionary<string, string> groups)
         {
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
                 !groups.TryGetNonEmptyValue("host", out string xmlHost) ||
                 !groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return ValidationResult.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
             if (FilteringHelpers.LikelyPowershellVariable(secret))
             {
-                return ValidationResult.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
             IEnumerable<string> hosts = ExtractHosts(xmlHost);
@@ -124,7 +112,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                ref Dictionary<string, string> options,
+                                                                Dictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string host = fingerprint.Host;
@@ -202,9 +190,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             hostXml.LoadXml(hostXmlAsString);
 
             // First attempt the most common format for package sources: <packageSources><add key="..." value="{the thing we're interested in}" /></packageSources>
-            var returnList = hostXml?.ChildNodes[0] // <packageSources>...
-                            ?.ChildNodes.Cast<XmlNode>().Where(x => x.Name.Equals("add", StringComparison.OrdinalIgnoreCase)) // <add ... >  <clear/> (the first node)
-                                .Select(x => x.Attributes["value"]?.Value ?? x.Attributes["Value"]?.Value).ToList(); // <add key="name of host" value="http://nugetfeedUrl.com" /> (we're looking for URL)
+            // <packageSources>...
+            // <add ... >  <clear/> (the first node)
+            // <add key="name of host" value="http://nugetfeedUrl.com" /> (we're looking for URL)
+            var returnList = hostXml?.ChildNodes[0]?.ChildNodes
+                                     .Cast<XmlNode>()
+                                     .Where(x => x.Name.Equals("add", StringComparison.OrdinalIgnoreCase))
+                                     .Select(x => x.Attributes["value"]?.Value ?? x.Attributes["Value"]?.Value)
+                                     .ToList();
 
             if (returnList == null || returnList.Count == 0)
             {

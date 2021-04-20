@@ -498,8 +498,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
                                                                                            context,
                                                                                            ref refinedMatchedPattern,
-                                                                                           ref groups,
-                                                                                           ref validatorMessage,
+                                                                                           groups,
                                                                                            out bool pluginSupportsDynamicValidation);
 
                     if (validationResults != null)
@@ -513,6 +512,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 continue;
                             }
 
+                            validatorMessage = validationResult.Message;
                             SetPropertiesBasedOnValidationState(validationResult.ValidationState,
                                                                 context,
                                                                 validationResult.ResultLevelKind,
@@ -634,14 +634,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
                                                  context,
                                                  ref filePath,
-                                                 ref groups,
-                                                 ref validatorMessage,
+                                                 groups,
                                                  out bool pluginSupportsDynamicValidation);
 
                 if (validationResults != null)
                 {
                     foreach (ValidationResult validationResult in validationResults)
                     {
+                        validatorMessage = validationResult.Message;
+
                         switch (validationResult.ValidationState)
                         {
                             case ValidationState.NoMatch:

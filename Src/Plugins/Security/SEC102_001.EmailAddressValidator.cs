@@ -13,8 +13,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 #pragma warning disable IDE0060 // Unused parameter.
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                    ref Dictionary<string, string> groups,
-                                                    ref string message)
+                                                    Dictionary<string, string> groups)
 #pragma warning restore IDE0060 // Unused parameter.
         {
             try
@@ -42,10 +41,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch
             {
-                return ValidationResult.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
-            return ValidationResult.NoMatch;
+            return ValidationResult.CreateNoMatch();
         }
     }
 }

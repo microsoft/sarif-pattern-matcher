@@ -12,8 +12,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public static class PfxCryptographicKeyfileValidator
     {
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  ref Dictionary<string, string> groups,
-                                                                  ref string message)
+                                                                  Dictionary<string, string> groups)
         {
             groups.TryGetValue("content", out string content);
 
@@ -22,9 +21,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 // This condition indicates that we have textual (PEM-encoded) data.
                 // These certificates are handled by the SecurePlaintextSecrets rules.
-                return ValidationResult.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
+            string message = string.Empty;
             Fingerprint fingerprint = default;
             ResultLevelKind resultLevelKind = default;
             ValidationState validationState = CertificateHelper.TryLoadCertificate(matchedPattern,
@@ -34,6 +34,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
+                Message = message,
                 Fingerprint = fingerprint,
                 ResultLevelKind = resultLevelKind,
                 ValidationState = validationState,

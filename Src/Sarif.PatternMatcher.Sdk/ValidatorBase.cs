@@ -80,13 +80,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         protected ISet<string> PerFileFingerprintCache { get; }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ValidatorBase validator,
-                                           ref string matchedPattern,
-                                           ref Dictionary<string, string> groups,
-                                           ref string message)
+                                                                  ref string matchedPattern,
+                                                                  Dictionary<string, string> groups)
         {
             IEnumerable<ValidationResult> validationResults = validator.IsValidStaticHelper(ref matchedPattern,
-                                                                                            ref groups,
-                                                                                            ref message);
+                                                                                            groups);
 
             foreach (ValidationResult validationResult in validationResults)
             {
@@ -113,7 +111,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public static ValidationState IsValidDynamic(ValidatorBase validator,
                                             ref Fingerprint fingerprint,
                                             ref string message,
-                                            ref Dictionary<string, string> options,
+                                            Dictionary<string, string> options,
                                             ref ResultLevelKind resultLevelKind)
         {
             resultLevelKind = default;
@@ -128,7 +126,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             ValidationState validationState =
                 validator.IsValidDynamicHelper(ref fingerprint,
                                                ref message,
-                                               ref options,
+                                               options,
                                                ref resultLevelKind);
 
             validator.FingerprintToResultCache[fingerprint] =
@@ -307,17 +305,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// Capture groups from the regex match. Dictionary entries can be modified or new entries
         /// added in order to refine or add argument values that will be used in result messages.
         /// </param>
-        /// <param name="message">
-        /// A message that can be used to pass additional information back to the user.
-        /// </param>
+        ///
         /// <returns>Return an ienumerable of ValidationResult.</returns>
         protected abstract IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             ref Dictionary<string, string> groups,
-                                                                             ref string message);
+                                                                             Dictionary<string, string> groups);
 
         protected virtual ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                       ref string message,
-                                                      ref Dictionary<string, string> options,
+                                                      Dictionary<string, string> options,
                                                       ref ResultLevelKind resultLevelKind)
         {
             return ValidationState.NoMatch;

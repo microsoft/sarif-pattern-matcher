@@ -51,12 +51,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 bool performDynamicValidation = testCase.PerformDynamicValidation;
                 string failureLevel = testCase.FailureLevel;
-                string fingerprintText = null, message = null;
+                string fingerprintText = null;
                 var groups = new Dictionary<string, string>();
 
                 IEnumerable<ValidationResult> validationResults = AdoPatValidator.IsValidStatic(ref testCase.Input,
-                                                                                                ref groups,
-                                                                                                ref message);
+                                                                                                groups);
 
                 string title = testCase.Title;
 
