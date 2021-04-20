@@ -23,7 +23,7 @@
 
 # $FacebookAppCredentials=(?si)(((facebook|fb)(.{0,20})?[`'"\s>](?<id>[0-9]{13,17})[^0-9].{1,500}?)|((facebook|fb)(.{0,20})?[`'"\s>](?<secret>[0-9a-f]{32})([^0-9a-f]?)).{1,500}?){2}
 
-  $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?<host>(http|ftp|https):\/\/[\w_.-]{1,200})(?<resource>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= "']+(basic)[\s\r\n]{0,10}(?<secret>[^'"><;]+)
+  $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?<scheme>http|ftp|https):\/\/(?<host>[\w_.-]{1,200})(?<path>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= "']+(basic)[\s\r\n]{0,10}(?<secret>[^'"><;\s]{1,500})
   $SEC101/002.GoogleOAuthCredentials=(?s)\b(?<id>[0-9]{12}\-[0-9a-z]{32})\.apps\.googleusercontent\.com.{1,500}?\b(?i)(?<secret>[0-9a-z\-]{24})
   $SEC101/003.GoogleApiKey=\b(?<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
   $SEC101/004.FacebookAppCredentials=(?si)facebook.{1,50}\b(?<id>[0-9]{15}).{1,500}?\b(?<secret>[0-9a-f]{32})
@@ -62,7 +62,7 @@
   $SEC101/030.GoogleServiceAccountKeyConsoleRestFormat="name": "projects\/[\w-]+\/serviceAccounts\/[\w@.-]+\/keys\/(?<secret>[^"]+)",
   $SEC101/031.NuGetApiKey=\b(?<refine>(?<secret>oy2[0-9a-z]{43}))(^[0-9a-z]|$)
   $SEC101/032.GpgCredentials=(?is)gpg[._-](gen_key_input|sign|decrypt_file)\s*\(\s*(name_email\s*=\s*["'](?<id>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?<secret>[^"']*)["']
-  $SEC101/033.MongoDbConnectionString=(?i)mongodb([^:]{0,50})?:\/\/(?<id>[0-9a-z]+):(?<secret>[^@]+)@(?<host>[^\/;"<]+)
+  $SEC101/033.MongoDbConnectionString=(?i)mongodb([^:]{0,50})?:\/\/(?<id>[0-9a-z]+):(?<secret>[^@\s]{1,200})@(?<host>[^\/;"<]+)
   $SEC101/034.CredentialObjectConstructor=(PSCredential|SqlCredential)\s*\(\s*"(?<id>[^"]*)"\s*,\s*"(?<secret>[^"]*)"
   $SEC101/034.CredentialObjectInitializer=(?s)(PSCredential|SqlCredential)\s*\(\)\s*{\s*.{0,50}User(Name|Id)\s*=\s*"(?<id>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?<secret>[^"]*)"  
   $SEC101/035.CloudantCredentialsPython=(?is)cloudant\s*\(\s*"(?<id>[\w-]+)"\s*\,\s*"(?<secret>[\w]{64})"\s*\,\s*.{0,200}url=\s*"https:\/\/(?<resource>[\w.-]+)\.(?<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
@@ -70,9 +70,9 @@
   $SEC101/035.CloudantCredentialsUrl=(?i)https:\/\/(?<id>[^:]+):(?<secret>[\w]{64}|[a-z]{24})@[\w-]+\.(?<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/036.MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<id>[a-z\@\-]{1,120})(?i))|(Pwd\s*=\s*(?<secret>[^;"]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
   $SEC101/036.MySqlConnectionStringPlainJdbc=(jdbc:mysql:\/\/(?<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?<url>[^,(]+),\s*"(?<id>[\w@-]{1,200})",\s*"(?<secret>[^"';<>=]{7,200})"
-  $SEC101/037.SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*[^;"<]{0,50}|(initial catalog|database)\s*=\s*[^;"<]{0,50}|(user id|uid)\s*=\s*[^;"<]{0,50}|(password|pwd)\s*=\s*[^;"<]{0,50}).+?){4}
-  $SEC101/037.SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;"<]+);(((database\s*=\s*(?<database>[^;"<]{1,128}))|(user\s*=\s*(?<id>[^@]+)@[^;"<]+)|(password\s*=\s*(?<secret>[^;"<]+))).{1,50}?){3}
-  $SEC101/037.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;"<]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<id>[^"]+)",\s*"(?<secret>[^"]+)"
+  $SEC101/037.SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*[^;"<\n]{0,50}|(initial catalog|database)\s*=\s*[^;"<>*%&:\/?\n]{0,50}|(user id|uid)\s*=\s*[^;"'<]{0,50}|(password|pwd)\s*=\s*[^;"<]{0,50}).+?){4}
+  $SEC101/037.SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;"<]+);(((database\s*=\s*(?<database>[^;"<>*%&:\/?\n]{1,128}))|(user\s*=\s*(?<id>[^@]+)@[^;"<]+)|(password\s*=\s*(?<secret>[^;"<]+))).{1,50}?){3}
+  $SEC101/037.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;"<]+);\s*Database\s*=\s*(?<database>[^;"<>*%&:\/?\n]+)",\s*"(?<id>[^"]+)",\s*"(?<secret>[^"]+)"
   $SEC101/038.PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<id>[^,;"<\s]+)|(password|pwd)\s*=\s*(?<secret>[^,;"<\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+)))?
   $SEC101/039.ShopifyAccessToken=\b(?<refine>(shpat|shpca|shppa)_(?i)[0-9a-f]{32})
   $SEC101/040.ShopifySharedSecret=\b(?<refine>shpss_(?i)[0-9a-f]{32})

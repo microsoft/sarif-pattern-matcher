@@ -67,18 +67,18 @@
                   "charOffset": 51,
                   "charLength": 137,
                   "snippet": {
-                    "text": "https://example.com\");\r\nvar request = new RestRequest(Method.GET);\r\nrequest.AddHeader(\"Authorization\", \"Basic SomeAuthorizationKey0123456"
+                    "text": "https://example.com\");\r\nvar request = new RestRequest(Method.GET);\r\nrequest.AddHeader(\"Authorization\", \"Basic SomeAuthorizationKey1111111"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=https://example.com]",
-            "ValidationFingerprint/v1": "[host=https://example.com][secret=SomeAuthorizationKey0123456]",
-            "ValidationFingerprintHash/v1": "9f61f788a9976a0c5fdedc6909854556216e1dd9b23e36e2d010163001851ec5"
+            "AssetFingerprint/v1": "[host=example.com]",
+            "ValidationFingerprint/v1": "[host=example.com][secret=SomeAuthorizationKey1111111]",
+            "ValidationFingerprintHash/v1": "d7b0a75b3370f57faa45ddaa2d0315a3c9455e05d7a000deb888c24bf17d48e0"
           },
-          "rank": 62.24
+          "rank": 51.84
         },
         {
           "ruleId": "SEC101/001",
@@ -110,18 +110,18 @@
                   "charOffset": 224,
                   "charLength": 181,
                   "snippet": {
-                    "text": "https://example.com?some=parameters&that=should&appear=inresults\")\r\nvar request = new RestRequest(Method.GET);\r\nrequest.AddHeader(\"Authorization\", \"Basic SomeAuthorizationKey0123456"
+                    "text": "https://example.com?some=parameters&that=should&appear=inresults\")\r\nvar request = new RestRequest(Method.GET);\r\nrequest.AddHeader(\"Authorization\", \"Basic SomeAuthorizationKey2222222"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=https://example.com][resource=?some=parameters&that=should&appear=inresults]",
-            "ValidationFingerprint/v1": "[host=https://example.com][resource=?some=parameters&that=should&appear=inresults][secret=SomeAuthorizationKey0123456]",
-            "ValidationFingerprintHash/v1": "8fb1c3b2417c8c779c8c6ec1ceb7984400efc15f4cc27e1e06a26f1d9295e8cf"
+            "AssetFingerprint/v1": "[host=example.com][path=?some=parameters&that=should&appear=inresults]",
+            "ValidationFingerprint/v1": "[host=example.com][path=?some=parameters&that=should&appear=inresults][secret=SomeAuthorizationKey2222222]",
+            "ValidationFingerprintHash/v1": "cd5084c4a230ab60acdedc79a1da7ef8d5d8038e750285e0d47152c122e75e4e"
           },
-          "rank": 62.24
+          "rank": 51.84
         },
         {
           "ruleId": "SEC101/001",
@@ -153,18 +153,104 @@
                   "charOffset": 451,
                   "charLength": 83,
                   "snippet": {
-                    "text": "https://example.com' \\\r\n--header 'Authorization: Basic SomeAuthorizationKey0123456="
+                    "text": "https://example.com' \\\r\n--header 'Authorization: Basic SomeAuthorizationKey3333333="
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=https://example.com]",
-            "ValidationFingerprint/v1": "[host=https://example.com][secret=SomeAuthorizationKey0123456=]",
-            "ValidationFingerprintHash/v1": "b56ba7ad0fdd7f0489e0d8743393fd39af7b815ce7b7894f766ca3946a0bbeba"
+            "AssetFingerprint/v1": "[host=example.com]",
+            "ValidationFingerprint/v1": "[host=example.com][secret=SomeAuthorizationKey3333333=]",
+            "ValidationFingerprintHash/v1": "9b16c07b5818ffcb568f4c2243f818f05a2f8d9bb3ae9de58d3ae8c7a981e6b5"
           },
-          "rank": 63.19
+          "rank": 53.16
+        },
+        {
+          "ruleId": "SEC101/001",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_001.HttpAuthorizationRequestHeader.ps1",
+              "an apparent ",
+              "",
+              "Http authorization request header",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_001.HttpAuthorizationRequestHeader.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 30,
+                  "endLine": 18,
+                  "endColumn": 70,
+                  "charOffset": 679,
+                  "charLength": 137,
+                  "snippet": {
+                    "text": "https://example.com/\")\r\nvar request = new RestRequest(Method.GET);\r\nrequest.AddHeader(\"Authorization\", \"Basic SomeAuthorizationKey4444444"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=example.com][path=/]",
+            "ValidationFingerprint/v1": "[host=example.com][path=/][secret=SomeAuthorizationKey4444444]",
+            "ValidationFingerprintHash/v1": "e2430a2c03fc75d8298ed86889936780cc6a23559451965dab54715e4b2491e0"
+          },
+          "rank": 51.84
+        },
+        {
+          "ruleId": "SEC101/001",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_001.HttpAuthorizationRequestHeader.ps1",
+              "an apparent ",
+              "",
+              "Http authorization request header",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_001.HttpAuthorizationRequestHeader.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 5,
+                  "endLine": 31,
+                  "endColumn": 259,
+                  "charOffset": 1158,
+                  "charLength": 329,
+                  "snippet": {
+                    "text": "http://we.want.that.site.com/16 HTTP/1.1\r\nHost: we.want.that.site.com\r\nProxy-Authorization: Basic 6666666b29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29uZw=="
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=we.want.that.site.com][path=/16][scheme=http]",
+            "ValidationFingerprint/v1": "[host=we.want.that.site.com][path=/16][scheme=http][secret=6666666b29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29uZw==]",
+            "ValidationFingerprintHash/v1": "2e15426e76483150597c0611c0ad9a2b180046aeb5e1611a455f23d2e55eb4b3"
+          },
+          "rank": 32.62
         }
       ],
       "columnKind": "utf16CodeUnits"

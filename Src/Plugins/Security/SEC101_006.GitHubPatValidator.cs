@@ -24,33 +24,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
                                                     ref Dictionary<string, string> groups,
-                                                    ref string failureLevel,
                                                     ref string message,
+                                                    out ResultLevelKind resultLevelKind,
                                                     out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
-                                 ref failureLevel,
                                  ref message,
+                                 out resultLevelKind,
                                  out fingerprint);
         }
 
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
+                                                     ref string message,
+                                                     ref Dictionary<string, string> options,
+                                                     ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
-                                  ref options);
+                                  ref options,
+                                  ref resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                                ref Dictionary<string, string> groups,
-                                                               ref string failureLevel,
                                                                ref string message,
+                                                               out ResultLevelKind resultLevelKind,
                                                                out Fingerprint fingerprint)
         {
             fingerprint = default;
+            resultLevelKind = default;
 
             if (!groups.TryGetNonEmptyValue("secret", out string pat))
             {
@@ -100,7 +105,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return ValidationState.Unknown;
         }
 
-        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
+                                                                ref string message,
+                                                                ref Dictionary<string, string> options,
+                                                                ref ResultLevelKind resultLevelKind)
         {
             string pat = fingerprint.Secret;
 
@@ -127,7 +135,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             catch (ForbiddenException)
             {
                 // The token is valid but doesn't have read/user access. Write only perhaps?
-                return ValidationState.AuthorizedError;
+                return ValidationState.Authorized;
             }
             catch (Exception e)
             {
@@ -136,7 +144,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationState.Unknown;
             }
 
-            return ValidationState.AuthorizedError;
+            return ValidationState.Authorized;
         }
     }
 }

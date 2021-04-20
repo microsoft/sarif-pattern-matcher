@@ -22,33 +22,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
                                                     ref Dictionary<string, string> groups,
-                                                    ref string failureLevel,
                                                     ref string message,
+                                                    out ResultLevelKind resultLevelKind,
                                                     out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
-                                 ref failureLevel,
                                  ref message,
+                                 out resultLevelKind,
                                  out fingerprint);
         }
 
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
+                                                     ref string message,
+                                                     ref Dictionary<string, string> options,
+                                                     ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
-                                  ref options);
+                                  ref options,
+                                  ref resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                                ref Dictionary<string, string> groups,
-                                                               ref string failureLevel,
                                                                ref string message,
+                                                               out ResultLevelKind resultLevelKind,
                                                                out Fingerprint fingerprint)
         {
             fingerprint = default;
+            resultLevelKind = default;
 
             if (!groups.TryGetValue("id", out string id) ||
                 !groups.TryGetValue("secret", out string secret))
@@ -68,7 +73,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                ref Dictionary<string, string> options)
+                                                                ref Dictionary<string, string> options,
+                                                                ref ResultLevelKind resultLevelKind)
         {
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
@@ -79,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 ref message,
                 out AccessTokenObject obj);
 
-            if (state == ValidationState.AuthorizedError)
+            if (state == ValidationState.Authorized)
             {
                 return CheckInformation(id, obj.AccessToken, ref message);
             }
@@ -95,7 +101,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 ref message,
                 out CreatorObject obj);
 
-            if (state == ValidationState.AuthorizedError)
+            if (state == ValidationState.Authorized)
             {
                 return RetrieveAccountInformation(id, obj.CreatorUid, accessToken, ref message);
             }
@@ -111,7 +117,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 ref message,
                 out AccountObject obj);
 
-            if (state == ValidationState.AuthorizedError)
+            if (state == ValidationState.Authorized)
             {
                 return ReturnAuthorizedAccess(ref message, asset: $"{obj.Id}:{obj.Name}");
             }
@@ -143,7 +149,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             return ValidationState.Unknown;
                         }
 
-                        return ValidationState.AuthorizedError;
+                        return ValidationState.Authorized;
                     }
 
                     case System.Net.HttpStatusCode.BadRequest:

@@ -16,9 +16,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static SqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
 
-        private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;""<]+";
-        private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;""<]+";
-        private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;""<]+";
+        private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;""<\n]+";
+        private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;""<>*%&:\/?\n]+"; // Your database name can't end with '.' or ' ', can't contain '<,>,*,%,&,:,\,/,?' or control characters
+        private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;""'<\n]+";
         private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;""<\s]+";
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
@@ -26,6 +26,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             "postgres.database.azure.com",
             "mysql.database.azure.com",
+            "mysqldb.chinacloudapi.cn", // Azure China domain
+            "mysql.database.chinacloudapi.cn", // Azure China domain
         };
 
         static SqlConnectionStringValidator()
@@ -45,33 +47,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
                                                     ref Dictionary<string, string> groups,
-                                                    ref string failureLevel,
                                                     ref string message,
+                                                    out ResultLevelKind resultLevelKind,
                                                     out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
-                                 ref failureLevel,
                                  ref message,
+                                 out resultLevelKind,
                                  out fingerprint);
         }
 
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
+                                                     ref string message,
+                                                     ref Dictionary<string, string> options,
+                                                     ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
-                                  ref options);
+                                  ref options,
+                                  ref resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                                ref Dictionary<string, string> groups,
-                                                               ref string failureLevel,
                                                                ref string message,
+                                                               out ResultLevelKind resultLevelKind,
                                                                out Fingerprint fingerprint)
         {
             fingerprint = default;
+            resultLevelKind = default;
             matchedPattern = matchedPattern.Trim();
 
             string id, host, secret, database;
@@ -125,15 +132,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Host = host,
                 Secret = secret,
                 Resource = database,
-                Platform = SharedUtilities.GetDatabasePlatformFromHost(host, out _),
             };
+
+            SharedUtilities.PopulateAssetFingerprint(host, ref fingerprint);
 
             return ValidationState.Unknown;
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                       ref string message,
-                                                       ref Dictionary<string, string> options)
+                                                                ref string message,
+                                                                ref Dictionary<string, string> options,
+                                                                ref ResultLevelKind resultLevelKind)
         {
             string host = fingerprint.Host;
             string account = fingerprint.Id;
@@ -206,7 +215,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e, asset: host);
             }
 
-            return ValidationState.AuthorizedError;
+            return ValidationState.Authorized;
         }
     }
 }

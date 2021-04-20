@@ -21,15 +21,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void CryptographicPrivateKeyValidator_Test()
         {
-            Fingerprint fingerprint;
             string message = null;
-            string validationState = null;
+            Fingerprint fingerprint;
             var keyValuePairs = new Dictionary<string, string>
             {
                 { "secret", TestKey }
             };
 
-            ValidationState actualValidationState = CryptographicPrivateKeyValidator.IsValidStatic(ref TestMatchedPattern, ref keyValuePairs, ref validationState, ref message, out fingerprint);
+            ValidationState actualValidationState = CryptographicPrivateKeyValidator.IsValidStatic(ref TestMatchedPattern, ref keyValuePairs, ref message, out _, out fingerprint);
             Assert.Equal(ExpectedValidationState, actualValidationState);
         }
     }

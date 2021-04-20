@@ -13,13 +13,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         public static ValidationState IsValidStatic(ref string matchedPattern,
                                                     ref Dictionary<string, string> groups,
-#pragma warning disable IDE0060 // Remove unused parameter
-                                                    ref string failureLevel,
-#pragma warning restore IDE0060
                                                     ref string message,
+                                                    out ResultLevelKind resultLevelKind,
                                                     out Fingerprint fingerprint)
         {
             fingerprint = default;
+            resultLevelKind = default;
 
             groups.TryGetValue("content", out string content);
 
@@ -32,8 +31,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             return CertificateHelper.TryLoadCertificate(matchedPattern,
-                                                         ref fingerprint,
-                                                         ref message);
+                                                        ref fingerprint,
+                                                        ref message,
+                                                        ref resultLevelKind);
         }
     }
 }

@@ -54,12 +54,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string fingerprintText = null, message = null;
                 var groups = new Dictionary<string, string>();
                 Fingerprint fingerprint;
+                ResultLevelKind resultLevelKind;
 
                 ValidationState state =
                     AdoPatValidator.IsValidStatic(ref testCase.Input,
                                                   ref groups,
-                                                  ref failureLevel,
                                                   ref message,
+                                                  out resultLevelKind,
                                                   out fingerprint);
 
                 string title = testCase.Title;

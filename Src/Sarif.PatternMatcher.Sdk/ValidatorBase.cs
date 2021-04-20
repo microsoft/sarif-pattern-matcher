@@ -82,14 +82,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public static ValidationState IsValidStatic(ValidatorBase validator,
                                            ref string matchedPattern,
                                            ref Dictionary<string, string> groups,
-                                           ref string failureLevel,
                                            ref string message,
+                                           out ResultLevelKind resultLevelKind,
                                            out Fingerprint fingerprint)
         {
             ValidationState state = validator.IsValidStaticHelper(ref matchedPattern,
                                                          ref groups,
-                                                         ref failureLevel,
                                                          ref message,
+                                                         out resultLevelKind,
                                                          out fingerprint);
 
             if (state == ValidationState.NoMatch)
@@ -113,8 +113,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public static ValidationState IsValidDynamic(ValidatorBase validator,
                                             ref Fingerprint fingerprint,
                                             ref string message,
-                                            ref Dictionary<string, string> options)
+                                            ref Dictionary<string, string> options,
+                                            ref ResultLevelKind resultLevelKind)
         {
+            resultLevelKind = default;
+
             if (shouldUseDynamicCache &&
                 validator.FingerprintToResultCache.TryGetValue(fingerprint, out Tuple<ValidationState, string> result))
             {
@@ -125,7 +128,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             ValidationState validationState =
                 validator.IsValidDynamicHelper(ref fingerprint,
                                                ref message,
-                                               ref options);
+                                               ref options,
+                                               ref resultLevelKind);
 
             validator.FingerprintToResultCache[fingerprint] =
                 new Tuple<ValidationState, string>(validationState, message);
@@ -223,7 +227,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 $"The compromised asset is '{asset}'." :
                 $"The '{account}' account is compromised for '{asset}'.";
 
-            return ValidationState.AuthorizedError;
+            return ValidationState.Authorized;
         }
 
         public static ValidationState ReturnUnknownAuthorization(ref string message,
@@ -303,13 +307,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// Capture groups from the regex match. Dictionary entries can be modified or new entries
         /// added in order to refine or add argument values that will be used in result messages.
         /// </param>
-        /// <param name="failureLevel">
-        /// The current failure level associated with the match (if a match occurs). This parameter can be
-        /// set to a different failure level by the callee, if appropriate.
-        /// </param>
         /// <param name="message">
         /// A message that can be used to pass additional information back to the user.
         /// </param>
+        /// <param name="resultLevelKind"></param>
         /// <param name="fingerprint">
         /// A SARIF fingerprint that identifies a logically unique secret. This parameter should be
         /// set to null if no fingerprint can be computed that definitively identifies the secret.
@@ -317,13 +318,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// <returns>Return the validation state.</returns>
         protected abstract ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                       ref Dictionary<string, string> groups,
-                                                      ref string failureLevel,
                                                       ref string message,
+                                                      out ResultLevelKind resultLevelKind,
                                                       out Fingerprint fingerprint);
 
         protected virtual ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                       ref string message,
-                                                      ref Dictionary<string, string> options)
+                                                      ref Dictionary<string, string> options,
+                                                      ref ResultLevelKind resultLevelKind)
         {
             return ValidationState.NoMatch;
         }

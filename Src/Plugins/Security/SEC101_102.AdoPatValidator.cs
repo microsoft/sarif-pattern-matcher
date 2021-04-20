@@ -81,12 +81,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
                                                     ref Dictionary<string, string> groups,
-                                                    ref string failureLevel,
                                                     ref string message,
+                                                    out ResultLevelKind resultLevelKind,
                                                     out Fingerprint fingerprint)
         {
 #pragma warning restore IDE0060
             fingerprint = default;
+            resultLevelKind = default;
 
             if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {

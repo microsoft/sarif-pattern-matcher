@@ -14,10 +14,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
     public struct Fingerprint
     {
         public const string IdKeyName = "id";
-        public const string UriKeyName = "uri";
         public const string HostKeyName = "host";
         public const string PartKeyName = "part";
+        public const string PathKeyName = "path";
         public const string PortKeyName = "port";
+        public const string SchemeKeyName = "scheme";
         public const string SecretKeyName = "secret";
         public const string PlatformKeyName = "platform";
         public const string ResourceKeyName = "resource";
@@ -50,10 +51,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             SecretSymbolSetCount = 0;
 
             // Validation fingerprint properties.
-            Id = Host = Uri = Port = Secret = Resource = Thumbprint = null;
+            Id = Host = Path = Port = Scheme = Secret = Resource = Thumbprint = null;
 
             // Asset fingerprint properties.
-            Platform = ResourceType = ResourceProvider = null;
+            Platform = Part = null;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -93,11 +94,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string Id { get; set; }
 
-        public string Uri { get; set; }
-
         public string Host { get; set; }
 
+        public string Part { get; set; }
+
+        public string Path { get; set; }
+
         public string Port { get; set; }
+
+        public string Scheme { get; set; }
 
         public string Secret { get; set; }
 
@@ -105,46 +110,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string Thumbprint { get; set; }
 
-        // The following properties are relevant to asset fingerprints only.
-        public string Part
-        {
-            get
-            {
-                if (!string.IsNullOrWhiteSpace(ResourceType) &&
-                    !string.IsNullOrWhiteSpace(ResourceProvider))
-                {
-                    return ResourceProvider + "/" + ResourceType;
-                }
-
-                if (!string.IsNullOrWhiteSpace(ResourceType) ||
-                    !string.IsNullOrWhiteSpace(ResourceProvider))
-                {
-                    throw new InvalidOperationException();
-                }
-
-                return null;
-            }
-
-            set
-            {
-                string[] tokens = value?.Split('/');
-
-                if (tokens?.Length != 2)
-                {
-                    throw new ArgumentException(
-                        $"Value could not be parsed into resource provider and type: {value}");
-                }
-
-                ResourceProvider = tokens[0];
-                ResourceType = tokens[1];
-            }
-        }
-
         public string Platform { get; set; }
-
-        public string ResourceType { get; set; }
-
-        public string ResourceProvider { get; set; }
 
         /// <summary>
         /// Gets or sets a value that is the count of the valid symbols that
@@ -239,11 +205,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             switch (keyName)
             {
                 case IdKeyName: { Id = value; break; }
-                case SecretKeyName: { Secret = value; break; }
-                case UriKeyName: { Uri = value; break; }
                 case HostKeyName: { Host = value; break; }
                 case PartKeyName: { Part = value; break; }
+                case PathKeyName: { Path = value; break; }
                 case PortKeyName: { Port = value; break; }
+                case SecretKeyName: { Secret = value; break; }
+                case SchemeKeyName: { Scheme = value; break; }
                 case PlatformKeyName: { Platform = value; break; }
                 case ResourceKeyName: { Resource = value; break; }
                 case ThumbprintKeyName: { Thumbprint = value; break; }
@@ -262,13 +229,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             return obj is Fingerprint equatable &&
                 Id == equatable.Id &&
-                Secret == equatable.Secret &&
-                Uri == equatable.Uri &&
                 Host == equatable.Host &&
                 Part == equatable.Part &&
-                Platform == equatable.Platform &&
+                Path == equatable.Path &&
                 Port == equatable.Port &&
+                Scheme == equatable.Scheme &&
                 Secret == equatable.Secret &&
+                Platform == equatable.Platform &&
                 Resource == equatable.Resource &&
                 Thumbprint == equatable.Thumbprint;
         }
@@ -283,14 +250,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     result = (result * 31) + this.Id.GetHashCode();
                 }
 
-                if (this.Uri != null)
-                {
-                    result = (result * 31) + this.Uri.GetHashCode();
-                }
-
                 if (this.Host != null)
                 {
                     result = (result * 31) + this.Host.GetHashCode();
+                }
+
+                if (this.Path != null)
+                {
+                    result = (result * 31) + this.Path.GetHashCode();
                 }
 
                 if (this.Part != null)
@@ -306,6 +273,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 if (this.Port != null)
                 {
                     result = (result * 31) + this.Port.GetHashCode();
+                }
+
+                if (this.Scheme != null)
+                {
+                    result = (result * 31) + this.Scheme.GetHashCode();
                 }
 
                 if (this.Secret != null)
@@ -349,6 +321,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 components.Add(PartKeyName, $"[{PartKeyName}={f.Part.Trim()}]");
             }
 
+            if (!string.IsNullOrEmpty(f.Path) && !denyList.Contains(PathKeyName))
+            {
+                components.Add(PathKeyName, $"[{PathKeyName}={f.Path.Trim()}]");
+            }
+
             if (!string.IsNullOrEmpty(f.Platform) && !denyList.Contains(PlatformKeyName))
             {
                 components.Add(PlatformKeyName, $"[{PlatformKeyName}={f.Platform.Trim()}]");
@@ -364,6 +341,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 components.Add(ResourceKeyName, $"[{ResourceKeyName}={f.Resource.Trim()}]");
             }
 
+            if (!string.IsNullOrEmpty(f.Scheme) && !denyList.Contains(SchemeKeyName) && !f.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
+            {
+                components.Add(SchemeKeyName, $"[{SchemeKeyName}={f.Scheme.Trim()}]");
+            }
+
             if (!string.IsNullOrEmpty(f.Secret) && !denyList.Contains(SecretKeyName))
             {
                 components.Add(SecretKeyName, $"[{SecretKeyName}={f.Secret.Trim()}]");
@@ -372,11 +354,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             if (!string.IsNullOrEmpty(f.Thumbprint) && !denyList.Contains(ThumbprintKeyName))
             {
                 components.Add(ThumbprintKeyName, $"[{ThumbprintKeyName}={f.Thumbprint.Trim()}]");
-            }
-
-            if (!string.IsNullOrEmpty(f.Uri) && !denyList.Contains(UriKeyName))
-            {
-                components.Add(UriKeyName, $"[{UriKeyName}={f.Uri.Trim()}]");
             }
 
             return components.Count > 0 ?

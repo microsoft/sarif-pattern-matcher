@@ -208,6 +208,49 @@
             "ValidationFingerprintHash/v1": "be9a255ca20f181fa32a493b9f7418aa116df8e87b2cc2c5e206df2792689164"
           },
           "rank": 44.6
+        },
+        {
+          "ruleId": "SEC101/033",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC101_033.MongoDbConnectionString.ps1",
+              "an apparent ",
+              "",
+              "MongoDb connection string",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_033.MongoDbConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 59,
+                  "endLine": 12,
+                  "endColumn": 101,
+                  "charOffset": 503,
+                  "charLength": 42,
+                  "snippet": {
+                    "text": "mongodb://dbuser5:password@localhost:55555"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=localhost:55555][id=dbuser5]",
+            "ValidationFingerprint/v1": "[host=localhost:55555][id=dbuser5][secret=password]",
+            "ValidationFingerprintHash/v1": "94065eb91a048f1fd7a7fc117ea3841dfc2a5ddf307268b9f965e2df78403476"
+          },
+          "rank": 39.29
         }
       ],
       "columnKind": "utf16CodeUnits"

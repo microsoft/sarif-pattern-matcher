@@ -24,6 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
             "database.windows.net",
+            "database.chinacloudapi.cn", // Azure China domain
             "postgres.database.azure.com",
         };
 
@@ -35,33 +36,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
                                                     ref Dictionary<string, string> groups,
-                                                    ref string failureLevel,
                                                     ref string message,
+                                                    out ResultLevelKind resultLevelKind,
                                                     out Fingerprint fingerprint)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
-                                 ref failureLevel,
                                  ref message,
+                                 out resultLevelKind,
                                  out fingerprint);
         }
 
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
+                                                     ref string message,
+                                                     ref Dictionary<string, string> options,
+                                                     ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
-                                  ref options);
+                                  ref options,
+                                  ref resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                                ref Dictionary<string, string> groups,
-                                                               ref string failureLevel,
                                                                ref string message,
+                                                               out ResultLevelKind resultLevelKind,
                                                                out Fingerprint fingerprint)
         {
             fingerprint = default;
+            resultLevelKind = default;
 
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
                 !groups.TryGetNonEmptyValue("secret", out string secret))
@@ -104,14 +110,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint.Port = port;
             fingerprint.Host = host.Replace("\"", string.Empty).Replace(",", ";");
             fingerprint.Resource = database;
-            fingerprint.Platform = SharedUtilities.GetDatabasePlatformFromHost(fingerprint.Host, out _);
+
+            SharedUtilities.PopulateAssetFingerprint(host, ref fingerprint);
 
             return ValidationState.Unknown;
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                ref Dictionary<string, string> options)
+                                                                ref Dictionary<string, string> options,
+                                                                ref ResultLevelKind resultLevelKind)
         {
             string host = fingerprint.Host;
             string port = fingerprint.Port;
@@ -126,25 +134,49 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationState.Unknown;
             }
 
-            var connectionStringBuilder = new StringBuilder();
-            connectionStringBuilder.Append($"Server={host}; Database={database}; Uid={account}; Pwd={password}; SslMode=Preferred;");
+            string connString = $"Server={host}; Database={database}; Uid={account}; Pwd={password}; SslMode=Preferred;";
             message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
 
             if (!string.IsNullOrWhiteSpace(port))
             {
-                connectionStringBuilder.Append($"Port={port}");
+                connString += $"Port={port}";
             }
+
+            // Validating ConnectionString with database.
+            ValidationState validationState = ValidateConnectionString(ref message, host, connString, out bool shouldRetry);
+            if (validationState != ValidationState.Unknown || !shouldRetry)
+            {
+                return validationState;
+            }
+
+            connString = $"Server={host}; Uid={account}; Pwd={password}; SslMode=Preferred;";
+            message = $"the '{account}' account is compromised for server '{host}'";
+
+            if (!string.IsNullOrWhiteSpace(port))
+            {
+                connString += $"Port={port}";
+            }
+
+            // Validating ConnectionString without database.
+            return ValidateConnectionString(ref message, host, connString, out shouldRetry);
+        }
+
+        private static ValidationState ValidateConnectionString(ref string message, string host, string connString, out bool shouldRetry)
+        {
+            shouldRetry = true;
 
             try
             {
-                using var connection = new MySqlConnection(connectionStringBuilder.ToString());
+                using var connection = new MySqlConnection(connString);
                 connection.Open();
             }
             catch (Exception e)
             {
                 if (e is MySqlException mysqlException)
                 {
-                    if (mysqlException.ErrorCode == MySqlErrorCode.AccessDenied)
+                    // ErrorCode = 9000: Client with IP address is not allowed to connect to this MySQL server.
+                    if (mysqlException.ErrorCode == (MySqlErrorCode)9000 ||
+                        mysqlException.ErrorCode == MySqlErrorCode.AccessDenied)
                     {
                         return ReturnUnauthorizedAccess(ref message, asset: host);
                     }
@@ -158,7 +190,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ReturnUnhandledException(ref message, e, asset: host);
             }
 
-            return ValidationState.AuthorizedError;
+            return ValidationState.Authorized;
         }
     }
 }

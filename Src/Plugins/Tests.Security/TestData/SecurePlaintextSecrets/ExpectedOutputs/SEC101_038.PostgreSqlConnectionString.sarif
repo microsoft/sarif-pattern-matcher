@@ -74,7 +74,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db]",
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db][secret=my_pw_1]",
             "ValidationFingerprintHash/v1": "26398ed84db620c4b93af7bbc1c663924da5b5c0a5120a189c5e110df6e6eb83"
           },
@@ -117,7 +117,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db]",
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db][secret=my_pw_2]",
             "ValidationFingerprintHash/v1": "4d770bdcc8d78f2ad3588f70ac74c9ce9d103fa7ed40f0981d2f8c0227c484bf"
           },
@@ -160,7 +160,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555]",
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555]",
             "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][secret=my_pw_3]",
             "ValidationFingerprintHash/v1": "90a3fcb57ace80a4fe7a1343d09aa011d5bb5ea7d7e64f8d60697f9030dd8bb8"
           },
@@ -203,7 +203,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555]",
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555]",
             "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][secret=my_pw_4]",
             "ValidationFingerprintHash/v1": "480870613ba213cbea424a9d39c4b4976fb3ada28346ed286684fd9b1805610c"
           },
@@ -246,7 +246,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555]",
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555]",
             "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][secret=my_pw_5]",
             "ValidationFingerprintHash/v1": "422091febe3f2012854d1a2cae14844568f6973122d37b8b0401f9ec9cf32381"
           },
@@ -289,7 +289,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user]",
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise]",
             "ValidationFingerprint/v1": "[host=my_host][id=my_user][secret=my_pw_5]",
             "ValidationFingerprintHash/v1": "62699f9469245fcd726072ab32c94b2db498784e7897761c2c201e9c84d15263"
           },
@@ -332,7 +332,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555]",
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555]",
             "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][secret=my_pw_6]",
             "ValidationFingerprintHash/v1": "88928ee160f7377ba74cd226933ff51d569149d3d5a313b6efa01b45f93426a1"
           },
@@ -375,7 +375,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db]",
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db][secret=my_pw_7]",
             "ValidationFingerprintHash/v1": "fc1843ad5044c97192eea0f7cdb06e013cd3271f1191bb6134d627a8875c983c"
           },
@@ -418,7 +418,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555]",
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555]",
             "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][secret=my_pw_7]",
             "ValidationFingerprintHash/v1": "8083529e9e26321f5065eb13ff72f77a08bf863f08e163861915fbfa3bc589c5"
           },
@@ -461,7 +461,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db]",
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db][secret=my_pw_8]",
             "ValidationFingerprintHash/v1": "c74920bcd7e030643010fd0386a947a609f631440e2a9898da8cf3c05d8baeed"
           },
@@ -504,7 +504,7 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db]",
+            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db][secret=my_pw_9]",
             "ValidationFingerprintHash/v1": "07bbf43078a3822e8ce323a0bbb935c3fd1a1e7b8eb5f02f0d907788edc999f7"
           },

@@ -22,11 +22,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             groups.Add("checksum", "checksum");
             groups.Add("scanTargetFullPath", "GitHitPatTest");
 
-            string failureLevel = null;
-
             string message = null;
 
-            ValidationState actualValidationState = GitHubPatValidator.IsValidStatic(ref matchedPattern, ref groups, ref failureLevel, ref message, out Fingerprint fingerprint);
+            ValidationState actualValidationState = GitHubPatValidator.IsValidStatic(ref matchedPattern, ref groups, ref message, out _, out Fingerprint fingerprint);
 
             Assert.Equal(matchedPattern, fingerprint.Secret);
             Assert.Equal(AssetPlatform.GitHub.ToString(), fingerprint.Platform);
@@ -39,11 +37,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             ValidationState expectedValidationState = ValidationState.Unauthorized;
 
             string fingerprintText = "[platform=GitHub][secret=ghp_000000000001234567890123456789012345]";
-            Fingerprint fingerprint = new Fingerprint(fingerprintText);
-            string message = null;
-            Dictionary<string, string> options = new Dictionary<string, string>();
 
-            ValidationState actualValidationState = GitHubPatValidator.IsValidDynamic(ref fingerprint, ref message, ref options);
+            string message = null;
+            ResultLevelKind resultLevelKind = default;
+            var fingerprint = new Fingerprint(fingerprintText);
+            var options = new Dictionary<string, string>();
+
+            ValidationState actualValidationState = GitHubPatValidator.IsValidDynamic(ref fingerprint,
+                                                                                      ref message,
+                                                                                      ref options,
+                                                                                      ref resultLevelKind);
 
             Assert.Equal(expectedValidationState, actualValidationState);
         }
