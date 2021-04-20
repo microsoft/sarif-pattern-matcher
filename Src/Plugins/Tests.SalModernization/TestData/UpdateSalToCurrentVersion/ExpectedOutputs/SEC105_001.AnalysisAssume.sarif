@@ -238,7 +238,7 @@
           "fixes": [
             {
               "description": {
-                "text": "Replace '__analysis_assume' for '_Analysis_assume_'."
+                "text": "Replace '__analysis_assume' with '_Analysis_assume_'."
               },
               "artifactChanges": [
                 {

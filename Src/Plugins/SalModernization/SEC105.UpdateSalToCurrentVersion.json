@@ -215,7 +215,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__analysis_assume' for '_Analysis_assume_'.",
+              "Description": "Replace '__analysis_assume' with '_Analysis_assume_'.",
               "Find": "__analysis_assume",
               "ReplaceWith": "_Analysis_assume_"
             }
@@ -229,7 +229,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__byte_readableTo' for '_Readable_bytes_'.",
+              "Description": "Replace '__byte_readableTo' with '_Readable_bytes_'.",
               "Find": "__byte_readableTo",
               "ReplaceWith": "_Readable_bytes_"
             }
@@ -243,7 +243,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__byte_writableTo' for '_Writable_bytes_'.",
+              "Description": "Replace '__byte_writableTo' with '_Writable_bytes_'.",
               "Find": "__byte_writableTo",
               "ReplaceWith": "_Writable_bytes_"
             }
@@ -257,7 +257,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__checkReturn' for '_Check_return_'.",
+              "Description": "Replace '__checkReturn' with '_Check_return_'.",
               "Find": "__checkReturn",
               "ReplaceWith": "_Check_return_"
             }
@@ -271,7 +271,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_in' for '_In_'.",
+              "Description": "Replace '__deref_in' with '_In_'.",
               "Find": "__deref_in",
               "ReplaceWith": "_In_"
             }
@@ -285,7 +285,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_inout' for '_Inout_'.",
+              "Description": "Replace '__deref_inout' with '_Inout_'.",
               "Find": "__deref_inout",
               "ReplaceWith": "_Inout_"
             }
@@ -299,7 +299,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_inout_opt' for '_Inout_'.",
+              "Description": "Replace '__deref_inout_opt' with '_Inout_'.",
               "Find": "__deref_inout_opt",
               "ReplaceWith": "_Inout_"
             }
@@ -313,7 +313,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_opt_inout' for '_Inout_opt_'.",
+              "Description": "Replace '__deref_opt_inout' with '_Inout_opt_'.",
               "Find": "__deref_opt_inout",
               "ReplaceWith": "_Inout_opt_"
             }
@@ -327,7 +327,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_opt_inout_opt' for '_Inout_opt_'.",
+              "Description": "Replace '__deref_opt_inout_opt' with '_Inout_opt_'.",
               "Find": "__deref_opt_inout_opt",
               "ReplaceWith": "_Inout_opt_"
             }
@@ -341,7 +341,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_opt_out' for '_Outptr_opt_'.",
+              "Description": "Replace '__deref_opt_out' with '_Outptr_opt_'.",
               "Find": "__deref_opt_out",
               "ReplaceWith": "_Outptr_opt_"
             }
@@ -355,7 +355,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_opt_out_bcount_opt' for '_Outptr_opt_result_bytebuffer_maybenull_'.",
+              "Description": "Replace '__deref_opt_out_bcount_opt' with '_Outptr_opt_result_bytebuffer_maybenull_'.",
               "Find": "__deref_opt_out_bcount_opt",
               "ReplaceWith": "_Outptr_opt_result_bytebuffer_maybenull_"
             }
@@ -369,7 +369,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_opt_out_opt' for '_Outptr_opt_result_maybenull_'.",
+              "Description": "Replace '__deref_opt_out_opt' with '_Outptr_opt_result_maybenull_'.",
               "Find": "__deref_opt_out_opt",
               "ReplaceWith": "_Outptr_opt_result_maybenull_"
             }
@@ -383,7 +383,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_opt_out_z' for '_Outptr_opt_result_z_'.",
+              "Description": "Replace '__deref_opt_out_z' with '_Outptr_opt_result_z_'.",
               "Find": "__deref_opt_out_z",
               "ReplaceWith": "_Outptr_opt_result_z_"
             }
@@ -397,7 +397,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_opt_out_z_opt' for '_Outptr_opt_result_maybenull_z_'.",
+              "Description": "Replace '__deref_opt_out_z_opt' with '_Outptr_opt_result_maybenull_z_'.",
               "Find": "__deref_opt_out_z_opt",
               "ReplaceWith": "_Outptr_opt_result_maybenull_z_"
             }
@@ -411,7 +411,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_out' for '_Outptr_'.",
+              "Description": "Replace '__deref_out' with '_Outptr_'.",
               "Find": "__deref_out",
               "ReplaceWith": "_Outptr_"
             }
@@ -425,7 +425,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_out_bcount' for '_Outptr_result_bytebuffer_'.",
+              "Description": "Replace '__deref_out_bcount' with '_Outptr_result_bytebuffer_'.",
               "Find": "__deref_out_bcount",
               "ReplaceWith": "_Outptr_result_bytebuffer_"
             }
@@ -439,7 +439,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_out_bcount_opt' for '_Outptr_result_bytebuffer_maybenull_'.",
+              "Description": "Replace '__deref_out_bcount_opt' with '_Outptr_result_bytebuffer_maybenull_'.",
               "Find": "__deref_out_bcount_opt",
               "ReplaceWith": "_Outptr_result_bytebuffer_maybenull_"
             }
@@ -453,7 +453,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_out_bcount_part' for '_Outptr_result_bytebuffer_to_'.",
+              "Description": "Replace '__deref_out_bcount_part' with '_Outptr_result_bytebuffer_to_'.",
               "Find": "__deref_out_bcount_part",
               "ReplaceWith": "_Outptr_result_bytebuffer_to_"
             }
@@ -467,7 +467,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_out_ecount' for '_Outptr_result_buffer_'.",
+              "Description": "Replace '__deref_out_ecount' with '_Outptr_result_buffer_'.",
               "Find": "__deref_out_ecount",
               "ReplaceWith": "_Outptr_result_buffer_"
             }
@@ -481,7 +481,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_out_ecount_opt' for '_Outptr_result_buffer_maybenull_'.",
+              "Description": "Replace '__deref_out_ecount_opt' with '_Outptr_result_buffer_maybenull_'.",
               "Find": "__deref_out_ecount_opt",
               "ReplaceWith": "_Outptr_result_buffer_maybenull_"
             }
@@ -495,7 +495,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_out_ecount_part' for '_Outptr_result_buffer_to_'.",
+              "Description": "Replace '__deref_out_ecount_part' with '_Outptr_result_buffer_to_'.",
               "Find": "__deref_out_ecount_part",
               "ReplaceWith": "_Outptr_result_buffer_to_"
             }
@@ -509,7 +509,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_out_opt' for '_Outptr_result_maybenull_'.",
+              "Description": "Replace '__deref_out_opt' with '_Outptr_result_maybenull_'.",
               "Find": "__deref_out_opt",
               "ReplaceWith": "_Outptr_result_maybenull_"
             }
@@ -523,7 +523,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_out_range' for '_Deref_out_range_'.",
+              "Description": "Replace '__deref_out_range' with '_Deref_out_range_'.",
               "Find": "__deref_out_range",
               "ReplaceWith": "_Deref_out_range_"
             }
@@ -537,7 +537,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_out_z' for '_Outptr_result_z_'.",
+              "Description": "Replace '__deref_out_z' with '_Outptr_result_z_'.",
               "Find": "__deref_out_z",
               "ReplaceWith": "_Outptr_result_z_"
             }
@@ -551,7 +551,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__deref_out_z_opt' for '_Outptr_result_maybenull_z_'.",
+              "Description": "Replace '__deref_out_z_opt' with '_Outptr_result_maybenull_z_'.",
               "Find": "__deref_out_z_opt",
               "ReplaceWith": "_Outptr_result_maybenull_z_"
             }
@@ -565,7 +565,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__elem_readableTo' for '_Readable_elements_'.",
+              "Description": "Replace '__elem_readableTo' with '_Readable_elements_'.",
               "Find": "__elem_readableTo",
               "ReplaceWith": "_Readable_elements_"
             }
@@ -579,7 +579,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__elem_writableTo' for '_Writable_elements_'.",
+              "Description": "Replace '__elem_writableTo' with '_Writable_elements_'.",
               "Find": "__elem_writableTo",
               "ReplaceWith": "_Writable_elements_"
             }
@@ -593,7 +593,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__field_bcount' for '_Field_size_bytes_'.",
+              "Description": "Replace '__field_bcount' with '_Field_size_bytes_'.",
               "Find": "__field_bcount",
               "ReplaceWith": "_Field_size_bytes_"
             }
@@ -607,7 +607,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__field_bcount_full' for '_Field_size_bytes_full_'.",
+              "Description": "Replace '__field_bcount_full' with '_Field_size_bytes_full_'.",
               "Find": "__field_bcount_full",
               "ReplaceWith": "_Field_size_bytes_full_"
             }
@@ -621,7 +621,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__field_bcount_opt' for '_Field_size_bytes_opt_'.",
+              "Description": "Replace '__field_bcount_opt' with '_Field_size_bytes_opt_'.",
               "Find": "__field_bcount_opt",
               "ReplaceWith": "_Field_size_bytes_opt_"
             }
@@ -635,7 +635,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__field_bcount_part' for '_Field_size_bytes_part_'.",
+              "Description": "Replace '__field_bcount_part' with '_Field_size_bytes_part_'.",
               "Find": "__field_bcount_part",
               "ReplaceWith": "_Field_size_bytes_part_"
             }
@@ -649,7 +649,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__field_bcount_part_opt' for '_Field_size_bytes_part_opt_'.",
+              "Description": "Replace '__field_bcount_part_opt' with '_Field_size_bytes_part_opt_'.",
               "Find": "__field_bcount_part_opt",
               "ReplaceWith": "_Field_size_bytes_part_opt_"
             }
@@ -663,7 +663,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__field_ecount' for '_Field_size_'.",
+              "Description": "Replace '__field_ecount' with '_Field_size_'.",
               "Find": "__field_ecount",
               "ReplaceWith": "_Field_size_"
             }
@@ -677,7 +677,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__field_ecount_full' for '_Field_size_full_'.",
+              "Description": "Replace '__field_ecount_full' with '_Field_size_full_'.",
               "Find": "__field_ecount_full",
               "ReplaceWith": "_Field_size_full_"
             }
@@ -691,7 +691,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__field_ecount_opt' for '_Field_size_opt_'.",
+              "Description": "Replace '__field_ecount_opt' with '_Field_size_opt_'.",
               "Find": "__field_ecount_opt",
               "ReplaceWith": "_Field_size_opt_"
             }
@@ -705,7 +705,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__field_ecount_part' for '_Field_size_part_'.",
+              "Description": "Replace '__field_ecount_part' with '_Field_size_part_'.",
               "Find": "__field_ecount_part",
               "ReplaceWith": "_Field_size_part_"
             }
@@ -719,7 +719,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__field_nullterminated' for '_Field_z_'.",
+              "Description": "Replace '__field_nullterminated' with '_Field_z_'.",
               "Find": "__field_nullterminated",
               "ReplaceWith": "_Field_z_"
             }
@@ -733,7 +733,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__field_range' for '_Field_range_'.",
+              "Description": "Replace '__field_range' with '_Field_range_'.",
               "Find": "__field_range",
               "ReplaceWith": "_Field_range_"
             }
@@ -747,7 +747,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__in' for '_In_'.",
+              "Description": "Replace '__in' with '_In_'.",
               "Find": "__in",
               "ReplaceWith": "_In_"
             }
@@ -761,7 +761,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__in_bcount' for '_In_reads_bytes_'.",
+              "Description": "Replace '__in_bcount' with '_In_reads_bytes_'.",
               "Find": "__in_bcount",
               "ReplaceWith": "_In_reads_bytes_"
             }
@@ -775,7 +775,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__in_bcount_opt' for '_In_reads_bytes_opt_'.",
+              "Description": "Replace '__in_bcount_opt' with '_In_reads_bytes_opt_'.",
               "Find": "__in_bcount_opt",
               "ReplaceWith": "_In_reads_bytes_opt_"
             }
@@ -789,7 +789,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__in_ecount' for '_In_reads_'.",
+              "Description": "Replace '__in_ecount' with '_In_reads_'.",
               "Find": "__in_ecount",
               "ReplaceWith": "_In_reads_"
             }
@@ -803,7 +803,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__in_ecount_opt' for '_In_reads_opt_'.",
+              "Description": "Replace '__in_ecount_opt' with '_In_reads_opt_'.",
               "Find": "__in_ecount_opt",
               "ReplaceWith": "_In_reads_opt_"
             }
@@ -817,7 +817,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__in_ecount_or_z' for '_In_reads_or_z_'.",
+              "Description": "Replace '__in_ecount_or_z' with '_In_reads_or_z_'.",
               "Find": "__in_ecount_or_z",
               "ReplaceWith": "_In_reads_or_z_"
             }
@@ -831,7 +831,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__in_opt' for '_In_opt_'.",
+              "Description": "Replace '__in_opt' with '_In_opt_'.",
               "Find": "__in_opt",
               "ReplaceWith": "_In_opt_"
             }
@@ -845,7 +845,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__in_range' for '_In_range_'.",
+              "Description": "Replace '__in_range' with '_In_range_'.",
               "Find": "__in_range",
               "ReplaceWith": "_In_range_"
             }
@@ -859,7 +859,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__in_z' for '_In_z_'.",
+              "Description": "Replace '__in_z' with '_In_z_'.",
               "Find": "__in_z",
               "ReplaceWith": "_In_z_"
             }
@@ -873,7 +873,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__in_z_opt' for '_In_opt_z_'.",
+              "Description": "Replace '__in_z_opt' with '_In_opt_z_'.",
               "Find": "__in_z_opt",
               "ReplaceWith": "_In_opt_z_"
             }
@@ -887,7 +887,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__inout' for '_Inout_'.",
+              "Description": "Replace '__inout' with '_Inout_'.",
               "Find": "__inout",
               "ReplaceWith": "_Inout_"
             }
@@ -901,7 +901,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__inout_bcount' for '_Inout_updates_bytes_'.",
+              "Description": "Replace '__inout_bcount' with '_Inout_updates_bytes_'.",
               "Find": "__inout_bcount",
               "ReplaceWith": "_Inout_updates_bytes_"
             }
@@ -915,7 +915,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__inout_bcount_opt' for '_Inout_updates_bytes_opt_'.",
+              "Description": "Replace '__inout_bcount_opt' with '_Inout_updates_bytes_opt_'.",
               "Find": "__inout_bcount_opt",
               "ReplaceWith": "_Inout_updates_bytes_opt_"
             }
@@ -929,7 +929,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__inout_bcount_part' for '_Inout_updates_bytes_to_'.",
+              "Description": "Replace '__inout_bcount_part' with '_Inout_updates_bytes_to_'.",
               "Find": "__inout_bcount_part",
               "ReplaceWith": "_Inout_updates_bytes_to_"
             }
@@ -943,7 +943,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__inout_bcount_part_opt' for '_Inout_updates_bytes_to_opt_'.",
+              "Description": "Replace '__inout_bcount_part_opt' with '_Inout_updates_bytes_to_opt_'.",
               "Find": "__inout_bcount_part_opt",
               "ReplaceWith": "_Inout_updates_bytes_to_opt_"
             }
@@ -957,7 +957,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__inout_ecount' for '_Inout_updates_'.",
+              "Description": "Replace '__inout_ecount' with '_Inout_updates_'.",
               "Find": "__inout_ecount",
               "ReplaceWith": "_Inout_updates_"
             }
@@ -971,7 +971,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__inout_ecount_opt' for '_Inout_updates_opt_'.",
+              "Description": "Replace '__inout_ecount_opt' with '_Inout_updates_opt_'.",
               "Find": "__inout_ecount_opt",
               "ReplaceWith": "_Inout_updates_opt_"
             }
@@ -985,7 +985,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__inout_ecount_part' for '_Inout_updates_to_'.",
+              "Description": "Replace '__inout_ecount_part' with '_Inout_updates_to_'.",
               "Find": "__inout_ecount_part",
               "ReplaceWith": "_Inout_updates_to_"
             }
@@ -999,7 +999,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__inout_ecount_part_opt' for '_Inout_updates_to_opt_'.",
+              "Description": "Replace '__inout_ecount_part_opt' with '_Inout_updates_to_opt_'.",
               "Find": "__inout_ecount_part_opt",
               "ReplaceWith": "_Inout_updates_to_opt_"
             }
@@ -1013,7 +1013,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__inout_ecount_z' for '_Inout_updates_z_'.",
+              "Description": "Replace '__inout_ecount_z' with '_Inout_updates_z_'.",
               "Find": "__inout_ecount_z",
               "ReplaceWith": "_Inout_updates_z_"
             }
@@ -1027,7 +1027,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__inout_opt' for '_Inout_opt_'.",
+              "Description": "Replace '__inout_opt' with '_Inout_opt_'.",
               "Find": "__inout_opt",
               "ReplaceWith": "_Inout_opt_"
             }
@@ -1041,7 +1041,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__inout_z' for '_Inout_z_'.",
+              "Description": "Replace '__inout_z' with '_Inout_z_'.",
               "Find": "__inout_z",
               "ReplaceWith": "_Inout_z_"
             }
@@ -1055,7 +1055,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__kernel_driver' for '_Analysis_mode_(_Analysis_code_type_kernel_driver_)'.",
+              "Description": "Replace '__kernel_driver' with '_Analysis_mode_(_Analysis_code_type_kernel_driver_)'.",
               "Find": "__kernel_driver",
               "ReplaceWith": "_Analysis_mode_(_Analysis_code_type_kernel_driver_)"
             }
@@ -1069,7 +1069,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__on_failure' for '_On_failure_'.",
+              "Description": "Replace '__on_failure' with '_On_failure_'.",
               "Find": "__on_failure",
               "ReplaceWith": "_On_failure_"
             }
@@ -1083,7 +1083,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out' for '_Out_'.",
+              "Description": "Replace '__out' with '_Out_'.",
               "Find": "__out",
               "ReplaceWith": "_Out_"
             }
@@ -1097,7 +1097,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out_bcount' for '_Out_writes_bytes_'.",
+              "Description": "Replace '__out_bcount' with '_Out_writes_bytes_'.",
               "Find": "__out_bcount",
               "ReplaceWith": "_Out_writes_bytes_"
             }
@@ -1111,7 +1111,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out_bcount_opt' for '_Out_writes_bytes_opt_'.",
+              "Description": "Replace '__out_bcount_opt' with '_Out_writes_bytes_opt_'.",
               "Find": "__out_bcount_opt",
               "ReplaceWith": "_Out_writes_bytes_opt_"
             }
@@ -1125,7 +1125,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out_bcount_part' for '_Out_writes_bytes_to_'.",
+              "Description": "Replace '__out_bcount_part' with '_Out_writes_bytes_to_'.",
               "Find": "__out_bcount_part",
               "ReplaceWith": "_Out_writes_bytes_to_"
             }
@@ -1139,7 +1139,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out_bcount_part_opt' for '_Out_writes_bytes_to_opt_'.",
+              "Description": "Replace '__out_bcount_part_opt' with '_Out_writes_bytes_to_opt_'.",
               "Find": "__out_bcount_part_opt",
               "ReplaceWith": "_Out_writes_bytes_to_opt_"
             }
@@ -1153,7 +1153,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out_ecount' for '_Out_writes_'.",
+              "Description": "Replace '__out_ecount' with '_Out_writes_'.",
               "Find": "__out_ecount",
               "ReplaceWith": "_Out_writes_"
             }
@@ -1167,7 +1167,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out_ecount_opt' for '_Out_writes_opt_'.",
+              "Description": "Replace '__out_ecount_opt' with '_Out_writes_opt_'.",
               "Find": "__out_ecount_opt",
               "ReplaceWith": "_Out_writes_opt_"
             }
@@ -1181,7 +1181,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out_ecount_part' for '_Out_writes_to_'.",
+              "Description": "Replace '__out_ecount_part' with '_Out_writes_to_'.",
               "Find": "__out_ecount_part",
               "ReplaceWith": "_Out_writes_to_"
             }
@@ -1195,7 +1195,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out_ecount_part_opt' for '_Out_writes_to_opt_'.",
+              "Description": "Replace '__out_ecount_part_opt' with '_Out_writes_to_opt_'.",
               "Find": "__out_ecount_part_opt",
               "ReplaceWith": "_Out_writes_to_opt_"
             }
@@ -1209,7 +1209,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out_ecount_z' for '_Out_writes_z_'.",
+              "Description": "Replace '__out_ecount_z' with '_Out_writes_z_'.",
               "Find": "__out_ecount_z",
               "ReplaceWith": "_Out_writes_z_"
             }
@@ -1223,7 +1223,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out_ecount_z_opt' for '_Out_writes_opt_z_'.",
+              "Description": "Replace '__out_ecount_z_opt' with '_Out_writes_opt_z_'.",
               "Find": "__out_ecount_z_opt",
               "ReplaceWith": "_Out_writes_opt_z_"
             }
@@ -1237,7 +1237,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out_opt' for '_Out_opt_'.",
+              "Description": "Replace '__out_opt' with '_Out_opt_'.",
               "Find": "__out_opt",
               "ReplaceWith": "_Out_opt_"
             }
@@ -1251,7 +1251,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__out_range' for '_Out_range_'.",
+              "Description": "Replace '__out_range' with '_Out_range_'.",
               "Find": "__out_range",
               "ReplaceWith": "_Out_range_"
             }
@@ -1265,7 +1265,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__post_nullnullterminated' for '_Post_ _NullNull_terminated_'.",
+              "Description": "Replace '__post_nullnullterminated' with '_Post_ _NullNull_terminated_'.",
               "Find": "__post_nullnullterminated",
               "ReplaceWith": "_Post_ _NullNull_terminated_"
             }
@@ -1279,7 +1279,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__reserved' for '_Reserved_'.",
+              "Description": "Replace '__reserved' with '_Reserved_'.",
               "Find": "__reserved",
               "ReplaceWith": "_Reserved_"
             }
@@ -1293,7 +1293,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__struct_bcount' for '_Struct_size_bytes_'.",
+              "Description": "Replace '__struct_bcount' with '_Struct_size_bytes_'.",
               "Find": "__struct_bcount",
               "ReplaceWith": "_Struct_size_bytes_"
             }
@@ -1307,7 +1307,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__user_code' for '_Analysis_mode_(_Analysis_code_type_user_code_)'.",
+              "Description": "Replace '__user_code' with '_Analysis_mode_(_Analysis_code_type_user_code_)'.",
               "Find": "__user_code",
               "ReplaceWith": "_Analysis_mode_(_Analysis_code_type_user_code_)"
             }
@@ -1321,7 +1321,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__user_driver' for '_Analysis_mode_(_Analysis_code_type_user_driver_)'.",
+              "Description": "Replace '__user_driver' with '_Analysis_mode_(_Analysis_code_type_user_driver_)'.",
               "Find": "__user_driver",
               "ReplaceWith": "_Analysis_mode_(_Analysis_code_type_user_driver_)"
             }
@@ -1335,7 +1335,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__guarded_by' for '_Guarded_by_'.",
+              "Description": "Replace '__guarded_by' with '_Guarded_by_'.",
               "Find": "__guarded_by",
               "ReplaceWith": "_Guarded_by_"
             }
@@ -1349,7 +1349,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__write_guarded_by' for '_Write_guarded_by_'.",
+              "Description": "Replace '__write_guarded_by' with '_Write_guarded_by_'.",
               "Find": "__write_guarded_by",
               "ReplaceWith": "_Write_guarded_by_"
             }
@@ -1363,7 +1363,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__interlocked' for '_Interlocked_'.",
+              "Description": "Replace '__interlocked' with '_Interlocked_'.",
               "Find": "__interlocked",
               "ReplaceWith": "_Interlocked_"
             }
@@ -1377,7 +1377,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__requires_lock_held' for '_Requires_lock_held_'.",
+              "Description": "Replace '__requires_lock_held' with '_Requires_lock_held_'.",
               "Find": "__requires_lock_held",
               "ReplaceWith": "_Requires_lock_held_"
             }
@@ -1391,7 +1391,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__requires_exclusive_lock_held' for '_Requires_exclusive_lock_held_'.",
+              "Description": "Replace '__requires_exclusive_lock_held' with '_Requires_exclusive_lock_held_'.",
               "Find": "__requires_exclusive_lock_held",
               "ReplaceWith": "_Requires_exclusive_lock_held_"
             }
@@ -1405,7 +1405,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__requires_shared_lock_held' for '_Requires_shared_lock_held_'.",
+              "Description": "Replace '__requires_shared_lock_held' with '_Requires_shared_lock_held_'.",
               "Find": "__requires_shared_lock_held",
               "ReplaceWith": "_Requires_shared_lock_held_"
             }
@@ -1419,7 +1419,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__requires_lock_not_held' for '_Requires_lock_not_held_'.",
+              "Description": "Replace '__requires_lock_not_held' with '_Requires_lock_not_held_'.",
               "Find": "__requires_lock_not_held",
               "ReplaceWith": "_Requires_lock_not_held_"
             }
@@ -1433,7 +1433,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__requires_no_locks_held' for '_Requires_no_locks_held_'.",
+              "Description": "Replace '__requires_no_locks_held' with '_Requires_no_locks_held_'.",
               "Find": "__requires_no_locks_held",
               "ReplaceWith": "_Requires_no_locks_held_"
             }
@@ -1447,7 +1447,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__acquires_lock' for '_Acquires_lock_'.",
+              "Description": "Replace '__acquires_lock' with '_Acquires_lock_'.",
               "Find": "__acquires_lock",
               "ReplaceWith": "_Acquires_lock_"
             }
@@ -1461,7 +1461,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__acquires_exclusive_lock' for '_Acquires_exclusive_lock_'.",
+              "Description": "Replace '__acquires_exclusive_lock' with '_Acquires_exclusive_lock_'.",
               "Find": "__acquires_exclusive_lock",
               "ReplaceWith": "_Acquires_exclusive_lock_"
             }
@@ -1475,7 +1475,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__acquires_shared_lock' for '_Acquires_shared_lock_'.",
+              "Description": "Replace '__acquires_shared_lock' with '_Acquires_shared_lock_'.",
               "Find": "__acquires_shared_lock",
               "ReplaceWith": "_Acquires_shared_lock_"
             }
@@ -1489,7 +1489,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__releases_lock' for '_Releases_lock_'.",
+              "Description": "Replace '__releases_lock' with '_Releases_lock_'.",
               "Find": "__releases_lock",
               "ReplaceWith": "_Releases_lock_"
             }
@@ -1503,7 +1503,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__releases_exclusive_lock' for '_Releases_exclusive_lock_'.",
+              "Description": "Replace '__releases_exclusive_lock' with '_Releases_exclusive_lock_'.",
               "Find": "__releases_exclusive_lock",
               "ReplaceWith": "_Releases_exclusive_lock_"
             }
@@ -1517,7 +1517,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__releases_shared_lock' for '_Releases_shared_lock_'.",
+              "Description": "Replace '__releases_shared_lock' with '_Releases_shared_lock_'.",
               "Find": "__releases_shared_lock",
               "ReplaceWith": "_Releases_shared_lock_"
             }
@@ -1531,7 +1531,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__has_lock_property' for '_Has_lock_kind_'.",
+              "Description": "Replace '__has_lock_property' with '_Has_lock_kind_'.",
               "Find": "__has_lock_property",
               "ReplaceWith": "_Has_lock_kind_"
             }
@@ -1545,7 +1545,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__declare_lock_level' for '_Create_lock_level_'.",
+              "Description": "Replace '__declare_lock_level' with '_Create_lock_level_'.",
               "Find": "__declare_lock_level",
               "ReplaceWith": "_Create_lock_level_"
             }
@@ -1559,7 +1559,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__has_lock_level' for '_Has_lock_level_'.",
+              "Description": "Replace '__has_lock_level' with '_Has_lock_level_'.",
               "Find": "__has_lock_level",
               "ReplaceWith": "_Has_lock_level_"
             }
@@ -1573,7 +1573,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__lock_level_order' for '_Lock_level_order_'.",
+              "Description": "Replace '__lock_level_order' with '_Lock_level_order_'.",
               "Find": "__lock_level_order",
               "ReplaceWith": "_Lock_level_order_"
             }
@@ -1587,7 +1587,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__no_competing_thread' for '_No_competing_thread_'.",
+              "Description": "Replace '__no_competing_thread' with '_No_competing_thread_'.",
               "Find": "__no_competing_thread",
               "ReplaceWith": "_No_competing_thread_"
             }
@@ -1601,7 +1601,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__analysis_assume_lock_acquired' for '_Analysis_assume_lock_acquired_'.",
+              "Description": "Replace '__analysis_assume_lock_acquired' with '_Analysis_assume_lock_acquired_'.",
               "Find": "__analysis_assume_lock_acquired",
               "ReplaceWith": "_Analysis_assume_lock_acquired_"
             }
@@ -1615,7 +1615,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__analysis_assume_lock_released' for '_Analysis_assume_lock_released_'.",
+              "Description": "Replace '__analysis_assume_lock_released' with '_Analysis_assume_lock_released_'.",
               "Find": "__analysis_assume_lock_released",
               "ReplaceWith": "_Analysis_assume_lock_released_"
             }
@@ -1629,7 +1629,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__function_ignore_lock_checking' for '_Function_ignore_lock_checking_'.",
+              "Description": "Replace '__function_ignore_lock_checking' with '_Function_ignore_lock_checking_'.",
               "Find": "__function_ignore_lock_checking",
               "ReplaceWith": "_Function_ignore_lock_checking_"
             }
@@ -1643,7 +1643,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__analysis_suppress_lock_checking' for '_Analysis_suppress_lock_checking_'.",
+              "Description": "Replace '__analysis_suppress_lock_checking' with '_Analysis_suppress_lock_checking_'.",
               "Find": "__analysis_suppress_lock_checking",
               "ReplaceWith": "_Analysis_suppress_lock_checking_"
             }
@@ -1657,7 +1657,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_acquiresCancelSpinLock' for '_Acquires_nonreentrant_lock_(_Global_cancel_spin_lock_)'.",
+              "Description": "Replace '__drv_acquiresCancelSpinLock' with '_Acquires_nonreentrant_lock_(_Global_cancel_spin_lock_)'.",
               "Find": "__drv_acquiresCancelSpinLock",
               "ReplaceWith": "_Acquires_nonreentrant_lock_(_Global_cancel_spin_lock_)"
             }
@@ -1671,7 +1671,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_releasesCancelSpinLock' for '_Releases_nonreentrant_lock_(_Global_cancel_spin_lock_)'.",
+              "Description": "Replace '__drv_releasesCancelSpinLock' with '_Releases_nonreentrant_lock_(_Global_cancel_spin_lock_)'.",
               "Find": "__drv_releasesCancelSpinLock",
               "ReplaceWith": "_Releases_nonreentrant_lock_(_Global_cancel_spin_lock_)"
             }
@@ -1685,7 +1685,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_mustHoldCancelSpinLock' for '_Requires_lock_held_(_Global_cancel_spin_lock_)'.",
+              "Description": "Replace '__drv_mustHoldCancelSpinLock' with '_Requires_lock_held_(_Global_cancel_spin_lock_)'.",
               "Find": "__drv_mustHoldCancelSpinLock",
               "ReplaceWith": "_Requires_lock_held_(_Global_cancel_spin_lock_)"
             }
@@ -1699,7 +1699,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_neverHoldCancelSpinLock' for '_Requires_lock_not_held_(_Global_cancel_spin_lock_)'.",
+              "Description": "Replace '__drv_neverHoldCancelSpinLock' with '_Requires_lock_not_held_(_Global_cancel_spin_lock_)'.",
               "Find": "__drv_neverHoldCancelSpinLock",
               "ReplaceWith": "_Requires_lock_not_held_(_Global_cancel_spin_lock_)"
             }
@@ -1713,7 +1713,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_acquiresCriticalRegion' for '_Acquires_lock_(_Global_critical_region_)'.",
+              "Description": "Replace '__drv_acquiresCriticalRegion' with '_Acquires_lock_(_Global_critical_region_)'.",
               "Find": "__drv_acquiresCriticalRegion",
               "ReplaceWith": "_Acquires_lock_(_Global_critical_region_)"
             }
@@ -1727,7 +1727,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_releasesCriticalRegion' for '_Releases_lock_(_Global_critical_region_)'.",
+              "Description": "Replace '__drv_releasesCriticalRegion' with '_Releases_lock_(_Global_critical_region_)'.",
               "Find": "__drv_releasesCriticalRegion",
               "ReplaceWith": "_Releases_lock_(_Global_critical_region_)"
             }
@@ -1741,7 +1741,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_mustHoldCriticalRegion' for '_Requires_lock_held_(_Global_critical_region_)'.",
+              "Description": "Replace '__drv_mustHoldCriticalRegion' with '_Requires_lock_held_(_Global_critical_region_)'.",
               "Find": "__drv_mustHoldCriticalRegion",
               "ReplaceWith": "_Requires_lock_held_(_Global_critical_region_)"
             }
@@ -1755,7 +1755,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_neverHoldCriticalRegion' for '_Requires_lock_not_held_(_Global_critical_region_)'.",
+              "Description": "Replace '__drv_neverHoldCriticalRegion' with '_Requires_lock_not_held_(_Global_critical_region_)'.",
               "Find": "__drv_neverHoldCriticalRegion",
               "ReplaceWith": "_Requires_lock_not_held_(_Global_critical_region_)"
             }
@@ -1769,7 +1769,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_acquiresPriorityRegion' for '_Acquires_lock_(_Global_priority_region_)'.",
+              "Description": "Replace '__drv_acquiresPriorityRegion' with '_Acquires_lock_(_Global_priority_region_)'.",
               "Find": "__drv_acquiresPriorityRegion",
               "ReplaceWith": "_Acquires_lock_(_Global_priority_region_)"
             }
@@ -1783,7 +1783,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_releasesPriorityRegion' for '_Releases_lock_(_Global_priority_region_)'.",
+              "Description": "Replace '__drv_releasesPriorityRegion' with '_Releases_lock_(_Global_priority_region_)'.",
               "Find": "__drv_releasesPriorityRegion",
               "ReplaceWith": "_Releases_lock_(_Global_priority_region_)"
             }
@@ -1797,7 +1797,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_mustHoldPriorityRegion' for '_Requires_lock_held_(_Global_priority_region_)'.",
+              "Description": "Replace '__drv_mustHoldPriorityRegion' with '_Requires_lock_held_(_Global_priority_region_)'.",
               "Find": "__drv_mustHoldPriorityRegion",
               "ReplaceWith": "_Requires_lock_held_(_Global_priority_region_)"
             }
@@ -1811,7 +1811,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_neverHoldPriorityRegion' for '_Requires_lock_not_held_(_Global_priority_region_)'.",
+              "Description": "Replace '__drv_neverHoldPriorityRegion' with '_Requires_lock_not_held_(_Global_priority_region_)'.",
               "Find": "__drv_neverHoldPriorityRegion",
               "ReplaceWith": "_Requires_lock_not_held_(_Global_priority_region_)"
             }
@@ -1825,7 +1825,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_interlocked' for '_Interlocked_operand_'.",
+              "Description": "Replace '__drv_interlocked' with '_Interlocked_operand_'.",
               "Find": "__drv_interlocked",
               "ReplaceWith": "_Interlocked_operand_"
             }
@@ -1839,7 +1839,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_at' for '_At_'.",
+              "Description": "Replace '__drv_at' with '_At_'.",
               "Find": "__drv_at",
               "ReplaceWith": "_At_"
             }
@@ -1853,7 +1853,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_when' for '_When_'.",
+              "Description": "Replace '__drv_when' with '_When_'.",
               "Find": "__drv_when",
               "ReplaceWith": "_When_"
             }
@@ -1867,7 +1867,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_setsIRQL' for '_IRQL_raises_'.",
+              "Description": "Replace '__drv_setsIRQL' with '_IRQL_raises_'.",
               "Find": "__drv_setsIRQL",
               "ReplaceWith": "_IRQL_raises_"
             }
@@ -1881,7 +1881,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_raisesIRQL' for '_IRQL_raises_'.",
+              "Description": "Replace '__drv_raisesIRQL' with '_IRQL_raises_'.",
               "Find": "__drv_raisesIRQL",
               "ReplaceWith": "_IRQL_raises_"
             }
@@ -1895,7 +1895,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_requiresIRQL' for '_IRQL_requires_'.",
+              "Description": "Replace '__drv_requiresIRQL' with '_IRQL_requires_'.",
               "Find": "__drv_requiresIRQL",
               "ReplaceWith": "_IRQL_requires_"
             }
@@ -1909,7 +1909,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_maxIRQL' for '_IRQL_requires_max_'.",
+              "Description": "Replace '__drv_maxIRQL' with '_IRQL_requires_max_'.",
               "Find": "__drv_maxIRQL",
               "ReplaceWith": "_IRQL_requires_max_"
             }
@@ -1923,7 +1923,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_minIRQL' for '_IRQL_requires_min_'.",
+              "Description": "Replace '__drv_minIRQL' with '_IRQL_requires_min_'.",
               "Find": "__drv_minIRQL",
               "ReplaceWith": "_IRQL_requires_min_"
             }
@@ -1937,7 +1937,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_savesIRQL' for '_IRQL_saves_'.",
+              "Description": "Replace '__drv_savesIRQL' with '_IRQL_saves_'.",
               "Find": "__drv_savesIRQL",
               "ReplaceWith": "_IRQL_saves_"
             }
@@ -1951,7 +1951,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_savesIRQLGlobal' for '_IRQL_saves_global_'.",
+              "Description": "Replace '__drv_savesIRQLGlobal' with '_IRQL_saves_global_'.",
               "Find": "__drv_savesIRQLGlobal",
               "ReplaceWith": "_IRQL_saves_global_"
             }
@@ -1965,7 +1965,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_restoresIRQL' for '_IRQL_restores_'.",
+              "Description": "Replace '__drv_restoresIRQL' with '_IRQL_restores_'.",
               "Find": "__drv_restoresIRQL",
               "ReplaceWith": "_IRQL_restores_"
             }
@@ -1979,7 +1979,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_restoresIRQLGlobal' for '_IRQL_restores_global_'.",
+              "Description": "Replace '__drv_restoresIRQLGlobal' with '_IRQL_restores_global_'.",
               "Find": "__drv_restoresIRQLGlobal",
               "ReplaceWith": "_IRQL_restores_global_"
             }
@@ -1993,7 +1993,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_minFunctionIRQL' for '_IRQL_always_function_min_'.",
+              "Description": "Replace '__drv_minFunctionIRQL' with '_IRQL_always_function_min_'.",
               "Find": "__drv_minFunctionIRQL",
               "ReplaceWith": "_IRQL_always_function_min_"
             }
@@ -2007,7 +2007,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_maxFunctionIRQL' for '_IRQL_always_function_max_'.",
+              "Description": "Replace '__drv_maxFunctionIRQL' with '_IRQL_always_function_max_'.",
               "Find": "__drv_maxFunctionIRQL",
               "ReplaceWith": "_IRQL_always_function_max_"
             }
@@ -2021,7 +2021,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_sameIRQL' for '_IRQL_requires_same_'.",
+              "Description": "Replace '__drv_sameIRQL' with '_IRQL_requires_same_'.",
               "Find": "__drv_sameIRQL",
               "ReplaceWith": "_IRQL_requires_same_"
             }
@@ -2035,7 +2035,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_useCancelIRQL' for '_IRQL_uses_cancel_'.",
+              "Description": "Replace '__drv_useCancelIRQL' with '_IRQL_uses_cancel_'.",
               "Find": "__drv_useCancelIRQL",
               "ReplaceWith": "_IRQL_uses_cancel_"
             }
@@ -2049,7 +2049,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_isCancelIRQL' for '_IRQL_is_cancel_'.",
+              "Description": "Replace '__drv_isCancelIRQL' with '_IRQL_is_cancel_'.",
               "Find": "__drv_isCancelIRQL",
               "ReplaceWith": "_IRQL_is_cancel_"
             }
@@ -2063,7 +2063,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_clearDoInit' for '_Kernel_clear_do_init_'.",
+              "Description": "Replace '__drv_clearDoInit' with '_Kernel_clear_do_init_'.",
               "Find": "__drv_clearDoInit",
               "ReplaceWith": "_Kernel_clear_do_init_"
             }
@@ -2077,7 +2077,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_IoGetDmaAdapter' for '_Kernel_IoGetDmaAdapter_'.",
+              "Description": "Replace '__drv_IoGetDmaAdapter' with '_Kernel_IoGetDmaAdapter_'.",
               "Find": "__drv_IoGetDmaAdapter",
               "ReplaceWith": "_Kernel_IoGetDmaAdapter_"
             }
@@ -2091,7 +2091,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_floatSaved' for '_Kernel_float_saved_'.",
+              "Description": "Replace '__drv_floatSaved' with '_Kernel_float_saved_'.",
               "Find": "__drv_floatSaved",
               "ReplaceWith": "_Kernel_float_saved_"
             }
@@ -2105,7 +2105,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_floatRestored' for '_Kernel_float_restored_'.",
+              "Description": "Replace '__drv_floatRestored' with '_Kernel_float_restored_'.",
               "Find": "__drv_floatRestored",
               "ReplaceWith": "_Kernel_float_restored_"
             }
@@ -2119,7 +2119,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_floatUsed' for '_Kernel_float_used_'.",
+              "Description": "Replace '__drv_floatUsed' with '_Kernel_float_used_'.",
               "Find": "__drv_floatUsed",
               "ReplaceWith": "_Kernel_float_used_"
             }
@@ -2133,7 +2133,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_dispatchType' for '_Dispatch_type_'.",
+              "Description": "Replace '__drv_dispatchType' with '_Dispatch_type_'.",
               "Find": "__drv_dispatchType",
               "ReplaceWith": "_Dispatch_type_"
             }
@@ -2147,7 +2147,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_functionClass' for '_Function_class_'.",
+              "Description": "Replace '__drv_functionClass' with '_Function_class_'.",
               "Find": "__drv_functionClass",
               "ReplaceWith": "_Function_class_"
             }
@@ -2161,7 +2161,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_arg' for '_At_'.",
+              "Description": "Replace '__drv_arg' with '_At_'.",
               "Find": "__drv_arg",
               "ReplaceWith": "_At_"
             }
@@ -2175,7 +2175,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_constant' for '_Literal_'.",
+              "Description": "Replace '__drv_constant' with '_Literal_'.",
               "Find": "__drv_constant",
               "ReplaceWith": "_Literal_"
             }
@@ -2189,7 +2189,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_nonConstant' for '_Notliteral_'.",
+              "Description": "Replace '__drv_nonConstant' with '_Notliteral_'.",
               "Find": "__drv_nonConstant",
               "ReplaceWith": "_Notliteral_"
             }
@@ -2203,7 +2203,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_isObjectPointer' for '_Points_to_data_'.",
+              "Description": "Replace '__drv_isObjectPointer' with '_Points_to_data_'.",
               "Find": "__drv_isObjectPointer",
               "ReplaceWith": "_Points_to_data_"
             }
@@ -2217,7 +2217,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '__drv_inTry' for '_Maybe_raises_SEH_exception_'.",
+              "Description": "Replace '__drv_inTry' with '_Maybe_raises_SEH_exception_'.",
               "Find": "__drv_inTry",
               "ReplaceWith": "_Maybe_raises_SEH_exception_"
             }
@@ -2231,7 +2231,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Deref_out_' for '_Outptr_'.",
+              "Description": "Replace '_Deref_out_' with '_Outptr_'.",
               "Find": "_Deref_out_",
               "ReplaceWith": "_Outptr_"
             }
@@ -2245,7 +2245,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Deref_opt_out_' for '_Outptr_opt_'.",
+              "Description": "Replace '_Deref_opt_out_' with '_Outptr_opt_'.",
               "Find": "_Deref_opt_out_",
               "ReplaceWith": "_Outptr_opt_"
             }
@@ -2259,7 +2259,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Deref_out_opt_' for '_Outptr_result_maybenull_'.",
+              "Description": "Replace '_Deref_out_opt_' with '_Outptr_result_maybenull_'.",
               "Find": "_Deref_out_opt_",
               "ReplaceWith": "_Outptr_result_maybenull_"
             }
@@ -2273,7 +2273,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Deref_opt_out_opt_' for '_Outptr_opt_result_maybenull_'.",
+              "Description": "Replace '_Deref_opt_out_opt_' with '_Outptr_opt_result_maybenull_'.",
               "Find": "_Deref_opt_out_opt_",
               "ReplaceWith": "_Outptr_opt_result_maybenull_"
             }
@@ -2287,7 +2287,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_In_bytecount_' for '_In_reads_bytes_'.",
+              "Description": "Replace '_In_bytecount_' with '_In_reads_bytes_'.",
               "Find": "_In_bytecount_",
               "ReplaceWith": "_In_reads_bytes_"
             }
@@ -2301,7 +2301,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_In_bytecount_c_' for '_In_reads_bytes_'.",
+              "Description": "Replace '_In_bytecount_c_' with '_In_reads_bytes_'.",
               "Find": "_In_bytecount_c_",
               "ReplaceWith": "_In_reads_bytes_"
             }
@@ -2315,7 +2315,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_In_count_' for '_In_reads_'.",
+              "Description": "Replace '_In_count_' with '_In_reads_'.",
               "Find": "_In_count_",
               "ReplaceWith": "_In_reads_"
             }
@@ -2329,7 +2329,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_In_count_c_' for '_In_reads_'.",
+              "Description": "Replace '_In_count_c_' with '_In_reads_'.",
               "Find": "_In_count_c_",
               "ReplaceWith": "_In_reads_"
             }
@@ -2343,7 +2343,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_In_opt_bytecount_' for '_In_reads_bytes_opt_'.",
+              "Description": "Replace '_In_opt_bytecount_' with '_In_reads_bytes_opt_'.",
               "Find": "_In_opt_bytecount_",
               "ReplaceWith": "_In_reads_bytes_opt_"
             }
@@ -2357,7 +2357,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_In_opt_count_' for '_In_reads_opt_'.",
+              "Description": "Replace '_In_opt_count_' with '_In_reads_opt_'.",
               "Find": "_In_opt_count_",
               "ReplaceWith": "_In_reads_opt_"
             }
@@ -2371,7 +2371,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_In_opt_count_c_' for '_In_reads_opt_'.",
+              "Description": "Replace '_In_opt_count_c_' with '_In_reads_opt_'.",
               "Find": "_In_opt_count_c_",
               "ReplaceWith": "_In_reads_opt_"
             }
@@ -2385,7 +2385,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_In_opt_z_count_' for '_In_reads_opt_z_'.",
+              "Description": "Replace '_In_opt_z_count_' with '_In_reads_opt_z_'.",
               "Find": "_In_opt_z_count_",
               "ReplaceWith": "_In_reads_opt_z_"
             }
@@ -2399,7 +2399,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_In_ptrdiff_count_' for '_In_reads_to_ptr_'.",
+              "Description": "Replace '_In_ptrdiff_count_' with '_In_reads_to_ptr_'.",
               "Find": "_In_ptrdiff_count_",
               "ReplaceWith": "_In_reads_to_ptr_"
             }
@@ -2413,7 +2413,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_In_z_count_' for '_In_reads_z_'.",
+              "Description": "Replace '_In_z_count_' with '_In_reads_z_'.",
               "Find": "_In_z_count_",
               "ReplaceWith": "_In_reads_z_"
             }
@@ -2427,7 +2427,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_In_z_count_c_' for '_In_reads_z_'.",
+              "Description": "Replace '_In_z_count_c_' with '_In_reads_z_'.",
               "Find": "_In_z_count_c_",
               "ReplaceWith": "_In_reads_z_"
             }
@@ -2441,7 +2441,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Inout_bytecap_' for '_Inout_updates_bytes_'.",
+              "Description": "Replace '_Inout_bytecap_' with '_Inout_updates_bytes_'.",
               "Find": "_Inout_bytecap_",
               "ReplaceWith": "_Inout_updates_bytes_"
             }
@@ -2455,7 +2455,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Inout_cap_' for '_Inout_updates_'.",
+              "Description": "Replace '_Inout_cap_' with '_Inout_updates_'.",
               "Find": "_Inout_cap_",
               "ReplaceWith": "_Inout_updates_"
             }
@@ -2469,7 +2469,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Inout_cap_c_' for '_Inout_updates_'.",
+              "Description": "Replace '_Inout_cap_c_' with '_Inout_updates_'.",
               "Find": "_Inout_cap_c_",
               "ReplaceWith": "_Inout_updates_"
             }
@@ -2483,7 +2483,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Inout_count_' for '_Inout_updates_all_'.",
+              "Description": "Replace '_Inout_count_' with '_Inout_updates_all_'.",
               "Find": "_Inout_count_",
               "ReplaceWith": "_Inout_updates_all_"
             }
@@ -2497,7 +2497,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Inout_count_c_' for '_Inout_updates_all_'.",
+              "Description": "Replace '_Inout_count_c_' with '_Inout_updates_all_'.",
               "Find": "_Inout_count_c_",
               "ReplaceWith": "_Inout_updates_all_"
             }
@@ -2511,7 +2511,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Inout_opt_bytecap_' for '_Inout_updates_bytes_opt_'.",
+              "Description": "Replace '_Inout_opt_bytecap_' with '_Inout_updates_bytes_opt_'.",
               "Find": "_Inout_opt_bytecap_",
               "ReplaceWith": "_Inout_updates_bytes_opt_"
             }
@@ -2525,7 +2525,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Inout_opt_cap_' for '_Inout_updates_opt_'.",
+              "Description": "Replace '_Inout_opt_cap_' with '_Inout_updates_opt_'.",
               "Find": "_Inout_opt_cap_",
               "ReplaceWith": "_Inout_updates_opt_"
             }
@@ -2539,7 +2539,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Inout_opt_cap_c_' for '_Inout_updates_opt_'.",
+              "Description": "Replace '_Inout_opt_cap_c_' with '_Inout_updates_opt_'.",
               "Find": "_Inout_opt_cap_c_",
               "ReplaceWith": "_Inout_updates_opt_"
             }
@@ -2553,7 +2553,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Inout_z_cap_' for '_Inout_updates_z_'.",
+              "Description": "Replace '_Inout_z_cap_' with '_Inout_updates_z_'.",
               "Find": "_Inout_z_cap_",
               "ReplaceWith": "_Inout_updates_z_"
             }
@@ -2567,7 +2567,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Inout_z_cap_c_' for '_Inout_updates_z_'.",
+              "Description": "Replace '_Inout_z_cap_c_' with '_Inout_updates_z_'.",
               "Find": "_Inout_z_cap_c_",
               "ReplaceWith": "_Inout_updates_z_"
             }
@@ -2581,7 +2581,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_bytecap_' for '_Out_writes_bytes_'.",
+              "Description": "Replace '_Out_bytecap_' with '_Out_writes_bytes_'.",
               "Find": "_Out_bytecap_",
               "ReplaceWith": "_Out_writes_bytes_"
             }
@@ -2595,7 +2595,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_bytecap_c_' for '_Out_writes_bytes_'.",
+              "Description": "Replace '_Out_bytecap_c_' with '_Out_writes_bytes_'.",
               "Find": "_Out_bytecap_c_",
               "ReplaceWith": "_Out_writes_bytes_"
             }
@@ -2609,7 +2609,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_bytecap_post_bytecount_' for '_Out_writes_bytes_to_'.",
+              "Description": "Replace '_Out_bytecap_post_bytecount_' with '_Out_writes_bytes_to_'.",
               "Find": "_Out_bytecap_post_bytecount_",
               "ReplaceWith": "_Out_writes_bytes_to_"
             }
@@ -2623,7 +2623,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_bytecapcount_' for '_Out_writes_bytes_all_'.",
+              "Description": "Replace '_Out_bytecapcount_' with '_Out_writes_bytes_all_'.",
               "Find": "_Out_bytecapcount_",
               "ReplaceWith": "_Out_writes_bytes_all_"
             }
@@ -2637,7 +2637,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_cap_' for '_Out_writes_'.",
+              "Description": "Replace '_Out_cap_' with '_Out_writes_'.",
               "Find": "_Out_cap_",
               "ReplaceWith": "_Out_writes_"
             }
@@ -2651,7 +2651,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_cap_c_' for '_Out_writes_'.",
+              "Description": "Replace '_Out_cap_c_' with '_Out_writes_'.",
               "Find": "_Out_cap_c_",
               "ReplaceWith": "_Out_writes_"
             }
@@ -2665,7 +2665,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_cap_post_count_' for '_Out_writes_to_'.",
+              "Description": "Replace '_Out_cap_post_count_' with '_Out_writes_to_'.",
               "Find": "_Out_cap_post_count_",
               "ReplaceWith": "_Out_writes_to_"
             }
@@ -2679,7 +2679,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_capcount_' for '_Out_writes_all_'.",
+              "Description": "Replace '_Out_capcount_' with '_Out_writes_all_'.",
               "Find": "_Out_capcount_",
               "ReplaceWith": "_Out_writes_all_"
             }
@@ -2693,7 +2693,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_opt_bytecap_' for '_Out_writes_bytes_opt_'.",
+              "Description": "Replace '_Out_opt_bytecap_' with '_Out_writes_bytes_opt_'.",
               "Find": "_Out_opt_bytecap_",
               "ReplaceWith": "_Out_writes_bytes_opt_"
             }
@@ -2707,7 +2707,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_opt_bytecap_post_bytecount_' for '_Out_writes_bytes_to_opt_'.",
+              "Description": "Replace '_Out_opt_bytecap_post_bytecount_' with '_Out_writes_bytes_to_opt_'.",
               "Find": "_Out_opt_bytecap_post_bytecount_",
               "ReplaceWith": "_Out_writes_bytes_to_opt_"
             }
@@ -2721,7 +2721,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_opt_bytecapcount_' for '_Out_writes_bytes_all_opt_'.",
+              "Description": "Replace '_Out_opt_bytecapcount_' with '_Out_writes_bytes_all_opt_'.",
               "Find": "_Out_opt_bytecapcount_",
               "ReplaceWith": "_Out_writes_bytes_all_opt_"
             }
@@ -2735,7 +2735,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_opt_cap_' for '_Out_writes_opt_'.",
+              "Description": "Replace '_Out_opt_cap_' with '_Out_writes_opt_'.",
               "Find": "_Out_opt_cap_",
               "ReplaceWith": "_Out_writes_opt_"
             }
@@ -2749,7 +2749,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_opt_cap_c_' for '_Out_writes_opt_'.",
+              "Description": "Replace '_Out_opt_cap_c_' with '_Out_writes_opt_'.",
               "Find": "_Out_opt_cap_c_",
               "ReplaceWith": "_Out_writes_opt_"
             }
@@ -2763,7 +2763,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_opt_cap_post_count_' for '_Out_writes_to_opt_'.",
+              "Description": "Replace '_Out_opt_cap_post_count_' with '_Out_writes_to_opt_'.",
               "Find": "_Out_opt_cap_post_count_",
               "ReplaceWith": "_Out_writes_to_opt_"
             }
@@ -2777,7 +2777,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_opt_capcount_' for '_Out_writes_all_opt_'.",
+              "Description": "Replace '_Out_opt_capcount_' with '_Out_writes_all_opt_'.",
               "Find": "_Out_opt_capcount_",
               "ReplaceWith": "_Out_writes_all_opt_"
             }
@@ -2791,7 +2791,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_opt_z_cap_' for '_Out_writes_opt_z_'.",
+              "Description": "Replace '_Out_opt_z_cap_' with '_Out_writes_opt_z_'.",
               "Find": "_Out_opt_z_cap_",
               "ReplaceWith": "_Out_writes_opt_z_"
             }
@@ -2805,7 +2805,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_z_cap_' for '_Out_writes_z_'.",
+              "Description": "Replace '_Out_z_cap_' with '_Out_writes_z_'.",
               "Find": "_Out_z_cap_",
               "ReplaceWith": "_Out_writes_z_"
             }
@@ -2819,7 +2819,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Out_z_cap_c_' for '_Out_writes_z_'.",
+              "Description": "Replace '_Out_z_cap_c_' with '_Out_writes_z_'.",
               "Find": "_Out_z_cap_c_",
               "ReplaceWith": "_Out_writes_z_"
             }
@@ -2833,7 +2833,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Post_bytecount_' for '_Post_readable_byte_size_'.",
+              "Description": "Replace '_Post_bytecount_' with '_Post_readable_byte_size_'.",
               "Find": "_Post_bytecount_",
               "ReplaceWith": "_Post_readable_byte_size_"
             }
@@ -2847,7 +2847,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Post_bytecount_c_' for '_Post_readable_byte_size_'.",
+              "Description": "Replace '_Post_bytecount_c_' with '_Post_readable_byte_size_'.",
               "Find": "_Post_bytecount_c_",
               "ReplaceWith": "_Post_readable_byte_size_"
             }
@@ -2861,7 +2861,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Post_count_' for '_Post_readable_size_'.",
+              "Description": "Replace '_Post_count_' with '_Post_readable_size_'.",
               "Find": "_Post_count_",
               "ReplaceWith": "_Post_readable_size_"
             }
@@ -2875,7 +2875,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Post_count_c_' for '_Post_readable_size_'.",
+              "Description": "Replace '_Post_count_c_' with '_Post_readable_size_'.",
               "Find": "_Post_count_c_",
               "ReplaceWith": "_Post_readable_size_"
             }
@@ -2889,7 +2889,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Post_z_count_' for '_Post_z_ _Post_readable_size_'.",
+              "Description": "Replace '_Post_z_count_' with '_Post_z_ _Post_readable_size_'.",
               "Find": "_Post_z_count_",
               "ReplaceWith": "_Post_z_ _Post_readable_size_"
             }
@@ -2903,7 +2903,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Pre_count_' for '_Pre_readable_size_'.",
+              "Description": "Replace '_Pre_count_' with '_Pre_readable_size_'.",
               "Find": "_Pre_count_",
               "ReplaceWith": "_Pre_readable_size_"
             }
@@ -2917,7 +2917,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Ret_bytecap_' for '_Ret_notnull_ _Post_writable_byte_size_'.",
+              "Description": "Replace '_Ret_bytecap_' with '_Ret_notnull_ _Post_writable_byte_size_'.",
               "Find": "_Ret_bytecap_",
               "ReplaceWith": "_Ret_notnull_ _Post_writable_byte_size_"
             }
@@ -2931,7 +2931,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Ret_cap_' for '_Ret_notnull_ _Post_writable_size_'.",
+              "Description": "Replace '_Ret_cap_' with '_Ret_notnull_ _Post_writable_size_'.",
               "Find": "_Ret_cap_",
               "ReplaceWith": "_Ret_notnull_ _Post_writable_size_"
             }
@@ -2945,7 +2945,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Ret_opt_bytecap_' for '_Ret_maybenull_ _Post_writable_byte_size_'.",
+              "Description": "Replace '_Ret_opt_bytecap_' with '_Ret_maybenull_ _Post_writable_byte_size_'.",
               "Find": "_Ret_opt_bytecap_",
               "ReplaceWith": "_Ret_maybenull_ _Post_writable_byte_size_"
             }
@@ -2959,7 +2959,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Ret_opt_count_' for '_Ret_writes_maybenull_'.",
+              "Description": "Replace '_Ret_opt_count_' with '_Ret_writes_maybenull_'.",
               "Find": "_Ret_opt_count_",
               "ReplaceWith": "_Ret_writes_maybenull_"
             }
@@ -2973,7 +2973,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '_Ret_opt_z_cap_' for '_Ret_maybenull_z_ _Post_writable_byte_size_'.",
+              "Description": "Replace '_Ret_opt_z_cap_' with '_Ret_maybenull_z_ _Post_writable_byte_size_'.",
               "Find": "_Ret_opt_z_cap_",
               "ReplaceWith": "_Ret_maybenull_z_ _Post_writable_byte_size_"
             }
@@ -2987,7 +2987,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Access=SA_Read )]' for '_Pre_readonly_'.",
+              "Description": "Replace '[SA_Pre(Access=SA_Read )]' with '_Pre_readonly_'.",
               "Find": "[SA_Pre(Access=SA_Read )]",
               "ReplaceWith": "_Pre_readonly_"
             }
@@ -3001,7 +3001,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Access=SA_Write)]' for '_Pre_writeonly_'.",
+              "Description": "Replace '[SA_Pre(Access=SA_Write)]' with '_Pre_writeonly_'.",
               "Find": "[SA_Pre(Access=SA_Write)]",
               "ReplaceWith": "_Pre_writeonly_"
             }
@@ -3015,7 +3015,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(0), Null=SA_Maybe )]' for '_Pre_maybenull_'.",
+              "Description": "Replace '[SA_Pre( Deref=(0), Null=SA_Maybe )]' with '_Pre_maybenull_'.",
               "Find": "[SA_Pre( Deref=(0), Null=SA_Maybe )]",
               "ReplaceWith": "_Pre_maybenull_"
             }
@@ -3029,7 +3029,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(0), NullTerminated=SA_Yes )]' for '_Pre_z_'.",
+              "Description": "Replace '[SA_Pre( Deref=(0), NullTerminated=SA_Yes )]' with '_Pre_z_'.",
               "Find": "[SA_Pre( Deref=(0), NullTerminated=SA_Yes )]",
               "ReplaceWith": "_Pre_z_"
             }
@@ -3043,7 +3043,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=0, NullTerminated=SA_Yes )]' for '_Pre_z_'.",
+              "Description": "Replace '[SA_Pre( Deref=0, NullTerminated=SA_Yes )]' with '_Pre_z_'.",
               "Find": "[SA_Pre( Deref=0, NullTerminated=SA_Yes )]",
               "ReplaceWith": "_Pre_z_"
             }
@@ -3057,7 +3057,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Deref=0, Valid=SA_No)]' for '_Pre_invalid_'.",
+              "Description": "Replace '[SA_Pre(Deref=0, Valid=SA_No)]' with '_Pre_invalid_'.",
               "Find": "[SA_Pre(Deref=0, Valid=SA_No)]",
               "ReplaceWith": "_Pre_invalid_"
             }
@@ -3071,7 +3071,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre (Deref=0, ValidElements=\"%1\")]' for '_Pre_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre (Deref=0, ValidElements=\"%1\")]' with '_Pre_readable_size_(%1)'.",
               "Find": "[SA_Pre (Deref=0, ValidElements=\"%1\")]",
               "ReplaceWith": "_Pre_readable_size_(%1)"
             }
@@ -3085,7 +3085,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(0), ValidElements = \"%1\" )]' for '_Pre_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre( Deref=(0), ValidElements = \"%1\" )]' with '_Pre_readable_size_(%1)'.",
               "Find": "[SA_Pre( Deref=(0), ValidElements = \"%1\" )]",
               "ReplaceWith": "_Pre_readable_size_(%1)"
             }
@@ -3099,7 +3099,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(0), ValidElementsConst=(%1) )]' for '_Pre_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre( Deref=(0), ValidElementsConst=(%1) )]' with '_Pre_readable_size_(%1)'.",
               "Find": "[SA_Pre( Deref=(0), ValidElementsConst=(%1) )]",
               "ReplaceWith": "_Pre_readable_size_(%1)"
             }
@@ -3113,7 +3113,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Deref=0, WritableBytes = \"%1\")]' for '_Pre_writable_byte_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(Deref=0, WritableBytes = \"%1\")]' with '_Pre_writable_byte_size_(%1)'.",
               "Find": "[SA_Pre(Deref=0, WritableBytes = \"%1\")]",
               "ReplaceWith": "_Pre_writable_byte_size_(%1)"
             }
@@ -3127,7 +3127,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(0), WritableElements = \"%1\" )]' for '_Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre( Deref=(0), WritableElements = \"%1\" )]' with '_Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre( Deref=(0), WritableElements = \"%1\" )]",
               "ReplaceWith": "_Pre_writable_size_(%1)"
             }
@@ -3141,7 +3141,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(0), WritableElementsConst=(%1) )]' for '_Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre( Deref=(0), WritableElementsConst=(%1) )]' with '_Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre( Deref=(0), WritableElementsConst=(%1) )]",
               "ReplaceWith": "_Pre_writable_size_(%1)"
             }
@@ -3155,7 +3155,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=1, Access=SA_Write )]' for '_Deref_pre_writeonly_'.",
+              "Description": "Replace '[SA_Pre( Deref=1, Access=SA_Write )]' with '_Deref_pre_writeonly_'.",
               "Find": "[SA_Pre( Deref=1, Access=SA_Write )]",
               "ReplaceWith": "_Deref_pre_writeonly_"
             }
@@ -3169,7 +3169,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=1, Access=SA_Read )]' for '_Deref_pre_readonly_'.",
+              "Description": "Replace '[SA_Pre( Deref=1, Access=SA_Read )]' with '_Deref_pre_readonly_'.",
               "Find": "[SA_Pre( Deref=1, Access=SA_Read )]",
               "ReplaceWith": "_Deref_pre_readonly_"
             }
@@ -3183,7 +3183,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=1, Access=SA_ReadWrite )]' for '_Inout_'.",
+              "Description": "Replace '[SA_Pre( Deref=1, Access=SA_ReadWrite )]' with '_Inout_'.",
               "Find": "[SA_Pre( Deref=1, Access=SA_ReadWrite )]",
               "ReplaceWith": "_Inout_"
             }
@@ -3197,7 +3197,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(1), Null=SA_Yes )]' for '_Deref_pre_null_'.",
+              "Description": "Replace '[SA_Pre( Deref=(1), Null=SA_Yes )]' with '_Deref_pre_null_'.",
               "Find": "[SA_Pre( Deref=(1), Null=SA_Yes )]",
               "ReplaceWith": "_Deref_pre_null_"
             }
@@ -3211,7 +3211,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(1), NullTerminated=SA_Yes )]' for '_Deref_pre_z_'.",
+              "Description": "Replace '[SA_Pre( Deref=(1), NullTerminated=SA_Yes )]' with '_Deref_pre_z_'.",
               "Find": "[SA_Pre( Deref=(1), NullTerminated=SA_Yes )]",
               "ReplaceWith": "_Deref_pre_z_"
             }
@@ -3225,7 +3225,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(1), Valid=SA_Yes )]' for '_Deref_pre_valid_'.",
+              "Description": "Replace '[SA_Pre( Deref=(1), Valid=SA_Yes )]' with '_Deref_pre_valid_'.",
               "Find": "[SA_Pre( Deref=(1), Valid=SA_Yes )]",
               "ReplaceWith": "_Deref_pre_valid_"
             }
@@ -3239,7 +3239,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(1), Valid=SA_No )]' for '_Deref_pre_invalid_'.",
+              "Description": "Replace '[SA_Pre( Deref=(1), Valid=SA_No )]' with '_Deref_pre_invalid_'.",
               "Find": "[SA_Pre( Deref=(1), Valid=SA_No )]",
               "ReplaceWith": "_Deref_pre_invalid_"
             }
@@ -3253,7 +3253,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Deref=1,Valid=SA_No)]' for '_Deref_pre_invalid_'.",
+              "Description": "Replace '[SA_Pre(Deref=1,Valid=SA_No)]' with '_Deref_pre_invalid_'.",
               "Find": "[SA_Pre(Deref=1,Valid=SA_No)]",
               "ReplaceWith": "_Deref_pre_invalid_"
             }
@@ -3267,7 +3267,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Deref=1, Valid=SA_Yes)]' for '_Deref_pre_valid_'.",
+              "Description": "Replace '[SA_Pre(Deref=1, Valid=SA_Yes)]' with '_Deref_pre_valid_'.",
               "Find": "[SA_Pre(Deref=1, Valid=SA_Yes)]",
               "ReplaceWith": "_Deref_pre_valid_"
             }
@@ -3281,7 +3281,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(1), Null=SA_No )]' for '_Deref_pre_notnull_'.",
+              "Description": "Replace '[SA_Pre( Deref=(1), Null=SA_No )]' with '_Deref_pre_notnull_'.",
               "Find": "[SA_Pre( Deref=(1), Null=SA_No )]",
               "ReplaceWith": "_Deref_pre_notnull_"
             }
@@ -3295,7 +3295,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Deref=1,Valid=SA_Yes,Access=SA_Read)]' for '_Deref_pre_valid_ _Deref_pre_readonly_'.",
+              "Description": "Replace '[SA_Pre(Deref=1,Valid=SA_Yes,Access=SA_Read)]' with '_Deref_pre_valid_ _Deref_pre_readonly_'.",
               "Find": "[SA_Pre(Deref=1,Valid=SA_Yes,Access=SA_Read)]",
               "ReplaceWith": "_Deref_pre_valid_ _Deref_pre_readonly_"
             }
@@ -3309,7 +3309,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Deref=1, ValidBytesConst=%1)]' for '_Deref_pre_bytecount_(%1)'.",
+              "Description": "Replace '[SA_Pre(Deref=1, ValidBytesConst=%1)]' with '_Deref_pre_bytecount_(%1)'.",
               "Find": "[SA_Pre(Deref=1, ValidBytesConst=%1)]",
               "ReplaceWith": "_Deref_pre_bytecount_(%1)"
             }
@@ -3323,7 +3323,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Deref=1, ValidElementsConst=%1)]' for '_Deref_pre_count_(%1)'.",
+              "Description": "Replace '[SA_Pre(Deref=1, ValidElementsConst=%1)]' with '_Deref_pre_count_(%1)'.",
               "Find": "[SA_Pre(Deref=1, ValidElementsConst=%1)]",
               "ReplaceWith": "_Deref_pre_count_(%1)"
             }
@@ -3337,7 +3337,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Deref=1,ValidElementsConst=%1,ElementSizeConst=%2)]' for '_Deref_pre_count_(%1)'.",
+              "Description": "Replace '[SA_Pre(Deref=1,ValidElementsConst=%1,ElementSizeConst=%2)]' with '_Deref_pre_count_(%1)'.",
               "Find": "[SA_Pre(Deref=1,ValidElementsConst=%1,ElementSizeConst=%2)]",
               "ReplaceWith": "_Deref_pre_count_(%1)"
             }
@@ -3351,7 +3351,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Deref=1, WritableBytes = \"%1\")]' for '_Deref_pre_cap_(%1)'.",
+              "Description": "Replace '[SA_Pre(Deref=1, WritableBytes = \"%1\")]' with '_Deref_pre_cap_(%1)'.",
               "Find": "[SA_Pre(Deref=1, WritableBytes = \"%1\")]",
               "ReplaceWith": "_Deref_pre_cap_(%1)"
             }
@@ -3365,7 +3365,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Deref=2,Valid=SA_No)]' for '_At_(**_Curr_, _Pre_invalid_)'.",
+              "Description": "Replace '[SA_Pre(Deref=2,Valid=SA_No)]' with '_At_(**_Curr_, _Pre_invalid_)'.",
               "Find": "[SA_Pre(Deref=2,Valid=SA_No)]",
               "ReplaceWith": "_At_(**_Curr_, _Pre_invalid_)"
             }
@@ -3379,7 +3379,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_Yes)]' for '_Pre_null_'.",
+              "Description": "Replace '[SA_Pre(Null=SA_Yes)]' with '_Pre_null_'.",
               "Find": "[SA_Pre(Null=SA_Yes)]",
               "ReplaceWith": "_Pre_null_"
             }
@@ -3393,7 +3393,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_No)]' for '_Pre_notnull_'.",
+              "Description": "Replace '[SA_Pre(Null=SA_No)]' with '_Pre_notnull_'.",
               "Find": "[SA_Pre(Null=SA_No)]",
               "ReplaceWith": "_Pre_notnull_"
             }
@@ -3407,7 +3407,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_No,NullTerminated=SA_Yes,WritableElements=\"%1\")]' for '_Pre_z_  _Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(Null=SA_No,NullTerminated=SA_Yes,WritableElements=\"%1\")]' with '_Pre_z_  _Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre(Null=SA_No,NullTerminated=SA_Yes,WritableElements=\"%1\")]",
               "ReplaceWith": "_Pre_z_  _Pre_writable_size_(%1)"
             }
@@ -3421,7 +3421,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_Maybe)]' for '_Pre_maybenull_'.",
+              "Description": "Replace '[SA_Pre(Null=SA_Maybe)]' with '_Pre_maybenull_'.",
               "Find": "[SA_Pre(Null=SA_Maybe)]",
               "ReplaceWith": "_Pre_maybenull_"
             }
@@ -3435,7 +3435,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_No,Notref=1)]' for '_Pre_notnull_'.",
+              "Description": "Replace '[SA_Pre(Null=SA_No,Notref=1)]' with '_Pre_notnull_'.",
               "Find": "[SA_Pre(Null=SA_No,Notref=1)]",
               "ReplaceWith": "_Pre_notnull_"
             }
@@ -3449,7 +3449,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_Yes, Valid=SA_No)]' for '_Pre_null_ _Pre_invalid_'.",
+              "Description": "Replace '[SA_Pre(Null=SA_Yes, Valid=SA_No)]' with '_Pre_null_ _Pre_invalid_'.",
               "Find": "[SA_Pre(Null=SA_Yes, Valid=SA_No)]",
               "ReplaceWith": "_Pre_null_ _Pre_invalid_"
             }
@@ -3463,7 +3463,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_No, Valid=SA_No)]' for '_Pre_notnull_ _Pre_invalid_'.",
+              "Description": "Replace '[SA_Pre(Null=SA_No, Valid=SA_No)]' with '_Pre_notnull_ _Pre_invalid_'.",
               "Find": "[SA_Pre(Null=SA_No, Valid=SA_No)]",
               "ReplaceWith": "_Pre_notnull_ _Pre_invalid_"
             }
@@ -3477,7 +3477,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_Maybe, Valid=SA_No)]' for '_Pre_maybenull_ _Pre_valid_'.",
+              "Description": "Replace '[SA_Pre(Null=SA_Maybe, Valid=SA_No)]' with '_Pre_maybenull_ _Pre_valid_'.",
               "Find": "[SA_Pre(Null=SA_Maybe, Valid=SA_No)]",
               "ReplaceWith": "_Pre_maybenull_ _Pre_valid_"
             }
@@ -3491,7 +3491,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_Yes, Valid=SA_Yes)]' for '_Pre_null_ _Pre_valid_'.",
+              "Description": "Replace '[SA_Pre(Null=SA_Yes, Valid=SA_Yes)]' with '_Pre_null_ _Pre_valid_'.",
               "Find": "[SA_Pre(Null=SA_Yes, Valid=SA_Yes)]",
               "ReplaceWith": "_Pre_null_ _Pre_valid_"
             }
@@ -3505,7 +3505,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_Yes,WritableBytesParam=\"%1\")]' for '_Pre_writable_byte_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(Null=SA_Yes,WritableBytesParam=\"%1\")]' with '_Pre_writable_byte_size_(%1)'.",
               "Find": "[SA_Pre(Null=SA_Yes,WritableBytesParam=\"%1\")]",
               "ReplaceWith": "_Pre_writable_byte_size_(%1)"
             }
@@ -3519,7 +3519,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_Yes),SA_Pre(WritableElementsParam=\"%1\")]' for '_Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(Null=SA_Yes),SA_Pre(WritableElementsParam=\"%1\")]' with '_Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre(Null=SA_Yes),SA_Pre(WritableElementsParam=\"%1\")]",
               "ReplaceWith": "_Pre_writable_size_(%1)"
             }
@@ -3533,7 +3533,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(ValidElementsParam=\"%1\", ElementSizeParam=\"%2\")]' for '_In_reads_(%1)'.",
+              "Description": "Replace '[SA_Pre(ValidElementsParam=\"%1\", ElementSizeParam=\"%2\")]' with '_In_reads_(%1)'.",
               "Find": "[SA_Pre(ValidElementsParam=\"%1\", ElementSizeParam=\"%2\")]",
               "ReplaceWith": "_In_reads_(%1)"
             }
@@ -3547,7 +3547,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_No,WritableElements=\"%1\")]' for '_Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(Null=SA_No,WritableElements=\"%1\")]' with '_Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre(Null=SA_No,WritableElements=\"%1\")]",
               "ReplaceWith": "_Pre_writable_size_(%1)"
             }
@@ -3561,7 +3561,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=SA_No,WritableElementsConst=%1)]' for '_Pre_notnull_    _Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(Null=SA_No,WritableElementsConst=%1)]' with '_Pre_notnull_    _Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre(Null=SA_No,WritableElementsConst=%1)]",
               "ReplaceWith": "_Pre_notnull_    _Pre_writable_size_(%1)"
             }
@@ -3575,7 +3575,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(NullTerminated=SA_Yes)]' for '_Pre_z_'.",
+              "Description": "Replace '[SA_Pre(NullTerminated=SA_Yes)]' with '_Pre_z_'.",
               "Find": "[SA_Pre(NullTerminated=SA_Yes)]",
               "ReplaceWith": "_Pre_z_"
             }
@@ -3589,7 +3589,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(NullTerminated=SA_Yes,Null=SA_Maybe)]' for '_Pre_z_ _Pre_maybenull_'.",
+              "Description": "Replace '[SA_Pre(NullTerminated=SA_Yes,Null=SA_Maybe)]' with '_Pre_z_ _Pre_maybenull_'.",
               "Find": "[SA_Pre(NullTerminated=SA_Yes,Null=SA_Maybe)]",
               "ReplaceWith": "_Pre_z_ _Pre_maybenull_"
             }
@@ -3603,7 +3603,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(NullTerminated=SA_Yes, Valid=SA_Yes)]' for '_Pre_z_ _Pre_valid_'.",
+              "Description": "Replace '[SA_Pre(NullTerminated=SA_Yes, Valid=SA_Yes)]' with '_Pre_z_ _Pre_valid_'.",
               "Find": "[SA_Pre(NullTerminated=SA_Yes, Valid=SA_Yes)]",
               "ReplaceWith": "_Pre_z_ _Pre_valid_"
             }
@@ -3617,7 +3617,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(NullTerminated=SA_No, Null=SA_No, ValidElementsConst=%1, WritableElementsConst=%2)]' for '_Pre_readable_size_(%1) _Pre_writable_size_(%2)'.",
+              "Description": "Replace '[SA_Pre(NullTerminated=SA_No, Null=SA_No, ValidElementsConst=%1, WritableElementsConst=%2)]' with '_Pre_readable_size_(%1) _Pre_writable_size_(%2)'.",
               "Find": "[SA_Pre(NullTerminated=SA_No, Null=SA_No, ValidElementsConst=%1, WritableElementsConst=%2)]",
               "ReplaceWith": "_Pre_readable_size_(%1) _Pre_writable_size_(%2)"
             }
@@ -3631,7 +3631,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(NullTerminated=SA_No, Valid=SA_Yes)]' for '_Pre_valid_'.",
+              "Description": "Replace '[SA_Pre(NullTerminated=SA_No, Valid=SA_Yes)]' with '_Pre_valid_'.",
               "Find": "[SA_Pre(NullTerminated=SA_No, Valid=SA_Yes)]",
               "ReplaceWith": "_Pre_valid_"
             }
@@ -3645,7 +3645,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(ElementSizeConst=%1, ValidElementsConst=%2)]' for '_Pre_readable_size_(%2)'.",
+              "Description": "Replace '[SA_Pre(ElementSizeConst=%1, ValidElementsConst=%2)]' with '_Pre_readable_size_(%2)'.",
               "Find": "[SA_Pre(ElementSizeConst=%1, ValidElementsConst=%2)]",
               "ReplaceWith": "_Pre_readable_size_(%2)"
             }
@@ -3659,7 +3659,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(ElementSizeConst=%1, WritableElementsConst=%2)]' for '_Pre_writable_size_(%2)'.",
+              "Description": "Replace '[SA_Pre(ElementSizeConst=%1, WritableElementsConst=%2)]' with '_Pre_writable_size_(%2)'.",
               "Find": "[SA_Pre(ElementSizeConst=%1, WritableElementsConst=%2)]",
               "ReplaceWith": "_Pre_writable_size_(%2)"
             }
@@ -3673,7 +3673,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_FormatString(Style=\"printf\")]' for '_Printf_format_string_'.",
+              "Description": "Replace '[SA_FormatString(Style=\"printf\")]' with '_Printf_format_string_'.",
               "Find": "[SA_FormatString(Style=\"printf\")]",
               "ReplaceWith": "_Printf_format_string_"
             }
@@ -3687,7 +3687,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_FormatString( Style=\"scanf\" )]' for '_Scanf_format_string_'.",
+              "Description": "Replace '[SA_FormatString( Style=\"scanf\" )]' with '_Scanf_format_string_'.",
               "Find": "[SA_FormatString( Style=\"scanf\" )]",
               "ReplaceWith": "_Scanf_format_string_"
             }
@@ -3701,7 +3701,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Valid=SA_Yes )]' for '_Pre_valid_'.",
+              "Description": "Replace '[SA_Pre( Valid=SA_Yes )]' with '_Pre_valid_'.",
               "Find": "[SA_Pre( Valid=SA_Yes )]",
               "ReplaceWith": "_Pre_valid_"
             }
@@ -3715,7 +3715,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Valid=SA_Yes, Null=SA_No)]' for '_Pre_valid_ _Pre_notnull_'.",
+              "Description": "Replace '[SA_Pre(Valid=SA_Yes, Null=SA_No)]' with '_Pre_valid_ _Pre_notnull_'.",
               "Find": "[SA_Pre(Valid=SA_Yes, Null=SA_No)]",
               "ReplaceWith": "_Pre_valid_ _Pre_notnull_"
             }
@@ -3729,7 +3729,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Valid=SA_Yes, Null=SA_No, ValidElementsParam=%1)]' for '_Pre_valid_ _Pre_notnull_ _Pre_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(Valid=SA_Yes, Null=SA_No, ValidElementsParam=%1)]' with '_Pre_valid_ _Pre_notnull_ _Pre_readable_size_(%1)'.",
               "Find": "[SA_Pre(Valid=SA_Yes, Null=SA_No, ValidElementsParam=%1)]",
               "ReplaceWith": "_Pre_valid_ _Pre_notnull_ _Pre_readable_size_(%1)"
             }
@@ -3743,7 +3743,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Valid=SA_Yes, Null=SA_No, WritableElements=\"%1\")]' for '_Pre_valid_ _Pre_notnull_ _Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(Valid=SA_Yes, Null=SA_No, WritableElements=\"%1\")]' with '_Pre_valid_ _Pre_notnull_ _Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre(Valid=SA_Yes, Null=SA_No, WritableElements=\"%1\")]",
               "ReplaceWith": "_Pre_valid_ _Pre_notnull_ _Pre_writable_size_(%1)"
             }
@@ -3757,7 +3757,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( ValidBytesConst=%1 )]' for '_Pre_readable_byte_size_(%1)'.",
+              "Description": "Replace '[SA_Pre( ValidBytesConst=%1 )]' with '_Pre_readable_byte_size_(%1)'.",
               "Find": "[SA_Pre( ValidBytesConst=%1 )]",
               "ReplaceWith": "_Pre_readable_byte_size_(%1)"
             }
@@ -3771,7 +3771,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( ValidBytesConst=%1, Condition=\"%2\" )]' for '_When_(%2, _Pre_readable_byte_size_(%1))'.",
+              "Description": "Replace '[SA_Pre( ValidBytesConst=%1, Condition=\"%2\" )]' with '_When_(%2, _Pre_readable_byte_size_(%1))'.",
               "Find": "[SA_Pre( ValidBytesConst=%1, Condition=\"%2\" )]",
               "ReplaceWith": "_When_(%2, _Pre_readable_byte_size_(%1))"
             }
@@ -3785,7 +3785,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre (ValidBytes=\"%1\")]' for '_Pre_readable_byte_size_(%1)'.",
+              "Description": "Replace '[SA_Pre (ValidBytes=\"%1\")]' with '_Pre_readable_byte_size_(%1)'.",
               "Find": "[SA_Pre (ValidBytes=\"%1\")]",
               "ReplaceWith": "_Pre_readable_byte_size_(%1)"
             }
@@ -3799,7 +3799,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre (ValidElements=\"%1\")]' for '_Pre_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre (ValidElements=\"%1\")]' with '_Pre_readable_size_(%1)'.",
               "Find": "[SA_Pre (ValidElements=\"%1\")]",
               "ReplaceWith": "_Pre_readable_size_(%1)"
             }
@@ -3813,7 +3813,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre (ValidElementsLength=\"%1\")]' for '_Pre_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre (ValidElementsLength=\"%1\")]' with '_Pre_readable_size_(%1)'.",
               "Find": "[SA_Pre (ValidElementsLength=\"%1\")]",
               "ReplaceWith": "_Pre_readable_size_(%1)"
             }
@@ -3827,7 +3827,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( ValidElementsConst=%1 )]' for '_Pre_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre( ValidElementsConst=%1 )]' with '_Pre_readable_size_(%1)'.",
               "Find": "[SA_Pre( ValidElementsConst=%1 )]",
               "ReplaceWith": "_Pre_readable_size_(%1)"
             }
@@ -3841,7 +3841,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(ValidElementsConst=%1, WritableElementsConst=%2, Null=SA_No)]' for '_Pre_readable_size_(%1) _Pre_writable_size_(%2)'.",
+              "Description": "Replace '[SA_Pre(ValidElementsConst=%1, WritableElementsConst=%2, Null=SA_No)]' with '_Pre_readable_size_(%1) _Pre_writable_size_(%2)'.",
               "Find": "[SA_Pre(ValidElementsConst=%1, WritableElementsConst=%2, Null=SA_No)]",
               "ReplaceWith": "_Pre_readable_size_(%1) _Pre_writable_size_(%2)"
             }
@@ -3855,7 +3855,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(WritableElementsConst =%1)]' for '_Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(WritableElementsConst =%1)]' with '_Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre(WritableElementsConst =%1)]",
               "ReplaceWith": "_Pre_writable_size_(%1)"
             }
@@ -3869,7 +3869,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(WritableElementsConst=%1,Notref=1)]' for '_Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(WritableElementsConst=%1,Notref=1)]' with '_Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre(WritableElementsConst=%1,Notref=1)]",
               "ReplaceWith": "_Pre_writable_size_(%1)"
             }
@@ -3883,7 +3883,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(WritableElementsConst=%1, Null=SA_No)]' for '_Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(WritableElementsConst=%1, Null=SA_No)]' with '_Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre(WritableElementsConst=%1, Null=SA_No)]",
               "ReplaceWith": "_Pre_writable_size_(%1)"
             }
@@ -3897,7 +3897,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre (WritableBytes=\"%1\")]' for '_Pre_writable_byte_size_(%1)'.",
+              "Description": "Replace '[SA_Pre (WritableBytes=\"%1\")]' with '_Pre_writable_byte_size_(%1)'.",
               "Find": "[SA_Pre (WritableBytes=\"%1\")]",
               "ReplaceWith": "_Pre_writable_byte_size_(%1)"
             }
@@ -3911,7 +3911,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(WritableBytesConst=%1)]' for '_Pre_writable_byte_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(WritableBytesConst=%1)]' with '_Pre_writable_byte_size_(%1)'.",
               "Find": "[SA_Pre(WritableBytesConst=%1)]",
               "ReplaceWith": "_Pre_writable_byte_size_(%1)"
             }
@@ -3925,7 +3925,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(WritableElements=\"%1\")]' for '_Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(WritableElements=\"%1\")]' with '_Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre(WritableElements=\"%1\")]",
               "ReplaceWith": "_Pre_writable_size_(%1)"
             }
@@ -3939,7 +3939,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(WritableElements=L\"%1\")]' for '_Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(WritableElements=L\"%1\")]' with '_Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre(WritableElements=L\"%1\")]",
               "ReplaceWith": "_Pre_writable_size_(%1)"
             }
@@ -3953,7 +3953,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre (WritableBytesLength=\"%1\")]' for '_Pre_writable_byte_size_(%1)'.",
+              "Description": "Replace '[SA_Pre (WritableBytesLength=\"%1\")]' with '_Pre_writable_byte_size_(%1)'.",
               "Find": "[SA_Pre (WritableBytesLength=\"%1\")]",
               "ReplaceWith": "_Pre_writable_byte_size_(%1)"
             }
@@ -3967,7 +3967,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre (WritableElementsLength=\"%1\")]' for '_Pre_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre (WritableElementsLength=\"%1\")]' with '_Pre_writable_size_(%1)'.",
               "Find": "[SA_Pre (WritableElementsLength=\"%1\")]",
               "ReplaceWith": "_Pre_writable_size_(%1)"
             }
@@ -3981,7 +3981,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_PreAttribute(Valid=SA_Yes)]' for '_Pre_valid_'.",
+              "Description": "Replace '[SA_PreAttribute(Valid=SA_Yes)]' with '_Pre_valid_'.",
               "Find": "[SA_PreAttribute(Valid=SA_Yes)]",
               "ReplaceWith": "_Pre_valid_"
             }
@@ -3995,7 +3995,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( ValidBytesConst=%1 ), SA_Post( ValidBytesConst=%2 )]' for '_Pre_readable_byte_size_(%1) _Post_readable_byte_size_(%2)'.",
+              "Description": "Replace '[SA_Pre( ValidBytesConst=%1 ), SA_Post( ValidBytesConst=%2 )]' with '_Pre_readable_byte_size_(%1) _Post_readable_byte_size_(%2)'.",
               "Find": "[SA_Pre( ValidBytesConst=%1 ), SA_Post( ValidBytesConst=%2 )]",
               "ReplaceWith": "_Pre_readable_byte_size_(%1) _Post_readable_byte_size_(%2)"
             }
@@ -4009,7 +4009,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(ValidBytes=\"%1\"), SA_Post(ElementSize=\"%2\", WritableElementsConst=%3)]' for '_Pre_readable_byte_size_(%1) _Post_writable_size_(%3)'.",
+              "Description": "Replace '[SA_Pre(ValidBytes=\"%1\"), SA_Post(ElementSize=\"%2\", WritableElementsConst=%3)]' with '_Pre_readable_byte_size_(%1) _Post_writable_size_(%3)'.",
               "Find": "[SA_Pre(ValidBytes=\"%1\"), SA_Post(ElementSize=\"%2\", WritableElementsConst=%3)]",
               "ReplaceWith": "_Pre_readable_byte_size_(%1) _Post_writable_size_(%3)"
             }
@@ -4023,7 +4023,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(ElementSize=\"%1\", WritableElementsConst=%2), SA_Post(ValidBytes=\"%3\")]' for '_Pre_writable_size_(%2) _Post_readable_byte_size_(%3)'.",
+              "Description": "Replace '[SA_Pre(ElementSize=\"%1\", WritableElementsConst=%2), SA_Post(ValidBytes=\"%3\")]' with '_Pre_writable_size_(%2) _Post_readable_byte_size_(%3)'.",
               "Find": "[SA_Pre(ElementSize=\"%1\", WritableElementsConst=%2), SA_Post(ValidBytes=\"%3\")]",
               "ReplaceWith": "_Pre_writable_size_(%2) _Post_readable_byte_size_(%3)"
             }
@@ -4037,7 +4037,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(WritableElements=\"%1\"), SA_Post(ValidElements=\"%2\")]' for '_Pre_writable_size_(%1) _Post_readable_size_(%2)'.",
+              "Description": "Replace '[SA_Pre(WritableElements=\"%1\"), SA_Post(ValidElements=\"%2\")]' with '_Pre_writable_size_(%1) _Post_readable_size_(%2)'.",
               "Find": "[SA_Pre(WritableElements=\"%1\"), SA_Post(ValidElements=\"%2\")]",
               "ReplaceWith": "_Pre_writable_size_(%1) _Post_readable_size_(%2)"
             }
@@ -4051,7 +4051,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(Null=Maybe), SA_Post(ValidElementsParam=\"%1\")]' for '_Pre_maybenull_ _Post_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Pre(Null=Maybe), SA_Post(ValidElementsParam=\"%1\")]' with '_Pre_maybenull_ _Post_readable_size_(%1)'.",
               "Find": "[SA_Pre(Null=Maybe), SA_Post(ValidElementsParam=\"%1\")]",
               "ReplaceWith": "_Pre_maybenull_ _Post_readable_size_(%1)"
             }
@@ -4065,7 +4065,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre (Tainted=%1)]' for '/*[SA_Pre (Tainted=%1)]*/'.",
+              "Description": "Replace '[SA_Pre (Tainted=%1)]' with '/*[SA_Pre (Tainted=%1)]*/'.",
               "Find": "[SA_Pre (Tainted=%1)]",
               "ReplaceWith": "/*[SA_Pre (Tainted=%1)]*/"
             }
@@ -4079,7 +4079,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Tainted=(SA_Yes | SA_No))]' for '/*[Pre(Tainted=(SA_Yes | SA_No))]*/'.",
+              "Description": "Replace '[Pre(Tainted=(SA_Yes | SA_No))]' with '/*[Pre(Tainted=(SA_Yes | SA_No))]*/'.",
               "Find": "[Pre(Tainted=(SA_Yes | SA_No))]",
               "ReplaceWith": "/*[Pre(Tainted=(SA_Yes | SA_No))]*/"
             }
@@ -4093,7 +4093,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(0), NullTerminated=SA_No )]' for '_Pre1_impl_(__notzterm_impl)'.",
+              "Description": "Replace '[SA_Pre( Deref=(0), NullTerminated=SA_No )]' with '_Pre1_impl_(__notzterm_impl)'.",
               "Find": "[SA_Pre( Deref=(0), NullTerminated=SA_No )]",
               "ReplaceWith": "_Pre1_impl_(__notzterm_impl)"
             }
@@ -4107,7 +4107,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(0), NullTerminated=SA_Maybe )]' for '_Pre1_impl_(__maybezterm_impl)'.",
+              "Description": "Replace '[SA_Pre( Deref=(0), NullTerminated=SA_Maybe )]' with '_Pre1_impl_(__maybezterm_impl)'.",
               "Find": "[SA_Pre( Deref=(0), NullTerminated=SA_Maybe )]",
               "ReplaceWith": "_Pre1_impl_(__maybezterm_impl)"
             }
@@ -4121,7 +4121,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(1), NullTerminated=SA_No )]' for '_At_(*_Curr_, _Pre1_impl_(__notzterm_impl))'.",
+              "Description": "Replace '[SA_Pre( Deref=(1), NullTerminated=SA_No )]' with '_At_(*_Curr_, _Pre1_impl_(__notzterm_impl))'.",
               "Find": "[SA_Pre( Deref=(1), NullTerminated=SA_No )]",
               "ReplaceWith": "_At_(*_Curr_, _Pre1_impl_(__notzterm_impl))"
             }
@@ -4135,7 +4135,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre( Deref=(1), NullTerminated=SA_Maybe )]' for '_At_(*_Curr_, _Pre1_impl_(__maybezterm_impl))'.",
+              "Description": "Replace '[SA_Pre( Deref=(1), NullTerminated=SA_Maybe )]' with '_At_(*_Curr_, _Pre1_impl_(__maybezterm_impl))'.",
               "Find": "[SA_Pre( Deref=(1), NullTerminated=SA_Maybe )]",
               "ReplaceWith": "_At_(*_Curr_, _Pre1_impl_(__maybezterm_impl))"
             }
@@ -4149,7 +4149,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(NullTerminated=SA_Maybe, Valid=SA_Yes)]' for '_Pre1_impl_(__maybezterm_impl)    _Pre_valid_'.",
+              "Description": "Replace '[SA_Pre(NullTerminated=SA_Maybe, Valid=SA_Yes)]' with '_Pre1_impl_(__maybezterm_impl)    _Pre_valid_'.",
               "Find": "[SA_Pre(NullTerminated=SA_Maybe, Valid=SA_Yes)]",
               "ReplaceWith": "_Pre1_impl_(__maybezterm_impl)    _Pre_valid_"
             }
@@ -4163,7 +4163,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(NullTerminated=SA_No), SA_Post(NullTerminated=SA_No)]' for '_Pre1_impl_(__notzterm_impl) _Post1_impl_(__notzterm_impl)'.",
+              "Description": "Replace '[SA_Pre(NullTerminated=SA_No), SA_Post(NullTerminated=SA_No)]' with '_Pre1_impl_(__notzterm_impl) _Post1_impl_(__notzterm_impl)'.",
               "Find": "[SA_Pre(NullTerminated=SA_No), SA_Post(NullTerminated=SA_No)]",
               "ReplaceWith": "_Pre1_impl_(__notzterm_impl) _Post1_impl_(__notzterm_impl)"
             }
@@ -4177,7 +4177,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(NullTerminated=SA_NO, Null=SA_No)]' for '_Pre_notnull_ _Pre1_impl_(__notzterm_impl)'.",
+              "Description": "Replace '[SA_Pre(NullTerminated=SA_NO, Null=SA_No)]' with '_Pre_notnull_ _Pre1_impl_(__notzterm_impl)'.",
               "Find": "[SA_Pre(NullTerminated=SA_NO, Null=SA_No)]",
               "ReplaceWith": "_Pre_notnull_ _Pre1_impl_(__notzterm_impl)"
             }
@@ -4191,7 +4191,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Pre(NullTerminated=SA_NO, Null=SA_No, Valid=SA_Yes)]' for '_Pre_notnull_ _Pre_valid_ _Pre1_impl_(__notzterm_impl)'.",
+              "Description": "Replace '[SA_Pre(NullTerminated=SA_NO, Null=SA_No, Valid=SA_Yes)]' with '_Pre_notnull_ _Pre_valid_ _Pre1_impl_(__notzterm_impl)'.",
               "Find": "[SA_Pre(NullTerminated=SA_NO, Null=SA_No, Valid=SA_Yes)]",
               "ReplaceWith": "_Pre_notnull_ _Pre_valid_ _Pre1_impl_(__notzterm_impl)"
             }
@@ -4205,7 +4205,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post (Access=SA_Write)]' for '_Post_writable_size_(1)'.",
+              "Description": "Replace '[SA_Post (Access=SA_Write)]' with '_Post_writable_size_(1)'.",
               "Find": "[SA_Post (Access=SA_Write)]",
               "ReplaceWith": "_Post_writable_size_(1)"
             }
@@ -4219,7 +4219,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(0), NullTerminated=SA_Yes )]' for '_Post_z_'.",
+              "Description": "Replace '[SA_Post( Deref=(0), NullTerminated=SA_Yes )]' with '_Post_z_'.",
               "Find": "[SA_Post( Deref=(0), NullTerminated=SA_Yes )]",
               "ReplaceWith": "_Post_z_"
             }
@@ -4233,7 +4233,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(0), Valid=SA_Yes, NullTerminated=SA_Yes )]' for '_Post_valid_ _Post_z_'.",
+              "Description": "Replace '[SA_Post( Deref=(0), Valid=SA_Yes, NullTerminated=SA_Yes )]' with '_Post_valid_ _Post_z_'.",
               "Find": "[SA_Post( Deref=(0), Valid=SA_Yes, NullTerminated=SA_Yes )]",
               "ReplaceWith": "_Post_valid_ _Post_z_"
             }
@@ -4247,7 +4247,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(0), Valid=SA_Yes, NullTerminated=SA_No )]' for '_Post_valid_'.",
+              "Description": "Replace '[SA_Post( Deref=(0), Valid=SA_Yes, NullTerminated=SA_No )]' with '_Post_valid_'.",
               "Find": "[SA_Post( Deref=(0), Valid=SA_Yes, NullTerminated=SA_No )]",
               "ReplaceWith": "_Post_valid_"
             }
@@ -4261,7 +4261,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(0), ValidBytesConst=(%1) )]' for '_Post_readable_byte_size_(%1)'.",
+              "Description": "Replace '[SA_Post( Deref=(0), ValidBytesConst=(%1) )]' with '_Post_readable_byte_size_(%1)'.",
               "Find": "[SA_Post( Deref=(0), ValidBytesConst=(%1) )]",
               "ReplaceWith": "_Post_readable_byte_size_(%1)"
             }
@@ -4275,7 +4275,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(0), ValidElements = \"%1\" )]' for '_Post_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Post( Deref=(0), ValidElements = \"%1\" )]' with '_Post_readable_size_(%1)'.",
               "Find": "[SA_Post( Deref=(0), ValidElements = \"%1\" )]",
               "ReplaceWith": "_Post_readable_size_(%1)"
             }
@@ -4289,7 +4289,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(0), ValidElementsConst=(%1) )]' for '_Post_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Post( Deref=(0), ValidElementsConst=(%1) )]' with '_Post_readable_size_(%1)'.",
               "Find": "[SA_Post( Deref=(0), ValidElementsConst=(%1) )]",
               "ReplaceWith": "_Post_readable_size_(%1)"
             }
@@ -4303,7 +4303,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(0), WritableElements = \"%1\" )]' for '_Post_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Post( Deref=(0), WritableElements = \"%1\" )]' with '_Post_writable_size_(%1)'.",
               "Find": "[SA_Post( Deref=(0), WritableElements = \"%1\" )]",
               "ReplaceWith": "_Post_writable_size_(%1)"
             }
@@ -4317,7 +4317,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(0), WritableElementsConst=(%1) )]' for '_Post_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Post( Deref=(0), WritableElementsConst=(%1) )]' with '_Post_writable_size_(%1)'.",
               "Find": "[SA_Post( Deref=(0), WritableElementsConst=(%1) )]",
               "ReplaceWith": "_Post_writable_size_(%1)"
             }
@@ -4331,7 +4331,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(0), WritableElementsConst=(%1), ElementSizeConst=%2 )]' for '_Post_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Post( Deref=(0), WritableElementsConst=(%1), ElementSizeConst=%2 )]' with '_Post_writable_size_(%1)'.",
               "Find": "[SA_Post( Deref=(0), WritableElementsConst=(%1), ElementSizeConst=%2 )]",
               "ReplaceWith": "_Post_writable_size_(%1)"
             }
@@ -4345,7 +4345,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(1), Null=SA_No )]' for '_Deref_post_null_'.",
+              "Description": "Replace '[SA_Post( Deref=(1), Null=SA_No )]' with '_Deref_post_null_'.",
               "Find": "[SA_Post( Deref=(1), Null=SA_No )]",
               "ReplaceWith": "_Deref_post_null_"
             }
@@ -4359,7 +4359,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(Deref=1, Null=SA_No)]' for '_Deref_post_notnull_'.",
+              "Description": "Replace '[SA_Post(Deref=1, Null=SA_No)]' with '_Deref_post_notnull_'.",
               "Find": "[SA_Post(Deref=1, Null=SA_No)]",
               "ReplaceWith": "_Deref_post_notnull_"
             }
@@ -4373,7 +4373,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=1, NullTerminated=SA_Yes )]' for '_Deref_post_z_'.",
+              "Description": "Replace '[SA_Post( Deref=1, NullTerminated=SA_Yes )]' with '_Deref_post_z_'.",
               "Find": "[SA_Post( Deref=1, NullTerminated=SA_Yes )]",
               "ReplaceWith": "_Deref_post_z_"
             }
@@ -4387,7 +4387,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(1), NullTerminated=SA_Yes )]' for '_Deref_post_z_'.",
+              "Description": "Replace '[SA_Post( Deref=(1), NullTerminated=SA_Yes )]' with '_Deref_post_z_'.",
               "Find": "[SA_Post( Deref=(1), NullTerminated=SA_Yes )]",
               "ReplaceWith": "_Deref_post_z_"
             }
@@ -4401,7 +4401,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(1), Valid=SA_Yes )]' for '_Deref_post_valid_'.",
+              "Description": "Replace '[SA_Post( Deref=(1), Valid=SA_Yes )]' with '_Deref_post_valid_'.",
               "Find": "[SA_Post( Deref=(1), Valid=SA_Yes )]",
               "ReplaceWith": "_Deref_post_valid_"
             }
@@ -4415,7 +4415,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(1), ValidBytes = \"%1\" )]' for '_Deref_post_count_(%1)'.",
+              "Description": "Replace '[SA_Post( Deref=(1), ValidBytes = \"%1\" )]' with '_Deref_post_count_(%1)'.",
               "Find": "[SA_Post( Deref=(1), ValidBytes = \"%1\" )]",
               "ReplaceWith": "_Deref_post_count_(%1)"
             }
@@ -4429,7 +4429,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(1), WritableElements = \"%1\" )]' for '_Deref_post_cap_(%1)'.",
+              "Description": "Replace '[SA_Post( Deref=(1), WritableElements = \"%1\" )]' with '_Deref_post_cap_(%1)'.",
               "Find": "[SA_Post( Deref=(1), WritableElements = \"%1\" )]",
               "ReplaceWith": "_Deref_post_cap_(%1)"
             }
@@ -4443,7 +4443,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(1), WritableElements = \"%1\", ElementSizeConst = %2 )]' for '_Deref_post_cap_(%1)'.",
+              "Description": "Replace '[SA_Post( Deref=(1), WritableElements = \"%1\", ElementSizeConst = %2 )]' with '_Deref_post_cap_(%1)'.",
               "Find": "[SA_Post( Deref=(1), WritableElements = \"%1\", ElementSizeConst = %2 )]",
               "ReplaceWith": "_Deref_post_cap_(%1)"
             }
@@ -4457,7 +4457,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(1), WritableElementsConst=(%1) )]' for '_Deref_post_cap_(%1)'.",
+              "Description": "Replace '[SA_Post( Deref=(1), WritableElementsConst=(%1) )]' with '_Deref_post_cap_(%1)'.",
               "Find": "[SA_Post( Deref=(1), WritableElementsConst=(%1) )]",
               "ReplaceWith": "_Deref_post_cap_(%1)"
             }
@@ -4471,7 +4471,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(Deref=1, Valid=SA_No)]' for '_At_(*_Curr_, _Post_invalid_)'.",
+              "Description": "Replace '[SA_Post(Deref=1, Valid=SA_No)]' with '_At_(*_Curr_, _Post_invalid_)'.",
               "Find": "[SA_Post(Deref=1, Valid=SA_No)]",
               "ReplaceWith": "_At_(*_Curr_, _Post_invalid_)"
             }
@@ -4485,7 +4485,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(Deref=2,Valid=SA_No)]' for '_At_(**_Curr_, _Post_invalid_)'.",
+              "Description": "Replace '[SA_Post(Deref=2,Valid=SA_No)]' with '_At_(**_Curr_, _Post_invalid_)'.",
               "Find": "[SA_Post(Deref=2,Valid=SA_No)]",
               "ReplaceWith": "_At_(**_Curr_, _Post_invalid_)"
             }
@@ -4499,7 +4499,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(Deref=2,Valid=SA_Yes)]' for '_At_(**_Curr_, _Post_valid_)'.",
+              "Description": "Replace '[SA_Post(Deref=2,Valid=SA_Yes)]' with '_At_(**_Curr_, _Post_valid_)'.",
               "Find": "[SA_Post(Deref=2,Valid=SA_Yes)]",
               "ReplaceWith": "_At_(**_Curr_, _Post_valid_)"
             }
@@ -4513,7 +4513,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(Null=SA_Yes)]' for '_Post_null_'.",
+              "Description": "Replace '[SA_Post(Null=SA_Yes)]' with '_Post_null_'.",
               "Find": "[SA_Post(Null=SA_Yes)]",
               "ReplaceWith": "_Post_null_"
             }
@@ -4527,7 +4527,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(Null=SA_No)]' for '_Post_notnull_'.",
+              "Description": "Replace '[SA_Post(Null=SA_No)]' with '_Post_notnull_'.",
               "Find": "[SA_Post(Null=SA_No)]",
               "ReplaceWith": "_Post_notnull_"
             }
@@ -4541,7 +4541,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(Valid=SA_Yes)]' for '_Post_valid_'.",
+              "Description": "Replace '[SA_Post(Valid=SA_Yes)]' with '_Post_valid_'.",
               "Find": "[SA_Post(Valid=SA_Yes)]",
               "ReplaceWith": "_Post_valid_"
             }
@@ -4555,7 +4555,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(ValidBytes=\"%1\")]' for '_Post_readable_byte_size_(%1)'.",
+              "Description": "Replace '[SA_Post(ValidBytes=\"%1\")]' with '_Post_readable_byte_size_(%1)'.",
               "Find": "[SA_Post(ValidBytes=\"%1\")]",
               "ReplaceWith": "_Post_readable_byte_size_(%1)"
             }
@@ -4569,7 +4569,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(ValidBytesParam=\"%1\")]' for '_Post_readable_byte_size_(%1)'.",
+              "Description": "Replace '[SA_Post(ValidBytesParam=\"%1\")]' with '_Post_readable_byte_size_(%1)'.",
               "Find": "[SA_Post(ValidBytesParam=\"%1\")]",
               "ReplaceWith": "_Post_readable_byte_size_(%1)"
             }
@@ -4583,7 +4583,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(ValidBytesLength=\"%1\")]' for '_Post_readable_byte_size_(%1)'.",
+              "Description": "Replace '[SA_Post(ValidBytesLength=\"%1\")]' with '_Post_readable_byte_size_(%1)'.",
               "Find": "[SA_Post(ValidBytesLength=\"%1\")]",
               "ReplaceWith": "_Post_readable_byte_size_(%1)"
             }
@@ -4597,7 +4597,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(ValidElementsConst=%1)]' for '_Post_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Post(ValidElementsConst=%1)]' with '_Post_readable_size_(%1)'.",
               "Find": "[SA_Post(ValidElementsConst=%1)]",
               "ReplaceWith": "_Post_readable_size_(%1)"
             }
@@ -4611,7 +4611,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( ValidElements=\"%1\" )]' for '_Post_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Post( ValidElements=\"%1\" )]' with '_Post_readable_size_(%1)'.",
               "Find": "[SA_Post( ValidElements=\"%1\" )]",
               "ReplaceWith": "_Post_readable_size_(%1)"
             }
@@ -4625,7 +4625,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(ValidElementsLength=\"%1\")]' for '_Post_readable_size_(%1)'.",
+              "Description": "Replace '[SA_Post(ValidElementsLength=\"%1\")]' with '_Post_readable_size_(%1)'.",
               "Find": "[SA_Post(ValidElementsLength=\"%1\")]",
               "ReplaceWith": "_Post_readable_size_(%1)"
             }
@@ -4639,7 +4639,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(WritableElementsParam=\"%1\")]' for '_Post_writable_size_(%1)'.",
+              "Description": "Replace '[SA_Post(WritableElementsParam=\"%1\")]' with '_Post_writable_size_(%1)'.",
               "Find": "[SA_Post(WritableElementsParam=\"%1\")]",
               "ReplaceWith": "_Post_writable_size_(%1)"
             }
@@ -4653,7 +4653,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( ValidBytesConst=(%1) )]' for '_Post_readable_byte_size_(%1)'.",
+              "Description": "Replace '[SA_Post( ValidBytesConst=(%1) )]' with '_Post_readable_byte_size_(%1)'.",
               "Find": "[SA_Post( ValidBytesConst=(%1) )]",
               "ReplaceWith": "_Post_readable_byte_size_(%1)"
             }
@@ -4667,7 +4667,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( ValidBytesConst=%1, Condition=\"%2\" )]' for '_When_(%2, _Post_readable_byte_size_(%1))'.",
+              "Description": "Replace '[SA_Post( ValidBytesConst=%1, Condition=\"%2\" )]' with '_When_(%2, _Post_readable_byte_size_(%1))'.",
               "Find": "[SA_Post( ValidBytesConst=%1, Condition=\"%2\" )]",
               "ReplaceWith": "_When_(%2, _Post_readable_byte_size_(%1))"
             }
@@ -4681,7 +4681,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=1, ValidBytesConst=(%1) )]' for '_At_(*_Curr_, _Post_readable_byte_size_(%1))'.",
+              "Description": "Replace '[SA_Post( Deref=1, ValidBytesConst=(%1) )]' with '_At_(*_Curr_, _Post_readable_byte_size_(%1))'.",
               "Find": "[SA_Post( Deref=1, ValidBytesConst=(%1) )]",
               "ReplaceWith": "_At_(*_Curr_, _Post_readable_byte_size_(%1))"
             }
@@ -4695,7 +4695,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(1), ValidElementsConst = \"%1\" )]' for '_At_(*_Curr_, _Post_readable_size_(%1))'.",
+              "Description": "Replace '[SA_Post( Deref=(1), ValidElementsConst = \"%1\" )]' with '_At_(*_Curr_, _Post_readable_size_(%1))'.",
               "Find": "[SA_Post( Deref=(1), ValidElementsConst = \"%1\" )]",
               "ReplaceWith": "_At_(*_Curr_, _Post_readable_size_(%1))"
             }
@@ -4709,7 +4709,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_PostAttribute(Valid=SA_Yes)]' for '_Post_valid_'.",
+              "Description": "Replace '[SA_PostAttribute(Valid=SA_Yes)]' with '_Post_valid_'.",
               "Find": "[SA_PostAttribute(Valid=SA_Yes)]",
               "ReplaceWith": "_Post_valid_"
             }
@@ -4723,7 +4723,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post=1]' for '_Post_'.",
+              "Description": "Replace '[SA_Post=1]' with '_Post_'.",
               "Find": "[SA_Post=1]",
               "ReplaceWith": "_Post_"
             }
@@ -4737,7 +4737,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(Null=SA_No), MyAttribute=1]' for '_Post_notnull_'.",
+              "Description": "Replace '[SA_Post(Null=SA_No), MyAttribute=1]' with '_Post_notnull_'.",
               "Find": "[SA_Post(Null=SA_No), MyAttribute=1]",
               "ReplaceWith": "_Post_notnull_"
             }
@@ -4751,7 +4751,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Null=SA_No, Deref=1)]' for '_At_(*_Curr_, _Post_notnull_)'.",
+              "Description": "Replace '[Post(Null=SA_No, Deref=1)]' with '_At_(*_Curr_, _Post_notnull_)'.",
               "Find": "[Post(Null=SA_No, Deref=1)]",
               "ReplaceWith": "_At_(*_Curr_, _Post_notnull_)"
             }
@@ -4765,7 +4765,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Null=SA_No, Deref=2)]' for '_At_(**_Curr_, _Post_notnull_)'.",
+              "Description": "Replace '[Post(Null=SA_No, Deref=2)]' with '_At_(**_Curr_, _Post_notnull_)'.",
               "Find": "[Post(Null=SA_No, Deref=2)]",
               "ReplaceWith": "_At_(**_Curr_, _Post_notnull_)"
             }
@@ -4779,7 +4779,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[vc_attributes::Post(Valid=SA_Yes)]' for '_Post_valid_'.",
+              "Description": "Replace '[vc_attributes::Post(Valid=SA_Yes)]' with '_Post_valid_'.",
               "Find": "[vc_attributes::Post(Valid=SA_Yes)]",
               "ReplaceWith": "_Post_valid_"
             }
@@ -4793,7 +4793,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[vc_attributes::PostAttribute(Valid=SA_Yes)]' for '_Post_valid_'.",
+              "Description": "Replace '[vc_attributes::PostAttribute(Valid=SA_Yes)]' with '_Post_valid_'.",
               "Find": "[vc_attributes::PostAttribute(Valid=SA_Yes)]",
               "ReplaceWith": "_Post_valid_"
             }
@@ -4807,7 +4807,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[vc_attributes::SA_Post(Valid=SA_Yes)]' for '_Post_valid_'.",
+              "Description": "Replace '[vc_attributes::SA_Post(Valid=SA_Yes)]' with '_Post_valid_'.",
               "Find": "[vc_attributes::SA_Post(Valid=SA_Yes)]",
               "ReplaceWith": "_Post_valid_"
             }
@@ -4821,7 +4821,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[vc_attributes::SA_PostAttribute(Valid=SA_Yes)]' for '_Post_valid_'.",
+              "Description": "Replace '[vc_attributes::SA_PostAttribute(Valid=SA_Yes)]' with '_Post_valid_'.",
               "Find": "[vc_attributes::SA_PostAttribute(Valid=SA_Yes)]",
               "ReplaceWith": "_Post_valid_"
             }
@@ -4835,7 +4835,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(0), NullTerminated=SA_No )]' for '_Post1_impl_(__notzterm_impl)'.",
+              "Description": "Replace '[SA_Post( Deref=(0), NullTerminated=SA_No )]' with '_Post1_impl_(__notzterm_impl)'.",
               "Find": "[SA_Post( Deref=(0), NullTerminated=SA_No )]",
               "ReplaceWith": "_Post1_impl_(__notzterm_impl)"
             }
@@ -4849,7 +4849,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(0), NullTerminated=SA_Maybe )]' for '_Post1_impl_(__maybezterm_impl)'.",
+              "Description": "Replace '[SA_Post( Deref=(0), NullTerminated=SA_Maybe )]' with '_Post1_impl_(__maybezterm_impl)'.",
               "Find": "[SA_Post( Deref=(0), NullTerminated=SA_Maybe )]",
               "ReplaceWith": "_Post1_impl_(__maybezterm_impl)"
             }
@@ -4863,7 +4863,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=(1), NullTerminated=SA_No )]' for '_At_(*_Curr_, _Post1_impl_(__notzterm_impl))'.",
+              "Description": "Replace '[SA_Post( Deref=(1), NullTerminated=SA_No )]' with '_At_(*_Curr_, _Post1_impl_(__notzterm_impl))'.",
               "Find": "[SA_Post( Deref=(1), NullTerminated=SA_No )]",
               "ReplaceWith": "_At_(*_Curr_, _Post1_impl_(__notzterm_impl))"
             }
@@ -4877,7 +4877,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post(Deref=1, NullTerminated=SA_Maybe) ]' for '_At_(*_Curr_, _Post1_impl_(__maybezterm_impl))'.",
+              "Description": "Replace '[SA_Post(Deref=1, NullTerminated=SA_Maybe) ]' with '_At_(*_Curr_, _Post1_impl_(__maybezterm_impl))'.",
               "Find": "[SA_Post(Deref=1, NullTerminated=SA_Maybe) ]",
               "ReplaceWith": "_At_(*_Curr_, _Post1_impl_(__maybezterm_impl))"
             }
@@ -4891,7 +4891,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[SA_Post( Deref=0, NullTerminated=SA_No )]' for '_Post1_impl_(__notzterm_impl)'.",
+              "Description": "Replace '[SA_Post( Deref=0, NullTerminated=SA_No )]' with '_Post1_impl_(__notzterm_impl)'.",
               "Find": "[SA_Post( Deref=0, NullTerminated=SA_No )]",
               "ReplaceWith": "_Post1_impl_(__notzterm_impl)"
             }
@@ -4905,7 +4905,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Access=SA_ReadWrite)]' for '_Inout_'.",
+              "Description": "Replace '[Pre(Access=SA_ReadWrite)]' with '_Inout_'.",
               "Find": "[Pre(Access=SA_ReadWrite)]",
               "ReplaceWith": "_Inout_"
             }
@@ -4919,7 +4919,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Access=(SA_Read | SA_Write))]' for '_Inout_'.",
+              "Description": "Replace '[Pre(Access=(SA_Read | SA_Write))]' with '_Inout_'.",
               "Find": "[Pre(Access=(SA_Read | SA_Write))]",
               "ReplaceWith": "_Inout_"
             }
@@ -4933,7 +4933,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Access=SA_Read | SA_NoAccess)]' for '_Pre_readonly_'.",
+              "Description": "Replace '[Pre(Access=SA_Read | SA_NoAccess)]' with '_Pre_readonly_'.",
               "Find": "[Pre(Access=SA_Read | SA_NoAccess)]",
               "ReplaceWith": "_Pre_readonly_"
             }
@@ -4947,7 +4947,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Access=SA_ReadWrite | SA_NoAccess)]' for '_Inout_'.",
+              "Description": "Replace '[Pre(Access=SA_ReadWrite | SA_NoAccess)]' with '_Inout_'.",
               "Find": "[Pre(Access=SA_ReadWrite | SA_NoAccess)]",
               "ReplaceWith": "_Inout_"
             }
@@ -4961,7 +4961,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre( Deref=0, Access=Write )]' for '_Pre_writeonly_'.",
+              "Description": "Replace '[Pre( Deref=0, Access=Write )]' with '_Pre_writeonly_'.",
               "Find": "[Pre( Deref=0, Access=Write )]",
               "ReplaceWith": "_Pre_writeonly_"
             }
@@ -4975,7 +4975,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Deref=1, Access=Read)]' for '_Pre_readonly_'.",
+              "Description": "Replace '[Pre(Deref=1, Access=Read)]' with '_Pre_readonly_'.",
               "Find": "[Pre(Deref=1, Access=Read)]",
               "ReplaceWith": "_Pre_readonly_"
             }
@@ -4989,7 +4989,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre( Deref=1, Access=Read )]' for '_Deref_pre_readonly_'.",
+              "Description": "Replace '[Pre( Deref=1, Access=Read )]' with '_Deref_pre_readonly_'.",
               "Find": "[Pre( Deref=1, Access=Read )]",
               "ReplaceWith": "_Deref_pre_readonly_"
             }
@@ -5003,7 +5003,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Deref=1, Access=Write)]' for '_Deref_pre_writeonly_'.",
+              "Description": "Replace '[Pre(Deref=1, Access=Write)]' with '_Deref_pre_writeonly_'.",
               "Find": "[Pre(Deref=1, Access=Write)]",
               "ReplaceWith": "_Deref_pre_writeonly_"
             }
@@ -5017,7 +5017,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Deref=1, Access=ReadWrite )]' for '_Inout_'.",
+              "Description": "Replace '[Pre(Deref=1, Access=ReadWrite )]' with '_Inout_'.",
               "Find": "[Pre(Deref=1, Access=ReadWrite )]",
               "ReplaceWith": "_Inout_"
             }
@@ -5031,7 +5031,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre( Deref=2, Access=Write )]' for '_At_(**_Curr_, _Pre_writeonly_)'.",
+              "Description": "Replace '[Pre( Deref=2, Access=Write )]' with '_At_(**_Curr_, _Pre_writeonly_)'.",
               "Find": "[Pre( Deref=2, Access=Write )]",
               "ReplaceWith": "_At_(**_Curr_, _Pre_writeonly_)"
             }
@@ -5045,7 +5045,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre( Deref=3, Access=Write )]' for '_At_(***_Curr_, _Pre_writeonly_)'.",
+              "Description": "Replace '[Pre( Deref=3, Access=Write )]' with '_At_(***_Curr_, _Pre_writeonly_)'.",
               "Find": "[Pre( Deref=3, Access=Write )]",
               "ReplaceWith": "_At_(***_Curr_, _Pre_writeonly_)"
             }
@@ -5059,7 +5059,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Deref=1, Null=SA_Yes)]' for '_Deref_pre_null_'.",
+              "Description": "Replace '[Pre(Deref=1, Null=SA_Yes)]' with '_Deref_pre_null_'.",
               "Find": "[Pre(Deref=1, Null=SA_Yes)]",
               "ReplaceWith": "_Deref_pre_null_"
             }
@@ -5073,7 +5073,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Deref=0, Valid=SA_Yes)]' for '_Pre_valid_'.",
+              "Description": "Replace '[Pre(Deref=0, Valid=SA_Yes)]' with '_Pre_valid_'.",
               "Find": "[Pre(Deref=0, Valid=SA_Yes)]",
               "ReplaceWith": "_Pre_valid_"
             }
@@ -5087,7 +5087,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre( Deref=1, Valid=Yes )]' for '_Deref_pre_valid_'.",
+              "Description": "Replace '[Pre( Deref=1, Valid=Yes )]' with '_Deref_pre_valid_'.",
               "Find": "[Pre( Deref=1, Valid=Yes )]",
               "ReplaceWith": "_Deref_pre_valid_"
             }
@@ -5101,7 +5101,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Deref=2, Valid=SA_Yes)]' for '_At_(**_Curr_,    _Pre_valid_)'.",
+              "Description": "Replace '[Pre(Deref=2, Valid=SA_Yes)]' with '_At_(**_Curr_,    _Pre_valid_)'.",
               "Find": "[Pre(Deref=2, Valid=SA_Yes)]",
               "ReplaceWith": "_At_(**_Curr_,    _Pre_valid_)"
             }
@@ -5115,7 +5115,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Deref=3, Valid=SA_Yes)]' for '_At_(***_Curr_,    _Pre_valid_)'.",
+              "Description": "Replace '[Pre(Deref=3, Valid=SA_Yes)]' with '_At_(***_Curr_,    _Pre_valid_)'.",
               "Find": "[Pre(Deref=3, Valid=SA_Yes)]",
               "ReplaceWith": "_At_(***_Curr_,    _Pre_valid_)"
             }
@@ -5129,7 +5129,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Deref=4, Valid=SA_Yes)]' for '_At_(****_Curr_,    _Pre_valid_)'.",
+              "Description": "Replace '[Pre(Deref=4, Valid=SA_Yes)]' with '_At_(****_Curr_,    _Pre_valid_)'.",
               "Find": "[Pre(Deref=4, Valid=SA_Yes)]",
               "ReplaceWith": "_At_(****_Curr_,    _Pre_valid_)"
             }
@@ -5143,7 +5143,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Null=Yes, Valid=Yes)]' for '_Pre_null_ _Pre_valid_'.",
+              "Description": "Replace '[Pre(Null=Yes, Valid=Yes)]' with '_Pre_null_ _Pre_valid_'.",
               "Find": "[Pre(Null=Yes, Valid=Yes)]",
               "ReplaceWith": "_Pre_null_ _Pre_valid_"
             }
@@ -5157,7 +5157,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Null=Yes, Valid=No)]' for '_Pre_null_ _Pre_invalid_'.",
+              "Description": "Replace '[Pre(Null=Yes, Valid=No)]' with '_Pre_null_ _Pre_invalid_'.",
               "Find": "[Pre(Null=Yes, Valid=No)]",
               "ReplaceWith": "_Pre_null_ _Pre_invalid_"
             }
@@ -5171,7 +5171,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Null=No)]' for '_Pre_notnull_'.",
+              "Description": "Replace '[Pre(Null=No)]' with '_Pre_notnull_'.",
               "Find": "[Pre(Null=No)]",
               "ReplaceWith": "_Pre_notnull_"
             }
@@ -5185,7 +5185,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Null=No, Valid=No)]' for '_Pre_notnull_ _Pre_invalid_'.",
+              "Description": "Replace '[Pre(Null=No, Valid=No)]' with '_Pre_notnull_ _Pre_invalid_'.",
               "Find": "[Pre(Null=No, Valid=No)]",
               "ReplaceWith": "_Pre_notnull_ _Pre_invalid_"
             }
@@ -5199,7 +5199,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Null=Maybe, Valid=No)]' for '_Pre_maybenull_ _Pre_invalid_'.",
+              "Description": "Replace '[Pre(Null=Maybe, Valid=No)]' with '_Pre_maybenull_ _Pre_invalid_'.",
               "Find": "[Pre(Null=Maybe, Valid=No)]",
               "ReplaceWith": "_Pre_maybenull_ _Pre_invalid_"
             }
@@ -5213,7 +5213,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Null=(SA_Yes | SA_Maybe))]' for '_Pre_maybenull_'.",
+              "Description": "Replace '[Pre(Null=(SA_Yes | SA_Maybe))]' with '_Pre_maybenull_'.",
               "Find": "[Pre(Null=(SA_Yes | SA_Maybe))]",
               "ReplaceWith": "_Pre_maybenull_"
             }
@@ -5227,7 +5227,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Null=Yes, Null=No)]' for '_Pre_maybenull_'.",
+              "Description": "Replace '[Pre(Null=Yes, Null=No)]' with '_Pre_maybenull_'.",
               "Find": "[Pre(Null=Yes, Null=No)]",
               "ReplaceWith": "_Pre_maybenull_"
             }
@@ -5241,7 +5241,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Valid=SA_No)]' for '_Pre_invalid_'.",
+              "Description": "Replace '[Pre(Valid=SA_No)]' with '_Pre_invalid_'.",
               "Find": "[Pre(Valid=SA_No)]",
               "ReplaceWith": "_Pre_invalid_"
             }
@@ -5255,7 +5255,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Valid=SA_Maybe)]' for '_Pre_unknown_'.",
+              "Description": "Replace '[Pre(Valid=SA_Maybe)]' with '_Pre_unknown_'.",
               "Find": "[Pre(Valid=SA_Maybe)]",
               "ReplaceWith": "_Pre_unknown_"
             }
@@ -5269,7 +5269,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Valid=(SA_Yes | SA_Maybe))]' for '_Pre_unknown_'.",
+              "Description": "Replace '[Pre(Valid=(SA_Yes | SA_Maybe))]' with '_Pre_unknown_'.",
               "Find": "[Pre(Valid=(SA_Yes | SA_Maybe))]",
               "ReplaceWith": "_Pre_unknown_"
             }
@@ -5283,7 +5283,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Valid=Yes)]' for '_Pre_valid_'.",
+              "Description": "Replace '[Pre(Valid=Yes)]' with '_Pre_valid_'.",
               "Find": "[Pre(Valid=Yes)]",
               "ReplaceWith": "_Pre_valid_"
             }
@@ -5297,7 +5297,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre( Valid=Yes, NullTerminated=Yes )]' for '_In_z_'.",
+              "Description": "Replace '[Pre( Valid=Yes, NullTerminated=Yes )]' with '_In_z_'.",
               "Find": "[Pre( Valid=Yes, NullTerminated=Yes )]",
               "ReplaceWith": "_In_z_"
             }
@@ -5311,7 +5311,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre( Valid=Yes, NullTerminated=No )]' for '_In_'.",
+              "Description": "Replace '[Pre( Valid=Yes, NullTerminated=No )]' with '_In_'.",
               "Find": "[Pre( Valid=Yes, NullTerminated=No )]",
               "ReplaceWith": "_In_"
             }
@@ -5325,7 +5325,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[vc_attributes::Pre(Valid=SA_Yes)]' for '_Pre_valid_'.",
+              "Description": "Replace '[vc_attributes::Pre(Valid=SA_Yes)]' with '_Pre_valid_'.",
               "Find": "[vc_attributes::Pre(Valid=SA_Yes)]",
               "ReplaceWith": "_Pre_valid_"
             }
@@ -5339,7 +5339,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[vc_attributes::PreAttribute(Valid=SA_Yes)]' for '_Pre_valid_'.",
+              "Description": "Replace '[vc_attributes::PreAttribute(Valid=SA_Yes)]' with '_Pre_valid_'.",
               "Find": "[vc_attributes::PreAttribute(Valid=SA_Yes)]",
               "ReplaceWith": "_Pre_valid_"
             }
@@ -5353,7 +5353,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[vc_attributes::SA_Pre(Valid=SA_Yes)]' for '_Pre_valid_'.",
+              "Description": "Replace '[vc_attributes::SA_Pre(Valid=SA_Yes)]' with '_Pre_valid_'.",
               "Find": "[vc_attributes::SA_Pre(Valid=SA_Yes)]",
               "ReplaceWith": "_Pre_valid_"
             }
@@ -5367,7 +5367,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[vc_attributes::SA_PreAttribute(Valid=SA_Yes)]' for '_Pre_valid_'.",
+              "Description": "Replace '[vc_attributes::SA_PreAttribute(Valid=SA_Yes)]' with '_Pre_valid_'.",
               "Find": "[vc_attributes::SA_PreAttribute(Valid=SA_Yes)]",
               "ReplaceWith": "_Pre_valid_"
             }
@@ -5381,7 +5381,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Deref=1, NullTerminated=SA_Maybe)]' for '_Pre1_impl_(__maybezterm_impl)'.",
+              "Description": "Replace '[Pre(Deref=1, NullTerminated=SA_Maybe)]' with '_Pre1_impl_(__maybezterm_impl)'.",
               "Find": "[Pre(Deref=1, NullTerminated=SA_Maybe)]",
               "ReplaceWith": "_Pre1_impl_(__maybezterm_impl)"
             }
@@ -5395,7 +5395,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(NullTerminated=(SA_Yes | SA_Maybe))]' for '_Pre1_impl_(__zterm_impl) _Pre1_impl_(__maybezterm_impl)'.",
+              "Description": "Replace '[Pre(NullTerminated=(SA_Yes | SA_Maybe))]' with '_Pre1_impl_(__zterm_impl) _Pre1_impl_(__maybezterm_impl)'.",
               "Find": "[Pre(NullTerminated=(SA_Yes | SA_Maybe))]",
               "ReplaceWith": "_Pre1_impl_(__zterm_impl) _Pre1_impl_(__maybezterm_impl)"
             }
@@ -5409,7 +5409,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre( Deref=-1, Access=Write )]' for '_At_(&_Curr_, _Pre_writeonly_)'.",
+              "Description": "Replace '[Pre( Deref=-1, Access=Write )]' with '_At_(&_Curr_, _Pre_writeonly_)'.",
               "Find": "[Pre( Deref=-1, Access=Write )]",
               "ReplaceWith": "_At_(&_Curr_, _Pre_writeonly_)"
             }
@@ -5423,7 +5423,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Pre(Deref=-1, Valid=SA_Yes)]' for '_At_(&_Curr_, _Pre_valid_)'.",
+              "Description": "Replace '[Pre(Deref=-1, Valid=SA_Yes)]' with '_At_(&_Curr_, _Pre_valid_)'.",
               "Find": "[Pre(Deref=-1, Valid=SA_Yes)]",
               "ReplaceWith": "_At_(&_Curr_, _Pre_valid_)"
             }
@@ -5437,7 +5437,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(1, Null=Yes)]' for '_Post_null_'.",
+              "Description": "Replace '[Post(1, Null=Yes)]' with '_Post_null_'.",
               "Find": "[Post(1, Null=Yes)]",
               "ReplaceWith": "_Post_null_"
             }
@@ -5451,7 +5451,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post( Access=Read )]' for '_Post_valid_'.",
+              "Description": "Replace '[Post( Access=Read )]' with '_Post_valid_'.",
               "Find": "[Post( Access=Read )]",
               "ReplaceWith": "_Post_valid_"
             }
@@ -5465,7 +5465,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Access=SA_Write | SA_NoAccess)]' for '_Post_writable_size_(1)'.",
+              "Description": "Replace '[Post(Access=SA_Write | SA_NoAccess)]' with '_Post_writable_size_(1)'.",
               "Find": "[Post(Access=SA_Write | SA_NoAccess)]",
               "ReplaceWith": "_Post_writable_size_(1)"
             }
@@ -5479,7 +5479,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post( Deref=0, Access=Write )]' for '_Post_writable_size_(1)'.",
+              "Description": "Replace '[Post( Deref=0, Access=Write )]' with '_Post_writable_size_(1)'.",
               "Find": "[Post( Deref=0, Access=Write )]",
               "ReplaceWith": "_Post_writable_size_(1)"
             }
@@ -5493,7 +5493,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post( Deref=1, Access=Write )]' for '_At_(*_Curr_, _Post_writable_size_(1))'.",
+              "Description": "Replace '[Post( Deref=1, Access=Write )]' with '_At_(*_Curr_, _Post_writable_size_(1))'.",
               "Find": "[Post( Deref=1, Access=Write )]",
               "ReplaceWith": "_At_(*_Curr_, _Post_writable_size_(1))"
             }
@@ -5507,7 +5507,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post( Deref=2, Access=Read )]' for '_At_(**_Curr_, _Post_valid_)'.",
+              "Description": "Replace '[Post( Deref=2, Access=Read )]' with '_At_(**_Curr_, _Post_valid_)'.",
               "Find": "[Post( Deref=2, Access=Read )]",
               "ReplaceWith": "_At_(**_Curr_, _Post_valid_)"
             }
@@ -5521,7 +5521,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post( Deref=2, Access=Write )]' for '_At_(**_Curr_, _Post_writable_size_(1))'.",
+              "Description": "Replace '[Post( Deref=2, Access=Write )]' with '_At_(**_Curr_, _Post_writable_size_(1))'.",
               "Find": "[Post( Deref=2, Access=Write )]",
               "ReplaceWith": "_At_(**_Curr_, _Post_writable_size_(1))"
             }
@@ -5535,7 +5535,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post( Deref=3, Access=Write )]' for '_At_(***_Curr_, _Post_writable_size_(1))'.",
+              "Description": "Replace '[Post( Deref=3, Access=Write )]' with '_At_(***_Curr_, _Post_writable_size_(1))'.",
               "Find": "[Post( Deref=3, Access=Write )]",
               "ReplaceWith": "_At_(***_Curr_, _Post_writable_size_(1))"
             }
@@ -5549,7 +5549,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post( Deref=1, Valid=Yes )]' for '_Deref_post_valid_'.",
+              "Description": "Replace '[Post( Deref=1, Valid=Yes )]' with '_Deref_post_valid_'.",
               "Find": "[Post( Deref=1, Valid=Yes )]",
               "ReplaceWith": "_Deref_post_valid_"
             }
@@ -5563,7 +5563,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Null=Yes)]' for '_Post_null_'.",
+              "Description": "Replace '[Post(Null=Yes)]' with '_Post_null_'.",
               "Find": "[Post(Null=Yes)]",
               "ReplaceWith": "_Post_null_"
             }
@@ -5577,7 +5577,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Null=Yes, Null=No)]' for '_Post_maybenull_'.",
+              "Description": "Replace '[Post(Null=Yes, Null=No)]' with '_Post_maybenull_'.",
               "Find": "[Post(Null=Yes, Null=No)]",
               "ReplaceWith": "_Post_maybenull_"
             }
@@ -5591,7 +5591,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Null=SA_Maybe)]' for '_Post_maybenull_'.",
+              "Description": "Replace '[Post(Null=SA_Maybe)]' with '_Post_maybenull_'.",
               "Find": "[Post(Null=SA_Maybe)]",
               "ReplaceWith": "_Post_maybenull_"
             }
@@ -5605,7 +5605,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Null=SA_Maybe, Deref=1)]' for '_At_(*Curr, _Post_maybenull_)'.",
+              "Description": "Replace '[Post(Null=SA_Maybe, Deref=1)]' with '_At_(*Curr, _Post_maybenull_)'.",
               "Find": "[Post(Null=SA_Maybe, Deref=1)]",
               "ReplaceWith": "_At_(*Curr, _Post_maybenull_)"
             }
@@ -5619,7 +5619,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post( Valid=No )]' for '_Post_valid_'.",
+              "Description": "Replace '[Post( Valid=No )]' with '_Post_valid_'.",
               "Find": "[Post( Valid=No )]",
               "ReplaceWith": "_Post_valid_"
             }
@@ -5633,7 +5633,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Valid=SA_No)]' for '_Post_invalid_'.",
+              "Description": "Replace '[Post(Valid=SA_No)]' with '_Post_invalid_'.",
               "Find": "[Post(Valid=SA_No)]",
               "ReplaceWith": "_Post_invalid_"
             }
@@ -5647,7 +5647,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(WritableBytes=\"%1\")]' for '_Post_writable_byte_size_(%1)'.",
+              "Description": "Replace '[Post(WritableBytes=\"%1\")]' with '_Post_writable_byte_size_(%1)'.",
               "Find": "[Post(WritableBytes=\"%1\")]",
               "ReplaceWith": "_Post_writable_byte_size_(%1)"
             }
@@ -5661,7 +5661,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(WritableBytesConst=%1)]' for '_Post_writable_byte_size_(%1)'.",
+              "Description": "Replace '[Post(WritableBytesConst=%1)]' with '_Post_writable_byte_size_(%1)'.",
               "Find": "[Post(WritableBytesConst=%1)]",
               "ReplaceWith": "_Post_writable_byte_size_(%1)"
             }
@@ -5675,7 +5675,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(WritableBytesConst=%1, Deref=1)]' for '_Deref_post_bytecap_(%1)'.",
+              "Description": "Replace '[Post(WritableBytesConst=%1, Deref=1)]' with '_Deref_post_bytecap_(%1)'.",
               "Find": "[Post(WritableBytesConst=%1, Deref=1)]",
               "ReplaceWith": "_Deref_post_bytecap_(%1)"
             }
@@ -5689,7 +5689,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Deref=1, WritableBytesConst=%1)]' for '_Deref_post_bytecap_(%1)'.",
+              "Description": "Replace '[Post(Deref=1, WritableBytesConst=%1)]' with '_Deref_post_bytecap_(%1)'.",
               "Find": "[Post(Deref=1, WritableBytesConst=%1)]",
               "ReplaceWith": "_Deref_post_bytecap_(%1)"
             }
@@ -5703,7 +5703,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(WritableBytes=\"%1\", Deref=1)]' for '_Deref_post_bytecap_(%1)'.",
+              "Description": "Replace '[Post(WritableBytes=\"%1\", Deref=1)]' with '_Deref_post_bytecap_(%1)'.",
               "Find": "[Post(WritableBytes=\"%1\", Deref=1)]",
               "ReplaceWith": "_Deref_post_bytecap_(%1)"
             }
@@ -5717,7 +5717,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(ValidBytesConst=%1, Deref=2)]' for '_At_(**_Curr_, _Post_readable_byte_size_(%1))'.",
+              "Description": "Replace '[Post(ValidBytesConst=%1, Deref=2)]' with '_At_(**_Curr_, _Post_readable_byte_size_(%1))'.",
               "Find": "[Post(ValidBytesConst=%1, Deref=2)]",
               "ReplaceWith": "_At_(**_Curr_, _Post_readable_byte_size_(%1))"
             }
@@ -5731,7 +5731,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(WritableElementsConst=%1)]' for '_Post_writable_size_(%1)'.",
+              "Description": "Replace '[Post(WritableElementsConst=%1)]' with '_Post_writable_size_(%1)'.",
               "Find": "[Post(WritableElementsConst=%1)]",
               "ReplaceWith": "_Post_writable_size_(%1)"
             }
@@ -5745,7 +5745,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(WritableElementsConst=%1, Deref=1)]' for '_Deref_post_cap_(%1)'.",
+              "Description": "Replace '[Post(WritableElementsConst=%1, Deref=1)]' with '_Deref_post_cap_(%1)'.",
               "Find": "[Post(WritableElementsConst=%1, Deref=1)]",
               "ReplaceWith": "_Deref_post_cap_(%1)"
             }
@@ -5759,7 +5759,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Deref=1, WritableElementsConst=%1)]' for '_Deref_post_cap_(%1)'.",
+              "Description": "Replace '[Post(Deref=1, WritableElementsConst=%1)]' with '_Deref_post_cap_(%1)'.",
               "Find": "[Post(Deref=1, WritableElementsConst=%1)]",
               "ReplaceWith": "_Deref_post_cap_(%1)"
             }
@@ -5773,7 +5773,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(WritableElements=\"%1\", Deref=1)]' for '_Deref_post_cap_(%1)'.",
+              "Description": "Replace '[Post(WritableElements=\"%1\", Deref=1)]' with '_Deref_post_cap_(%1)'.",
               "Find": "[Post(WritableElements=\"%1\", Deref=1)]",
               "ReplaceWith": "_Deref_post_cap_(%1)"
             }
@@ -5787,7 +5787,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(WritableElements=\"%1\")]' for '_Post_writable_size_(%1)'.",
+              "Description": "Replace '[Post(WritableElements=\"%1\")]' with '_Post_writable_size_(%1)'.",
               "Find": "[Post(WritableElements=\"%1\")]",
               "ReplaceWith": "_Post_writable_size_(%1)"
             }
@@ -5801,7 +5801,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Deref=1, ValidElementsConst=%1)]' for '_At_(*_Curr_, _Post_readable_size_(%1))'.",
+              "Description": "Replace '[Post(Deref=1, ValidElementsConst=%1)]' with '_At_(*_Curr_, _Post_readable_size_(%1))'.",
               "Find": "[Post(Deref=1, ValidElementsConst=%1)]",
               "ReplaceWith": "_At_(*_Curr_, _Post_readable_size_(%1))"
             }
@@ -5815,7 +5815,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Deref=1, Tainted=%1)]' for '/*[Post(Deref=1, Tainted=%1)]*/'.",
+              "Description": "Replace '[Post(Deref=1, Tainted=%1)]' with '/*[Post(Deref=1, Tainted=%1)]*/'.",
               "Find": "[Post(Deref=1, Tainted=%1)]",
               "ReplaceWith": "/*[Post(Deref=1, Tainted=%1)]*/"
             }
@@ -5829,7 +5829,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[Post(Valid=SA_Maybe, Deref=1)]' for '_At_(*_Curr_, _Post1_impl_(__maybevalid_impl))'.",
+              "Description": "Replace '[Post(Valid=SA_Maybe, Deref=1)]' with '_At_(*_Curr_, _Post1_impl_(__maybevalid_impl))'.",
               "Find": "[Post(Valid=SA_Maybe, Deref=1)]",
               "ReplaceWith": "_At_(*_Curr_, _Post1_impl_(__maybevalid_impl))"
             }
@@ -5843,7 +5843,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Access=SA_Read)]' for '_Ret_valid_'.",
+              "Description": "Replace '[returnvalue:Post(Access=SA_Read)]' with '_Ret_valid_'.",
               "Find": "[returnvalue:Post(Access=SA_Read)]",
               "ReplaceWith": "_Ret_valid_"
             }
@@ -5857,7 +5857,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Access=(SA_Read | SA_Read))]' for '_Ret_valid_'.",
+              "Description": "Replace '[returnvalue:Post(Access=(SA_Read | SA_Read))]' with '_Ret_valid_'.",
               "Find": "[returnvalue:Post(Access=(SA_Read | SA_Read))]",
               "ReplaceWith": "_Ret_valid_"
             }
@@ -5871,7 +5871,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Null=SA_Yes)]' for '_Ret_null_'.",
+              "Description": "Replace '[returnvalue:Post(Null=SA_Yes)]' with '_Ret_null_'.",
               "Find": "[returnvalue:Post(Null=SA_Yes)]",
               "ReplaceWith": "_Ret_null_"
             }
@@ -5885,7 +5885,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Null=SA_No, Deref=0)]' for '_Ret_notnull_'.",
+              "Description": "Replace '[returnvalue:Post(Null=SA_No, Deref=0)]' with '_Ret_notnull_'.",
               "Find": "[returnvalue:Post(Null=SA_No, Deref=0)]",
               "ReplaceWith": "_Ret_notnull_"
             }
@@ -5899,7 +5899,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Null=SA_No, Deref=1)]' for '_At_(*return, _Ret_null_)'.",
+              "Description": "Replace '[returnvalue:Post(Null=SA_No, Deref=1)]' with '_At_(*return, _Ret_null_)'.",
               "Find": "[returnvalue:Post(Null=SA_No, Deref=1)]",
               "ReplaceWith": "_At_(*return, _Ret_null_)"
             }
@@ -5913,7 +5913,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Null=SA_Maybe, Deref=2)]' for '_At_(**return, _Ret_maybenull_)'.",
+              "Description": "Replace '[returnvalue:Post(Null=SA_Maybe, Deref=2)]' with '_At_(**return, _Ret_maybenull_)'.",
               "Find": "[returnvalue:Post(Null=SA_Maybe, Deref=2)]",
               "ReplaceWith": "_At_(**return, _Ret_maybenull_)"
             }
@@ -5927,7 +5927,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Valid=SA_Yes)]' for '_Ret_valid_'.",
+              "Description": "Replace '[returnvalue:Post(Valid=SA_Yes)]' with '_Ret_valid_'.",
               "Find": "[returnvalue:Post(Valid=SA_Yes)]",
               "ReplaceWith": "_Ret_valid_"
             }
@@ -5941,7 +5941,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(WritableBytesConst=%1)]' for '_Ret_bytecap_(%1)'.",
+              "Description": "Replace '[returnvalue:Post(WritableBytesConst=%1)]' with '_Ret_bytecap_(%1)'.",
               "Find": "[returnvalue:Post(WritableBytesConst=%1)]",
               "ReplaceWith": "_Ret_bytecap_(%1)"
             }
@@ -5955,7 +5955,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(ValidBytesConst=%1)]' for '_Ret_writes_bytes_(%1)'.",
+              "Description": "Replace '[returnvalue:Post(ValidBytesConst=%1)]' with '_Ret_writes_bytes_(%1)'.",
               "Find": "[returnvalue:Post(ValidBytesConst=%1)]",
               "ReplaceWith": "_Ret_writes_bytes_(%1)"
             }
@@ -5969,7 +5969,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(ValidElementsConst=%1)]' for '_Ret_writes_(%1)'.",
+              "Description": "Replace '[returnvalue:Post(ValidElementsConst=%1)]' with '_Ret_writes_(%1)'.",
               "Find": "[returnvalue:Post(ValidElementsConst=%1)]",
               "ReplaceWith": "_Ret_writes_(%1)"
             }
@@ -5983,7 +5983,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(WritableElementsConst=%1)]' for '_Ret_cap_(%1)'.",
+              "Description": "Replace '[returnvalue:Post(WritableElementsConst=%1)]' with '_Ret_cap_(%1)'.",
               "Find": "[returnvalue:Post(WritableElementsConst=%1)]",
               "ReplaceWith": "_Ret_cap_(%1)"
             }
@@ -5997,7 +5997,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(NullTerminated=SA_No)]' for '_Ret1_impl_(__notzterm_impl)'.",
+              "Description": "Replace '[returnvalue:Post(NullTerminated=SA_No)]' with '_Ret1_impl_(__notzterm_impl)'.",
               "Find": "[returnvalue:Post(NullTerminated=SA_No)]",
               "ReplaceWith": "_Ret1_impl_(__notzterm_impl)"
             }
@@ -6011,7 +6011,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Deref=0), returnvalue:Post(Valid=SA_Yes)]' for '_Ret_valid_'.",
+              "Description": "Replace '[returnvalue:Post(Deref=0), returnvalue:Post(Valid=SA_Yes)]' with '_Ret_valid_'.",
               "Find": "[returnvalue:Post(Deref=0), returnvalue:Post(Valid=SA_Yes)]",
               "ReplaceWith": "_Ret_valid_"
             }
@@ -6025,7 +6025,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue: SA_Post(Null=SA_Maybe)]' for '_Ret_maybenull_'.",
+              "Description": "Replace '[returnvalue: SA_Post(Null=SA_Maybe)]' with '_Ret_maybenull_'.",
               "Find": "[returnvalue: SA_Post(Null=SA_Maybe)]",
               "ReplaceWith": "_Ret_maybenull_"
             }
@@ -6039,7 +6039,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue: SA_Post( Deref=(0), Null=SA_Yes )]' for '_Ret_null_'.",
+              "Description": "Replace '[returnvalue: SA_Post( Deref=(0), Null=SA_Yes )]' with '_Ret_null_'.",
               "Find": "[returnvalue: SA_Post( Deref=(0), Null=SA_Yes )]",
               "ReplaceWith": "_Ret_null_"
             }
@@ -6053,7 +6053,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue: SA_Post(Null=SA_Maybe, ValidElements=%1)]' for '_Ret_writes_maybenull_(%1)'.",
+              "Description": "Replace '[returnvalue: SA_Post(Null=SA_Maybe, ValidElements=%1)]' with '_Ret_writes_maybenull_(%1)'.",
               "Find": "[returnvalue: SA_Post(Null=SA_Maybe, ValidElements=%1)]",
               "ReplaceWith": "_Ret_writes_maybenull_(%1)"
             }
@@ -6067,7 +6067,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue: SA_Post( Deref=(1), Null=SA_Maybe )]' for '_At_(*return, _Ret_maybenull_)'.",
+              "Description": "Replace '[returnvalue: SA_Post( Deref=(1), Null=SA_Maybe )]' with '_At_(*return, _Ret_maybenull_)'.",
               "Find": "[returnvalue: SA_Post( Deref=(1), Null=SA_Maybe )]",
               "ReplaceWith": "_At_(*return, _Ret_maybenull_)"
             }
@@ -6081,7 +6081,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue: SA_Post( Deref=(0), Null=SA_No )]' for '_Ret_notnull_'.",
+              "Description": "Replace '[returnvalue: SA_Post( Deref=(0), Null=SA_No )]' with '_Ret_notnull_'.",
               "Find": "[returnvalue: SA_Post( Deref=(0), Null=SA_No )]",
               "ReplaceWith": "_Ret_notnull_"
             }
@@ -6095,7 +6095,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue: SA_Post(MustCheck=SA_Yes)]' for '_Check_return_'.",
+              "Description": "Replace '[returnvalue: SA_Post(MustCheck=SA_Yes)]' with '_Check_return_'.",
               "Find": "[returnvalue: SA_Post(MustCheck=SA_Yes)]",
               "ReplaceWith": "_Check_return_"
             }
@@ -6109,7 +6109,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Access=SA_ReadWrite)]' for '_Ret1_impl_(__allaccess_impl)'.",
+              "Description": "Replace '[returnvalue:Post(Access=SA_ReadWrite)]' with '_Ret1_impl_(__allaccess_impl)'.",
               "Find": "[returnvalue:Post(Access=SA_ReadWrite)]",
               "ReplaceWith": "_Ret1_impl_(__allaccess_impl)"
             }
@@ -6123,7 +6123,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Access=SA_ReadWrite, Deref=1)]' for '_At_(*return, _Ret1_impl_(__allaccess_impl))'.",
+              "Description": "Replace '[returnvalue:Post(Access=SA_ReadWrite, Deref=1)]' with '_At_(*return, _Ret1_impl_(__allaccess_impl))'.",
               "Find": "[returnvalue:Post(Access=SA_ReadWrite, Deref=1)]",
               "ReplaceWith": "_At_(*return, _Ret1_impl_(__allaccess_impl))"
             }
@@ -6137,7 +6137,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Access=SA_Write)]' for '_Ret1_impl_(__writeaccess_impl)'.",
+              "Description": "Replace '[returnvalue:Post(Access=SA_Write)]' with '_Ret1_impl_(__writeaccess_impl)'.",
               "Find": "[returnvalue:Post(Access=SA_Write)]",
               "ReplaceWith": "_Ret1_impl_(__writeaccess_impl)"
             }
@@ -6151,7 +6151,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Access=(SA_ReadWrite | SA_Read))]' for '_Ret1_impl_(__allaccess_impl)'.",
+              "Description": "Replace '[returnvalue:Post(Access=(SA_ReadWrite | SA_Read))]' with '_Ret1_impl_(__allaccess_impl)'.",
               "Find": "[returnvalue:Post(Access=(SA_ReadWrite | SA_Read))]",
               "ReplaceWith": "_Ret1_impl_(__allaccess_impl)"
             }
@@ -6165,7 +6165,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue:Post(Valid=SA_Maybe, Deref=1)]' for '_At_(*return, _Ret1_impl_(__maybevalid_impl))'.",
+              "Description": "Replace '[returnvalue:Post(Valid=SA_Maybe, Deref=1)]' with '_At_(*return, _Ret1_impl_(__maybevalid_impl))'.",
               "Find": "[returnvalue:Post(Valid=SA_Maybe, Deref=1)]",
               "ReplaceWith": "_At_(*return, _Ret1_impl_(__maybevalid_impl))"
             }
@@ -6179,7 +6179,7 @@
           },
           "Fixes": {
             "updateAnnotation": {
-              "Description": "Replace '[returnvalue: SA_Post( Deref=(1), Null=SA_Yes, NullTerminated=SA_No )]' for '_At_(*return, _Ret_null_ _Ret1_impl_(__notzterm_impl))'.",
+              "Description": "Replace '[returnvalue: SA_Post( Deref=(1), Null=SA_Yes, NullTerminated=SA_No )]' with '_At_(*return, _Ret_null_ _Ret1_impl_(__notzterm_impl))'.",
               "Find": "[returnvalue: SA_Post( Deref=(1), Null=SA_Yes, NullTerminated=SA_No )]",
               "ReplaceWith": "_At_(*return, _Ret_null_ _Ret1_impl_(__notzterm_impl))"
             }

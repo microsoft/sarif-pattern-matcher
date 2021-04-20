@@ -192,7 +192,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                     "updateAnnotation",
                                     new SimpleFix
                                     {
-                                        Description = $"Replace '{obsolete}' for '{parts[1].Trim()}'.",
+                                        Description = $"Replace '{obsolete}' with '{parts[1].Trim()}'.",
                                         Find = obsolete,
                                         ReplaceWith = parts[1].Trim(),
                                     }
