@@ -36,24 +36,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         public static ValidationState IsValidStatic(ref string matchedPattern,
                                                     ref Dictionary<string, string> groups,
-                                                    ref string failureLevel,
                                                     ref string message,
+                                                    out ResultLevelKind resultLevelKind,
                                                     out Fingerprint fingerprint)
         {
-            return ValidatorBase.IsValidStatic(Instance,
-                                               ref matchedPattern,
-                                               ref groups,
-                                               ref failureLevel,
-                                               ref message,
-                                               out fingerprint);
+            return IsValidStatic(Instance,
+                                 ref matchedPattern,
+                                 ref groups,
+                                 ref message,
+                                 out resultLevelKind,
+                                 out fingerprint);
         }
 
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
+                                                     ref string message,
+                                                     ref Dictionary<string, string> options,
+                                                     ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
-                                  ref options);
+                                  ref options,
+                                  ref resultLevelKind);
         }
 
         internal static List<string> ExtractHosts(string hostXmlAsString)
@@ -83,11 +87,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
                                                                ref Dictionary<string, string> groups,
-                                                               ref string failureLevel,
                                                                ref string message,
+                                                               out ResultLevelKind resultLevelKind,
                                                                out Fingerprint fingerprint)
         {
             fingerprint = default;
+            resultLevelKind = default;
 
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
                 !groups.TryGetNonEmptyValue("host", out string host) ||
@@ -114,7 +119,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                ref Dictionary<string, string> options)
+                                                                ref Dictionary<string, string> options,
+                                                                ref ResultLevelKind resultLevelKind)
         {
             string hostXmlAsString = fingerprint.Host;
             string username = fingerprint.Id;
@@ -201,10 +207,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 case 0:
                     return ReturnUnknownAuthorization(ref message, username);
+
                 case 1:
                     return ReturnUnknownHost(ref message, username);
+
                 case 2:
                     return ReturnUnauthorizedAccess(ref message, username);
+
                 default:
                     return ReturnUnknownAuthorization(ref message, username);
             }
@@ -220,7 +229,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             ?.ChildNodes.Cast<XmlNode>().Where(x => x.Name.Equals("add", StringComparison.OrdinalIgnoreCase)) // <add ... >  <clear/> (the first node)
                                 .Select(x => x.Attributes["value"]?.Value ?? x.Attributes["Value"]?.Value).ToList(); // <add key="name of host" value="http://nugetfeedUrl.com" /> (we're looking for URL)
 
-            if (returnList == null || returnList.Count() == 0)
+            if (returnList == null || returnList.Count == 0)
             {
                 // Sometimes it looks like <packageSources>{the thing we're interested in}</packageSources>
                 string host = hostXml?.ChildNodes[0]?.InnerText;
