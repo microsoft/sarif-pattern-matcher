@@ -16,9 +16,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static SqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
 
-        private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;""<]+";
-        private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;""<]+";
-        private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;""<]+";
+        private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;""<\n]+";
+        private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;""<\n]+";
+        private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;""'<]+";
         private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;""<\s]+";
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
@@ -59,12 +59,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                  out fingerprint);
         }
 
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint, ref string message, ref Dictionary<string, string> options)
+        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
+                                                     ref string message,
+                                                     ref Dictionary<string, string> options,
+                                                     out ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
-                                  ref options);
+                                  ref options,
+                                  out resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
@@ -136,9 +140,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                       ref string message,
-                                                       ref Dictionary<string, string> options)
+                                                                ref string message,
+                                                                ref Dictionary<string, string> options,
+                                                                out ResultLevelKind resultLevelKind)
         {
+            resultLevelKind = new ResultLevelKind();
+
             string host = fingerprint.Host;
             string account = fingerprint.Id;
             string password = fingerprint.Secret;

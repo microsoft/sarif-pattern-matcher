@@ -113,8 +113,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public static ValidationState IsValidDynamic(ValidatorBase validator,
                                             ref Fingerprint fingerprint,
                                             ref string message,
-                                            ref Dictionary<string, string> options)
+                                            ref Dictionary<string, string> options,
+                                            out ResultLevelKind resultLevelKind)
         {
+            resultLevelKind = default;
+
             if (shouldUseDynamicCache &&
                 validator.FingerprintToResultCache.TryGetValue(fingerprint, out Tuple<ValidationState, string> result))
             {
@@ -125,7 +128,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             ValidationState validationState =
                 validator.IsValidDynamicHelper(ref fingerprint,
                                                ref message,
-                                               ref options);
+                                               ref options,
+                                               out resultLevelKind);
 
             validator.FingerprintToResultCache[fingerprint] =
                 new Tuple<ValidationState, string>(validationState, message);
@@ -320,8 +324,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected virtual ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                       ref string message,
-                                                      ref Dictionary<string, string> options)
+                                                      ref Dictionary<string, string> options,
+                                                      out ResultLevelKind resultLevelKind)
         {
+            resultLevelKind = default;
+
             return ValidationState.NoMatch;
         }
 
