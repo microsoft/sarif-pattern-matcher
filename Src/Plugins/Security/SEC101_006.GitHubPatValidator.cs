@@ -22,18 +22,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new GitHubPatValidator();
         }
 
-        public static ValidationState IsValidStatic(ref string matchedPattern,
-                                                    ref Dictionary<string, string> groups,
-                                                    ref string message,
-                                                    out ResultLevelKind resultLevelKind,
-                                                    out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
+                                                                  ref Dictionary<string, string> groups,
+                                                                  ref string message)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
-                                 ref message,
-                                 out resultLevelKind,
-                                 out fingerprint);
+                                 ref message);
         }
 
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
@@ -48,38 +44,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref resultLevelKind);
         }
 
-        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
-                                                               ref Dictionary<string, string> groups,
-                                                               ref string message,
-                                                               out ResultLevelKind resultLevelKind,
-                                                               out Fingerprint fingerprint)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
+                                                                             ref Dictionary<string, string> groups,
+                                                                             ref string message)
         {
-            fingerprint = default;
-            resultLevelKind = default;
-
             if (!groups.TryGetNonEmptyValue("secret", out string pat))
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.NoMatch;
             }
 
+            ValidationResult validationResult;
             if (groups.TryGetNonEmptyValue("checksum", out string checksum))
             {
                 // TODO: #365 Utilize checksum https://github.com/microsoft/sarif-pattern-matcher/issues/365
 
-                fingerprint = new Fingerprint
+                validationResult = new ValidationResult
                 {
-                    Secret = matchedPattern,
-                    Platform = nameof(AssetPlatform.GitHub),
+                    Fingerprint = new Fingerprint
+                    {
+                        Secret = matchedPattern,
+                        Platform = nameof(AssetPlatform.GitHub),
+                    },
+                    ValidationState = ValidationState.Unknown,
                 };
 
-                return ValidationState.Unknown;
+                return new[] { validationResult };
             }
 
             // It is highly likely we do not have a key if we can't
             // find at least one letter and digit within the pattern.
             if (!ContainsDigitAndChar(pat))
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.NoMatch;
             }
 
             if (matchedPattern.IndexOf("commit", StringComparison.OrdinalIgnoreCase) >= 0 ||
@@ -93,16 +89,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 matchedPattern.IndexOf("using ref", StringComparison.OrdinalIgnoreCase) >= 0 ||
                 matchedPattern.IndexOf("githubusercontent.com", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.NoMatch;
             }
 
-            fingerprint = new Fingerprint
+            validationResult = new ValidationResult
             {
-                Secret = pat,
-                Platform = nameof(AssetPlatform.GitHub),
+                Fingerprint = new Fingerprint
+                {
+                    Secret = pat,
+                    Platform = nameof(AssetPlatform.GitHub),
+                },
+                ValidationState = ValidationState.Unknown,
             };
 
-            return ValidationState.Unknown;
+            return new[] { validationResult };
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,

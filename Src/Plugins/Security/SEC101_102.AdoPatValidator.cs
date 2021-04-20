@@ -79,19 +79,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
 #pragma warning disable IDE0060 // Remove unused parameter
 
-        public static ValidationState IsValidStatic(ref string matchedPattern,
-                                                    ref Dictionary<string, string> groups,
-                                                    ref string message,
-                                                    out ResultLevelKind resultLevelKind,
-                                                    out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
+                                                                  ref Dictionary<string, string> groups,
+                                                                  ref string message)
         {
 #pragma warning restore IDE0060
-            fingerprint = default;
-            resultLevelKind = default;
-
             if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.NoMatch;
             }
 
             ValidationState state =
@@ -100,16 +95,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     ValidationState.Unknown :
                     ValidationState.NoMatch;
 
-            if (state != ValidationState.NoMatch)
+            if (state == ValidationState.NoMatch)
             {
-                fingerprint = new Fingerprint()
+                return ValidationResult.NoMatch;
+            }
+
+            var validationResult = new ValidationResult
+            {
+                Fingerprint = new Fingerprint()
                 {
                     Secret = secret,
                     Platform = nameof(AssetPlatform.AzureDevOps),
-                };
-            }
+                },
+                ValidationState = state,
+            };
 
-            return state;
+            return new[] { validationResult };
         }
 
         /// <summary>

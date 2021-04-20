@@ -17,18 +17,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             ValidationState expectedValidationState = ValidationState.Unknown;
 
             string matchedPattern = "ghp_stuffchecksum"; // Insert new GitHub PAT here
-            Dictionary<string, string> groups = new Dictionary<string, string>();
+            var groups = new Dictionary<string, string>();
             groups.Add("secret", "stuff");
             groups.Add("checksum", "checksum");
             groups.Add("scanTargetFullPath", "GitHitPatTest");
 
             string message = null;
 
-            ValidationState actualValidationState = GitHubPatValidator.IsValidStatic(ref matchedPattern, ref groups, ref message, out _, out Fingerprint fingerprint);
-
-            Assert.Equal(matchedPattern, fingerprint.Secret);
-            Assert.Equal(AssetPlatform.GitHub.ToString(), fingerprint.Platform);
-            Assert.Equal(expectedValidationState, actualValidationState);
+            IEnumerable<ValidationResult> validationResults = GitHubPatValidator.IsValidStatic(ref matchedPattern, ref groups, ref message);
+            foreach (ValidationResult validationResult in validationResults)
+            {
+                Assert.Equal(matchedPattern, validationResult.Fingerprint.Secret);
+                Assert.Equal(AssetPlatform.GitHub.ToString(), validationResult.Fingerprint.Platform);
+                Assert.Equal(expectedValidationState, validationResult.ValidationState);
+            }
         }
 
         [Fact]

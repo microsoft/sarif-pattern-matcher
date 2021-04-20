@@ -17,41 +17,36 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new PicaticApiKeyValidator();
         }
 
-        public static ValidationState IsValidStatic(ref string matchedPattern,
-                                                    ref Dictionary<string, string> groups,
-                                                    ref string message,
-                                                    out ResultLevelKind resultLevelKind,
-                                                    out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
+                                                                  ref Dictionary<string, string> groups,
+                                                                  ref string message)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
-                                 ref message,
-                                 out resultLevelKind,
-                                 out fingerprint);
+                                 ref message);
         }
 
-        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
-                                                               ref Dictionary<string, string> groups,
-                                                               ref string message,
-                                                               out ResultLevelKind resultLevelKind,
-                                                               out Fingerprint fingerprint)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
+                                                                             ref Dictionary<string, string> groups,
+                                                                             ref string message)
         {
-            fingerprint = default;
-            resultLevelKind = default;
-
             if (!groups.TryGetNonEmptyValue("refine", out string secret))
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.NoMatch;
             }
 
-            fingerprint = new Fingerprint()
+            var validationResult = new ValidationResult
             {
-                Secret = secret,
-                Platform = nameof(AssetPlatform.Picatic),
+                Fingerprint = new Fingerprint()
+                {
+                    Secret = secret,
+                    Platform = nameof(AssetPlatform.Picatic),
+                },
+                ValidationState = ValidationState.Unknown,
             };
 
-            return ValidationState.Unknown;
+            return new[] { validationResult };
         }
     }
 }

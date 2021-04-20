@@ -488,100 +488,127 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 string levelText = level.ToString();
 
-                ValidationState state = 0;
                 Fingerprint fingerprint = default;
-                ResultLevelKind resultLevelKind = default;
                 string validatorMessage = null;
                 string validationPrefix = string.Empty;
                 string validationSuffix = string.Empty;
 
                 if (_validators != null && matchExpression.IsValidatorEnabled)
                 {
-                    state = _validators.Validate(reportingDescriptor.Name,
-                                                context,
-                                                ref refinedMatchedPattern,
-                                                ref groups,
-                                                ref validatorMessage,
-                                                out resultLevelKind,
-                                                out fingerprint,
-                                                out bool pluginSupportsDynamicValidation);
+                    IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
+                                                                                           context,
+                                                                                           ref refinedMatchedPattern,
+                                                                                           ref groups,
+                                                                                           ref validatorMessage,
+                                                                                           out bool pluginSupportsDynamicValidation);
 
-                    if (!Enum.TryParse<FailureLevel>(levelText, out level))
+                    if (validationResults != null)
                     {
-                        // An illegal failure level '{0}' was returned running check '{1}' against '{2}'.
-                        context.Logger.LogToolNotification(
-                            Errors.CreateNotification(
-                                context.TargetUri,
-                                "ERR998.ValidatorReturnedIllegalResultLevel",
-                                context.Rule.Id,
-                                FailureLevel.Error,
-                                exception: null,
-                                persistExceptionStack: false,
-                                messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalResultLevel,
-                                levelText,
-                                context.Rule.Id,
-                                context.TargetUri.GetFileName()));
+                        foreach (ValidationResult validationResult in validationResults)
+                        {
+                            if (validationResult.ValidationState == ValidationState.None ||
+                                validationResult.ValidationState == ValidationState.NoMatch ||
+                                validationResult.ValidationState == ValidationState.ValidatorReturnedIllegalValidationState)
+                            {
+                                continue;
+                            }
 
-                        // If we don't understand the failure level, elevate it to error.
-                        level = FailureLevel.Error;
-                    }
+                            SetPropertiesBasedOnValidationState(validationResult.ValidationState,
+                                                                context,
+                                                                validationResult.ResultLevelKind,
+                                                                ref level,
+                                                                ref validationPrefix,
+                                                                ref validationSuffix,
+                                                                ref validatorMessage,
+                                                                pluginSupportsDynamicValidation);
 
-                    SetPropertiesBasedOnValidationState(state,
-                                                        context,
-                                                        resultLevelKind,
-                                                        ref level,
-                                                        ref validationPrefix,
-                                                        ref validationSuffix,
-                                                        ref validatorMessage,
-                                                        pluginSupportsDynamicValidation);
-
-                    if (state == ValidationState.None ||
-                        state == ValidationState.NoMatch ||
-                        state == ValidationState.ValidatorReturnedIllegalValidationState)
-                    {
-                        continue;
+                            ConstructResultAndLogForContentsRegex(binary64DecodedMatch,
+                                                  context,
+                                                  matchExpression,
+                                                  level,
+                                                  filePath,
+                                                  flexMatch,
+                                                  reportingDescriptor,
+                                                  match,
+                                                  refinedMatchedPattern,
+                                                  validationResult.Fingerprint,
+                                                  validatorMessage,
+                                                  validationPrefix,
+                                                  validationSuffix);
+                        }
                     }
                 }
-
-                // If we're matching against decoded contents, the region should
-                // relate to the base64-encoded scan target content. We do use
-                // the decoded content for the fingerprint, however.
-                FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch;
-
-                Region region = ConstructRegion(context, regionFlexMatch, refinedMatchedPattern);
-
-                Dictionary<string, string> messageArguments = matchExpression.MessageArguments != null ?
-                    new Dictionary<string, string>(matchExpression.MessageArguments) :
-                    new Dictionary<string, string>();
-
-                messageArguments["encoding"] = binary64DecodedMatch != null ?
-                    "base64-encoded" :
-                    string.Empty; // We don't bother to report a value for plaintext content
-
-                messageArguments["validationPrefix"] = validationPrefix;
-                messageArguments["validationSuffix"] = validationSuffix;
-
-                IList<string> arguments = GetMessageArguments(match,
-                                                              matchExpression.ArgumentNameToIndexMap,
-                                                              filePath,
-                                                              validatorMessage: NormalizeValidatorMessage(validatorMessage),
-                                                              messageArguments);
-
-                Result result = ConstructResult(context.TargetUri,
-                                                reportingDescriptor.Id,
-                                                level,
-                                                region,
-                                                flexMatch,
-                                                fingerprint,
-                                                matchExpression,
-                                                arguments);
-
-                // This skimmer instance mutates its reporting descriptor state,
-                // for example, the sub-id may change for every match
-                // expression. We will therefore generate a snapshot of
-                // current ReportingDescriptor state when logging.
-                context.Logger.Log(reportingDescriptor, result);
+                else
+                {
+                    ConstructResultAndLogForContentsRegex(binary64DecodedMatch,
+                                          context,
+                                          matchExpression,
+                                          level,
+                                          filePath,
+                                          flexMatch,
+                                          reportingDescriptor,
+                                          match,
+                                          refinedMatchedPattern,
+                                          fingerprint,
+                                          validatorMessage,
+                                          validationPrefix,
+                                          validationSuffix);
+                }
             }
+        }
+
+        private void ConstructResultAndLogForContentsRegex(FlexMatch binary64DecodedMatch,
+                                           AnalyzeContext context,
+                                           MatchExpression matchExpression,
+                                           FailureLevel level,
+                                           string filePath,
+                                           FlexMatch flexMatch,
+                                           ReportingDescriptor reportingDescriptor,
+                                           Match match,
+                                           string refinedMatchedPattern,
+                                           Fingerprint fingerprint,
+                                           string validatorMessage,
+                                           string validationPrefix,
+                                           string validationSuffix)
+        {
+            // If we're matching against decoded contents, the region should
+            // relate to the base64-encoded scan target content. We do use
+            // the decoded content for the fingerprint, however.
+            FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch;
+
+            Region region = ConstructRegion(context, regionFlexMatch, refinedMatchedPattern);
+
+            Dictionary<string, string> messageArguments = matchExpression.MessageArguments != null ?
+                new Dictionary<string, string>(matchExpression.MessageArguments) :
+                new Dictionary<string, string>();
+
+            messageArguments["encoding"] = binary64DecodedMatch != null ?
+                "base64-encoded" :
+                string.Empty; // We don't bother to report a value for plaintext content
+
+            messageArguments["validationPrefix"] = validationPrefix;
+            messageArguments["validationSuffix"] = validationSuffix;
+
+            IList<string> arguments = GetMessageArguments(match,
+                                                          matchExpression.ArgumentNameToIndexMap,
+                                                          filePath,
+                                                          validatorMessage: NormalizeValidatorMessage(validatorMessage),
+                                                          messageArguments);
+
+            Result result = ConstructResult(context.TargetUri,
+                                            reportingDescriptor.Id,
+                                            level,
+                                            region,
+                                            flexMatch,
+                                            fingerprint,
+                                            matchExpression,
+                                            arguments);
+
+            // This skimmer instance mutates its reporting descriptor state,
+            // for example, the sub-id may change for every match
+            // expression. We will therefore generate a snapshot of
+            // current ReportingDescriptor state when logging.
+            context.Logger.Log(reportingDescriptor, result);
         }
 
         private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level)
@@ -602,171 +629,178 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string filePath = context.TargetUri.IsAbsoluteUri
                 ? context.TargetUri.LocalPath
                 : context.TargetUri.OriginalString;
-
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
-                ResultLevelKind resultLevelKind;
-                ValidationState state = _validators.Validate(reportingDescriptor.Name,
-                                                             context,
-                                                             ref filePath,
-                                                             ref groups,
-                                                             ref validatorMessage,
-                                                             out resultLevelKind,
-                                                             out fingerprint,
-                                                             out bool pluginSupportsDynamicValidation);
+                IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
+                                                 context,
+                                                 ref filePath,
+                                                 ref groups,
+                                                 ref validatorMessage,
+                                                 out bool pluginSupportsDynamicValidation);
 
-                if (!Enum.TryParse<FailureLevel>(levelText, out level))
+                if (validationResults != null)
                 {
-                    // An illegal failure level '{0}' was returned running check '{1}' against '{2}'.
-                    context.Logger.LogToolNotification(
-                        Errors.CreateNotification(
-                            context.TargetUri,
-                            "ERR998.ValidatorReturnedIllegalResultLevel",
-                            context.Rule.Id,
-                            FailureLevel.Error,
-                            exception: null,
-                            persistExceptionStack: false,
-                            messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalResultLevel,
-                            levelText,
-                            context.Rule.Id,
-                            context.TargetUri.GetFileName()));
-
-                    // If we don't understand the failure level, elevate it to error.
-                    level = FailureLevel.Error;
-                }
-
-                switch (state)
-                {
-                    case ValidationState.NoMatch:
+                    foreach (ValidationResult validationResult in validationResults)
                     {
-                        // The validator determined the match is a false positive.
-                        // i.e., it is not the kind of artifact we're looking for.
-                        // We should suspend processing and move to the next match.
-                        level = FailureLevel.None;
-                        break;
-                    }
-
-                    case ValidationState.None:
-                    case ValidationState.ValidatorReturnedIllegalValidationState:
-                    {
-                        // An illegal state was returned running check '{0}' against '{1}' ({2}).
-                        context.Logger.LogToolNotification(
-                            Errors.CreateNotification(
-                                context.TargetUri,
-                                "ERR998.ValidatorReturnedIllegalValidationState",
-                                context.Rule.Id,
-                                FailureLevel.Error,
-                                exception: null,
-                                persistExceptionStack: false,
-                                messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
-                                context.Rule.Id,
-                                context.TargetUri.GetFileName(),
-                                validatorMessage));
-
-                        level = FailureLevel.Error;
-                        break;
-                    }
-
-                    case ValidationState.Authorized:
-                    {
-                        level = FailureLevel.Error;
-
-                        // Contributes to building a message fragment such as:
-                        // 'SomeFile.txt' is an exposed SomeSecret file [...].
-                        validationPrefix = "an exposed ";
-                        break;
-                    }
-
-                    case ValidationState.Expired:
-                    {
-                        level = FailureLevel.Note;
-
-                        // Contributes to building a message fragment such as:
-                        // 'SomeFile.txt' contains an expired SomeApi token[...].
-                        validationPrefix = "an expired ";
-                        break;
-                    }
-
-                    case ValidationState.PasswordProtected:
-                    {
-                        level = FailureLevel.Warning;
-
-                        // Contributes to building a message fragment such as:
-                        // 'SomeFile.txt' contains a password-protected SomeSecret file
-                        // which could be exfiltrated and potentially brute-forced offline.
-                        validationPrefix = "a password-protected ";
-                        validationSuffix = " which could be exfiltrated and potentially brute-forced offline";
-                        break;
-                    }
-
-                    case ValidationState.UnknownHost:
-                    case ValidationState.Unauthorized:
-                    case ValidationState.InvalidForConsultedAuthorities:
-                    {
-                        throw new InvalidOperationException();
-                    }
-
-                    case ValidationState.Unknown:
-                    {
-                        level = FailureLevel.Note;
-
-                        validationPrefix = "an apparent ";
-                        if (!context.DynamicValidation)
+                        switch (validationResult.ValidationState)
                         {
-                            if (pluginSupportsDynamicValidation)
+                            case ValidationState.NoMatch:
                             {
-                                // This indicates that dynamic validation was disabled but we
-                                // passed this result to a validator that could have performed
-                                // this work.
-                                validationSuffix = ". No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
+                                // The validator determined the match is a false positive.
+                                // i.e., it is not the kind of artifact we're looking for.
+                                // We should suspend processing and move to the next match.
+                                level = FailureLevel.None;
+                                break;
                             }
-                            else
+
+                            case ValidationState.None:
+                            case ValidationState.ValidatorReturnedIllegalValidationState:
                             {
-                                // No validation was requested. The plugin indicated
-                                // that is can't perform this work in any case.
-                                validationSuffix = string.Empty;
+                                // An illegal state was returned running check '{0}' against '{1}' ({2}).
+                                context.Logger.LogToolNotification(
+                                    Errors.CreateNotification(
+                                        context.TargetUri,
+                                        "ERR998.ValidatorReturnedIllegalValidationState",
+                                        context.Rule.Id,
+                                        FailureLevel.Error,
+                                        exception: null,
+                                        persistExceptionStack: false,
+                                        messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
+                                        context.Rule.Id,
+                                        context.TargetUri.GetFileName(),
+                                        validatorMessage));
+
+                                level = FailureLevel.Error;
+                                break;
+                            }
+
+                            case ValidationState.Authorized:
+                            {
+                                level = FailureLevel.Error;
+
+                                // Contributes to building a message fragment such as:
+                                // 'SomeFile.txt' is an exposed SomeSecret file [...].
+                                validationPrefix = "an exposed ";
+                                break;
+                            }
+
+                            case ValidationState.Expired:
+                            {
+                                level = FailureLevel.Note;
+
+                                // Contributes to building a message fragment such as:
+                                // 'SomeFile.txt' contains an expired SomeApi token[...].
+                                validationPrefix = "an expired ";
+                                break;
+                            }
+
+                            case ValidationState.PasswordProtected:
+                            {
+                                level = FailureLevel.Warning;
+
+                                // Contributes to building a message fragment such as:
+                                // 'SomeFile.txt' contains a password-protected SomeSecret file
+                                // which could be exfiltrated and potentially brute-forced offline.
+                                validationPrefix = "a password-protected ";
+                                validationSuffix = " which could be exfiltrated and potentially brute-forced offline";
+                                break;
+                            }
+
+                            case ValidationState.UnknownHost:
+                            case ValidationState.Unauthorized:
+                            case ValidationState.InvalidForConsultedAuthorities:
+                            {
+                                throw new InvalidOperationException();
+                            }
+
+                            case ValidationState.Unknown:
+                            {
+                                level = FailureLevel.Note;
+
+                                validationPrefix = "an apparent ";
+                                if (!context.DynamicValidation)
+                                {
+                                    if (pluginSupportsDynamicValidation)
+                                    {
+                                        // This indicates that dynamic validation was disabled but we
+                                        // passed this result to a validator that could have performed
+                                        // this work.
+                                        validationSuffix = ". No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
+                                    }
+                                    else
+                                    {
+                                        // No validation was requested. The plugin indicated
+                                        // that is can't perform this work in any case.
+                                        validationSuffix = string.Empty;
+                                    }
+                                }
+                                else if (pluginSupportsDynamicValidation)
+                                {
+                                    validationSuffix = ", the validity of which could not be determined by runtime analysis";
+                                }
+                                else
+                                {
+                                    // Validation was requested. But the plugin indicated
+                                    // that it can't perform this work in any case.
+                                    validationSuffix = string.Empty;
+                                }
+
+                                break;
+                            }
+
+                            case ValidationState.ValidatorNotFound:
+                            {
+                                // TODO: should we have an explicit indicator in
+                                // all cases that tells us whether this is an
+                                // expected condition or not?
+                                validationPrefix = "an apparent ";
+
+                                break;
+                            }
+
+                            default:
+                            {
+                                throw new InvalidOperationException($"Unrecognized validation value '{validationResult.ValidationState}'.");
                             }
                         }
-                        else if (pluginSupportsDynamicValidation)
+
+                        if (validationResult.ResultLevelKind != default)
                         {
-                            validationSuffix = ", the validity of which could not be determined by runtime analysis";
-                        }
-                        else
-                        {
-                            // Validation was requested. But the plugin indicated
-                            // that it can't perform this work in any case.
-                            validationSuffix = string.Empty;
+                            level = validationResult.ResultLevelKind.Level;
                         }
 
-                        break;
+                        ConstructResultAndLogForFileNameRegex(context,
+                                                              matchExpression,
+                                                              level,
+                                                              reportingDescriptor,
+                                                              validationResult.Fingerprint,
+                                                              validatorMessage,
+                                                              validationPrefix,
+                                                              validationSuffix,
+                                                              filePath);
                     }
-
-                    case ValidationState.ValidatorNotFound:
-                    {
-                        // TODO: should we have an explicit indicator in
-                        // all cases that tells us whether this is an
-                        // expected condition or not?
-                        validationPrefix = "an apparent ";
-
-                        break;
-                    }
-
-                    default:
-                    {
-                        throw new InvalidOperationException($"Unrecognized validation value '{state}'.");
-                    }
-                }
-
-                if (resultLevelKind != default)
-                {
-                    level = resultLevelKind.Level;
                 }
             }
+            else
+            {
+                ConstructResultAndLogForFileNameRegex(context,
+                                                      matchExpression,
+                                                      level,
+                                                      reportingDescriptor,
+                                                      fingerprint,
+                                                      validatorMessage,
+                                                      validationPrefix,
+                                                      validationSuffix,
+                                                      filePath);
+            }
+        }
 
+        private void ConstructResultAndLogForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level, ReportingDescriptor reportingDescriptor, Fingerprint fingerprint, string validatorMessage, string validationPrefix, string validationSuffix, string filePath)
+        {
             Dictionary<string, string> messageArguments =
-                matchExpression.MessageArguments != null ?
-                    new Dictionary<string, string>(matchExpression.MessageArguments) :
-                    new Dictionary<string, string>();
+                            matchExpression.MessageArguments != null ?
+                                new Dictionary<string, string>(matchExpression.MessageArguments) :
+                                new Dictionary<string, string>();
 
             messageArguments["validationPrefix"] = validationPrefix;
             messageArguments["validationSuffix"] = validationSuffix;

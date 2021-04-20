@@ -21,9 +21,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string fingerprintText = "[host=<packageSources>\n    <clear />\n    <add key=\"sourceName\" value=\"https://api.nuget.org/v3/index.json\" />\n  </packageSources>][id=username][secret=password]";
             var fingerprint = new Fingerprint(fingerprintText);
             string message = null;
+            ResultLevelKind resultLevelKind = default;
             var keyValuePairs = new Dictionary<string, string>();
 
-            ValidationState actualValidationState = NuGetCredentialsValidator.IsValidDynamic(ref fingerprint, ref message, ref keyValuePairs);
+            ValidationState actualValidationState = NuGetCredentialsValidator.IsValidDynamic(ref fingerprint, ref message, ref keyValuePairs, ref resultLevelKind);
             Assert.Equal(ExpectedValidationState, actualValidationState);
         }
 
@@ -33,7 +34,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string xmlString = @"<packageSources>
     <add key=""nuget.org"" value=""https://api.nuget.org/v3/index.json"" protocolVersion=""3"" />
     <add key = ""Contoso"" value = ""https://contoso.com/packages/"" />
-   
+
        <add key = ""Test Source"" value = ""c:\packages"" />
       </packageSources> ";
 

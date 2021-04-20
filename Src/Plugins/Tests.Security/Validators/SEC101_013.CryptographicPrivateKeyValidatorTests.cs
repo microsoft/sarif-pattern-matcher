@@ -22,14 +22,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         public void CryptographicPrivateKeyValidator_Test()
         {
             string message = null;
-            Fingerprint fingerprint;
             var keyValuePairs = new Dictionary<string, string>
             {
                 { "secret", TestKey }
             };
 
-            ValidationState actualValidationState = CryptographicPrivateKeyValidator.IsValidStatic(ref TestMatchedPattern, ref keyValuePairs, ref message, out _, out fingerprint);
-            Assert.Equal(ExpectedValidationState, actualValidationState);
+            IEnumerable<ValidationResult> validationResults = CryptographicPrivateKeyValidator.IsValidStatic(ref TestMatchedPattern, ref keyValuePairs, ref message);
+            foreach (ValidationResult validationResult in validationResults)
+            {
+                Assert.Equal(ExpectedValidationState, validationResult.ValidationState);
+            }
         }
     }
 }

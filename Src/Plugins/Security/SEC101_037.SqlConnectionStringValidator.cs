@@ -45,18 +45,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             RegexEngine.Match(string.Empty, PasswordExpression);
         }
 
-        public static ValidationState IsValidStatic(ref string matchedPattern,
-                                                    ref Dictionary<string, string> groups,
-                                                    ref string message,
-                                                    out ResultLevelKind resultLevelKind,
-                                                    out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
+                                                                  ref Dictionary<string, string> groups,
+                                                                  ref string message)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
-                                 ref message,
-                                 out resultLevelKind,
-                                 out fingerprint);
+                                 ref message);
         }
 
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
@@ -71,14 +67,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref resultLevelKind);
         }
 
-        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
-                                                               ref Dictionary<string, string> groups,
-                                                               ref string message,
-                                                               out ResultLevelKind resultLevelKind,
-                                                               out Fingerprint fingerprint)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
+                                                                             ref Dictionary<string, string> groups,
+                                                                             ref string message)
         {
-            fingerprint = default;
-            resultLevelKind = default;
             matchedPattern = matchedPattern.Trim();
 
             string id, host, secret, database;
@@ -106,7 +98,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string.IsNullOrWhiteSpace(secret) ||
                 string.IsNullOrWhiteSpace(database))
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.NoMatch;
             }
 
             host = FilteringHelpers.StandardizeLocalhostName(host);
@@ -115,7 +107,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             if (exclusionResult == ValidationState.NoMatch)
             {
-                return exclusionResult;
+                return ValidationResult.NoMatch;
             }
 
             if (id.Length > 128 ||
@@ -123,10 +115,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 secret.Length > 128 ||
                 database.Length > 128)
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.NoMatch;
             }
 
-            fingerprint = new Fingerprint()
+            var fingerprint = new Fingerprint()
             {
                 Id = id,
                 Host = host,
@@ -136,7 +128,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             SharedUtilities.PopulateAssetFingerprint(host, ref fingerprint);
 
-            return ValidationState.Unknown;
+            var validationResult = new ValidationResult
+            {
+                Fingerprint = fingerprint,
+                ValidationState = ValidationState.Unknown,
+            };
+
+            return new[] { validationResult };
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,

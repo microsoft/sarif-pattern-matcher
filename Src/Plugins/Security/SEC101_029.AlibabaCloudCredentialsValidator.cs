@@ -29,18 +29,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new AlibabaCloudCredentialsValidator();
         }
 
-        public static ValidationState IsValidStatic(ref string matchedPattern,
-                                                    ref Dictionary<string, string> groups,
-                                                    ref string message,
-                                                    out ResultLevelKind resultLevelKind,
-                                                    out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
+                                                                  ref Dictionary<string, string> groups,
+                                                                  ref string message)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
-                                 ref message,
-                                 out resultLevelKind,
-                                 out fingerprint);
+                                 ref message);
         }
 
         // TODO: uncomment when Alibaba release a signed package/dll.
@@ -52,29 +48,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         //                           ref options);
         // }
 
-        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
-                                                               ref Dictionary<string, string> groups,
-                                                               ref string message,
-                                                               out ResultLevelKind resultLevelKind,
-                                                               out Fingerprint fingerprint)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
+                                                                             ref Dictionary<string, string> groups,
+                                                                             ref string message)
         {
-            fingerprint = default;
-            resultLevelKind = default;
-
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
                 !groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.NoMatch;
             }
 
-            fingerprint = new Fingerprint()
+            var validationResult = new ValidationResult
             {
-                Id = id,
-                Secret = secret,
-                Platform = nameof(AssetPlatform.AlibabaCloud),
+                Fingerprint = new Fingerprint()
+                {
+                    Id = id,
+                    Secret = secret,
+                    Platform = nameof(AssetPlatform.AlibabaCloud),
+                },
+                ValidationState = ValidationState.Unknown,
             };
 
-            return ValidationState.Unknown;
+            return new[] { validationResult };
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,

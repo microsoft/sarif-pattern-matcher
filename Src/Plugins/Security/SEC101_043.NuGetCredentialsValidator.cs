@@ -34,18 +34,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new NuGetCredentialsValidator();
         }
 
-        public static ValidationState IsValidStatic(ref string matchedPattern,
-                                                    ref Dictionary<string, string> groups,
-                                                    ref string message,
-                                                    out ResultLevelKind resultLevelKind,
-                                                    out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
+                                                                  ref Dictionary<string, string> groups,
+                                                                  ref string message)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
                                  ref groups,
-                                 ref message,
-                                 out resultLevelKind,
-                                 out fingerprint);
+                                 ref message);
         }
 
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
@@ -85,53 +81,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
         }
 
-        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
-                                                               ref Dictionary<string, string> groups,
-                                                               ref string message,
-                                                               out ResultLevelKind resultLevelKind,
-                                                               out Fingerprint fingerprint)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
+                                                                             ref Dictionary<string, string> groups,
+                                                                             ref string message)
         {
-            fingerprint = default;
-            resultLevelKind = default;
-
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("host", out string host) ||
+                !groups.TryGetNonEmptyValue("host", out string xmlHost) ||
                 !groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.NoMatch;
             }
 
             if (FilteringHelpers.LikelyPowershellVariable(secret))
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.NoMatch;
             }
 
-            fingerprint = new Fingerprint
-            {
-                Id = id,
-                Host = host, // technically, this is XML which could contain multiple hosts.
-                Secret = secret,
-                Platform = nameof(AssetPlatform.NuGet),
-            };
-
-            return ValidationState.Unknown;
-        }
-
-        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                                ref string message,
-                                                                ref Dictionary<string, string> options,
-                                                                ref ResultLevelKind resultLevelKind)
-        {
-            string hostXmlAsString = fingerprint.Host;
-            string username = fingerprint.Id;
-            string password = fingerprint.Secret;
-
-            IEnumerable<string> hosts = ExtractHosts(hostXmlAsString);
-
-            // Usually there will only be a single host.
-            // In any case, attempt to pass the credentials to each host one by one.
-            using HttpClient client = CreateHttpClient();
-            int highestResponse = 0;
+            IEnumerable<string> hosts = ExtractHosts(xmlHost);
+            var validationResults = new List<ValidationResult>();
             foreach (string host in hosts)
             {
                 if (!Uri.IsWellFormedUriString(host, UriKind.Absolute))
@@ -139,83 +106,93 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     continue;
                 }
 
-                using (HttpResponseMessage responseWithNoCredentials = client
-                .GetAsync(host, HttpCompletionOption.ResponseHeadersRead)
-                .GetAwaiter()
-                .GetResult())
+                validationResults.Add(new ValidationResult
                 {
-                    switch (responseWithNoCredentials.StatusCode)
+                    Fingerprint = new Fingerprint
                     {
-                        case HttpStatusCode.OK:
-                        {
-                            // Credentials not needed, this method of verification is indeterminate.
-                            highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unknown);
-                            break;
-                        }
+                        Id = id,
+                        Host = host,
+                        Secret = secret,
+                        Platform = nameof(AssetPlatform.NuGet),
+                    },
+                    ValidationState = ValidationState.Unknown,
+                });
+            }
 
-                        case HttpStatusCode.Unauthorized:
-                        case HttpStatusCode.Forbidden:
-                        {
-                            // Credentials may resolve this, try again with them.
-                            byte[] byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
-                            client.DefaultRequestHeaders.Authorization =
-                                new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+            return validationResults;
+        }
 
-                            using (HttpResponseMessage responseWithCredentials = client
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
+                                                                ref string message,
+                                                                ref Dictionary<string, string> options,
+                                                                ref ResultLevelKind resultLevelKind)
+        {
+            string host = fingerprint.Host;
+            string username = fingerprint.Id;
+            string password = fingerprint.Secret;
+
+            using HttpClient client = CreateHttpClient();
+
+            try
+            {
+                using HttpResponseMessage responseWithNoCredentials = client
+                    .GetAsync(host, HttpCompletionOption.ResponseHeadersRead)
+                    .GetAwaiter()
+                    .GetResult();
+
+                switch (responseWithNoCredentials.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                    {
+                        // Credentials not needed, this method of verification is indeterminate.
+                        return ReturnUnknownAuthorization(ref message, host, account: username);
+                    }
+
+                    case HttpStatusCode.Unauthorized:
+                    case HttpStatusCode.Forbidden:
+                    {
+                        // Credentials may resolve this, try again with them.
+                        byte[] byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
+                        client.DefaultRequestHeaders.Authorization =
+                            new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+                        using HttpResponseMessage responseWithCredentials = client
                             .GetAsync(host, HttpCompletionOption.ResponseHeadersRead)
                             .GetAwaiter()
-                            .GetResult())
+                            .GetResult();
+
+                        switch (responseWithCredentials.StatusCode)
+                        {
+                            case HttpStatusCode.OK:
                             {
-                                switch (responseWithCredentials.StatusCode)
-                                {
-                                    case HttpStatusCode.OK:
-                                    {
-                                        // Credentials resolved the forbidden/unauthorized message we received.
-                                        return ReturnAuthorizedAccess(ref message, username);
-                                    }
-
-                                    case HttpStatusCode.Forbidden:
-                                    case HttpStatusCode.Unauthorized:
-                                    {
-                                        // Credentials didn't fix the error, but it may be that we're missing
-                                        // something in the request.
-                                        highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unauthorized);
-                                        break;
-                                    }
-
-                                    default:
-                                    {
-                                        highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unknown);
-                                        break;
-                                    }
-                                }
+                                // Credentials resolved the forbidden/unauthorized message we received.
+                                return ReturnAuthorizedAccess(ref message, asset: host, account: username);
                             }
 
-                            break;
-                        }
+                            case HttpStatusCode.Forbidden:
+                            case HttpStatusCode.Unauthorized:
+                            {
+                                return ReturnUnauthorizedAccess(ref message, asset: host, account: username);
+                            }
 
-                        default:
-                        {
-                            highestResponse = AssignHighestResponse(highestResponse, ValidationState.Unknown);
-                            break;
+                            default:
+                            {
+                                message = CreateUnexpectedResponseCodeMessage(responseWithCredentials.StatusCode);
+                                return ValidationState.Unknown;
+                            }
                         }
+                    }
+
+                    default:
+                    {
+                        message = CreateUnexpectedResponseCodeMessage(responseWithNoCredentials.StatusCode);
+                        return ValidationState.Unknown;
                     }
                 }
             }
-
-            switch (highestResponse)
+            catch (Exception e)
             {
-                case 0:
-                    return ReturnUnknownAuthorization(ref message, username);
-
-                case 1:
-                    return ReturnUnknownHost(ref message, username);
-
-                case 2:
-                    return ReturnUnauthorizedAccess(ref message, username);
-
-                default:
-                    return ReturnUnknownAuthorization(ref message, username);
+                return ReturnUnhandledException(ref message, e, asset: host, account: username);
             }
         }
 
@@ -240,11 +217,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             return returnList ?? new List<string>();
-        }
-
-        private int AssignHighestResponse(int highestResponseSoFar, ValidationState response)
-        {
-            return Math.Max(highestResponseSoFar, badResponseSorting[response]);
         }
     }
 }
