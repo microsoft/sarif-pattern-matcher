@@ -14,80 +14,48 @@
           "rules": [
             {
               "id": "SEC105/001",
-              "name": "UpdateSalToCurrentVersion/Allocator",
+              "name": "RemoveObsoleteOrRedundantAnnotations",
               "fullDescription": {
-                "text": "Update SAL to current version"
+                "text": "Obsolete or redundant SAL annotation."
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL."
+                  "text": "'{0}' contains a use of the obsolete or redundant SAL v1 '{1}' annotation that should be removed."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             },
             {
               "id": "SEC105/002",
-              "name": "UpdateSalToCurrentVersion/AnalysisAssume",
+              "name": "RenameLegacyAnnotationsToCurrentVersion",
               "fullDescription": {
-                "text": "Update SAL to current version"
+                "text": "SAL 1 can be replaced with SAL 2."
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL."
+                  "text": "'{0}' contains a use of the obsolete or redundant '{1}' annotation and should be replaced for '{2}'."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             },
             {
-              "id": "SEC105/119",
-              "name": "UpdateSalToCurrentVersion/Maybenull",
+              "id": "SEC105/003",
+              "name": "UpdateAnnotationsToCurrentVersion",
               "fullDescription": {
-                "text": "Update SAL to current version"
+                "text": "Conversion from SAL 1 to SAL 2 cannot be automatically done."
               },
               "messageStrings": {
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            },
-            {
-              "id": "SEC105/121",
-              "name": "UpdateSalToCurrentVersion/Notnull",
-              "fullDescription": {
-                "text": "Update SAL to current version"
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            },
-            {
-              "id": "SEC105/159",
-              "name": "UpdateSalToCurrentVersion/PostInvalid",
-              "fullDescription": {
-                "text": "Update SAL to current version"
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Default": {
-                  "text": "'{0}' contains incorrect or out-dated use of SAL."
+                  "text": "'{0}' contains a use of the SAL v1 '{1}' annotation that should be converted manually to the correct SAL v2 pattern."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -107,7 +75,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
+              "SEC105_001.AnalysisAssume.cpp",
+              "__allocator"
             ]
           },
           "locations": [
@@ -140,7 +109,7 @@
           "fixes": [
             {
               "description": {
-                "text": "Delete Allocator"
+                "text": "Delete '__allocator'."
               },
               "artifactChanges": [
                 {
@@ -170,7 +139,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
+              "SEC105_001.AnalysisAssume.cpp",
+              "__allocator"
             ]
           },
           "locations": [
@@ -203,7 +173,7 @@
           "fixes": [
             {
               "description": {
-                "text": "Delete Allocator"
+                "text": "Delete '__allocator'."
               },
               "artifactChanges": [
                 {
@@ -233,7 +203,9 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
+              "SEC105_001.AnalysisAssume.cpp",
+              "__analysis_assume",
+              "_Analysis_assume_"
             ]
           },
           "locations": [
@@ -266,7 +238,7 @@
           "fixes": [
             {
               "description": {
-                "text": "Automatic AnalysisAssume"
+                "text": "Replace '__analysis_assume' with '_Analysis_assume_'."
               },
               "artifactChanges": [
                 {
@@ -291,12 +263,13 @@
           ]
         },
         {
-          "ruleId": "SEC105/119",
+          "ruleId": "SEC105/003",
           "ruleIndex": 2,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
+              "SEC105_001.AnalysisAssume.cpp",
+              "__maybenull"
             ]
           },
           "locations": [
@@ -328,12 +301,13 @@
           "rank": 54.42
         },
         {
-          "ruleId": "SEC105/121",
-          "ruleIndex": 3,
+          "ruleId": "SEC105/003",
+          "ruleIndex": 2,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
+              "SEC105_001.AnalysisAssume.cpp",
+              "__notnull"
             ]
           },
           "locations": [
@@ -352,80 +326,6 @@
                   "charLength": 11,
                   "snippet": {
                     "text": " __notnull "
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "ValidationFingerprintHash/v1": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
-          },
-          "rank": 54.42
-        },
-        {
-          "ruleId": "SEC105/159",
-          "ruleIndex": 4,
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 2,
-                  "startColumn": 97,
-                  "endLine": 2,
-                  "endColumn": 113,
-                  "charOffset": 192,
-                  "charLength": 16,
-                  "snippet": {
-                    "text": " __post_invalid)"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "ValidationFingerprintHash/v1": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
-          },
-          "rank": 54.42
-        },
-        {
-          "ruleId": "SEC105/159",
-          "ruleIndex": 4,
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "SEC105_001.AnalysisAssume.cpp"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 103,
-                  "endLine": 3,
-                  "endColumn": 119,
-                  "charOffset": 312,
-                  "charLength": 16,
-                  "snippet": {
-                    "text": " __post_invalid)"
                   }
                 }
               }
