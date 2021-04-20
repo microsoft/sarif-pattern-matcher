@@ -7,8 +7,8 @@
 #include <cstdint>
 
 struct alignas(1) GroupNameHeader {
-	uint64_t Index;
-	uint64_t Length;
+	int32_t Index;
+	int32_t Length;
 };
 
 #pragma pack(pop)

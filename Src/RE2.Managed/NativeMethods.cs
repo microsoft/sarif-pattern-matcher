@@ -76,7 +76,7 @@ namespace Microsoft.RE2.Managed
                 : NativeMethodsX86.Matches(regexIndex, text, fromTextIndex, matches, matchesLength, timeoutMilliseconds);
         }
 
-        public static unsafe void GetNamedGroupsSetup(StringUtf8 pattern, ulong* numCapturingGroups, ulong* numNamedCapturingGroups, ulong* groupNamesBufferSize)
+        public static unsafe void GetNamedGroupsSetup(StringUtf8 pattern, int* numCapturingGroups, int* numNamedCapturingGroups, int* groupNamesBufferSize)
         {
             if (Environment.Is64BitProcess)
             {
@@ -126,7 +126,7 @@ namespace Microsoft.RE2.Managed
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
-            public static unsafe extern void GetRegexSetup(StringUtf8 pattern, ulong* numCapturingGroups, ulong* numNamedCapturingGroups, ulong* groupNamesBufferSize);
+            public static unsafe extern void GetRegexSetup(StringUtf8 pattern, int* numCapturingGroups, int* numNamedCapturingGroups, int* groupNamesBufferSize);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
@@ -153,7 +153,7 @@ namespace Microsoft.RE2.Managed
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
-            public static unsafe extern void GetRegexSetup(StringUtf8 pattern, ulong* numCapturingGroups, ulong* numNamedCapturingGroups, ulong* groupNamesBufferSize);
+            public static unsafe extern void GetRegexSetup(StringUtf8 pattern, int* numCapturingGroups, int* numNamedCapturingGroups, int* groupNamesBufferSize);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
