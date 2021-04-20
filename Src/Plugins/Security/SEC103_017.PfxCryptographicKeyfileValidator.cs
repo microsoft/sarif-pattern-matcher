@@ -31,8 +31,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             return CertificateHelper.TryLoadCertificate(matchedPattern,
-                                                         ref fingerprint,
-                                                         ref message);
+                                                        ref fingerprint,
+                                                        ref message,
+                                                        ref resultLevelKind);
         }
     }
 }

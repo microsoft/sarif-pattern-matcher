@@ -38,13 +38,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                                      ref string message,
                                                      ref Dictionary<string, string> options,
-                                                     out ResultLevelKind resultLevelKind)
+                                                     ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
                                   ref options,
-                                  out resultLevelKind);
+                                  ref resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
@@ -66,10 +66,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                  ref string message,
                                                                  ref Dictionary<string, string> options,
-                                                                 out ResultLevelKind resultLevelKind)
+                                                                 ref ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
-
             const string Invalid = "RequestDenied: The provided API key is invalid";
             const string Expired = "RequestDenied: The provided API key is expired";
             const string RevokedKey = "RequestDenied: Google has disabled the use of APIs from this API project";
@@ -113,7 +111,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     if (e.Message.StartsWith(EnableBilling))
                     {
                         // The API is enabled but billing has not been configured.
-                        return ValidationState.AuthorizedError;
+                        return ValidationState.Authorized;
                     }
 
                     if (e.Message.StartsWith(KeyNotAuthorized) ||
@@ -122,7 +120,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         // What this condition means is that the API key is recognized.
                         // It is not authorized for the Directions API, but this isn't
                         // what we're verifying here.
-                        return ValidationState.AuthorizedError;
+                        return ValidationState.Authorized;
                     }
 
                     if (e.Message.StartsWith(Invalid))
@@ -136,7 +134,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             // This condition indicates the API key is recognized and can access Directions API.
-            return ValidationState.AuthorizedError;
+            return ValidationState.Authorized;
         }
     }
 }

@@ -51,18 +51,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 };
 
                 FailureLevel level = default;
+                ResultLevelKind resultLevelKind = default;
                 ValidationState state =
                     ValidatorsCache.ValidateDynamicHelper(validationPair.IsValidDynamic,
                                                           ref fingerprint,
                                                           ref message,
                                                           ref options,
-                                                          out ResultLevelKind resultLevelKind);
+                                                          ref resultLevelKind);
 
                 string validationPrefix = node.Message.Arguments[1];
                 string validationSuffix = node.Message.Arguments[4];
 
                 SearchSkimmer.SetPropertiesBasedOnValidationState(state,
                                                                   context: null,
+                                                                  resultLevelKind,
                                                                   ref level,
                                                                   ref validationPrefix,
                                                                   ref validationSuffix,

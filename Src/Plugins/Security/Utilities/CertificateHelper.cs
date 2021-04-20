@@ -14,8 +14,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
     internal static class CertificateHelper
     {
         public static ValidationState TryLoadCertificate(string certificatePath,
-                                                ref Fingerprint fingerprint,
-                                                ref string message)
+                                                         ref Fingerprint fingerprint,
+                                                         ref string message,
+                                                         ref ResultLevelKind resultLevelKind)
         {
             try
             {
@@ -30,11 +31,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 
                 if (certificate.SubjectName.RawData.Equals(certificate.IssuerName.RawData))
                 {
-                    return ValidationState.AuthorizedWarning;
+                    resultLevelKind = new ResultLevelKind { Level = FailureLevel.Warning };
+                    return ValidationState.Authorized;
                 }
 
                 message = "which contains private keys.";
-                return ValidationState.AuthorizedError;
+                return ValidationState.Authorized;
             }
             catch (Exception e)
             {
@@ -80,7 +82,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     if (certificate.HasPrivateKey)
                     {
                         thumbprints.Add(certificate.Thumbprint);
-                        state = ValidationState.AuthorizedError;
+                        state = ValidationState.Authorized;
                     }
                 }
 
@@ -116,7 +118,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                 }
 
                 message = "which contains private keys.";
-                return ValidationState.AuthorizedError;
+                return ValidationState.Authorized;
             }
             catch (Exception e)
             {
@@ -166,7 +168,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     if (certificate.HasPrivateKey)
                     {
                         thumbprints.Add(certificate.Thumbprint);
-                        state = ValidationState.AuthorizedError;
+                        state = ValidationState.Authorized;
                     }
                 }
 

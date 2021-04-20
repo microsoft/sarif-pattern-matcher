@@ -50,7 +50,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Secret = secret,
             };
 
-            return ValidationState.AuthorizedWarning;
+            resultLevelKind = new ResultLevelKind
+            {
+                Level = FailureLevel.Warning,
+            };
+
+            return ValidationState.Authorized;
         }
     }
 }
