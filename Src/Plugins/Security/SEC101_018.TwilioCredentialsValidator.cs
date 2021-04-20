@@ -39,13 +39,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                                      ref string message,
                                                      ref Dictionary<string, string> options,
-                                                     out ResultLevelKind resultLevelKind)
+                                                     ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
                                   ref options,
-                                  out resultLevelKind);
+                                  ref resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
@@ -76,10 +76,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
                                                                 ref Dictionary<string, string> options,
-                                                                out ResultLevelKind resultLevelKind)
+                                                                ref ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
-
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
 

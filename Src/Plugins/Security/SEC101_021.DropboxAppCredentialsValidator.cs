@@ -39,13 +39,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                                      ref string message,
                                                      ref Dictionary<string, string> options,
-                                                     out ResultLevelKind resultLevelKind)
+                                                     ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
                                   ref options,
-                                  out resultLevelKind);
+                                  ref resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
@@ -82,10 +82,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                  ref string message,
                                                                  ref Dictionary<string, string> options,
-                                                                 out ResultLevelKind resultLevelKind)
+                                                                 ref ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
-
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
             string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
@@ -105,7 +103,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     case HttpStatusCode.InternalServerError:
                     {
                         // The request is correct, but the header 'Dropbox-API-Arg' is wrong.
-                        return ValidationState.AuthorizedError;
+                        return ValidationState.Authorized;
                     }
 
                     case HttpStatusCode.BadRequest:

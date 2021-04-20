@@ -38,13 +38,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                                      ref string message,
                                                      ref Dictionary<string, string> options,
-                                                     out ResultLevelKind resultLevelKind)
+                                                     ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
                                   ref options,
-                                  out resultLevelKind);
+                                  ref resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
@@ -75,10 +75,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
                                                                 ref Dictionary<string, string> options,
-                                                                out ResultLevelKind resultLevelKind)
+                                                                ref ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
-
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
             string uri = $"https://hooks.slack.com/services/{id}/{secret}";
@@ -100,7 +98,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     case HttpStatusCode.BadRequest:
                     {
                         // We authenticated and our bogus payload was read.
-                        return ValidationState.AuthorizedError;
+                        return ValidationState.Authorized;
                     }
 
                     case HttpStatusCode.NotFound:

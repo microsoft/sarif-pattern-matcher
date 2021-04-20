@@ -40,13 +40,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                                      ref string message,
                                                      ref Dictionary<string, string> options,
-                                                     out ResultLevelKind resultLevelKind)
+                                                     ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
                                   ref options,
-                                  out resultLevelKind);
+                                  ref resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
@@ -75,10 +75,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
                                                                 ref Dictionary<string, string> options,
-                                                                out ResultLevelKind resultLevelKind)
+                                                                ref ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
-
             string secret = fingerprint.Secret;
 
             try
@@ -97,7 +95,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
-                        return CheckInformation(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), secret, ref message);
+                        return CheckInformation(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), secret, ref message, ref resultLevelKind);
                     }
 
                     case HttpStatusCode.Unauthorized:
@@ -121,7 +119,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return ValidationState.Unknown;
         }
 
-        private static ValidationState CheckInformation(string content, string secret, ref string message)
+        private static ValidationState CheckInformation(string content, string secret, ref string message, ref ResultLevelKind resultLevelKind)
         {
             TokensRoot tokensRoot = JsonConvert.DeserializeObject<TokensRoot>(content);
             if (tokensRoot?.Tokens?.Count > 0)
@@ -136,21 +134,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     if (obj.Readonly)
                     {
                         message = "The token has 'read' permissions.";
-                        return ValidationState.AuthorizedWarning;
+                        resultLevelKind = new ResultLevelKind { Level = FailureLevel.Warning };
+                        return ValidationState.Authorized;
                     }
 
                     if (obj.Automation)
                     {
                         message = "The token has 'automation' permissions.";
-                        return ValidationState.AuthorizedError;
+                        return ValidationState.Authorized;
                     }
 
                     message = "The token has 'publish' permissions.";
-                    return ValidationState.AuthorizedError;
+                    return ValidationState.Authorized;
                 }
             }
 
-            return ValidationState.AuthorizedError;
+            return ValidationState.Authorized;
         }
 
         private class Object

@@ -64,12 +64,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// Pattern is a match and the secret is valid.
         /// The result should be reported as an error.
         /// </summary>
-        AuthorizedError,
-
-        /// <summary>
-        /// Pattern is a match and the secret is valid.
-        /// The result should be reported as an warning.
-        /// </summary>
-        AuthorizedWarning,
+        Authorized,
     }
 }

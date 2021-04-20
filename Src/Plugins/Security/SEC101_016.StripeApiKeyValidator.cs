@@ -44,13 +44,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                                      ref string message,
                                                      ref Dictionary<string, string> options,
-                                                     out ResultLevelKind resultLevelKind)
+                                                     ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
                                   ref options,
-                                  out resultLevelKind);
+                                  ref resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
@@ -84,10 +84,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
                                                                 ref Dictionary<string, string> options,
-                                                                out ResultLevelKind resultLevelKind)
+                                                                ref ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
-
             string secret = fingerprint.Secret;
 
             string keyKind = secret.Contains("_test_") ? "test" : "live production";
@@ -110,7 +108,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
-                        return ValidationState.AuthorizedError;
+                        return ValidationState.Authorized;
                     }
 
                     case HttpStatusCode.Unauthorized:
