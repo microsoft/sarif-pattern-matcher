@@ -153,12 +153,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     matchExpression.Message ??= definition.Message;
                     matchExpression.Description ??= definition.Description;
 
-                    if (matchExpression.Level == 0)
+                    if (matchExpression.Level == FailureLevel.None)
                     {
                         matchExpression.Level = definition.Level;
                     }
 
-                    if (matchExpression.Kind == 0)
+                    if (matchExpression.Kind == ResultKind.None)
                     {
                         matchExpression.Kind = definition.Kind;
                     }
