@@ -50,6 +50,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     { "enhancedReporting", _enhancedReporting ? bool.TrueString : bool.FalseString },
                 };
 
+                ResultKind kind = node.Kind;
                 FailureLevel level = default;
                 ResultLevelKind resultLevelKind = default;
                 ValidationState state =
@@ -66,12 +67,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                   context: null,
                                                                   resultLevelKind,
                                                                   ref level,
+                                                                  ref kind,
                                                                   ref validationPrefix,
                                                                   ref validationSuffix,
                                                                   ref message,
                                                                   pluginSupportsDynamicValidation: true);
 
                 node.Level = level;
+                node.Kind = kind;
                 node.Message.Arguments[1] = validationPrefix;
                 node.Message.Arguments[4] = validationSuffix;
                 node.Message.Arguments[5] = SearchSkimmer.NormalizeValidatorMessage(message);

@@ -245,6 +245,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                  AnalyzeContext context,
                                                                  ResultLevelKind resultLevelKind,
                                                                  ref FailureLevel level,
+                                                                 ref ResultKind kind,
                                                                  ref string validationPrefix,
                                                                  ref string validationSuffix,
                                                                  ref string validatorMessage,
@@ -395,6 +396,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (resultLevelKind != default)
             {
+                kind = resultLevelKind.Kind;
                 level = resultLevelKind.Level;
             }
         }
@@ -419,15 +421,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
-            FailureLevel level = matchExpression.Level;
-
             if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
             {
-                RunMatchExpressionForContentsRegex(binary64DecodedMatch, context, matchExpression, level);
+                RunMatchExpressionForContentsRegex(binary64DecodedMatch, context, matchExpression);
             }
             else if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
             {
-                RunMatchExpressionForFileNameRegex(context, matchExpression, level);
+                RunMatchExpressionForFileNameRegex(context, matchExpression);
             }
             else
             {
@@ -438,9 +438,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private void RunMatchExpressionForContentsRegex(
             FlexMatch binary64DecodedMatch,
             AnalyzeContext context,
-            MatchExpression matchExpression,
-            FailureLevel level)
+            MatchExpression matchExpression)
         {
+            ResultKind kind = matchExpression.Kind;
+            FailureLevel level = matchExpression.Level;
             string filePath = context.TargetUri.GetFilePath();
             string searchText = binary64DecodedMatch != null
                                                    ? Decode(binary64DecodedMatch.Value)
@@ -486,8 +487,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     refinedMatchedPattern = flexMatch.Value;
                 }
 
-                string levelText = level.ToString();
-
                 ValidationState state = 0;
                 Fingerprint fingerprint = default;
                 ResultLevelKind resultLevelKind = default;
@@ -506,30 +505,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                 out fingerprint,
                                                 out bool pluginSupportsDynamicValidation);
 
-                    if (!Enum.TryParse<FailureLevel>(levelText, out level))
-                    {
-                        // An illegal failure level '{0}' was returned running check '{1}' against '{2}'.
-                        context.Logger.LogToolNotification(
-                            Errors.CreateNotification(
-                                context.TargetUri,
-                                "ERR998.ValidatorReturnedIllegalResultLevel",
-                                context.Rule.Id,
-                                FailureLevel.Error,
-                                exception: null,
-                                persistExceptionStack: false,
-                                messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalResultLevel,
-                                levelText,
-                                context.Rule.Id,
-                                context.TargetUri.GetFileName()));
-
-                        // If we don't understand the failure level, elevate it to error.
-                        level = FailureLevel.Error;
-                    }
-
                     SetPropertiesBasedOnValidationState(state,
                                                         context,
                                                         resultLevelKind,
                                                         ref level,
+                                                        ref kind,
                                                         ref validationPrefix,
                                                         ref validationSuffix,
                                                         ref validatorMessage,
@@ -570,6 +550,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Result result = ConstructResult(context.TargetUri,
                                                 reportingDescriptor.Id,
                                                 level,
+                                                kind,
                                                 region,
                                                 flexMatch,
                                                 fingerprint,
@@ -584,8 +565,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level)
+        private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression)
         {
+            ResultKind kind = matchExpression.Kind;
+            FailureLevel level = matchExpression.Level;
             ReportingDescriptor reportingDescriptor = this;
 
             string levelText = level.ToString();
@@ -759,6 +742,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (resultLevelKind != default)
                 {
+                    kind = resultLevelKind.Kind;
                     level = resultLevelKind.Level;
                 }
             }
@@ -782,6 +766,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     context.TargetUri,
                     reportingDescriptor.Id,
                     level,
+                    kind,
                     region: null,
                     flexMatch: null,
                     fingerprint,
@@ -823,6 +808,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Uri targetUri,
             string ruleId,
             FailureLevel level,
+            ResultKind kind,
             Region region,
             FlexMatch flexMatch,
             Fingerprint fingerprint,
@@ -855,6 +841,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 RuleId = ruleId,
                 Level = level,
+                Kind = kind,
                 Message = new Message()
                 {
                     Id = messageId,
