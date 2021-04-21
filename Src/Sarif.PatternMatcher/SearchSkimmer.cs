@@ -43,34 +43,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly Dictionary<string, MultiformatMessageString> _messageStrings;
 
         public SearchSkimmer(IRegex engine, ValidatorsCache validators, FileRegionsCache fileRegionsCache, SearchDefinition definition, IFileSystem fileSystem = null)
-            : this(
-                  engine,
-                  validators,
-                  fileRegionsCache,
-                  definition.Id,
-                  definition.Name,
-                  definition.Description,
-                  definition.MatchExpressions,
-                  fileSystem)
         {
-        }
-
-        public SearchSkimmer(
-            IRegex engine,
-            ValidatorsCache validators,
-            FileRegionsCache fileRegionsCache,
-            string id,
-            string name,
-            string description,
-            IList<MatchExpression> matchExpressions,
-            IFileSystem fileSystem = null)
-        {
-            _id = id;
-            _name = name;
             _engine = engine;
+            _id = definition.Id;
+            _name = definition.Name;
             _validators = validators;
             _fileRegionsCache = fileRegionsCache;
-            _fullDescription = new MultiformatMessageString { Text = description };
+            _fullDescription = new MultiformatMessageString { Text = definition.Description };
             _fileSystem = fileSystem ?? FileSystem.Instance;
 
             _messageStrings = new Dictionary<string, MultiformatMessageString>
@@ -78,22 +57,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 { nameof(SdkResources.NotApplicable_InvalidMetadata), new MultiformatMessageString() { Text = SdkResources.NotApplicable_InvalidMetadata, } },
             };
 
-            foreach (MatchExpression matchExpression in matchExpressions)
+            foreach (MatchExpression matchExpression in definition.MatchExpressions)
             {
                 string matchExpressionMessage = matchExpression.Message;
                 matchExpression.ArgumentNameToIndexMap = GenerateIndicesForNamedArguments(ref matchExpressionMessage);
 
-                string messageId = matchExpression.SubId ?? "Default";
-                if (!_messageStrings.TryGetValue(messageId, out MultiformatMessageString mfString))
+                string messageId = !matchExpression.CustomMessage
+                    ? $"Default"
+                    : $"Default_{matchExpression.SubId}";
+
+                if (_messageStrings.ContainsKey(messageId))
                 {
-                    _messageStrings[messageId] = new MultiformatMessageString
-                    {
-                        Text = matchExpressionMessage,
-                    };
+                    continue;
                 }
+
+                _messageStrings[messageId] = new MultiformatMessageString
+                {
+                    Text = matchExpressionMessage,
+                };
             }
 
-            _matchExpressions = matchExpressions;
+            _matchExpressions = definition.MatchExpressions;
         }
 
         public override Uri HelpUri => s_helpUri;
@@ -878,7 +862,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             Dictionary<string, string> fingerprints = BuildFingerprints(fingerprint, out double rank);
 
-            string messageId = matchExpression.SubId ?? "Default";
+            string messageId = !matchExpression.CustomMessage
+                ? $"Default"
+                : $"Default_{matchExpression.SubId}";
+
+            if (!string.IsNullOrEmpty(matchExpression.SubId))
+            {
+                ruleId = $"{ruleId}/{matchExpression.SubId}";
+            }
 
             // We'll limit rank precision to two decimal places. Because this value
             // is actually converted from a nomalized range of 0.0 to 1.0, to the

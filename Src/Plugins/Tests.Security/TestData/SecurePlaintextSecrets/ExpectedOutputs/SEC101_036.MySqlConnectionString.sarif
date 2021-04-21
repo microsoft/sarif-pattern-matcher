@@ -22,10 +22,7 @@
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
-                "Odbc": {
-                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
-                },
-                "Jdbc": {
+                "Default": {
                   "text": "'{0}' contains {1}{2}{3}{4}{5}."
                 }
               },
@@ -41,13 +38,7 @@
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
-                "Odbc": {
-                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
-                },
-                "Jdbc": {
-                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
-                },
-                "Php": {
+                "Default": {
                   "text": "'{0}' contains {1}{2}{3}{4}{5}."
                 }
               },
@@ -63,7 +54,7 @@
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
-                "Ado": {
+                "Default": {
                   "text": "'{0}' contains {1}{2}{3}{4}{5}."
                 }
               },
@@ -79,11 +70,11 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/036",
+          "ruleId": "SEC101/036/Odbc",
           "ruleIndex": 0,
           "level": "note",
           "message": {
-            "id": "Odbc",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -122,11 +113,11 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/036",
+          "ruleId": "SEC101/036/Odbc",
           "ruleIndex": 0,
           "level": "note",
           "message": {
-            "id": "Odbc",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -165,11 +156,11 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/036",
+          "ruleId": "SEC101/036/Odbc",
           "ruleIndex": 0,
           "level": "note",
           "message": {
-            "id": "Odbc",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -208,11 +199,11 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/036",
+          "ruleId": "SEC101/036/Odbc",
           "ruleIndex": 0,
           "level": "note",
           "message": {
-            "id": "Odbc",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -251,11 +242,11 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/036",
+          "ruleId": "SEC101/036/Odbc",
           "ruleIndex": 0,
           "level": "note",
           "message": {
-            "id": "Odbc",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -294,11 +285,11 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/036",
+          "ruleId": "SEC101/036/Odbc",
           "ruleIndex": 0,
           "level": "note",
           "message": {
-            "id": "Odbc",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -337,11 +328,11 @@
           "rank": 46.27
         },
         {
-          "ruleId": "SEC101/036",
+          "ruleId": "SEC101/036/Odbc",
           "ruleIndex": 0,
           "level": "note",
           "message": {
-            "id": "Odbc",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -380,11 +371,11 @@
           "rank": 44.23
         },
         {
-          "ruleId": "SEC101/036",
+          "ruleId": "SEC101/036/Jdbc",
           "ruleIndex": 0,
           "level": "note",
           "message": {
-            "id": "Jdbc",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -423,11 +414,11 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/036",
+          "ruleId": "SEC101/036/Jdbc",
           "ruleIndex": 0,
           "level": "note",
           "message": {
-            "id": "Jdbc",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -466,11 +457,11 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/036",
+          "ruleId": "SEC101/036/Jdbc",
           "ruleIndex": 0,
           "level": "note",
           "message": {
-            "id": "Jdbc",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -509,11 +500,11 @@
           "rank": 56.71
         },
         {
-          "ruleId": "SEC101/037",
+          "ruleId": "SEC101/037/Odbc",
           "ruleIndex": 1,
           "level": "note",
           "message": {
-            "id": "Odbc",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -552,11 +543,11 @@
           "rank": 46.27
         },
         {
-          "ruleId": "SEC101/037",
+          "ruleId": "SEC101/037/Odbc",
           "ruleIndex": 1,
           "level": "note",
           "message": {
-            "id": "Odbc",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -595,11 +586,11 @@
           "rank": 44.23
         },
         {
-          "ruleId": "SEC101/038",
+          "ruleId": "SEC101/038/Ado",
           "ruleIndex": 2,
           "level": "note",
           "message": {
-            "id": "Ado",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
@@ -638,11 +629,11 @@
           "rank": 46.27
         },
         {
-          "ruleId": "SEC101/038",
+          "ruleId": "SEC101/038/Ado",
           "ruleIndex": 2,
           "level": "note",
           "message": {
-            "id": "Ado",
+            "id": "Default",
             "arguments": [
               "SEC101_036.MySqlConnectionString.ps1",
               "an apparent ",
