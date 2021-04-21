@@ -17,15 +17,20 @@
 
 # Common patterns for file allow and deny lists.
 #
-  $CSourceFiles=(?i)\.(c|cpp|cxx)$
-  $BinaryFiles=(?i)\.(bmp|dll|exe|gif|jpe?g|lock|pack|png|psd|tar\.gz|tiff?|ttf|wmf|xcf|zip)$
-  $SourceFiles=(?i)\.(azure|bat|c|cmd|config|cpp|cs|cscfg|definitions|dtsx|h|hxx|hpp|ini|java|jsx?|json|keys|kt|loadtest|m|md|php|properties|ps1|psm1|pubxml|py|resx|sample|sql|ste|swift|test|tsx?|txt|waz|xml)$
 
-# RE2 doesn't support lookahead/lookbehind
-# $SEC106/001.Term.Edge=(?i)(?<=\s|^|\W)(?<!microsoft\s)edge(?=\s|$|\W)
-# $SEC107/001.Term.Shit=(?i)(?<=\s|^|\W)shit(?=\s|$|\W)
+$CSourceFiles=(?i)\.(c|cpp|cxx)$
+$BinaryFiles=(?i)\.(bmp|dll|exe|gif|jpe?g|lock|pack|png|psd|tar\.gz|tiff?|ttf|wmf|xcf|zip)$
+$SourceFiles=(?i)\.(azure|bat|c|cmd|config|cpp|cs|cscfg|definitions|dtsx|h|hxx|hpp|ini|java|jsx?|json|keys|kt|loadtest|m|md|php|properties|ps1|psm1|pubxml|py|resx|sample|sql|ste|swift|test|tsx?|txt|waz|xml)$
 
-$SEC106/001.Term.Edge=(?i)(?:\s|\W|^)(?:microsoft\s+edge)|(?:\s(?<target>edge))(?:\s|\W|$)
-
-$SEC107/001.Term.Shit=(?i)(?:\s|\W|^)(shit)(?:\s|\W|$)
-
+$SEC106/001.Crip=(?i)(?:\s|\W|^)(?<refine>crip)(?:\s|\W|$)
+$SEC106/001.Madahouse=(?i)(?:\s|\W|^)(?<refine>mada *house)(?:\s|\W|$)
+$SEC106/002.Boozer=(?i)(?:\s|\W|^)(?<refine>boozer)(?:\s|\W|$)
+$SEC106/002.Commie=(?i)(?:\s|\W|^)(?<refine>commie)(?:\s|\W|$)
+$SEC106/003.Bimbo=(?i)(?:\s|\W|^)(?<refine>bimbo)(?:\s|\W|$)
+$SEC106/004.ArunachalPradesh=(?i)(?:\s|\W|^)(?<refine>Arunachal *Pradesh)(?:\s|\W|$)
+$SEC106/004.Azeri=(?i)(?:\s|\W|^)(?<refine>Azeri)(?:\s|\W|$)
+$SEC106/005.FIFAConfederationsCup=(?i)(?:\s|\W|^)(?<refine>FIFA *Confederations *Cup)(?:\s|\W|$)
+$SEC106/005.London2012=(?i)(?:\s|\W|^)(?<refine>London *2012)(?:\s|\W|$)
+$SEC106/005.Edge=(?i)(?:\s|\W|^)(?<ignore>:microsoft\s+edge)|(?:\s(?<refine>edge))(?:\s|\W|$)
+$SEC106/006.Damn=(?i)(?:\s|\W|^)(?<refine>damn|dammit)(?:\s|\W|$)
+$SEC106/006.Shit=(?i)(?:\s|\W|^)(?<refine>shit)(?:\s|\W|$)

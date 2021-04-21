@@ -1,0 +1,16 @@
+﻿// tests for crip
+cripes scripted ecrip !#CRIP@$ "us mzn crip" <li>cRiP</li>
+
+// tests for mada house
+armada madams rehoused armada housewife '   mada   house   '  %^Mada House &* mada = houSE | <a><<MADA  HOUSE>></a>
+
+// tests for damn and dammit
+ damnotion dammit!  DAM-MIT  https://www.merriam-webster.com/dictionary/damn !.@#dammIT, 
+
+// tests for edge
+// is an edge condition, so we are just preventing SD
+// Edge <= 12 - 13+, Firefox <=18 - 45+, IE 10 - 11, Safari 5.1 - 9+, iOS 6 - 9.1
+"Description": "MCIO Global Data Center EDGE Operations APAC Region Equinix: Singapore Data Center",
+geo_locations = ["us-ca-sjc-azr", "us-va-ash-azr", "us-il-ch1-azr", "us-tx-sn1-azr", "us-fl-mia-edge"]
+<li>Use Microsoft Edge browser</li>
+acknowledgement MicrosoFT     edge   MICROSFT     edging

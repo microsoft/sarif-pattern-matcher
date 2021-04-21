@@ -3,18 +3,134 @@
   "SharedStringsFileName": "SensitiveTerms.SharedStrings.txt",
   "Definitions": [
     {
-      "Id": "SEC106",
-      "Name": "DoNotUseSensitiveTerms",
+      "Id": "SEC106/001",
+      "Name": "DoNotUseSensitiveTerms.Accessibility",
       "Level": "Warning",
       "FileNameAllowRegex": "$SourceFiles",
-      "Description": "Do not use sensitive terms in all files.",
-      "Message": "'{0:scanTarget}' contains sensitive term '{1:term}'.",
+      "Description": "Do not use accessibility related sensitive terms in all files.",
+      "Message": "'{0:scanTarget}' contains accessibility related sensitive term '{1:term}'.",
       "MatchExpressions": [
         {
-          "Id": "SEC106/001",
-          "Name": "DoNotUseSensitiveTerms/Edge",
-          "ContentsRegex": "$SEC106/001.Term.Edge",
+          "Id": "SEC106/001.Crip",
+          "Name": "AccessibilitySensitiveTerms/Crip",
+          "ContentsRegex": "$SEC106/001.Crip",
+          "MessageArguments": { "term": "crip" }
+        },
+        {
+          "Id": "SEC106/001.Madahouse",
+          "Name": "AccessibilitySensitiveTerms/Madahouse",
+          "ContentsRegex": "$SEC106/001.Madahouse",
+          "MessageArguments": { "term": "mada house" }
+        }
+      ]
+    },
+    {
+      "Id": "SEC106/002",
+      "Name": "DoNotUseSensitiveTerms.Culture",
+      "Level": "Warning",
+      "FileNameAllowRegex": "$SourceFiles",
+      "Description": "Do not use cultural sensitive terms in all files.",
+      "Message": "'{0:scanTarget}' contains cultural sensitive term '{1:term}'.",
+      "MatchExpressions": [
+        {
+          "Id": "SEC106/002.Boozer",
+          "Name": "CulturalSensitiveTerms/Boozer",
+          "ContentsRegex": "$SEC106/002.Boozer",
+          "MessageArguments": { "term": "boozer" }
+        },
+        {
+          "Id": "SEC106/002.Commie",
+          "Name": "CulturalSensitiveTerms/Commie",
+          "ContentsRegex": "$SEC106/002.Commie",
+          "MessageArguments": { "term": "commie" }
+        }
+      ]
+    },
+    {
+      "Id": "SEC106/003",
+      "Name": "DoNotUseSensitiveTerms.Diversity",
+      "Level": "Warning",
+      "FileNameAllowRegex": "$SourceFiles",
+      "Description": "Do not use diverse sensitive terms in all files.",
+      "Message": "'{0:scanTarget}' contains diverse sensitive term '{1:term}'.",
+      "MatchExpressions": [
+        {
+          "Id": "SEC106/003.Bimbo",
+          "Name": "DiverseSensitiveTerms/Bimbo",
+          "ContentsRegex": "$SEC106/003.Bimbo",
+          "MessageArguments": { "term": "bimbo" }
+        }
+      ]
+    },
+    {
+      "Id": "SEC106/004",
+      "Name": "DoNotUseSensitiveTerms.Geopolitics",
+      "Level": "Warning",
+      "FileNameAllowRegex": "$SourceFiles",
+      "Description": "Do not use geopolitical sensitive terms in all files.",
+      "Message": "'{0:scanTarget}' contains geopolitical sensitive term '{1:term}'.",
+      "MatchExpressions": [
+        {
+          "Id": "SEC106/004.ArunachalPradesh",
+          "Name": "GeopoliticalSensitiveTerms/ArunachalPradesh",
+          "ContentsRegex": "$SEC106/004.ArunachalPradesh",
+          "MessageArguments": { "term": "Arunachal Pradesh" }
+        },
+        {
+          "Id": "SEC106/004.Azeri",
+          "Name": "GeopoliticalSensitiveTerms/Azeri",
+          "ContentsRegex": "$SEC106/004.Azeri",
+          "MessageArguments": { "term": "Azeri" }
+        }
+      ]
+    },
+    {
+      "Id": "SEC106/005",
+      "Name": "DoNotUseSensitiveTerms.Legal",
+      "Level": "Warning",
+      "FileNameAllowRegex": "$SourceFiles",
+      "Description": "Do not use legal sensitive terms in all files.",
+      "Message": "'{0:scanTarget}' legal sensitive term '{1:term}'.",
+      "MatchExpressions": [
+        {
+          "Id": "SEC106/005.FIFAConfederationsCup",
+          "Name": "LegalSensitiveTerms/FIFAConfederationsCup",
+          "ContentsRegex": "$SEC106/005.FIFAConfederationsCup",
+          "MessageArguments": { "term": "FIFA Confederations Cup" }
+        },
+        {
+          "Id": "SEC106/005.London2012",
+          "Name": "LegalSensitiveTerms/London2012",
+          "ContentsRegex": "$SEC106/005.London2012",
+          "MessageArguments": { "term": "London 2012" }
+        },
+        {
+          "Id": "SEC106/005.Edge",
+          "Name": "LegalSensitiveTerms/Edge",
+          "ContentsRegex": "$SEC106/005.Edge",
           "MessageArguments": { "term": "edge" }
+        }
+      ]
+    },
+    {
+      "Id": "SEC106/006",
+      "Name": "DoNotUseSensitiveTerms.Profanity",
+      "Level": "Warning",
+      "FileNameAllowRegex": "$SourceFiles",
+      "Description": "Do not use profane sensitive terms in all files.",
+      "Message": "'{0:scanTarget}' profane sensitive term '{1:term}'.",
+      "MatchExpressions": [
+        {
+          "Id": "SEC106/006.Damn",
+          "Name": "ProfaneSensitiveTerms/Damn",
+          "ContentsRegex": "$SEC106/006.Damn",
+          "MessageArguments": { "term": "damn" }
+        },
+        {
+          "Id": "SEC106/006.Shit",
+          "Name": "ProfaneSensitiveTerms/Shit",
+          "ContentsRegex": "$SEC106/006.Shit",
+          "MessageArguments": { "term": "shit" }
         }
       ]
     }

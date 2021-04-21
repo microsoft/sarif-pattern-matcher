@@ -1,0 +1,814 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC106/001.Crip",
+              "name": "AccessibilitySensitiveTerms/Crip",
+              "fullDescription": {
+                "text": "Do not use accessibility related sensitive terms in all files."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' contains accessibility related sensitive term '{1}'."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            },
+            {
+              "id": "SEC106/001.Madahouse",
+              "name": "AccessibilitySensitiveTerms/Madahouse",
+              "fullDescription": {
+                "text": "Do not use accessibility related sensitive terms in all files."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' contains accessibility related sensitive term '{1}'."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            },
+            {
+              "id": "SEC106/005.Edge",
+              "name": "LegalSensitiveTerms/Edge",
+              "fullDescription": {
+                "text": "Do not use legal sensitive terms in all files."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' legal sensitive term '{1}'."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            },
+            {
+              "id": "SEC106/006.Damn",
+              "name": "ProfaneSensitiveTerms/Damn",
+              "fullDescription": {
+                "text": "Do not use profane sensitive terms in all files."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' profane sensitive term '{1}'."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC106/001.Crip",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "crip"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 14,
+                  "endLine": 1,
+                  "endColumn": 18,
+                  "charOffset": 13,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "crip"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/001.Crip",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "crip"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 25,
+                  "endLine": 2,
+                  "endColumn": 29,
+                  "charOffset": 43,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "CRIP"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/001.Crip",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "crip"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 40,
+                  "endLine": 2,
+                  "endColumn": 44,
+                  "charOffset": 58,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "crip"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/001.Crip",
+          "ruleIndex": 0,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "crip"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 50,
+                  "endLine": 2,
+                  "endColumn": 54,
+                  "charOffset": 68,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "cRiP"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/001.Madahouse",
+          "ruleIndex": 1,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "mada house"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 4,
+                  "startColumn": 14,
+                  "endLine": 4,
+                  "endColumn": 24,
+                  "charOffset": 94,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "mada house"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/001.Madahouse",
+          "ruleIndex": 1,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "mada house"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 45,
+                  "endLine": 5,
+                  "endColumn": 57,
+                  "charOffset": 150,
+                  "charLength": 12,
+                  "snippet": {
+                    "text": "mada   house"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/001.Madahouse",
+          "ruleIndex": 1,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "mada house"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 65,
+                  "endLine": 5,
+                  "endColumn": 75,
+                  "charOffset": 170,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "Mada House"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/001.Madahouse",
+          "ruleIndex": 1,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "mada house"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 99,
+                  "endLine": 5,
+                  "endColumn": 110,
+                  "charOffset": 204,
+                  "charLength": 11,
+                  "snippet": {
+                    "text": "MADA  HOUSE"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/005.Edge",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "edge"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 14,
+                  "endLine": 10,
+                  "endColumn": 18,
+                  "charOffset": 361,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "edge"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/005.Edge",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "edge"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 10,
+                  "endLine": 11,
+                  "endColumn": 14,
+                  "charOffset": 376,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "edge"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/005.Edge",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "edge"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 4,
+                  "endLine": 12,
+                  "endColumn": 8,
+                  "charOffset": 425,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "Edge"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/005.Edge",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "edge"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 41,
+                  "endLine": 13,
+                  "endColumn": 45,
+                  "charOffset": 545,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "EDGE"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/005.Edge",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "edge"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 19,
+                  "endLine": 15,
+                  "endColumn": 23,
+                  "charOffset": 729,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "Edge"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/005.Edge",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "edge"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 31,
+                  "endLine": 16,
+                  "endColumn": 35,
+                  "charOffset": 778,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "edge"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/006.Damn",
+          "ruleIndex": 3,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "damn"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 14,
+                  "endLine": 7,
+                  "endColumn": 18,
+                  "charOffset": 238,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "damn"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/006.Damn",
+          "ruleIndex": 3,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "damn"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 23,
+                  "endLine": 7,
+                  "endColumn": 29,
+                  "charOffset": 247,
+                  "charLength": 6,
+                  "snippet": {
+                    "text": "dammit"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/006.Damn",
+          "ruleIndex": 3,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "damn"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 12,
+                  "endLine": 8,
+                  "endColumn": 18,
+                  "charOffset": 266,
+                  "charLength": 6,
+                  "snippet": {
+                    "text": "dammit"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/006.Damn",
+          "ruleIndex": 3,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "damn"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 73,
+                  "endLine": 8,
+                  "endColumn": 77,
+                  "charOffset": 327,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "damn"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        },
+        {
+          "ruleId": "SEC106/006.Damn",
+          "ruleIndex": 3,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC106_001.Tests.txt",
+              "damn"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SensitiveTerms/TestData/SensitiveTerms/Inputs/SEC106_001.Tests.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 82,
+                  "endLine": 8,
+                  "endColumn": 88,
+                  "charOffset": 336,
+                  "charLength": 6,
+                  "snippet": {
+                    "text": "dammIT"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=404DC6A2DA1E01B71A882FBB6B408D46C9E0EDCA0454F6FDFF177A6F0C2CA89B]",
+            "ValidationFingerprintHash/v1": "e300cd8a2dc934a1fba83de22face793e0ec86d74d81f919a37e8adf9b12e355"
+          },
+          "rank": 54.3
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}
