@@ -11,15 +11,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public static class PfxCryptographicKeyfileValidator
     {
-        public static ValidationState IsValidStatic(ref string matchedPattern,
-                                                    ref Dictionary<string, string> groups,
-                                                    ref string message,
-                                                    out ResultLevelKind resultLevelKind,
-                                                    out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
+                                                                  Dictionary<string, string> groups)
         {
-            fingerprint = default;
-            resultLevelKind = default;
-
             groups.TryGetValue("content", out string content);
 
             if (!string.IsNullOrWhiteSpace(content) &&
@@ -27,13 +21,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 // This condition indicates that we have textual (PEM-encoded) data.
                 // These certificates are handled by the SecurePlaintextSecrets rules.
-                return ValidationState.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
-            return CertificateHelper.TryLoadCertificate(matchedPattern,
-                                                        ref fingerprint,
-                                                        ref message,
-                                                        ref resultLevelKind);
+            string message = string.Empty;
+            Fingerprint fingerprint = default;
+            ResultLevelKind resultLevelKind = default;
+            ValidationState validationState = CertificateHelper.TryLoadCertificate(matchedPattern,
+                                                                                   ref fingerprint,
+                                                                                   ref message,
+                                                                                   ref resultLevelKind);
+
+            var validationResult = new ValidationResult
+            {
+                Message = message,
+                Fingerprint = fingerprint,
+                ResultLevelKind = resultLevelKind,
+                ValidationState = validationState,
+            };
+
+            return new[] { validationResult };
         }
     }
 }

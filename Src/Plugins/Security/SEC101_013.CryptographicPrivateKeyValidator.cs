@@ -23,32 +23,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new CryptographicPrivateKeyValidator();
         }
 
-        public static ValidationState IsValidStatic(ref string matchedPattern,
-                                                    ref Dictionary<string, string> groups,
-                                                    ref string message,
-                                                    out ResultLevelKind resultLevelKind,
-                                                    out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
+                                                                  Dictionary<string, string> groups)
         {
-            return ValidatorBase.IsValidStatic(Instance,
-                                               ref matchedPattern,
-                                               ref groups,
-                                               ref message,
-                                               out resultLevelKind,
-                                               out fingerprint);
+            return IsValidStatic(Instance,
+                                 ref matchedPattern,
+                                 groups);
         }
 
-        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
-                                                               ref Dictionary<string, string> groups,
-                                                               ref string message,
-                                                               out ResultLevelKind resultLevelKind,
-                                                               out Fingerprint fingerprint)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
+                                                                             Dictionary<string, string> groups)
         {
-            fingerprint = default;
-            resultLevelKind = default;
-
             if (!groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
             groups.TryGetValue("kind", out string kind);
@@ -66,12 +54,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 secret = string.Join(Environment.NewLine, linesArray);
             }
 
-            fingerprint = new Fingerprint
+            var fingerprint = new Fingerprint
             {
                 Secret = secret,
             };
 
             ValidationState state = ValidationState.Unknown;
+            string message = string.Empty;
 
             switch (kind)
             {
@@ -87,7 +76,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         bytes[10] != 'A' ||
                         bytes[11] != '2')
                     {
-                        return ValidationState.NoMatch;
+                        return ValidationResult.CreateNoMatch();
                     }
 
                     break;
@@ -120,14 +109,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     }
                     catch (FormatException)
                     {
-                        return ValidationState.NoMatch;
+                        return ValidationResult.CreateNoMatch();
                     }
 
                     break;
                 }
             }
 
-            return state;
+            var validationResult = new ValidationResult
+            {
+                Message = message,
+                ValidationState = state,
+                Fingerprint = fingerprint,
+            };
+
+            return new[] { validationResult };
         }
 
         private static ValidationState GetPrivatePgpKey(string secret)

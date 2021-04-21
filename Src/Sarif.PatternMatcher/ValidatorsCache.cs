@@ -64,24 +64,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return validationMethods;
         }
 
-        public static ValidationState ValidateStaticHelper(MethodInfo isValidStaticMethodInfo,
-                                                       ref string matchedPattern,
-                                                       ref IDictionary<string, string> groups,
-                                                       ref string message,
-                                                       out ResultLevelKind resultLevelKind,
-                                                       out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> ValidateStaticHelper(MethodInfo isValidStaticMethodInfo,
+                                                                         ref string matchedPattern,
+                                                                         IDictionary<string, string> groups)
         {
-            ValidationState validationState;
-            fingerprint = default;
-            resultLevelKind = default;
+            IEnumerable<ValidationResult> validationResults;
 
             object[] arguments = new object[]
             {
                 matchedPattern,
                 groups,
-                message,
-                resultLevelKind,
-                fingerprint,
             };
 
             string currentDirectory = Environment.CurrentDirectory;
@@ -93,8 +85,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Environment.CurrentDirectory = Path.GetDirectoryName(location);
                 }
 
-                validationState =
-                    (ValidationState)isValidStaticMethodInfo.Invoke(
+                validationResults =
+                    (IEnumerable<ValidationResult>)isValidStaticMethodInfo.Invoke(
                         obj: null, arguments);
             }
             catch (TargetInvocationException e)
@@ -108,17 +100,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             matchedPattern = (string)arguments[0];
             groups = (Dictionary<string, string>)arguments[1];
-            message = (string)arguments[2];
-            resultLevelKind = (ResultLevelKind)arguments[3];
-            fingerprint = (Fingerprint)arguments[4];
 
-            return validationState;
+            return validationResults;
         }
 
         public static ValidationState ValidateDynamicHelper(MethodInfo isValidDynamicMethodInfo,
                                                        ref Fingerprint fingerprint,
                                                        ref string message,
-                                                       ref IDictionary<string, string> options,
+                                                       IDictionary<string, string> options,
                                                        ref ResultLevelKind resultLevelKind)
         {
             ValidationState validationText;
@@ -189,58 +178,51 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        public ValidationState Validate(string ruleName,
+        public IEnumerable<ValidationResult> Validate(string ruleName,
                                         AnalyzeContext context,
                                         ref string matchedPattern,
-                                        ref IDictionary<string, string> groups,
-                                        ref string message,
-                                        out ResultLevelKind resultLevelKind,
-                                        out Fingerprint fingerprint,
+                                        IDictionary<string, string> groups,
                                         out bool pluginCanPerformDynamicAnalysis)
         {
             return ValidateHelper(RuleNameToValidationMethods,
                                   ruleName,
                                   context,
                                   ref matchedPattern,
-                                  ref groups,
-                                  ref message,
-                                  out resultLevelKind,
-                                  out fingerprint,
+                                  groups,
                                   out pluginCanPerformDynamicAnalysis);
         }
 
-        internal static ValidationState ValidateHelper(Dictionary<string, ValidationMethods> ruleIdToMethodMap,
+        internal static IEnumerable<ValidationResult> ValidateHelper(Dictionary<string, ValidationMethods> ruleIdToMethodMap,
                                                        string ruleName,
                                                        AnalyzeContext context,
                                                        ref string matchedPattern,
-                                                       ref IDictionary<string, string> groups,
-                                                       ref string message,
-                                                       out ResultLevelKind resultLevelKind,
-                                                       out Fingerprint fingerprint,
+                                                       IDictionary<string, string> groups,
                                                        out bool pluginCanPerformDynamicAnalysis)
         {
-            message = null;
-            fingerprint = default;
-            resultLevelKind = default;
             pluginCanPerformDynamicAnalysis = false;
 
             ValidationMethods validationMethods = GetValidationMethods(ruleName, ruleIdToMethodMap);
 
             if (validationMethods == null)
             {
+                var validationResult = new ValidationResult
+                {
+                    ValidationState = ValidationState.ValidatorNotFound,
+                };
+
                 if (context.TargetUri.IsAbsoluteUri)
                 {
                     string secret = HashUtilities.ComputeSha256Hash(context.TargetUri.LocalPath);
 
                     // If we have no static analysis validator, the file itself
                     // is the sensitive asset, and so we will use the hash as the id.
-                    fingerprint = new Fingerprint()
+                    validationResult.Fingerprint = new Fingerprint()
                     {
                         Secret = secret,
                     };
                 }
 
-                return ValidationState.ValidatorNotFound;
+                return new[] { validationResult };
             }
 
             if (validationMethods.DisableDynamicValidationCaching != null)
@@ -248,18 +230,33 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 DisableValidationCaching(validationMethods.DisableDynamicValidationCaching, context.DisableDynamicValidationCaching);
             }
 
-            ValidationState result = ValidateStaticHelper(validationMethods.IsValidStatic,
-                                                          ref matchedPattern,
-                                                          ref groups,
-                                                          ref message,
-                                                          out resultLevelKind,
-                                                          out fingerprint);
+            IEnumerable<ValidationResult> validationResults = ValidateStaticHelper(validationMethods.IsValidStatic,
+                                                                                   ref matchedPattern,
+                                                                                   groups);
 
             pluginCanPerformDynamicAnalysis = validationMethods.IsValidDynamic != null;
 
-            return (result != ValidationState.NoMatch && result != ValidationState.Expired && context.DynamicValidation && pluginCanPerformDynamicAnalysis)
-                ? ValidateDynamicHelper(validationMethods.IsValidDynamic, ref fingerprint, ref message, ref groups, ref resultLevelKind)
-                : result;
+            if (context.DynamicValidation && pluginCanPerformDynamicAnalysis)
+            {
+                foreach (ValidationResult validationResult in validationResults)
+                {
+                    if (validationResult.ValidationState != ValidationState.NoMatch &&
+                        validationResult.ValidationState != ValidationState.Expired)
+                    {
+                        ResultLevelKind resultLevelKind = default;
+                        string message = validationResult.Message;
+                        Fingerprint fingerprint = validationResult.Fingerprint;
+                        validationResult.ValidationState = ValidateDynamicHelper(validationMethods.IsValidDynamic,
+                                                                                 ref fingerprint,
+                                                                                 ref message,
+                                                                                 groups,
+                                                                                 ref resultLevelKind);
+                        validationResult.ResultLevelKind = resultLevelKind;
+                    }
+                }
+            }
+
+            return validationResults;
         }
 
         private Dictionary<string, ValidationMethods> LoadValidationAssemblies(IEnumerable<string> validatorPaths)
@@ -299,14 +296,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             new[]
                             {
                                 typeof(string).MakeByRefType(), // Matched pattern.
-                                typeof(Dictionary<string, string>).MakeByRefType(), // Regex groups.
-                                typeof(string).MakeByRefType(), // Message.
-                                typeof(ResultLevelKind).MakeByRefType(), // ResultLevelKind.
-                                typeof(Fingerprint).MakeByRefType(), // Fingerprint.
+                                typeof(Dictionary<string, string>), // Regex groups.
                             },
                             null);
 
-                        if (isValidStatic == null || isValidStatic?.ReturnType != typeof(ValidationState))
+                        if (isValidStatic == null || isValidStatic?.ReturnType != typeof(IEnumerable<ValidationResult>))
                         {
                             continue;
                         }
@@ -317,7 +311,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             {
                                 typeof(Fingerprint).MakeByRefType(), // Fingerprint.
                                 typeof(string).MakeByRefType(), // Message.
-                                typeof(Dictionary<string, string>).MakeByRefType(), // Options.
+                                typeof(Dictionary<string, string>), // Options.
                                 typeof(ResultLevelKind).MakeByRefType(), // ResultLevelKind.
                             },
                             null);

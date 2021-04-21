@@ -154,7 +154,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                         searchDefinition.MatchExpressions.Add(new MatchExpression
                         {
-                            //SubId = name,
+                            // SubId = name,
                             ContentsRegex = $"${searchDefinition.Id}.{name}",
                             MessageArguments = new Dictionary<string, string>
                             {
@@ -179,7 +179,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                         searchDefinition.MatchExpressions.Add(new MatchExpression
                         {
-                            //SubId = name,
+                            // SubId = name,
                             ContentsRegex = $"${searchDefinition.Id}.{name}",
                             MessageArguments = new Dictionary<string, string>
                             {
@@ -205,7 +205,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                         searchDefinition.MatchExpressions.Add(new MatchExpression
                         {
-                            //SubId = name,
+                            // SubId = name,
                             ContentsRegex = $"${searchDefinition.Id}.{name}",
                             MessageArguments = new Dictionary<string, string>
                             {
