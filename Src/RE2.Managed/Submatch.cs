@@ -8,7 +8,7 @@ namespace Microsoft.RE2.Managed
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct Submatch
     {
-        public ulong Index;
-        public ulong Length;
+        public int Index;
+        public int Length;
     }
 }

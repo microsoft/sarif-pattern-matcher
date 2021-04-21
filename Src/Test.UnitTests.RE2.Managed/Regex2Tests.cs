@@ -187,8 +187,8 @@ namespace Microsoft.RE2.Managed
         public void Regex2_MatchWithNamedGroups()
         {
             bool isMatch;
-            Dictionary<string, ulong> groupName2Index;
-            Dictionary<ulong, string> index2GroupName;
+            Dictionary<string, int> groupName2Index;
+            Dictionary<int, string> index2GroupName;
             List<string> submatchStrings;
 
             isMatch = Regex2.Matches(@"abc", "def", out _, out _, out _);
@@ -207,9 +207,9 @@ namespace Microsoft.RE2.Managed
             Assert.Equal(2, index2GroupName.Count);
             Assert.Equal(4, submatchStrings.Count);
             Assert.True(groupName2Index.ContainsKey("g1"));
-            Assert.Equal(1ul, groupName2Index["g1"]);
+            Assert.Equal(1, groupName2Index["g1"]);
             Assert.True(groupName2Index.ContainsKey("g2"));
-            Assert.Equal(3ul, groupName2Index["g2"]);
+            Assert.Equal(3, groupName2Index["g2"]);
             Assert.True(index2GroupName.ContainsKey(1));
             Assert.Equal("g1", index2GroupName[1]);
             Assert.True(index2GroupName.ContainsKey(3));

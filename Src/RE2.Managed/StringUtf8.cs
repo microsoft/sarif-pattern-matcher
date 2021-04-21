@@ -8,7 +8,7 @@ namespace Microsoft.RE2.Managed
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public unsafe struct StringUtf8
     {
-        public StringUtf8(byte* bytes, ulong length)
+        public StringUtf8(byte* bytes, int length)
         {
             this.Bytes = bytes;
             this.Length = length;
@@ -16,6 +16,6 @@ namespace Microsoft.RE2.Managed
 
         public byte* Bytes { get; private set; }
 
-        public ulong Length { get; private set; }
+        public int Length { get; private set; }
     }
 }

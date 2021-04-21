@@ -9,7 +9,7 @@
 
 struct alignas(1) StringUtf8 {
 	uint8_t* Bytes;
-	uint64_t Length;
+	int32_t Length;
 };
 
 #pragma pack(pop)
