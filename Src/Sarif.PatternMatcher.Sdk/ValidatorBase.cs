@@ -114,7 +114,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                                             ref Fingerprint fingerprint,
                                             ref string message,
                                             ref Dictionary<string, string> options,
-                                            out ResultLevelKind resultLevelKind)
+                                            ref ResultLevelKind resultLevelKind)
         {
             resultLevelKind = default;
 
@@ -129,7 +129,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 validator.IsValidDynamicHelper(ref fingerprint,
                                                ref message,
                                                ref options,
-                                               out resultLevelKind);
+                                               ref resultLevelKind);
 
             validator.FingerprintToResultCache[fingerprint] =
                 new Tuple<ValidationState, string>(validationState, message);
@@ -227,7 +227,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 $"The compromised asset is '{asset}'." :
                 $"The '{account}' account is compromised for '{asset}'.";
 
-            return ValidationState.AuthorizedError;
+            return ValidationState.Authorized;
         }
 
         public static ValidationState ReturnUnknownAuthorization(ref string message,
@@ -325,10 +325,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         protected virtual ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                       ref string message,
                                                       ref Dictionary<string, string> options,
-                                                      out ResultLevelKind resultLevelKind)
+                                                      ref ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = default;
-
             return ValidationState.NoMatch;
         }
 

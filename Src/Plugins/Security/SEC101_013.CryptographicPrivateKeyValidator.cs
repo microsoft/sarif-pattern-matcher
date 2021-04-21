@@ -154,7 +154,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         continue;
                     }
 
-                    return ValidationState.AuthorizedError;
+                    return ValidationState.Authorized;
                 }
             }
 

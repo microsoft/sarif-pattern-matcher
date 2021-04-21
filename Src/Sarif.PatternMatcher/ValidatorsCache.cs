@@ -119,9 +119,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                        ref Fingerprint fingerprint,
                                                        ref string message,
                                                        ref IDictionary<string, string> options,
-                                                       out ResultLevelKind resultLevelKind)
+                                                       ref ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = default;
             ValidationState validationText;
 
             object[] arguments = new object[]
@@ -259,7 +258,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             pluginCanPerformDynamicAnalysis = validationMethods.IsValidDynamic != null;
 
             return (result != ValidationState.NoMatch && result != ValidationState.Expired && context.DynamicValidation && pluginCanPerformDynamicAnalysis)
-                ? ValidateDynamicHelper(validationMethods.IsValidDynamic, ref fingerprint, ref message, ref groups, out resultLevelKind)
+                ? ValidateDynamicHelper(validationMethods.IsValidDynamic, ref fingerprint, ref message, ref groups, ref resultLevelKind)
                 : result;
         }
 

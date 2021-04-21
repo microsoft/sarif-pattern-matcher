@@ -26,21 +26,21 @@ the IDE/editor only and does not affect the actual build of the project.
 
 Clone the repository with the command:
 
-```bash
+```bat
 git clone https://github.com/microsoft/sarif-pattern-matcher.git
 ```
 
 Then, update the submodules:
 
-```bash
+```bat
 git submodule update --init --recursive
 ```
 
 To build the solution you can:
 
-* Use the `BuildAndTest.cmd` script:
+* Use the `BuildAndTest.cmd` script in `Developer Command Prompt for VS 2019`:
 
-```bash
+```bat
 .\BuildAndTest.cmd
 ```
 

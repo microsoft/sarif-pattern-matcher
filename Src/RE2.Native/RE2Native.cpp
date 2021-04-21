@@ -155,23 +155,23 @@ extern "C" __declspec(dllexport) int Matches(int regexIndex, String8 text, int f
 // pattern must use RE2 syntax
 extern "C" __declspec(dllexport) void GetRegexSetup(
 	_In_  StringUtf8 pattern,
-	_Out_ uint64_t* numCapturingGroups,
-	_Out_ uint64_t* numNamedCapturingGroups,
-	_Out_ uint64_t* groupNamesBufferSize)
+	_Out_ int32_t* numCapturingGroups,
+	_Out_ int32_t* numNamedCapturingGroups,
+	_Out_ int32_t* groupNamesBufferSize)
 {
 	// Compile RE2 from pattern.
 	re2::RE2::Options options;
 	re2::StringPiece patternSp(reinterpret_cast<char*>(pattern.Bytes), pattern.Length);
 	re2::RE2 re(patternSp, options);
 
-	*numCapturingGroups = re.NumberOfCapturingGroups();
-	*numNamedCapturingGroups = re.NamedCapturingGroups().size();
+	*numCapturingGroups = static_cast<int32_t>(re.NumberOfCapturingGroups());
+	*numNamedCapturingGroups = static_cast<int32_t>(re.NamedCapturingGroups().size());
 	
 	*groupNamesBufferSize = 0;
 	for (auto const& pair : re.NamedCapturingGroups())
 	{
 		std::string groupName = pair.first;
-		(*groupNamesBufferSize) += groupName.length();
+		(*groupNamesBufferSize) += static_cast<int32_t>(groupName.length());
 	}
 }
 
@@ -201,7 +201,7 @@ extern "C" __declspec(dllexport) bool MatchesNamedGroups(
 
 		//- Write group name header.
 		groupNameHeaders->Index = index;
-		groupNameHeaders->Length = groupName.length();
+		groupNameHeaders->Length = static_cast<int32_t>(groupName.length());
 		
 		//- Advance pointer to next entry.
 		groupNameHeaders += 1;
@@ -224,8 +224,8 @@ extern "C" __declspec(dllexport) bool MatchesNamedGroups(
 		for (auto const& submatchSp : submatchesSp)
 		{
 			//- Convert submatches to substrings.
-			uint64_t index = submatchSp.data() - textSp.data();
-			uint64_t length = submatchSp.length();
+			int32_t index = static_cast<int32_t>(submatchSp.data() - textSp.data());
+			int32_t length = static_cast<int32_t>(submatchSp.length());
 
 			//- Write submatch entry.
 			submatches->Index = index;

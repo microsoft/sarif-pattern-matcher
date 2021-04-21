@@ -70,9 +70,9 @@
   $SEC101/035.CloudantCredentialsUrl=(?i)https:\/\/(?<id>[^:]+):(?<secret>[\w]{64}|[a-z]{24})@[\w-]+\.(?<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/036.MySqlConnectionStringAdo=(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?<host>[\w\-.]{3,90}))|(Uid=(?-i)(?<id>[a-z\@\-]{1,120})(?i))|(Pwd\s*=\s*(?<secret>[^;"]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?
   $SEC101/036.MySqlConnectionStringPlainJdbc=(jdbc:mysql:\/\/(?<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?<url>[^,(]+),\s*"(?<id>[\w@-]{1,200})",\s*"(?<secret>[^"';<>=]{7,200})"
-  $SEC101/037.SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*[^;"<]{0,50}|(initial catalog|database)\s*=\s*[^;"<]{0,50}|(user id|uid)\s*=\s*[^;"<]{0,50}|(password|pwd)\s*=\s*[^;"<]{0,50}).+?){4}
-  $SEC101/037.SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;"<]+);(((database\s*=\s*(?<database>[^;"<]{1,128}))|(user\s*=\s*(?<id>[^@]+)@[^;"<]+)|(password\s*=\s*(?<secret>[^;"<]+))).{1,50}?){3}
-  $SEC101/037.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;"<]+);\s*Database\s*=\s*(?<database>[^\"]+)",\s*"(?<id>[^"]+)",\s*"(?<secret>[^"]+)"
+  $SEC101/037.SqlConnectionStringAdo=(?i)(((server|data source)\s*=\s*[^;"<\n]{0,50}|(initial catalog|database)\s*=\s*[^;"<>*%&:\/?\n]{0,50}|(user id|uid)\s*=\s*[^;"'<]{0,50}|(password|pwd)\s*=\s*[^;"<]{0,50}).+?){4}
+  $SEC101/037.SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?<host>[^;"<]+);(((database\s*=\s*(?<database>[^;"<>*%&:\/?\n]{1,128}))|(user\s*=\s*(?<id>[^@]+)@[^;"<]+)|(password\s*=\s*(?<secret>[^;"<]+))).{1,50}?){3}
+  $SEC101/037.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?<host>[^;"<]+);\s*Database\s*=\s*(?<database>[^;"<>*%&:\/?\n]+)",\s*"(?<id>[^"]+)",\s*"(?<secret>[^"]+)"
   $SEC101/038.PostgreSqlConnectionStringAdo=((?i)(((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+));.*)?((host|server)\s*=\s*(?<host>[\w\-_\.]{3,91})|(username|uid|user id)\s*=\s*(?<id>[^,;"<\s]+)|(password|pwd)\s*=\s*(?<secret>[^,;"<\s]+)).+?){3}(.*((Port\s*=\s*[0-9]{1,5})|((database|db)\s*=\s*[^;"<]+)))?
   $SEC101/039.ShopifyAccessToken=\b(?<refine>(shpat|shpca|shppa)_(?i)[0-9a-f]{32})
   $SEC101/040.ShopifySharedSecret=\b(?<refine>shpss_(?i)[0-9a-f]{32})

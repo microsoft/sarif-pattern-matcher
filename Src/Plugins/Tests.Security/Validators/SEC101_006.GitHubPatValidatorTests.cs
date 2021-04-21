@@ -39,13 +39,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string fingerprintText = "[platform=GitHub][secret=ghp_000000000001234567890123456789012345]";
 
             string message = null;
+            ResultLevelKind resultLevelKind = default;
             var fingerprint = new Fingerprint(fingerprintText);
             var options = new Dictionary<string, string>();
 
             ValidationState actualValidationState = GitHubPatValidator.IsValidDynamic(ref fingerprint,
                                                                                       ref message,
                                                                                       ref options,
-                                                                                      out ResultLevelKind resultLevelKind);
+                                                                                      ref resultLevelKind);
 
             Assert.Equal(expectedValidationState, actualValidationState);
         }

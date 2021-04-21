@@ -37,13 +37,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                                      ref string message,
                                                      ref Dictionary<string, string> options,
-                                                     out ResultLevelKind resultLevelKind)
+                                                     ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
                                   ref options,
-                                  out resultLevelKind);
+                                  ref resultLevelKind);
         }
 
         protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
@@ -74,10 +74,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
                                                                 ref Dictionary<string, string> options,
-                                                                out ResultLevelKind resultLevelKind)
+                                                                ref ResultLevelKind resultLevelKind)
         {
-            resultLevelKind = new ResultLevelKind();
-
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
 
@@ -87,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 ref message,
                 out AccessTokenObject obj);
 
-            if (state == ValidationState.AuthorizedError)
+            if (state == ValidationState.Authorized)
             {
                 return CheckInformation(id, obj.AccessToken, ref message);
             }
@@ -103,7 +101,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 ref message,
                 out CreatorObject obj);
 
-            if (state == ValidationState.AuthorizedError)
+            if (state == ValidationState.Authorized)
             {
                 return RetrieveAccountInformation(id, obj.CreatorUid, accessToken, ref message);
             }
@@ -119,7 +117,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 ref message,
                 out AccountObject obj);
 
-            if (state == ValidationState.AuthorizedError)
+            if (state == ValidationState.Authorized)
             {
                 return ReturnAuthorizedAccess(ref message, asset: $"{obj.Id}:{obj.Name}");
             }
@@ -151,7 +149,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             return ValidationState.Unknown;
                         }
 
-                        return ValidationState.AuthorizedError;
+                        return ValidationState.Authorized;
                     }
 
                     case System.Net.HttpStatusCode.BadRequest:

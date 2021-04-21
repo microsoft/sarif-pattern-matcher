@@ -21,13 +21,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             }
 
             string message = null;
+            ResultLevelKind resultLevelKind = default;
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
             SlackTokenValidator.IsValidDynamic(ref fingerprint,
                                                ref message,
                                                ref keyValuePairs,
-                                               out ResultLevelKind resultLevelKind);
+                                               ref resultLevelKind);
         }
     }
 }

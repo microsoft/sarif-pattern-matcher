@@ -243,6 +243,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         internal static void SetPropertiesBasedOnValidationState(ValidationState state,
                                                                  AnalyzeContext context,
+                                                                 ResultLevelKind resultLevelKind,
                                                                  ref FailureLevel level,
                                                                  ref string validationPrefix,
                                                                  ref string validationSuffix,
@@ -258,7 +259,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // We should suspend processing and move to the next match.
 
                     level = FailureLevel.None;
-                    return;
+                    break;
                 }
 
                 case ValidationState.None:
@@ -282,23 +283,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     }
 
                     level = FailureLevel.Error;
-                    return;
-                }
-
-                case ValidationState.AuthorizedError:
-                {
-                    level = FailureLevel.Error;
-
-                    // Contributes to building a message fragment such as:
-                    // 'SomeFile.txt' contains a valid SomeApi token [...].
-                    validationPrefix = "a valid ";
-                    validationSuffix = string.Empty;
                     break;
                 }
 
-                case ValidationState.AuthorizedWarning:
+                case ValidationState.Authorized:
                 {
-                    level = FailureLevel.Warning;
+                    level = FailureLevel.Error;
 
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains a valid SomeApi token [...].
@@ -401,6 +391,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     throw new InvalidOperationException($"Unrecognized validation value '{state}'.");
                 }
+            }
+
+            if (resultLevelKind != default)
+            {
+                level = resultLevelKind.Level;
             }
         }
 
@@ -533,6 +528,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     SetPropertiesBasedOnValidationState(state,
                                                         context,
+                                                        resultLevelKind,
                                                         ref level,
                                                         ref validationPrefix,
                                                         ref validationSuffix,
@@ -601,7 +597,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             Fingerprint fingerprint = default;
-            ResultLevelKind resultLevelKind = default;
             string validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
             string filePath = context.TargetUri.IsAbsoluteUri
@@ -610,6 +605,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
+                ResultLevelKind resultLevelKind;
                 ValidationState state = _validators.Validate(reportingDescriptor.Name,
                                                              context,
                                                              ref filePath,
@@ -647,7 +643,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         // i.e., it is not the kind of artifact we're looking for.
                         // We should suspend processing and move to the next match.
                         level = FailureLevel.None;
-                        return;
+                        break;
                     }
 
                     case ValidationState.None:
@@ -668,26 +664,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 validatorMessage));
 
                         level = FailureLevel.Error;
-                        return;
+                        break;
                     }
 
-                    case ValidationState.AuthorizedError:
+                    case ValidationState.Authorized:
                     {
                         level = FailureLevel.Error;
 
                         // Contributes to building a message fragment such as:
                         // 'SomeFile.txt' is an exposed SomeSecret file [...].
                         validationPrefix = "an exposed ";
-                        break;
-                    }
-
-                    case ValidationState.AuthorizedWarning:
-                    {
-                        level = FailureLevel.Warning;
-
-                        // Contributes to building a message fragment such as:
-                        // 'SomeFile.txt' contains a valid SomeApi token [...].
-                        validationPrefix = "a valid ";
                         break;
                     }
 
@@ -769,6 +755,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     {
                         throw new InvalidOperationException($"Unrecognized validation value '{state}'.");
                     }
+                }
+
+                if (resultLevelKind != default)
+                {
+                    level = resultLevelKind.Level;
                 }
             }
 
