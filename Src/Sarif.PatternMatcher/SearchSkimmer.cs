@@ -487,9 +487,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     refinedMatchedPattern = flexMatch.Value;
                 }
 
-                string levelText = level.ToString();
-
-                ValidationState state = 0;
                 Fingerprint fingerprint = default;
                 string validatorMessage = null;
                 string validationPrefix = string.Empty;
@@ -518,61 +515,63 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                 context,
                                                                 validationResult.ResultLevelKind,
                                                                 ref level,
+                                                                ref kind,
                                                                 ref validationPrefix,
                                                                 ref validationSuffix,
                                                                 ref validatorMessage,
                                                                 pluginSupportsDynamicValidation);
-                                                        pluginSupportsDynamicValidation);
-                                                                pluginSupportsDynamicValidation);
 
                             ConstructResultAndLogForContentsRegex(binary64DecodedMatch,
-                                                  context,
-                                                  matchExpression,
-                                                  level,
-                                                  filePath,
-                                                  flexMatch,
-                                                  reportingDescriptor,
-                                                  match,
-                                                  refinedMatchedPattern,
-                                                  validationResult.Fingerprint,
-                                                  validatorMessage,
-                                                  validationPrefix,
-                                                  validationSuffix);
+                                                                  context,
+                                                                  matchExpression,
+                                                                  level,
+                                                                  kind,
+                                                                  filePath,
+                                                                  flexMatch,
+                                                                  reportingDescriptor,
+                                                                  match,
+                                                                  refinedMatchedPattern,
+                                                                  validationResult.Fingerprint,
+                                                                  validatorMessage,
+                                                                  validationPrefix,
+                                                                  validationSuffix);
                         }
                     }
                 }
                 else
                 {
                     ConstructResultAndLogForContentsRegex(binary64DecodedMatch,
-                                          context,
-                                          matchExpression,
-                                          level,
-                                          filePath,
-                                          flexMatch,
-                                          reportingDescriptor,
-                                          match,
-                                          refinedMatchedPattern,
-                                          fingerprint,
-                                          validatorMessage,
-                                          validationPrefix,
-                                          validationSuffix);
+                                                          context,
+                                                          matchExpression,
+                                                          level,
+                                                          kind,
+                                                          filePath,
+                                                          flexMatch,
+                                                          reportingDescriptor,
+                                                          match,
+                                                          refinedMatchedPattern,
+                                                          fingerprint,
+                                                          validatorMessage,
+                                                          validationPrefix,
+                                                          validationSuffix);
                 }
             }
         }
 
         private void ConstructResultAndLogForContentsRegex(FlexMatch binary64DecodedMatch,
-                                           AnalyzeContext context,
-                                           MatchExpression matchExpression,
-                                           FailureLevel level,
-                                           string filePath,
-                                           FlexMatch flexMatch,
-                                           ReportingDescriptor reportingDescriptor,
-                                           Match match,
-                                           string refinedMatchedPattern,
-                                           Fingerprint fingerprint,
-                                           string validatorMessage,
-                                           string validationPrefix,
-                                           string validationSuffix)
+                                                           AnalyzeContext context,
+                                                           MatchExpression matchExpression,
+                                                           FailureLevel level,
+                                                           ResultKind kind,
+                                                           string filePath,
+                                                           FlexMatch flexMatch,
+                                                           ReportingDescriptor reportingDescriptor,
+                                                           Match match,
+                                                           string refinedMatchedPattern,
+                                                           Fingerprint fingerprint,
+                                                           string validatorMessage,
+                                                           string validationPrefix,
+                                                           string validationSuffix)
         {
             // If we're matching against decoded contents, the region should
             // relate to the base64-encoded scan target content. We do use
@@ -596,16 +595,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                           matchExpression.ArgumentNameToIndexMap,
                                                           filePath,
                                                           validatorMessage: NormalizeValidatorMessage(validatorMessage),
+                                                          messageArguments);
+
             Result result = ConstructResult(context.TargetUri,
                                             reportingDescriptor.Id,
                                             level,
+                                            kind,
                                             region,
                                             flexMatch,
                                             fingerprint,
                                             matchExpression,
                                             arguments);
-                                            arguments);
-                                                arguments);
 
             // This skimmer instance mutates its reporting descriptor state,
             // for example, the sub-id may change for every match
@@ -619,8 +619,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ResultKind kind = matchExpression.Kind;
             FailureLevel level = matchExpression.Level;
             ReportingDescriptor reportingDescriptor = this;
-
-            string levelText = level.ToString();
             IDictionary<string, string> groups = new Dictionary<string, string>();
 
             if (!string.IsNullOrEmpty(context.FileContents))
@@ -772,10 +770,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                         if (validationResult.ResultLevelKind != default)
                         {
+                            kind = validationResult.ResultLevelKind.Kind;
                             level = validationResult.ResultLevelKind.Level;
+                        }
+
                         ConstructResultAndLogForFileNameRegex(context,
                                                               matchExpression,
                                                               level,
+                                                              kind,
                                                               reportingDescriptor,
                                                               validationResult.Fingerprint,
                                                               validatorMessage,
@@ -790,6 +792,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 ConstructResultAndLogForFileNameRegex(context,
                                                       matchExpression,
                                                       level,
+                                                      kind,
                                                       reportingDescriptor,
                                                       fingerprint,
                                                       validatorMessage,
@@ -798,10 +801,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                       filePath);
             }
         }
-            }
-            }
 
-        private void ConstructResultAndLogForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression, FailureLevel level, ReportingDescriptor reportingDescriptor, Fingerprint fingerprint, string validatorMessage, string validationPrefix, string validationSuffix, string filePath)
+        private void ConstructResultAndLogForFileNameRegex(AnalyzeContext context,
+                                                           MatchExpression matchExpression,
+                                                           FailureLevel level,
+                                                           ResultKind kind,
+                                                           ReportingDescriptor reportingDescriptor,
+                                                           Fingerprint fingerprint,
+                                                           string validatorMessage,
+                                                           string validationPrefix,
+                                                           string validationSuffix,
+                                                           string filePath)
         {
             Dictionary<string, string> messageArguments =
                             matchExpression.MessageArguments != null ?
