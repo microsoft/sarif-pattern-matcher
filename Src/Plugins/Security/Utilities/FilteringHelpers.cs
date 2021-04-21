@@ -4,12 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 {
-    public static class DomainFilteringHelper
+    public static class FilteringHelpers
     {
         public static readonly HashSet<string> LocalhostList = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
@@ -48,6 +49,32 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             }
 
             return ValidationState.Unknown;
+        }
+
+        public static bool LikelyPowershellVariable(string input)
+        {
+            if (input.Length < 4)
+            {
+                // Not enough space for a variable name in the string
+                return false;
+            }
+
+            if (input[0] != '$')
+            {
+                return false;
+            }
+
+            if (input[1] != '(')
+            {
+                return false;
+            }
+
+            if (input[input.Length - 1] != ')')
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

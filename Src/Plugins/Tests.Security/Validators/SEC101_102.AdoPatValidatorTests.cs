@@ -51,32 +51,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 bool performDynamicValidation = testCase.PerformDynamicValidation;
                 string failureLevel = testCase.FailureLevel;
-                string fingerprintText = null, message = null;
+                string fingerprintText = null;
                 var groups = new Dictionary<string, string>();
-                Fingerprint fingerprint;
-                ResultLevelKind resultLevelKind;
 
-                ValidationState state =
-                    AdoPatValidator.IsValidStatic(ref testCase.Input,
-                                                  ref groups,
-                                                  ref message,
-                                                  out resultLevelKind,
-                                                  out fingerprint);
+                IEnumerable<ValidationResult> validationResults = AdoPatValidator.IsValidStatic(ref testCase.Input,
+                                                                                                groups);
 
                 string title = testCase.Title;
 
-                Verify(state == testCase.ExpectedValidationState, title, failedTestCases);
-
-                Verify(failureLevel == testCase.FailureLevel, title, failedTestCases);
-                Verify(state == testCase.ExpectedValidationState, title, failedTestCases);
-
-                if (state != ValidationState.Unknown)
+                foreach (ValidationResult validationResult in validationResults)
                 {
-                    Verify(fingerprintText == null, title, failedTestCases);
-                }
-                else
-                {
-                    Verify(fingerprintText == $"[pat/vs={testCase.Input}]", title, failedTestCases);
+                    Verify(validationResult.ValidationState == testCase.ExpectedValidationState, title, failedTestCases);
+
+                    Verify(failureLevel == testCase.FailureLevel, title, failedTestCases);
+                    Verify(validationResult.ValidationState == testCase.ExpectedValidationState, title, failedTestCases);
+
+                    if (validationResult.ValidationState != ValidationState.Unknown)
+                    {
+                        Verify(fingerprintText == null, title, failedTestCases);
+                    }
+                    else
+                    {
+                        Verify(fingerprintText == $"[pat/vs={testCase.Input}]", title, failedTestCases);
+                    }
                 }
             }
 

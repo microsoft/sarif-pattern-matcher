@@ -426,7 +426,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
                 // Reported as lowercase hex rather than base64
                 byte[] hash = hasher.Hash;
-                StringBuilder text = new StringBuilder(hash.Length / 2);
+                var text = new StringBuilder(hash.Length / 2);
                 foreach (byte b in hash)
                 {
                     text.Append(b.ToString("x2"));

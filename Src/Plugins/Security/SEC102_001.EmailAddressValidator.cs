@@ -12,40 +12,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
 #pragma warning disable IDE0060 // Unused parameter.
 
-        public static ValidationState IsValidStatic(ref string matchedPattern,
-                                                    ref Dictionary<string, string> groups,
-                                                    ref string message,
-                                                    out ResultLevelKind resultLevelKind,
-                                                    out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
+                                                    Dictionary<string, string> groups)
 #pragma warning restore IDE0060 // Unused parameter.
         {
-            fingerprint = default;
-            resultLevelKind = default;
-
             try
             {
                 var addr = new MailAddress(matchedPattern);
                 if (addr.Address == matchedPattern)
                 {
+                    var validationResult = new ValidationResult
+                    {
+                        ValidationState = ValidationState.Unknown,
+                    };
+
                     string[] parts = matchedPattern.Split('@');
                     if (parts.Length == 2)
                     {
-                        fingerprint = new Fingerprint()
+                        validationResult.Fingerprint = new Fingerprint()
                         {
                             Id = parts[0],
                             Host = parts[1],
                         };
                     }
 
-                    return ValidationState.Unknown;
+                    return new[] { validationResult };
                 }
             }
             catch
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
-            return ValidationState.NoMatch;
+            return ValidationResult.CreateNoMatch();
         }
     }
 }

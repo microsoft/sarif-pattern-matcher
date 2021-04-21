@@ -10,20 +10,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public static class MicrosoftSerializedCertificateStoreFileValidator
     {
-        public static ValidationState IsValidStatic(ref string matchedPattern,
-#pragma warning disable IDE0060 // Remove unused parameter
-                                                    ref Dictionary<string, string> groups,
-#pragma warning restore IDE0060// Remove unused parameter
-                                                    ref string message,
-                                                    out ResultLevelKind resultLevelKind,
-                                                    out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
+                                                                  Dictionary<string, string> groups)
         {
-            fingerprint = default;
-            resultLevelKind = default;
+            string message = string.Empty;
+            Fingerprint fingerprint = default;
+            ResultLevelKind resultLevelKind = default;
+            ValidationState validationState = CertificateHelper.TryLoadCertificateCollection(matchedPattern,
+                                                                                             ref fingerprint,
+                                                                                             ref message);
 
-            return CertificateHelper.TryLoadCertificateCollection(matchedPattern,
-                                                               ref fingerprint,
-                                                               ref message);
+            var validationResult = new ValidationResult
+            {
+                Message = message,
+                Fingerprint = fingerprint,
+                ResultLevelKind = resultLevelKind,
+                ValidationState = validationState,
+            };
+
+            return new[] { validationResult };
         }
     }
 }
