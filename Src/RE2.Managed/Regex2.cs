@@ -199,6 +199,7 @@ namespace Microsoft.RE2.Managed
         /// <param name="groupName2Index">Map of group name to index in <paramref name="submatchStrings"/>.</param>
         /// <param name="index2GroupName">Map of index in <paramref name="submatchStrings"/> to group name.</param>
         /// <param name="submatchStrings">List of texts for each matching group.</param>
+        /// <param name="matchGroups">List of match groups.</param>
         ///
         /// <returns>Boolean indicating if the pattern matches the text.</returns>
         ///
@@ -217,7 +218,8 @@ namespace Microsoft.RE2.Managed
             string text,
             out Dictionary<string, int> groupName2Index,
             out Dictionary<int, string> index2GroupName,
-            out List<string> submatchStrings)
+            out List<string> submatchStrings,
+            out List<MatchGroup> matchGroups)
         {
             GetNamedGroupsSetup(
                 pattern,
@@ -245,6 +247,7 @@ namespace Microsoft.RE2.Managed
                         groupNameHeadersPtr,
                         groupNamesBufferPtr,
                         submatchesPtr);
+
                 if (isMatch)
                 {
                     groupName2Index = new Dictionary<string, int>();
@@ -269,6 +272,24 @@ namespace Microsoft.RE2.Managed
                         submatchStrings.Add(submatchString);
                     }
 
+                    // Build MatchGroup list
+                    matchGroups = new List<MatchGroup>();
+                    matchGroups.Add(new MatchGroup(MatchGroupType.Full, submatchStrings[0]));
+                    for (int i = 1; i < submatches.LongLength; i++)
+                    {
+                        Submatch submatch = submatches[i];
+                        string submatchString = submatchStrings[i];
+                        if (index2GroupName.ContainsKey(i))
+                        {
+                            string groupName = index2GroupName[i];
+                            matchGroups.Add(new MatchGroup(MatchGroupType.Named, groupName, submatchString));
+                        }
+                        else
+                        {
+                            matchGroups.Add(new MatchGroup(MatchGroupType.Anonymous, submatchString));
+                        }
+                    }
+
                     return true;
                 }
                 else
@@ -276,6 +297,8 @@ namespace Microsoft.RE2.Managed
                     groupName2Index = null;
                     index2GroupName = null;
                     submatchStrings = null;
+                    matchGroups = null;
+
                     return false;
                 }
             }
