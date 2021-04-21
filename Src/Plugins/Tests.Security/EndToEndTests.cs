@@ -90,7 +90,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 LogFilePersistenceOptions.PrettyPrint,
                 dataToRemove: OptionallyEmittedData.NondeterministicProperties,
                 levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
-                kinds: new List<ResultKind> { ResultKind.Fail }))
+                kinds: new List<ResultKind> { ResultKind.Fail, ResultKind.Pass }))
             {
                 // The analysis will disable skimmers that raise an exception. This
                 // hash set stores the disabled skimmers. When a skimmer is disabled,
