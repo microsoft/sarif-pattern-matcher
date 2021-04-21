@@ -20,66 +20,58 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new CloudantCredentialsValidator();
         }
 
-        public static ValidationState IsValidStatic(ref string matchedPattern,
-                                                    ref Dictionary<string, string> groups,
-                                                    ref string message,
-                                                    out ResultLevelKind resultLevelKind,
-                                                    out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
+                                                                  Dictionary<string, string> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
-                                 ref groups,
-                                 ref message,
-                                 out resultLevelKind,
-                                 out fingerprint);
+                                 groups);
         }
 
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                                      ref string message,
-                                                     ref Dictionary<string, string> options,
+                                                     Dictionary<string, string> options,
                                                      ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
-                                  ref options,
+                                  options,
                                   ref resultLevelKind);
         }
 
-        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
-                                                               ref Dictionary<string, string> groups,
-                                                               ref string message,
-                                                               out ResultLevelKind resultLevelKind,
-                                                               out Fingerprint fingerprint)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
+                                                                             Dictionary<string, string> groups)
         {
-            fingerprint = default;
-            resultLevelKind = default;
-
             // We need uri and neither account nor password, or uri and both account and password.  Use XOR
             if (!groups.TryGetNonEmptyValue("id", out string id) ||
                 !groups.TryGetNonEmptyValue("host", out string host) ||
                 !groups.TryGetNonEmptyValue("secret", out string secret))
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
             groups.TryGetNonEmptyValue("resource", out string resource);
 
-            fingerprint = new Fingerprint()
+            var validationResult = new ValidationResult
             {
-                Id = id,
-                Host = host,
-                Secret = secret,
-                Resource = resource,
-                Platform = nameof(AssetPlatform.Cloudant),
+                Fingerprint = new Fingerprint()
+                {
+                    Id = id,
+                    Host = host,
+                    Secret = secret,
+                    Resource = resource,
+                    Platform = nameof(AssetPlatform.Cloudant),
+                },
+                ValidationState = ValidationState.Unknown,
             };
 
-            return ValidationState.Unknown;
+            return new[] { validationResult };
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                ref Dictionary<string, string> options,
+                                                                Dictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             // TODO: Create a unit test for this. https://github.com/microsoft/sarif-pattern-matcher/issues/258

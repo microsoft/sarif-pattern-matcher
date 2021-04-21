@@ -25,7 +25,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             ValidationState actualValidationState = PostgreSqlConnectionStringValidator.IsValidDynamic(ref fingerprint,
                                                                                                        ref message,
-                                                                                                       ref keyValuePairs,
+                                                                                                       keyValuePairs,
                                                                                                        ref resultLevelKind);
             Assert.Equal(ExpectedValidationState, actualValidationState);
         }

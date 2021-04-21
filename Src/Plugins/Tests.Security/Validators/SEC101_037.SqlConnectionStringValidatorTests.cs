@@ -11,8 +11,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     public class SqlConnectionStringValidatorTests
     {
-        private const ValidationState ExpectedValidationState = ValidationState.UnknownHost;
-
         [Fact]
         public void SqlConnectionStringValidatorTests_Test()
         {
@@ -24,9 +22,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             ValidationState actualValidationState = SqlConnectionStringValidator.IsValidDynamic(ref fingerprint,
                                                                                                 ref message,
-                                                                                                ref keyValuePairs,
+                                                                                                keyValuePairs,
                                                                                                 ref resultLevelKind);
-            Assert.Equal(ExpectedValidationState, actualValidationState);
+            Assert.True(actualValidationState == ValidationState.Unknown || actualValidationState == ValidationState.UnknownHost);
         }
     }
 }

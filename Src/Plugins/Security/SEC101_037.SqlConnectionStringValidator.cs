@@ -45,40 +45,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             RegexEngine.Match(string.Empty, PasswordExpression);
         }
 
-        public static ValidationState IsValidStatic(ref string matchedPattern,
-                                                    ref Dictionary<string, string> groups,
-                                                    ref string message,
-                                                    out ResultLevelKind resultLevelKind,
-                                                    out Fingerprint fingerprint)
+        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
+                                                                  Dictionary<string, string> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
-                                 ref groups,
-                                 ref message,
-                                 out resultLevelKind,
-                                 out fingerprint);
+                                 groups);
         }
 
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                                      ref string message,
-                                                     ref Dictionary<string, string> options,
+                                                     Dictionary<string, string> options,
                                                      ref ResultLevelKind resultLevelKind)
         {
             return IsValidDynamic(Instance,
                                   ref fingerprint,
                                   ref message,
-                                  ref options,
+                                  options,
                                   ref resultLevelKind);
         }
 
-        protected override ValidationState IsValidStaticHelper(ref string matchedPattern,
-                                                               ref Dictionary<string, string> groups,
-                                                               ref string message,
-                                                               out ResultLevelKind resultLevelKind,
-                                                               out Fingerprint fingerprint)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
+                                                                             Dictionary<string, string> groups)
         {
-            fingerprint = default;
-            resultLevelKind = default;
             matchedPattern = matchedPattern.Trim();
 
             string id, host, secret, database;
@@ -106,16 +95,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string.IsNullOrWhiteSpace(secret) ||
                 string.IsNullOrWhiteSpace(database))
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
-            host = DomainFilteringHelper.StandardizeLocalhostName(host);
+            host = FilteringHelpers.StandardizeLocalhostName(host);
 
-            ValidationState exclusionResult = DomainFilteringHelper.HostExclusion(host, HostsToExclude);
+            ValidationState exclusionResult = FilteringHelpers.HostExclusion(host, HostsToExclude);
 
             if (exclusionResult == ValidationState.NoMatch)
             {
-                return exclusionResult;
+                return ValidationResult.CreateNoMatch();
             }
 
             if (id.Length > 128 ||
@@ -123,10 +112,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 secret.Length > 128 ||
                 database.Length > 128)
             {
-                return ValidationState.NoMatch;
+                return ValidationResult.CreateNoMatch();
             }
 
-            fingerprint = new Fingerprint()
+            var fingerprint = new Fingerprint()
             {
                 Id = id,
                 Host = host,
@@ -136,12 +125,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             SharedUtilities.PopulateAssetFingerprint(host, ref fingerprint);
 
-            return ValidationState.Unknown;
+            var validationResult = new ValidationResult
+            {
+                Fingerprint = fingerprint,
+                ValidationState = ValidationState.Unknown,
+            };
+
+            return new[] { validationResult };
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                ref Dictionary<string, string> options,
+                                                                Dictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string host = fingerprint.Host;
@@ -149,7 +144,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string password = fingerprint.Secret;
             string database = fingerprint.Resource;
 
-            if (DomainFilteringHelper.LocalhostList.Contains(host))
+            if (FilteringHelpers.LocalhostList.Contains(host))
             {
                 return ValidationState.Unknown;
             }
