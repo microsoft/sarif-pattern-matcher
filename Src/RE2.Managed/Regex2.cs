@@ -187,19 +187,44 @@ namespace Microsoft.RE2.Managed
             }
         }
 
+        /// <summary>
+        /// Searches the text for the specified pattern.
+        ///
+        /// For simplicity, the implementation uses 32-bit signed integers throughout. There is no size-related error checking.
+        /// Hence, if some count or size exceeds that (e.g. number of named groups, length of text), there will be problems.
+        /// </summary>
+        ///
+        /// <param name="pattern">Pattern to search for in RE2 syntax.</param>
+        /// <param name="text">Text to search.</param>
+        /// <param name="groupName2Index">Map of group name to index in <paramref name="submatchStrings"/>.</param>
+        /// <param name="index2GroupName">Map of index in <paramref name="submatchStrings"/> to group name.</param>
+        /// <param name="submatchStrings">List of texts for each matching group.</param>
+        ///
+        /// <returns>Boolean indicating if the pattern matches the text.</returns>
+        ///
+        /// <example>
+        /// <code>
+        /// Input pattern @"(?P<g1>a)(b)(?P<g2>c)"
+        /// Input text = @"abc"
+        ///
+        /// groupName2Index = { "g1": 0, "g2": 2 }
+        /// index2GroupName = { 0: "g1", 2: "g2" }
+        /// index2GroupName = [ "abc", "a", "b", "c" ]
+        /// </code>
+        /// </example>
         public static unsafe bool Matches(
             string pattern,
             string text,
-            out Dictionary<string, ulong> groupName2Index,
-            out Dictionary<ulong, string> index2GroupName,
+            out Dictionary<string, int> groupName2Index,
+            out Dictionary<int, string> index2GroupName,
             out List<string> submatchStrings)
         {
             GetNamedGroupsSetup(
                 pattern,
-                out ulong numCapturingGroups,
-                out ulong numNamedCapturingGroups,
-                out ulong groupNamesBufferSize);
-            ulong numSubmatches = numCapturingGroups + 1;
+                out int numCapturingGroups,
+                out int numNamedCapturingGroups,
+                out int groupNamesBufferSize);
+            int numSubmatches = numCapturingGroups + 1;
 
             byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
             byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
@@ -213,17 +238,23 @@ namespace Microsoft.RE2.Managed
             fixed (byte* groupNamesBufferPtr = groupNamesBuffer)
             fixed (Submatch* submatchesPtr = submatches)
             {
-                bool isMatch = NativeMethods.MatchesNamedGroups(new StringUtf8(patternUtf8BytesPtr, (ulong)pattern.Length), new StringUtf8(textUtf8BytesPtr, (ulong)text.Length), groupNameHeadersPtr, groupNamesBufferPtr, submatchesPtr);
+                bool isMatch =
+                    NativeMethods.MatchesNamedGroups(
+                        new StringUtf8(patternUtf8BytesPtr, pattern.Length),
+                        new StringUtf8(textUtf8BytesPtr, text.Length),
+                        groupNameHeadersPtr,
+                        groupNamesBufferPtr,
+                        submatchesPtr);
                 if (isMatch)
                 {
-                    groupName2Index = new Dictionary<string, ulong>();
-                    index2GroupName = new Dictionary<ulong, string>();
+                    groupName2Index = new Dictionary<string, int>();
+                    index2GroupName = new Dictionary<int, string>();
 
                     // Build GroupName-Index maps
-                    ulong groupNameStringIndex = 0;
+                    int groupNameStringIndex = 0;
                     foreach (GroupNameHeader groupNameHeader in groupNameHeaders)
                     {
-                        string groupName = Encoding.UTF8.GetString(groupNamesBuffer, (int)groupNameStringIndex, (int)groupNameHeader.Length);
+                        string groupName = Encoding.UTF8.GetString(groupNamesBuffer, groupNameStringIndex, groupNameHeader.Length);
                         groupName2Index[groupName] = groupNameHeader.Index;
                         index2GroupName[groupNameHeader.Index] = groupName;
                         groupNameStringIndex += groupNameHeader.Length;
@@ -234,7 +265,7 @@ namespace Microsoft.RE2.Managed
                     foreach (Submatch submatch in submatches)
                     {
                         Console.WriteLine(submatch.Index);
-                        string submatchString = Encoding.UTF8.GetString(textUtf8Bytes, (int)submatch.Index, (int)submatch.Length);
+                        string submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatch.Index, submatch.Length);
                         submatchStrings.Add(submatchString);
                     }
 
@@ -250,17 +281,17 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        private static unsafe void GetNamedGroupsSetup(string pattern, out ulong numCapturingGroups, out ulong numNamedCapturingGroups, out ulong groupNamesBufferSize)
+        private static unsafe void GetNamedGroupsSetup(string pattern, out int numCapturingGroups, out int numNamedCapturingGroups, out int groupNamesBufferSize)
         {
             byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
 
             fixed (byte* patternUtf8BytesPtr = patternUtf8Bytes)
             {
-                fixed (ulong* numCapturingGroupsPtr = &numCapturingGroups)
-                fixed (ulong* numNamedCapturingGroupsPtr = &numNamedCapturingGroups)
-                fixed (ulong* groupNamesBufferSizePtr = &groupNamesBufferSize)
+                fixed (int* numCapturingGroupsPtr = &numCapturingGroups)
+                fixed (int* numNamedCapturingGroupsPtr = &numNamedCapturingGroups)
+                fixed (int* groupNamesBufferSizePtr = &groupNamesBufferSize)
                 {
-                    NativeMethods.GetNamedGroupsSetup(new StringUtf8(patternUtf8BytesPtr, (ulong)pattern.Length), numCapturingGroupsPtr, numNamedCapturingGroupsPtr, groupNamesBufferSizePtr);
+                    NativeMethods.GetNamedGroupsSetup(new StringUtf8(patternUtf8BytesPtr, pattern.Length), numCapturingGroupsPtr, numNamedCapturingGroupsPtr, groupNamesBufferSizePtr);
                 }
             }
         }
