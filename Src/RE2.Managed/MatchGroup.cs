@@ -8,17 +8,17 @@ namespace Microsoft.RE2.Managed
     public enum MatchGroupType
     {
         /// <summary>
-        /// todo
+        /// This submatch is for the entire pattern.
         /// </summary>
         Full,
 
         /// <summary>
-        /// todo
+        /// This is a named submatch group.
         /// </summary>
         Named,
 
         /// <summary>
-        /// todo
+        /// This is an unnamed submatch group.
         /// </summary>
         Anonymous,
     }
