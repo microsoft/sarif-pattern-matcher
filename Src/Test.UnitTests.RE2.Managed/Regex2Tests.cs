@@ -190,21 +190,24 @@ namespace Microsoft.RE2.Managed
             Dictionary<string, int> groupName2Index;
             Dictionary<int, string> index2GroupName;
             List<string> submatchStrings;
-            List<MatchGroup> matchGroups;
+            string fullMatch;
+            List<string> anonymousCapturingGroups;
+            Dictionary<string, string> namedCapturingGroups;
 
-            isMatch = Regex2.Matches(@"abc", "def", out _, out _, out _, out _);
+            isMatch = Regex2.Matches(@"abc", "def", out _, out _, out _, out _, out _, out _);
             Assert.False(isMatch);
 
-            isMatch = Regex2.Matches(@"abc", "abc", out groupName2Index, out index2GroupName, out submatchStrings, out matchGroups);
+            isMatch = Regex2.Matches(@"abc", "abc", out groupName2Index, out index2GroupName, out submatchStrings, out fullMatch, out anonymousCapturingGroups, out namedCapturingGroups);
             Assert.True(isMatch);
             Assert.Empty(groupName2Index);
             Assert.Empty(index2GroupName);
             Assert.Single(submatchStrings);
             Assert.Equal("abc", submatchStrings[0]);
-            Assert.Single(matchGroups);
-            Assert.Equal(new MatchGroup(MatchGroupType.Full, "abc"), matchGroups[0]);
+            Assert.Equal("abc", fullMatch);
+            Assert.Empty(anonymousCapturingGroups);
+            Assert.Empty(namedCapturingGroups);
 
-            isMatch = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out groupName2Index, out index2GroupName, out submatchStrings, out matchGroups);
+            isMatch = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out groupName2Index, out index2GroupName, out submatchStrings, out fullMatch, out anonymousCapturingGroups, out namedCapturingGroups);
             Assert.True(isMatch);
             Assert.Equal(2, groupName2Index.Count);
             Assert.Equal(2, index2GroupName.Count);
@@ -221,11 +224,14 @@ namespace Microsoft.RE2.Managed
             Assert.Equal("a", submatchStrings[1]);
             Assert.Equal("b", submatchStrings[2]);
             Assert.Equal("c", submatchStrings[3]);
-            Assert.Equal(4, matchGroups.Count);
-            Assert.Equal(new MatchGroup(MatchGroupType.Full, "abc"), matchGroups[0]);
-            Assert.Equal(new MatchGroup(MatchGroupType.Named, "g1", "a"), matchGroups[1]);
-            Assert.Equal(new MatchGroup(MatchGroupType.Anonymous, "b"), matchGroups[2]);
-            Assert.Equal(new MatchGroup(MatchGroupType.Named, "g2", "c"), matchGroups[3]);
+            Assert.Equal("abc", fullMatch);
+            Assert.Single(anonymousCapturingGroups);
+            Assert.Equal("b", anonymousCapturingGroups[0]);
+            Assert.Equal(2, namedCapturingGroups.Count);
+            Assert.True(namedCapturingGroups.ContainsKey("g1"));
+            Assert.Equal("a", namedCapturingGroups["g1"]);
+            Assert.True(namedCapturingGroups.ContainsKey("g2"));
+            Assert.Equal("c", namedCapturingGroups["g2"]);
         }
 
         private string MatchToString(Match2 match, String8 content)

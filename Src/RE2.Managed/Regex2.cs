@@ -199,7 +199,6 @@ namespace Microsoft.RE2.Managed
         /// <param name="groupName2Index">Map of group name to index in <paramref name="submatchStrings"/>.</param>
         /// <param name="index2GroupName">Map of index in <paramref name="submatchStrings"/> to group name.</param>
         /// <param name="submatchStrings">List of texts for each matching group.</param>
-        /// <param name="matchGroups">List of match groups.</param>
         ///
         /// <returns>Boolean indicating if the pattern matches the text.</returns>
         ///
@@ -219,7 +218,9 @@ namespace Microsoft.RE2.Managed
             out Dictionary<string, int> groupName2Index,
             out Dictionary<int, string> index2GroupName,
             out List<string> submatchStrings,
-            out List<MatchGroup> matchGroups)
+            out string fullMatch,
+            out List<string> anonymousCapturingGroups,
+            out Dictionary<string, string> namedCapturingGroups)
         {
             GetNamedGroupsSetup(
                 pattern,
@@ -230,9 +231,9 @@ namespace Microsoft.RE2.Managed
 
             byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
             byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
-            GroupNameHeader[] groupNameHeaders = new GroupNameHeader[numNamedCapturingGroups];
+            var groupNameHeaders = new GroupNameHeader[numNamedCapturingGroups];
             byte[] groupNamesBuffer = new byte[groupNamesBufferSize];
-            Submatch[] submatches = new Submatch[numSubmatches];
+            var submatches = new Submatch[numSubmatches];
 
             fixed (byte* patternUtf8BytesPtr = patternUtf8Bytes)
             fixed (byte* textUtf8BytesPtr = textUtf8Bytes)
@@ -272,9 +273,10 @@ namespace Microsoft.RE2.Managed
                         submatchStrings.Add(submatchString);
                     }
 
-                    // Build MatchGroup list
-                    matchGroups = new List<MatchGroup>();
-                    matchGroups.Add(new MatchGroup(MatchGroupType.Full, submatchStrings[0]));
+                    // Build outputs
+                    fullMatch = submatchStrings[0];
+                    anonymousCapturingGroups = new List<string>();
+                    namedCapturingGroups = new Dictionary<string, string>();
                     for (int i = 1; i < submatches.LongLength; i++)
                     {
                         Submatch submatch = submatches[i];
@@ -282,11 +284,11 @@ namespace Microsoft.RE2.Managed
                         if (index2GroupName.ContainsKey(i))
                         {
                             string groupName = index2GroupName[i];
-                            matchGroups.Add(new MatchGroup(MatchGroupType.Named, groupName, submatchString));
+                            namedCapturingGroups[groupName] = submatchString;
                         }
                         else
                         {
-                            matchGroups.Add(new MatchGroup(MatchGroupType.Anonymous, submatchString));
+                            anonymousCapturingGroups.Add(submatchString);
                         }
                     }
 
@@ -297,7 +299,9 @@ namespace Microsoft.RE2.Managed
                     groupName2Index = null;
                     index2GroupName = null;
                     submatchStrings = null;
-                    matchGroups = null;
+                    fullMatch = null;
+                    anonymousCapturingGroups = null;
+                    namedCapturingGroups = null;
 
                     return false;
                 }
