@@ -132,7 +132,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 foreach (MatchExpression matchExpression in definition.MatchExpressions)
                 {
-                    matchExpression.CustomMessage = !string.IsNullOrEmpty(matchExpression.Message) && matchExpression.Message != definition.Message;
                     matchExpression.FileNameDenyRegex = PushData(matchExpression.FileNameDenyRegex,
                                                                  definition.SharedStrings,
                                                                  sharedStrings);

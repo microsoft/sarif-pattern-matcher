@@ -62,10 +62,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string matchExpressionMessage = matchExpression.Message;
                 matchExpression.ArgumentNameToIndexMap = GenerateIndicesForNamedArguments(ref matchExpressionMessage);
 
-                string messageId = !matchExpression.CustomMessage
-                    ? $"Default"
-                    : $"Default_{matchExpression.SubId}";
-
+                string messageId = matchExpression.MessageId;
                 if (_messageStrings.ContainsKey(messageId))
                 {
                     continue;
@@ -862,10 +859,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             Dictionary<string, string> fingerprints = BuildFingerprints(fingerprint, out double rank);
 
-            string messageId = !matchExpression.CustomMessage
-                ? $"Default"
-                : $"Default_{matchExpression.SubId}";
-
             if (!string.IsNullOrEmpty(matchExpression.SubId))
             {
                 ruleId = $"{ruleId}/{matchExpression.SubId}";
@@ -883,7 +876,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Level = level,
                 Message = new Message()
                 {
-                    Id = messageId,
+                    Id = matchExpression.MessageId,
                     Arguments = arguments,
                 },
                 Rank = rank,

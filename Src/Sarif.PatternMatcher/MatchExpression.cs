@@ -49,6 +49,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public bool IsValidatorEnabled { get; set; } = true;
 
-        public bool CustomMessage { get; set; }
+        public string MessageId { get; set; } = "Default";
     }
 }
