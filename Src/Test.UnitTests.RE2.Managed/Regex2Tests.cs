@@ -207,7 +207,7 @@ namespace Microsoft.RE2.Managed
             Assert.Empty(anonymousCapturingGroups);
             Assert.Empty(namedCapturingGroups);
 
-            isMatch = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out groupName2Index, out index2GroupName, out submatchStrings, out fullMatch, out anonymousCapturingGroups, out namedCapturingGroups);
+            isMatch = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc abc abc", out groupName2Index, out index2GroupName, out submatchStrings, out fullMatch, out anonymousCapturingGroups, out namedCapturingGroups);
             Assert.True(isMatch);
             Assert.Equal(2, groupName2Index.Count);
             Assert.Equal(2, index2GroupName.Count);
