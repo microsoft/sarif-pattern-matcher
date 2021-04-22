@@ -22,7 +22,7 @@
                 "NotApplicable_InvalidMetadata": {
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
-                "Default": {
+                "_alloca": {
                   "text": "'{0}' contains a call to '{1}', a potentially insecure API that could be replaced with a more secure alternative: '{2}'."
                 },
                 "_malloca": {
@@ -41,13 +41,14 @@
       ],
       "results": [
         {
-          "ruleId": "SEC104/001/_alloca",
+          "ruleId": "SEC104/001",
           "ruleIndex": 0,
+          "kind": "pass",
+          "level": "none",
           "message": {
-            "id": "Default",
+            "id": "_malloca",
             "arguments": [
-              "SEC104.Memory.Allocation_alloca.c",
-              "_alloca",
+              "SEC104.Memory.Allocation_malloca.c",
               "_malloca"
             ]
           },
@@ -55,18 +56,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC104.Memory.Allocation_alloca.c",
+                  "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC104.Memory.Allocation_malloca.c",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 10,
-                  "startColumn": 13,
+                  "startColumn": 10,
                   "endLine": 10,
-                  "endColumn": 21,
-                  "charOffset": 187,
-                  "charLength": 8,
+                  "endColumn": 19,
+                  "charOffset": 178,
+                  "charLength": 9,
                   "snippet": {
-                    "text": "_alloca("
+                    "text": "_malloca("
                   }
                 }
               }
@@ -74,10 +75,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=D62A0E587857E47344ED096CC889828D53B1AB3EA83E005D277AC18A2AB80B4F]",
-            "ValidationFingerprintHash/v1": "b344d33a3519f593c86ad5274421711b348eb2b250a69bdb4b6d3600bc069563"
+            "ValidationFingerprint/v1": "[secret=E3EE29CD7A8EF1E076AC13F921A48D18B021085CF2DC2913FBF6A794CB9DA2F0]",
+            "ValidationFingerprintHash/v1": "b7591dea032cc4e4f935ea0766800ee8ff2927816f4d55f2376ea6a43e4547bf"
           },
-          "rank": 54.99
+          "rank": 55.53
         }
       ],
       "columnKind": "utf16CodeUnits"
