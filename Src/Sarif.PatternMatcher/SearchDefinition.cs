@@ -17,6 +17,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public FailureLevel Level { get; set; }
 
+        public ResultKind Kind { get; set; }
+
         public string Description { get; set; }
 
         public string FileNameDenyRegex { get; set; }
@@ -26,10 +28,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public List<MatchExpression> MatchExpressions { get; set; }
 
 #if DEBUG
+
         public override string ToString()
         {
             return $"{Id}.{Name}:{Level}";
         }
+
 #endif
     }
 }
