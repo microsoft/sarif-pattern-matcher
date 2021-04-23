@@ -70,7 +70,7 @@
       ],
       "results": [
         {
-          "ruleId": "SEC105/001",
+          "ruleId": "SEC105/001/allocator",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
@@ -134,7 +134,7 @@
           ]
         },
         {
-          "ruleId": "SEC105/001",
+          "ruleId": "SEC105/001/allocator",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
@@ -198,7 +198,7 @@
           ]
         },
         {
-          "ruleId": "SEC105/002",
+          "ruleId": "SEC105/002/analysisassume",
           "ruleIndex": 1,
           "message": {
             "id": "Default",
@@ -263,7 +263,7 @@
           ]
         },
         {
-          "ruleId": "SEC105/003",
+          "ruleId": "SEC105/003/maybenull",
           "ruleIndex": 2,
           "message": {
             "id": "Default",
@@ -301,7 +301,7 @@
           "rank": 54.42
         },
         {
-          "ruleId": "SEC105/003",
+          "ruleId": "SEC105/003/notnull",
           "ruleIndex": 2,
           "message": {
             "id": "Default",

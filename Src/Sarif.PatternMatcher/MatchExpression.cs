@@ -50,5 +50,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public Dictionary<string, int> ArgumentNameToIndexMap { get; set; }
 
         public bool IsValidatorEnabled { get; set; } = true;
+
+        public string MessageId { get; set; } = "Default";
     }
 }
