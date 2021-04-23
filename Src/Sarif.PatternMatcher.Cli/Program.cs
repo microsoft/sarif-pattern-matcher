@@ -18,7 +18,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
     {
         private static int Main(string[] args)
         {
-            SalParser(@"c:\users\ednakamu\desktop\Sal1ToSal2.txt");
             return Parser.Default.ParseArguments<
                 AnalyzeOptions,
                 ExportRulesMetatadaOptions,
