@@ -38,7 +38,7 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
@@ -81,7 +81,7 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
@@ -124,7 +124,7 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
@@ -167,7 +167,7 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
@@ -210,7 +210,7 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
@@ -253,7 +253,7 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
@@ -296,7 +296,7 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
@@ -339,7 +339,7 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
@@ -382,7 +382,7 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
@@ -425,7 +425,7 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {
@@ -468,7 +468,7 @@
           "rank": 36.02
         },
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 0,
           "level": "note",
           "message": {

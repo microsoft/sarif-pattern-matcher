@@ -20,6 +20,7 @@
           "SubId": "_malloca",
           "Kind": "Pass",
           "ContentsRegex": "\\b(?<secureApi>[_]?malloca)\\s*\\(",
+          "MessageId": "Default_Secure",
           "Message": "'{0:scanTarget}' contains a call to the secure API '{1:secureApi}'."
         }
       ]

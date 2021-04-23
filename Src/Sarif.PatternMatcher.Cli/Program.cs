@@ -18,6 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
     {
         private static int Main(string[] args)
         {
+            SalParser(@"c:\users\ednakamu\desktop\Sal1ToSal2.txt");
             return Parser.Default.ParseArguments<
                 AnalyzeOptions,
                 ExportRulesMetatadaOptions,
@@ -154,7 +155,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                         searchDefinition.MatchExpressions.Add(new MatchExpression
                         {
-                            // SubId = name,
+                            SubId = name,
                             ContentsRegex = $"${searchDefinition.Id}.{name}",
                             MessageArguments = new Dictionary<string, string>
                             {
@@ -179,7 +180,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                         searchDefinition.MatchExpressions.Add(new MatchExpression
                         {
-                            // SubId = name,
+                            SubId = name,
                             ContentsRegex = $"${searchDefinition.Id}.{name}",
                             MessageArguments = new Dictionary<string, string>
                             {
@@ -205,7 +206,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                         searchDefinition.MatchExpressions.Add(new MatchExpression
                         {
-                            // SubId = name,
+                            SubId = name,
                             ContentsRegex = $"${searchDefinition.Id}.{name}",
                             MessageArguments = new Dictionary<string, string>
                             {
@@ -223,6 +224,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 Formatting.None,
                 settings);
             json = json.Replace(@"""Level"":""None"",", string.Empty);
+            json = json.Replace(@"""Kind"":""None"",", string.Empty);
+            json = json.Replace(@",""MessageId"":""Default""", string.Empty);
             json = json.Replace(@"""MatchLengthToDecode"":0,", string.Empty);
             json = json.Replace($@",""IsValidatorEnabled"":true", string.Empty);
         }

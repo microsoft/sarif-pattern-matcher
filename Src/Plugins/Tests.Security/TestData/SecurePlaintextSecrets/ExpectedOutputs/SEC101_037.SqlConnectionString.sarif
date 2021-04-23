@@ -70,7 +70,7 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/036/Odbc",
+          "ruleId": "SEC101/036",
           "ruleIndex": 0,
           "level": "note",
           "message": {
@@ -113,7 +113,7 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/036/Odbc",
+          "ruleId": "SEC101/036",
           "ruleIndex": 0,
           "level": "note",
           "message": {
@@ -156,7 +156,7 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -199,7 +199,7 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -242,7 +242,7 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -285,7 +285,7 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -328,7 +328,7 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -371,7 +371,7 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -414,7 +414,7 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -457,7 +457,7 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -500,7 +500,7 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -543,7 +543,7 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -586,7 +586,7 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -629,7 +629,7 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -672,7 +672,7 @@
           "rank": 32.09
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -715,7 +715,7 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/037/Odbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -758,7 +758,7 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/037/Jdbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -801,7 +801,7 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/037/Jdbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -844,7 +844,7 @@
           "rank": 41.74
         },
         {
-          "ruleId": "SEC101/037/Jdbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -887,7 +887,7 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/037/Jdbc",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -930,7 +930,7 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/037/Php",
+          "ruleId": "SEC101/037",
           "ruleIndex": 1,
           "level": "note",
           "message": {
@@ -973,7 +973,7 @@
           "rank": 42.11
         },
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 2,
           "level": "note",
           "message": {
@@ -1016,7 +1016,7 @@
           "rank": 44.6
         },
         {
-          "ruleId": "SEC101/038/Ado",
+          "ruleId": "SEC101/038",
           "ruleIndex": 2,
           "level": "note",
           "message": {

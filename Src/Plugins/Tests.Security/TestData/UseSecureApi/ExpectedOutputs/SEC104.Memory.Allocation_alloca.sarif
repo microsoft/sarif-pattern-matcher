@@ -25,7 +25,7 @@
                 "Default": {
                   "text": "'{0}' contains a call to '{1}', a potentially insecure API that could be replaced with a more secure alternative: '{2}'."
                 },
-                "_malloca": {
+                "Default_Secure": {
                   "text": "'{0}' contains a call to the secure API '{1}'."
                 }
               },
