@@ -73,19 +73,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
                                                                              Dictionary<string, string> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("host", out string xmlHost) ||
-                !groups.TryGetNonEmptyValue("secret", out string secret))
+            if (!groups.TryGetNonEmptyValue("host", out string xmlHost) ||
+                !groups.TryGetNonEmptyValue("secret", out string xmlCredentials))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
-            if (FilteringHelpers.LikelyPowershellVariable(secret))
+            if (FilteringHelpers.LikelyPowershellVariable(xmlCredentials))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
             IEnumerable<string> hosts = ExtractHosts(xmlHost);
+            List<(string user, string password)> credentials = ExtractCredentials(xmlCredentials);
             var validationResults = new List<ValidationResult>();
             foreach (string host in hosts)
             {
@@ -94,17 +94,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     continue;
                 }
 
-                validationResults.Add(new ValidationResult
+                foreach ((string user, string password) in credentials)
                 {
-                    Fingerprint = new Fingerprint
+                    validationResults.Add(new ValidationResult
                     {
-                        Id = id,
-                        Host = host,
-                        Secret = secret,
-                        Platform = nameof(AssetPlatform.NuGet),
-                    },
-                    ValidationState = ValidationState.Unknown,
-                });
+                        Fingerprint = new Fingerprint
+                        {
+                            Id = user,
+                            Host = host,
+                            Secret = password,
+                            Platform = nameof(AssetPlatform.NuGet),
+                        },
+                        ValidationState = ValidationState.Unknown,
+                    });
+                }
             }
 
             return validationResults;
@@ -210,6 +213,49 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             return returnList ?? new List<string>();
+        }
+
+        private static List<(string user, string password)> ExtractCredentials(string credentialXmlAsString)
+        {
+            var list = new List<(string user, string password)>();
+
+            try
+            {
+                var credentialsXml = new XmlDocument();
+                credentialsXml.LoadXml(credentialXmlAsString);
+
+                IEnumerable<XmlNode> credentials = credentialsXml?.ChildNodes[0]?.ChildNodes.Cast<XmlNode>();
+                foreach (XmlNode credential in credentials)
+                {
+                    string user = null;
+                    string password = null;
+                    foreach (XmlNode item in credential.ChildNodes.Cast<XmlNode>())
+                    {
+                        IEnumerable<XmlNode> current = item.Attributes.Cast<XmlNode>();
+                        if (current.Any(a => a.Value.Equals("username", StringComparison.OrdinalIgnoreCase)))
+                        {
+                            user = current.FirstOrDefault(a => a.Name.Equals("value", StringComparison.OrdinalIgnoreCase))?.Value;
+                        }
+
+                        if (current.Any(a => a.Value.Equals("password", StringComparison.OrdinalIgnoreCase) ||
+                                             a.Value.Equals("cleartextpassword", StringComparison.OrdinalIgnoreCase)))
+                        {
+                            password = current.FirstOrDefault(a => a.Name.Equals("value", StringComparison.OrdinalIgnoreCase))?.Value;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(password))
+                    {
+                        list.Add((user, password));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+            return list;
         }
     }
 }
