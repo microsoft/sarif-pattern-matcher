@@ -11,7 +11,9 @@
 .PARAMETER NoTest
     Do not run tests.
 .PARAMETER NoFormat
-    Do not format files based on dotnet-format tool
+    Do not format files based on dotnet-format tool.
+.PARAMETER EnableCoverage
+    Enable CodeCoverage.
 #>
 
 [CmdletBinding()]
@@ -27,7 +29,10 @@ param(
     $NoTest,
     
     [switch]
-    $NoFormat
+    $NoFormat,
+
+    [switch]
+    $EnableCoverage
 )
 
 Set-StrictMode -Version Latest
@@ -79,7 +84,14 @@ if (-not $NoBuild) {
 
 if (-not $NoTest) {
     Write-Information "Running tests..."
-    dotnet test $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration --no-build --collect:"Code Coverage"
+
+    $CodeCoverageCommand = '--collect:"Code Coverage"'
+    if (-not $EnableCoverage) {
+        $CodeCoverageCommand = ""
+    }
+
+    dotnet test $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration --no-build $CodeCoverageCommand
+
     if ($LASTEXITCODE -ne 0) {
         Exit-WithFailureMessage $ScriptName "Test of SarifPatternMatcher failed."
     }
