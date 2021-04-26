@@ -15,7 +15,7 @@ steps:
   displayName: 'Run BuildAndTest.cmd'
   inputs:
     filename: 'BuildAndTest.cmd'
-    arguments: '-Configuration Debug'
+    arguments: '-Configuration Debug -EnableCoverage'
 
 - task: PowerShell@2
   displayName: Run ProcessCodeCoverage.ps1
