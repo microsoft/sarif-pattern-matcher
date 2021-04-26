@@ -79,11 +79,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
-            if (FilteringHelpers.LikelyPowershellVariable(xmlCredentials))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
-
             IEnumerable<string> hosts = ExtractHosts(xmlHost);
             List<(string user, string password)> credentials = ExtractCredentials(xmlCredentials);
             var validationResults = new List<ValidationResult>();
@@ -218,41 +213,41 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private static List<(string user, string password)> ExtractCredentials(string credentialXmlAsString)
         {
             var list = new List<(string user, string password)>();
+            var credentialsXml = new XmlDocument();
 
             try
             {
-                var credentialsXml = new XmlDocument();
                 credentialsXml.LoadXml(credentialXmlAsString);
-
-                IEnumerable<XmlNode> credentials = credentialsXml?.ChildNodes[0]?.ChildNodes.Cast<XmlNode>();
-                foreach (XmlNode credential in credentials)
-                {
-                    string user = null;
-                    string password = null;
-                    foreach (XmlNode item in credential.ChildNodes.Cast<XmlNode>())
-                    {
-                        IEnumerable<XmlNode> current = item.Attributes.Cast<XmlNode>();
-                        if (current.Any(a => a.Value.Equals("username", StringComparison.OrdinalIgnoreCase)))
-                        {
-                            user = current.FirstOrDefault(a => a.Name.Equals("value", StringComparison.OrdinalIgnoreCase))?.Value;
-                        }
-
-                        if (current.Any(a => a.Value.Equals("password", StringComparison.OrdinalIgnoreCase) ||
-                                             a.Value.Equals("cleartextpassword", StringComparison.OrdinalIgnoreCase)))
-                        {
-                            password = current.FirstOrDefault(a => a.Name.Equals("value", StringComparison.OrdinalIgnoreCase))?.Value;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(password))
-                    {
-                        list.Add((user, password));
-                    }
-                }
             }
-            catch (Exception)
+            catch (XmlException)
             {
                 return list;
+            }
+
+            IEnumerable<XmlNode> credentials = credentialsXml?.ChildNodes[0]?.ChildNodes.Cast<XmlNode>();
+            foreach (XmlNode credential in credentials)
+            {
+                string user = null;
+                string password = null;
+                foreach (XmlNode item in credential.ChildNodes.Cast<XmlNode>())
+                {
+                    IEnumerable<XmlNode> current = item.Attributes.Cast<XmlNode>();
+                    if (current.Any(a => a.Value.Equals("username", StringComparison.OrdinalIgnoreCase)))
+                    {
+                        user = current.FirstOrDefault(a => a.Name.Equals("value", StringComparison.OrdinalIgnoreCase))?.Value;
+                    }
+
+                    if (current.Any(a => a.Value.Equals("password", StringComparison.OrdinalIgnoreCase) ||
+                                         a.Value.Equals("cleartextpassword", StringComparison.OrdinalIgnoreCase)))
+                    {
+                        password = current.FirstOrDefault(a => a.Name.Equals("value", StringComparison.OrdinalIgnoreCase))?.Value;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(password))
+                {
+                    list.Add((user, password));
+                }
             }
 
             return list;
