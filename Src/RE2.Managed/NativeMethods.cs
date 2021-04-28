@@ -88,18 +88,6 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        public static unsafe bool MatchesNamedGroups(StringUtf8 pattern, StringUtf8 text, GroupNameHeader* groupNameHeaders, byte* groupNamesBuffer, Submatch* submatches)
-        {
-            if (Environment.Is64BitProcess)
-            {
-                return NativeMethodsX64.MatchesNamedGroups(pattern, text, groupNameHeaders, groupNamesBuffer, submatches);
-            }
-            else
-            {
-                return NativeMethodsX86.MatchesNamedGroups(pattern, text, groupNameHeaders, groupNamesBuffer, submatches);
-            }
-        }
-
         public static unsafe void MatchesNamedGroups2(
                 StringUtf8 pattern,
                 StringUtf8 text,
@@ -160,10 +148,6 @@ namespace Microsoft.RE2.Managed
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern void GetRegexSetup(StringUtf8 pattern, int* numCapturingGroups, int* numNamedCapturingGroups, int* groupNamesBufferSize);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
-            public static unsafe extern bool MatchesNamedGroups(StringUtf8 pattern, StringUtf8 text, GroupNameHeader* groupNameHeaders, byte* groupNamesBuffer, Submatch* submatches);
         }
 
         private static class NativeMethodsX64
@@ -187,10 +171,6 @@ namespace Microsoft.RE2.Managed
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern void GetRegexSetup(StringUtf8 pattern, int* numCapturingGroups, int* numNamedCapturingGroups, int* groupNamesBufferSize);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
-            public static unsafe extern bool MatchesNamedGroups(StringUtf8 pattern, StringUtf8 text, GroupNameHeader* groupNameHeaders, byte* groupNamesBuffer, Submatch* submatches);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
