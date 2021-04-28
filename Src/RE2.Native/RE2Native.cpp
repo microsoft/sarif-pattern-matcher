@@ -243,16 +243,10 @@ extern "C" __declspec(dllexport) bool MatchesNamedGroups(
 	}
 }
 
-/*
-	Memory layout
-	match 0: submatch 0, sm 1, sm2
-	match 1: submatch 0, sm 1, sm2
-	match 2: submatch 0, sm 1, sm2
-
-	std::vector<[numSubmatches]Submatch>>
-*/
-// NOTE: The data std::vector is guaranteed to be contiguous by the C++ standard,
-//       so we can pass it to C# space for pointer-based copying.
+// pattern must use RE2 syntax
+//
+// Implementation note: The data std::vector is guaranteed to be contiguous by the C++ standard,
+// so we can pass it to C# space for pointer-based copying.
 extern "C" __declspec(dllexport) void MatchesNamedGroups2(
 	_In_  StringUtf8 pattern,
 	_In_  StringUtf8 text,
