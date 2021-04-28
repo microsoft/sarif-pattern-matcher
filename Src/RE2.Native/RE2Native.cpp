@@ -223,7 +223,7 @@ extern "C" __declspec(dllexport) bool MatchesNamedGroups(
 		// Build submatches buffer.
 		for (auto const& submatchSp : submatchesSp)
 		{
-			//- Convert submatches to substrings.
+			//- Convert submatches to substring index and length.
 			int32_t index = static_cast<int32_t>(submatchSp.data() - textSp.data());
 			int32_t length = static_cast<int32_t>(submatchSp.length());
 
@@ -241,4 +241,124 @@ extern "C" __declspec(dllexport) bool MatchesNamedGroups(
 	{
 		return false;
 	}
+}
+
+/*
+	Memory layout
+	match 0: submatch 0, sm 1, sm2
+	match 1: submatch 0, sm 1, sm2
+	match 2: submatch 0, sm 1, sm2
+
+	std::vector<[numSubmatches]Submatch>>
+*/
+// NOTE: The data std::vector is guaranteed to be contiguous by the C++ standard,
+//       so we can pass it to C# space for pointer-based copying.
+extern "C" __declspec(dllexport) void MatchesNamedGroups2(
+	_In_  StringUtf8 pattern,
+	_In_  StringUtf8 text,
+
+	_Out_ GroupNameHeader** groupNameHeadersOut,
+	_Out_ uint8_t**         groupNamesBufferOut,
+	_Out_ int*              numGroupNamesOut,
+	_Out_ Submatch***       matchesOut,
+	_Out_ size_t*           numMatchesOut,
+	_Out_ int*              numSubmatchesOut,
+
+	_Out_ std::vector<GroupNameHeader>** groupNameHeadersCleanupPtrOut,
+	_Out_ std::vector<uint8_t>**         groupNamesBufferCleanupPtrOut,
+	_Out_ std::vector<Submatch*>**       matchesCleanupPtrOut
+)
+{
+	// Convert StringUtf8 to string piece.
+	re2::StringPiece patternSp(reinterpret_cast<char*>(pattern.Bytes), pattern.Length);
+	re2::StringPiece textSp(reinterpret_cast<char*>(text.Bytes), text.Length);
+
+	// Compile RE2 regex from pattern.
+	re2::RE2::Options options;
+	re2::RE2 re(patternSp, options);
+
+	// Compute the number of submatches in the pattern.
+	int numSubmatches = re.NumberOfCapturingGroups() + 1;
+
+	// Build group name headers and buffer.
+	std::vector<GroupNameHeader>* groupNameHeaderVectorPtr = new std::vector<GroupNameHeader>();
+	std::vector<uint8_t>* groupNameBufferVectorPtr = new std::vector<uint8_t>();
+	for (auto const& pair : re.CapturingGroupNames())
+	{
+		// Extract index and group name.
+		int index = pair.first;
+		std::string groupName = pair.second;
+
+		// Add group name header.
+		GroupNameHeader groupNameHeader;
+		groupNameHeader.Index = index;
+		groupNameHeader.Length = static_cast<int32_t>(groupName.length());
+		groupNameHeaderVectorPtr->push_back(groupNameHeader);
+
+		// Add group name string.
+		for (size_t i = 0; i < groupName.length(); i++)
+		{
+			groupNameBufferVectorPtr->push_back(groupName.data()[i]);
+		}
+	}
+
+	// Create an array to hold the submatches of each match.
+	std::vector<re2::StringPiece> submatchesSp(numSubmatches);
+
+	// Allocate a vector to hold the matches. This will need to be manually destroyed.
+	std::vector<Submatch*>* matchesVectorPtr = new std::vector<Submatch*>();
+
+	// Extract successive non-overlapping matches from the text.
+	re2::StringPiece::size_type startpos = 0;
+	while (true)
+	{
+		// Stop searching if we have run out of text.
+		if (startpos >= textSp.length())
+		{
+			break;
+		}
+
+		// Extract next match from text using pattern.
+		bool isMatch = re.Match(textSp, startpos, textSp.length(), re2::RE2::UNANCHORED, submatchesSp.data(), numSubmatches);
+
+		// Stop searching if no more matches are found.
+		if (!isMatch)
+		{
+			break;
+		}
+
+		// Allocate an array to record submatches for this match.
+		Submatch* submatches = new Submatch[numSubmatches];
+		matchesVectorPtr->push_back(submatches);
+
+		// Write submatches.
+		for (auto const& submatchSp : submatchesSp)
+		{
+			// Convert submatches to substring index and length.
+			int32_t index = static_cast<int32_t>(submatchSp.data() - textSp.data());
+			int32_t length = static_cast<int32_t>(submatchSp.length());
+
+			// Write submatch entry.
+			submatches->Index = index;
+			submatches->Length = length;
+
+			// Advance pointer to next entry.
+			submatches += 1;
+		}
+
+		// Advance the starting position past this match.
+		re2::StringPiece fullMatchSp = submatchesSp[0];
+		startpos += fullMatchSp.length();
+	}
+
+	// Assign outputs.
+	*groupNameHeadersOut = groupNameHeaderVectorPtr->data();
+	*groupNamesBufferOut = groupNameBufferVectorPtr->data();
+	*numGroupNamesOut = static_cast<int>(re.CapturingGroupNames().size());
+	*matchesOut = matchesVectorPtr->data();
+	*numMatchesOut = matchesVectorPtr->size();
+	*numSubmatchesOut = numSubmatches;
+	*groupNameHeadersCleanupPtrOut = groupNameHeaderVectorPtr;
+	*groupNamesBufferCleanupPtrOut = groupNameBufferVectorPtr;
+	*matchesCleanupPtrOut = matchesVectorPtr;
 }

@@ -228,9 +228,9 @@ namespace Microsoft.RE2.Managed
 
             byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
             byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
-            GroupNameHeader[] groupNameHeaders = new GroupNameHeader[numNamedCapturingGroups];
+            var groupNameHeaders = new GroupNameHeader[numNamedCapturingGroups];
             byte[] groupNamesBuffer = new byte[groupNamesBufferSize];
-            Submatch[] submatches = new Submatch[numSubmatches];
+            var submatches = new Submatch[numSubmatches];
 
             fixed (byte* patternUtf8BytesPtr = patternUtf8Bytes)
             fixed (byte* textUtf8BytesPtr = textUtf8Bytes)
@@ -277,6 +277,75 @@ namespace Microsoft.RE2.Managed
                     index2GroupName = null;
                     submatchStrings = null;
                     return false;
+                }
+            }
+        }
+
+        public static unsafe void MatchesNamedGroups2(string pattern, string text, out List<Dictionary<string, string>> matches)
+        {
+            byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
+            byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
+
+            fixed (byte* patternUtf8BytesPtr = patternUtf8Bytes)
+            fixed (byte* textUtf8BytesPtr = textUtf8Bytes)
+            {
+                GroupNameHeader* groupNameHeaders;
+                byte* groupNamesBuffer;
+                int numGroupNames;
+                Submatch** matchesRe2;
+                int numMatches;
+                int numSubmatches;
+                void* groupNameHeadersCleanupPtr;
+                void* groupNamesBufferCleanupPtr;
+                void* matchesCleanupPtr;
+
+                NativeMethods.MatchesNamedGroups2(
+                    new StringUtf8(patternUtf8BytesPtr, pattern.Length),
+                    new StringUtf8(textUtf8BytesPtr, text.Length),
+                    &groupNameHeaders,
+                    &groupNamesBuffer,
+                    &numGroupNames,
+                    &matchesRe2,
+                    &numMatches,
+                    &numSubmatches,
+                    &groupNameHeadersCleanupPtr,
+                    &groupNamesBufferCleanupPtr,
+                    &matchesCleanupPtr);
+
+                // Build SubmatchIndex to GroupName map
+                var submatchIndex2GroupName = new Dictionary<int, string>();
+                for (int i = 0; i < numGroupNames; i++)
+                {
+                    string groupName = Encoding.UTF8.GetString(groupNamesBuffer, groupNameHeaders[i].Length);
+                    groupNamesBuffer += groupNameHeaders->Length;
+                    submatchIndex2GroupName[groupNameHeaders[i].Index] = groupName;
+                }
+
+                // Build matches.
+                matches = new List<Dictionary<string, string>>();
+                for (int matchIndex = 0; matchIndex < numMatches; matchIndex++)
+                {
+                    var newSubmatch = new Dictionary<string, string>();
+                    matches.Add(newSubmatch);
+
+                    for (int submatchIndex = 0; submatchIndex < numSubmatches; submatchIndex++)
+                    {
+                        Submatch submatchRe2 = matchesRe2[matchIndex][submatchIndex];
+                        int submatchTextStartIndex = submatchRe2.Index;
+                        int submatchLength = submatchRe2.Length;
+
+                        string submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchTextStartIndex, submatchLength);
+
+                        if (submatchIndex2GroupName.ContainsKey(submatchIndex))
+                        {
+                            string groupName = submatchIndex2GroupName[submatchIndex];
+                            newSubmatch[groupName] = submatchString;
+                        }
+                        else
+                        {
+                            newSubmatch[submatchIndex.ToString()] = submatchString;
+                        }
+                    }
                 }
             }
         }

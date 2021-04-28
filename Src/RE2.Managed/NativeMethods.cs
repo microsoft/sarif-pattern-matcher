@@ -100,6 +100,39 @@ namespace Microsoft.RE2.Managed
             }
         }
 
+        public static unsafe void MatchesNamedGroups2(
+                StringUtf8 pattern,
+                StringUtf8 text,
+                GroupNameHeader** groupNameHeadersOut,
+                byte** groupNamesBufferOut,
+                int* numGroupNames,
+                Submatch*** matchesOut,
+                int* numMatchesOut,
+                int* numSubmatchesOut,
+                void** groupNameHeadersCleanupPtrOut,
+                void** groupNamesBufferCleanupPtrOut,
+                void** matchesCleanupPtrOut)
+        {
+            if (Environment.Is64BitProcess)
+            {
+                NativeMethodsX64.MatchesNamedGroups2(pattern,
+                    text,
+                    groupNameHeadersOut,
+                    groupNamesBufferOut,
+                    numGroupNames,
+                    matchesOut,
+                    numMatchesOut,
+                    numSubmatchesOut,
+                    groupNameHeadersCleanupPtrOut,
+                    groupNamesBufferCleanupPtrOut,
+                    matchesCleanupPtrOut);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
         public static unsafe extern IntPtr LoadLibrary(string libraryPath);
 
@@ -158,6 +191,21 @@ namespace Microsoft.RE2.Managed
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern bool MatchesNamedGroups(StringUtf8 pattern, StringUtf8 text, GroupNameHeader* groupNameHeaders, byte* groupNamesBuffer, Submatch* submatches);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            public static unsafe extern bool MatchesNamedGroups2(
+                StringUtf8 pattern,
+                StringUtf8 text,
+                GroupNameHeader** groupNameHeadersOut,
+                byte** groupNamesBufferOut,
+                int* numGroupNames,
+                Submatch*** matchesOut,
+                int* numMatchesOut,
+                int* numSubmatchesOut,
+                void** groupNameHeadersCleanupPtrOut,
+                void** groupNamesBufferCleanupPtrOut,
+                void** matchesCleanupPtrOut);
         }
     }
 }

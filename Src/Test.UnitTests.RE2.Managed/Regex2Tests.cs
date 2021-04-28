@@ -184,6 +184,58 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
+        public void Regex2_Groups()
+        {
+            List<Dictionary<string, string>> matches;
+
+            Regex2.MatchesNamedGroups2(@"abc", "abc", out matches);
+            Assert.Single(matches);
+            Assert.True(matches[0].ContainsKey("0"));
+            Assert.Equal("abc", matches[0]["0"]);
+        }
+
+        [Fact]
+        public void Regex2_Groups2()
+        {
+            List<Dictionary<string, string>> matches;
+
+            Regex2.MatchesNamedGroups2(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out matches);
+
+            Assert.Single(matches);
+            Assert.Equal(4, matches[0].Count);
+            Assert.True(matches[0].ContainsKey("0"));
+            Assert.Equal("abc", matches[0]["0"]);
+            Assert.True(matches[0].ContainsKey("g1"));
+            Assert.Equal("a", matches[0]["g1"]);
+            Assert.True(matches[0].ContainsKey("2"));
+            Assert.Equal("b", matches[0]["2"]);
+            Assert.True(matches[0].ContainsKey("g2"));
+            Assert.Equal("c", matches[0]["g2"]);
+        }
+
+        [Fact]
+        public void Regex2_Groups3()
+        {
+            List<Dictionary<string, string>> matches;
+
+            Regex2.MatchesNamedGroups2(@"(?P<g1>a)(b)(?P<g2>c)", "abc abc abc", out matches);
+
+            Assert.Equal(3, matches.Count);
+            for (int i = 0; i < 3; i++)
+            {
+                Assert.Equal(4, matches[0].Count);
+                Assert.True(matches[0].ContainsKey("0"));
+                Assert.Equal("abc", matches[0]["0"]);
+                Assert.True(matches[0].ContainsKey("g1"));
+                Assert.Equal("a", matches[0]["g1"]);
+                Assert.True(matches[0].ContainsKey("2"));
+                Assert.Equal("b", matches[0]["2"]);
+                Assert.True(matches[0].ContainsKey("g2"));
+                Assert.Equal("c", matches[0]["g2"]);
+            }
+        }
+
+            [Fact]
         public void Regex2_MatchWithNamedGroups()
         {
             bool isMatch;
