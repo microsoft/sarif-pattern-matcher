@@ -19,6 +19,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public FailureLevel Level { get; set; }
 
+        public ResultKind Kind { get; set; }
+
         public string Description { get; set; }
 
         public string ContentsRegex { get; set; }
@@ -48,5 +50,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public Dictionary<string, int> ArgumentNameToIndexMap { get; set; }
 
         public bool IsValidatorEnabled { get; set; } = true;
+
+        public string MessageId { get; set; } = "Default";
     }
 }

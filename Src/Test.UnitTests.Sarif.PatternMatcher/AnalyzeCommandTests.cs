@@ -53,6 +53,140 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
+        [Fact]
+        public void AnalyzeCommand_WithMessageId()
+        {
+            const string messageId = "NewId";
+            var definitions = new SearchDefinitions()
+            {
+                Definitions = new List<SearchDefinition>(new[]
+                            {
+                    new SearchDefinition()
+                    {
+                        Name = "MinimalRule", Id = "Test1002",
+                        Level = FailureLevel.Error, FileNameAllowRegex = "(?i)\\.test$",
+                        Message = "A problem occurred in '{0:scanTarget}'.",
+                        MatchExpressions = new List<MatchExpression>(new[]
+                        {
+                            new MatchExpression()
+                            {
+                                ContentsRegex = "foo",
+                                MessageId = messageId,
+                                Message = "Custom message."
+                            }
+                        })
+                    }
+                })
+            };
+
+            string definitionsText = JsonConvert.SerializeObject(definitions);
+
+            string searchDefinitionsPath = Guid.NewGuid().ToString();
+
+            var disabledSkimmers = new HashSet<string>();
+            var testLogger = new TestLogger();
+
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
+
+            // Acquire skimmers for searchers
+            ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
+                mockFileSystem.Object,
+                new string[] { searchDefinitionsPath },
+                RE2Regex.Instance);
+
+            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
+            FlexString fileContents = "bar foo foo";
+            FlexString fixedFileContents = "bar bar bar";
+
+            var context = new AnalyzeContext()
+            {
+                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                FileContents = fileContents,
+                Logger = testLogger
+            };
+
+            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
+
+            PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
+
+            testLogger.Results.Should().NotBeNull();
+            testLogger.Results.Count.Should().Be(2);
+
+            foreach (Result result in testLogger.Results)
+            {
+                result.Level.Should().Be(FailureLevel.Error);
+                result.Message.Id.Should().Be(messageId);
+            }
+        }
+
+        [Fact]
+        public void AnalyzeCommand_WithSubId()
+        {
+            const string subId = "NewId";
+            var definitions = new SearchDefinitions()
+            {
+                Definitions = new List<SearchDefinition>(new[]
+                {
+                    new SearchDefinition()
+                    {
+                        Name = "MinimalRule", Id = "Test1002",
+                        Level = FailureLevel.Error, FileNameAllowRegex = "(?i)\\.test$",
+                        Message = "A problem occurred in '{0:scanTarget}'.",
+                        MatchExpressions = new List<MatchExpression>(new[]
+                        {
+                            new MatchExpression()
+                            {
+                                SubId = subId,
+                                ContentsRegex = "foo",
+                                Message = "Custom message."
+                            }
+                        })
+                    }
+                })
+            };
+
+            string definitionsText = JsonConvert.SerializeObject(definitions);
+
+            string searchDefinitionsPath = Guid.NewGuid().ToString();
+
+            var disabledSkimmers = new HashSet<string>();
+            var testLogger = new TestLogger();
+
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
+
+            // Acquire skimmers for searchers
+            ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
+                mockFileSystem.Object,
+                new string[] { searchDefinitionsPath },
+                RE2Regex.Instance);
+
+            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
+            FlexString fileContents = "bar foo foo";
+            FlexString fixedFileContents = "bar bar bar";
+
+            var context = new AnalyzeContext()
+            {
+                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                FileContents = fileContents,
+                Logger = testLogger
+            };
+
+            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
+
+            PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
+
+            testLogger.Results.Should().NotBeNull();
+            testLogger.Results.Count.Should().Be(2);
+
+            foreach (Result result in testLogger.Results)
+            {
+                result.Level.Should().Be(FailureLevel.Error);
+                result.RuleId.Should().Be($"Test1002/{subId}");
+            }
+        }
+
         private static void AnalyzeCommand(IRegex engine)
         {
             var definitions = new SearchDefinitions()
@@ -124,6 +258,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             foreach (Result result in testLogger.Results)
             {
                 result.Level.Should().Be(FailureLevel.Error);
+                result.Message.Id.Should().Be("Default");
             }
         }
 
@@ -184,6 +319,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             foreach (Result result in testLogger.Results)
             {
                 result.Level.Should().Be(FailureLevel.Error);
+                result.Message.Id.Should().Be("Default");
             }
         }
     }

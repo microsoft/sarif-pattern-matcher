@@ -86,19 +86,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         case "Delete":
                             searchDefinition.Name = "RemoveObsoleteOrRedundantAnnotations";
                             searchDefinition.Description = "Obsolete or redundant SAL annotation.";
-                            searchDefinition.Message = "'{0:scanTarget}' contains a use of the obsolete or redundant SAL v1 '{1:obsoleteAnnotation}' annotation that should be removed.";
+                            searchDefinition.Message = "The SAL v1 '{0:obsoleteAnnotation}' annotation is obsolete in SAL v2 and should be removed.";
                             break;
 
                         case "Automatic":
                             searchDefinition.Name = "RenameLegacyAnnotationsToCurrentVersion";
                             searchDefinition.Description = "SAL 1 can be replaced with SAL 2.";
-                            searchDefinition.Message = "'{0:scanTarget}' contains a use of the obsolete or redundant '{1:obsoleteAnnotation}' annotation and should be replaced for '{2:newAnnotation}'.";
+                            searchDefinition.Message = "The SAL v1 '{0:obsoleteAnnotation}' annotation is obsolete and should be replaced with the SAL v2 equivalent '{1:newAnnotation}'.";
                             break;
 
                         case "Manual":
                             searchDefinition.Name = "UpdateAnnotationsToCurrentVersion";
                             searchDefinition.Description = "Conversion from SAL 1 to SAL 2 cannot be automatically done.";
-                            searchDefinition.Message = "'{0:scanTarget}' contains a use of the SAL v1 '{1:obsoleteAnnotation}' annotation that should be converted manually to the correct SAL v2 pattern.";
+                            searchDefinition.Message = "The SAL v1 '{0:obsoleteAnnotation}' annotation has changed in SAL v2 and should be converted manually to the correct pattern.";
                             break;
                     }
 
@@ -154,7 +154,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                         searchDefinition.MatchExpressions.Add(new MatchExpression
                         {
-                            // SubId = name,
+                            SubId = name,
                             ContentsRegex = $"${searchDefinition.Id}.{name}",
                             MessageArguments = new Dictionary<string, string>
                             {
@@ -179,7 +179,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                         searchDefinition.MatchExpressions.Add(new MatchExpression
                         {
-                            // SubId = name,
+                            SubId = name,
                             ContentsRegex = $"${searchDefinition.Id}.{name}",
                             MessageArguments = new Dictionary<string, string>
                             {
@@ -205,7 +205,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                         searchDefinition.MatchExpressions.Add(new MatchExpression
                         {
-                            // SubId = name,
+                            SubId = name,
                             ContentsRegex = $"${searchDefinition.Id}.{name}",
                             MessageArguments = new Dictionary<string, string>
                             {
@@ -223,6 +223,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 Formatting.None,
                 settings);
             json = json.Replace(@"""Level"":""None"",", string.Empty);
+            json = json.Replace(@"""Kind"":""None"",", string.Empty);
+            json = json.Replace(@",""MessageId"":""Default""", string.Empty);
             json = json.Replace(@"""MatchLengthToDecode"":0,", string.Empty);
             json = json.Replace($@",""IsValidatorEnabled"":true", string.Empty);
         }

@@ -153,10 +153,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     matchExpression.Message ??= definition.Message;
                     matchExpression.Description ??= definition.Description;
 
-                    if (matchExpression.Level == 0)
+                    if (matchExpression.Level == FailureLevel.None)
                     {
                         matchExpression.Level = definition.Level;
                     }
+
+                    if (matchExpression.Kind == ResultKind.None)
+                    {
+                        matchExpression.Kind = definition.Kind;
+                    }
+
+                    UpdateLevelKind(matchExpression);
 
                     if (!idToExpressionsMap.TryGetValue(matchExpression.Id, out List<MatchExpression> cachedMatchExpressions))
                     {
@@ -193,6 +200,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 #endif
 
             return searchDefinitions;
+        }
+
+        internal static void UpdateLevelKind(MatchExpression matchExpression)
+        {
+            // If level has any value other than "none" and kind is present, then kind SHALL have the value "fail".
+            if (matchExpression.Level != FailureLevel.None)
+            {
+                matchExpression.Kind = ResultKind.Fail;
+            }
+
+            if (matchExpression.Kind != ResultKind.Fail)
+            {
+                matchExpression.Level = FailureLevel.None;
+            }
         }
 
         internal static Dictionary<string, string> LoadSharedStrings(string sharedStringsFullPath, IFileSystem fileSystem)

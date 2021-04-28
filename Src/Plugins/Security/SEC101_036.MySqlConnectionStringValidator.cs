@@ -121,25 +121,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string database = fingerprint.Resource;
 
             if (string.IsNullOrWhiteSpace(host) ||
-                string.IsNullOrWhiteSpace(database) ||
                 FilteringHelpers.LocalhostList.Contains(host))
             {
                 return ValidationState.Unknown;
             }
 
-            string connString = $"Server={host}; Database={database}; Uid={account}; Pwd={password}; SslMode=Preferred;";
-            message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
-
-            if (!string.IsNullOrWhiteSpace(port))
+            bool shouldRetry;
+            string connString;
+            if (!string.IsNullOrWhiteSpace(database))
             {
-                connString += $"Port={port}";
-            }
+                connString = $"Server={host}; Database={database}; Uid={account}; Pwd={password}; SslMode=Preferred;";
+                message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
 
-            // Validating ConnectionString with database.
-            ValidationState validationState = ValidateConnectionString(ref message, host, connString, out bool shouldRetry);
-            if (validationState != ValidationState.Unknown || !shouldRetry)
-            {
-                return validationState;
+                if (!string.IsNullOrWhiteSpace(port))
+                {
+                    connString += $"Port={port}";
+                }
+
+                // Validating ConnectionString with database.
+                ValidationState validationState = ValidateConnectionString(ref message, host, connString, out shouldRetry);
+                if (validationState != ValidationState.Unknown || !shouldRetry)
+                {
+                    return validationState;
+                }
             }
 
             connString = $"Server={host}; Uid={account}; Pwd={password}; SslMode=Preferred;";
@@ -151,7 +155,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             // Validating ConnectionString without database.
-            return ValidateConnectionString(ref message, host, connString, out shouldRetry);
+            return ValidateConnectionString(ref message, host, connString, out _);
         }
 
         private static ValidationState ValidateConnectionString(ref string message, string host, string connString, out bool shouldRetry)

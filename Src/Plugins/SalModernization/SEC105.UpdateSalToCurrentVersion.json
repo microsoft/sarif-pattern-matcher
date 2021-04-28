@@ -5,12 +5,13 @@
     {
       "Id": "SEC105/001",
       "Name": "RemoveObsoleteOrRedundantAnnotations",
-      "Message": "'{0:scanTarget}' contains a use of the obsolete or redundant SAL v1 '{1:obsoleteAnnotation}' annotation that should be removed.",
+      "Message": "The SAL v1 '{0:obsoleteAnnotation}' annotation is obsolete in SAL v2 and should be removed.",
       "Level": "Warning",
       "Description": "Obsolete or redundant SAL annotation.",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
+          "SubId": "allocator",
           "ContentsRegex": "$SEC105/001.allocator",
           "MessageArguments": { "obsoleteAnnotation": "__allocator" },
           "Fixes": {
@@ -22,6 +23,7 @@
           }
         },
         {
+          "SubId": "bound",
           "ContentsRegex": "$SEC105/001.bound",
           "MessageArguments": { "obsoleteAnnotation": "__bound" },
           "Fixes": {
@@ -33,6 +35,7 @@
           }
         },
         {
+          "SubId": "gdientry",
           "ContentsRegex": "$SEC105/001.gdientry",
           "MessageArguments": { "obsoleteAnnotation": "__gdi_entry" },
           "Fixes": {
@@ -44,6 +47,7 @@
           }
         },
         {
+          "SubId": "inbound",
           "ContentsRegex": "$SEC105/001.inbound",
           "MessageArguments": { "obsoleteAnnotation": "__in_bound" },
           "Fixes": {
@@ -55,6 +59,7 @@
           }
         },
         {
+          "SubId": "possiblynotnullterminated",
           "ContentsRegex": "$SEC105/001.possiblynotnullterminated",
           "MessageArguments": { "obsoleteAnnotation": "__possibly_notnullterminated" },
           "Fixes": {
@@ -66,6 +71,7 @@
           }
         },
         {
+          "SubId": "refparam",
           "ContentsRegex": "$SEC105/001.refparam",
           "MessageArguments": { "obsoleteAnnotation": "__refparam" },
           "Fixes": {
@@ -77,6 +83,7 @@
           }
         },
         {
+          "SubId": "Pre",
           "ContentsRegex": "$SEC105/001.Pre",
           "MessageArguments": { "obsoleteAnnotation": "[Pre()]" },
           "Fixes": {
@@ -88,6 +95,7 @@
           }
         },
         {
+          "SubId": "Pre1",
           "ContentsRegex": "$SEC105/001.Pre1",
           "MessageArguments": { "obsoleteAnnotation": "[Pre(1)]" },
           "Fixes": {
@@ -99,6 +107,7 @@
           }
         },
         {
+          "SubId": "PreAccessSAYes",
           "ContentsRegex": "$SEC105/001.PreAccessSAYes",
           "MessageArguments": { "obsoleteAnnotation": "[Pre(Access=SA_Yes)]" },
           "Fixes": {
@@ -110,6 +119,7 @@
           }
         },
         {
+          "SubId": "PreAccessSANo",
           "ContentsRegex": "$SEC105/001.PreAccessSANo",
           "MessageArguments": { "obsoleteAnnotation": "[Pre(Access=SA_No)]" },
           "Fixes": {
@@ -121,6 +131,7 @@
           }
         },
         {
+          "SubId": "PreDeref0",
           "ContentsRegex": "$SEC105/001.PreDeref0",
           "MessageArguments": { "obsoleteAnnotation": "[Pre( Deref=0 )]" },
           "Fixes": {
@@ -132,6 +143,7 @@
           }
         },
         {
+          "SubId": "PreDeref1",
           "ContentsRegex": "$SEC105/001.PreDeref1",
           "MessageArguments": { "obsoleteAnnotation": "[Pre(Deref=1)]" },
           "Fixes": {
@@ -143,6 +155,7 @@
           }
         },
         {
+          "SubId": "PreNullTerminatedSARead",
           "ContentsRegex": "$SEC105/001.PreNullTerminatedSARead",
           "MessageArguments": { "obsoleteAnnotation": "[Pre(NullTerminated=SA_Read)]" },
           "Fixes": {
@@ -154,6 +167,7 @@
           }
         },
         {
+          "SubId": "Post",
           "ContentsRegex": "$SEC105/001.Post",
           "MessageArguments": { "obsoleteAnnotation": "[Post()]" },
           "Fixes": {
@@ -165,6 +179,7 @@
           }
         },
         {
+          "SubId": "Post12",
           "ContentsRegex": "$SEC105/001.Post12",
           "MessageArguments": { "obsoleteAnnotation": "[Post(1,2)]" },
           "Fixes": {
@@ -176,6 +191,7 @@
           }
         },
         {
+          "SubId": "PostDeref1",
           "ContentsRegex": "$SEC105/001.PostDeref1",
           "MessageArguments": { "obsoleteAnnotation": "[Post( Deref=1 )]" },
           "Fixes": {
@@ -187,6 +203,7 @@
           }
         },
         {
+          "SubId": "PostDeref2",
           "ContentsRegex": "$SEC105/001.PostDeref2",
           "MessageArguments": { "obsoleteAnnotation": "[Post( Deref=2 )]" },
           "Fixes": {
@@ -202,12 +219,13 @@
     {
       "Id": "SEC105/002",
       "Name": "RenameLegacyAnnotationsToCurrentVersion",
-      "Message": "'{0:scanTarget}' contains a use of the obsolete or redundant '{1:obsoleteAnnotation}' annotation and should be replaced for '{2:newAnnotation}'.",
+      "Message": "The SAL v1 '{0:obsoleteAnnotation}' annotation is obsolete and should be replaced with the SAL v2 equivalent '{1:newAnnotation}'.",
       "Level": "Warning",
       "Description": "SAL 1 can be replaced with SAL 2.",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
+          "SubId": "analysisassume",
           "ContentsRegex": "$SEC105/002.analysisassume",
           "MessageArguments": {
             "obsoleteAnnotation": "__analysis_assume",
@@ -222,6 +240,7 @@
           }
         },
         {
+          "SubId": "bytereadableTo",
           "ContentsRegex": "$SEC105/002.bytereadableTo",
           "MessageArguments": {
             "obsoleteAnnotation": "__byte_readableTo",
@@ -236,6 +255,7 @@
           }
         },
         {
+          "SubId": "bytewritableTo",
           "ContentsRegex": "$SEC105/002.bytewritableTo",
           "MessageArguments": {
             "obsoleteAnnotation": "__byte_writableTo",
@@ -250,6 +270,7 @@
           }
         },
         {
+          "SubId": "checkReturn",
           "ContentsRegex": "$SEC105/002.checkReturn",
           "MessageArguments": {
             "obsoleteAnnotation": "__checkReturn",
@@ -264,6 +285,7 @@
           }
         },
         {
+          "SubId": "derefin",
           "ContentsRegex": "$SEC105/002.derefin",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_in",
@@ -278,6 +300,7 @@
           }
         },
         {
+          "SubId": "derefinout",
           "ContentsRegex": "$SEC105/002.derefinout",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_inout",
@@ -292,6 +315,7 @@
           }
         },
         {
+          "SubId": "derefinoutopt",
           "ContentsRegex": "$SEC105/002.derefinoutopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_inout_opt",
@@ -306,6 +330,7 @@
           }
         },
         {
+          "SubId": "derefoptinout",
           "ContentsRegex": "$SEC105/002.derefoptinout",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_opt_inout",
@@ -320,6 +345,7 @@
           }
         },
         {
+          "SubId": "derefoptinoutopt",
           "ContentsRegex": "$SEC105/002.derefoptinoutopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_opt_inout_opt",
@@ -334,6 +360,7 @@
           }
         },
         {
+          "SubId": "derefoptout",
           "ContentsRegex": "$SEC105/002.derefoptout",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_opt_out",
@@ -348,6 +375,7 @@
           }
         },
         {
+          "SubId": "derefoptoutbcountopt",
           "ContentsRegex": "$SEC105/002.derefoptoutbcountopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_opt_out_bcount_opt",
@@ -362,6 +390,7 @@
           }
         },
         {
+          "SubId": "derefoptoutopt",
           "ContentsRegex": "$SEC105/002.derefoptoutopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_opt_out_opt",
@@ -376,6 +405,7 @@
           }
         },
         {
+          "SubId": "derefoptoutz",
           "ContentsRegex": "$SEC105/002.derefoptoutz",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_opt_out_z",
@@ -390,6 +420,7 @@
           }
         },
         {
+          "SubId": "derefoptoutzopt",
           "ContentsRegex": "$SEC105/002.derefoptoutzopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_opt_out_z_opt",
@@ -404,6 +435,7 @@
           }
         },
         {
+          "SubId": "derefout",
           "ContentsRegex": "$SEC105/002.derefout",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_out",
@@ -418,6 +450,7 @@
           }
         },
         {
+          "SubId": "derefoutbcount",
           "ContentsRegex": "$SEC105/002.derefoutbcount",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_out_bcount",
@@ -432,6 +465,7 @@
           }
         },
         {
+          "SubId": "derefoutbcountopt",
           "ContentsRegex": "$SEC105/002.derefoutbcountopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_out_bcount_opt",
@@ -446,6 +480,7 @@
           }
         },
         {
+          "SubId": "derefoutbcountpart",
           "ContentsRegex": "$SEC105/002.derefoutbcountpart",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_out_bcount_part",
@@ -460,6 +495,7 @@
           }
         },
         {
+          "SubId": "derefoutecount",
           "ContentsRegex": "$SEC105/002.derefoutecount",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_out_ecount",
@@ -474,6 +510,7 @@
           }
         },
         {
+          "SubId": "derefoutecountopt",
           "ContentsRegex": "$SEC105/002.derefoutecountopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_out_ecount_opt",
@@ -488,6 +525,7 @@
           }
         },
         {
+          "SubId": "derefoutecountpart",
           "ContentsRegex": "$SEC105/002.derefoutecountpart",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_out_ecount_part",
@@ -502,6 +540,7 @@
           }
         },
         {
+          "SubId": "derefoutopt",
           "ContentsRegex": "$SEC105/002.derefoutopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_out_opt",
@@ -516,6 +555,7 @@
           }
         },
         {
+          "SubId": "derefoutrange",
           "ContentsRegex": "$SEC105/002.derefoutrange",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_out_range",
@@ -530,6 +570,7 @@
           }
         },
         {
+          "SubId": "derefoutz",
           "ContentsRegex": "$SEC105/002.derefoutz",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_out_z",
@@ -544,6 +585,7 @@
           }
         },
         {
+          "SubId": "derefoutzopt",
           "ContentsRegex": "$SEC105/002.derefoutzopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__deref_out_z_opt",
@@ -558,6 +600,7 @@
           }
         },
         {
+          "SubId": "elemreadableTo",
           "ContentsRegex": "$SEC105/002.elemreadableTo",
           "MessageArguments": {
             "obsoleteAnnotation": "__elem_readableTo",
@@ -572,6 +615,7 @@
           }
         },
         {
+          "SubId": "elemwritableTo",
           "ContentsRegex": "$SEC105/002.elemwritableTo",
           "MessageArguments": {
             "obsoleteAnnotation": "__elem_writableTo",
@@ -586,6 +630,7 @@
           }
         },
         {
+          "SubId": "fieldbcount",
           "ContentsRegex": "$SEC105/002.fieldbcount",
           "MessageArguments": {
             "obsoleteAnnotation": "__field_bcount",
@@ -600,6 +645,7 @@
           }
         },
         {
+          "SubId": "fieldbcountfull",
           "ContentsRegex": "$SEC105/002.fieldbcountfull",
           "MessageArguments": {
             "obsoleteAnnotation": "__field_bcount_full",
@@ -614,6 +660,7 @@
           }
         },
         {
+          "SubId": "fieldbcountopt",
           "ContentsRegex": "$SEC105/002.fieldbcountopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__field_bcount_opt",
@@ -628,6 +675,7 @@
           }
         },
         {
+          "SubId": "fieldbcountpart",
           "ContentsRegex": "$SEC105/002.fieldbcountpart",
           "MessageArguments": {
             "obsoleteAnnotation": "__field_bcount_part",
@@ -642,6 +690,7 @@
           }
         },
         {
+          "SubId": "fieldbcountpartopt",
           "ContentsRegex": "$SEC105/002.fieldbcountpartopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__field_bcount_part_opt",
@@ -656,6 +705,7 @@
           }
         },
         {
+          "SubId": "fieldecount",
           "ContentsRegex": "$SEC105/002.fieldecount",
           "MessageArguments": {
             "obsoleteAnnotation": "__field_ecount",
@@ -670,6 +720,7 @@
           }
         },
         {
+          "SubId": "fieldecountfull",
           "ContentsRegex": "$SEC105/002.fieldecountfull",
           "MessageArguments": {
             "obsoleteAnnotation": "__field_ecount_full",
@@ -684,6 +735,7 @@
           }
         },
         {
+          "SubId": "fieldecountopt",
           "ContentsRegex": "$SEC105/002.fieldecountopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__field_ecount_opt",
@@ -698,6 +750,7 @@
           }
         },
         {
+          "SubId": "fieldecountpart",
           "ContentsRegex": "$SEC105/002.fieldecountpart",
           "MessageArguments": {
             "obsoleteAnnotation": "__field_ecount_part",
@@ -712,6 +765,7 @@
           }
         },
         {
+          "SubId": "fieldnullterminated",
           "ContentsRegex": "$SEC105/002.fieldnullterminated",
           "MessageArguments": {
             "obsoleteAnnotation": "__field_nullterminated",
@@ -726,6 +780,7 @@
           }
         },
         {
+          "SubId": "fieldrange",
           "ContentsRegex": "$SEC105/002.fieldrange",
           "MessageArguments": {
             "obsoleteAnnotation": "__field_range",
@@ -740,6 +795,7 @@
           }
         },
         {
+          "SubId": "in",
           "ContentsRegex": "$SEC105/002.in",
           "MessageArguments": {
             "obsoleteAnnotation": "__in",
@@ -754,6 +810,7 @@
           }
         },
         {
+          "SubId": "inbcount",
           "ContentsRegex": "$SEC105/002.inbcount",
           "MessageArguments": {
             "obsoleteAnnotation": "__in_bcount",
@@ -768,6 +825,7 @@
           }
         },
         {
+          "SubId": "inbcountopt",
           "ContentsRegex": "$SEC105/002.inbcountopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__in_bcount_opt",
@@ -782,6 +840,7 @@
           }
         },
         {
+          "SubId": "inecount",
           "ContentsRegex": "$SEC105/002.inecount",
           "MessageArguments": {
             "obsoleteAnnotation": "__in_ecount",
@@ -796,6 +855,7 @@
           }
         },
         {
+          "SubId": "inecountopt",
           "ContentsRegex": "$SEC105/002.inecountopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__in_ecount_opt",
@@ -810,6 +870,7 @@
           }
         },
         {
+          "SubId": "inecountorz",
           "ContentsRegex": "$SEC105/002.inecountorz",
           "MessageArguments": {
             "obsoleteAnnotation": "__in_ecount_or_z",
@@ -824,6 +885,7 @@
           }
         },
         {
+          "SubId": "inopt",
           "ContentsRegex": "$SEC105/002.inopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__in_opt",
@@ -838,6 +900,7 @@
           }
         },
         {
+          "SubId": "inrange",
           "ContentsRegex": "$SEC105/002.inrange",
           "MessageArguments": {
             "obsoleteAnnotation": "__in_range",
@@ -852,6 +915,7 @@
           }
         },
         {
+          "SubId": "inz",
           "ContentsRegex": "$SEC105/002.inz",
           "MessageArguments": {
             "obsoleteAnnotation": "__in_z",
@@ -866,6 +930,7 @@
           }
         },
         {
+          "SubId": "inzopt",
           "ContentsRegex": "$SEC105/002.inzopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__in_z_opt",
@@ -880,6 +945,7 @@
           }
         },
         {
+          "SubId": "inout",
           "ContentsRegex": "$SEC105/002.inout",
           "MessageArguments": {
             "obsoleteAnnotation": "__inout",
@@ -894,6 +960,7 @@
           }
         },
         {
+          "SubId": "inoutbcount",
           "ContentsRegex": "$SEC105/002.inoutbcount",
           "MessageArguments": {
             "obsoleteAnnotation": "__inout_bcount",
@@ -908,6 +975,7 @@
           }
         },
         {
+          "SubId": "inoutbcountopt",
           "ContentsRegex": "$SEC105/002.inoutbcountopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__inout_bcount_opt",
@@ -922,6 +990,7 @@
           }
         },
         {
+          "SubId": "inoutbcountpart",
           "ContentsRegex": "$SEC105/002.inoutbcountpart",
           "MessageArguments": {
             "obsoleteAnnotation": "__inout_bcount_part",
@@ -936,6 +1005,7 @@
           }
         },
         {
+          "SubId": "inoutbcountpartopt",
           "ContentsRegex": "$SEC105/002.inoutbcountpartopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__inout_bcount_part_opt",
@@ -950,6 +1020,7 @@
           }
         },
         {
+          "SubId": "inoutecount",
           "ContentsRegex": "$SEC105/002.inoutecount",
           "MessageArguments": {
             "obsoleteAnnotation": "__inout_ecount",
@@ -964,6 +1035,7 @@
           }
         },
         {
+          "SubId": "inoutecountopt",
           "ContentsRegex": "$SEC105/002.inoutecountopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__inout_ecount_opt",
@@ -978,6 +1050,7 @@
           }
         },
         {
+          "SubId": "inoutecountpart",
           "ContentsRegex": "$SEC105/002.inoutecountpart",
           "MessageArguments": {
             "obsoleteAnnotation": "__inout_ecount_part",
@@ -992,6 +1065,7 @@
           }
         },
         {
+          "SubId": "inoutecountpartopt",
           "ContentsRegex": "$SEC105/002.inoutecountpartopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__inout_ecount_part_opt",
@@ -1006,6 +1080,7 @@
           }
         },
         {
+          "SubId": "inoutecountz",
           "ContentsRegex": "$SEC105/002.inoutecountz",
           "MessageArguments": {
             "obsoleteAnnotation": "__inout_ecount_z",
@@ -1020,6 +1095,7 @@
           }
         },
         {
+          "SubId": "inoutopt",
           "ContentsRegex": "$SEC105/002.inoutopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__inout_opt",
@@ -1034,6 +1110,7 @@
           }
         },
         {
+          "SubId": "inoutz",
           "ContentsRegex": "$SEC105/002.inoutz",
           "MessageArguments": {
             "obsoleteAnnotation": "__inout_z",
@@ -1048,6 +1125,7 @@
           }
         },
         {
+          "SubId": "kerneldriver",
           "ContentsRegex": "$SEC105/002.kerneldriver",
           "MessageArguments": {
             "obsoleteAnnotation": "__kernel_driver",
@@ -1062,6 +1140,7 @@
           }
         },
         {
+          "SubId": "onfailure",
           "ContentsRegex": "$SEC105/002.onfailure",
           "MessageArguments": {
             "obsoleteAnnotation": "__on_failure",
@@ -1076,6 +1155,7 @@
           }
         },
         {
+          "SubId": "out",
           "ContentsRegex": "$SEC105/002.out",
           "MessageArguments": {
             "obsoleteAnnotation": "__out",
@@ -1090,6 +1170,7 @@
           }
         },
         {
+          "SubId": "outbcount",
           "ContentsRegex": "$SEC105/002.outbcount",
           "MessageArguments": {
             "obsoleteAnnotation": "__out_bcount",
@@ -1104,6 +1185,7 @@
           }
         },
         {
+          "SubId": "outbcountopt",
           "ContentsRegex": "$SEC105/002.outbcountopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__out_bcount_opt",
@@ -1118,6 +1200,7 @@
           }
         },
         {
+          "SubId": "outbcountpart",
           "ContentsRegex": "$SEC105/002.outbcountpart",
           "MessageArguments": {
             "obsoleteAnnotation": "__out_bcount_part",
@@ -1132,6 +1215,7 @@
           }
         },
         {
+          "SubId": "outbcountpartopt",
           "ContentsRegex": "$SEC105/002.outbcountpartopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__out_bcount_part_opt",
@@ -1146,6 +1230,7 @@
           }
         },
         {
+          "SubId": "outecount",
           "ContentsRegex": "$SEC105/002.outecount",
           "MessageArguments": {
             "obsoleteAnnotation": "__out_ecount",
@@ -1160,6 +1245,7 @@
           }
         },
         {
+          "SubId": "outecountopt",
           "ContentsRegex": "$SEC105/002.outecountopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__out_ecount_opt",
@@ -1174,6 +1260,7 @@
           }
         },
         {
+          "SubId": "outecountpart",
           "ContentsRegex": "$SEC105/002.outecountpart",
           "MessageArguments": {
             "obsoleteAnnotation": "__out_ecount_part",
@@ -1188,6 +1275,7 @@
           }
         },
         {
+          "SubId": "outecountpartopt",
           "ContentsRegex": "$SEC105/002.outecountpartopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__out_ecount_part_opt",
@@ -1202,6 +1290,7 @@
           }
         },
         {
+          "SubId": "outecountz",
           "ContentsRegex": "$SEC105/002.outecountz",
           "MessageArguments": {
             "obsoleteAnnotation": "__out_ecount_z",
@@ -1216,6 +1305,7 @@
           }
         },
         {
+          "SubId": "outecountzopt",
           "ContentsRegex": "$SEC105/002.outecountzopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__out_ecount_z_opt",
@@ -1230,6 +1320,7 @@
           }
         },
         {
+          "SubId": "outopt",
           "ContentsRegex": "$SEC105/002.outopt",
           "MessageArguments": {
             "obsoleteAnnotation": "__out_opt",
@@ -1244,6 +1335,7 @@
           }
         },
         {
+          "SubId": "outrange",
           "ContentsRegex": "$SEC105/002.outrange",
           "MessageArguments": {
             "obsoleteAnnotation": "__out_range",
@@ -1258,6 +1350,7 @@
           }
         },
         {
+          "SubId": "postnullnullterminated",
           "ContentsRegex": "$SEC105/002.postnullnullterminated",
           "MessageArguments": {
             "obsoleteAnnotation": "__post_nullnullterminated",
@@ -1272,6 +1365,7 @@
           }
         },
         {
+          "SubId": "reserved",
           "ContentsRegex": "$SEC105/002.reserved",
           "MessageArguments": {
             "obsoleteAnnotation": "__reserved",
@@ -1286,6 +1380,7 @@
           }
         },
         {
+          "SubId": "structbcount",
           "ContentsRegex": "$SEC105/002.structbcount",
           "MessageArguments": {
             "obsoleteAnnotation": "__struct_bcount",
@@ -1300,6 +1395,7 @@
           }
         },
         {
+          "SubId": "usercode",
           "ContentsRegex": "$SEC105/002.usercode",
           "MessageArguments": {
             "obsoleteAnnotation": "__user_code",
@@ -1314,6 +1410,7 @@
           }
         },
         {
+          "SubId": "userdriver",
           "ContentsRegex": "$SEC105/002.userdriver",
           "MessageArguments": {
             "obsoleteAnnotation": "__user_driver",
@@ -1328,6 +1425,7 @@
           }
         },
         {
+          "SubId": "guardedby",
           "ContentsRegex": "$SEC105/002.guardedby",
           "MessageArguments": {
             "obsoleteAnnotation": "__guarded_by",
@@ -1342,6 +1440,7 @@
           }
         },
         {
+          "SubId": "writeguardedby",
           "ContentsRegex": "$SEC105/002.writeguardedby",
           "MessageArguments": {
             "obsoleteAnnotation": "__write_guarded_by",
@@ -1356,6 +1455,7 @@
           }
         },
         {
+          "SubId": "interlocked",
           "ContentsRegex": "$SEC105/002.interlocked",
           "MessageArguments": {
             "obsoleteAnnotation": "__interlocked",
@@ -1370,6 +1470,7 @@
           }
         },
         {
+          "SubId": "requireslockheld",
           "ContentsRegex": "$SEC105/002.requireslockheld",
           "MessageArguments": {
             "obsoleteAnnotation": "__requires_lock_held",
@@ -1384,6 +1485,7 @@
           }
         },
         {
+          "SubId": "requiresexclusivelockheld",
           "ContentsRegex": "$SEC105/002.requiresexclusivelockheld",
           "MessageArguments": {
             "obsoleteAnnotation": "__requires_exclusive_lock_held",
@@ -1398,6 +1500,7 @@
           }
         },
         {
+          "SubId": "requiressharedlockheld",
           "ContentsRegex": "$SEC105/002.requiressharedlockheld",
           "MessageArguments": {
             "obsoleteAnnotation": "__requires_shared_lock_held",
@@ -1412,6 +1515,7 @@
           }
         },
         {
+          "SubId": "requireslocknotheld",
           "ContentsRegex": "$SEC105/002.requireslocknotheld",
           "MessageArguments": {
             "obsoleteAnnotation": "__requires_lock_not_held",
@@ -1426,6 +1530,7 @@
           }
         },
         {
+          "SubId": "requiresnolocksheld",
           "ContentsRegex": "$SEC105/002.requiresnolocksheld",
           "MessageArguments": {
             "obsoleteAnnotation": "__requires_no_locks_held",
@@ -1440,6 +1545,7 @@
           }
         },
         {
+          "SubId": "acquireslock",
           "ContentsRegex": "$SEC105/002.acquireslock",
           "MessageArguments": {
             "obsoleteAnnotation": "__acquires_lock",
@@ -1454,6 +1560,7 @@
           }
         },
         {
+          "SubId": "acquiresexclusivelock",
           "ContentsRegex": "$SEC105/002.acquiresexclusivelock",
           "MessageArguments": {
             "obsoleteAnnotation": "__acquires_exclusive_lock",
@@ -1468,6 +1575,7 @@
           }
         },
         {
+          "SubId": "acquiressharedlock",
           "ContentsRegex": "$SEC105/002.acquiressharedlock",
           "MessageArguments": {
             "obsoleteAnnotation": "__acquires_shared_lock",
@@ -1482,6 +1590,7 @@
           }
         },
         {
+          "SubId": "releaseslock",
           "ContentsRegex": "$SEC105/002.releaseslock",
           "MessageArguments": {
             "obsoleteAnnotation": "__releases_lock",
@@ -1496,6 +1605,7 @@
           }
         },
         {
+          "SubId": "releasesexclusivelock",
           "ContentsRegex": "$SEC105/002.releasesexclusivelock",
           "MessageArguments": {
             "obsoleteAnnotation": "__releases_exclusive_lock",
@@ -1510,6 +1620,7 @@
           }
         },
         {
+          "SubId": "releasessharedlock",
           "ContentsRegex": "$SEC105/002.releasessharedlock",
           "MessageArguments": {
             "obsoleteAnnotation": "__releases_shared_lock",
@@ -1524,6 +1635,7 @@
           }
         },
         {
+          "SubId": "haslockproperty",
           "ContentsRegex": "$SEC105/002.haslockproperty",
           "MessageArguments": {
             "obsoleteAnnotation": "__has_lock_property",
@@ -1538,6 +1650,7 @@
           }
         },
         {
+          "SubId": "declarelocklevel",
           "ContentsRegex": "$SEC105/002.declarelocklevel",
           "MessageArguments": {
             "obsoleteAnnotation": "__declare_lock_level",
@@ -1552,6 +1665,7 @@
           }
         },
         {
+          "SubId": "haslocklevel",
           "ContentsRegex": "$SEC105/002.haslocklevel",
           "MessageArguments": {
             "obsoleteAnnotation": "__has_lock_level",
@@ -1566,6 +1680,7 @@
           }
         },
         {
+          "SubId": "locklevelorder",
           "ContentsRegex": "$SEC105/002.locklevelorder",
           "MessageArguments": {
             "obsoleteAnnotation": "__lock_level_order",
@@ -1580,6 +1695,7 @@
           }
         },
         {
+          "SubId": "nocompetingthread",
           "ContentsRegex": "$SEC105/002.nocompetingthread",
           "MessageArguments": {
             "obsoleteAnnotation": "__no_competing_thread",
@@ -1594,6 +1710,7 @@
           }
         },
         {
+          "SubId": "analysisassumelockacquired",
           "ContentsRegex": "$SEC105/002.analysisassumelockacquired",
           "MessageArguments": {
             "obsoleteAnnotation": "__analysis_assume_lock_acquired",
@@ -1608,6 +1725,7 @@
           }
         },
         {
+          "SubId": "analysisassumelockreleased",
           "ContentsRegex": "$SEC105/002.analysisassumelockreleased",
           "MessageArguments": {
             "obsoleteAnnotation": "__analysis_assume_lock_released",
@@ -1622,6 +1740,7 @@
           }
         },
         {
+          "SubId": "functionignorelockchecking",
           "ContentsRegex": "$SEC105/002.functionignorelockchecking",
           "MessageArguments": {
             "obsoleteAnnotation": "__function_ignore_lock_checking",
@@ -1636,6 +1755,7 @@
           }
         },
         {
+          "SubId": "analysissuppresslockchecking",
           "ContentsRegex": "$SEC105/002.analysissuppresslockchecking",
           "MessageArguments": {
             "obsoleteAnnotation": "__analysis_suppress_lock_checking",
@@ -1650,6 +1770,7 @@
           }
         },
         {
+          "SubId": "drvacquiresCancelSpinLock",
           "ContentsRegex": "$SEC105/002.drvacquiresCancelSpinLock",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_acquiresCancelSpinLock",
@@ -1664,6 +1785,7 @@
           }
         },
         {
+          "SubId": "drvreleasesCancelSpinLock",
           "ContentsRegex": "$SEC105/002.drvreleasesCancelSpinLock",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_releasesCancelSpinLock",
@@ -1678,6 +1800,7 @@
           }
         },
         {
+          "SubId": "drvmustHoldCancelSpinLock",
           "ContentsRegex": "$SEC105/002.drvmustHoldCancelSpinLock",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_mustHoldCancelSpinLock",
@@ -1692,6 +1815,7 @@
           }
         },
         {
+          "SubId": "drvneverHoldCancelSpinLock",
           "ContentsRegex": "$SEC105/002.drvneverHoldCancelSpinLock",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_neverHoldCancelSpinLock",
@@ -1706,6 +1830,7 @@
           }
         },
         {
+          "SubId": "drvacquiresCriticalRegion",
           "ContentsRegex": "$SEC105/002.drvacquiresCriticalRegion",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_acquiresCriticalRegion",
@@ -1720,6 +1845,7 @@
           }
         },
         {
+          "SubId": "drvreleasesCriticalRegion",
           "ContentsRegex": "$SEC105/002.drvreleasesCriticalRegion",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_releasesCriticalRegion",
@@ -1734,6 +1860,7 @@
           }
         },
         {
+          "SubId": "drvmustHoldCriticalRegion",
           "ContentsRegex": "$SEC105/002.drvmustHoldCriticalRegion",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_mustHoldCriticalRegion",
@@ -1748,6 +1875,7 @@
           }
         },
         {
+          "SubId": "drvneverHoldCriticalRegion",
           "ContentsRegex": "$SEC105/002.drvneverHoldCriticalRegion",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_neverHoldCriticalRegion",
@@ -1762,6 +1890,7 @@
           }
         },
         {
+          "SubId": "drvacquiresPriorityRegion",
           "ContentsRegex": "$SEC105/002.drvacquiresPriorityRegion",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_acquiresPriorityRegion",
@@ -1776,6 +1905,7 @@
           }
         },
         {
+          "SubId": "drvreleasesPriorityRegion",
           "ContentsRegex": "$SEC105/002.drvreleasesPriorityRegion",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_releasesPriorityRegion",
@@ -1790,6 +1920,7 @@
           }
         },
         {
+          "SubId": "drvmustHoldPriorityRegion",
           "ContentsRegex": "$SEC105/002.drvmustHoldPriorityRegion",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_mustHoldPriorityRegion",
@@ -1804,6 +1935,7 @@
           }
         },
         {
+          "SubId": "drvneverHoldPriorityRegion",
           "ContentsRegex": "$SEC105/002.drvneverHoldPriorityRegion",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_neverHoldPriorityRegion",
@@ -1818,6 +1950,7 @@
           }
         },
         {
+          "SubId": "drvinterlocked",
           "ContentsRegex": "$SEC105/002.drvinterlocked",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_interlocked",
@@ -1832,6 +1965,7 @@
           }
         },
         {
+          "SubId": "drvat",
           "ContentsRegex": "$SEC105/002.drvat",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_at",
@@ -1846,6 +1980,7 @@
           }
         },
         {
+          "SubId": "drvwhen",
           "ContentsRegex": "$SEC105/002.drvwhen",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_when",
@@ -1860,6 +1995,7 @@
           }
         },
         {
+          "SubId": "drvsetsIRQL",
           "ContentsRegex": "$SEC105/002.drvsetsIRQL",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_setsIRQL",
@@ -1874,6 +2010,7 @@
           }
         },
         {
+          "SubId": "drvraisesIRQL",
           "ContentsRegex": "$SEC105/002.drvraisesIRQL",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_raisesIRQL",
@@ -1888,6 +2025,7 @@
           }
         },
         {
+          "SubId": "drvrequiresIRQL",
           "ContentsRegex": "$SEC105/002.drvrequiresIRQL",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_requiresIRQL",
@@ -1902,6 +2040,7 @@
           }
         },
         {
+          "SubId": "drvmaxIRQL",
           "ContentsRegex": "$SEC105/002.drvmaxIRQL",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_maxIRQL",
@@ -1916,6 +2055,7 @@
           }
         },
         {
+          "SubId": "drvminIRQL",
           "ContentsRegex": "$SEC105/002.drvminIRQL",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_minIRQL",
@@ -1930,6 +2070,7 @@
           }
         },
         {
+          "SubId": "drvsavesIRQL",
           "ContentsRegex": "$SEC105/002.drvsavesIRQL",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_savesIRQL",
@@ -1944,6 +2085,7 @@
           }
         },
         {
+          "SubId": "drvsavesIRQLGlobal",
           "ContentsRegex": "$SEC105/002.drvsavesIRQLGlobal",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_savesIRQLGlobal",
@@ -1958,6 +2100,7 @@
           }
         },
         {
+          "SubId": "drvrestoresIRQL",
           "ContentsRegex": "$SEC105/002.drvrestoresIRQL",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_restoresIRQL",
@@ -1972,6 +2115,7 @@
           }
         },
         {
+          "SubId": "drvrestoresIRQLGlobal",
           "ContentsRegex": "$SEC105/002.drvrestoresIRQLGlobal",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_restoresIRQLGlobal",
@@ -1986,6 +2130,7 @@
           }
         },
         {
+          "SubId": "drvminFunctionIRQL",
           "ContentsRegex": "$SEC105/002.drvminFunctionIRQL",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_minFunctionIRQL",
@@ -2000,6 +2145,7 @@
           }
         },
         {
+          "SubId": "drvmaxFunctionIRQL",
           "ContentsRegex": "$SEC105/002.drvmaxFunctionIRQL",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_maxFunctionIRQL",
@@ -2014,6 +2160,7 @@
           }
         },
         {
+          "SubId": "drvsameIRQL",
           "ContentsRegex": "$SEC105/002.drvsameIRQL",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_sameIRQL",
@@ -2028,6 +2175,7 @@
           }
         },
         {
+          "SubId": "drvuseCancelIRQL",
           "ContentsRegex": "$SEC105/002.drvuseCancelIRQL",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_useCancelIRQL",
@@ -2042,6 +2190,7 @@
           }
         },
         {
+          "SubId": "drvisCancelIRQL",
           "ContentsRegex": "$SEC105/002.drvisCancelIRQL",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_isCancelIRQL",
@@ -2056,6 +2205,7 @@
           }
         },
         {
+          "SubId": "drvclearDoInit",
           "ContentsRegex": "$SEC105/002.drvclearDoInit",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_clearDoInit",
@@ -2070,6 +2220,7 @@
           }
         },
         {
+          "SubId": "drvIoGetDmaAdapter",
           "ContentsRegex": "$SEC105/002.drvIoGetDmaAdapter",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_IoGetDmaAdapter",
@@ -2084,6 +2235,7 @@
           }
         },
         {
+          "SubId": "drvfloatSaved",
           "ContentsRegex": "$SEC105/002.drvfloatSaved",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_floatSaved",
@@ -2098,6 +2250,7 @@
           }
         },
         {
+          "SubId": "drvfloatRestored",
           "ContentsRegex": "$SEC105/002.drvfloatRestored",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_floatRestored",
@@ -2112,6 +2265,7 @@
           }
         },
         {
+          "SubId": "drvfloatUsed",
           "ContentsRegex": "$SEC105/002.drvfloatUsed",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_floatUsed",
@@ -2126,6 +2280,7 @@
           }
         },
         {
+          "SubId": "drvdispatchType",
           "ContentsRegex": "$SEC105/002.drvdispatchType",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_dispatchType",
@@ -2140,6 +2295,7 @@
           }
         },
         {
+          "SubId": "drvfunctionClass",
           "ContentsRegex": "$SEC105/002.drvfunctionClass",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_functionClass",
@@ -2154,6 +2310,7 @@
           }
         },
         {
+          "SubId": "drvarg",
           "ContentsRegex": "$SEC105/002.drvarg",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_arg",
@@ -2168,6 +2325,7 @@
           }
         },
         {
+          "SubId": "drvconstant",
           "ContentsRegex": "$SEC105/002.drvconstant",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_constant",
@@ -2182,6 +2340,7 @@
           }
         },
         {
+          "SubId": "drvnonConstant",
           "ContentsRegex": "$SEC105/002.drvnonConstant",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_nonConstant",
@@ -2196,6 +2355,7 @@
           }
         },
         {
+          "SubId": "drvisObjectPointer",
           "ContentsRegex": "$SEC105/002.drvisObjectPointer",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_isObjectPointer",
@@ -2210,6 +2370,7 @@
           }
         },
         {
+          "SubId": "drvinTry",
           "ContentsRegex": "$SEC105/002.drvinTry",
           "MessageArguments": {
             "obsoleteAnnotation": "__drv_inTry",
@@ -2224,6 +2385,7 @@
           }
         },
         {
+          "SubId": "Derefout",
           "ContentsRegex": "$SEC105/002.Derefout",
           "MessageArguments": {
             "obsoleteAnnotation": "_Deref_out_",
@@ -2238,6 +2400,7 @@
           }
         },
         {
+          "SubId": "Derefoptout",
           "ContentsRegex": "$SEC105/002.Derefoptout",
           "MessageArguments": {
             "obsoleteAnnotation": "_Deref_opt_out_",
@@ -2252,6 +2415,7 @@
           }
         },
         {
+          "SubId": "Derefoutopt",
           "ContentsRegex": "$SEC105/002.Derefoutopt",
           "MessageArguments": {
             "obsoleteAnnotation": "_Deref_out_opt_",
@@ -2266,6 +2430,7 @@
           }
         },
         {
+          "SubId": "Derefoptoutopt",
           "ContentsRegex": "$SEC105/002.Derefoptoutopt",
           "MessageArguments": {
             "obsoleteAnnotation": "_Deref_opt_out_opt_",
@@ -2280,6 +2445,7 @@
           }
         },
         {
+          "SubId": "Inbytecount",
           "ContentsRegex": "$SEC105/002.Inbytecount",
           "MessageArguments": {
             "obsoleteAnnotation": "_In_bytecount_",
@@ -2294,6 +2460,7 @@
           }
         },
         {
+          "SubId": "Inbytecountc",
           "ContentsRegex": "$SEC105/002.Inbytecountc",
           "MessageArguments": {
             "obsoleteAnnotation": "_In_bytecount_c_",
@@ -2308,6 +2475,7 @@
           }
         },
         {
+          "SubId": "Incount",
           "ContentsRegex": "$SEC105/002.Incount",
           "MessageArguments": {
             "obsoleteAnnotation": "_In_count_",
@@ -2322,6 +2490,7 @@
           }
         },
         {
+          "SubId": "Incountc",
           "ContentsRegex": "$SEC105/002.Incountc",
           "MessageArguments": {
             "obsoleteAnnotation": "_In_count_c_",
@@ -2336,6 +2505,7 @@
           }
         },
         {
+          "SubId": "Inoptbytecount",
           "ContentsRegex": "$SEC105/002.Inoptbytecount",
           "MessageArguments": {
             "obsoleteAnnotation": "_In_opt_bytecount_",
@@ -2350,6 +2520,7 @@
           }
         },
         {
+          "SubId": "Inoptcount",
           "ContentsRegex": "$SEC105/002.Inoptcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_In_opt_count_",
@@ -2364,6 +2535,7 @@
           }
         },
         {
+          "SubId": "Inoptcountc",
           "ContentsRegex": "$SEC105/002.Inoptcountc",
           "MessageArguments": {
             "obsoleteAnnotation": "_In_opt_count_c_",
@@ -2378,6 +2550,7 @@
           }
         },
         {
+          "SubId": "Inoptzcount",
           "ContentsRegex": "$SEC105/002.Inoptzcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_In_opt_z_count_",
@@ -2392,6 +2565,7 @@
           }
         },
         {
+          "SubId": "Inptrdiffcount",
           "ContentsRegex": "$SEC105/002.Inptrdiffcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_In_ptrdiff_count_",
@@ -2406,6 +2580,7 @@
           }
         },
         {
+          "SubId": "Inzcount",
           "ContentsRegex": "$SEC105/002.Inzcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_In_z_count_",
@@ -2420,6 +2595,7 @@
           }
         },
         {
+          "SubId": "Inzcountc",
           "ContentsRegex": "$SEC105/002.Inzcountc",
           "MessageArguments": {
             "obsoleteAnnotation": "_In_z_count_c_",
@@ -2434,6 +2610,7 @@
           }
         },
         {
+          "SubId": "Inoutbytecap",
           "ContentsRegex": "$SEC105/002.Inoutbytecap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Inout_bytecap_",
@@ -2448,6 +2625,7 @@
           }
         },
         {
+          "SubId": "Inoutcap",
           "ContentsRegex": "$SEC105/002.Inoutcap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Inout_cap_",
@@ -2462,6 +2640,7 @@
           }
         },
         {
+          "SubId": "Inoutcapc",
           "ContentsRegex": "$SEC105/002.Inoutcapc",
           "MessageArguments": {
             "obsoleteAnnotation": "_Inout_cap_c_",
@@ -2476,6 +2655,7 @@
           }
         },
         {
+          "SubId": "Inoutcount",
           "ContentsRegex": "$SEC105/002.Inoutcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Inout_count_",
@@ -2490,6 +2670,7 @@
           }
         },
         {
+          "SubId": "Inoutcountc",
           "ContentsRegex": "$SEC105/002.Inoutcountc",
           "MessageArguments": {
             "obsoleteAnnotation": "_Inout_count_c_",
@@ -2504,6 +2685,7 @@
           }
         },
         {
+          "SubId": "Inoutoptbytecap",
           "ContentsRegex": "$SEC105/002.Inoutoptbytecap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Inout_opt_bytecap_",
@@ -2518,6 +2700,7 @@
           }
         },
         {
+          "SubId": "Inoutoptcap",
           "ContentsRegex": "$SEC105/002.Inoutoptcap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Inout_opt_cap_",
@@ -2532,6 +2715,7 @@
           }
         },
         {
+          "SubId": "Inoutoptcapc",
           "ContentsRegex": "$SEC105/002.Inoutoptcapc",
           "MessageArguments": {
             "obsoleteAnnotation": "_Inout_opt_cap_c_",
@@ -2546,6 +2730,7 @@
           }
         },
         {
+          "SubId": "Inoutzcap",
           "ContentsRegex": "$SEC105/002.Inoutzcap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Inout_z_cap_",
@@ -2560,6 +2745,7 @@
           }
         },
         {
+          "SubId": "Inoutzcapc",
           "ContentsRegex": "$SEC105/002.Inoutzcapc",
           "MessageArguments": {
             "obsoleteAnnotation": "_Inout_z_cap_c_",
@@ -2574,6 +2760,7 @@
           }
         },
         {
+          "SubId": "Outbytecap",
           "ContentsRegex": "$SEC105/002.Outbytecap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_bytecap_",
@@ -2588,6 +2775,7 @@
           }
         },
         {
+          "SubId": "Outbytecapc",
           "ContentsRegex": "$SEC105/002.Outbytecapc",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_bytecap_c_",
@@ -2602,6 +2790,7 @@
           }
         },
         {
+          "SubId": "Outbytecappostbytecount",
           "ContentsRegex": "$SEC105/002.Outbytecappostbytecount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_bytecap_post_bytecount_",
@@ -2616,6 +2805,7 @@
           }
         },
         {
+          "SubId": "Outbytecapcount",
           "ContentsRegex": "$SEC105/002.Outbytecapcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_bytecapcount_",
@@ -2630,6 +2820,7 @@
           }
         },
         {
+          "SubId": "Outcap",
           "ContentsRegex": "$SEC105/002.Outcap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_cap_",
@@ -2644,6 +2835,7 @@
           }
         },
         {
+          "SubId": "Outcapc",
           "ContentsRegex": "$SEC105/002.Outcapc",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_cap_c_",
@@ -2658,6 +2850,7 @@
           }
         },
         {
+          "SubId": "Outcappostcount",
           "ContentsRegex": "$SEC105/002.Outcappostcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_cap_post_count_",
@@ -2672,6 +2865,7 @@
           }
         },
         {
+          "SubId": "Outcapcount",
           "ContentsRegex": "$SEC105/002.Outcapcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_capcount_",
@@ -2686,6 +2880,7 @@
           }
         },
         {
+          "SubId": "Outoptbytecap",
           "ContentsRegex": "$SEC105/002.Outoptbytecap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_opt_bytecap_",
@@ -2700,6 +2895,7 @@
           }
         },
         {
+          "SubId": "Outoptbytecappostbytecount",
           "ContentsRegex": "$SEC105/002.Outoptbytecappostbytecount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_opt_bytecap_post_bytecount_",
@@ -2714,6 +2910,7 @@
           }
         },
         {
+          "SubId": "Outoptbytecapcount",
           "ContentsRegex": "$SEC105/002.Outoptbytecapcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_opt_bytecapcount_",
@@ -2728,6 +2925,7 @@
           }
         },
         {
+          "SubId": "Outoptcap",
           "ContentsRegex": "$SEC105/002.Outoptcap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_opt_cap_",
@@ -2742,6 +2940,7 @@
           }
         },
         {
+          "SubId": "Outoptcapc",
           "ContentsRegex": "$SEC105/002.Outoptcapc",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_opt_cap_c_",
@@ -2756,6 +2955,7 @@
           }
         },
         {
+          "SubId": "Outoptcappostcount",
           "ContentsRegex": "$SEC105/002.Outoptcappostcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_opt_cap_post_count_",
@@ -2770,6 +2970,7 @@
           }
         },
         {
+          "SubId": "Outoptcapcount",
           "ContentsRegex": "$SEC105/002.Outoptcapcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_opt_capcount_",
@@ -2784,6 +2985,7 @@
           }
         },
         {
+          "SubId": "Outoptzcap",
           "ContentsRegex": "$SEC105/002.Outoptzcap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_opt_z_cap_",
@@ -2798,6 +3000,7 @@
           }
         },
         {
+          "SubId": "Outzcap",
           "ContentsRegex": "$SEC105/002.Outzcap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_z_cap_",
@@ -2812,6 +3015,7 @@
           }
         },
         {
+          "SubId": "Outzcapc",
           "ContentsRegex": "$SEC105/002.Outzcapc",
           "MessageArguments": {
             "obsoleteAnnotation": "_Out_z_cap_c_",
@@ -2826,6 +3030,7 @@
           }
         },
         {
+          "SubId": "Postbytecount",
           "ContentsRegex": "$SEC105/002.Postbytecount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Post_bytecount_",
@@ -2840,6 +3045,7 @@
           }
         },
         {
+          "SubId": "Postbytecountc",
           "ContentsRegex": "$SEC105/002.Postbytecountc",
           "MessageArguments": {
             "obsoleteAnnotation": "_Post_bytecount_c_",
@@ -2854,6 +3060,7 @@
           }
         },
         {
+          "SubId": "Postcount",
           "ContentsRegex": "$SEC105/002.Postcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Post_count_",
@@ -2868,6 +3075,7 @@
           }
         },
         {
+          "SubId": "Postcountc",
           "ContentsRegex": "$SEC105/002.Postcountc",
           "MessageArguments": {
             "obsoleteAnnotation": "_Post_count_c_",
@@ -2882,6 +3090,7 @@
           }
         },
         {
+          "SubId": "Postzcount",
           "ContentsRegex": "$SEC105/002.Postzcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Post_z_count_",
@@ -2896,6 +3105,7 @@
           }
         },
         {
+          "SubId": "Precount",
           "ContentsRegex": "$SEC105/002.Precount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Pre_count_",
@@ -2910,6 +3120,7 @@
           }
         },
         {
+          "SubId": "Retbytecap",
           "ContentsRegex": "$SEC105/002.Retbytecap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Ret_bytecap_",
@@ -2924,6 +3135,7 @@
           }
         },
         {
+          "SubId": "Retcap",
           "ContentsRegex": "$SEC105/002.Retcap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Ret_cap_",
@@ -2938,6 +3150,7 @@
           }
         },
         {
+          "SubId": "Retoptbytecap",
           "ContentsRegex": "$SEC105/002.Retoptbytecap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Ret_opt_bytecap_",
@@ -2952,6 +3165,7 @@
           }
         },
         {
+          "SubId": "Retoptcount",
           "ContentsRegex": "$SEC105/002.Retoptcount",
           "MessageArguments": {
             "obsoleteAnnotation": "_Ret_opt_count_",
@@ -2966,6 +3180,7 @@
           }
         },
         {
+          "SubId": "Retoptzcap",
           "ContentsRegex": "$SEC105/002.Retoptzcap",
           "MessageArguments": {
             "obsoleteAnnotation": "_Ret_opt_z_cap_",
@@ -2980,6 +3195,7 @@
           }
         },
         {
+          "SubId": "SAPreAccessSARead",
           "ContentsRegex": "$SEC105/002.SAPreAccessSARead",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Access=SA_Read )]",
@@ -2994,6 +3210,7 @@
           }
         },
         {
+          "SubId": "SAPreAccessSAWrite",
           "ContentsRegex": "$SEC105/002.SAPreAccessSAWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Access=SA_Write)]",
@@ -3008,6 +3225,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref0NullSAMaybe",
           "ContentsRegex": "$SEC105/002.SAPreDeref0NullSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(0), Null=SA_Maybe )]",
@@ -3022,6 +3240,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref0NullTerminatedSAYes",
           "ContentsRegex": "$SEC105/002.SAPreDeref0NullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(0), NullTerminated=SA_Yes )]",
@@ -3036,6 +3255,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref0NullTerminatedSAYes",
           "ContentsRegex": "$SEC105/002.SAPreDeref0NullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=0, NullTerminated=SA_Yes )]",
@@ -3050,6 +3270,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref0ValidSANo",
           "ContentsRegex": "$SEC105/002.SAPreDeref0ValidSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Deref=0, Valid=SA_No)]",
@@ -3064,6 +3285,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref0ValidElements1",
           "ContentsRegex": "$SEC105/002.SAPreDeref0ValidElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre (Deref=0, ValidElements=\"%1\")]",
@@ -3078,6 +3300,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref0ValidElements1",
           "ContentsRegex": "$SEC105/002.SAPreDeref0ValidElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(0), ValidElements = \"%1\" )]",
@@ -3092,6 +3315,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref0ValidElementsConst1",
           "ContentsRegex": "$SEC105/002.SAPreDeref0ValidElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(0), ValidElementsConst=(%1) )]",
@@ -3106,6 +3330,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref0WritableBytes1",
           "ContentsRegex": "$SEC105/002.SAPreDeref0WritableBytes1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Deref=0, WritableBytes = \"%1\")]",
@@ -3120,6 +3345,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref0WritableElements1",
           "ContentsRegex": "$SEC105/002.SAPreDeref0WritableElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(0), WritableElements = \"%1\" )]",
@@ -3134,6 +3360,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref0WritableElementsConst1",
           "ContentsRegex": "$SEC105/002.SAPreDeref0WritableElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(0), WritableElementsConst=(%1) )]",
@@ -3148,6 +3375,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1AccessSAWrite",
           "ContentsRegex": "$SEC105/002.SAPreDeref1AccessSAWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=1, Access=SA_Write )]",
@@ -3162,6 +3390,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1AccessSARead",
           "ContentsRegex": "$SEC105/002.SAPreDeref1AccessSARead",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=1, Access=SA_Read )]",
@@ -3176,6 +3405,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1AccessSAReadWrite",
           "ContentsRegex": "$SEC105/002.SAPreDeref1AccessSAReadWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=1, Access=SA_ReadWrite )]",
@@ -3190,6 +3420,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1NullSAYes",
           "ContentsRegex": "$SEC105/002.SAPreDeref1NullSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(1), Null=SA_Yes )]",
@@ -3204,6 +3435,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1NullTerminatedSAYes",
           "ContentsRegex": "$SEC105/002.SAPreDeref1NullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(1), NullTerminated=SA_Yes )]",
@@ -3218,6 +3450,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1ValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPreDeref1ValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(1), Valid=SA_Yes )]",
@@ -3232,6 +3465,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1ValidSANo",
           "ContentsRegex": "$SEC105/002.SAPreDeref1ValidSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(1), Valid=SA_No )]",
@@ -3246,6 +3480,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1ValidSANo",
           "ContentsRegex": "$SEC105/002.SAPreDeref1ValidSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Deref=1,Valid=SA_No)]",
@@ -3260,6 +3495,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1ValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPreDeref1ValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Deref=1, Valid=SA_Yes)]",
@@ -3274,6 +3510,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1NullSANo",
           "ContentsRegex": "$SEC105/002.SAPreDeref1NullSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(1), Null=SA_No )]",
@@ -3288,6 +3525,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1ValidSAYesAccessSARead",
           "ContentsRegex": "$SEC105/002.SAPreDeref1ValidSAYesAccessSARead",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Deref=1,Valid=SA_Yes,Access=SA_Read)]",
@@ -3302,6 +3540,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1ValidBytesConst1",
           "ContentsRegex": "$SEC105/002.SAPreDeref1ValidBytesConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Deref=1, ValidBytesConst=%1)]",
@@ -3316,6 +3555,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1ValidElementsConst1",
           "ContentsRegex": "$SEC105/002.SAPreDeref1ValidElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Deref=1, ValidElementsConst=%1)]",
@@ -3330,6 +3570,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1ValidElementsConst1ElementSizeConst2",
           "ContentsRegex": "$SEC105/002.SAPreDeref1ValidElementsConst1ElementSizeConst2",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Deref=1,ValidElementsConst=%1,ElementSizeConst=%2)]",
@@ -3344,6 +3585,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1WritableBytes1",
           "ContentsRegex": "$SEC105/002.SAPreDeref1WritableBytes1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Deref=1, WritableBytes = \"%1\")]",
@@ -3358,6 +3600,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref2ValidSANo",
           "ContentsRegex": "$SEC105/002.SAPreDeref2ValidSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Deref=2,Valid=SA_No)]",
@@ -3372,6 +3615,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSAYes",
           "ContentsRegex": "$SEC105/002.SAPreNullSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_Yes)]",
@@ -3386,6 +3630,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSANo",
           "ContentsRegex": "$SEC105/002.SAPreNullSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_No)]",
@@ -3400,6 +3645,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSANoNullTerminatedSAYesWritableElements1",
           "ContentsRegex": "$SEC105/002.SAPreNullSANoNullTerminatedSAYesWritableElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_No,NullTerminated=SA_Yes,WritableElements=\"%1\")]",
@@ -3414,6 +3660,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSAMaybe",
           "ContentsRegex": "$SEC105/002.SAPreNullSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_Maybe)]",
@@ -3428,6 +3675,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSANoNotref1",
           "ContentsRegex": "$SEC105/002.SAPreNullSANoNotref1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_No,Notref=1)]",
@@ -3442,6 +3690,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSAYesValidSANo",
           "ContentsRegex": "$SEC105/002.SAPreNullSAYesValidSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_Yes, Valid=SA_No)]",
@@ -3456,6 +3705,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSANoValidSANo",
           "ContentsRegex": "$SEC105/002.SAPreNullSANoValidSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_No, Valid=SA_No)]",
@@ -3470,6 +3720,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSAMaybeValidSANo",
           "ContentsRegex": "$SEC105/002.SAPreNullSAMaybeValidSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_Maybe, Valid=SA_No)]",
@@ -3484,6 +3735,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSAYesValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPreNullSAYesValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_Yes, Valid=SA_Yes)]",
@@ -3498,6 +3750,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSAYesWritableBytesParam1",
           "ContentsRegex": "$SEC105/002.SAPreNullSAYesWritableBytesParam1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_Yes,WritableBytesParam=\"%1\")]",
@@ -3512,6 +3765,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSAYesSAPreWritableElementsParam1",
           "ContentsRegex": "$SEC105/002.SAPreNullSAYesSAPreWritableElementsParam1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_Yes),SA_Pre(WritableElementsParam=\"%1\")]",
@@ -3526,6 +3780,7 @@
           }
         },
         {
+          "SubId": "SAPreValidElementsParam1ElementSizeParam2",
           "ContentsRegex": "$SEC105/002.SAPreValidElementsParam1ElementSizeParam2",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(ValidElementsParam=\"%1\", ElementSizeParam=\"%2\")]",
@@ -3540,6 +3795,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSANoWritableElements1",
           "ContentsRegex": "$SEC105/002.SAPreNullSANoWritableElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_No,WritableElements=\"%1\")]",
@@ -3554,6 +3810,7 @@
           }
         },
         {
+          "SubId": "SAPreNullSANoWritableElementsConst1",
           "ContentsRegex": "$SEC105/002.SAPreNullSANoWritableElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=SA_No,WritableElementsConst=%1)]",
@@ -3568,6 +3825,7 @@
           }
         },
         {
+          "SubId": "SAPreNullTerminatedSAYes",
           "ContentsRegex": "$SEC105/002.SAPreNullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(NullTerminated=SA_Yes)]",
@@ -3582,6 +3840,7 @@
           }
         },
         {
+          "SubId": "SAPreNullTerminatedSAYesNullSAMaybe",
           "ContentsRegex": "$SEC105/002.SAPreNullTerminatedSAYesNullSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(NullTerminated=SA_Yes,Null=SA_Maybe)]",
@@ -3596,6 +3855,7 @@
           }
         },
         {
+          "SubId": "SAPreNullTerminatedSAYesValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPreNullTerminatedSAYesValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(NullTerminated=SA_Yes, Valid=SA_Yes)]",
@@ -3610,6 +3870,7 @@
           }
         },
         {
+          "SubId": "SAPreNullTerminatedSANoNullSANoValidElementsConst1WritableElementsConst2",
           "ContentsRegex": "$SEC105/002.SAPreNullTerminatedSANoNullSANoValidElementsConst1WritableElementsConst2",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(NullTerminated=SA_No, Null=SA_No, ValidElementsConst=%1, WritableElementsConst=%2)]",
@@ -3624,6 +3885,7 @@
           }
         },
         {
+          "SubId": "SAPreNullTerminatedSANoValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPreNullTerminatedSANoValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(NullTerminated=SA_No, Valid=SA_Yes)]",
@@ -3638,6 +3900,7 @@
           }
         },
         {
+          "SubId": "SAPreElementSizeConst1ValidElementsConst2",
           "ContentsRegex": "$SEC105/002.SAPreElementSizeConst1ValidElementsConst2",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(ElementSizeConst=%1, ValidElementsConst=%2)]",
@@ -3652,6 +3915,7 @@
           }
         },
         {
+          "SubId": "SAPreElementSizeConst1WritableElementsConst2",
           "ContentsRegex": "$SEC105/002.SAPreElementSizeConst1WritableElementsConst2",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(ElementSizeConst=%1, WritableElementsConst=%2)]",
@@ -3666,6 +3930,7 @@
           }
         },
         {
+          "SubId": "SAFormatStringStyleprintf",
           "ContentsRegex": "$SEC105/002.SAFormatStringStyleprintf",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_FormatString(Style=\"printf\")]",
@@ -3680,6 +3945,7 @@
           }
         },
         {
+          "SubId": "SAFormatStringStylescanf",
           "ContentsRegex": "$SEC105/002.SAFormatStringStylescanf",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_FormatString( Style=\"scanf\" )]",
@@ -3694,6 +3960,7 @@
           }
         },
         {
+          "SubId": "SAPreValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPreValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Valid=SA_Yes )]",
@@ -3708,6 +3975,7 @@
           }
         },
         {
+          "SubId": "SAPreValidSAYesNullSANo",
           "ContentsRegex": "$SEC105/002.SAPreValidSAYesNullSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Valid=SA_Yes, Null=SA_No)]",
@@ -3722,6 +3990,7 @@
           }
         },
         {
+          "SubId": "SAPreValidSAYesNullSANoValidElementsParam1",
           "ContentsRegex": "$SEC105/002.SAPreValidSAYesNullSANoValidElementsParam1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Valid=SA_Yes, Null=SA_No, ValidElementsParam=%1)]",
@@ -3736,6 +4005,7 @@
           }
         },
         {
+          "SubId": "SAPreValidSAYesNullSANoWritableElements1",
           "ContentsRegex": "$SEC105/002.SAPreValidSAYesNullSANoWritableElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Valid=SA_Yes, Null=SA_No, WritableElements=\"%1\")]",
@@ -3750,6 +4020,7 @@
           }
         },
         {
+          "SubId": "SAPreValidBytesConst1",
           "ContentsRegex": "$SEC105/002.SAPreValidBytesConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( ValidBytesConst=%1 )]",
@@ -3764,6 +4035,7 @@
           }
         },
         {
+          "SubId": "SAPreValidBytesConst1Condition2",
           "ContentsRegex": "$SEC105/002.SAPreValidBytesConst1Condition2",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( ValidBytesConst=%1, Condition=\"%2\" )]",
@@ -3778,6 +4050,7 @@
           }
         },
         {
+          "SubId": "SAPreValidBytes1",
           "ContentsRegex": "$SEC105/002.SAPreValidBytes1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre (ValidBytes=\"%1\")]",
@@ -3792,6 +4065,7 @@
           }
         },
         {
+          "SubId": "SAPreValidElements1",
           "ContentsRegex": "$SEC105/002.SAPreValidElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre (ValidElements=\"%1\")]",
@@ -3806,6 +4080,7 @@
           }
         },
         {
+          "SubId": "SAPreValidElementsLength1",
           "ContentsRegex": "$SEC105/002.SAPreValidElementsLength1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre (ValidElementsLength=\"%1\")]",
@@ -3820,6 +4095,7 @@
           }
         },
         {
+          "SubId": "SAPreValidElementsConst1",
           "ContentsRegex": "$SEC105/002.SAPreValidElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( ValidElementsConst=%1 )]",
@@ -3834,6 +4110,7 @@
           }
         },
         {
+          "SubId": "SAPreValidElementsConst1WritableElementsConst2NullSANo",
           "ContentsRegex": "$SEC105/002.SAPreValidElementsConst1WritableElementsConst2NullSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(ValidElementsConst=%1, WritableElementsConst=%2, Null=SA_No)]",
@@ -3848,6 +4125,7 @@
           }
         },
         {
+          "SubId": "SAPreWritableElementsConst1",
           "ContentsRegex": "$SEC105/002.SAPreWritableElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(WritableElementsConst =%1)]",
@@ -3862,6 +4140,7 @@
           }
         },
         {
+          "SubId": "SAPreWritableElementsConst1Notref1",
           "ContentsRegex": "$SEC105/002.SAPreWritableElementsConst1Notref1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(WritableElementsConst=%1,Notref=1)]",
@@ -3876,6 +4155,7 @@
           }
         },
         {
+          "SubId": "SAPreWritableElementsConst1NullSANo",
           "ContentsRegex": "$SEC105/002.SAPreWritableElementsConst1NullSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(WritableElementsConst=%1, Null=SA_No)]",
@@ -3890,6 +4170,7 @@
           }
         },
         {
+          "SubId": "SAPreWritableBytes1",
           "ContentsRegex": "$SEC105/002.SAPreWritableBytes1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre (WritableBytes=\"%1\")]",
@@ -3904,6 +4185,7 @@
           }
         },
         {
+          "SubId": "SAPreWritableBytesConst1",
           "ContentsRegex": "$SEC105/002.SAPreWritableBytesConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(WritableBytesConst=%1)]",
@@ -3918,6 +4200,7 @@
           }
         },
         {
+          "SubId": "SAPreWritableElements1",
           "ContentsRegex": "$SEC105/002.SAPreWritableElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(WritableElements=\"%1\")]",
@@ -3932,6 +4215,7 @@
           }
         },
         {
+          "SubId": "SAPreWritableElementsL1",
           "ContentsRegex": "$SEC105/002.SAPreWritableElementsL1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(WritableElements=L\"%1\")]",
@@ -3946,6 +4230,7 @@
           }
         },
         {
+          "SubId": "SAPreWritableBytesLength1",
           "ContentsRegex": "$SEC105/002.SAPreWritableBytesLength1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre (WritableBytesLength=\"%1\")]",
@@ -3960,6 +4245,7 @@
           }
         },
         {
+          "SubId": "SAPreWritableElementsLength1",
           "ContentsRegex": "$SEC105/002.SAPreWritableElementsLength1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre (WritableElementsLength=\"%1\")]",
@@ -3974,6 +4260,7 @@
           }
         },
         {
+          "SubId": "SAPreAttributeValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPreAttributeValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_PreAttribute(Valid=SA_Yes)]",
@@ -3988,6 +4275,7 @@
           }
         },
         {
+          "SubId": "SAPreValidBytesConst1SAPostValidBytesConst2",
           "ContentsRegex": "$SEC105/002.SAPreValidBytesConst1SAPostValidBytesConst2",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( ValidBytesConst=%1 ), SA_Post( ValidBytesConst=%2 )]",
@@ -4002,6 +4290,7 @@
           }
         },
         {
+          "SubId": "SAPreValidBytes1SAPostElementSize2WritableElementsConst3",
           "ContentsRegex": "$SEC105/002.SAPreValidBytes1SAPostElementSize2WritableElementsConst3",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(ValidBytes=\"%1\"), SA_Post(ElementSize=\"%2\", WritableElementsConst=%3)]",
@@ -4016,6 +4305,7 @@
           }
         },
         {
+          "SubId": "SAPreElementSize1WritableElementsConst2SAPostValidBytes3",
           "ContentsRegex": "$SEC105/002.SAPreElementSize1WritableElementsConst2SAPostValidBytes3",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(ElementSize=\"%1\", WritableElementsConst=%2), SA_Post(ValidBytes=\"%3\")]",
@@ -4030,6 +4320,7 @@
           }
         },
         {
+          "SubId": "SAPreWritableElements1SAPostValidElements2",
           "ContentsRegex": "$SEC105/002.SAPreWritableElements1SAPostValidElements2",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(WritableElements=\"%1\"), SA_Post(ValidElements=\"%2\")]",
@@ -4044,6 +4335,7 @@
           }
         },
         {
+          "SubId": "SAPreNullMaybeSAPostValidElementsParam1",
           "ContentsRegex": "$SEC105/002.SAPreNullMaybeSAPostValidElementsParam1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(Null=Maybe), SA_Post(ValidElementsParam=\"%1\")]",
@@ -4058,6 +4350,7 @@
           }
         },
         {
+          "SubId": "SAPreTainted1",
           "ContentsRegex": "$SEC105/002.SAPreTainted1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre (Tainted=%1)]",
@@ -4072,6 +4365,7 @@
           }
         },
         {
+          "SubId": "PreTaintedSAYesSANo",
           "ContentsRegex": "$SEC105/002.PreTaintedSAYesSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Tainted=(SA_Yes | SA_No))]",
@@ -4086,6 +4380,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref0NullTerminatedSANo",
           "ContentsRegex": "$SEC105/002.SAPreDeref0NullTerminatedSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(0), NullTerminated=SA_No )]",
@@ -4100,6 +4395,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref0NullTerminatedSAMaybe",
           "ContentsRegex": "$SEC105/002.SAPreDeref0NullTerminatedSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(0), NullTerminated=SA_Maybe )]",
@@ -4114,6 +4410,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1NullTerminatedSANo",
           "ContentsRegex": "$SEC105/002.SAPreDeref1NullTerminatedSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(1), NullTerminated=SA_No )]",
@@ -4128,6 +4425,7 @@
           }
         },
         {
+          "SubId": "SAPreDeref1NullTerminatedSAMaybe",
           "ContentsRegex": "$SEC105/002.SAPreDeref1NullTerminatedSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre( Deref=(1), NullTerminated=SA_Maybe )]",
@@ -4142,6 +4440,7 @@
           }
         },
         {
+          "SubId": "SAPreNullTerminatedSAMaybeValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPreNullTerminatedSAMaybeValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(NullTerminated=SA_Maybe, Valid=SA_Yes)]",
@@ -4156,6 +4455,7 @@
           }
         },
         {
+          "SubId": "SAPreNullTerminatedSANoSAPostNullTerminatedSANo",
           "ContentsRegex": "$SEC105/002.SAPreNullTerminatedSANoSAPostNullTerminatedSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(NullTerminated=SA_No), SA_Post(NullTerminated=SA_No)]",
@@ -4170,6 +4470,7 @@
           }
         },
         {
+          "SubId": "SAPreNullTerminatedSANONullSANo",
           "ContentsRegex": "$SEC105/002.SAPreNullTerminatedSANONullSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(NullTerminated=SA_NO, Null=SA_No)]",
@@ -4184,6 +4485,7 @@
           }
         },
         {
+          "SubId": "SAPreNullTerminatedSANONullSANoValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPreNullTerminatedSANONullSANoValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Pre(NullTerminated=SA_NO, Null=SA_No, Valid=SA_Yes)]",
@@ -4198,6 +4500,7 @@
           }
         },
         {
+          "SubId": "SAPostAccessSAWrite",
           "ContentsRegex": "$SEC105/002.SAPostAccessSAWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post (Access=SA_Write)]",
@@ -4212,6 +4515,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref0NullTerminatedSAYes",
           "ContentsRegex": "$SEC105/002.SAPostDeref0NullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(0), NullTerminated=SA_Yes )]",
@@ -4226,6 +4530,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref0ValidSAYesNullTerminatedSAYes",
           "ContentsRegex": "$SEC105/002.SAPostDeref0ValidSAYesNullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(0), Valid=SA_Yes, NullTerminated=SA_Yes )]",
@@ -4240,6 +4545,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref0ValidSAYesNullTerminatedSANo",
           "ContentsRegex": "$SEC105/002.SAPostDeref0ValidSAYesNullTerminatedSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(0), Valid=SA_Yes, NullTerminated=SA_No )]",
@@ -4254,6 +4560,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref0ValidBytesConst1",
           "ContentsRegex": "$SEC105/002.SAPostDeref0ValidBytesConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(0), ValidBytesConst=(%1) )]",
@@ -4268,6 +4575,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref0ValidElements1",
           "ContentsRegex": "$SEC105/002.SAPostDeref0ValidElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(0), ValidElements = \"%1\" )]",
@@ -4282,6 +4590,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref0ValidElementsConst1",
           "ContentsRegex": "$SEC105/002.SAPostDeref0ValidElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(0), ValidElementsConst=(%1) )]",
@@ -4296,6 +4605,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref0WritableElements1",
           "ContentsRegex": "$SEC105/002.SAPostDeref0WritableElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(0), WritableElements = \"%1\" )]",
@@ -4310,6 +4620,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref0WritableElementsConst1",
           "ContentsRegex": "$SEC105/002.SAPostDeref0WritableElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(0), WritableElementsConst=(%1) )]",
@@ -4324,6 +4635,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref0WritableElementsConst1ElementSizeConst2",
           "ContentsRegex": "$SEC105/002.SAPostDeref0WritableElementsConst1ElementSizeConst2",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(0), WritableElementsConst=(%1), ElementSizeConst=%2 )]",
@@ -4338,6 +4650,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1NullSANo",
           "ContentsRegex": "$SEC105/002.SAPostDeref1NullSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(1), Null=SA_No )]",
@@ -4352,6 +4665,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1NullSANo",
           "ContentsRegex": "$SEC105/002.SAPostDeref1NullSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(Deref=1, Null=SA_No)]",
@@ -4366,6 +4680,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1NullTerminatedSAYes",
           "ContentsRegex": "$SEC105/002.SAPostDeref1NullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=1, NullTerminated=SA_Yes )]",
@@ -4380,6 +4695,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1NullTerminatedSAYes",
           "ContentsRegex": "$SEC105/002.SAPostDeref1NullTerminatedSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(1), NullTerminated=SA_Yes )]",
@@ -4394,6 +4710,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1ValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPostDeref1ValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(1), Valid=SA_Yes )]",
@@ -4408,6 +4725,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1ValidBytes1",
           "ContentsRegex": "$SEC105/002.SAPostDeref1ValidBytes1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(1), ValidBytes = \"%1\" )]",
@@ -4422,6 +4740,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1WritableElements1",
           "ContentsRegex": "$SEC105/002.SAPostDeref1WritableElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(1), WritableElements = \"%1\" )]",
@@ -4436,6 +4755,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1WritableElements1ElementSizeConst2",
           "ContentsRegex": "$SEC105/002.SAPostDeref1WritableElements1ElementSizeConst2",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(1), WritableElements = \"%1\", ElementSizeConst = %2 )]",
@@ -4450,6 +4770,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1WritableElementsConst1",
           "ContentsRegex": "$SEC105/002.SAPostDeref1WritableElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(1), WritableElementsConst=(%1) )]",
@@ -4464,6 +4785,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1ValidSANo",
           "ContentsRegex": "$SEC105/002.SAPostDeref1ValidSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(Deref=1, Valid=SA_No)]",
@@ -4478,6 +4800,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref2ValidSANo",
           "ContentsRegex": "$SEC105/002.SAPostDeref2ValidSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(Deref=2,Valid=SA_No)]",
@@ -4492,6 +4815,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref2ValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPostDeref2ValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(Deref=2,Valid=SA_Yes)]",
@@ -4506,6 +4830,7 @@
           }
         },
         {
+          "SubId": "SAPostNullSAYes",
           "ContentsRegex": "$SEC105/002.SAPostNullSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(Null=SA_Yes)]",
@@ -4520,6 +4845,7 @@
           }
         },
         {
+          "SubId": "SAPostNullSANo",
           "ContentsRegex": "$SEC105/002.SAPostNullSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(Null=SA_No)]",
@@ -4534,6 +4860,7 @@
           }
         },
         {
+          "SubId": "SAPostValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPostValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(Valid=SA_Yes)]",
@@ -4548,6 +4875,7 @@
           }
         },
         {
+          "SubId": "SAPostValidBytes1",
           "ContentsRegex": "$SEC105/002.SAPostValidBytes1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(ValidBytes=\"%1\")]",
@@ -4562,6 +4890,7 @@
           }
         },
         {
+          "SubId": "SAPostValidBytesParam1",
           "ContentsRegex": "$SEC105/002.SAPostValidBytesParam1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(ValidBytesParam=\"%1\")]",
@@ -4576,6 +4905,7 @@
           }
         },
         {
+          "SubId": "SAPostValidBytesLength1",
           "ContentsRegex": "$SEC105/002.SAPostValidBytesLength1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(ValidBytesLength=\"%1\")]",
@@ -4590,6 +4920,7 @@
           }
         },
         {
+          "SubId": "SAPostValidElementsConst1",
           "ContentsRegex": "$SEC105/002.SAPostValidElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(ValidElementsConst=%1)]",
@@ -4604,6 +4935,7 @@
           }
         },
         {
+          "SubId": "SAPostValidElements1",
           "ContentsRegex": "$SEC105/002.SAPostValidElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( ValidElements=\"%1\" )]",
@@ -4618,6 +4950,7 @@
           }
         },
         {
+          "SubId": "SAPostValidElementsLength1",
           "ContentsRegex": "$SEC105/002.SAPostValidElementsLength1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(ValidElementsLength=\"%1\")]",
@@ -4632,6 +4965,7 @@
           }
         },
         {
+          "SubId": "SAPostWritableElementsParam1",
           "ContentsRegex": "$SEC105/002.SAPostWritableElementsParam1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(WritableElementsParam=\"%1\")]",
@@ -4646,6 +4980,7 @@
           }
         },
         {
+          "SubId": "SAPostValidBytesConst1",
           "ContentsRegex": "$SEC105/002.SAPostValidBytesConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( ValidBytesConst=(%1) )]",
@@ -4660,6 +4995,7 @@
           }
         },
         {
+          "SubId": "SAPostValidBytesConst1Condition2",
           "ContentsRegex": "$SEC105/002.SAPostValidBytesConst1Condition2",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( ValidBytesConst=%1, Condition=\"%2\" )]",
@@ -4674,6 +5010,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1ValidBytesConst1",
           "ContentsRegex": "$SEC105/002.SAPostDeref1ValidBytesConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=1, ValidBytesConst=(%1) )]",
@@ -4688,6 +5025,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1ValidElementsConst1",
           "ContentsRegex": "$SEC105/002.SAPostDeref1ValidElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(1), ValidElementsConst = \"%1\" )]",
@@ -4702,6 +5040,7 @@
           }
         },
         {
+          "SubId": "SAPostAttributeValidSAYes",
           "ContentsRegex": "$SEC105/002.SAPostAttributeValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_PostAttribute(Valid=SA_Yes)]",
@@ -4716,6 +5055,7 @@
           }
         },
         {
+          "SubId": "SAPost1",
           "ContentsRegex": "$SEC105/002.SAPost1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post=1]",
@@ -4730,6 +5070,7 @@
           }
         },
         {
+          "SubId": "SAPostNullSANoMyAttribute1",
           "ContentsRegex": "$SEC105/002.SAPostNullSANoMyAttribute1",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(Null=SA_No), MyAttribute=1]",
@@ -4744,6 +5085,7 @@
           }
         },
         {
+          "SubId": "PostNullSANoDeref1",
           "ContentsRegex": "$SEC105/002.PostNullSANoDeref1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Null=SA_No, Deref=1)]",
@@ -4758,6 +5100,7 @@
           }
         },
         {
+          "SubId": "PostNullSANoDeref2",
           "ContentsRegex": "$SEC105/002.PostNullSANoDeref2",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Null=SA_No, Deref=2)]",
@@ -4772,6 +5115,7 @@
           }
         },
         {
+          "SubId": "vcattributesPostValidSAYes",
           "ContentsRegex": "$SEC105/002.vcattributesPostValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[vc_attributes::Post(Valid=SA_Yes)]",
@@ -4786,6 +5130,7 @@
           }
         },
         {
+          "SubId": "vcattributesPostAttributeValidSAYes",
           "ContentsRegex": "$SEC105/002.vcattributesPostAttributeValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[vc_attributes::PostAttribute(Valid=SA_Yes)]",
@@ -4800,6 +5145,7 @@
           }
         },
         {
+          "SubId": "vcattributesSAPostValidSAYes",
           "ContentsRegex": "$SEC105/002.vcattributesSAPostValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[vc_attributes::SA_Post(Valid=SA_Yes)]",
@@ -4814,6 +5160,7 @@
           }
         },
         {
+          "SubId": "vcattributesSAPostAttributeValidSAYes",
           "ContentsRegex": "$SEC105/002.vcattributesSAPostAttributeValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[vc_attributes::SA_PostAttribute(Valid=SA_Yes)]",
@@ -4828,6 +5175,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref0NullTerminatedSANo",
           "ContentsRegex": "$SEC105/002.SAPostDeref0NullTerminatedSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(0), NullTerminated=SA_No )]",
@@ -4842,6 +5190,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref0NullTerminatedSAMaybe",
           "ContentsRegex": "$SEC105/002.SAPostDeref0NullTerminatedSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(0), NullTerminated=SA_Maybe )]",
@@ -4856,6 +5205,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1NullTerminatedSANo",
           "ContentsRegex": "$SEC105/002.SAPostDeref1NullTerminatedSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=(1), NullTerminated=SA_No )]",
@@ -4870,6 +5220,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref1NullTerminatedSAMaybe",
           "ContentsRegex": "$SEC105/002.SAPostDeref1NullTerminatedSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post(Deref=1, NullTerminated=SA_Maybe) ]",
@@ -4884,6 +5235,7 @@
           }
         },
         {
+          "SubId": "SAPostDeref0NullTerminatedSANo",
           "ContentsRegex": "$SEC105/002.SAPostDeref0NullTerminatedSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[SA_Post( Deref=0, NullTerminated=SA_No )]",
@@ -4898,6 +5250,7 @@
           }
         },
         {
+          "SubId": "PreAccessSAReadWrite",
           "ContentsRegex": "$SEC105/002.PreAccessSAReadWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Access=SA_ReadWrite)]",
@@ -4912,6 +5265,7 @@
           }
         },
         {
+          "SubId": "PreAccessSAReadSAWrite",
           "ContentsRegex": "$SEC105/002.PreAccessSAReadSAWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Access=(SA_Read | SA_Write))]",
@@ -4926,6 +5280,7 @@
           }
         },
         {
+          "SubId": "PreAccessSAReadSANoAccess",
           "ContentsRegex": "$SEC105/002.PreAccessSAReadSANoAccess",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Access=SA_Read | SA_NoAccess)]",
@@ -4940,6 +5295,7 @@
           }
         },
         {
+          "SubId": "PreAccessSAReadWriteSANoAccess",
           "ContentsRegex": "$SEC105/002.PreAccessSAReadWriteSANoAccess",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Access=SA_ReadWrite | SA_NoAccess)]",
@@ -4954,6 +5310,7 @@
           }
         },
         {
+          "SubId": "PreDeref0AccessWrite",
           "ContentsRegex": "$SEC105/002.PreDeref0AccessWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre( Deref=0, Access=Write )]",
@@ -4968,6 +5325,7 @@
           }
         },
         {
+          "SubId": "PreDeref1AccessRead",
           "ContentsRegex": "$SEC105/002.PreDeref1AccessRead",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Deref=1, Access=Read)]",
@@ -4982,6 +5340,7 @@
           }
         },
         {
+          "SubId": "PreDeref1AccessRead",
           "ContentsRegex": "$SEC105/002.PreDeref1AccessRead",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre( Deref=1, Access=Read )]",
@@ -4996,6 +5355,7 @@
           }
         },
         {
+          "SubId": "PreDeref1AccessWrite",
           "ContentsRegex": "$SEC105/002.PreDeref1AccessWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Deref=1, Access=Write)]",
@@ -5010,6 +5370,7 @@
           }
         },
         {
+          "SubId": "PreDeref1AccessReadWrite",
           "ContentsRegex": "$SEC105/002.PreDeref1AccessReadWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Deref=1, Access=ReadWrite )]",
@@ -5024,6 +5385,7 @@
           }
         },
         {
+          "SubId": "PreDeref2AccessWrite",
           "ContentsRegex": "$SEC105/002.PreDeref2AccessWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre( Deref=2, Access=Write )]",
@@ -5038,6 +5400,7 @@
           }
         },
         {
+          "SubId": "PreDeref3AccessWrite",
           "ContentsRegex": "$SEC105/002.PreDeref3AccessWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre( Deref=3, Access=Write )]",
@@ -5052,6 +5415,7 @@
           }
         },
         {
+          "SubId": "PreDeref1NullSAYes",
           "ContentsRegex": "$SEC105/002.PreDeref1NullSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Deref=1, Null=SA_Yes)]",
@@ -5066,6 +5430,7 @@
           }
         },
         {
+          "SubId": "PreDeref0ValidSAYes",
           "ContentsRegex": "$SEC105/002.PreDeref0ValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Deref=0, Valid=SA_Yes)]",
@@ -5080,6 +5445,7 @@
           }
         },
         {
+          "SubId": "PreDeref1ValidYes",
           "ContentsRegex": "$SEC105/002.PreDeref1ValidYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre( Deref=1, Valid=Yes )]",
@@ -5094,6 +5460,7 @@
           }
         },
         {
+          "SubId": "PreDeref2ValidSAYes",
           "ContentsRegex": "$SEC105/002.PreDeref2ValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Deref=2, Valid=SA_Yes)]",
@@ -5108,6 +5475,7 @@
           }
         },
         {
+          "SubId": "PreDeref3ValidSAYes",
           "ContentsRegex": "$SEC105/002.PreDeref3ValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Deref=3, Valid=SA_Yes)]",
@@ -5122,6 +5490,7 @@
           }
         },
         {
+          "SubId": "PreDeref4ValidSAYes",
           "ContentsRegex": "$SEC105/002.PreDeref4ValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Deref=4, Valid=SA_Yes)]",
@@ -5136,6 +5505,7 @@
           }
         },
         {
+          "SubId": "PreNullYesValidYes",
           "ContentsRegex": "$SEC105/002.PreNullYesValidYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Null=Yes, Valid=Yes)]",
@@ -5150,6 +5520,7 @@
           }
         },
         {
+          "SubId": "PreNullYesValidNo",
           "ContentsRegex": "$SEC105/002.PreNullYesValidNo",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Null=Yes, Valid=No)]",
@@ -5164,6 +5535,7 @@
           }
         },
         {
+          "SubId": "PreNullNo",
           "ContentsRegex": "$SEC105/002.PreNullNo",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Null=No)]",
@@ -5178,6 +5550,7 @@
           }
         },
         {
+          "SubId": "PreNullNoValidNo",
           "ContentsRegex": "$SEC105/002.PreNullNoValidNo",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Null=No, Valid=No)]",
@@ -5192,6 +5565,7 @@
           }
         },
         {
+          "SubId": "PreNullMaybeValidNo",
           "ContentsRegex": "$SEC105/002.PreNullMaybeValidNo",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Null=Maybe, Valid=No)]",
@@ -5206,6 +5580,7 @@
           }
         },
         {
+          "SubId": "PreNullSAYesSAMaybe",
           "ContentsRegex": "$SEC105/002.PreNullSAYesSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Null=(SA_Yes | SA_Maybe))]",
@@ -5220,6 +5595,7 @@
           }
         },
         {
+          "SubId": "PreNullYesNullNo",
           "ContentsRegex": "$SEC105/002.PreNullYesNullNo",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Null=Yes, Null=No)]",
@@ -5234,6 +5610,7 @@
           }
         },
         {
+          "SubId": "PreValidSANo",
           "ContentsRegex": "$SEC105/002.PreValidSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Valid=SA_No)]",
@@ -5248,6 +5625,7 @@
           }
         },
         {
+          "SubId": "PreValidSAMaybe",
           "ContentsRegex": "$SEC105/002.PreValidSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Valid=SA_Maybe)]",
@@ -5262,6 +5640,7 @@
           }
         },
         {
+          "SubId": "PreValidSAYesSAMaybe",
           "ContentsRegex": "$SEC105/002.PreValidSAYesSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Valid=(SA_Yes | SA_Maybe))]",
@@ -5276,6 +5655,7 @@
           }
         },
         {
+          "SubId": "PreValidYes",
           "ContentsRegex": "$SEC105/002.PreValidYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Valid=Yes)]",
@@ -5290,6 +5670,7 @@
           }
         },
         {
+          "SubId": "PreValidYesNullTerminatedYes",
           "ContentsRegex": "$SEC105/002.PreValidYesNullTerminatedYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre( Valid=Yes, NullTerminated=Yes )]",
@@ -5304,6 +5685,7 @@
           }
         },
         {
+          "SubId": "PreValidYesNullTerminatedNo",
           "ContentsRegex": "$SEC105/002.PreValidYesNullTerminatedNo",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre( Valid=Yes, NullTerminated=No )]",
@@ -5318,6 +5700,7 @@
           }
         },
         {
+          "SubId": "vcattributesPreValidSAYes",
           "ContentsRegex": "$SEC105/002.vcattributesPreValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[vc_attributes::Pre(Valid=SA_Yes)]",
@@ -5332,6 +5715,7 @@
           }
         },
         {
+          "SubId": "vcattributesPreAttributeValidSAYes",
           "ContentsRegex": "$SEC105/002.vcattributesPreAttributeValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[vc_attributes::PreAttribute(Valid=SA_Yes)]",
@@ -5346,6 +5730,7 @@
           }
         },
         {
+          "SubId": "vcattributesSAPreValidSAYes",
           "ContentsRegex": "$SEC105/002.vcattributesSAPreValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[vc_attributes::SA_Pre(Valid=SA_Yes)]",
@@ -5360,6 +5745,7 @@
           }
         },
         {
+          "SubId": "vcattributesSAPreAttributeValidSAYes",
           "ContentsRegex": "$SEC105/002.vcattributesSAPreAttributeValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[vc_attributes::SA_PreAttribute(Valid=SA_Yes)]",
@@ -5374,6 +5760,7 @@
           }
         },
         {
+          "SubId": "PreDeref1NullTerminatedSAMaybe",
           "ContentsRegex": "$SEC105/002.PreDeref1NullTerminatedSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Deref=1, NullTerminated=SA_Maybe)]",
@@ -5388,6 +5775,7 @@
           }
         },
         {
+          "SubId": "PreNullTerminatedSAYesSAMaybe",
           "ContentsRegex": "$SEC105/002.PreNullTerminatedSAYesSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(NullTerminated=(SA_Yes | SA_Maybe))]",
@@ -5402,6 +5790,7 @@
           }
         },
         {
+          "SubId": "PreDeref1AccessWrite",
           "ContentsRegex": "$SEC105/002.PreDeref1AccessWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre( Deref=-1, Access=Write )]",
@@ -5416,6 +5805,7 @@
           }
         },
         {
+          "SubId": "PreDeref1ValidSAYes",
           "ContentsRegex": "$SEC105/002.PreDeref1ValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Pre(Deref=-1, Valid=SA_Yes)]",
@@ -5430,6 +5820,7 @@
           }
         },
         {
+          "SubId": "Post1NullYes",
           "ContentsRegex": "$SEC105/002.Post1NullYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(1, Null=Yes)]",
@@ -5444,6 +5835,7 @@
           }
         },
         {
+          "SubId": "PostAccessRead",
           "ContentsRegex": "$SEC105/002.PostAccessRead",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post( Access=Read )]",
@@ -5458,6 +5850,7 @@
           }
         },
         {
+          "SubId": "PostAccessSAWriteSANoAccess",
           "ContentsRegex": "$SEC105/002.PostAccessSAWriteSANoAccess",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Access=SA_Write | SA_NoAccess)]",
@@ -5472,6 +5865,7 @@
           }
         },
         {
+          "SubId": "PostDeref0AccessWrite",
           "ContentsRegex": "$SEC105/002.PostDeref0AccessWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post( Deref=0, Access=Write )]",
@@ -5486,6 +5880,7 @@
           }
         },
         {
+          "SubId": "PostDeref1AccessWrite",
           "ContentsRegex": "$SEC105/002.PostDeref1AccessWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post( Deref=1, Access=Write )]",
@@ -5500,6 +5895,7 @@
           }
         },
         {
+          "SubId": "PostDeref2AccessRead",
           "ContentsRegex": "$SEC105/002.PostDeref2AccessRead",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post( Deref=2, Access=Read )]",
@@ -5514,6 +5910,7 @@
           }
         },
         {
+          "SubId": "PostDeref2AccessWrite",
           "ContentsRegex": "$SEC105/002.PostDeref2AccessWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post( Deref=2, Access=Write )]",
@@ -5528,6 +5925,7 @@
           }
         },
         {
+          "SubId": "PostDeref3AccessWrite",
           "ContentsRegex": "$SEC105/002.PostDeref3AccessWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post( Deref=3, Access=Write )]",
@@ -5542,6 +5940,7 @@
           }
         },
         {
+          "SubId": "PostDeref1ValidYes",
           "ContentsRegex": "$SEC105/002.PostDeref1ValidYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post( Deref=1, Valid=Yes )]",
@@ -5556,6 +5955,7 @@
           }
         },
         {
+          "SubId": "PostNullYes",
           "ContentsRegex": "$SEC105/002.PostNullYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Null=Yes)]",
@@ -5570,6 +5970,7 @@
           }
         },
         {
+          "SubId": "PostNullYesNullNo",
           "ContentsRegex": "$SEC105/002.PostNullYesNullNo",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Null=Yes, Null=No)]",
@@ -5584,6 +5985,7 @@
           }
         },
         {
+          "SubId": "PostNullSAMaybe",
           "ContentsRegex": "$SEC105/002.PostNullSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Null=SA_Maybe)]",
@@ -5598,6 +6000,7 @@
           }
         },
         {
+          "SubId": "PostNullSAMaybeDeref1",
           "ContentsRegex": "$SEC105/002.PostNullSAMaybeDeref1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Null=SA_Maybe, Deref=1)]",
@@ -5612,6 +6015,7 @@
           }
         },
         {
+          "SubId": "PostValidNo",
           "ContentsRegex": "$SEC105/002.PostValidNo",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post( Valid=No )]",
@@ -5626,6 +6030,7 @@
           }
         },
         {
+          "SubId": "PostValidSANo",
           "ContentsRegex": "$SEC105/002.PostValidSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Valid=SA_No)]",
@@ -5640,6 +6045,7 @@
           }
         },
         {
+          "SubId": "PostWritableBytes1",
           "ContentsRegex": "$SEC105/002.PostWritableBytes1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(WritableBytes=\"%1\")]",
@@ -5654,6 +6060,7 @@
           }
         },
         {
+          "SubId": "PostWritableBytesConst1",
           "ContentsRegex": "$SEC105/002.PostWritableBytesConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(WritableBytesConst=%1)]",
@@ -5668,6 +6075,7 @@
           }
         },
         {
+          "SubId": "PostWritableBytesConst1Deref1",
           "ContentsRegex": "$SEC105/002.PostWritableBytesConst1Deref1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(WritableBytesConst=%1, Deref=1)]",
@@ -5682,6 +6090,7 @@
           }
         },
         {
+          "SubId": "PostDeref1WritableBytesConst1",
           "ContentsRegex": "$SEC105/002.PostDeref1WritableBytesConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Deref=1, WritableBytesConst=%1)]",
@@ -5696,6 +6105,7 @@
           }
         },
         {
+          "SubId": "PostWritableBytes1Deref1",
           "ContentsRegex": "$SEC105/002.PostWritableBytes1Deref1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(WritableBytes=\"%1\", Deref=1)]",
@@ -5710,6 +6120,7 @@
           }
         },
         {
+          "SubId": "PostValidBytesConst1Deref2",
           "ContentsRegex": "$SEC105/002.PostValidBytesConst1Deref2",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(ValidBytesConst=%1, Deref=2)]",
@@ -5724,6 +6135,7 @@
           }
         },
         {
+          "SubId": "PostWritableElementsConst1",
           "ContentsRegex": "$SEC105/002.PostWritableElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(WritableElementsConst=%1)]",
@@ -5738,6 +6150,7 @@
           }
         },
         {
+          "SubId": "PostWritableElementsConst1Deref1",
           "ContentsRegex": "$SEC105/002.PostWritableElementsConst1Deref1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(WritableElementsConst=%1, Deref=1)]",
@@ -5752,6 +6165,7 @@
           }
         },
         {
+          "SubId": "PostDeref1WritableElementsConst1",
           "ContentsRegex": "$SEC105/002.PostDeref1WritableElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Deref=1, WritableElementsConst=%1)]",
@@ -5766,6 +6180,7 @@
           }
         },
         {
+          "SubId": "PostWritableElements1Deref1",
           "ContentsRegex": "$SEC105/002.PostWritableElements1Deref1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(WritableElements=\"%1\", Deref=1)]",
@@ -5780,6 +6195,7 @@
           }
         },
         {
+          "SubId": "PostWritableElements1",
           "ContentsRegex": "$SEC105/002.PostWritableElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(WritableElements=\"%1\")]",
@@ -5794,6 +6210,7 @@
           }
         },
         {
+          "SubId": "PostDeref1ValidElementsConst1",
           "ContentsRegex": "$SEC105/002.PostDeref1ValidElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Deref=1, ValidElementsConst=%1)]",
@@ -5808,6 +6225,7 @@
           }
         },
         {
+          "SubId": "PostDeref1Tainted1",
           "ContentsRegex": "$SEC105/002.PostDeref1Tainted1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Deref=1, Tainted=%1)]",
@@ -5822,6 +6240,7 @@
           }
         },
         {
+          "SubId": "PostValidSAMaybeDeref1",
           "ContentsRegex": "$SEC105/002.PostValidSAMaybeDeref1",
           "MessageArguments": {
             "obsoleteAnnotation": "[Post(Valid=SA_Maybe, Deref=1)]",
@@ -5836,6 +6255,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostAccessSARead",
           "ContentsRegex": "$SEC105/002.returnvaluePostAccessSARead",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Access=SA_Read)]",
@@ -5850,6 +6270,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostAccessSAReadSARead",
           "ContentsRegex": "$SEC105/002.returnvaluePostAccessSAReadSARead",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Access=(SA_Read | SA_Read))]",
@@ -5864,6 +6285,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostNullSAYes",
           "ContentsRegex": "$SEC105/002.returnvaluePostNullSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Null=SA_Yes)]",
@@ -5878,6 +6300,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostNullSANoDeref0",
           "ContentsRegex": "$SEC105/002.returnvaluePostNullSANoDeref0",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Null=SA_No, Deref=0)]",
@@ -5892,6 +6315,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostNullSANoDeref1",
           "ContentsRegex": "$SEC105/002.returnvaluePostNullSANoDeref1",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Null=SA_No, Deref=1)]",
@@ -5906,6 +6330,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostNullSAMaybeDeref2",
           "ContentsRegex": "$SEC105/002.returnvaluePostNullSAMaybeDeref2",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Null=SA_Maybe, Deref=2)]",
@@ -5920,6 +6345,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostValidSAYes",
           "ContentsRegex": "$SEC105/002.returnvaluePostValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Valid=SA_Yes)]",
@@ -5934,6 +6360,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostWritableBytesConst1",
           "ContentsRegex": "$SEC105/002.returnvaluePostWritableBytesConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(WritableBytesConst=%1)]",
@@ -5948,6 +6375,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostValidBytesConst1",
           "ContentsRegex": "$SEC105/002.returnvaluePostValidBytesConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(ValidBytesConst=%1)]",
@@ -5962,6 +6390,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostValidElementsConst1",
           "ContentsRegex": "$SEC105/002.returnvaluePostValidElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(ValidElementsConst=%1)]",
@@ -5976,6 +6405,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostWritableElementsConst1",
           "ContentsRegex": "$SEC105/002.returnvaluePostWritableElementsConst1",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(WritableElementsConst=%1)]",
@@ -5990,6 +6420,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostNullTerminatedSANo",
           "ContentsRegex": "$SEC105/002.returnvaluePostNullTerminatedSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(NullTerminated=SA_No)]",
@@ -6004,6 +6435,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostDeref0returnvaluePostValidSAYes",
           "ContentsRegex": "$SEC105/002.returnvaluePostDeref0returnvaluePostValidSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Deref=0), returnvalue:Post(Valid=SA_Yes)]",
@@ -6018,6 +6450,7 @@
           }
         },
         {
+          "SubId": "returnvalueSAPostNullSAMaybe",
           "ContentsRegex": "$SEC105/002.returnvalueSAPostNullSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue: SA_Post(Null=SA_Maybe)]",
@@ -6032,6 +6465,7 @@
           }
         },
         {
+          "SubId": "returnvalueSAPostDeref0NullSAYes",
           "ContentsRegex": "$SEC105/002.returnvalueSAPostDeref0NullSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue: SA_Post( Deref=(0), Null=SA_Yes )]",
@@ -6046,6 +6480,7 @@
           }
         },
         {
+          "SubId": "returnvalueSAPostNullSAMaybeValidElements1",
           "ContentsRegex": "$SEC105/002.returnvalueSAPostNullSAMaybeValidElements1",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue: SA_Post(Null=SA_Maybe, ValidElements=%1)]",
@@ -6060,6 +6495,7 @@
           }
         },
         {
+          "SubId": "returnvalueSAPostDeref1NullSAMaybe",
           "ContentsRegex": "$SEC105/002.returnvalueSAPostDeref1NullSAMaybe",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue: SA_Post( Deref=(1), Null=SA_Maybe )]",
@@ -6074,6 +6510,7 @@
           }
         },
         {
+          "SubId": "returnvalueSAPostDeref0NullSANo",
           "ContentsRegex": "$SEC105/002.returnvalueSAPostDeref0NullSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue: SA_Post( Deref=(0), Null=SA_No )]",
@@ -6088,6 +6525,7 @@
           }
         },
         {
+          "SubId": "returnvalueSAPostMustCheckSAYes",
           "ContentsRegex": "$SEC105/002.returnvalueSAPostMustCheckSAYes",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue: SA_Post(MustCheck=SA_Yes)]",
@@ -6102,6 +6540,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostAccessSAReadWrite",
           "ContentsRegex": "$SEC105/002.returnvaluePostAccessSAReadWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Access=SA_ReadWrite)]",
@@ -6116,6 +6555,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostAccessSAReadWriteDeref1",
           "ContentsRegex": "$SEC105/002.returnvaluePostAccessSAReadWriteDeref1",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Access=SA_ReadWrite, Deref=1)]",
@@ -6130,6 +6570,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostAccessSAWrite",
           "ContentsRegex": "$SEC105/002.returnvaluePostAccessSAWrite",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Access=SA_Write)]",
@@ -6144,6 +6585,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostAccessSAReadWriteSARead",
           "ContentsRegex": "$SEC105/002.returnvaluePostAccessSAReadWriteSARead",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Access=(SA_ReadWrite | SA_Read))]",
@@ -6158,6 +6600,7 @@
           }
         },
         {
+          "SubId": "returnvaluePostValidSAMaybeDeref1",
           "ContentsRegex": "$SEC105/002.returnvaluePostValidSAMaybeDeref1",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue:Post(Valid=SA_Maybe, Deref=1)]",
@@ -6172,6 +6615,7 @@
           }
         },
         {
+          "SubId": "returnvalueSAPostDeref1NullSAYesNullTerminatedSANo",
           "ContentsRegex": "$SEC105/002.returnvalueSAPostDeref1NullSAYesNullTerminatedSANo",
           "MessageArguments": {
             "obsoleteAnnotation": "[returnvalue: SA_Post( Deref=(1), Null=SA_Yes, NullTerminated=SA_No )]",
@@ -6190,748 +6634,933 @@
     {
       "Id": "SEC105/003",
       "Name": "UpdateAnnotationsToCurrentVersion",
-      "Message": "'{0:scanTarget}' contains a use of the SAL v1 '{1:obsoleteAnnotation}' annotation that should be converted manually to the correct SAL v2 pattern.",
+      "Message": "The SAL v1 '{0:obsoleteAnnotation}' annotation has changed in SAL v2 and should be converted manually to the correct pattern.",
       "Level": "Warning",
       "Description": "Conversion from SAL 1 to SAL 2 cannot be automatically done.",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
+          "SubId": "assumebound",
           "ContentsRegex": "$SEC105/003.assumebound",
           "MessageArguments": { "obsoleteAnnotation": "__assume_bound" }
         },
         {
+          "SubId": "bcount",
           "ContentsRegex": "$SEC105/003.bcount",
           "MessageArguments": { "obsoleteAnnotation": "__bcount" }
         },
         {
+          "SubId": "bcountopt",
           "ContentsRegex": "$SEC105/003.bcountopt",
           "MessageArguments": { "obsoleteAnnotation": "__bcount_opt" }
         },
         {
+          "SubId": "controlentrypoint",
           "ContentsRegex": "$SEC105/003.controlentrypoint",
           "MessageArguments": { "obsoleteAnnotation": "__control_entrypoint" }
         },
         {
+          "SubId": "dataentrypoint",
           "ContentsRegex": "$SEC105/003.dataentrypoint",
           "MessageArguments": { "obsoleteAnnotation": "__data_entrypoint" }
         },
         {
+          "SubId": "deref",
           "ContentsRegex": "$SEC105/003.deref",
           "MessageArguments": { "obsoleteAnnotation": "__deref" }
         },
         {
+          "SubId": "derefbcount",
           "ContentsRegex": "$SEC105/003.derefbcount",
           "MessageArguments": { "obsoleteAnnotation": "__deref_bcount" }
         },
         {
+          "SubId": "derefecount",
           "ContentsRegex": "$SEC105/003.derefecount",
           "MessageArguments": { "obsoleteAnnotation": "__deref_ecount" }
         },
         {
+          "SubId": "derefecountopt",
           "ContentsRegex": "$SEC105/003.derefecountopt",
           "MessageArguments": { "obsoleteAnnotation": "__deref_ecount_opt" }
         },
         {
+          "SubId": "derefinbcountopt",
           "ContentsRegex": "$SEC105/003.derefinbcountopt",
           "MessageArguments": { "obsoleteAnnotation": "__deref_in_bcount_opt" }
         },
         {
+          "SubId": "derefinoptout",
           "ContentsRegex": "$SEC105/003.derefinoptout",
           "MessageArguments": { "obsoleteAnnotation": "__deref_in_opt_out" }
         },
         {
+          "SubId": "derefinrange",
           "ContentsRegex": "$SEC105/003.derefinrange",
           "MessageArguments": { "obsoleteAnnotation": "__deref_in_range" }
         },
         {
+          "SubId": "derefinoutbcount",
           "ContentsRegex": "$SEC105/003.derefinoutbcount",
           "MessageArguments": { "obsoleteAnnotation": "__deref_inout_bcount" }
         },
         {
+          "SubId": "derefinoutbcountopt",
           "ContentsRegex": "$SEC105/003.derefinoutbcountopt",
           "MessageArguments": { "obsoleteAnnotation": "__deref_inout_bcount_opt" }
         },
         {
+          "SubId": "derefinoutbcountpart",
           "ContentsRegex": "$SEC105/003.derefinoutbcountpart",
           "MessageArguments": { "obsoleteAnnotation": "__deref_inout_bcount_part" }
         },
         {
+          "SubId": "derefinoutecount",
           "ContentsRegex": "$SEC105/003.derefinoutecount",
           "MessageArguments": { "obsoleteAnnotation": "__deref_inout_ecount" }
         },
         {
+          "SubId": "derefinoutecountpart",
           "ContentsRegex": "$SEC105/003.derefinoutecountpart",
           "MessageArguments": { "obsoleteAnnotation": "__deref_inout_ecount_part" }
         },
         {
+          "SubId": "derefinoutecountz",
           "ContentsRegex": "$SEC105/003.derefinoutecountz",
           "MessageArguments": { "obsoleteAnnotation": "__deref_inout_ecount_z" }
         },
         {
+          "SubId": "derefinoutrange",
           "ContentsRegex": "$SEC105/003.derefinoutrange",
           "MessageArguments": { "obsoleteAnnotation": "__deref_inout_range" }
         },
         {
+          "SubId": "derefinoutxcount",
           "ContentsRegex": "$SEC105/003.derefinoutxcount",
           "MessageArguments": { "obsoleteAnnotation": "__deref_inout_xcount" }
         },
         {
+          "SubId": "derefinoutz",
           "ContentsRegex": "$SEC105/003.derefinoutz",
           "MessageArguments": { "obsoleteAnnotation": "__deref_inout_z" }
         },
         {
+          "SubId": "derefoptinoutbcountfull",
           "ContentsRegex": "$SEC105/003.derefoptinoutbcountfull",
           "MessageArguments": { "obsoleteAnnotation": "__deref_opt_inout_bcount_full" }
         },
         {
+          "SubId": "derefoptinoutbcountpartopt",
           "ContentsRegex": "$SEC105/003.derefoptinoutbcountpartopt",
           "MessageArguments": { "obsoleteAnnotation": "__deref_opt_inout_bcount_part_opt" }
         },
         {
+          "SubId": "derefoptoutbcount",
           "ContentsRegex": "$SEC105/003.derefoptoutbcount",
           "MessageArguments": { "obsoleteAnnotation": "__deref_opt_out_bcount" }
         },
         {
+          "SubId": "derefoptoutbcountfull",
           "ContentsRegex": "$SEC105/003.derefoptoutbcountfull",
           "MessageArguments": { "obsoleteAnnotation": "__deref_opt_out_bcount_full" }
         },
         {
+          "SubId": "derefoptoutecount",
           "ContentsRegex": "$SEC105/003.derefoptoutecount",
           "MessageArguments": { "obsoleteAnnotation": "__deref_opt_out_ecount" }
         },
         {
+          "SubId": "derefoptoutxcount",
           "ContentsRegex": "$SEC105/003.derefoptoutxcount",
           "MessageArguments": { "obsoleteAnnotation": "__deref_opt_out_xcount" }
         },
         {
+          "SubId": "derefoutbcountfull",
           "ContentsRegex": "$SEC105/003.derefoutbcountfull",
           "MessageArguments": { "obsoleteAnnotation": "__deref_out_bcount_full" }
         },
         {
+          "SubId": "derefoutbcountfullopt",
           "ContentsRegex": "$SEC105/003.derefoutbcountfullopt",
           "MessageArguments": { "obsoleteAnnotation": "__deref_out_bcount_full_opt" }
         },
         {
+          "SubId": "derefoutecountfull",
           "ContentsRegex": "$SEC105/003.derefoutecountfull",
           "MessageArguments": { "obsoleteAnnotation": "__deref_out_ecount_full" }
         },
         {
+          "SubId": "derefoutecountfullopt",
           "ContentsRegex": "$SEC105/003.derefoutecountfullopt",
           "MessageArguments": { "obsoleteAnnotation": "__deref_out_ecount_full_opt" }
         },
         {
+          "SubId": "derefoutecountzopt",
           "ContentsRegex": "$SEC105/003.derefoutecountzopt",
           "MessageArguments": { "obsoleteAnnotation": "__deref_out_ecount_z_opt" }
         },
         {
+          "SubId": "derefoutxcount",
           "ContentsRegex": "$SEC105/003.derefoutxcount",
           "MessageArguments": { "obsoleteAnnotation": "__deref_out_xcount" }
         },
         {
+          "SubId": "derefoutxcountpart",
           "ContentsRegex": "$SEC105/003.derefoutxcountpart",
           "MessageArguments": { "obsoleteAnnotation": "__deref_out_xcount_part" }
         },
         {
+          "SubId": "ecount",
           "ContentsRegex": "$SEC105/003.ecount",
           "MessageArguments": { "obsoleteAnnotation": "__ecount" }
         },
         {
+          "SubId": "exceptthat",
           "ContentsRegex": "$SEC105/003.exceptthat",
           "MessageArguments": { "obsoleteAnnotation": "__exceptthat" }
         },
         {
+          "SubId": "formatstring",
           "ContentsRegex": "$SEC105/003.formatstring",
           "MessageArguments": { "obsoleteAnnotation": "__format_string" }
         },
         {
+          "SubId": "inbcountz",
           "ContentsRegex": "$SEC105/003.inbcountz",
           "MessageArguments": { "obsoleteAnnotation": "__in_bcount_z" }
         },
         {
+          "SubId": "inecountz",
           "ContentsRegex": "$SEC105/003.inecountz",
           "MessageArguments": { "obsoleteAnnotation": "__in_ecount_z" }
         },
         {
+          "SubId": "inxcount",
           "ContentsRegex": "$SEC105/003.inxcount",
           "MessageArguments": { "obsoleteAnnotation": "__in_xcount" }
         },
         {
+          "SubId": "inxcountopt",
           "ContentsRegex": "$SEC105/003.inxcountopt",
           "MessageArguments": { "obsoleteAnnotation": "__in_xcount_opt" }
         },
         {
+          "SubId": "inexpressiblereadableTo",
           "ContentsRegex": "$SEC105/003.inexpressiblereadableTo",
           "MessageArguments": { "obsoleteAnnotation": "__inexpressible_readableTo" }
         },
         {
+          "SubId": "inoutbcountfull",
           "ContentsRegex": "$SEC105/003.inoutbcountfull",
           "MessageArguments": { "obsoleteAnnotation": "__inout_bcount_full" }
         },
         {
+          "SubId": "inoutbcountfullopt",
           "ContentsRegex": "$SEC105/003.inoutbcountfullopt",
           "MessageArguments": { "obsoleteAnnotation": "__inout_bcount_full_opt" }
         },
         {
+          "SubId": "inoutbcountz",
           "ContentsRegex": "$SEC105/003.inoutbcountz",
           "MessageArguments": { "obsoleteAnnotation": "__inout_bcount_z" }
         },
         {
+          "SubId": "inoutecountfull",
           "ContentsRegex": "$SEC105/003.inoutecountfull",
           "MessageArguments": { "obsoleteAnnotation": "__inout_ecount_full" }
         },
         {
+          "SubId": "inoutecountfullopt",
           "ContentsRegex": "$SEC105/003.inoutecountfullopt",
           "MessageArguments": { "obsoleteAnnotation": "__inout_ecount_full_opt" }
         },
         {
+          "SubId": "inoutxcount",
           "ContentsRegex": "$SEC105/003.inoutxcount",
           "MessageArguments": { "obsoleteAnnotation": "__inout_xcount" }
         },
         {
+          "SubId": "inoutxcountopt",
           "ContentsRegex": "$SEC105/003.inoutxcountopt",
           "MessageArguments": { "obsoleteAnnotation": "__inout_xcount_opt" }
         },
         {
+          "SubId": "internalkerneldriver",
           "ContentsRegex": "$SEC105/003.internalkerneldriver",
           "MessageArguments": { "obsoleteAnnotation": "__internal_kernel_driver" }
         },
         {
+          "SubId": "maybenull",
           "ContentsRegex": "$SEC105/003.maybenull",
           "MessageArguments": { "obsoleteAnnotation": "__maybenull" }
         },
         {
+          "SubId": "maybevalid",
           "ContentsRegex": "$SEC105/003.maybevalid",
           "MessageArguments": { "obsoleteAnnotation": "__maybevalid" }
         },
         {
+          "SubId": "notnull",
           "ContentsRegex": "$SEC105/003.notnull",
           "MessageArguments": { "obsoleteAnnotation": "__notnull" }
         },
         {
+          "SubId": "notvalid",
           "ContentsRegex": "$SEC105/003.notvalid",
           "MessageArguments": { "obsoleteAnnotation": "__notvalid" }
         },
         {
+          "SubId": "null",
           "ContentsRegex": "$SEC105/003.null",
           "MessageArguments": { "obsoleteAnnotation": "__null" }
         },
         {
+          "SubId": "nullnullterminated",
           "ContentsRegex": "$SEC105/003.nullnullterminated",
           "MessageArguments": { "obsoleteAnnotation": "__nullnullterminated" }
         },
         {
+          "SubId": "nullterminated",
           "ContentsRegex": "$SEC105/003.nullterminated",
           "MessageArguments": { "obsoleteAnnotation": "__nullterminated" }
         },
         {
+          "SubId": "outawcount",
           "ContentsRegex": "$SEC105/003.outawcount",
           "MessageArguments": { "obsoleteAnnotation": "__out_awcount" }
         },
         {
+          "SubId": "outbcountfull",
           "ContentsRegex": "$SEC105/003.outbcountfull",
           "MessageArguments": { "obsoleteAnnotation": "__out_bcount_full" }
         },
         {
+          "SubId": "outbcountfullopt",
           "ContentsRegex": "$SEC105/003.outbcountfullopt",
           "MessageArguments": { "obsoleteAnnotation": "__out_bcount_full_opt" }
         },
         {
+          "SubId": "outbcountpartz",
           "ContentsRegex": "$SEC105/003.outbcountpartz",
           "MessageArguments": { "obsoleteAnnotation": "__out_bcount_part_z" }
         },
         {
+          "SubId": "outbcountzopt",
           "ContentsRegex": "$SEC105/003.outbcountzopt",
           "MessageArguments": { "obsoleteAnnotation": "__out_bcount_z_opt" }
         },
         {
+          "SubId": "outecountfull",
           "ContentsRegex": "$SEC105/003.outecountfull",
           "MessageArguments": { "obsoleteAnnotation": "__out_ecount_full" }
         },
         {
+          "SubId": "outecountfullopt",
           "ContentsRegex": "$SEC105/003.outecountfullopt",
           "MessageArguments": { "obsoleteAnnotation": "__out_ecount_full_opt" }
         },
         {
+          "SubId": "outecountfullz",
           "ContentsRegex": "$SEC105/003.outecountfullz",
           "MessageArguments": { "obsoleteAnnotation": "__out_ecount_full_z" }
         },
         {
+          "SubId": "outecountpartz",
           "ContentsRegex": "$SEC105/003.outecountpartz",
           "MessageArguments": { "obsoleteAnnotation": "__out_ecount_part_z" }
         },
         {
+          "SubId": "outecountpartzopt",
           "ContentsRegex": "$SEC105/003.outecountpartzopt",
           "MessageArguments": { "obsoleteAnnotation": "__out_ecount_part_z_opt" }
         },
         {
+          "SubId": "outvalidated",
           "ContentsRegex": "$SEC105/003.outvalidated",
           "MessageArguments": { "obsoleteAnnotation": "__out_validated" }
         },
         {
+          "SubId": "outxcount",
           "ContentsRegex": "$SEC105/003.outxcount",
           "MessageArguments": { "obsoleteAnnotation": "__out_xcount" }
         },
         {
+          "SubId": "outxcountopt",
           "ContentsRegex": "$SEC105/003.outxcountopt",
           "MessageArguments": { "obsoleteAnnotation": "__out_xcount_opt" }
         },
         {
+          "SubId": "outxcountpartopt",
           "ContentsRegex": "$SEC105/003.outxcountpartopt",
           "MessageArguments": { "obsoleteAnnotation": "__out_xcount_part_opt" }
         },
         {
+          "SubId": "outz",
           "ContentsRegex": "$SEC105/003.outz",
           "MessageArguments": { "obsoleteAnnotation": "__out_z" }
         },
         {
+          "SubId": "outzopt",
           "ContentsRegex": "$SEC105/003.outzopt",
           "MessageArguments": { "obsoleteAnnotation": "__out_z_opt" }
         },
         {
+          "SubId": "post",
           "ContentsRegex": "$SEC105/003.post",
           "MessageArguments": { "obsoleteAnnotation": "__post" }
         },
         {
+          "SubId": "postinvalid",
           "ContentsRegex": "$SEC105/003.postinvalid",
           "MessageArguments": { "obsoleteAnnotation": "__post_invalid" }
         },
         {
+          "SubId": "pre",
           "ContentsRegex": "$SEC105/003.pre",
           "MessageArguments": { "obsoleteAnnotation": "__pre" }
         },
         {
+          "SubId": "precond",
           "ContentsRegex": "$SEC105/003.precond",
           "MessageArguments": { "obsoleteAnnotation": "__precond" }
         },
         {
+          "SubId": "prefastoperatornewnull",
           "ContentsRegex": "$SEC105/003.prefastoperatornewnull",
           "MessageArguments": { "obsoleteAnnotation": "__prefast_operator_new_null" }
         },
         {
+          "SubId": "range",
           "ContentsRegex": "$SEC105/003.range",
           "MessageArguments": { "obsoleteAnnotation": "__range" }
         },
         {
+          "SubId": "SALHFULLVER",
           "ContentsRegex": "$SEC105/003.SALHFULLVER",
           "MessageArguments": { "obsoleteAnnotation": "__SAL_H_FULL_VER" }
         },
         {
+          "SubId": "specstrings",
           "ContentsRegex": "$SEC105/003.specstrings",
           "MessageArguments": { "obsoleteAnnotation": "__specstrings" }
         },
         {
+          "SubId": "structxcount",
           "ContentsRegex": "$SEC105/003.structxcount",
           "MessageArguments": { "obsoleteAnnotation": "__struct_xcount" }
         },
         {
+          "SubId": "success",
           "ContentsRegex": "$SEC105/003.success",
           "MessageArguments": { "obsoleteAnnotation": "__success" }
         },
         {
+          "SubId": "typefix",
           "ContentsRegex": "$SEC105/003.typefix",
           "MessageArguments": { "obsoleteAnnotation": "__typefix" }
         },
         {
+          "SubId": "writableTo",
           "ContentsRegex": "$SEC105/003.writableTo",
           "MessageArguments": { "obsoleteAnnotation": "__writableTo" }
         },
         {
+          "SubId": "valid",
           "ContentsRegex": "$SEC105/003.valid",
           "MessageArguments": { "obsoleteAnnotation": "__valid" }
         },
         {
+          "SubId": "xcount",
           "ContentsRegex": "$SEC105/003.xcount",
           "MessageArguments": { "obsoleteAnnotation": "__xcount" }
         },
         {
+          "SubId": "internallocklevelorder",
           "ContentsRegex": "$SEC105/003.internallocklevelorder",
           "MessageArguments": { "obsoleteAnnotation": "__internal_lock_level_order" }
         },
         {
+          "SubId": "drvacquiresResource",
           "ContentsRegex": "$SEC105/003.drvacquiresResource",
           "MessageArguments": { "obsoleteAnnotation": "__drv_acquiresResource" }
         },
         {
+          "SubId": "drvreleasesResource",
           "ContentsRegex": "$SEC105/003.drvreleasesResource",
           "MessageArguments": { "obsoleteAnnotation": "__drv_releasesResource" }
         },
         {
+          "SubId": "drvacquiresResourceGlobal",
           "ContentsRegex": "$SEC105/003.drvacquiresResourceGlobal",
           "MessageArguments": { "obsoleteAnnotation": "__drv_acquiresResourceGlobal" }
         },
         {
+          "SubId": "drvreleasesResourceGlobal",
           "ContentsRegex": "$SEC105/003.drvreleasesResourceGlobal",
           "MessageArguments": { "obsoleteAnnotation": "__drv_releasesResourceGlobal" }
         },
         {
+          "SubId": "drvmustHold",
           "ContentsRegex": "$SEC105/003.drvmustHold",
           "MessageArguments": { "obsoleteAnnotation": "__drv_mustHold" }
         },
         {
+          "SubId": "drvmustHoldGlobal",
           "ContentsRegex": "$SEC105/003.drvmustHoldGlobal",
           "MessageArguments": { "obsoleteAnnotation": "__drv_mustHoldGlobal" }
         },
         {
+          "SubId": "drvneverHold",
           "ContentsRegex": "$SEC105/003.drvneverHold",
           "MessageArguments": { "obsoleteAnnotation": "__drv_neverHold" }
         },
         {
+          "SubId": "drvneverHoldGlobal",
           "ContentsRegex": "$SEC105/003.drvneverHoldGlobal",
           "MessageArguments": { "obsoleteAnnotation": "__drv_neverHoldGlobal" }
         },
         {
+          "SubId": "drvacquiresExclusiveResource",
           "ContentsRegex": "$SEC105/003.drvacquiresExclusiveResource",
           "MessageArguments": { "obsoleteAnnotation": "__drv_acquiresExclusiveResource" }
         },
         {
+          "SubId": "drvreleasesExclusiveResource",
           "ContentsRegex": "$SEC105/003.drvreleasesExclusiveResource",
           "MessageArguments": { "obsoleteAnnotation": "__drv_releasesExclusiveResource" }
         },
         {
+          "SubId": "drvacquiresExclusiveResourceGlobal",
           "ContentsRegex": "$SEC105/003.drvacquiresExclusiveResourceGlobal",
           "MessageArguments": { "obsoleteAnnotation": "__drv_acquiresExclusiveResourceGlobal" }
         },
         {
+          "SubId": "drvreleasesExclusiveResourceGlobal",
           "ContentsRegex": "$SEC105/003.drvreleasesExclusiveResourceGlobal",
           "MessageArguments": { "obsoleteAnnotation": "__drv_releasesExclusiveResourceGlobal" }
         },
         {
+          "SubId": "drvvalueIs",
           "ContentsRegex": "$SEC105/003.drvvalueIs",
           "MessageArguments": { "obsoleteAnnotation": "__drv_valueIs" }
         },
         {
+          "SubId": "drvformatString",
           "ContentsRegex": "$SEC105/003.drvformatString",
           "MessageArguments": { "obsoleteAnnotation": "__drv_formatString" }
         },
         {
+          "SubId": "drvderef",
           "ContentsRegex": "$SEC105/003.drvderef",
           "MessageArguments": { "obsoleteAnnotation": "__drv_deref" }
         },
         {
+          "SubId": "drvret",
           "ContentsRegex": "$SEC105/003.drvret",
           "MessageArguments": { "obsoleteAnnotation": "__drv_ret" }
         },
         {
+          "SubId": "drvfun",
           "ContentsRegex": "$SEC105/003.drvfun",
           "MessageArguments": { "obsoleteAnnotation": "__drv_fun" }
         },
         {
+          "SubId": "drvoutderef",
           "ContentsRegex": "$SEC105/003.drvoutderef",
           "MessageArguments": { "obsoleteAnnotation": "__drv_out_deref" }
         },
         {
+          "SubId": "drvin",
           "ContentsRegex": "$SEC105/003.drvin",
           "MessageArguments": { "obsoleteAnnotation": "__drv_in" }
         },
         {
+          "SubId": "drvnotPointer",
           "ContentsRegex": "$SEC105/003.drvnotPointer",
           "MessageArguments": { "obsoleteAnnotation": "__drv_notPointer" }
         },
         {
+          "SubId": "drvModeimpl",
           "ContentsRegex": "$SEC105/003.drvModeimpl",
           "MessageArguments": { "obsoleteAnnotation": "__drv_Mode_impl" }
         },
         {
+          "SubId": "drvstrictType",
           "ContentsRegex": "$SEC105/003.drvstrictType",
           "MessageArguments": { "obsoleteAnnotation": "__drv_strictType" }
         },
         {
+          "SubId": "drvstrictTypeMatch",
           "ContentsRegex": "$SEC105/003.drvstrictTypeMatch",
           "MessageArguments": { "obsoleteAnnotation": "__drv_strictTypeMatch" }
         },
         {
+          "SubId": "drvtypeCond",
           "ContentsRegex": "$SEC105/003.drvtypeCond",
           "MessageArguments": { "obsoleteAnnotation": "__drv_typeCond" }
         },
         {
+          "SubId": "drvtypeConst",
           "ContentsRegex": "$SEC105/003.drvtypeConst",
           "MessageArguments": { "obsoleteAnnotation": "__drv_typeConst" }
         },
         {
+          "SubId": "drvtypeExpr",
           "ContentsRegex": "$SEC105/003.drvtypeExpr",
           "MessageArguments": { "obsoleteAnnotation": "__drv_typeExpr" }
         },
         {
+          "SubId": "Derefinoutzbytecapc",
           "ContentsRegex": "$SEC105/003.Derefinoutzbytecapc",
           "MessageArguments": { "obsoleteAnnotation": "_Deref_inout_z_bytecap_c_" }
         },
         {
+          "SubId": "Derefinoutzcapc",
           "ContentsRegex": "$SEC105/003.Derefinoutzcapc",
           "MessageArguments": { "obsoleteAnnotation": "_Deref_inout_z_cap_c_" }
         },
         {
+          "SubId": "Derefoutzbytecapc",
           "ContentsRegex": "$SEC105/003.Derefoutzbytecapc",
           "MessageArguments": { "obsoleteAnnotation": "_Deref_out_z_bytecap_c_" }
         },
         {
+          "SubId": "Derefoutzcapc",
           "ContentsRegex": "$SEC105/003.Derefoutzcapc",
           "MessageArguments": { "obsoleteAnnotation": "_Deref_out_z_cap_c_" }
         },
         {
+          "SubId": "Derefpostcap",
           "ContentsRegex": "$SEC105/003.Derefpostcap",
           "MessageArguments": { "obsoleteAnnotation": "_Deref_post_cap_" }
         },
         {
+          "SubId": "Derefpostcount",
           "ContentsRegex": "$SEC105/003.Derefpostcount",
           "MessageArguments": { "obsoleteAnnotation": "_Deref_post_count_" }
         },
         {
+          "SubId": "Derefpostcountc",
           "ContentsRegex": "$SEC105/003.Derefpostcountc",
           "MessageArguments": { "obsoleteAnnotation": "_Deref_post_count_c_" }
         },
         {
+          "SubId": "Derefpostoptbytecountc",
           "ContentsRegex": "$SEC105/003.Derefpostoptbytecountc",
           "MessageArguments": { "obsoleteAnnotation": "_Deref_post_opt_bytecount_c_" }
         },
         {
+          "SubId": "Derefpostoptbytecountx",
           "ContentsRegex": "$SEC105/003.Derefpostoptbytecountx",
           "MessageArguments": { "obsoleteAnnotation": "_Deref_post_opt_bytecount_x_" }
         },
         {
+          "SubId": "Derefpostoptcap",
           "ContentsRegex": "$SEC105/003.Derefpostoptcap",
           "MessageArguments": { "obsoleteAnnotation": "_Deref_post_opt_cap_" }
         },
         {
+          "SubId": "Derefpostoptzcap",
           "ContentsRegex": "$SEC105/003.Derefpostoptzcap",
           "MessageArguments": { "obsoleteAnnotation": "_Deref_post_opt_z_cap_" }
         },
         {
+          "SubId": "Derefpostzcap",
           "ContentsRegex": "$SEC105/003.Derefpostzcap",
           "MessageArguments": { "obsoleteAnnotation": "_Deref_post_z_cap_" }
         },
         {
+          "SubId": "Inbytecountx",
           "ContentsRegex": "$SEC105/003.Inbytecountx",
           "MessageArguments": { "obsoleteAnnotation": "_In_bytecount_x_" }
         },
         {
+          "SubId": "Incountx",
           "ContentsRegex": "$SEC105/003.Incountx",
           "MessageArguments": { "obsoleteAnnotation": "_In_count_x_" }
         },
         {
+          "SubId": "Inoutbytecapx",
           "ContentsRegex": "$SEC105/003.Inoutbytecapx",
           "MessageArguments": { "obsoleteAnnotation": "_Inout_bytecap_x_" }
         },
         {
+          "SubId": "Inoutoptzbytecap",
           "ContentsRegex": "$SEC105/003.Inoutoptzbytecap",
           "MessageArguments": { "obsoleteAnnotation": "_Inout_opt_z_bytecap_" }
         },
         {
+          "SubId": "Inoutzbytecap",
           "ContentsRegex": "$SEC105/003.Inoutzbytecap",
           "MessageArguments": { "obsoleteAnnotation": "_Inout_z_bytecap_" }
         },
         {
+          "SubId": "Outbytecapx",
           "ContentsRegex": "$SEC105/003.Outbytecapx",
           "MessageArguments": { "obsoleteAnnotation": "_Out_bytecap_x_" }
         },
         {
+          "SubId": "Outcapm",
           "ContentsRegex": "$SEC105/003.Outcapm",
           "MessageArguments": { "obsoleteAnnotation": "_Out_cap_m_" }
         },
         {
+          "SubId": "Outcapx",
           "ContentsRegex": "$SEC105/003.Outcapx",
           "MessageArguments": { "obsoleteAnnotation": "_Out_cap_x_" }
         },
         {
+          "SubId": "Outcapcountx",
           "ContentsRegex": "$SEC105/003.Outcapcountx",
           "MessageArguments": { "obsoleteAnnotation": "_Out_capcount_x_" }
         },
         {
+          "SubId": "Outoptcapx",
           "ContentsRegex": "$SEC105/003.Outoptcapx",
           "MessageArguments": { "obsoleteAnnotation": "_Out_opt_cap_x_" }
         },
         {
+          "SubId": "Outoptzbytecap",
           "ContentsRegex": "$SEC105/003.Outoptzbytecap",
           "MessageArguments": { "obsoleteAnnotation": "_Out_opt_z_bytecap_" }
         },
         {
+          "SubId": "Outoptzbytecapc",
           "ContentsRegex": "$SEC105/003.Outoptzbytecapc",
           "MessageArguments": { "obsoleteAnnotation": "_Out_opt_z_bytecap_c_" }
         },
         {
+          "SubId": "Outoptzcappostcount",
           "ContentsRegex": "$SEC105/003.Outoptzcappostcount",
           "MessageArguments": { "obsoleteAnnotation": "_Out_opt_z_cap_post_count_" }
         },
         {
+          "SubId": "Outzbytecap",
           "ContentsRegex": "$SEC105/003.Outzbytecap",
           "MessageArguments": { "obsoleteAnnotation": "_Out_z_bytecap_" }
         },
         {
+          "SubId": "Outzbytecapc",
           "ContentsRegex": "$SEC105/003.Outzbytecapc",
           "MessageArguments": { "obsoleteAnnotation": "_Out_z_bytecap_c_" }
         },
         {
+          "SubId": "Outzcappostcount",
           "ContentsRegex": "$SEC105/003.Outzcappostcount",
           "MessageArguments": { "obsoleteAnnotation": "_Out_z_cap_post_count_" }
         },
         {
+          "SubId": "Outzcapx",
           "ContentsRegex": "$SEC105/003.Outzcapx",
           "MessageArguments": { "obsoleteAnnotation": "_Out_z_cap_x_" }
         },
         {
+          "SubId": "Outzcapcount",
           "ContentsRegex": "$SEC105/003.Outzcapcount",
           "MessageArguments": { "obsoleteAnnotation": "_Out_z_capcount_" }
         },
         {
+          "SubId": "Postbytecountx",
           "ContentsRegex": "$SEC105/003.Postbytecountx",
           "MessageArguments": { "obsoleteAnnotation": "_Post_bytecount_x_" }
         },
         {
+          "SubId": "Precapfor",
           "ContentsRegex": "$SEC105/003.Precapfor",
           "MessageArguments": { "obsoleteAnnotation": "_Pre_cap_for_" }
         },
         {
+          "SubId": "Preoptbytecountx",
           "ContentsRegex": "$SEC105/003.Preoptbytecountx",
           "MessageArguments": { "obsoleteAnnotation": "_Pre_opt_bytecount_x_" }
         },
         {
+          "SubId": "Prepostbytecountx",
           "ContentsRegex": "$SEC105/003.Prepostbytecountx",
           "MessageArguments": { "obsoleteAnnotation": "_Prepost_bytecount_x_" }
         },
         {
+          "SubId": "Prepostcount",
           "ContentsRegex": "$SEC105/003.Prepostcount",
           "MessageArguments": { "obsoleteAnnotation": "_Prepost_count_" }
         },
         {
+          "SubId": "Prepostoptbytecountx",
           "ContentsRegex": "$SEC105/003.Prepostoptbytecountx",
           "MessageArguments": { "obsoleteAnnotation": "_Prepost_opt_bytecount_x_" }
         },
         {
+          "SubId": "Retcountx",
           "ContentsRegex": "$SEC105/003.Retcountx",
           "MessageArguments": { "obsoleteAnnotation": "_Ret_count_x_" }
         },
         {
+          "SubId": "Retoptbytecapx",
           "ContentsRegex": "$SEC105/003.Retoptbytecapx",
           "MessageArguments": { "obsoleteAnnotation": "_Ret_opt_bytecap_x_" }
         },
         {
+          "SubId": "Retoptbytecountx",
           "ContentsRegex": "$SEC105/003.Retoptbytecountx",
           "MessageArguments": { "obsoleteAnnotation": "_Ret_opt_bytecount_x_" }
         },
         {
+          "SubId": "SAPreNullTerminatedCOMINGNullSANo",
           "ContentsRegex": "$SEC105/003.SAPreNullTerminatedCOMINGNullSANo",
           "MessageArguments": { "obsoleteAnnotation": "[SA_Pre(NullTerminated=COMING, Null=SA_No)]" }
         },
         {
+          "SubId": "SAPreNullTerminatedCOMINGNullSANoValidSAYes",
           "ContentsRegex": "$SEC105/003.SAPreNullTerminatedCOMINGNullSANoValidSAYes",
           "MessageArguments": { "obsoleteAnnotation": "[SA_Pre(NullTerminated=COMING, Null=SA_No, Valid=SA_Yes)]" }
         },
         {
+          "SubId": "SAPreElementSizeConst1",
           "ContentsRegex": "$SEC105/003.SAPreElementSizeConst1",
           "MessageArguments": { "obsoleteAnnotation": "[SA_Pre(ElementSizeConst=%1)]" }
         },
         {
+          "SubId": "SAPostNeedsReleaseSAYes",
           "ContentsRegex": "$SEC105/003.SAPostNeedsReleaseSAYes",
           "MessageArguments": { "obsoleteAnnotation": "[SA_Post(NeedsRelease=SA_Yes)]" }
         },
         {
+          "SubId": "SAPostValidSAUnchanged",
           "ContentsRegex": "$SEC105/003.SAPostValidSAUnchanged",
           "MessageArguments": { "obsoleteAnnotation": "[SA_Post(Valid=SA_Unchanged)]" }
         },
         {
+          "SubId": "SAPostPROPERTYvalue1value2",
           "ContentsRegex": "$SEC105/003.SAPostPROPERTYvalue1value2",
           "MessageArguments": { "obsoleteAnnotation": "[SA_Post( PROPERTY=(value1 | value2) )]" }
         },
         {
+          "SubId": "SAPostElementSizeParam1",
           "ContentsRegex": "$SEC105/003.SAPostElementSizeParam1",
           "MessageArguments": { "obsoleteAnnotation": "[SA_Post(ElementSizeParam=\"%1\")]" }
         },
         {
+          "SubId": "PreDerefINTMINAccessWrite",
           "ContentsRegex": "$SEC105/003.PreDerefINTMINAccessWrite",
           "MessageArguments": { "obsoleteAnnotation": "[Pre( Deref=INT_MIN, Access=Write )]" }
         },
         {
+          "SubId": "PreDerefderefAccess1",
           "ContentsRegex": "$SEC105/003.PreDerefderefAccess1",
           "MessageArguments": { "obsoleteAnnotation": "[Pre( Deref=deref, Access=%1 )]" }
         },
         {
+          "SubId": "PreDerefderefNull1",
           "ContentsRegex": "$SEC105/003.PreDerefderefNull1",
           "MessageArguments": { "obsoleteAnnotation": "[Pre( Deref=deref, Null=%1 )]" }
         },
         {
+          "SubId": "PreDerefderefValidvalidValuePreDerefderefderefNNullnullValue",
           "ContentsRegex": "$SEC105/003.PreDerefderefValidvalidValuePreDerefderefderefNNullnullValue",
           "MessageArguments": { "obsoleteAnnotation": "[Pre( Deref=deref, Valid=validValue ), Pre( Deref=deref+derefN, Null=nullValue )]" }
         },
         {
+          "SubId": "PreNeedsRelease1",
           "ContentsRegex": "$SEC105/003.PreNeedsRelease1",
           "MessageArguments": { "obsoleteAnnotation": "[Pre( NeedsRelease=%1 )]" }
         },
         {
+          "SubId": "PreValidSANoAccess",
           "ContentsRegex": "$SEC105/003.PreValidSANoAccess",
           "MessageArguments": { "obsoleteAnnotation": "[Pre(Valid=SA_NoAccess)]" }
         },
         {
+          "SubId": "PostAccess1",
           "ContentsRegex": "$SEC105/003.PostAccess1",
           "MessageArguments": { "obsoleteAnnotation": "[Post( Access=%1 )]" }
         },
         {
+          "SubId": "PostDeref1Access1",
           "ContentsRegex": "$SEC105/003.PostDeref1Access1",
           "MessageArguments": { "obsoleteAnnotation": "[Post( Deref=1, Access=%1 )]" }
         },
         {
+          "SubId": "PostDeref1NeedsRelease1",
           "ContentsRegex": "$SEC105/003.PostDeref1NeedsRelease1",
           "MessageArguments": { "obsoleteAnnotation": "[Post( Deref=1, NeedsRelease=%1 )]" }
         },
         {
+          "SubId": "PostDeref1PROPERTY2",
           "ContentsRegex": "$SEC105/003.PostDeref1PROPERTY2",
           "MessageArguments": { "obsoleteAnnotation": "[Post(Deref=%1, PROPERTY=%2)]" }
         },
         {
+          "SubId": "PostDeref1PROPERTY2",
           "ContentsRegex": "$SEC105/003.PostDeref1PROPERTY2",
           "MessageArguments": { "obsoleteAnnotation": "[Post(Deref=%1, PROPERTY=\"%2\")]" }
         },
         {
+          "SubId": "PostDeref1Access2",
           "ContentsRegex": "$SEC105/003.PostDeref1Access2",
           "MessageArguments": { "obsoleteAnnotation": "[Post( Deref=%1, Access=%2 )]" }
         },
         {
+          "SubId": "PostDeref1Null2",
           "ContentsRegex": "$SEC105/003.PostDeref1Null2",
           "MessageArguments": { "obsoleteAnnotation": "[Post( Deref=%1, Null=%2 )]" }
         },
         {
+          "SubId": "PostDeref1property12",
           "ContentsRegex": "$SEC105/003.PostDeref1property12",
           "MessageArguments": { "obsoleteAnnotation": "[Post(Deref=%1, property1=%2)]" }
         },
         {
+          "SubId": "PostDeref1property22",
           "ContentsRegex": "$SEC105/003.PostDeref1property22",
           "MessageArguments": { "obsoleteAnnotation": "[Post(Deref=%1, property2=%2)]" }
         },
         {
+          "SubId": "PostDeref1Valid2",
           "ContentsRegex": "$SEC105/003.PostDeref1Valid2",
           "MessageArguments": { "obsoleteAnnotation": "[Post( Deref=%1, Valid=%2 )]" }
         },
         {
+          "SubId": "PostNeedsRelease1",
           "ContentsRegex": "$SEC105/003.PostNeedsRelease1",
           "MessageArguments": { "obsoleteAnnotation": "[Post( NeedsRelease=%1 )]" }
         },
         {
+          "SubId": "PostPROPERTY1",
           "ContentsRegex": "$SEC105/003.PostPROPERTY1",
           "MessageArguments": { "obsoleteAnnotation": "[Post(PROPERTY=%1)]" }
         },
         {
+          "SubId": "PostPROPERTY1",
           "ContentsRegex": "$SEC105/003.PostPROPERTY1",
           "MessageArguments": { "obsoleteAnnotation": "[Post(PROPERTY=\"%1\")]" }
         },
         {
+          "SubId": "PostPROPERTY1Deref2",
           "ContentsRegex": "$SEC105/003.PostPROPERTY1Deref2",
           "MessageArguments": { "obsoleteAnnotation": "[Post(PROPERTY=\"%1\", Deref=%2)]" }
         },
         {
+          "SubId": "PostPROPERTY1Deref2",
           "ContentsRegex": "$SEC105/003.PostPROPERTY1Deref2",
           "MessageArguments": { "obsoleteAnnotation": "[Post(PROPERTY=%1, Deref=%2)]" }
         },
         {
+          "SubId": "returnvaluePostAccessSAMaybe",
           "ContentsRegex": "$SEC105/003.returnvaluePostAccessSAMaybe",
           "MessageArguments": { "obsoleteAnnotation": "[returnvalue:Post(Access=SA_Maybe)]" }
         },
         {
+          "SubId": "returnvaluePostAccessSANoAccess",
           "ContentsRegex": "$SEC105/003.returnvaluePostAccessSANoAccess",
           "MessageArguments": { "obsoleteAnnotation": "[returnvalue:Post(Access=SA_NoAccess)]" }
         },
         {
+          "SubId": "returnvaluePostAccessSANoAccessSANoAccess",
           "ContentsRegex": "$SEC105/003.returnvaluePostAccessSANoAccessSANoAccess",
           "MessageArguments": { "obsoleteAnnotation": "[returnvalue:Post(Access=(SA_NoAccess | SA_NoAccess))]" }
         },
         {
+          "SubId": "returnvaluePostDeref1ValidSAYes",
           "ContentsRegex": "$SEC105/003.returnvaluePostDeref1ValidSAYes",
           "MessageArguments": { "obsoleteAnnotation": "[returnvalue:Post(Deref='%1', Valid=SA_Yes)]" }
         }

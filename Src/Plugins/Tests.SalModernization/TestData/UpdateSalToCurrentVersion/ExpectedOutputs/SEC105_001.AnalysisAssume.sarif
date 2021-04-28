@@ -23,7 +23,7 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains a use of the obsolete or redundant SAL v1 '{1}' annotation that should be removed."
+                  "text": "The SAL v1 '{0}' annotation is obsolete in SAL v2 and should be removed."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -39,7 +39,7 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains a use of the obsolete or redundant '{1}' annotation and should be replaced for '{2}'."
+                  "text": "The SAL v1 '{0}' annotation is obsolete and should be replaced with the SAL v2 equivalent '{1}'."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -55,7 +55,7 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains a use of the SAL v1 '{1}' annotation that should be converted manually to the correct SAL v2 pattern."
+                  "text": "The SAL v1 '{0}' annotation has changed in SAL v2 and should be converted manually to the correct pattern."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -70,12 +70,11 @@
       ],
       "results": [
         {
-          "ruleId": "SEC105/001",
+          "ruleId": "SEC105/001/allocator",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
               "__allocator"
             ]
           },
@@ -134,12 +133,11 @@
           ]
         },
         {
-          "ruleId": "SEC105/001",
+          "ruleId": "SEC105/001/allocator",
           "ruleIndex": 0,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
               "__allocator"
             ]
           },
@@ -198,12 +196,11 @@
           ]
         },
         {
-          "ruleId": "SEC105/002",
+          "ruleId": "SEC105/002/analysisassume",
           "ruleIndex": 1,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
               "__analysis_assume",
               "_Analysis_assume_"
             ]
@@ -263,12 +260,11 @@
           ]
         },
         {
-          "ruleId": "SEC105/003",
+          "ruleId": "SEC105/003/maybenull",
           "ruleIndex": 2,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
               "__maybenull"
             ]
           },
@@ -301,12 +297,11 @@
           "rank": 54.42
         },
         {
-          "ruleId": "SEC105/003",
+          "ruleId": "SEC105/003/notnull",
           "ruleIndex": 2,
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC105_001.AnalysisAssume.cpp",
               "__notnull"
             ]
           },
