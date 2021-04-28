@@ -235,7 +235,7 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-            [Fact]
+        [Fact]
         public void Regex2_MatchWithNamedGroups()
         {
             bool isMatch;
