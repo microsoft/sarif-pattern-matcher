@@ -156,7 +156,7 @@ extern "C" __declspec(dllexport) int Matches(int regexIndex, String8 text, int f
 //
 // Implementation note: The data std::vector is guaranteed to be contiguous by the C++ standard,
 // so we can pass it to C# space for pointer-based copying.
-extern "C" __declspec(dllexport) void MatchesNamedGroups2(
+extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 	_In_  StringUtf8 pattern,
 	_In_  StringUtf8 text,
 

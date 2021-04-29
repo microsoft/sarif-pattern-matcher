@@ -227,7 +227,7 @@ namespace Microsoft.RE2.Managed
                 void* groupNamesBufferCleanupPtr;
                 void* matchesCleanupPtr;
 
-                NativeMethods.MatchesNamedGroups2(
+                NativeMethods.MatchesCaptureGroups(
                     new StringUtf8(patternUtf8BytesPtr, pattern.Length),
                     new StringUtf8(textUtf8BytesPtr, text.Length),
                     &groupNameHeaders,

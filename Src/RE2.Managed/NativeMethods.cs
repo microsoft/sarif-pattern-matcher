@@ -88,7 +88,7 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        public static unsafe void MatchesNamedGroups2(
+        public static unsafe void MatchesCaptureGroups(
                 StringUtf8 pattern,
                 StringUtf8 text,
                 GroupNameHeader** groupNameHeadersOut,
@@ -103,7 +103,7 @@ namespace Microsoft.RE2.Managed
         {
             if (Environment.Is64BitProcess)
             {
-                NativeMethodsX64.MatchesNamedGroups2(pattern,
+                NativeMethodsX64.MatchesCaptureGroups(pattern,
                     text,
                     groupNameHeadersOut,
                     groupNamesBufferOut,
@@ -174,7 +174,7 @@ namespace Microsoft.RE2.Managed
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
-            public static unsafe extern bool MatchesNamedGroups2(
+            public static unsafe extern bool MatchesCaptureGroups(
                 StringUtf8 pattern,
                 StringUtf8 text,
                 GroupNameHeader** groupNameHeadersOut,
