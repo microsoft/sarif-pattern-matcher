@@ -23,10 +23,10 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains a call to '{1}', a potentially insecure API that could be replaced with a more secure alternative: '{2}'."
+                  "text": "'{0}' contains a call to '{1}', a potentially insecure API that could be replaced with a more secure alternative: {2}."
                 },
                 "Default_Secure": {
-                  "text": "'{0}' contains a call to the secure API '{1}'."
+                  "text": "'{0}' contains a call to '{1}', a more secure alternative to one or more potentially insecure APIs: {2}."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -48,7 +48,7 @@
             "arguments": [
               "SEC104.Memory.Allocation_alloca.c",
               "_alloca",
-              "_malloca"
+              "'_malloca'"
             ]
           },
           "locations": [
@@ -62,11 +62,11 @@
                   "startLine": 10,
                   "startColumn": 13,
                   "endLine": 10,
-                  "endColumn": 21,
+                  "endColumn": 20,
                   "charOffset": 187,
-                  "charLength": 8,
+                  "charLength": 7,
                   "snippet": {
-                    "text": "_alloca("
+                    "text": "_alloca"
                   }
                 }
               }
