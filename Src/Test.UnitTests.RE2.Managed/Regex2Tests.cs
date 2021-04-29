@@ -184,7 +184,7 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void Regex2_Groups()
+        public void Regex2_CaptureGroups()
         {
             List<Dictionary<string, string>> matches;
 
@@ -195,7 +195,7 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void Regex2_Groups2()
+        public void Regex2_CaptureGroups_2()
         {
             List<Dictionary<string, string>> matches;
 
@@ -214,7 +214,7 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void Regex2_Groups3()
+        public void Regex2_CaptureGroups_3()
         {
             List<Dictionary<string, string>> matches;
 
