@@ -218,6 +218,25 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, string>> matches;
 
+            Regex2.Matches(@"(?P<a>a)(?P<bb>b)(?P<ccc>c)", "abc", out matches);
+
+            Assert.Single(matches);
+            Assert.Equal(4, matches[0].Count);
+            Assert.True(matches[0].ContainsKey("0"));
+            Assert.Equal("abc", matches[0]["0"]);
+            Assert.True(matches[0].ContainsKey("a"));
+            Assert.Equal("a", matches[0]["a"]);
+            Assert.True(matches[0].ContainsKey("bb"));
+            Assert.Equal("b", matches[0]["bb"]);
+            Assert.True(matches[0].ContainsKey("ccc"));
+            Assert.Equal("c", matches[0]["ccc"]);
+        }
+
+        [Fact]
+        public void Regex2_CaptureGroups_4()
+        {
+            List<Dictionary<string, string>> matches;
+
             Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc abc abc", out matches);
 
             Assert.Equal(3, matches.Count);

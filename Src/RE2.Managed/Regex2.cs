@@ -245,7 +245,7 @@ namespace Microsoft.RE2.Managed
                 for (int i = 0; i < numGroupNames; i++)
                 {
                     string groupName = Encoding.UTF8.GetString(groupNamesBuffer, groupNameHeaders[i].Length);
-                    groupNamesBuffer += groupNameHeaders->Length;
+                    groupNamesBuffer += groupNameHeaders[i].Length;
                     submatchIndex2GroupName[groupNameHeaders[i].Index] = groupName;
                 }
 
