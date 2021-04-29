@@ -31,13 +31,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 {
                     case "BannedApi":
                     {
-                        searchDefinitions = ExportBannedApi(options.InputFilePath);
+                        searchDefinitions = ExportBannedApi(FileSystem, options.InputFilePath);
                         break;
                     }
 
                     case "Sal":
                     {
-                        searchDefinitions = ExportSal(options.InputFilePath);
+                        searchDefinitions = ExportSal(FileSystem, options.InputFilePath);
                         break;
                     }
 
@@ -70,10 +70,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return SUCCESS;
         }
 
-        internal static SearchDefinitions ExportBannedApi(string filePath)
+        internal static SearchDefinitions ExportBannedApi(IFileSystem fileSystem, string filePath)
         {
             SearchDefinitions searchDefinitions = null;
-            string bannedApiInformation = File.ReadAllText(filePath);
+            string bannedApiInformation = fileSystem.FileReadAllText(filePath);
             using var reader = new StringReader(bannedApiInformation);
             var serializer = new XmlSerializer(typeof(ArrayOfContentSearcher));
             var arrayOfContentSearcher = (ArrayOfContentSearcher)serializer.Deserialize(reader);
@@ -170,9 +170,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return searchDefinitions;
         }
 
-        internal static SearchDefinitions ExportSal(string filePath)
+        internal static SearchDefinitions ExportSal(IFileSystem fileSystem, string filePath)
         {
-            string[] lines = File.ReadAllLines(filePath);
+            string[] lines = fileSystem.FileReadAllLines(filePath);
 
             int i = 1;
             var searchDefinitions = new SearchDefinitions

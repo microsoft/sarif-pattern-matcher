@@ -5,6 +5,8 @@ using System.Linq;
 
 using FluentAssertions;
 
+using Moq;
+
 using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
@@ -14,6 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         [Fact]
         public void ExportSearchDefinitionsCommand_ExportSingleBannedApi()
         {
+            const string filePath = "file.txt";
             const string bannedApiInformation = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <ArrayOfContentSearcher xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
   <ContentSearcher>
@@ -28,18 +31,31 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
   </ContentSearcher>
 </ArrayOfContentSearcher>";
 
-            SearchDefinitions searchDefinitions = ExportSearchDefinitionsCommand.ExportBannedApi(bannedApiInformation);
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileReadAllText(filePath)).Returns(bannedApiInformation);
+
+            SearchDefinitions searchDefinitions = ExportSearchDefinitionsCommand.ExportBannedApi(mockFileSystem.Object, filePath);
             searchDefinitions.Should().NotBeNull();
             searchDefinitions.Definitions.Count.Should().Be(1);
-            searchDefinitions.Definitions[0].MatchExpressions.Count(d => d.Kind == ResultKind.Pass).Should().Be(1);
             searchDefinitions.Definitions[0].MatchExpressions.Count(d => d.Level == FailureLevel.Warning).Should().Be(1);
         }
 
         [Fact]
         public void ExportSearchDefinitionsCommand_ExportMultipleBannedApi()
         {
+            const string filePath = "file.txt";
             const string bannedApiInformation = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <ArrayOfContentSearcher xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <ContentSearcher>
+    <Name>DoNotUseBannedApi</Name>
+    <RuleId>BAN1001/Memory/Allocation/_alloca</RuleId>
+    <ResourceMatchPattern>\.(c|cpp|cxx)$</ResourceMatchPattern>
+    <ContentSearchPatterns>
+      <string>\b(?&lt;refine&gt;_alloca)\s*\(</string>
+    </ContentSearchPatterns>
+    <FullMatchDetails>'{0}' contains a call to '_alloca', a potentially insecure API that could be replaced with a more secure alternative: '_malloca'.</FullMatchDetails>
+    <Severity>2</Severity>
+  </ContentSearcher>
   <ContentSearcher>
     <Name>DoNotUseBannedApi</Name>
     <RuleId>BAN1001/String/Input/_getts</RuleId>
@@ -52,11 +68,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
   </ContentSearcher>
 </ArrayOfContentSearcher>";
 
-            SearchDefinitions searchDefinitions = ExportSearchDefinitionsCommand.ExportBannedApi(bannedApiInformation);
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileReadAllText(filePath)).Returns(bannedApiInformation);
+
+            SearchDefinitions searchDefinitions = ExportSearchDefinitionsCommand.ExportBannedApi(mockFileSystem.Object, filePath);
             searchDefinitions.Should().NotBeNull();
-            searchDefinitions.Definitions.Count.Should().Be(1);
-            searchDefinitions.Definitions[0].MatchExpressions.Count(d => d.Kind == ResultKind.Pass).Should().Be(5);
-            searchDefinitions.Definitions[0].MatchExpressions.Count(d => d.Level == FailureLevel.Error).Should().Be(1);
+            searchDefinitions.Definitions.Count.Should().Be(2);
+            searchDefinitions.Definitions[1].MatchExpressions.Count(d => d.Level == FailureLevel.Error).Should().Be(1);
+            searchDefinitions.Definitions[0].MatchExpressions.Count(d => d.Level == FailureLevel.Warning).Should().Be(1);
         }
     }
 }
