@@ -188,7 +188,7 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, string>> matches;
 
-            Regex2.MatchesNamedGroups2(@"abc", "abc", out matches);
+            Regex2.Matches(@"abc", "abc", out matches);
             Assert.Single(matches);
             Assert.True(matches[0].ContainsKey("0"));
             Assert.Equal("abc", matches[0]["0"]);
@@ -199,7 +199,7 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, string>> matches;
 
-            Regex2.MatchesNamedGroups2(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out matches);
+            Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out matches);
 
             Assert.Single(matches);
             Assert.Equal(4, matches[0].Count);
@@ -218,7 +218,7 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, string>> matches;
 
-            Regex2.MatchesNamedGroups2(@"(?P<g1>a)(b)(?P<g2>c)", "abc abc abc", out matches);
+            Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc abc abc", out matches);
 
             Assert.Equal(3, matches.Count);
             for (int i = 0; i < 3; i++)

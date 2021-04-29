@@ -209,7 +209,7 @@ namespace Microsoft.RE2.Managed
         /// ]
         /// </code>
         /// </example>
-        public static unsafe void MatchesNamedGroups2(string pattern, string text, out List<Dictionary<string, string>> matches)
+        public static unsafe void Matches(string pattern, string text, out List<Dictionary<string, string>> matches)
         {
             byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
             byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
