@@ -195,12 +195,6 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void PlatformTest()
-        {
-            Assert.True(!Environment.Is64BitProcess);
-        }
-
-        [Fact]
         public void Regex2_CaptureGroups_2()
         {
             List<Dictionary<string, string>> matches;
