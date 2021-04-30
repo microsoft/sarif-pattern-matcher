@@ -96,7 +96,7 @@ namespace Microsoft.RE2.Managed
             }
             else
             {
-                throw new NotImplementedException();
+                NativeMethodsX86.MatchesCaptureGroups(pattern, text, matchesCaptureGroupsOutput);
             }
         }
 
@@ -108,7 +108,7 @@ namespace Microsoft.RE2.Managed
             }
             else
             {
-                throw new NotImplementedException();
+                NativeMethodsX86.MatchesCaptureGroupsDispose(matchesCaptureGroupsOutput);
             }
         }
 
@@ -139,6 +139,14 @@ namespace Microsoft.RE2.Managed
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern void GetRegexSetup(StringUtf8 pattern, int* numCapturingGroups, int* numNamedCapturingGroups, int* groupNamesBufferSize);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            public static unsafe extern bool MatchesCaptureGroups(StringUtf8 pattern, StringUtf8 text, MatchesCaptureGroupsOutput** matchesCaptureGroupsOutput);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            public static unsafe extern bool MatchesCaptureGroupsDispose(MatchesCaptureGroupsOutput* matchesCaptureGroupsOutput);
         }
 
         private static class NativeMethodsX64
