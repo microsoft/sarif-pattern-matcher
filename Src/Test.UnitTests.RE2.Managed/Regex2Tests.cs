@@ -243,20 +243,20 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, string>> matches;
 
-            Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc abc abc", out matches);
+            Regex2.Matches(@"(?P<g1>a)(a)(?P<g2>a)", "aaaaaaaaaaaa", out matches);
 
-            Assert.Equal(3, matches.Count);
-            for (int i = 0; i < 3; i++)
+            Assert.Equal(4, matches.Count);
+            for (int i = 0; i < 4; i++)
             {
                 Assert.Equal(4, matches[0].Count);
                 Assert.True(matches[0].ContainsKey("0"));
-                Assert.Equal("abc", matches[0]["0"]);
+                Assert.Equal("aaa", matches[0]["0"]);
                 Assert.True(matches[0].ContainsKey("g1"));
                 Assert.Equal("a", matches[0]["g1"]);
                 Assert.True(matches[0].ContainsKey("2"));
-                Assert.Equal("b", matches[0]["2"]);
+                Assert.Equal("a", matches[0]["2"]);
                 Assert.True(matches[0].ContainsKey("g2"));
-                Assert.Equal("c", matches[0]["g2"]);
+                Assert.Equal("a", matches[0]["g2"]);
             }
         }
 
