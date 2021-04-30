@@ -100,6 +100,18 @@ namespace Microsoft.RE2.Managed
             }
         }
 
+        public static unsafe void MatchesCaptureGroupsDispose(MatchesCaptureGroupsOutput* matchesCaptureGroupsOutput)
+        {
+            if (Environment.Is64BitProcess)
+            {
+                NativeMethodsX64.MatchesCaptureGroupsDispose(matchesCaptureGroupsOutput);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
         public static unsafe extern IntPtr LoadLibrary(string libraryPath);
 
@@ -154,6 +166,10 @@ namespace Microsoft.RE2.Managed
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern bool MatchesCaptureGroups(StringUtf8 pattern, StringUtf8 text, MatchesCaptureGroupsOutput** matchesCaptureGroupsOutput);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            public static unsafe extern bool MatchesCaptureGroupsDispose(MatchesCaptureGroupsOutput* matchesCaptureGroupsOutput);
         }
     }
 }

@@ -259,6 +259,9 @@ namespace Microsoft.RE2.Managed
                         }
                     }
                 }
+
+                // Free C++ resources.
+                NativeMethods.MatchesCaptureGroupsDispose(output);
             }
         }
 
