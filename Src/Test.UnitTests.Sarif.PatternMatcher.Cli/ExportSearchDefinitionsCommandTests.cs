@@ -31,10 +31,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
   </ContentSearcher>
 </ArrayOfContentSearcher>";
 
+            // Arrange
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.FileReadAllText(filePath)).Returns(bannedApiInformation);
 
+            // Act
             SearchDefinitions searchDefinitions = ExportSearchDefinitionsCommand.ExportBannedApi(mockFileSystem.Object, filePath);
+
+            // Assert
             searchDefinitions.Should().NotBeNull();
             searchDefinitions.Definitions.Count.Should().Be(1);
             searchDefinitions.Definitions[0].MatchExpressions.Count(d => d.Level == FailureLevel.Warning).Should().Be(1);
@@ -68,10 +72,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
   </ContentSearcher>
 </ArrayOfContentSearcher>";
 
+            // Arrange
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.FileReadAllText(filePath)).Returns(bannedApiInformation);
 
+            // Act
             SearchDefinitions searchDefinitions = ExportSearchDefinitionsCommand.ExportBannedApi(mockFileSystem.Object, filePath);
+
+            // Assert
             searchDefinitions.Should().NotBeNull();
             searchDefinitions.Definitions.Count.Should().Be(2);
             searchDefinitions.Definitions[1].MatchExpressions.Count(d => d.Level == FailureLevel.Error).Should().Be(1);
