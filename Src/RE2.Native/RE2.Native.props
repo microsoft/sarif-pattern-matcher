@@ -49,6 +49,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="StringUtf8.h" />
     <ClInclude Include="GroupNameHeader.h" />
+    <ClInclude Include="MatchesCaptureGroupsOutput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RE2Native.cpp" />
