@@ -4,1058 +4,2573 @@
     {
       "Id": "SEC104/001",
       "Name": "UseSecureApi/Memory/Allocation",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "_alloca",
           "Level": "Warning",
-          "ContentsRegex": "\\b(?<insecureApi>[_]?alloca)\\s*\\(",
-          "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
+          "ContentsRegex": "\\b(?<refine>_alloca)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_malloca"
+            "alternative": "'_malloca'"
+          }
+        },
+        {
+          "SubId": "alloca",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>alloca)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_malloca'"
           }
         },
         {
           "SubId": "_malloca",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
           "Kind": "Pass",
-          "ContentsRegex": "\\b(?<secureApi>[_]?malloca)\\s*\\(",
-          "MessageId": "Default_Secure",
-          "Message": "'{0:scanTarget}' contains a call to the secure API '{1:secureApi}'."
+          "ContentsRegex": "\\b(?<refine>_malloca)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_alloca', 'alloca'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/002",
       "Name": "UseSecureApi/String/Input",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "_getts",
-          "ContentsRegex": "\\b(?<insecureApi>_getts)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>_getts)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "gets_s, StringCbGets, StringCbGetsEx, StringCchGets or StringCchGetsEx"
+            "alternative": "'gets_s', 'StringCbGets', 'StringCbGetsEx', 'StringCchGets', 'StringCchGetsEx'"
           }
         },
         {
           "SubId": "_gettws",
-          "ContentsRegex": "\\b(?<insecureApi>_gettws)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>_gettws)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "gets_s"
+            "alternative": "'gets_s'"
           }
         },
         {
           "SubId": "_getws",
-          "ContentsRegex": "\\b(?<insecureApi>_getws)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_getws)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbGets, StringCbGetsEx, StringCchGets or StringCchGetsEx"
+            "alternative": "'StringCbGets', 'StringCbGetsEx', 'StringCchGets', 'StringCchGetsEx'"
           }
         },
         {
           "SubId": "gets",
-          "ContentsRegex": "\\b(?<insecureApi>gets)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>gets)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "fgets, gets_s, StringCbGets, StringCbGetsEx, StringCchGets or StringCchGetsEx"
+            "alternative": "'fgets', 'gets_s', 'StringCbGets', 'StringCbGetsEx', 'StringCchGets', 'StringCchGetsEx'"
           }
+        },
+        {
+          "SubId": "fgets",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>fgets)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'gets'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "gets_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>gets_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_getts', '_gettws', 'gets'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbGets",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbGets)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_getts', '_getws', 'gets'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbGetsEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbGetsEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_getts', '_getws', 'gets'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchGets",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchGets)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_getts', '_getws', 'gets'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchGetsEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchGetsEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_getts', '_getws', 'gets'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/003",
       "Name": "UseSecureApi/String/Conversion",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "_i64toa",
-          "ContentsRegex": "\\b(?<insecureApi>_i64toa)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_i64toa)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_i64toa_s"
+            "alternative": "'_i64toa_s'"
           }
         },
         {
           "SubId": "_i64tow",
-          "ContentsRegex": "\\b(?<insecureApi>_i64tow)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_i64tow)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_i64tow_s"
+            "alternative": "'_i64tow_s'"
           }
         },
         {
           "SubId": "_itoa",
-          "ContentsRegex": "\\b(?<insecureApi>_itoa)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_itoa)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_itoa_s"
+            "alternative": "'_itoa_s'"
           }
         },
         {
           "SubId": "_itow",
-          "ContentsRegex": "\\b(?<insecureApi>_itow)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_itow)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_itow_s"
+            "alternative": "'_itow_s'"
           }
         },
         {
           "SubId": "_ui64toa",
-          "ContentsRegex": "\\b(?<insecureApi>_ui64toa)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_ui64toa)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_ui64toa_s"
+            "alternative": "'_ui64toa_s'"
           }
         },
         {
           "SubId": "_ui64tow",
-          "ContentsRegex": "\\b(?<insecureApi>_ui64tow)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_ui64tow)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_ui64tow_s"
+            "alternative": "'_ui64tow_s'"
           }
         },
         {
           "SubId": "_ultoa",
-          "ContentsRegex": "\\b(?<insecureApi>_ultoa)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_ultoa)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_ultoa_s"
+            "alternative": "'_ultoa_s'"
           }
         },
         {
           "SubId": "_ultow",
-          "ContentsRegex": "\\b(?<insecureApi>_ultow)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_ultow)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_ultow_s"
+            "alternative": "'_ultow_s'"
           }
         },
         {
           "SubId": "atof",
-          "ContentsRegex": "\\b(?<insecureApi>atof)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>atof)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "strtod"
+            "alternative": "'strtod'"
           }
         },
         {
           "SubId": "atoi",
-          "ContentsRegex": "\\b(?<insecureApi>atoi)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>atoi)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "strtol"
+            "alternative": "'strtol'"
           }
         },
         {
           "SubId": "atoll",
-          "ContentsRegex": "\\b(?<insecureApi>atoll)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>atoll)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "strtoll"
+            "alternative": "'strtoll'"
           }
         },
         {
           "SubId": "mbsrtowcs",
-          "ContentsRegex": "\\b(?<insecureApi>mbsrtowcs)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>mbsrtowcs)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "mbsrtowcs_s"
+            "alternative": "'mbsrtowcs_s'"
           }
         },
         {
           "SubId": "mbstowcs",
-          "ContentsRegex": "\\b(?<insecureApi>mbstowcs)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>mbstowcs)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "mbstowcs_s"
+            "alternative": "'mbstowcs_s'"
           }
         },
         {
           "SubId": "wcrtomb",
-          "ContentsRegex": "\\b(?<insecureApi>wcrtomb)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wcrtomb)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "wcrtomb_s"
+            "alternative": "'wcrtomb_s'"
           }
         },
         {
           "SubId": "wcrtombs",
-          "ContentsRegex": "\\b(?<insecureApi>wcrtombs)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wcrtombs)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "wcrtombs_s"
+            "alternative": "'wcrtombs_s'"
           }
         },
         {
           "SubId": "wcsrtombs",
-          "ContentsRegex": "\\b(?<insecureApi>wcsrtombs)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wcsrtombs)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "wcsrtombs_s"
+            "alternative": "'wcsrtombs_s'"
           }
         },
         {
           "SubId": "wctomb",
-          "ContentsRegex": "\\b(?<insecureApi>wctomb)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wctomb)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "wctomb_s"
+            "alternative": "'wctomb_s'"
           }
+        },
+        {
+          "SubId": "_i64toa_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_i64toa_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_i64toa'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_i64tow_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_i64tow_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_i64tow'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_itoa_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_itoa_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_itoa'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_itow_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_itow_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_itow'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_ui64toa_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_ui64toa_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_ui64toa'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_ui64tow_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_ui64tow_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_ui64tow'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_ultoa_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_ultoa_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_ultoa'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_ultow_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_ultow_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_ultow'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "mbsrtowcs_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>mbsrtowcs_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'mbsrtowcs'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "mbstowcs_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>mbstowcs_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'mbstowcs'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strtod",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strtod)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'atof'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strtol",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strtol)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'atoi'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strtoll",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strtoll)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'atoll'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wcrtomb_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wcrtomb_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wcrtomb'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wcrtombs_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wcrtombs_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wcrtombs'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wcsrtombs_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wcsrtombs_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wcsrtombs'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wctomb_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wctomb_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wctomb'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/004",
       "Name": "UseSecureApi/Path/Manipulation",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "_makepath",
-          "ContentsRegex": "\\b(?<insecureApi>_makepath)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_makepath)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_makepath_s"
+            "alternative": "'_makepath_s'"
           }
         },
         {
           "SubId": "_splitpath",
-          "ContentsRegex": "\\b(?<insecureApi>_splitpath)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_splitpath)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_splitpath_s"
+            "alternative": "'_splitpath_s'"
           }
         },
         {
           "SubId": "_wmakepath",
-          "ContentsRegex": "\\b(?<insecureApi>_wmakepath)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_wmakepath)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_wmakepath_s"
+            "alternative": "'_wmakepath_s'"
           }
         },
         {
           "SubId": "_wsplitpath",
-          "ContentsRegex": "\\b(?<insecureApi>_wsplitpath)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_wsplitpath)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_wsplitpath_s"
+            "alternative": "'_wsplitpath_s'"
           }
         },
         {
           "SubId": "getwd",
-          "ContentsRegex": "\\b(?<insecureApi>getwd)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>getwd)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "getcwd"
+            "alternative": "'getcwd'"
           }
         },
         {
           "SubId": "makepath",
-          "ContentsRegex": "\\b(?<insecureApi>makepath)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>makepath)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "makepath_s"
+            "alternative": "'makepath_s'"
           }
+        },
+        {
+          "SubId": "_makepath_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_makepath_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_makepath'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_splitpath_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_splitpath_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_splitpath'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_wmakepath_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_wmakepath_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_wmakepath'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_wsplitpath_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_wsplitpath_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_wsplitpath'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "getcwd",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>getcwd)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'getwd'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "makepath_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>makepath_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'makepath'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/005",
       "Name": "UseSecureApi/String/Copy",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "_mbccpy",
-          "ContentsRegex": "\\b(?<insecureApi>_mbccpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>_mbccpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_mbccpy_s"
+            "alternative": "'_mbccpy_s'"
           }
         },
         {
           "SubId": "_mbscpy",
-          "ContentsRegex": "\\b(?<insecureApi>_mbscpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>_mbscpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_mbscpy_s"
+            "alternative": "'_mbscpy_s'"
           }
         },
         {
           "SubId": "_mbsnbcpy",
-          "ContentsRegex": "\\b(?<insecureApi>_mbsnbcpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>_mbsnbcpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_mbsnbcpy_s"
+            "alternative": "'_mbsnbcpy_s'"
           }
         },
         {
           "SubId": "_mbsncpy",
-          "ContentsRegex": "\\b(?<insecureApi>_mbsncpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>_mbsncpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_mbsncpy_s"
+            "alternative": "'_mbsncpy_s'"
           }
         },
         {
           "SubId": "_tcscpy",
-          "ContentsRegex": "\\b(?<insecureApi>_tcscpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>_tcscpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCopy, StringCbCopyEx, StringCchCopy or StringCchCopyEx"
+            "alternative": "'StringCbCopy', 'StringCbCopyEx', 'StringCchCopy', 'StringCchCopyEx'"
           }
         },
         {
           "SubId": "_tcsncpy",
-          "ContentsRegex": "\\b(?<insecureApi>_tcsncpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>_tcsncpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCopyN, StringCbCopyNEx, StringCchCopyN or StringCchCopyNEx"
+            "alternative": "'StringCbCopyN', 'StringCbCopyNEx', 'StringCchCopyN', 'StringCchCopyNEx'"
           }
         },
         {
           "SubId": "lstrcpy",
-          "ContentsRegex": "\\b(?<insecureApi>lstrcpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>lstrcpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCopy, StringCbCopyEx, StringCchCopy or StringCchCopyEx"
+            "alternative": "'StringCbCopy', 'StringCbCopyEx', 'StringCchCopy', 'StringCchCopyEx'"
           }
         },
         {
           "SubId": "lstrcpyA",
-          "ContentsRegex": "\\b(?<insecureApi>lstrcpyA)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>lstrcpyA)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCchCopy"
+            "alternative": "'StringCchCopy'"
           }
         },
         {
           "SubId": "lstrcpynA",
-          "ContentsRegex": "\\b(?<insecureApi>lstrcpynA)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>lstrcpynA)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCchCopy"
+            "alternative": "'StringCchCopy'"
           }
         },
         {
           "SubId": "lstrcpynW",
-          "ContentsRegex": "\\b(?<insecureApi>lstrcpynW)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>lstrcpynW)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCchCopy"
+            "alternative": "'StringCchCopy'"
           }
         },
         {
           "SubId": "lstrcpyW",
-          "ContentsRegex": "\\b(?<insecureApi>lstrcpyW)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>lstrcpyW)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCchCopy"
+            "alternative": "'StringCchCopy'"
           }
         },
         {
           "SubId": "strcpy",
-          "ContentsRegex": "\\b(?<insecureApi>strcpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>strcpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "strcpy_s, StringCbCopy, StringCbCopyEx, StringCchCopy, StringCchCopyEx or strlcpy"
+            "alternative": "'strcpy_s', 'StringCbCopy', 'StringCbCopyEx', 'StringCchCopy', 'StringCchCopyEx', 'strlcpy'"
           }
         },
         {
           "SubId": "StrCpy",
-          "ContentsRegex": "\\b(?<insecureApi>StrCpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>StrCpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCopy, StringCbCopyEx, StringCchCopy or StringCchCopyEx"
+            "alternative": "'StringCbCopy', 'StringCbCopyEx', 'StringCchCopy', 'StringCchCopyEx'"
           }
         },
         {
           "SubId": "strncpy",
-          "ContentsRegex": "\\b(?<insecureApi>strncpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>strncpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCopyN, StringCbCopyNEx, StringCchCopyN, StringCchCopyNEx, strlcpy or strncpy_s"
+            "alternative": "'StringCbCopyN', 'StringCbCopyNEx', 'StringCchCopyN', 'StringCchCopyNEx', 'strlcpy', 'strncpy_s'"
           }
         },
         {
           "SubId": "wcscpy",
-          "ContentsRegex": "\\b(?<insecureApi>wcscpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>wcscpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCopy, StringCbCopyEx, StringCchCopy, StringCchCopyEx, wcscpy_s or wcslcpy"
+            "alternative": "'StringCbCopy', 'StringCbCopyEx', 'StringCchCopy', 'StringCchCopyEx', 'wcscpy_s', 'wcslcpy'"
           }
         },
         {
           "SubId": "wcsncpy",
-          "ContentsRegex": "\\b(?<insecureApi>wcsncpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>wcsncpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCopyN, StringCbCopyNEx, StringCchCopyN, StringCchCopyNEx, wcslcpy or wcsncpy_s"
+            "alternative": "'StringCbCopyN', 'StringCbCopyNEx', 'StringCchCopyN', 'StringCchCopyNEx', 'wcslcpy', 'wcsncpy_s'"
           }
+        },
+        {
+          "SubId": "_mbccpy_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_mbccpy_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_mbccpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_mbscpy_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_mbscpy_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_mbscpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_mbsnbcpy_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_mbsnbcpy_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_mbsnbcpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_mbsncpy_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_mbsncpy_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_mbsncpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strcpy_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strcpy_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strcpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbCopy",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbCopy)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcscpy', 'lstrcpy', 'strcpy', 'StrCpy', 'wcscpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbCopyEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbCopyEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcscpy', 'lstrcpy', 'strcpy', 'StrCpy', 'wcscpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbCopyN",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbCopyN)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcsncpy', 'strncpy', 'wcsncpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbCopyNEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbCopyNEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcsncpy', 'strncpy', 'wcsncpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchCopy",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchCopy)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcscpy', 'lstrcpy', 'lstrcpyA', 'lstrcpynA', 'lstrcpynW', 'lstrcpyW', 'strcpy', 'StrCpy', 'wcscpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchCopyEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchCopyEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcscpy', 'lstrcpy', 'strcpy', 'StrCpy', 'wcscpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchCopyN",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchCopyN)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcsncpy', 'strncpy', 'wcsncpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchCopyNEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchCopyNEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcsncpy', 'strncpy', 'wcsncpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strlcpy",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strlcpy)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strcpy', 'strncpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strncpy_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strncpy_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strncpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wcscpy_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wcscpy_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wcscpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wcslcpy",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wcslcpy)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wcscpy', 'wcsncpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wcsncpy_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wcsncpy_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wcsncpy'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/006",
       "Name": "UseSecureApi/String/Concatenation",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "_mbscat",
-          "ContentsRegex": "\\b(?<insecureApi>_mbscat)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>_mbscat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_mbscat_s"
+            "alternative": "'_mbscat_s'"
           }
         },
         {
           "SubId": "_mbsnbcat",
-          "ContentsRegex": "\\b(?<insecureApi>_mbsnbcat)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>_mbsnbcat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_mbsnbcat_s"
+            "alternative": "'_mbsnbcat_s'"
           }
         },
         {
           "SubId": "_mbsncat",
-          "ContentsRegex": "\\b(?<insecureApi>_mbsncat)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>_mbsncat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_mbsncat_s"
+            "alternative": "'_mbsncat_s'"
           }
         },
         {
           "SubId": "_tcscat",
-          "ContentsRegex": "\\b(?<insecureApi>_tcscat)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_tcscat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCat, StringCbCatEx, StringCchCat or StringCchCatEx"
+            "alternative": "'StringCbCat', 'StringCbCatEx', 'StringCchCat', 'StringCchCatEx'"
           }
         },
         {
           "SubId": "lstrcat",
-          "ContentsRegex": "\\b(?<insecureApi>lstrcat)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>lstrcat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCat, StringCbCatEx, StringCchCat or StringCchCatEx"
+            "alternative": "'StringCbCat', 'StringCbCatEx', 'StringCchCat', 'StringCchCatEx'"
           }
         },
         {
           "SubId": "lstrcatA",
-          "ContentsRegex": "\\b(?<insecureApi>lstrcatA)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>lstrcatA)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCchCat"
+            "alternative": "'StringCchCat'"
           }
         },
         {
           "SubId": "lstrcatW",
-          "ContentsRegex": "\\b(?<insecureApi>lstrcatW)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>lstrcatW)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCchCat"
+            "alternative": "'StringCchCat'"
           }
         },
         {
           "SubId": "lstrncat",
-          "ContentsRegex": "\\b(?<insecureApi>lstrncat)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>lstrncat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "strcat_s"
+            "alternative": "'strcat_s'"
           }
         },
         {
           "SubId": "strcat",
-          "ContentsRegex": "\\b(?<insecureApi>strcat)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>strcat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "strcat_s, StringCbCat, StringCbCatEx, StringCchCat, StringCchCatEx, strlcat or strncat_s"
+            "alternative": "'strcat_s', 'StringCbCat', 'StringCbCatEx', 'StringCchCat', 'StringCchCatEx', 'strlcat', 'strncat_s'"
           }
         },
         {
           "SubId": "StrCat",
-          "ContentsRegex": "\\b(?<insecureApi>StrCat)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>StrCat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCat, StringCbCatEx, StringCchCat or StringCchCatEx"
+            "alternative": "'StringCbCat', 'StringCbCatEx', 'StringCchCat', 'StringCchCatEx'"
           }
         },
         {
           "SubId": "StrCatBuff",
-          "ContentsRegex": "\\b(?<insecureApi>StrCatBuff)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>StrCatBuff)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCat, StringCbCatEx, StringCchCat or StringCchCatEx"
+            "alternative": "'StringCbCat', 'StringCbCatEx', 'StringCchCat', 'StringCchCatEx'"
           }
         },
         {
           "SubId": "wcscat",
-          "ContentsRegex": "\\b(?<insecureApi>wcscat)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>wcscat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCat, StringCbCatEx, StringCchCat, StringCchCatEx, wcscat_s or wcslcat"
+            "alternative": "'StringCbCat', 'StringCbCatEx', 'StringCchCat', 'StringCchCatEx', 'wcscat_s', 'wcslcat'"
           }
         },
         {
           "SubId": "wcsncat",
-          "ContentsRegex": "\\b(?<insecureApi>wcsncat)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>wcsncat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "wcslcat or wcsncat_s"
+            "alternative": "'wcslcat', 'wcsncat_s'"
           }
+        },
+        {
+          "SubId": "_mbscat_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_mbscat_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_mbscat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_mbsnbcat_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_mbsnbcat_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_mbsnbcat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_mbsncat_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_mbsncat_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_mbsncat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strcat_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strcat_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'lstrncat', 'strcat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbCat",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbCat)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcscat', 'lstrcat', 'strcat', 'StrCat', 'StrCatBuff', 'wcscat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbCatEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbCatEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcscat', 'lstrcat', 'strcat', 'StrCat', 'StrCatBuff', 'wcscat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchCat",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchCat)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcscat', 'lstrcat', 'lstrcatA', 'lstrcatW', 'strcat', 'StrCat', 'StrCatBuff', 'wcscat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchCatEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchCatEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcscat', 'lstrcat', 'strcat', 'StrCat', 'StrCatBuff', 'wcscat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strlcat",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strlcat)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strcat', 'strncat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strncat_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strncat_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strcat', 'strncat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wcscat_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wcscat_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wcscat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wcslcat",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wcslcat)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wcscat', 'wcsncat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wcsncat_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wcsncat_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wcsncat'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/007",
       "Name": "UseSecureApi/String/Length",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "_mbslen",
-          "ContentsRegex": "\\b(?<insecureApi>_mbslen)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_mbslen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_mbsnlen"
+            "alternative": "'_mbsnlen'"
           }
         },
         {
           "SubId": "_mbstrlen",
-          "ContentsRegex": "\\b(?<insecureApi>_mbstrlen)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_mbstrlen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_mbstrnlen"
+            "alternative": "'_mbstrnlen'"
           }
         },
         {
           "SubId": "_tcslen",
-          "ContentsRegex": "\\b(?<insecureApi>_tcslen)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_tcslen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbLength, StringCchLength, UnalignedStringCbLength or UnalignedStringCchLength"
+            "alternative": "'StringCbLength', 'StringCchLength', 'UnalignedStringCbLength', 'UnalignedStringCchLength'"
           }
         },
         {
           "SubId": "strlen",
-          "ContentsRegex": "\\b(?<insecureApi>strlen)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>strlen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbLength, StringCchLength, strlen_s, UnalignedStringCbLength or UnalignedStringCchLength"
+            "alternative": "'StringCbLength', 'StringCchLength', 'strlen_s', 'UnalignedStringCbLength', 'UnalignedStringCchLength'"
           }
         },
         {
           "SubId": "strncat",
-          "ContentsRegex": "\\b(?<insecureApi>strncat)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>strncat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCatN, StringCbCatNEx, StringCchCatN, StringCchCatNEx, strlcat or strncat_s"
+            "alternative": "'StringCbCatN', 'StringCbCatNEx', 'StringCchCatN', 'StringCchCatNEx', 'strlcat', 'strncat_s'"
           }
         },
         {
           "SubId": "StrNCat",
-          "ContentsRegex": "\\b(?<insecureApi>StrNCat)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>StrNCat)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbCatN, StringCbCatNEx, StringCchCatN or StringCchCatNEx"
+            "alternative": "'StringCbCatN', 'StringCbCatNEx', 'StringCchCatN', 'StringCchCatNEx'"
           }
         },
         {
           "SubId": "wcslen",
-          "ContentsRegex": "\\b(?<insecureApi>wcslen)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wcslen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbLength, StringCchLength, UnalignedStringCbLength, UnalignedStringCchLength or wcslen_s"
+            "alternative": "'StringCbLength', 'StringCchLength', 'UnalignedStringCbLength', 'UnalignedStringCchLength', 'wcslen_s'"
           }
+        },
+        {
+          "SubId": "_mbsnlen",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_mbsnlen)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_mbslen'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_mbstrnlen",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_mbstrnlen)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_mbstrlen'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbCatN",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbCatN)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strncat', 'StrNCat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbCatNEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbCatNEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strncat', 'StrNCat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbLength",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbLength)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcslen', 'strlen', 'wcslen'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchCatN",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchCatN)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strncat', 'StrNCat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchCatNEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchCatNEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strncat', 'StrNCat'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchLength",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchLength)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcslen', 'strlen', 'wcslen'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strlen_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strlen_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strlen'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "UnalignedStringCbLength",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>UnalignedStringCbLength)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcslen', 'strlen', 'wcslen'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "UnalignedStringCchLength",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>UnalignedStringCchLength)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_tcslen', 'strlen', 'wcslen'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wcslen_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wcslen_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wcslen'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/008",
       "Name": "UseSecureApi/String/Parsing",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "_mbstok",
-          "ContentsRegex": "\\b(?<insecureApi>_mbstok)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_mbstok)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_mbstok_s"
+            "alternative": "'_mbstok_s'"
           }
         },
         {
           "SubId": "fscanf",
-          "ContentsRegex": "\\b(?<insecureApi>fscanf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>fscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "fscanf_s"
+            "alternative": "'fscanf_s'"
           }
         },
         {
           "SubId": "fwscanf",
-          "ContentsRegex": "\\b(?<insecureApi>fwscanf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>fwscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "fwscanf_s"
+            "alternative": "'fwscanf_s'"
           }
         },
         {
           "SubId": "scanf",
-          "ContentsRegex": "\\b(?<insecureApi>scanf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>scanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "scanf_s"
+            "alternative": "'scanf_s'"
           }
         },
         {
           "SubId": "sscanf",
-          "ContentsRegex": "\\b(?<insecureApi>sscanf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>sscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "sscanf_s"
+            "alternative": "'sscanf_s'"
           }
         },
         {
           "SubId": "strtok",
-          "ContentsRegex": "\\b(?<insecureApi>strtok)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>strtok)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "strsep, strtok_r or strtok_s"
+            "alternative": "'strsep', 'strtok_r', 'strtok_s'"
           }
         },
         {
           "SubId": "swscanf",
-          "ContentsRegex": "\\b(?<insecureApi>swscanf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>swscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "swscanf_s"
+            "alternative": "'swscanf_s'"
           }
         },
         {
           "SubId": "vfscanf",
-          "ContentsRegex": "\\b(?<insecureApi>vfscanf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>vfscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "vfscanf_s"
+            "alternative": "'vfscanf_s'"
           }
         },
         {
           "SubId": "vfwscanf",
-          "ContentsRegex": "\\b(?<insecureApi>vfwscanf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>vfwscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "vfwscanf_s"
+            "alternative": "'vfwscanf_s'"
           }
         },
         {
           "SubId": "vscanf",
-          "ContentsRegex": "\\b(?<insecureApi>vscanf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>vscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "vscanf_s"
+            "alternative": "'vscanf_s'"
           }
         },
         {
           "SubId": "vsscanf",
-          "ContentsRegex": "\\b(?<insecureApi>vsscanf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>vsscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "vsscanf_s"
+            "alternative": "'vsscanf_s'"
           }
         },
         {
           "SubId": "vswscanf",
-          "ContentsRegex": "\\b(?<insecureApi>vswscanf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>vswscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "vswscanf_s"
+            "alternative": "'vswscanf_s'"
           }
         },
         {
           "SubId": "vwscanf",
-          "ContentsRegex": "\\b(?<insecureApi>vwscanf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>vwscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "vwscanf_s"
+            "alternative": "'vwscanf_s'"
           }
         },
         {
           "SubId": "wcstok",
-          "ContentsRegex": "\\b(?<insecureApi>wcstok)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wcstok)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "wcstok_s"
+            "alternative": "'wcstok_s'"
           }
         },
         {
           "SubId": "wscanf",
-          "ContentsRegex": "\\b(?<insecureApi>wscanf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wscanf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "wscanf_s"
+            "alternative": "'wscanf_s'"
           }
+        },
+        {
+          "SubId": "_mbstok_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_mbstok_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_mbstok'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "fscanf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>fscanf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'fscanf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "fwscanf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>fwscanf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'fwscanf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "scanf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>scanf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'scanf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "sscanf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>sscanf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'sscanf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strsep",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strsep)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strtok'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strtok_r",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strtok_r)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strtok'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strtok_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strtok_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strtok'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "swscanf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>swscanf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'swscanf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vfscanf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vfscanf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vfscanf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vfwscanf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vfwscanf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vfwscanf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vscanf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vscanf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vscanf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vsscanf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vsscanf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vsscanf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vswscanf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vswscanf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vswscanf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vwscanf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vwscanf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vwscanf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wcstok_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wcstok_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wcstok'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wscanf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wscanf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wscanf'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/009",
       "Name": "UseSecureApi/String/Formatting",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "_snprintf",
-          "ContentsRegex": "\\b(?<insecureApi>_snprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_snprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
+            "alternative": "'StringCbPrintf', 'StringCbPrintf_l', 'StringCbPrintf_lEx', 'StringCbPrintfEx', 'StringCchPrintf', 'StringCchPrintfEx'"
           }
         },
         {
           "SubId": "_sntprintf",
-          "ContentsRegex": "\\b(?<insecureApi>_sntprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_sntprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
+            "alternative": "'StringCbPrintf', 'StringCbPrintf_l', 'StringCbPrintf_lEx', 'StringCbPrintfEx', 'StringCchPrintf', 'StringCchPrintfEx'"
           }
         },
         {
           "SubId": "_snwprintf",
-          "ContentsRegex": "\\b(?<insecureApi>_snwprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_snwprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_snwprintf_s, StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
+            "alternative": "'_snwprintf_s', 'StringCbPrintf', 'StringCbPrintf_l', 'StringCbPrintf_lEx', 'StringCbPrintfEx', 'StringCchPrintf', 'StringCchPrintfEx'"
           }
         },
         {
           "SubId": "_stprintf",
-          "ContentsRegex": "\\b(?<insecureApi>_stprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_stprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
+            "alternative": "'StringCbPrintf', 'StringCbPrintf_l', 'StringCbPrintf_lEx', 'StringCbPrintfEx', 'StringCchPrintf', 'StringCchPrintfEx'"
           }
         },
         {
           "SubId": "_vsnprintf",
-          "ContentsRegex": "\\b(?<insecureApi>_vsnprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_vsnprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_vsnprintf_s, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx or StringCchVPrintfEx"
+            "alternative": "'_vsnprintf_s', 'StringCchVPrintf', 'StringCchVPrintf_l', 'StringCchVPrintf_lEx', 'StringCchVPrintfEx'"
           }
         },
         {
           "SubId": "_vsntprintf",
-          "ContentsRegex": "\\b(?<insecureApi>_vsntprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_vsntprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx or StringCchVPrintfEx"
+            "alternative": "'StringCbVPrintf', 'StringCbVPrintf_l', 'StringCbVPrintf_lEx', 'StringCbVPrintfEx', 'StringCchVPrintf', 'StringCchVPrintf_l', 'StringCchVPrintf_lEx', 'StringCchVPrintfEx'"
           }
         },
         {
           "SubId": "_vsnwprintf",
-          "ContentsRegex": "\\b(?<insecureApi>_vsnwprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>_vsnwprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "_vsnwprintf_s, StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx or StringCbVPrintfEx"
+            "alternative": "'_vsnwprintf_s', 'StringCbVPrintf', 'StringCbVPrintf_l', 'StringCbVPrintf_lEx', 'StringCbVPrintfEx'"
           }
         },
         {
           "SubId": "_vstprintf",
-          "ContentsRegex": "\\b(?<insecureApi>_vstprintf)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>_vstprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx or StringCchVPrintfEx"
+            "alternative": "'StringCbVPrintf', 'StringCbVPrintf_l', 'StringCbVPrintf_lEx', 'StringCbVPrintfEx', 'StringCchVPrintf', 'StringCchVPrintf_l', 'StringCchVPrintf_lEx', 'StringCchVPrintfEx'"
           }
         },
         {
           "SubId": "fprintf",
-          "ContentsRegex": "\\b(?<insecureApi>fprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>fprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "fprintf_s"
+            "alternative": "'fprintf_s'"
           }
         },
         {
           "SubId": "fwprintf",
-          "ContentsRegex": "\\b(?<insecureApi>fwprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>fwprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "fwprintf_s"
+            "alternative": "'fwprintf_s'"
           }
         },
         {
           "SubId": "printf",
-          "ContentsRegex": "\\b(?<insecureApi>printf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>printf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "printf_s"
+            "alternative": "'printf_s'"
           }
         },
         {
           "SubId": "snprintf",
-          "ContentsRegex": "\\b(?<insecureApi>snprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>snprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "snprintf_s"
+            "alternative": "'snprintf_s'"
           }
         },
         {
           "SubId": "sprintf",
-          "ContentsRegex": "\\b(?<insecureApi>sprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>sprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "asprintf, sprintf_s, StringCbPrintf, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
+            "alternative": "'asprintf', 'sprintf_s', 'StringCbPrintf', 'StringCbPrintfEx', 'StringCchPrintf', 'StringCchPrintfEx'"
           }
         },
         {
           "SubId": "swprintf",
-          "ContentsRegex": "\\b(?<insecureApi>swprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>swprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf, StringCchPrintfEx or swprintf_s"
+            "alternative": "'StringCbPrintf', 'StringCbPrintf_l', 'StringCbPrintf_lEx', 'StringCbPrintfEx', 'StringCchPrintf', 'StringCchPrintfEx', 'swprintf_s'"
           }
         },
         {
           "SubId": "vfprintf",
-          "ContentsRegex": "\\b(?<insecureApi>vfprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>vfprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "vfprintf_s"
+            "alternative": "'vfprintf_s'"
           }
         },
         {
           "SubId": "vprintf",
-          "ContentsRegex": "\\b(?<insecureApi>vprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>vprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "vprintf_s"
+            "alternative": "'vprintf_s'"
           }
         },
         {
           "SubId": "vsnprintf",
-          "ContentsRegex": "\\b(?<insecureApi>vsnprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>vsnprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx, StringCchVPrintfEx or vsnprintf_s"
+            "alternative": "'StringCbVPrintf', 'StringCbVPrintf_l', 'StringCbVPrintf_lEx', 'StringCbVPrintfEx', 'StringCchVPrintf', 'StringCchVPrintf_l', 'StringCchVPrintf_lEx', 'StringCchVPrintfEx', 'vsnprintf_s'"
           }
         },
         {
           "SubId": "vsprintf",
-          "ContentsRegex": "\\b(?<insecureApi>vsprintf)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>vsprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx, StringCchVPrintfEx, vasprintf or vsprintf_s"
+            "alternative": "'StringCbVPrintf', 'StringCbVPrintf_l', 'StringCbVPrintf_lEx', 'StringCbVPrintfEx', 'StringCchVPrintf', 'StringCchVPrintf_l', 'StringCchVPrintf_lEx', 'StringCchVPrintfEx', 'vasprintf', 'vsprintf_s'"
           }
         },
         {
           "SubId": "vswprintf",
-          "ContentsRegex": "\\b(?<insecureApi>vswprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>vswprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx, StringCchVPrintfEx or vswprintf_s"
+            "alternative": "'StringCbVPrintf', 'StringCbVPrintf_l', 'StringCbVPrintf_lEx', 'StringCbVPrintfEx', 'StringCchVPrintf', 'StringCchVPrintf_l', 'StringCchVPrintf_lEx', 'StringCchVPrintfEx', 'vswprintf_s'"
           }
         },
         {
           "SubId": "vwprintf",
-          "ContentsRegex": "\\b(?<insecureApi>vwprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>vwprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "vwprintf_s"
+            "alternative": "'vwprintf_s'"
           }
         },
         {
           "SubId": "wnsprintf",
-          "ContentsRegex": "\\b(?<insecureApi>wnsprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wnsprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
+            "alternative": "'StringCbPrintf', 'StringCbPrintf_l', 'StringCbPrintf_lEx', 'StringCbPrintfEx', 'StringCchPrintf', 'StringCchPrintfEx'"
           }
         },
         {
           "SubId": "wprintf",
-          "ContentsRegex": "\\b(?<insecureApi>wprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "wprintf_s"
+            "alternative": "'wprintf_s'"
           }
         },
         {
           "SubId": "wsprintf",
-          "ContentsRegex": "\\b(?<insecureApi>wsprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wsprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbPrintf, StringCbPrintf_l, StringCbPrintf_lEx, StringCbPrintfEx, StringCchPrintf or StringCchPrintfEx"
+            "alternative": "'StringCbPrintf', 'StringCbPrintf_l', 'StringCbPrintf_lEx', 'StringCbPrintfEx', 'StringCchPrintf', 'StringCchPrintfEx'"
           }
         },
         {
           "SubId": "wvnsprintf",
-          "ContentsRegex": "\\b(?<insecureApi>wvnsprintf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wvnsprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx or StringCchVPrintfEx"
+            "alternative": "'StringCbVPrintf', 'StringCbVPrintf_l', 'StringCbVPrintf_lEx', 'StringCbVPrintfEx', 'StringCchVPrintf', 'StringCchVPrintf_l', 'StringCchVPrintf_lEx', 'StringCchVPrintfEx'"
           }
         },
         {
           "SubId": "wvsprintf",
-          "ContentsRegex": "\\b(?<insecureApi>wvsprintf)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>wvsprintf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "StringCbVPrintf, StringCbVPrintf_l, StringCbVPrintf_lEx, StringCbVPrintfEx, StringCchVPrintf, StringCchVPrintf_l, StringCchVPrintf_lEx or StringCchVPrintfEx"
+            "alternative": "'StringCbVPrintf', 'StringCbVPrintf_l', 'StringCbVPrintf_lEx', 'StringCbVPrintfEx', 'StringCchVPrintf', 'StringCchVPrintf_l', 'StringCchVPrintf_lEx', 'StringCchVPrintfEx'"
           }
+        },
+        {
+          "SubId": "_snwprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_snwprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_snwprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_vsnprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_vsnprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_vsnprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "_vsnwprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>_vsnwprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_vsnwprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "asprintf",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>asprintf)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'sprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "fprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>fprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'fprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "fwprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>fwprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'fwprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "printf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>printf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'printf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "snprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>snprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'snprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "sprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>sprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'sprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbPrintf",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbPrintf)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_snprintf', '_sntprintf', '_snwprintf', '_stprintf', 'sprintf', 'swprintf', 'wnsprintf', 'wsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbPrintf_l",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbPrintf_l)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_snprintf', '_sntprintf', '_snwprintf', '_stprintf', 'swprintf', 'wnsprintf', 'wsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbPrintf_lEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbPrintf_lEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_snprintf', '_sntprintf', '_snwprintf', '_stprintf', 'swprintf', 'wnsprintf', 'wsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbPrintfEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbPrintfEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_snprintf', '_sntprintf', '_snwprintf', '_stprintf', 'sprintf', 'swprintf', 'wnsprintf', 'wsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbVPrintf",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbVPrintf)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_vsntprintf', '_vsnwprintf', '_vstprintf', 'vsnprintf', 'vsprintf', 'vswprintf', 'wvnsprintf', 'wvsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbVPrintf_l",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbVPrintf_l)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_vsntprintf', '_vsnwprintf', '_vstprintf', 'vsnprintf', 'vsprintf', 'vswprintf', 'wvnsprintf', 'wvsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbVPrintf_lEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbVPrintf_lEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_vsntprintf', '_vsnwprintf', '_vstprintf', 'vsnprintf', 'vsprintf', 'vswprintf', 'wvnsprintf', 'wvsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCbVPrintfEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCbVPrintfEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_vsntprintf', '_vsnwprintf', '_vstprintf', 'vsnprintf', 'vsprintf', 'vswprintf', 'wvnsprintf', 'wvsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchPrintf",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchPrintf)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_snprintf', '_sntprintf', '_snwprintf', '_stprintf', 'sprintf', 'swprintf', 'wnsprintf', 'wsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchPrintfEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchPrintfEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_snprintf', '_sntprintf', '_snwprintf', '_stprintf', 'sprintf', 'swprintf', 'wnsprintf', 'wsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchVPrintf",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchVPrintf)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_vsnprintf', '_vsntprintf', '_vstprintf', 'vsnprintf', 'vsprintf', 'vswprintf', 'wvnsprintf', 'wvsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchVPrintf_l",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchVPrintf_l)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_vsnprintf', '_vsntprintf', '_vstprintf', 'vsnprintf', 'vsprintf', 'vswprintf', 'wvnsprintf', 'wvsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchVPrintf_lEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchVPrintf_lEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_vsnprintf', '_vsntprintf', '_vstprintf', 'vsnprintf', 'vsprintf', 'vswprintf', 'wvnsprintf', 'wvsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "StringCchVPrintfEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>StringCchVPrintfEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'_vsnprintf', '_vsntprintf', '_vstprintf', 'vsnprintf', 'vsprintf', 'vswprintf', 'wvnsprintf', 'wvsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "swprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>swprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'swprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vasprintf",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vasprintf)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vfprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vfprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vfprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vsnprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vsnprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vsnprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vsprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vsprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vsprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vswprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vswprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vswprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "vwprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>vwprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'vwprintf'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wprintf_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wprintf_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wprintf'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/010",
       "Name": "UseSecureApi/TimeOperations",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "asctime",
-          "ContentsRegex": "\\b(?<insecureApi>asctime)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>asctime)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "asctime_s"
+            "alternative": "'asctime_s'"
           }
         },
         {
           "SubId": "ctime",
-          "ContentsRegex": "\\b(?<insecureApi>ctime)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>ctime)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "ctime_s"
+            "alternative": "'ctime_s'"
           }
         },
         {
           "SubId": "gmtime",
-          "ContentsRegex": "\\b(?<insecureApi>gmtime)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>gmtime)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "gmtime_s"
+            "alternative": "'gmtime_s'"
           }
         },
         {
           "SubId": "localtime",
-          "ContentsRegex": "\\b(?<insecureApi>localtime)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>localtime)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "localtime_s"
+            "alternative": "'localtime_s'"
           }
+        },
+        {
+          "SubId": "asctime_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>asctime_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'asctime'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "ctime_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>ctime_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'ctime'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "gmtime_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>gmtime_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'gmtime'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "localtime_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>localtime_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'localtime'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/011",
       "Name": "UseSecureApi/Search",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "bsearch",
-          "ContentsRegex": "\\b(?<insecureApi>bsearch)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>bsearch)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "bsearch_s"
+            "alternative": "'bsearch_s'"
           }
+        },
+        {
+          "SubId": "bsearch_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>bsearch_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'bsearch'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/012",
-      "Name": "UseSecureApiMessageHandling/",
+      "Name": "UseSecureApi/MessageHandling",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "ChangeWindowMessageFilter",
-          "ContentsRegex": "\\b(?<insecureApi>ChangeWindowMessageFilter)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>ChangeWindowMessageFilter)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "ChangeWindowMessageFilterEx"
+            "alternative": "'ChangeWindowMessageFilterEx'"
           }
+        },
+        {
+          "SubId": "ChangeWindowMessageFilterEx",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>ChangeWindowMessageFilterEx)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'ChangeWindowMessageFilter'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/013",
       "Name": "UseSecureApi/FileOperations",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "fopen",
-          "ContentsRegex": "\\b(?<insecureApi>fopen)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>fopen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "fopen_s"
+            "alternative": "'fopen_s'"
           }
         },
         {
           "SubId": "freopen",
-          "ContentsRegex": "\\b(?<insecureApi>freopen)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>freopen)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "freopen_s"
+            "alternative": "'freopen_s'"
           }
         },
         {
           "SubId": "mktemp",
-          "ContentsRegex": "\\b(?<insecureApi>mktemp)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>mktemp)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "mkstemp"
+            "alternative": "'mkstemp'"
           }
         },
         {
           "SubId": "tmpnam",
-          "ContentsRegex": "\\b(?<insecureApi>tmpnam)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>tmpnam)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "tmpnam_s"
+            "alternative": "'tmpnam_s'"
           }
+        },
+        {
+          "SubId": "fopen_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>fopen_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'fopen'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "freopen_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>freopen_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'freopen'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "mkstemp",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>mkstemp)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'mktemp'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "tmpnam_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>tmpnam_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'tmpnam'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/014",
       "Name": "UseSecureApi/Environment/Variables",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "getenv",
-          "ContentsRegex": "\\b(?<insecureApi>getenv)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>getenv)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "getenv_s"
+            "alternative": "'getenv_s'"
           }
+        },
+        {
+          "SubId": "getenv_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>getenv_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'getenv'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/015",
       "Name": "UseSecureApi/Memory/Copy",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "memcpy",
-          "ContentsRegex": "\\b(?<insecureApi>memcpy)\\s*\\(",
+          "Level": "Error",
+          "ContentsRegex": "\\b(?<refine>memcpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "memcpy_s"
+            "alternative": "'memcpy_s'"
           }
         },
         {
           "SubId": "memmove",
-          "ContentsRegex": "\\b(?<insecureApi>memmove)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>memmove)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "memmove_s"
+            "alternative": "'memmove_s'"
           }
         },
         {
           "SubId": "wmemcpy",
-          "ContentsRegex": "\\b(?<insecureApi>wmemcpy)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wmemcpy)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "wmemcpy_s"
+            "alternative": "'wmemcpy_s'"
           }
         },
         {
           "SubId": "wmemmove",
-          "ContentsRegex": "\\b(?<insecureApi>wmemmove)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>wmemmove)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "wmemcpy_s"
+            "alternative": "'wmemcpy_s'"
           }
+        },
+        {
+          "SubId": "memcpy_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>memcpy_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'memcpy'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "memmove_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>memmove_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'memmove'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wmemcpy_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>wmemcpy_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wmemcpy', 'wmemmove'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/016",
       "Name": "UseSecureApi/Sorting",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "qsort",
-          "ContentsRegex": "\\b(?<insecureApi>qsort)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>qsort)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "qsort_s"
+            "alternative": "'qsort_s'"
           }
+        },
+        {
+          "SubId": "qsort_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>qsort_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'qsort'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/017",
       "Name": "UseSecureApi/Stream/Navigation",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "rewind",
-          "ContentsRegex": "\\b(?<insecureApi>rewind)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>rewind)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "fseek"
+            "alternative": "'fseek'"
           }
+        },
+        {
+          "SubId": "fseek",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>fseek)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'rewind'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/018",
       "Name": "UseSecureApi/Stream/Buffering",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "setbuf",
-          "ContentsRegex": "\\b(?<insecureApi>setbuf)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>setbuf)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "setvbuf"
+            "alternative": "'setvbuf'"
           }
+        },
+        {
+          "SubId": "setvbuf",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>setvbuf)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'setbuf'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
     {
       "Id": "SEC104/019",
       "Name": "UseSecureApi/ErrorHandling",
+      "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a potentially insecure API that could be replaced with a more secure alternative: {2:alternative}.",
       "Description": "Developers should use secure API in preferance of insecure alternates.",
-      "Message": "'{0:scanTarget}' contains a call to '{1:insecureApi}', a potentially insecure API that could be replaced with a more secure alternative: '{2:secureApi}'.",
-      "Level": "Error",
       "FileNameAllowRegex": "$CSourceFiles",
       "MatchExpressions": [
         {
           "SubId": "strerror",
-          "ContentsRegex": "\\b(?<insecureApi>strerror)\\s*\\(",
+          "Level": "Warning",
+          "ContentsRegex": "\\b(?<refine>strerror)\\s*\\(",
           "MessageArguments": {
-            "secureApi": "strerror_r or strerror_s"
+            "alternative": "'strerror_r', 'strerror_s'"
           }
+        },
+        {
+          "SubId": "strerror_r",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strerror_r)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strerror'"
+          },
+          "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "strerror_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?<refine>strerror_s)\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'strerror'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     }
