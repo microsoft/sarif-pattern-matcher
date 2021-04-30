@@ -218,7 +218,7 @@ namespace Microsoft.RE2.Managed
         ///
         /// </code>
         /// </example>
-        public static unsafe void Matches(string pattern, string text, out List<Dictionary<string, string>> matches)
+        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, string>> matches)
         {
             byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
             byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
@@ -234,7 +234,7 @@ namespace Microsoft.RE2.Managed
                     &output);
 
                 // Build SubmatchIndex to GroupName map
-                var submatchIndex2GroupName = new Dictionary<int, string>();
+                var submatchIndex2GroupName = new Dictionary<int, string>(output->NumGroupNames);
                 for (int i = 0; i < output->NumGroupNames; i++)
                 {
                     string groupName = Encoding.UTF8.GetString(output->GroupNamesBuffer, output->GroupNameHeaders[i].Length);
@@ -243,10 +243,10 @@ namespace Microsoft.RE2.Managed
                 }
 
                 // Build matches.
-                matches = new List<Dictionary<string, string>>();
+                matches = new List<Dictionary<string, string>>(output->NumMatches);
                 for (int matchIndex = 0; matchIndex < output->NumMatches; matchIndex++)
                 {
-                    var newSubmatch = new Dictionary<string, string>();
+                    var newSubmatch = new Dictionary<string, string>(output->NumSubmatches);
                     matches.Add(newSubmatch);
 
                     for (int submatchIndex = 0; submatchIndex < output->NumSubmatches; submatchIndex++)
@@ -272,6 +272,8 @@ namespace Microsoft.RE2.Managed
                 // Free C++ resources.
                 NativeMethods.MatchesCaptureGroupsDispose(output);
             }
+
+            return matches.Count > 0;
         }
 
         // Retrieve a Regex Cache before each match to reuse parsed Regex objects.

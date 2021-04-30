@@ -188,7 +188,8 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, string>> matches;
 
-            Regex2.Matches(@"abc", "abc", out matches);
+            bool hasMatches = Regex2.Matches(@"abc", "abc", out matches);
+            Assert.True(hasMatches);
             Assert.Single(matches);
             Assert.True(matches[0].ContainsKey("0"));
             Assert.Equal("abc", matches[0]["0"]);
@@ -199,8 +200,9 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, string>> matches;
 
-            Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out matches);
+            bool hasMatches = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out matches);
 
+            Assert.True(hasMatches);
             Assert.Single(matches);
             Assert.Equal(4, matches[0].Count);
             Assert.True(matches[0].ContainsKey("0"));
@@ -218,8 +220,9 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, string>> matches;
 
-            Regex2.Matches(@"(?P<a>a)(?P<bb>b)(?P<ccc>c)", "abc", out matches);
+            bool hasMatches = Regex2.Matches(@"(?P<a>a)(?P<bb>b)(?P<ccc>c)", "abc", out matches);
 
+            Assert.True(hasMatches);
             Assert.Single(matches);
             Assert.Equal(4, matches[0].Count);
             Assert.True(matches[0].ContainsKey("0"));
