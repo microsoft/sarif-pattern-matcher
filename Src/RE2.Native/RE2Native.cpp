@@ -153,20 +153,6 @@ extern "C" __declspec(dllexport) int Matches(int regexIndex, String8 text, int f
 	return nextMatchIndex;
 }
 
-extern "C" __declspec(dllexport) void MatchesCaptureGroupsDispose(
-	_In_  MatchesCaptureGroupsOutput* output
-)
-{
-	delete output->groupNameHeadersCleanupPtr;
-	delete output->groupNamesBufferCleanupPtr;
-	for (auto const& submatches : *(output->matchesCleanupPtr))
-	{
-		delete submatches;
-	}
-	delete output->matchesCleanupPtr;
-	delete output;
-}
-
 // pattern must use RE2 syntax
 //
 // Implementation note: The data std::vector is guaranteed to be contiguous by the C++ standard,
@@ -271,4 +257,18 @@ extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 	output->groupNamesBufferCleanupPtr = groupNameBufferVectorPtr;
 	output->matchesCleanupPtr = matchesVectorPtr;
 	*outputOut = output;
+}
+
+extern "C" __declspec(dllexport) void MatchesCaptureGroupsDispose(
+	_In_  MatchesCaptureGroupsOutput* output
+)
+{
+	delete output->groupNameHeadersCleanupPtr;
+	delete output->groupNamesBufferCleanupPtr;
+	for (auto const& submatches : *(output->matchesCleanupPtr))
+	{
+		delete submatches;
+	}
+	delete output->matchesCleanupPtr;
+	delete output;
 }
