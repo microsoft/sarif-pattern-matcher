@@ -7,12 +7,16 @@ using CommandLine;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
+    /// <summary>
+    /// export-search-definitions is a command line option that accepts three parameters: input, output, and type.
+    /// This command transforms the input file in a search definitionformat, which is used in our plugins.
+    /// </summary>
     [Verb("export-search-definitions", HelpText = "Export search definitions file from specific formats.")]
     internal class ExportSearchDefinitionsOptions
     {
         [Value(
             0,
-            HelpText = "Output path for exported search definitionas json.",
+            HelpText = "Output path for exported search definitions json.",
             Required = true)]
         public string OutputFilePath { get; set; }
 
@@ -24,7 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         [Option(
             "type",
-            HelpText = "Type of the input file (BannedApi as XML).",
+            HelpText = "Type of the input file (BannedApi or Sal).",
             Required = true)]
         public string FileType { get; set; }
 
