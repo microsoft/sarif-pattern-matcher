@@ -184,7 +184,7 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void Regex2_CaptureGroups()
+        public void Regex2_CaptureGroups_BasicMatch()
         {
             List<Dictionary<string, string>> matches;
 
@@ -196,7 +196,17 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void Regex2_CaptureGroups_2()
+        public void Regex2_CaptureGroups_NoMatch()
+        {
+            List<Dictionary<string, string>> matches;
+
+            bool hasMatches = Regex2.Matches(@"def", "abc", out matches);
+            Assert.False(hasMatches);
+            Assert.Empty(matches);
+        }
+
+        [Fact]
+        public void Regex2_CaptureGroups_WithGroups()
         {
             List<Dictionary<string, string>> matches;
 
@@ -216,7 +226,7 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void Regex2_CaptureGroups_3()
+        public void Regex2_CaptureGroups_VariableLengthGroupNames()
         {
             List<Dictionary<string, string>> matches;
 
@@ -236,7 +246,7 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void Regex2_CaptureGroups_4()
+        public void Regex2_CaptureGroups_NonOverlapping()
         {
             List<Dictionary<string, string>> matches;
 
