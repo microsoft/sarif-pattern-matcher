@@ -184,40 +184,87 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void Regex2_MatchWithNamedGroups()
+        public void Regex2_CaptureGroups_BasicMatch()
         {
-            bool isMatch;
-            Dictionary<string, int> groupName2Index;
-            Dictionary<int, string> index2GroupName;
-            List<string> submatchStrings;
+            List<Dictionary<string, string>> matches;
 
-            isMatch = Regex2.Matches(@"abc", "def", out _, out _, out _);
-            Assert.False(isMatch);
+            bool hasMatches = Regex2.Matches(@"abc", "abc", out matches);
+            Assert.True(hasMatches);
+            Assert.Single(matches);
+            Assert.True(matches[0].ContainsKey("0"));
+            Assert.Equal("abc", matches[0]["0"]);
+        }
 
-            isMatch = Regex2.Matches(@"abc", "abc", out groupName2Index, out index2GroupName, out submatchStrings);
-            Assert.True(isMatch);
-            Assert.Empty(groupName2Index);
-            Assert.Empty(index2GroupName);
-            Assert.Single(submatchStrings);
-            Assert.Equal("abc", submatchStrings[0]);
+        [Fact]
+        public void Regex2_CaptureGroups_NoMatch()
+        {
+            List<Dictionary<string, string>> matches;
 
-            isMatch = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out groupName2Index, out index2GroupName, out submatchStrings);
-            Assert.True(isMatch);
-            Assert.Equal(2, groupName2Index.Count);
-            Assert.Equal(2, index2GroupName.Count);
-            Assert.Equal(4, submatchStrings.Count);
-            Assert.True(groupName2Index.ContainsKey("g1"));
-            Assert.Equal(1, groupName2Index["g1"]);
-            Assert.True(groupName2Index.ContainsKey("g2"));
-            Assert.Equal(3, groupName2Index["g2"]);
-            Assert.True(index2GroupName.ContainsKey(1));
-            Assert.Equal("g1", index2GroupName[1]);
-            Assert.True(index2GroupName.ContainsKey(3));
-            Assert.Equal("g2", index2GroupName[3]);
-            Assert.Equal("abc", submatchStrings[0]);
-            Assert.Equal("a", submatchStrings[1]);
-            Assert.Equal("b", submatchStrings[2]);
-            Assert.Equal("c", submatchStrings[3]);
+            bool hasMatches = Regex2.Matches(@"def", "abc", out matches);
+            Assert.False(hasMatches);
+            Assert.Empty(matches);
+        }
+
+        [Fact]
+        public void Regex2_CaptureGroups_WithGroups()
+        {
+            List<Dictionary<string, string>> matches;
+
+            bool hasMatches = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out matches);
+
+            Assert.True(hasMatches);
+            Assert.Single(matches);
+            Assert.Equal(4, matches[0].Count);
+            Assert.True(matches[0].ContainsKey("0"));
+            Assert.Equal("abc", matches[0]["0"]);
+            Assert.True(matches[0].ContainsKey("g1"));
+            Assert.Equal("a", matches[0]["g1"]);
+            Assert.True(matches[0].ContainsKey("2"));
+            Assert.Equal("b", matches[0]["2"]);
+            Assert.True(matches[0].ContainsKey("g2"));
+            Assert.Equal("c", matches[0]["g2"]);
+        }
+
+        [Fact]
+        public void Regex2_CaptureGroups_VariableLengthGroupNames()
+        {
+            List<Dictionary<string, string>> matches;
+
+            bool hasMatches = Regex2.Matches(@"(?P<a>a)(?P<bb>b)(?P<ccc>c)", "abc", out matches);
+
+            Assert.True(hasMatches);
+            Assert.Single(matches);
+            Assert.Equal(4, matches[0].Count);
+            Assert.True(matches[0].ContainsKey("0"));
+            Assert.Equal("abc", matches[0]["0"]);
+            Assert.True(matches[0].ContainsKey("a"));
+            Assert.Equal("a", matches[0]["a"]);
+            Assert.True(matches[0].ContainsKey("bb"));
+            Assert.Equal("b", matches[0]["bb"]);
+            Assert.True(matches[0].ContainsKey("ccc"));
+            Assert.Equal("c", matches[0]["ccc"]);
+        }
+
+        [Fact]
+        public void Regex2_CaptureGroups_NonOverlapping()
+        {
+            List<Dictionary<string, string>> matches;
+
+            Regex2.Matches(@"(?P<g1>a)(a)(?P<g2>a)", "aaaaaaaaaaaa", out matches);
+
+            Assert.Equal(4, matches.Count);
+            for (int i = 0; i < 4; i++)
+            {
+                Assert.Equal(4, matches[0].Count);
+                Assert.True(matches[0].ContainsKey("0"));
+                Assert.Equal("aaa", matches[0]["0"]);
+                Assert.True(matches[0].ContainsKey("g1"));
+                Assert.Equal("a", matches[0]["g1"]);
+                Assert.True(matches[0].ContainsKey("2"));
+                Assert.Equal("a", matches[0]["2"]);
+                Assert.True(matches[0].ContainsKey("g2"));
+                Assert.Equal("a", matches[0]["g2"]);
+            }
         }
 
         private string MatchToString(Match2 match, String8 content)
