@@ -14,6 +14,7 @@
 #include "GroupNameHeader.h"
 #include "Submatch.h"
 #include "StringUtf8.h"
+#include "MatchesCaptureGroupsOutput.h"
 
 // System.Text.RegularExpressions.RegexOptions
 const int RegexOptions_IgnoreCase = 0x1;
@@ -159,17 +160,7 @@ extern "C" __declspec(dllexport) int Matches(int regexIndex, String8 text, int f
 extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 	_In_  StringUtf8 pattern,
 	_In_  StringUtf8 text,
-
-	_Out_ GroupNameHeader** groupNameHeadersOut,
-	_Out_ uint8_t**         groupNamesBufferOut,
-	_Out_ int*              numGroupNamesOut,
-	_Out_ Submatch***       matchesOut,
-	_Out_ size_t*           numMatchesOut,
-	_Out_ int*              numSubmatchesOut,
-
-	_Out_ std::vector<GroupNameHeader>** groupNameHeadersCleanupPtrOut,
-	_Out_ std::vector<uint8_t>**         groupNamesBufferCleanupPtrOut,
-	_Out_ std::vector<Submatch*>**       matchesCleanupPtrOut
+	_Out_ MatchesCaptureGroupsOutput** outputOut
 )
 {
 	// Convert StringUtf8 to string piece.
@@ -255,13 +246,15 @@ extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 	}
 
 	// Assign outputs.
-	*groupNameHeadersOut = groupNameHeaderVectorPtr->data();
-	*groupNamesBufferOut = groupNameBufferVectorPtr->data();
-	*numGroupNamesOut = static_cast<int>(re.CapturingGroupNames().size());
-	*matchesOut = matchesVectorPtr->data();
-	*numMatchesOut = matchesVectorPtr->size();
-	*numSubmatchesOut = numSubmatches;
-	*groupNameHeadersCleanupPtrOut = groupNameHeaderVectorPtr;
-	*groupNamesBufferCleanupPtrOut = groupNameBufferVectorPtr;
-	*matchesCleanupPtrOut = matchesVectorPtr;
+	MatchesCaptureGroupsOutput* output = new MatchesCaptureGroupsOutput;
+	output->groupNameHeaders = groupNameHeaderVectorPtr->data();
+	output->groupNamesBuffer = groupNameBufferVectorPtr->data();
+	output->numGroupNames = static_cast<int>(re.CapturingGroupNames().size());
+	output->matches = matchesVectorPtr->data();
+	output->numMatches = static_cast<int>(matchesVectorPtr->size());
+	output->numSubmatches = numSubmatches;
+	output->groupNameHeadersCleanupPtr = groupNameHeaderVectorPtr;
+	output->groupNamesBufferCleanupPtr = groupNameBufferVectorPtr;
+	output->matchesCleanupPtr = matchesVectorPtr;
+	*outputOut = output;
 }

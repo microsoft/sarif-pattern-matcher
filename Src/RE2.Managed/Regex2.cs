@@ -217,48 +217,32 @@ namespace Microsoft.RE2.Managed
             fixed (byte* patternUtf8BytesPtr = patternUtf8Bytes)
             fixed (byte* textUtf8BytesPtr = textUtf8Bytes)
             {
-                GroupNameHeader* groupNameHeaders;
-                byte* groupNamesBuffer;
-                int numGroupNames;
-                Submatch** matchesRe2;
-                int numMatches;
-                int numSubmatches;
-                void* groupNameHeadersCleanupPtr;
-                void* groupNamesBufferCleanupPtr;
-                void* matchesCleanupPtr;
+                MatchesCaptureGroupsOutput* output;
 
                 NativeMethods.MatchesCaptureGroups(
                     new StringUtf8(patternUtf8BytesPtr, pattern.Length),
                     new StringUtf8(textUtf8BytesPtr, text.Length),
-                    &groupNameHeaders,
-                    &groupNamesBuffer,
-                    &numGroupNames,
-                    &matchesRe2,
-                    &numMatches,
-                    &numSubmatches,
-                    &groupNameHeadersCleanupPtr,
-                    &groupNamesBufferCleanupPtr,
-                    &matchesCleanupPtr);
+                    &output);
 
                 // Build SubmatchIndex to GroupName map
                 var submatchIndex2GroupName = new Dictionary<int, string>();
-                for (int i = 0; i < numGroupNames; i++)
+                for (int i = 0; i < output->NumGroupNames; i++)
                 {
-                    string groupName = Encoding.UTF8.GetString(groupNamesBuffer, groupNameHeaders[i].Length);
-                    groupNamesBuffer += groupNameHeaders[i].Length;
-                    submatchIndex2GroupName[groupNameHeaders[i].Index] = groupName;
+                    string groupName = Encoding.UTF8.GetString(output->GroupNamesBuffer, output->GroupNameHeaders[i].Length);
+                    output->GroupNamesBuffer += output->GroupNameHeaders[i].Length;
+                    submatchIndex2GroupName[output->GroupNameHeaders[i].Index] = groupName;
                 }
 
                 // Build matches.
                 matches = new List<Dictionary<string, string>>();
-                for (int matchIndex = 0; matchIndex < numMatches; matchIndex++)
+                for (int matchIndex = 0; matchIndex < output->NumMatches; matchIndex++)
                 {
                     var newSubmatch = new Dictionary<string, string>();
                     matches.Add(newSubmatch);
 
-                    for (int submatchIndex = 0; submatchIndex < numSubmatches; submatchIndex++)
+                    for (int submatchIndex = 0; submatchIndex < output->NumSubmatches; submatchIndex++)
                     {
-                        Submatch submatchRe2 = matchesRe2[matchIndex][submatchIndex];
+                        Submatch submatchRe2 = output->Matches[matchIndex][submatchIndex];
                         int submatchTextStartIndex = submatchRe2.Index;
                         int submatchLength = submatchRe2.Length;
 

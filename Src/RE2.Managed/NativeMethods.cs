@@ -88,32 +88,11 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        public static unsafe void MatchesCaptureGroups(
-                StringUtf8 pattern,
-                StringUtf8 text,
-                GroupNameHeader** groupNameHeadersOut,
-                byte** groupNamesBufferOut,
-                int* numGroupNames,
-                Submatch*** matchesOut,
-                int* numMatchesOut,
-                int* numSubmatchesOut,
-                void** groupNameHeadersCleanupPtrOut,
-                void** groupNamesBufferCleanupPtrOut,
-                void** matchesCleanupPtrOut)
+        public static unsafe void MatchesCaptureGroups(StringUtf8 pattern, StringUtf8 text, MatchesCaptureGroupsOutput** matchesCaptureGroupsOutput)
         {
             if (Environment.Is64BitProcess)
             {
-                NativeMethodsX64.MatchesCaptureGroups(pattern,
-                    text,
-                    groupNameHeadersOut,
-                    groupNamesBufferOut,
-                    numGroupNames,
-                    matchesOut,
-                    numMatchesOut,
-                    numSubmatchesOut,
-                    groupNameHeadersCleanupPtrOut,
-                    groupNamesBufferCleanupPtrOut,
-                    matchesCleanupPtrOut);
+                NativeMethodsX64.MatchesCaptureGroups(pattern, text, matchesCaptureGroupsOutput);
             }
             else
             {
@@ -174,18 +153,7 @@ namespace Microsoft.RE2.Managed
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
-            public static unsafe extern bool MatchesCaptureGroups(
-                StringUtf8 pattern,
-                StringUtf8 text,
-                GroupNameHeader** groupNameHeadersOut,
-                byte** groupNamesBufferOut,
-                int* numGroupNames,
-                Submatch*** matchesOut,
-                int* numMatchesOut,
-                int* numSubmatchesOut,
-                void** groupNameHeadersCleanupPtrOut,
-                void** groupNamesBufferCleanupPtrOut,
-                void** matchesCleanupPtrOut);
+            public static unsafe extern bool MatchesCaptureGroups(StringUtf8 pattern, StringUtf8 text, MatchesCaptureGroupsOutput** matchesCaptureGroupsOutput);
         }
     }
 }
