@@ -228,13 +228,24 @@ extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 		// Write submatches.
 		for (auto const& submatchSp : submatchesSp)
 		{
-			// Convert submatches to substring index and length.
-			int32_t index = static_cast<int32_t>(submatchSp.data() - textSp.data());
-			int32_t length = static_cast<int32_t>(submatchSp.length());
+			if (submatchSp.data() == 0)
+			{
+				// This is an optional group that was not found.
+				submatches->Index = -1;
+				submatches->Length = -1;
+			}
+			else
+			{
+				// This group was found.
 
-			// Write submatch entry.
-			submatches->Index = index;
-			submatches->Length = length;
+				// Convert submatches to substring index and length.
+				int32_t index = static_cast<int32_t>(submatchSp.data() - textSp.data());
+				int32_t length = static_cast<int32_t>(submatchSp.length());
+
+				// Write submatch entry.
+				submatches->Index = index;
+				submatches->Length = length;
+			}
 
 			// Advance pointer to next entry.
 			submatches += 1;

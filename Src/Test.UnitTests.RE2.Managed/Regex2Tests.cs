@@ -267,6 +267,60 @@ namespace Microsoft.RE2.Managed
             }
         }
 
+        [Fact]
+        public void Regex2_CaptureGroups_Production()
+        {
+            List<Dictionary<string, string>> matches;
+
+            string pattern = @"(?i)(?P<scheme>http|ftp|https):\/\/(?P<host>[\w_.-]{1,200})(?P<path>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= ""']+(basic)[\s\r\n]{0,10}(?P<secret>[^'""><;\s]{1,500})";
+            string text = @"# RestClient example
+var client = new RestClient(""https://example.com"");
+var request = new RestRequest(Method.GET);
+request.AddHeader(""Authorization"", ""Basic SomeAuthorizationKey1111111"");
+
+var client = new RestClient(""https://example.com?some=parameters&that=should&appear=inresults"")
+var request = new RestRequest(Method.GET);
+request.AddHeader(""Authorization"", ""Basic SomeAuthorizationKey2222222"");
+
+# cURL
+curl --location --request GET 'https://example.com' \
+--header 'Authorization: Basic SomeAuthorizationKey3333333=' \
+
+# This should not get caught, since it will drop the last slash
+# and would be equal to the first example.
+var client = new RestClient(""https://example.com/"")
+var request = new RestRequest(Method.GET);
+request.AddHeader(""Authorization"", ""Basic SomeAuthorizationKey4444444"");
+
+# This should not get caught, since it would surpass the length
+# between url and authorization
+var client = new RestClient(""https://example.com/"")
+var request = new RestRequest(Method.GET);
+var text = ""more text to surpass the size."";
+request.AddHeader(""Authorization"", ""Basic SomeAuthorizationKey5555555"");
+
+
+<protocol>
+GET http://we.want.that.site.com/16 HTTP/1.1
+Host: we.want.that.site.com
+Proxy-Authorization: Basic 6666666b29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29uZw==
+Accept: */*
+Proxy-Connection: Keep-Alive
+
+ 
+
+</protocol>
+</verify>";
+
+            bool hasMatch = Regex2.Matches(pattern, text, out matches);
+
+            Assert.True(hasMatch);
+            Assert.Equal(5, matches.Count);
+            Assert.Equal(7, matches[0].Count);
+            Assert.Equal("", matches[0]["path"]);
+            Assert.Equal("SomeAuthorizationKey1111111", matches[0]["secret"]);
+        }
+
         private string MatchToString(Match2 match, String8 content)
         {
             return $"({match.Index}, {match.Length}: '{content.Substring(match.Index, match.Length)}')";
