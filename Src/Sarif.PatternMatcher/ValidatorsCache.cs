@@ -252,6 +252,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                                  groups,
                                                                                  ref resultLevelKind);
                         validationResult.ResultLevelKind = resultLevelKind;
+                        validationResult.Message = message;
                     }
                 }
             }
