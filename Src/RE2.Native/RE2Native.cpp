@@ -21,7 +21,7 @@ const int RegexOptions_IgnoreCase = 0x1;
 const int RegexOptions_Multiline = 0x2;
 const int RegexOptions_ExplicitCapture = 0x4;
 const int RegexOptions_Compiled = 0x8;
-const int RegexOptions_Singleline = 0x10; 
+const int RegexOptions_Singleline = 0x10;
 const int RegexOptions_IgnorePatternWhitespace = 0x20;
 const int RegexOptions_RightToLeft = 0x40;
 const int RegexOptions_Debug = 0x80;
@@ -47,7 +47,7 @@ std::mutex cachedExpressionsMutex;
 
 // Maintain a static vector to cache parsed RE2 regular expressions
 // RE2 instances are safe for concurrent use across threads.
-std::vector<re2::RE2*> *cachedExpressions;
+std::vector<re2::RE2*>* cachedExpressions;
 
 // Parse and Cache a Regular Expression for later runs
 extern "C" __declspec(dllexport) int BuildRegex(String8 regex, int regexOptions)
@@ -56,7 +56,7 @@ extern "C" __declspec(dllexport) int BuildRegex(String8 regex, int regexOptions)
 
 	// Allocate the vector if this is the first call
 	if (cachedExpressions == nullptr) cachedExpressions = new std::vector<re2::RE2*>();
-	
+
 	// Return error if Regex options contains flags not supported by RE2
 	if ((regexOptions & RegexOptions_ThrowOnMask) != 0) return -2;
 
@@ -71,7 +71,7 @@ extern "C" __declspec(dllexport) int BuildRegex(String8 regex, int regexOptions)
 
 	// Parse and construct an RE2 instance for the regular expression
 	re2::RE2* expression = new re2::RE2(expressionSp, *options);
-	
+
 	// If the expression didn't parse, return an error
 	// Not returning the native allocated error message; it's visible in stdout.
 	if (expression->error_code() != 0)
@@ -123,7 +123,7 @@ extern "C" __declspec(dllexport) int Matches(int regexIndex, String8 text, int f
 
 	// Get the time to measure the timeout
 	std::chrono::high_resolution_clock::time_point start;
-	if(timeoutMilliseconds > 0) start = std::chrono::high_resolution_clock::now();
+	if (timeoutMilliseconds > 0) start = std::chrono::high_resolution_clock::now();
 
 	// Find matches until the matches array is full or we run out of text
 	re2::StringPiece captures[1];
@@ -158,26 +158,25 @@ extern "C" __declspec(dllexport) int Matches(int regexIndex, String8 text, int f
 // Implementation note: The data std::vector is guaranteed to be contiguous by the C++ standard,
 // so we can pass it to C# space for pointer-based copying.
 extern "C" __declspec(dllexport) void MatchesCaptureGroups(
-	_In_  StringUtf8 pattern,
+	_In_  int regexIndex,
 	_In_  StringUtf8 text,
 	_Out_ MatchesCaptureGroupsOutput** outputOut
 )
 {
+	re2::RE2* re;
+	int index = GetCachedExpression(regexIndex, &re);
+	if (index < 0) { return; }
+
 	// Convert StringUtf8 to string piece.
-	re2::StringPiece patternSp(reinterpret_cast<char*>(pattern.Bytes), pattern.Length);
 	re2::StringPiece textSp(reinterpret_cast<char*>(text.Bytes), text.Length);
 
-	// Compile RE2 regex from pattern.
-	re2::RE2::Options options;
-	re2::RE2 re(patternSp, options);
-
 	// Compute the number of submatches in the pattern.
-	int numSubmatches = re.NumberOfCapturingGroups() + 1;
+	int numSubmatches = re->NumberOfCapturingGroups() + 1;
 
 	// Build group name headers and buffer.
 	std::vector<GroupNameHeader>* groupNameHeaderVectorPtr = new std::vector<GroupNameHeader>();
 	std::vector<uint8_t>* groupNameBufferVectorPtr = new std::vector<uint8_t>();
-	for (auto const& pair : re.CapturingGroupNames())
+	for (auto const& pair : re->CapturingGroupNames())
 	{
 		// Extract index and group name.
 		int index = pair.first;
@@ -213,7 +212,7 @@ extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 		}
 
 		// Extract next match from text using pattern.
-		bool isMatch = re.Match(textSp, startpos, textSp.length(), re2::RE2::UNANCHORED, submatchesSp.data(), numSubmatches);
+		bool isMatch = re->Match(textSp, startpos, textSp.length(), re2::RE2::UNANCHORED, submatchesSp.data(), numSubmatches);
 
 		// Stop searching if no more matches are found.
 		if (!isMatch)
@@ -261,7 +260,7 @@ extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 	MatchesCaptureGroupsOutput* output = new MatchesCaptureGroupsOutput;
 	output->groupNameHeaders = groupNameHeaderVectorPtr->data();
 	output->groupNamesBuffer = groupNameBufferVectorPtr->data();
-	output->numGroupNames = static_cast<int>(re.CapturingGroupNames().size());
+	output->numGroupNames = static_cast<int>(re->CapturingGroupNames().size());
 	output->matches = matchesVectorPtr->data();
 	output->numMatches = static_cast<int>(matchesVectorPtr->size());
 	output->numSubmatches = numSubmatches;
