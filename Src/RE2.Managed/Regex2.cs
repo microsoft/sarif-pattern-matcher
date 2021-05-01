@@ -250,28 +250,28 @@ namespace Microsoft.RE2.Managed
                         submatchIndex2GroupName[output->GroupNameHeaders[i].Index] = groupName;
                     }
 
-                // Build matches output.
-                matches = new List<Dictionary<string, string>>(output->NumMatches);
-                for (int matchIndex = 0; matchIndex < output->NumMatches; matchIndex++)
-                {
-                    var newSubmatch = new Dictionary<string, string>(output->NumSubmatches);
-                    matches.Add(newSubmatch);
-
-                    for (int submatchIndex = 0; submatchIndex < output->NumSubmatches; submatchIndex++)
+                    // Build matches output.
+                    matches = new List<Dictionary<string, string>>(output->NumMatches);
+                    for (int matchIndex = 0; matchIndex < output->NumMatches; matchIndex++)
                     {
-                        Submatch submatchRe2 = output->Matches[matchIndex][submatchIndex];
-                        int submatchTextStartIndex = submatchRe2.Index;
-                        int submatchLength = submatchRe2.Length;
+                        var newSubmatch = new Dictionary<string, string>(output->NumSubmatches);
+                        matches.Add(newSubmatch);
 
-                        string submatchString;
-                        if ((submatchTextStartIndex == -1) && (submatchLength == -1))
+                        for (int submatchIndex = 0; submatchIndex < output->NumSubmatches; submatchIndex++)
                         {
-                            submatchString = string.Empty;
-                        }
-                        else
-                        {
-                            submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchTextStartIndex, submatchLength);
-                        }
+                            Submatch submatchRe2 = output->Matches[matchIndex][submatchIndex];
+                            int submatchTextStartIndex = submatchRe2.Index;
+                            int submatchLength = submatchRe2.Length;
+
+                            string submatchString;
+                            if ((submatchTextStartIndex == -1) && (submatchLength == -1))
+                            {
+                                submatchString = string.Empty;
+                            }
+                            else
+                            {
+                                submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchTextStartIndex, submatchLength);
+                            }
 
                             if (submatchIndex2GroupName.ContainsKey(submatchIndex))
                             {
