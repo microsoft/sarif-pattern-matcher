@@ -197,6 +197,7 @@ namespace Microsoft.RE2.Managed
         /// <param name="pattern">Pattern to search for in RE2 syntax.</param>
         /// <param name="text">Text to search.</param>
         /// <param name="matches">A list of successive, non-overlapping matches.</param>
+        /// <returns>A bool indicating if 1 or more matches were found.</returns>
         ///
         /// <example>
         /// <code>
@@ -228,6 +229,7 @@ namespace Microsoft.RE2.Managed
             {
                 MatchesCaptureGroupsOutput* output;
 
+                // Use RE2 to search the text for the pattern.
                 NativeMethods.MatchesCaptureGroups(
                     new StringUtf8(patternUtf8BytesPtr, pattern.Length),
                     new StringUtf8(textUtf8BytesPtr, text.Length),
@@ -242,7 +244,7 @@ namespace Microsoft.RE2.Managed
                     submatchIndex2GroupName[output->GroupNameHeaders[i].Index] = groupName;
                 }
 
-                // Build matches.
+                // Build matches output.
                 matches = new List<Dictionary<string, string>>(output->NumMatches);
                 for (int matchIndex = 0; matchIndex < output->NumMatches; matchIndex++)
                 {
@@ -255,7 +257,15 @@ namespace Microsoft.RE2.Managed
                         int submatchTextStartIndex = submatchRe2.Index;
                         int submatchLength = submatchRe2.Length;
 
-                        string submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchTextStartIndex, submatchLength);
+                        string submatchString;
+                        if ((submatchTextStartIndex == -1) && (submatchLength == -1))
+                        {
+                            submatchString = string.Empty;
+                        }
+                        else
+                        {
+                            submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchTextStartIndex, submatchLength);
+                        }
 
                         if (submatchIndex2GroupName.ContainsKey(submatchIndex))
                         {
