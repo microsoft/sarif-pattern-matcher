@@ -101,7 +101,7 @@ extern "C" __declspec(dllexport) void ClearRegexes()
 	}
 }
 
-extern "C" int GetCachedExpression(int regexIndex, re2::RE2 * *ppRE2)
+extern "C" int GetCachedExpression(int regexIndex, re2::RE2** ppRE2)
 {
 	std::lock_guard<std::mutex> lock(cachedExpressionsMutex);
 	if (regexIndex < 0 || regexIndex >= (int)cachedExpressions->size()) return -(int)cachedExpressions->size();
@@ -111,7 +111,7 @@ extern "C" int GetCachedExpression(int regexIndex, re2::RE2 * *ppRE2)
 
 // Find matches for a cached regular expression in UTF8 text and fill the matches array with them.
 // Return the count of matches found or -1 for errors.
-extern "C" __declspec(dllexport) int Matches(int regexIndex, String8 text, int fromTextIndex, Match2 * matches, int matchesLength, int timeoutMilliseconds)
+extern "C" __declspec(dllexport) int Matches(int regexIndex, String8 text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds)
 {
 	re2::RE2* re;
 	int index = GetCachedExpression(regexIndex, &re);
@@ -160,7 +160,7 @@ extern "C" __declspec(dllexport) int Matches(int regexIndex, String8 text, int f
 extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 	_In_  int regexIndex,
 	_In_  StringUtf8 text,
-	_Out_ MatchesCaptureGroupsOutput * *outputOut
+	_Out_ MatchesCaptureGroupsOutput** outputOut
 )
 {
 	re2::RE2* re;
@@ -271,7 +271,7 @@ extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 }
 
 extern "C" __declspec(dllexport) void MatchesCaptureGroupsDispose(
-	_In_  MatchesCaptureGroupsOutput * output
+	_In_  MatchesCaptureGroupsOutput* output
 )
 {
 	delete output->groupNameHeadersCleanupPtr;
