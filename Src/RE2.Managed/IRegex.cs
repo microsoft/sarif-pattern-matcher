@@ -20,5 +20,7 @@ namespace Microsoft.RE2.Managed
         FlexMatch Match(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null);
 
         IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null);
+
+        bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches);
     }
 }

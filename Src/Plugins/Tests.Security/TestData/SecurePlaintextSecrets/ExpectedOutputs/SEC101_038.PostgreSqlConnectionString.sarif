@@ -275,49 +275,6 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 8,
-                  "startColumn": 55,
-                  "endLine": 8,
-                  "endColumn": 137,
-                  "charOffset": 751,
-                  "charLength": 82,
-                  "snippet": {
-                    "text": "Password=my_pw_5;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise]",
-            "ValidationFingerprint/v1": "[host=my_host][id=my_user][secret=my_pw_5]",
-            "ValidationFingerprintHash/v1": "62699f9469245fcd726072ab32c94b2db498784e7897761c2c201e9c84d15263"
-          },
-          "rank": 36.02
-        },
-        {
-          "ruleId": "SEC101/038",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "SEC101_038.PostgreSqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO PostgreSQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
                   "startLine": 9,
                   "startColumn": 45,
                   "endLine": 9,
@@ -378,49 +335,6 @@
             "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555][resource=my_db]",
             "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][resource=my_db][secret=my_pw_7]",
             "ValidationFingerprintHash/v1": "fc1843ad5044c97192eea0f7cdb06e013cd3271f1191bb6134d627a8875c983c"
-          },
-          "rank": 36.02
-        },
-        {
-          "ruleId": "SEC101/038",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "SEC101_038.PostgreSqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO PostgreSQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 10,
-                  "startColumn": 60,
-                  "endLine": 10,
-                  "endColumn": 175,
-                  "charOffset": 1152,
-                  "charLength": 115,
-                  "snippet": {
-                    "text": "Port=5555;Password=my_pw_7;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555]",
-            "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][secret=my_pw_7]",
-            "ValidationFingerprintHash/v1": "8083529e9e26321f5065eb13ff72f77a08bf863f08e163861915fbfa3bc589c5"
           },
           "rank": 36.02
         },
