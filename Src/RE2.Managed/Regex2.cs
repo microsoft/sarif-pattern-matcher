@@ -221,28 +221,34 @@ namespace Microsoft.RE2.Managed
         /// </example>
         public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, string>> matches)
         {
-            byte[] patternUtf8Bytes = Encoding.UTF8.GetBytes(pattern);
-            byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
-
-            fixed (byte* patternUtf8BytesPtr = patternUtf8Bytes)
-            fixed (byte* textUtf8BytesPtr = textUtf8Bytes)
+            ParsedRegexCache cache = null;
+            try
             {
-                MatchesCaptureGroupsOutput* output;
+                cache = CheckoutCache();
 
-                // Use RE2 to search the text for the pattern.
-                NativeMethods.MatchesCaptureGroups(
-                    new StringUtf8(patternUtf8BytesPtr, pattern.Length),
-                    new StringUtf8(textUtf8BytesPtr, text.Length),
-                    &output);
+                // Get or Cache the Regex on the native side and retrieve an index to it
+                int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None);
 
-                // Build SubmatchIndex to GroupName map
-                var submatchIndex2GroupName = new Dictionary<int, string>(output->NumGroupNames);
-                for (int i = 0; i < output->NumGroupNames; i++)
+                byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
+
+                fixed (byte* textUtf8BytesPtr = textUtf8Bytes)
                 {
-                    string groupName = Encoding.UTF8.GetString(output->GroupNamesBuffer, output->GroupNameHeaders[i].Length);
-                    output->GroupNamesBuffer += output->GroupNameHeaders[i].Length;
-                    submatchIndex2GroupName[output->GroupNameHeaders[i].Index] = groupName;
-                }
+                    MatchesCaptureGroupsOutput* output;
+
+                    // Use RE2 to search the text for the pattern.
+                    NativeMethods.MatchesCaptureGroups(
+                        expressionIndex,
+                        new StringUtf8(textUtf8BytesPtr, text.Length),
+                        &output);
+
+                    // Build SubmatchIndex to GroupName map
+                    var submatchIndex2GroupName = new Dictionary<int, string>(output->NumGroupNames);
+                    for (int i = 0; i < output->NumGroupNames; i++)
+                    {
+                        string groupName = Encoding.UTF8.GetString(output->GroupNamesBuffer, output->GroupNameHeaders[i].Length);
+                        output->GroupNamesBuffer += output->GroupNameHeaders[i].Length;
+                        submatchIndex2GroupName[output->GroupNameHeaders[i].Index] = groupName;
+                    }
 
                 // Build matches output.
                 matches = new List<Dictionary<string, string>>(output->NumMatches);
@@ -267,23 +273,28 @@ namespace Microsoft.RE2.Managed
                             submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchTextStartIndex, submatchLength);
                         }
 
-                        if (submatchIndex2GroupName.ContainsKey(submatchIndex))
-                        {
-                            string groupName = submatchIndex2GroupName[submatchIndex];
-                            newSubmatch[groupName] = submatchString;
-                        }
-                        else
-                        {
-                            newSubmatch[submatchIndex.ToString()] = submatchString;
+                            if (submatchIndex2GroupName.ContainsKey(submatchIndex))
+                            {
+                                string groupName = submatchIndex2GroupName[submatchIndex];
+                                newSubmatch[groupName] = submatchString;
+                            }
+                            else
+                            {
+                                newSubmatch[submatchIndex.ToString()] = submatchString;
+                            }
                         }
                     }
+
+                    // Free C++ resources.
+                    NativeMethods.MatchesCaptureGroupsDispose(output);
                 }
 
-                // Free C++ resources.
-                NativeMethods.MatchesCaptureGroupsDispose(output);
+                return matches.Count > 0;
             }
-
-            return matches.Count > 0;
+            finally
+            {
+                CheckinCache(cache);
+            }
         }
 
         // Retrieve a Regex Cache before each match to reuse parsed Regex objects.
