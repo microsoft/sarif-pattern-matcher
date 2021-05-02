@@ -10,5 +10,16 @@ namespace Microsoft.RE2.Managed
     {
         public int Index;
         public int Length;
+
+        /// <summary>
+        /// Capturing groups may be marked as optional. If they are optional and not found,
+        /// then they are handled specially.
+        /// </summary>
+        ///
+        /// <returns>Boolean indicating if this is an optional group that was not found.</returns>
+        public bool IsOptionalGroupAndNotFound()
+        {
+            return (this.Index == -1) && (this.Length == -1);
+        }
     }
 }

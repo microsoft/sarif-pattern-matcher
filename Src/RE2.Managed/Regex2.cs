@@ -260,16 +260,12 @@ namespace Microsoft.RE2.Managed
                         for (int submatchIndex = 0; submatchIndex < output->NumSubmatches; submatchIndex++)
                         {
                             Submatch submatchRe2 = output->Matches[matchIndex][submatchIndex];
-                            int submatchTextStartIndex = submatchRe2.Index;
-                            int submatchLength = submatchRe2.Length;
 
-                            string submatchString;
-                            if ((submatchTextStartIndex == -1) && (submatchLength == -1))
+                            string submatchString = string.Empty;
+                            if (!submatchRe2.IsOptionalGroupAndNotFound())
                             {
-                                submatchString = string.Empty;
-                            }
-                            else
-                            {
+                                int submatchTextStartIndex = submatchRe2.Index;
+                                int submatchLength = submatchRe2.Length;
                                 submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchTextStartIndex, submatchLength);
                             }
 
