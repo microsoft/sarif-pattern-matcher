@@ -267,6 +267,24 @@ namespace Microsoft.RE2.Managed
             }
         }
 
+        /// <summary>
+        /// If the regex implementation finds all overlapping matches, then this should get 2 matches.
+        /// If it does non-overlapping mathces, then this should get 1 match.
+        /// </summary>
+        [Fact]
+        public void Regex2_CaptureGroups_OverlappingImplementation()
+        {
+            List<Dictionary<string, string>> matches;
+
+            string pattern = @"(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?P<host>[\w\-.]{3,90}))|(Uid=(?-i)(?P<id>[a-z\@\-]{1,120})(?i))|(Pwd\s*=\s*(?P<secret>[^;""]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?";
+            string text = @"Port=3306; Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_2; SslMode=Preferred;";
+
+            bool hasMatch = Regex2.Matches(pattern, text, out matches);
+
+            Assert.True(hasMatch);
+            Assert.Single(matches);
+        }
+
         [Fact]
         public void Regex2_CaptureGroups_Production()
         {
