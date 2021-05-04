@@ -79,5 +79,8 @@
   $SEC101/041.RabbitMqConnectionString=(?i)(?<refine>amqps?:\/\/(?<id>[^:]+):(?<secret>[^@]+)@(?<host>[\w_\-\:]+)\/(?<resource>[\w]+))([^0-9a-z]|$)
   $SEC101/042.DynatraceToken=\b(?<refine>dt0(?i)[a-z]{1}[0-9]{2}\.[0-9A-Z]{24}\.[0-9A-Z]{64})
   $SEC101/043.NuGetPackageSourceCredentialsXml=(?i)(?<host><\s*packageSources\s*>(?s).{0,500}?(?-s)<\\?\/packageSources\s*>)(?s).{0,200}?(?-s)[^\/](?<secret><\s*packageSourceCredentials\s*>(?s).{0,500}?(?-s)<\\?\/packageSourceCredentials\s*>)
+  $SEC101/044.NpmCredentialsAuth=(?is)registry\s*=\s*https:\/\/(?<host>[^\s]+)(?:$|\s)(?:.{0,200})?_auth\s*=\s*(?<secret>[^\s]+)
+  $SEC101/044.NpmCredentialsUserPassword=(?is)(((registry\s*=\s*https:\/\/(?<host>[^\s]+)(?:$|\s))|(username\s*=\s*(?<id>[^\s]+)(?:$|\s))|(_password\s*=\s*(?<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){3}
+  $SEC101/044.NpmCredentialsPassword=(?is)(((registry\s*=\s*https:\/\/(?<host>[^\s]+)(?:$|\s))|(_password\s*=\s*(?<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){2}
   $SEC101/102.AdoPat=\b(?<secret>[2-7a-z]{52})(\b|$)
   
