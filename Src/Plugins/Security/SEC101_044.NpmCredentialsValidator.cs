@@ -8,8 +8,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
@@ -89,7 +87,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Id = id,
                     Host = host,
                     Secret = secret,
-                    Platform = nameof(AssetPlatform.NuGet),
+                    Platform = nameof(AssetPlatform.Npm),
                 },
                 ValidationState = ValidationState.Unknown,
             };
