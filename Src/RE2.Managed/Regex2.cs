@@ -219,7 +219,10 @@ namespace Microsoft.RE2.Managed
         ///
         /// </code>
         /// </example>
-        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, string>> matches)
+        public static unsafe bool Matches(
+            string pattern,
+            string text,
+            out List<Dictionary<string, string>> matches)
         {
             ParsedRegexCache cache = null;
             try
@@ -252,27 +255,32 @@ namespace Microsoft.RE2.Managed
 
                     // Build matches output.
                     matches = new List<Dictionary<string, string>>(output->NumMatches);
+
+                    // Iterate through each match.
                     for (int matchIndex = 0; matchIndex < output->NumMatches; matchIndex++)
                     {
                         var newSubmatch = new Dictionary<string, string>(output->NumSubmatches);
                         matches.Add(newSubmatch);
 
-                        for (int submatchIndex = 0; submatchIndex < output->NumSubmatches; submatchIndex++)
+                        // Handle each submatch of the match.
+                        for (int submatchIndex = 1; submatchIndex < output->NumSubmatches; submatchIndex++)
                         {
                             Submatch submatchRe2 = output->Matches[matchIndex][submatchIndex];
-                            int submatchTextStartIndex = submatchRe2.Index;
-                            int submatchLength = submatchRe2.Length;
+                            int submatchUtf8BytesStartIndex = submatchRe2.Index;
+                            int submatchUtf8BytesLength = submatchRe2.Length;
 
+                            // Convert submatch to string.
                             string submatchString;
-                            if ((submatchTextStartIndex == -1) && (submatchLength == -1))
+                            if ((submatchUtf8BytesStartIndex == -1) && (submatchUtf8BytesLength == -1))
                             {
                                 submatchString = string.Empty;
                             }
                             else
                             {
-                                submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchTextStartIndex, submatchLength);
+                                submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchUtf8BytesStartIndex, submatchUtf8BytesLength);
                             }
 
+                            // Associate submatches with group names or indices.
                             if (submatchIndex2GroupName.ContainsKey(submatchIndex))
                             {
                                 string groupName = submatchIndex2GroupName[submatchIndex];
