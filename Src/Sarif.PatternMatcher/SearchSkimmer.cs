@@ -515,7 +515,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                   validationResult.Fingerprint,
                                                                   validatorMessage,
                                                                   validationPrefix,
-                                                                  validationSuffix);
+                                                                  validationSuffix,
+                                                                  validationResult.OverrideIndex);
                         }
                     }
                 }
@@ -534,7 +535,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                           fingerprint,
                                                           validatorMessage,
                                                           validationPrefix,
-                                                          validationSuffix);
+                                                          validationSuffix,
+                                                          null);
                 }
             }
         }
@@ -552,14 +554,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                            Fingerprint fingerprint,
                                                            string validatorMessage,
                                                            string validationPrefix,
-                                                           string validationSuffix)
+                                                           string validationSuffix,
+                                                           int? overrideIndex)
         {
             // If we're matching against decoded contents, the region should
             // relate to the base64-encoded scan target content. We do use
             // the decoded content for the fingerprint, however.
             FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch;
 
-            Region region = ConstructRegion(context, regionFlexMatch, refinedMatchedPattern);
+            Region region = ConstructRegion(context, regionFlexMatch, refinedMatchedPattern, overrideIndex);
 
             Dictionary<string, string> messageArguments = matchExpression.MessageArguments != null ?
                 new Dictionary<string, string>(matchExpression.MessageArguments) :
@@ -823,11 +826,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.Logger.Log(reportingDescriptor, result);
         }
 
-        private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch, string fingerprint)
+        private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch, string fingerprint, int? overrideIndex)
         {
             // TODO: this code is wrong!! We no longer use the fingerprint to refine the region
 
-            int indexOffset = regionFlexMatch.Value.String.IndexOf(fingerprint);
+            int indexOffset = overrideIndex ?? regionFlexMatch.Value.String.IndexOf(fingerprint);
             int lengthOffset = fingerprint.Length - regionFlexMatch.Length;
 
             if (indexOffset == -1)
