@@ -188,11 +188,15 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, FlexMatch>> matches;
 
-            bool hasMatches = Regex2.Matches(@"abc", "abc", out matches);
+            string pattern = @"abc";
+            string text = @"abc";
+
+            bool hasMatches = Regex2.Matches(pattern, text, out matches);
             Assert.True(hasMatches);
             Assert.Single(matches);
             Assert.True(matches[0].ContainsKey("0"));
             Assert.Equal("abc", matches[0]["0"].Value);
+            ValidateMatchIndices(text, matches);
         }
 
         [Fact]
@@ -200,7 +204,10 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, FlexMatch>> matches;
 
-            bool hasMatches = Regex2.Matches(@"def", "abc", out matches);
+            string pattern = @"def";
+            string text = @"abc";
+
+            bool hasMatches = Regex2.Matches(pattern, text, out matches);
             Assert.False(hasMatches);
             Assert.Empty(matches);
         }
@@ -210,7 +217,10 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, FlexMatch>> matches;
 
-            bool hasMatches = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out matches);
+            string pattern = @"(?P<g1>a)(b)(?P<g2>c)";
+            string text = @"abc";
+
+            bool hasMatches = Regex2.Matches(pattern, text, out matches);
 
             Assert.True(hasMatches);
             Assert.Single(matches);
@@ -223,6 +233,7 @@ namespace Microsoft.RE2.Managed
             Assert.Equal("b", matches[0]["2"].Value);
             Assert.True(matches[0].ContainsKey("g2"));
             Assert.Equal("c", matches[0]["g2"].Value);
+            ValidateMatchIndices(text, matches);
         }
 
         [Fact]
@@ -230,7 +241,10 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, FlexMatch>> matches;
 
-            bool hasMatches = Regex2.Matches(@"(?P<a>a)(?P<bb>b)(?P<ccc>c)", "abc", out matches);
+            string pattern = @"(?P<a>a)(?P<bb>b)(?P<ccc>c)";
+            string text = @"abc";
+
+            bool hasMatches = Regex2.Matches(pattern, text, out matches);
 
             Assert.True(hasMatches);
             Assert.Single(matches);
@@ -243,6 +257,7 @@ namespace Microsoft.RE2.Managed
             Assert.Equal("b", matches[0]["bb"].Value);
             Assert.True(matches[0].ContainsKey("ccc"));
             Assert.Equal("c", matches[0]["ccc"].Value);
+            ValidateMatchIndices(text, matches);
         }
 
         [Fact]
@@ -250,8 +265,12 @@ namespace Microsoft.RE2.Managed
         {
             List<Dictionary<string, FlexMatch>> matches;
 
-            Regex2.Matches(@"(?P<g1>a)(a)(?P<g2>a)", "aaaaaaaaaaaa", out matches);
+            string pattern = @"(?P<g1>a)(a)(?P<g2>a)";
+            string text = @"aaaaaaaaaaaa";
 
+            bool hasMatches = Regex2.Matches(pattern, text, out matches);
+
+            Assert.True(hasMatches);
             Assert.Equal(4, matches.Count);
             for (int i = 0; i < 4; i++)
             {
@@ -265,6 +284,7 @@ namespace Microsoft.RE2.Managed
                 Assert.True(matches[0].ContainsKey("g2"));
                 Assert.Equal("a", matches[0]["g2"].Value);
             }
+            ValidateMatchIndices(text, matches);
         }
 
         /// <summary>
@@ -283,6 +303,7 @@ namespace Microsoft.RE2.Managed
 
             Assert.True(hasMatch);
             Assert.Single(matches);
+            ValidateMatchIndices(text, matches);
         }
 
         [Fact]
@@ -337,6 +358,26 @@ Proxy-Connection: Keep-Alive
             Assert.Equal(7, matches[0].Count);
             Assert.Null(matches[0]["path"].Value.String);
             Assert.Equal("SomeAuthorizationKey1111111", matches[0]["secret"].Value);
+            ValidateMatchIndices(text, matches);
+        }
+
+        private static void ValidateMatchIndices(string text, List<Dictionary<string, FlexMatch>> matches)
+        {
+            foreach (Dictionary<string, FlexMatch> match in matches)
+            {
+                foreach (string groupName in match.Keys)
+                {
+                    FlexMatch flexMatch = match[groupName];
+                    if (flexMatch.Index == -1)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Assert.Equal(flexMatch.Value.String, text.Substring(flexMatch.Index, flexMatch.Length));
+                    }
+                }
+            }
         }
 
         private string MatchToString(Match2 match, String8 content)
