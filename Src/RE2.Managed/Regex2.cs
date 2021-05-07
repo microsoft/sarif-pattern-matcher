@@ -287,9 +287,16 @@ namespace Microsoft.RE2.Managed
                             }
 
                             // Convert submatch to UTF-16 indices.
-                            int submatchUtf16BytesStartIndex = indexMap[submatchUtf8BytesStartIndex];
-                            int submatchUtf16BytesLength = indexMap[submatchUtf8BytesStartIndex + submatchUtf8BytesLength] - submatchUtf16BytesStartIndex;
-                            (int Start, int Length) submatchUtf16BytesIndex = (submatchUtf16BytesStartIndex, submatchUtf16BytesLength);
+                            (int Start, int Length) submatchUtf16BytesIndex;
+                            if ((submatchUtf8BytesStartIndex == -1) && (submatchUtf8BytesLength == -1))
+                            {
+                                submatchUtf16BytesIndex = (-1, -1);
+                            }
+                            else
+                            {
+                                int submatchUtf16BytesStartIndex = indexMap[submatchUtf8BytesStartIndex];
+                                submatchUtf16BytesIndex = (submatchUtf16BytesStartIndex, submatchString.Length);
+                            }
 
                             // Associate submatches with group names or indices.
                             if (submatchIndex2GroupName.ContainsKey(submatchIndex))

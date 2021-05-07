@@ -187,8 +187,9 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_BasicMatch()
         {
             List<Dictionary<string, string>> matches;
+            List<Dictionary<string, (int, int)>> matchIndices;
 
-            bool hasMatches = Regex2.Matches(@"abc", "abc", out matches);
+            bool hasMatches = Regex2.Matches(@"abc", "abc", out matches, out matchIndices);
             Assert.True(hasMatches);
             Assert.Single(matches);
             Assert.True(matches[0].ContainsKey("0"));
@@ -199,8 +200,9 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_NoMatch()
         {
             List<Dictionary<string, string>> matches;
+            List<Dictionary<string, (int, int)>> matchIndices;
 
-            bool hasMatches = Regex2.Matches(@"def", "abc", out matches);
+            bool hasMatches = Regex2.Matches(@"def", "abc", out matches, out matchIndices);
             Assert.False(hasMatches);
             Assert.Empty(matches);
         }
@@ -209,8 +211,9 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_WithGroups()
         {
             List<Dictionary<string, string>> matches;
+            List<Dictionary<string, (int, int)>> matchIndices;
 
-            bool hasMatches = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out matches);
+            bool hasMatches = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out matches, out matchIndices);
 
             Assert.True(hasMatches);
             Assert.Single(matches);
@@ -229,8 +232,9 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_VariableLengthGroupNames()
         {
             List<Dictionary<string, string>> matches;
+            List<Dictionary<string, (int, int)>> matchIndices;
 
-            bool hasMatches = Regex2.Matches(@"(?P<a>a)(?P<bb>b)(?P<ccc>c)", "abc", out matches);
+            bool hasMatches = Regex2.Matches(@"(?P<a>a)(?P<bb>b)(?P<ccc>c)", "abc", out matches, out matchIndices);
 
             Assert.True(hasMatches);
             Assert.Single(matches);
@@ -249,8 +253,9 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_NonOverlapping()
         {
             List<Dictionary<string, string>> matches;
+            List<Dictionary<string, (int, int)>> matchIndices;
 
-            Regex2.Matches(@"(?P<g1>a)(a)(?P<g2>a)", "aaaaaaaaaaaa", out matches);
+            Regex2.Matches(@"(?P<g1>a)(a)(?P<g2>a)", "aaaaaaaaaaaa", out matches, out matchIndices);
 
             Assert.Equal(4, matches.Count);
             for (int i = 0; i < 4; i++)
@@ -275,11 +280,12 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_OverlappingImplementation()
         {
             List<Dictionary<string, string>> matches;
+            List<Dictionary<string, (int, int)>> matchIndices;
 
             string pattern = @"(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?P<host>[\w\-.]{3,90}))|(Uid=(?-i)(?P<id>[a-z\@\-]{1,120})(?i))|(Pwd\s*=\s*(?P<secret>[^;""]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?";
             string text = @"Port=3306; Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_2; SslMode=Preferred;";
 
-            bool hasMatch = Regex2.Matches(pattern, text, out matches);
+            bool hasMatch = Regex2.Matches(pattern, text, out matches, out matchIndices);
 
             Assert.True(hasMatch);
             Assert.Single(matches);
@@ -289,6 +295,7 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_Production()
         {
             List<Dictionary<string, string>> matches;
+            List<Dictionary<string, (int, int)>> matchIndices;
 
             string pattern = @"(?i)(?P<scheme>http|ftp|https):\/\/(?P<host>[\w_.-]{1,200})(?P<path>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= ""']+(basic)[\s\r\n]{0,10}(?P<secret>[^'""><;\s]{1,500})";
             string text = @"# RestClient example
@@ -330,7 +337,7 @@ Proxy-Connection: Keep-Alive
 </protocol>
 </verify>";
 
-            bool hasMatch = Regex2.Matches(pattern, text, out matches);
+            bool hasMatch = Regex2.Matches(pattern, text, out matches, out matchIndices);
 
             Assert.True(hasMatch);
             Assert.Equal(5, matches.Count);
