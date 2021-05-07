@@ -219,7 +219,7 @@ namespace Microsoft.RE2.Managed
         ///
         /// </code>
         /// </example>
-        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, string>> matches)
+        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches)
         {
             ParsedRegexCache cache = null;
             try
@@ -230,6 +230,7 @@ namespace Microsoft.RE2.Managed
                 int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None);
 
                 byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
+                int[] indexMap = GetMapOfUtf8ToUtf16ByteIndices(textUtf8Bytes);
 
                 fixed (byte* textUtf8BytesPtr = textUtf8Bytes)
                 {
@@ -251,36 +252,56 @@ namespace Microsoft.RE2.Managed
                     }
 
                     // Build matches output.
-                    matches = new List<Dictionary<string, string>>(output->NumMatches);
+                    matches = new List<Dictionary<string, FlexMatch>>(output->NumMatches);
+
+                    // Iterate through each match.
                     for (int matchIndex = 0; matchIndex < output->NumMatches; matchIndex++)
                     {
-                        var newSubmatch = new Dictionary<string, string>(output->NumSubmatches);
-                        matches.Add(newSubmatch);
+                        var newSubmatchIndices = new Dictionary<string, FlexMatch>(output->NumSubmatches);
+                        matches.Add(newSubmatchIndices);
 
+                        // Handle each submatch of the match.
                         for (int submatchIndex = 0; submatchIndex < output->NumSubmatches; submatchIndex++)
                         {
                             Submatch submatchRe2 = output->Matches[matchIndex][submatchIndex];
-                            int submatchTextStartIndex = submatchRe2.Index;
-                            int submatchLength = submatchRe2.Length;
+                            int submatchUtf8BytesStartIndex = submatchRe2.Index;
+                            int submatchUtf8BytesLength = submatchRe2.Length;
 
+                            // Convert submatch to string and UTF-16 indices.
                             string submatchString;
-                            if ((submatchTextStartIndex == -1) && (submatchLength == -1))
+                            int submatchUtf16BytesStartIndex;
+                            int submatchUtf16BytesLength;
+                            if ((submatchUtf8BytesStartIndex == -1) && (submatchUtf8BytesLength == -1))
                             {
-                                submatchString = string.Empty;
+                                submatchString = null;
+                                submatchUtf16BytesStartIndex = -1;
+                                submatchUtf16BytesLength = -1;
                             }
                             else
                             {
-                                submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchTextStartIndex, submatchLength);
+                                submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchUtf8BytesStartIndex, submatchUtf8BytesLength);
+                                submatchUtf16BytesStartIndex = indexMap[submatchUtf8BytesStartIndex];
+                                submatchUtf16BytesLength = submatchString.Length;
                             }
 
+                            // Create FlexMatch.
+                            var flexMatch = new FlexMatch()
+                            {
+                                Success = true,
+                                Index = submatchUtf16BytesStartIndex,
+                                Length = submatchUtf16BytesLength,
+                                Value = submatchString,
+                            };
+
+                            // Associate submatches with group names or indices.
                             if (submatchIndex2GroupName.ContainsKey(submatchIndex))
                             {
                                 string groupName = submatchIndex2GroupName[submatchIndex];
-                                newSubmatch[groupName] = submatchString;
+                                newSubmatchIndices[groupName] = flexMatch;
                             }
                             else
                             {
-                                newSubmatch[submatchIndex.ToString()] = submatchString;
+                                newSubmatchIndices[submatchIndex.ToString()] = flexMatch;
                             }
                         }
                     }
@@ -294,6 +315,55 @@ namespace Microsoft.RE2.Managed
             finally
             {
                 CheckinCache(cache);
+            }
+        }
+
+        private static int[] GetMapOfUtf8ToUtf16ByteIndices(byte[] utf8Bytes)
+        {
+            int[] indexMap = new int[utf8Bytes.Length];
+
+            int utf8ByteIndex = 0;
+            int utf16ByteIndex = 0;
+            while (utf8ByteIndex < utf8Bytes.Length)
+            {
+                indexMap[utf8ByteIndex] = utf16ByteIndex;
+                GetCharacterSizeInBytes(utf8Bytes[utf8ByteIndex], out int utf8CharacterSizeInBytes, out int utf16CharacterSizeInBytes);
+                utf8ByteIndex += utf8CharacterSizeInBytes;
+                utf16ByteIndex += utf16CharacterSizeInBytes;
+            }
+
+            return indexMap;
+        }
+
+        private static void GetCharacterSizeInBytes(byte b, out int utf8CharacterSizeInBytes, out int utf16CharacterSizeInBytes)
+        {
+            if (b < 0x80)
+            {
+                utf8CharacterSizeInBytes = 1;
+                utf16CharacterSizeInBytes = 1;
+            }
+            else if (b < 0xC0)
+            {
+                throw new Exception($"found unexpected byte when decoding UTF-8: {b}");
+            }
+            else if (b < 0xE0)
+            {
+                utf8CharacterSizeInBytes = 2;
+                utf16CharacterSizeInBytes = 1;
+            }
+            else if (b < 0xF0)
+            {
+                utf8CharacterSizeInBytes = 3;
+                utf16CharacterSizeInBytes = 1;
+            }
+            else if (b < 0xF8)
+            {
+                utf8CharacterSizeInBytes = 4;
+                utf16CharacterSizeInBytes = 2;
+            }
+            else
+            {
+                throw new Exception($"found unexpected byte when decoding UTF-8: {b}");
             }
         }
 
