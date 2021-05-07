@@ -332,6 +332,80 @@
             "ValidationFingerprintHash/v1": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
           },
           "rank": 54.42
+        },
+        {
+          "ruleId": "SEC105/003/postinvalid",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "__post_invalid"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 97,
+                  "endLine": 2,
+                  "endColumn": 113,
+                  "charOffset": 192,
+                  "charLength": 16,
+                  "snippet": {
+                    "text": " __post_invalid)"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
+            "ValidationFingerprintHash/v1": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+          },
+          "rank": 54.42
+        },
+        {
+          "ruleId": "SEC105/003/postinvalid",
+          "ruleIndex": 2,
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "__post_invalid"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 103,
+                  "endLine": 3,
+                  "endColumn": 119,
+                  "charOffset": 312,
+                  "charLength": 16,
+                  "snippet": {
+                    "text": " __post_invalid)"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
+            "ValidationFingerprintHash/v1": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+          },
+          "rank": 54.42
         }
       ],
       "columnKind": "utf16CodeUnits"
