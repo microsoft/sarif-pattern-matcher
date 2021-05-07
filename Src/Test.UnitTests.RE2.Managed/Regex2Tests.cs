@@ -187,7 +187,7 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_BasicMatch()
         {
             List<Dictionary<string, string>> matches;
-            List<Dictionary<string, (int, int)>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matchIndices;
 
             bool hasMatches = Regex2.Matches(@"abc", "abc", out matches, out matchIndices);
             Assert.True(hasMatches);
@@ -200,7 +200,7 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_NoMatch()
         {
             List<Dictionary<string, string>> matches;
-            List<Dictionary<string, (int, int)>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matchIndices;
 
             bool hasMatches = Regex2.Matches(@"def", "abc", out matches, out matchIndices);
             Assert.False(hasMatches);
@@ -211,7 +211,7 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_WithGroups()
         {
             List<Dictionary<string, string>> matches;
-            List<Dictionary<string, (int, int)>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matchIndices;
 
             bool hasMatches = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out matches, out matchIndices);
 
@@ -232,7 +232,7 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_VariableLengthGroupNames()
         {
             List<Dictionary<string, string>> matches;
-            List<Dictionary<string, (int, int)>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matchIndices;
 
             bool hasMatches = Regex2.Matches(@"(?P<a>a)(?P<bb>b)(?P<ccc>c)", "abc", out matches, out matchIndices);
 
@@ -253,7 +253,7 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_NonOverlapping()
         {
             List<Dictionary<string, string>> matches;
-            List<Dictionary<string, (int, int)>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matchIndices;
 
             Regex2.Matches(@"(?P<g1>a)(a)(?P<g2>a)", "aaaaaaaaaaaa", out matches, out matchIndices);
 
@@ -280,7 +280,7 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_OverlappingImplementation()
         {
             List<Dictionary<string, string>> matches;
-            List<Dictionary<string, (int, int)>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matchIndices;
 
             string pattern = @"(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?P<host>[\w\-.]{3,90}))|(Uid=(?-i)(?P<id>[a-z\@\-]{1,120})(?i))|(Pwd\s*=\s*(?P<secret>[^;""]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?";
             string text = @"Port=3306; Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_2; SslMode=Preferred;";
@@ -295,7 +295,7 @@ namespace Microsoft.RE2.Managed
         public void Regex2_CaptureGroups_Production()
         {
             List<Dictionary<string, string>> matches;
-            List<Dictionary<string, (int, int)>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matchIndices;
 
             string pattern = @"(?i)(?P<scheme>http|ftp|https):\/\/(?P<host>[\w_.-]{1,200})(?P<path>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= ""']+(basic)[\s\r\n]{0,10}(?P<secret>[^'""><;\s]{1,500})";
             string text = @"# RestClient example
