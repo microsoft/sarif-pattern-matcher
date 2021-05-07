@@ -269,7 +269,7 @@ namespace Microsoft.RE2.Managed
                         matchIndices.Add(newSubmatchIndices);
 
                         // Handle each submatch of the match.
-                        for (int submatchIndex = 1; submatchIndex < output->NumSubmatches; submatchIndex++)
+                        for (int submatchIndex = 0; submatchIndex < output->NumSubmatches; submatchIndex++)
                         {
                             Submatch submatchRe2 = output->Matches[matchIndex][submatchIndex];
                             int submatchUtf8BytesStartIndex = submatchRe2.Index;
