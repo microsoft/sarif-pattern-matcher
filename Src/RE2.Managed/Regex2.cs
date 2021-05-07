@@ -197,6 +197,7 @@ namespace Microsoft.RE2.Managed
         /// <param name="pattern">Pattern to search for in RE2 syntax.</param>
         /// <param name="text">Text to search.</param>
         /// <param name="matches">A list of successive, non-overlapping matches.</param>
+        /// <param name="matchIndices">Index and length information of matches.</param>
         /// <returns>A bool indicating if 1 or more matches were found.</returns>
         ///
         /// <example>
@@ -222,7 +223,8 @@ namespace Microsoft.RE2.Managed
         public static unsafe bool Matches(
             string pattern,
             string text,
-            out List<Dictionary<string, string>> matches)
+            out List<Dictionary<string, string>> matches,
+            out List<Dictionary<string, (int Start, int Length)>> matchIndices)
         {
             ParsedRegexCache cache = null;
             try
@@ -233,6 +235,7 @@ namespace Microsoft.RE2.Managed
                 int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None);
 
                 byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
+                int[] indexMap = GetMapOfUtf8ToUtf16ByteIndices(textUtf8Bytes);
 
                 fixed (byte* textUtf8BytesPtr = textUtf8Bytes)
                 {
@@ -255,12 +258,15 @@ namespace Microsoft.RE2.Managed
 
                     // Build matches output.
                     matches = new List<Dictionary<string, string>>(output->NumMatches);
+                    matchIndices = new List<Dictionary<string, (int Start, int Length)>>(output->NumMatches);
 
                     // Iterate through each match.
                     for (int matchIndex = 0; matchIndex < output->NumMatches; matchIndex++)
                     {
                         var newSubmatch = new Dictionary<string, string>(output->NumSubmatches);
+                        var newSubmatchIndices = new Dictionary<string, (int Start, int Length)>(output->NumSubmatches);
                         matches.Add(newSubmatch);
+                        matchIndices.Add(newSubmatchIndices);
 
                         // Handle each submatch of the match.
                         for (int submatchIndex = 1; submatchIndex < output->NumSubmatches; submatchIndex++)
@@ -280,15 +286,22 @@ namespace Microsoft.RE2.Managed
                                 submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchUtf8BytesStartIndex, submatchUtf8BytesLength);
                             }
 
+                            // Convert submatch to UTF-16 indices.
+                            int submatchUtf16BytesStartIndex = indexMap[submatchUtf8BytesStartIndex];
+                            int submatchUtf16BytesLength = indexMap[submatchUtf8BytesStartIndex + submatchUtf8BytesLength] - submatchUtf16BytesStartIndex;
+                            (int Start, int Length) submatchUtf16BytesIndex = (submatchUtf16BytesStartIndex, submatchUtf16BytesLength);
+
                             // Associate submatches with group names or indices.
                             if (submatchIndex2GroupName.ContainsKey(submatchIndex))
                             {
                                 string groupName = submatchIndex2GroupName[submatchIndex];
                                 newSubmatch[groupName] = submatchString;
+                                newSubmatchIndices[groupName] = submatchUtf16BytesIndex;
                             }
                             else
                             {
                                 newSubmatch[submatchIndex.ToString()] = submatchString;
+                                newSubmatchIndices[submatchIndex.ToString()] = submatchUtf16BytesIndex;
                             }
                         }
                     }
@@ -302,6 +315,55 @@ namespace Microsoft.RE2.Managed
             finally
             {
                 CheckinCache(cache);
+            }
+        }
+
+        private static int[] GetMapOfUtf8ToUtf16ByteIndices(byte[] utf8Bytes)
+        {
+            int[] indexMap = new int[utf8Bytes.Length];
+
+            int utf8ByteIndex = 0;
+            int utf16ByteIndex = 0;
+            while (utf8ByteIndex < utf8Bytes.Length)
+            {
+                indexMap[utf8ByteIndex] = utf16ByteIndex;
+                GetCharacterSizeInBytes(utf8Bytes[utf8ByteIndex], out int utf8CharacterSizeInBytes, out int utf16CharacterSizeInBytes);
+                utf8ByteIndex += utf8CharacterSizeInBytes;
+                utf16ByteIndex += utf16CharacterSizeInBytes;
+            }
+
+            return indexMap;
+        }
+
+        private static void GetCharacterSizeInBytes(byte b, out int utf8CharacterSizeInBytes, out int utf16CharacterSizeInBytes)
+        {
+            if (b < 0x80)
+            {
+                utf8CharacterSizeInBytes = 1;
+                utf16CharacterSizeInBytes = 1;
+            }
+            else if (b < 0xC0)
+            {
+                throw new Exception($"found unexpected byte when decoding UTF-8: {b}");
+            }
+            else if (b < 0xE0)
+            {
+                utf8CharacterSizeInBytes = 2;
+                utf16CharacterSizeInBytes = 1;
+            }
+            else if (b < 0xF0)
+            {
+                utf8CharacterSizeInBytes = 3;
+                utf16CharacterSizeInBytes = 1;
+            }
+            else if (b < 0xF8)
+            {
+                utf8CharacterSizeInBytes = 4;
+                utf16CharacterSizeInBytes = 2;
+            }
+            else
+            {
+                throw new Exception($"found unexpected byte when decoding UTF-8: {b}");
             }
         }
 
