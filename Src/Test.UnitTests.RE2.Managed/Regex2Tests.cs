@@ -186,23 +186,21 @@ namespace Microsoft.RE2.Managed
         [Fact]
         public void Regex2_CaptureGroups_BasicMatch()
         {
-            List<Dictionary<string, string>> matches;
-            List<Dictionary<string, FlexMatch>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matches;
 
-            bool hasMatches = Regex2.Matches(@"abc", "abc", out matches, out matchIndices);
+            bool hasMatches = Regex2.Matches(@"abc", "abc", out matches);
             Assert.True(hasMatches);
             Assert.Single(matches);
             Assert.True(matches[0].ContainsKey("0"));
-            Assert.Equal("abc", matches[0]["0"]);
+            Assert.Equal("abc", matches[0]["0"].Value);
         }
 
         [Fact]
         public void Regex2_CaptureGroups_NoMatch()
         {
-            List<Dictionary<string, string>> matches;
-            List<Dictionary<string, FlexMatch>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matches;
 
-            bool hasMatches = Regex2.Matches(@"def", "abc", out matches, out matchIndices);
+            bool hasMatches = Regex2.Matches(@"def", "abc", out matches);
             Assert.False(hasMatches);
             Assert.Empty(matches);
         }
@@ -210,65 +208,62 @@ namespace Microsoft.RE2.Managed
         [Fact]
         public void Regex2_CaptureGroups_WithGroups()
         {
-            List<Dictionary<string, string>> matches;
-            List<Dictionary<string, FlexMatch>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matches;
 
-            bool hasMatches = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out matches, out matchIndices);
+            bool hasMatches = Regex2.Matches(@"(?P<g1>a)(b)(?P<g2>c)", "abc", out matches);
 
             Assert.True(hasMatches);
             Assert.Single(matches);
             Assert.Equal(4, matches[0].Count);
             Assert.True(matches[0].ContainsKey("0"));
-            Assert.Equal("abc", matches[0]["0"]);
+            Assert.Equal("abc", matches[0]["0"].Value);
             Assert.True(matches[0].ContainsKey("g1"));
-            Assert.Equal("a", matches[0]["g1"]);
+            Assert.Equal("a", matches[0]["g1"].Value);
             Assert.True(matches[0].ContainsKey("2"));
-            Assert.Equal("b", matches[0]["2"]);
+            Assert.Equal("b", matches[0]["2"].Value);
             Assert.True(matches[0].ContainsKey("g2"));
-            Assert.Equal("c", matches[0]["g2"]);
+            Assert.Equal("c", matches[0]["g2"].Value);
         }
 
         [Fact]
         public void Regex2_CaptureGroups_VariableLengthGroupNames()
         {
-            List<Dictionary<string, string>> matches;
-            List<Dictionary<string, FlexMatch>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matches;
 
-            bool hasMatches = Regex2.Matches(@"(?P<a>a)(?P<bb>b)(?P<ccc>c)", "abc", out matches, out matchIndices);
+            bool hasMatches = Regex2.Matches(@"(?P<a>a)(?P<bb>b)(?P<ccc>c)", "abc", out matches);
 
             Assert.True(hasMatches);
             Assert.Single(matches);
             Assert.Equal(4, matches[0].Count);
             Assert.True(matches[0].ContainsKey("0"));
-            Assert.Equal("abc", matches[0]["0"]);
+            Assert.Equal("abc", matches[0]["0"].Value);
             Assert.True(matches[0].ContainsKey("a"));
-            Assert.Equal("a", matches[0]["a"]);
+            Assert.Equal("a", matches[0]["a"].Value);
             Assert.True(matches[0].ContainsKey("bb"));
-            Assert.Equal("b", matches[0]["bb"]);
+            Assert.Equal("b", matches[0]["bb"].Value);
             Assert.True(matches[0].ContainsKey("ccc"));
-            Assert.Equal("c", matches[0]["ccc"]);
+            Assert.Equal("c", matches[0]["ccc"].Value);
         }
 
         [Fact]
         public void Regex2_CaptureGroups_NonOverlapping()
         {
-            List<Dictionary<string, string>> matches;
-            List<Dictionary<string, FlexMatch>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matches;
 
-            Regex2.Matches(@"(?P<g1>a)(a)(?P<g2>a)", "aaaaaaaaaaaa", out matches, out matchIndices);
+            Regex2.Matches(@"(?P<g1>a)(a)(?P<g2>a)", "aaaaaaaaaaaa", out matches);
 
             Assert.Equal(4, matches.Count);
             for (int i = 0; i < 4; i++)
             {
                 Assert.Equal(4, matches[0].Count);
                 Assert.True(matches[0].ContainsKey("0"));
-                Assert.Equal("aaa", matches[0]["0"]);
+                Assert.Equal("aaa", matches[0]["0"].Value);
                 Assert.True(matches[0].ContainsKey("g1"));
-                Assert.Equal("a", matches[0]["g1"]);
+                Assert.Equal("a", matches[0]["g1"].Value);
                 Assert.True(matches[0].ContainsKey("2"));
-                Assert.Equal("a", matches[0]["2"]);
+                Assert.Equal("a", matches[0]["2"].Value);
                 Assert.True(matches[0].ContainsKey("g2"));
-                Assert.Equal("a", matches[0]["g2"]);
+                Assert.Equal("a", matches[0]["g2"].Value);
             }
         }
 
@@ -279,13 +274,12 @@ namespace Microsoft.RE2.Managed
         [Fact]
         public void Regex2_CaptureGroups_OverlappingImplementation()
         {
-            List<Dictionary<string, string>> matches;
-            List<Dictionary<string, FlexMatch>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matches;
 
             string pattern = @"(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?P<host>[\w\-.]{3,90}))|(Uid=(?-i)(?P<id>[a-z\@\-]{1,120})(?i))|(Pwd\s*=\s*(?P<secret>[^;""]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?";
             string text = @"Port=3306; Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_2; SslMode=Preferred;";
 
-            bool hasMatch = Regex2.Matches(pattern, text, out matches, out matchIndices);
+            bool hasMatch = Regex2.Matches(pattern, text, out matches);
 
             Assert.True(hasMatch);
             Assert.Single(matches);
@@ -294,8 +288,7 @@ namespace Microsoft.RE2.Managed
         [Fact]
         public void Regex2_CaptureGroups_Production()
         {
-            List<Dictionary<string, string>> matches;
-            List<Dictionary<string, FlexMatch>> matchIndices;
+            List<Dictionary<string, FlexMatch>> matches;
 
             string pattern = @"(?i)(?P<scheme>http|ftp|https):\/\/(?P<host>[\w_.-]{1,200})(?P<path>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= ""']+(basic)[\s\r\n]{0,10}(?P<secret>[^'""><;\s]{1,500})";
             string text = @"# RestClient example
@@ -337,13 +330,13 @@ Proxy-Connection: Keep-Alive
 </protocol>
 </verify>";
 
-            bool hasMatch = Regex2.Matches(pattern, text, out matches, out matchIndices);
+            bool hasMatch = Regex2.Matches(pattern, text, out matches);
 
             Assert.True(hasMatch);
             Assert.Equal(5, matches.Count);
             Assert.Equal(7, matches[0].Count);
-            Assert.Equal("", matches[0]["path"]);
-            Assert.Equal("SomeAuthorizationKey1111111", matches[0]["secret"]);
+            Assert.Null(matches[0]["path"].Value.String);
+            Assert.Equal("SomeAuthorizationKey1111111", matches[0]["secret"].Value);
         }
 
         private string MatchToString(Match2 match, String8 content)

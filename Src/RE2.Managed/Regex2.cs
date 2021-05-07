@@ -197,7 +197,6 @@ namespace Microsoft.RE2.Managed
         /// <param name="pattern">Pattern to search for in RE2 syntax.</param>
         /// <param name="text">Text to search.</param>
         /// <param name="matches">A list of successive, non-overlapping matches.</param>
-        /// <param name="matchIndices">Index and length information of matches.</param>
         /// <returns>A bool indicating if 1 or more matches were found.</returns>
         ///
         /// <example>
@@ -220,11 +219,7 @@ namespace Microsoft.RE2.Managed
         ///
         /// </code>
         /// </example>
-        public static unsafe bool Matches(
-            string pattern,
-            string text,
-            out List<Dictionary<string, string>> matches,
-            out List<Dictionary<string, FlexMatch>> matchIndices)
+        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches)
         {
             ParsedRegexCache cache = null;
             try
@@ -257,16 +252,13 @@ namespace Microsoft.RE2.Managed
                     }
 
                     // Build matches output.
-                    matches = new List<Dictionary<string, string>>(output->NumMatches);
-                    matchIndices = new List<Dictionary<string, FlexMatch>>(output->NumMatches);
+                    matches = new List<Dictionary<string, FlexMatch>>(output->NumMatches);
 
                     // Iterate through each match.
                     for (int matchIndex = 0; matchIndex < output->NumMatches; matchIndex++)
                     {
-                        var newSubmatch = new Dictionary<string, string>(output->NumSubmatches);
                         var newSubmatchIndices = new Dictionary<string, FlexMatch>(output->NumSubmatches);
-                        matches.Add(newSubmatch);
-                        matchIndices.Add(newSubmatchIndices);
+                        matches.Add(newSubmatchIndices);
 
                         // Handle each submatch of the match.
                         for (int submatchIndex = 0; submatchIndex < output->NumSubmatches; submatchIndex++)
@@ -275,39 +267,40 @@ namespace Microsoft.RE2.Managed
                             int submatchUtf8BytesStartIndex = submatchRe2.Index;
                             int submatchUtf8BytesLength = submatchRe2.Length;
 
-                            // Convert submatch to string.
+                            // Convert submatch to string and UTF-16 indices.
                             string submatchString;
+                            int submatchUtf16BytesStartIndex;
+                            int submatchUtf16BytesLength;
                             if ((submatchUtf8BytesStartIndex == -1) && (submatchUtf8BytesLength == -1))
                             {
-                                submatchString = string.Empty;
+                                submatchString = null;
+                                submatchUtf16BytesStartIndex = -1;
+                                submatchUtf16BytesLength = -1;
                             }
                             else
                             {
                                 submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchUtf8BytesStartIndex, submatchUtf8BytesLength);
+                                submatchUtf16BytesStartIndex = indexMap[submatchUtf8BytesStartIndex];
+                                submatchUtf16BytesLength = submatchString.Length;
                             }
 
-                            // Convert submatch to UTF-16 indices.
-                            FlexMatch flexMatch;
-                            if ((submatchUtf8BytesStartIndex == -1) && (submatchUtf8BytesLength == -1))
+                            // Create FlexMatch.
+                            var flexMatch = new FlexMatch()
                             {
-                                flexMatch = new FlexMatch() { Success = true, Index = -1, Length = -1, Value = string.Empty };
-                            }
-                            else
-                            {
-                                int submatchUtf16BytesStartIndex = indexMap[submatchUtf8BytesStartIndex];
-                                flexMatch = new FlexMatch() { Success = true, Index = submatchUtf16BytesStartIndex, Length = submatchString.Length, Value = submatchString };
-                            }
+                                Success = true,
+                                Index = submatchUtf16BytesStartIndex,
+                                Length = submatchUtf16BytesLength,
+                                Value = submatchString,
+                            };
 
                             // Associate submatches with group names or indices.
                             if (submatchIndex2GroupName.ContainsKey(submatchIndex))
                             {
                                 string groupName = submatchIndex2GroupName[submatchIndex];
-                                newSubmatch[groupName] = submatchString;
                                 newSubmatchIndices[groupName] = flexMatch;
                             }
                             else
                             {
-                                newSubmatch[submatchIndex.ToString()] = submatchString;
                                 newSubmatchIndices[submatchIndex.ToString()] = flexMatch;
                             }
                         }
