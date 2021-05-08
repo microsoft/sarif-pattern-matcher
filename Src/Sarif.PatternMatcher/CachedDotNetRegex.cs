@@ -27,7 +27,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             RegexCache = new ConcurrentDictionary<Tuple<string, RegexOptions>, Regex>();
         }
 
-        private CachedDotNetRegex() { }
+        private CachedDotNetRegex()
+        {
+        }
 
         private static ConcurrentDictionary<Tuple<string, RegexOptions>, Regex> RegexCache { get; }
 
@@ -66,6 +68,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // (MatchesCollection *is* lazily computed).
                 if (w.Elapsed > timeout) { break; }
             }
+        }
+
+        public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches)
+        {
+            matches = new List<Dictionary<string, FlexMatch>>();
+
+            Regex regex = GetOrCreateRegex(pattern, RegexOptions.None);
+
+            foreach (Match m in regex.Matches(text))
+            {
+                var current = new Dictionary<string, FlexMatch>(m.Groups.Count);
+                foreach (string groupName in regex.GetGroupNames())
+                {
+                    Group group = m.Groups[groupName];
+                    current.Add(groupName, new FlexMatch { Success = group.Success, Index = group.Index, Value = group.Value, Length = group.Length });
+                }
+
+                matches.Add(current);
+            }
+
+            return matches.Count > 0;
         }
     }
 }

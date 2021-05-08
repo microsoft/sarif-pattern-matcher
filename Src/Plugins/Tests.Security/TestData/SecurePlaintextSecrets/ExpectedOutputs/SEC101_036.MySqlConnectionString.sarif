@@ -178,49 +178,6 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 3,
-                  "startColumn": 12,
-                  "endLine": 3,
-                  "endColumn": 132,
-                  "charOffset": 271,
-                  "charLength": 120,
-                  "snippet": {
-                    "text": "Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_2"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=some-database-name.mysql.database.azure.com][id=username@some-database-name][part=servers][platform=Azure][resource=catalog_db]",
-            "ValidationFingerprint/v1": "[host=some-database-name.mysql.database.azure.com][id=username@some-database-name][resource=catalog_db][secret=password_2]",
-            "ValidationFingerprintHash/v1": "f662d37d4bfb96aae2599f52fd3b86fbcf453fc920a451614231f0854ce3618b"
-          },
-          "rank": 44.6
-        },
-        {
-          "ruleId": "SEC101/036",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "SEC101_036.MySqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "ADO or ODBC MySQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
                   "startLine": 4,
                   "startColumn": 1,
                   "endLine": 4,
@@ -410,49 +367,6 @@
             "AssetFingerprint/v1": "[host=some-database-name.mysql.database.azure.com:3306][id=username@some-database-name][part=servers][platform=Azure]",
             "ValidationFingerprint/v1": "[host=some-database-name.mysql.database.azure.com:3306][id=username@some-database-name][secret=PASSword_5]",
             "ValidationFingerprintHash/v1": "2192301f7d7b3ef23419e5d9735b082704d93f6bb7ebd1347f9c6347a25305eb"
-          },
-          "rank": 44.6
-        },
-        {
-          "ruleId": "SEC101/036",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "SEC101_036.MySqlConnectionString.ps1",
-              "an apparent ",
-              "",
-              "JDBC MySQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_036.MySqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 8,
-                  "startColumn": 129,
-                  "endLine": 8,
-                  "endColumn": 205,
-                  "charOffset": 951,
-                  "charLength": 76,
-                  "snippet": {
-                    "text": "DriverManager.getConnection(url, \"username@some-database-name\", \"PASSword_5\""
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[id=username@some-database-name]",
-            "ValidationFingerprint/v1": "[id=username@some-database-name][secret=PASSword_5]",
-            "ValidationFingerprintHash/v1": "817e363bd054ed2b0cb169e372d5fa20d3b81a4cc615fa7645f5924c36e3057b"
           },
           "rank": 44.6
         },
