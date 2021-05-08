@@ -19,13 +19,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         [Option(
             "data-type",
             Required = true,
-            HelpText = "Connection type for the data. Valid inputs: Kusto.")]
+            HelpText = "Connection type for the data. Valid inputs: Kusto, SqlLite.")]
         public ConnectionType ConnectionType { get; internal set; }
 
         [Option(
             "target",
             Required = true,
-            HelpText = "Data target to analyze against. For example a Kusto query, or Cosmos relative structured stream path.")]
+            HelpText = "Data target to analyze against. For example a Kusto query, or SqlLite query.")]
         public string Target { get; internal set; }
 
         [Option(

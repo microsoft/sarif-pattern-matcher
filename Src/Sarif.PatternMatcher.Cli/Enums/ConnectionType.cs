@@ -5,7 +5,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli.Enums
 {
     public enum ConnectionType
     {
-        // Kusto database to be analyzed.
+        /// <summary>
+        /// Kusto database.
+        /// </summary>
         Kusto = 0,
+
+        /// <summary>
+        /// SqlLite database.
+        /// </summary>
+        SqlLite,
     }
 }
