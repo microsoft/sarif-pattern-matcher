@@ -314,6 +314,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     continue;
                 }
 
+                if (sharedStrings.TryGetValue(text, out string replaceText))
+                {
+                    text = replaceText;
+                    break;
+                }
+
                 foreach (string key in sharedStrings.Keys)
                 {
                     text = text.Replace(key, sharedStrings[key]);

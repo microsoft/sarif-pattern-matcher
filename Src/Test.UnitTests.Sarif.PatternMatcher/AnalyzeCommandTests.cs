@@ -26,9 +26,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             var regexList = new List<IRegex>
             {
+                RE2Regex.Instance,
                 DotNetRegex.Instance,
                 CachedDotNetRegex.Instance,
-                RE2Regex.Instance
             };
 
             foreach (IRegex regex in regexList)
