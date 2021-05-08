@@ -224,22 +224,29 @@ namespace Microsoft.RE2.Managed
             ParsedRegexCache cache = null;
             try
             {
+                if (string.IsNullOrEmpty(text))
+                {
+                    matches = null;
+                    return false;
+                }
+
                 cache = CheckoutCache();
 
                 // Get or Cache the Regex on the native side and retrieve an index to it
                 int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None);
 
-                byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
-                int[] indexMap = GetMapOfUtf8ToUtf16ByteIndices(textUtf8Bytes);
+                byte[] buffer = null;
+                var expression8 = String8.Convert(text, ref buffer);
+                int[] indexMap = GetMapOfUtf8ToUtf16ByteIndices(buffer);
 
-                fixed (byte* textUtf8BytesPtr = textUtf8Bytes)
+                fixed (byte* textUtf8BytesPtr = expression8.Array)
                 {
                     MatchesCaptureGroupsOutput* output;
 
                     // Use RE2 to search the text for the pattern.
                     NativeMethods.MatchesCaptureGroups(
                         expressionIndex,
-                        new StringUtf8(textUtf8BytesPtr, text.Length),
+                        new String8Interop(textUtf8BytesPtr, expression8.Index, expression8.Length),
                         &output);
 
                     // Build SubmatchIndex to GroupName map
@@ -278,7 +285,7 @@ namespace Microsoft.RE2.Managed
                                 submatchUtf16BytesStartIndex = -1;
                                 submatchUtf16BytesLength = -1;
                             }
-                            else if (submatchUtf8BytesStartIndex >= textUtf8Bytes.Length)
+                            else if (submatchUtf8BytesStartIndex >= expression8.Length)
                             {
                                 // This match occured past the end of the string.
                                 submatchString = null;
@@ -288,7 +295,7 @@ namespace Microsoft.RE2.Managed
                             else
                             {
                                 // This is a regular match.
-                                submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchUtf8BytesStartIndex, submatchUtf8BytesLength);
+                                submatchString = Encoding.UTF8.GetString(buffer, submatchUtf8BytesStartIndex, submatchUtf8BytesLength);
                                 submatchUtf16BytesStartIndex = indexMap[submatchUtf8BytesStartIndex];
                                 submatchUtf16BytesLength = submatchString.Length;
                             }
