@@ -277,6 +277,12 @@ namespace Microsoft.RE2.Managed
                                 submatchUtf16BytesStartIndex = -1;
                                 submatchUtf16BytesLength = -1;
                             }
+                            else if (submatchUtf8BytesStartIndex >= textUtf8Bytes.Length)
+                            {
+                                submatchString = null;
+                                submatchUtf16BytesStartIndex = text.Length;
+                                submatchUtf16BytesLength = 0;
+                            }
                             else
                             {
                                 submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchUtf8BytesStartIndex, submatchUtf8BytesLength);
