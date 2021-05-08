@@ -13,7 +13,6 @@
 
 #include "GroupNameHeader.h"
 #include "Submatch.h"
-#include "StringUtf8.h"
 #include "MatchesCaptureGroupsOutput.h"
 
 // System.Text.RegularExpressions.RegexOptions
