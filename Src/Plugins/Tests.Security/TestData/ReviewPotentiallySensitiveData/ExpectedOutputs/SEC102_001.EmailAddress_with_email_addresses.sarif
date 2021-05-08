@@ -1214,6 +1214,44 @@
             "ValidationFingerprint/v1": "[host=example.com][id=user]",
             "ValidationFingerprintHash/v1": "a659322ba9fe35fd2a2304e37d49e8a381a31756d1ea9d2079e53d6f3d1df37e"
           }
+        },
+        {
+          "ruleId": "SEC102/001",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email address"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress_with_email_addresses.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 58,
+                  "startColumn": 1,
+                  "endLine": 58,
+                  "endColumn": 27,
+                  "charOffset": 3188,
+                  "charLength": 26,
+                  "snippet": {
+                    "text": "endOfLineCheck@example.com"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=example.com][id=endOfLineCheck]",
+            "ValidationFingerprint/v1": "[host=example.com][id=endOfLineCheck]",
+            "ValidationFingerprintHash/v1": "82e3b649d41d3996a7a323f3f169eb2ec0a26992e9fbeeaca7f93abd06d38aa0"
+          }
         }
       ],
       "columnKind": "utf16CodeUnits"
