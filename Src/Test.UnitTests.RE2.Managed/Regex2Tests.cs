@@ -307,6 +307,26 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
+        public void Regex2_CaptureGroups_EndMatch()
+        {
+            List<Dictionary<string, FlexMatch>> matches;
+
+            string pattern = @"\b(?P<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)";
+            string text = @"AIza0deadbeef00deadbeef00deadbeef00dead";
+
+            bool hasMatch = Regex2.Matches(pattern, text, out matches);
+
+            Assert.True(hasMatch);
+            Assert.Single(matches);
+            Assert.True(matches[0].ContainsKey("0"));
+            Assert.Equal("AIza0deadbeef00deadbeef00deadbeef00dead", matches[0]["0"].Value);
+            Assert.True(matches[0].ContainsKey("refine"));
+            Assert.Equal("AIza0deadbeef00deadbeef00deadbeef00dead", matches[0]["refine"].Value);
+            Assert.True(matches[0].ContainsKey("2"));
+            Assert.Null(matches[0]["2"].Value.String);
+        }
+
+        [Fact]
         public void Regex2_CaptureGroups_Production()
         {
             List<Dictionary<string, FlexMatch>> matches;
@@ -370,7 +390,13 @@ Proxy-Connection: Keep-Alive
                     FlexMatch flexMatch = match[groupName];
                     if (flexMatch.Index == -1)
                     {
-                        continue;
+                        Assert.Equal(-1, flexMatch.Length);
+                        Assert.Null(flexMatch.Value.String);
+                    }
+                    else if (flexMatch.Index >= text.Length)
+                    {
+                        Assert.Equal(0, flexMatch.Length);
+                        Assert.Null(flexMatch.Value.String);
                     }
                     else
                     {
