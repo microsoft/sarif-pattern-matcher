@@ -273,18 +273,21 @@ namespace Microsoft.RE2.Managed
                             int submatchUtf16BytesLength;
                             if ((submatchUtf8BytesStartIndex == -1) && (submatchUtf8BytesLength == -1))
                             {
+                                // This is a optional group that was not matched.
                                 submatchString = null;
                                 submatchUtf16BytesStartIndex = -1;
                                 submatchUtf16BytesLength = -1;
                             }
                             else if (submatchUtf8BytesStartIndex >= textUtf8Bytes.Length)
                             {
+                                // This match occured past the end of the string.
                                 submatchString = null;
                                 submatchUtf16BytesStartIndex = text.Length;
                                 submatchUtf16BytesLength = 0;
                             }
                             else
                             {
+                                // This is a regular match.
                                 submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchUtf8BytesStartIndex, submatchUtf8BytesLength);
                                 submatchUtf16BytesStartIndex = indexMap[submatchUtf8BytesStartIndex];
                                 submatchUtf16BytesLength = submatchString.Length;
