@@ -329,8 +329,6 @@ namespace Microsoft.RE2.Managed
         [Fact]
         public void Regex2_CaptureGroups_Production()
         {
-            List<Dictionary<string, FlexMatch>> matches;
-
             string pattern = @"(?i)(?P<scheme>http|ftp|https):\/\/(?P<host>[\w_.-]{1,200})(?P<path>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= ""']+(basic)[\s\r\n]{0,10}(?P<secret>[^'""><;\s]{1,500})";
             string text = @"# RestClient example
 var client = new RestClient(""https://example.com"");
@@ -358,7 +356,6 @@ var request = new RestRequest(Method.GET);
 var text = ""more text to surpass the size."";
 request.AddHeader(""Authorization"", ""Basic SomeAuthorizationKey5555555"");
 
-
 <protocol>
 GET http://we.want.that.site.com/16 HTTP/1.1
 Host: we.want.that.site.com
@@ -366,12 +363,10 @@ Proxy-Authorization: Basic 6666666b29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb2
 Accept: */*
 Proxy-Connection: Keep-Alive
 
- 
-
 </protocol>
 </verify>";
 
-            bool hasMatch = Regex2.Matches(pattern, text, out matches);
+            bool hasMatch = Regex2.Matches(pattern, text, out List<Dictionary<string, FlexMatch>> matches);
 
             Assert.True(hasMatch);
             Assert.Equal(5, matches.Count);
