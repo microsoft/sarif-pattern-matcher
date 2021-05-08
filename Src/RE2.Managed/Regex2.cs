@@ -224,6 +224,12 @@ namespace Microsoft.RE2.Managed
             ParsedRegexCache cache = null;
             try
             {
+                if (string.IsNullOrEmpty(text))
+                {
+                    matches = null;
+                    return false;
+                }
+
                 cache = CheckoutCache();
 
                 // Get or Cache the Regex on the native side and retrieve an index to it
