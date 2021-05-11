@@ -50,11 +50,11 @@ namespace Microsoft.RE2.Managed
             return Environment.Is64BitProcess ? NativeMethodsX64.Test() : NativeMethodsX86.Test();
         }
 
-        public static int BuildRegex(String8Interop regex, int regexOptions)
+        public static int BuildRegex(String8Interop regex, int regexOptions, long maxMemory)
         {
             return Environment.Is64BitProcess
-                ? NativeMethodsX64.BuildRegex(regex, regexOptions)
-                : NativeMethodsX86.BuildRegex(regex, regexOptions);
+                ? NativeMethodsX64.BuildRegex(regex, regexOptions, maxMemory)
+                : NativeMethodsX86.BuildRegex(regex, regexOptions, maxMemory);
         }
 
         public static void ClearRegexes()
@@ -114,7 +114,7 @@ namespace Microsoft.RE2.Managed
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
-            public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions);
+            public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions, long maxMemory);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
@@ -141,7 +141,7 @@ namespace Microsoft.RE2.Managed
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
-            public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions);
+            public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions, long maxMemory);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]

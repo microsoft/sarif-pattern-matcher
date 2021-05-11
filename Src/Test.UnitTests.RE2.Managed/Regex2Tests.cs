@@ -191,7 +191,7 @@ namespace Microsoft.RE2.Managed
             string pattern = @"abc";
             string text = @"abc";
 
-            bool hasMatches = Regex2.Matches(pattern, text, out matches);
+            bool hasMatches = Regex2.Matches(pattern, text, out matches, -1);
             Assert.True(hasMatches);
             Assert.Single(matches);
             Assert.True(matches[0].ContainsKey("0"));
@@ -207,7 +207,7 @@ namespace Microsoft.RE2.Managed
             string pattern = @"def";
             string text = @"abc";
 
-            bool hasMatches = Regex2.Matches(pattern, text, out matches);
+            bool hasMatches = Regex2.Matches(pattern, text, out matches, -1);
             Assert.False(hasMatches);
             Assert.Empty(matches);
         }
@@ -220,7 +220,7 @@ namespace Microsoft.RE2.Managed
             string pattern = @"(?P<g1>a)(b)(?P<g2>c)";
             string text = @"abc";
 
-            bool hasMatches = Regex2.Matches(pattern, text, out matches);
+            bool hasMatches = Regex2.Matches(pattern, text, out matches, -1);
 
             Assert.True(hasMatches);
             Assert.Single(matches);
@@ -244,7 +244,7 @@ namespace Microsoft.RE2.Managed
             string pattern = @"(?P<a>a)(?P<bb>b)(?P<ccc>c)";
             string text = @"abc";
 
-            bool hasMatches = Regex2.Matches(pattern, text, out matches);
+            bool hasMatches = Regex2.Matches(pattern, text, out matches, -1);
 
             Assert.True(hasMatches);
             Assert.Single(matches);
@@ -268,7 +268,7 @@ namespace Microsoft.RE2.Managed
             string pattern = @"(?P<g1>a)(a)(?P<g2>a)";
             string text = @"aaaaaaaaaaaa";
 
-            bool hasMatches = Regex2.Matches(pattern, text, out matches);
+            bool hasMatches = Regex2.Matches(pattern, text, out matches, -1);
 
             Assert.True(hasMatches);
             Assert.Equal(4, matches.Count);
@@ -299,7 +299,7 @@ namespace Microsoft.RE2.Managed
             string pattern = @"(?i)(Port\s*=\s*([0-9]{4,5}).*)?(((Server\s*=\s*(?P<host>[\w\-.]{3,90}))|(Uid=(?-i)(?P<id>[a-z\@\-]{1,120})(?i))|(Pwd\s*=\s*(?P<secret>[^;""]{8,128}))).*?){3}(.*Port\s*=\s*([0-9]{4,5}))?";
             string text = @"Port=3306; Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_2; SslMode=Preferred;";
 
-            bool hasMatch = Regex2.Matches(pattern, text, out matches);
+            bool hasMatch = Regex2.Matches(pattern, text, out matches, -1);
 
             Assert.True(hasMatch);
             Assert.Single(matches);
@@ -314,7 +314,7 @@ namespace Microsoft.RE2.Managed
             string pattern = @"\b(?P<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)";
             string text = @"AIza0deadbeef00deadbeef00deadbeef00dead";
 
-            bool hasMatch = Regex2.Matches(pattern, text, out matches);
+            bool hasMatch = Regex2.Matches(pattern, text, out matches, -1);
 
             Assert.True(hasMatch);
             Assert.Single(matches);
@@ -366,7 +366,7 @@ Proxy-Connection: Keep-Alive
 </protocol>
 </verify>";
 
-            bool hasMatch = Regex2.Matches(pattern, text, out List<Dictionary<string, FlexMatch>> matches);
+            bool hasMatch = Regex2.Matches(pattern, text, out List<Dictionary<string, FlexMatch>> matches, -1);
 
             Assert.True(hasMatch);
             Assert.Equal(5, matches.Count);

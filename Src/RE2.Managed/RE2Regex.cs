@@ -47,9 +47,9 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches)
+        public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemory = -1)
         {
-            return Regex2.Matches(pattern, text, out matches);
+            return Regex2.Matches(pattern, text, out matches, maxMemory);
         }
 
         private FlexMatch ToFlex(Match2 match, FlexString input, ref int lastUtf8Index, ref int lastUtf16Index)
