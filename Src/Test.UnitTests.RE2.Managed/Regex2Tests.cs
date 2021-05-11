@@ -284,7 +284,7 @@ namespace Microsoft.RE2.Managed
             string pattern = @"aa";
             string text = @"aaaa";
 
-            bool hasMatches = Regex2.Matches(pattern, text, out matches);
+            bool hasMatches = Regex2.Matches(pattern, text, out matches, -1);
 
             Assert.True(hasMatches);
             Assert.Equal(3, matches.Count);
