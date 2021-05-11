@@ -114,7 +114,7 @@ namespace Microsoft.RE2.Managed
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
-            public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions, long maxMemory);
+            public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions, long maxMemoryInBytes);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x86.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
@@ -141,7 +141,7 @@ namespace Microsoft.RE2.Managed
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
-            public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions, long maxMemory);
+            public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions, long maxMemoryInBytes);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("RE2.Native.x64.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
