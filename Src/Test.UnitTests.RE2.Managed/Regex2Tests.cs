@@ -277,12 +277,32 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void Regex2_CaptureGroups_NonOverlapping()
+        public void Regex2_CaptureGroups_OverlappingMatches()
+        {
+            List<Dictionary<string, FlexMatch>> matches;
+
+            string pattern = @"aa";
+            string text = @"aaaa";
+
+            bool hasMatches = Regex2.Matches(pattern, text, out matches);
+
+            Assert.True(hasMatches);
+            Assert.Equal(3, matches.Count);
+            Assert.True(matches[0].ContainsKey("0"));
+            Assert.Equal("aa", matches[0]["0"].Value);
+            Assert.True(matches[1].ContainsKey("0"));
+            Assert.Equal("aa", matches[1]["0"].Value);
+            Assert.True(matches[2].ContainsKey("0"));
+            Assert.Equal("aa", matches[2]["0"].Value);
+        }
+
+        [Fact]
+        public void Regex2_CaptureGroups_OverlappingMatches_WithGroups()
         {
             List<Dictionary<string, FlexMatch>> matches;
 
             string pattern = @"(?P<g1>a)(a)(?P<g2>a)";
-            string text = @"aaaaaaaaaaaa";
+            string text = @"aaaaaa";
 
             bool hasMatches = Regex2.Matches(pattern, text, out matches, -1);
 
@@ -318,7 +338,7 @@ namespace Microsoft.RE2.Managed
             bool hasMatch = Regex2.Matches(pattern, text, out matches, -1);
 
             Assert.True(hasMatch);
-            Assert.Single(matches);
+            Assert.Equal(2, matches.Count);
             ValidateMatchIndices(text, matches);
         }
 
