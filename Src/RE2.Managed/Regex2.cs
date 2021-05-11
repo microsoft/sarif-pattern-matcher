@@ -197,7 +197,7 @@ namespace Microsoft.RE2.Managed
         /// <param name="pattern">Pattern to search for in RE2 syntax.</param>
         /// <param name="text">Text to search.</param>
         /// <param name="matches">A list of successive, non-overlapping matches.</param>
-        /// <param name="maxMemory">Maximum memory in bytes allocated for compiled regular expression.</param>
+        /// <param name="maxMemoryInBytes">Maximum memory in bytes allocated for compiled regular expression.</param>
         /// <returns>A bool indicating if 1 or more matches were found.</returns>
         ///
         /// <example>
@@ -220,7 +220,7 @@ namespace Microsoft.RE2.Managed
         ///
         /// </code>
         /// </example>
-        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemory)
+        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes)
         {
             ParsedRegexCache cache = null;
             try
@@ -234,7 +234,7 @@ namespace Microsoft.RE2.Managed
                 cache = CheckoutCache();
 
                 // Get or Cache the Regex on the native side and retrieve an index to it
-                int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None, maxMemory);
+                int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None, maxMemoryInBytes);
 
                 byte[] buffer = null;
                 var expression8 = String8.Convert(text, ref buffer);

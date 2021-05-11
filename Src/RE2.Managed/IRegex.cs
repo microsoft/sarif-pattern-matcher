@@ -21,6 +21,6 @@ namespace Microsoft.RE2.Managed
 
         IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null);
 
-        bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemory = -1);
+        bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = -1);
     }
 }

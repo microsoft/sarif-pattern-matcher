@@ -70,7 +70,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemory = -1)
+        public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = -1)
         {
             matches = new List<Dictionary<string, FlexMatch>>();
 
