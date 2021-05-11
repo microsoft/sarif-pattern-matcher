@@ -19,7 +19,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         internal static TimeSpan DefaultTimeout = TimeSpan.FromMilliseconds(int.MaxValue - 1);
 
-        private DotNetRegex() { }
+        private DotNetRegex()
+        {
+        }
 
         public bool IsMatch(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
@@ -41,6 +43,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 yield return ToFlex(m, captureGroup);
             }
+        }
+
+        public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = -1)
+        {
+            matches = new List<Dictionary<string, FlexMatch>>();
+            var regex = new Regex(pattern);
+
+            foreach (Match m in regex.Matches(text))
+            {
+                var current = new Dictionary<string, FlexMatch>(m.Groups.Count);
+                foreach (string groupName in regex.GetGroupNames())
+                {
+                    Group group = m.Groups[groupName];
+                    current.Add(groupName, new FlexMatch { Success = group.Success, Index = group.Index, Value = group.Value, Length = group.Length });
+                }
+
+                matches.Add(current);
+            }
+
+            return matches.Count > 0;
         }
 
         internal static FlexMatch ToFlex(Match match, string captureGroup = null)

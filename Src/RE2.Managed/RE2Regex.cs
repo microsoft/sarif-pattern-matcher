@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 
 namespace Microsoft.RE2.Managed
@@ -15,7 +14,9 @@ namespace Microsoft.RE2.Managed
         public static IRegex Instance = new RE2Regex();
         public static TimeSpan DefaultTimeout = TimeSpan.FromMilliseconds(int.MaxValue - 1);
 
-        private RE2Regex() { }
+        private RE2Regex()
+        {
+        }
 
         public bool IsMatch(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
@@ -44,6 +45,11 @@ namespace Microsoft.RE2.Managed
             {
                 yield return ToFlex(match, input, ref lastUtf8Index, ref lastUtf16Index);
             }
+        }
+
+        public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = -1)
+        {
+            return Regex2.Matches(pattern, text, out matches, maxMemoryInBytes);
         }
 
         private FlexMatch ToFlex(Match2 match, FlexString input, ref int lastUtf8Index, ref int lastUtf16Index)

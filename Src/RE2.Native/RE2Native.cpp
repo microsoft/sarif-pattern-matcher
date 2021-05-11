@@ -13,7 +13,6 @@
 
 #include "GroupNameHeader.h"
 #include "Submatch.h"
-#include "StringUtf8.h"
 #include "MatchesCaptureGroupsOutput.h"
 
 // System.Text.RegularExpressions.RegexOptions
@@ -50,7 +49,7 @@ std::mutex cachedExpressionsMutex;
 std::vector<re2::RE2*>* cachedExpressions;
 
 // Parse and Cache a Regular Expression for later runs
-extern "C" __declspec(dllexport) int BuildRegex(String8 regex, int regexOptions)
+extern "C" __declspec(dllexport) int BuildRegex(String8 regex, int regexOptions, int64_t maxMemoryInBytes)
 {
 	std::lock_guard<std::mutex> lock(cachedExpressionsMutex);
 
@@ -68,6 +67,10 @@ extern "C" __declspec(dllexport) int BuildRegex(String8 regex, int regexOptions)
 	re2::RE2::Options* options = new re2::RE2::Options();
 	if ((regexOptions & RegexOptions_IgnoreCase) != 0) options->set_case_sensitive(false);
 	if ((regexOptions & RegexOptions_Singleline) != 0) options->set_dot_nl(true);
+	if (maxMemoryInBytes != -1)
+	{
+		options->set_max_mem(maxMemoryInBytes);
+	}
 
 	// Parse and construct an RE2 instance for the regular expression
 	re2::RE2* expression = new re2::RE2(expressionSp, *options);
@@ -159,7 +162,7 @@ extern "C" __declspec(dllexport) int Matches(int regexIndex, String8 text, int f
 // so we can pass it to C# space for pointer-based copying.
 extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 	_In_  int regexIndex,
-	_In_  StringUtf8 text,
+	_In_  String8 text,
 	_Out_ MatchesCaptureGroupsOutput** outputOut
 )
 {
@@ -167,8 +170,9 @@ extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 	int index = GetCachedExpression(regexIndex, &re);
 	if (index < 0) { return; }
 
-	// Convert StringUtf8 to string piece.
-	re2::StringPiece textSp(reinterpret_cast<char*>(text.Bytes), text.Length);
+	// Wrap the UTF-8 text in RE2's string span wrapper
+	if (text.Index < 0 || text.Length < 0 || text.Array + text.Index + text.Length < text.Array) return;
+	re2::StringPiece allContentSp(text.Array + text.Index, text.Length);
 
 	// Compute the number of submatches in the pattern.
 	int numSubmatches = re->NumberOfCapturingGroups() + 1;
@@ -206,13 +210,13 @@ extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 	while (true)
 	{
 		// Stop searching if we have run out of text.
-		if (startpos >= textSp.length())
+		if (startpos >= allContentSp.length())
 		{
 			break;
 		}
 
 		// Extract next match from text using pattern.
-		bool isMatch = re->Match(textSp, startpos, textSp.length(), re2::RE2::UNANCHORED, submatchesSp.data(), numSubmatches);
+		bool isMatch = re->Match(allContentSp, startpos, allContentSp.length(), re2::RE2::UNANCHORED, submatchesSp.data(), numSubmatches);
 
 		// Stop searching if no more matches are found.
 		if (!isMatch)
@@ -238,7 +242,7 @@ extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 				// This group was found.
 
 				// Convert submatches to substring index and length.
-				int32_t index = static_cast<int32_t>(submatchSp.data() - textSp.data());
+				int32_t index = static_cast<int32_t>(submatchSp.data() - allContentSp.data());
 				int32_t length = static_cast<int32_t>(submatchSp.length());
 
 				// Write submatch entry.
@@ -252,8 +256,8 @@ extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 
 		// Advance the starting position past this match.
 		re2::StringPiece fullMatchSp = submatchesSp[0];
-		int matchStartIndex = static_cast<int>(fullMatchSp.data() - textSp.data());
-		startpos = matchStartIndex + fullMatchSp.length();
+		int matchStartIndex = static_cast<int>(fullMatchSp.data() - allContentSp.data());
+		startpos = matchStartIndex + 1;
 	}
 
 	// Assign outputs.

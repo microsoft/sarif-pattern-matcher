@@ -97,7 +97,7 @@ namespace Microsoft.RE2.Managed
                 var matches = new Match2[32];
 
                 // Get or Cache the Regex on the native side and retrieve an index to it
-                int expressionIndex = BuildRegex(cache, expression, options);
+                int expressionIndex = BuildRegex(cache, expression, options, -1);
 
                 while (true)
                 {
@@ -157,7 +157,7 @@ namespace Microsoft.RE2.Managed
             {
                 cache = CheckoutCache();
                 var matches = new Match2[1];
-                int expressionIndex = BuildRegex(cache, expression, options);
+                int expressionIndex = BuildRegex(cache, expression, options, -1);
 
                 int countFound = Matches(expressionIndex, text, 0, matches, timeout.RemainingMilliseconds);
                 if (countFound == 0)
@@ -187,58 +187,34 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        /// <summary>
-        /// Searches the text for the specified pattern.
-        ///
-        /// For simplicity, the implementation uses 32-bit signed integers throughout. There is no size-related error checking.
-        /// Hence, if some count or size exceeds that (e.g. number of named groups, length of text), there may be silent errors.
-        /// </summary>
-        ///
-        /// <param name="pattern">Pattern to search for in RE2 syntax.</param>
-        /// <param name="text">Text to search.</param>
-        /// <param name="matches">A list of successive, non-overlapping matches.</param>
-        /// <returns>A bool indicating if 1 or more matches were found.</returns>
-        ///
-        /// <example>
-        /// <code>
-        ///
-        /// Input pattern = @"(?P<g1>a)(b)(?P<g2>c)"
-        /// Input text    = @"abc abc"
-        /// Output = [
-        ///     {"0": "abc", "g1": "a", "2": "b", "g2": "c"},
-        ///     {"0": "abc", "g1": "a", "2": "b", "g2": "c"}
-        /// ]
-        ///
-        /// Input pattern = @"aa"
-        /// Input text    = @"aaaaaa"
-        /// Output = [
-        ///     {"0": "aa"},
-        ///     {"0": "aa"},
-        ///     {"0": "aa"}
-        /// ]
-        ///
-        /// </code>
-        /// </example>
-        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, string>> matches)
+        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes)
         {
             ParsedRegexCache cache = null;
             try
             {
+                if (string.IsNullOrEmpty(text))
+                {
+                    matches = null;
+                    return false;
+                }
+
                 cache = CheckoutCache();
 
                 // Get or Cache the Regex on the native side and retrieve an index to it
-                int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None);
+                int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None, maxMemoryInBytes);
 
-                byte[] textUtf8Bytes = Encoding.UTF8.GetBytes(text);
+                byte[] buffer = null;
+                var expression8 = String8.Convert(text, ref buffer);
+                int[] indexMap = GetMapOfUtf8ToUtf16ByteIndices(buffer);
 
-                fixed (byte* textUtf8BytesPtr = textUtf8Bytes)
+                fixed (byte* textUtf8BytesPtr = expression8.Array)
                 {
                     MatchesCaptureGroupsOutput* output;
 
                     // Use RE2 to search the text for the pattern.
                     NativeMethods.MatchesCaptureGroups(
                         expressionIndex,
-                        new StringUtf8(textUtf8BytesPtr, text.Length),
+                        new String8Interop(textUtf8BytesPtr, expression8.Index, expression8.Length),
                         &output);
 
                     // Build SubmatchIndex to GroupName map
@@ -251,36 +227,65 @@ namespace Microsoft.RE2.Managed
                     }
 
                     // Build matches output.
-                    matches = new List<Dictionary<string, string>>(output->NumMatches);
+                    matches = new List<Dictionary<string, FlexMatch>>(output->NumMatches);
+
+                    // Iterate through each match.
                     for (int matchIndex = 0; matchIndex < output->NumMatches; matchIndex++)
                     {
-                        var newSubmatch = new Dictionary<string, string>(output->NumSubmatches);
-                        matches.Add(newSubmatch);
+                        var newSubmatchIndices = new Dictionary<string, FlexMatch>(output->NumSubmatches);
+                        matches.Add(newSubmatchIndices);
 
+                        // Handle each submatch of the match.
                         for (int submatchIndex = 0; submatchIndex < output->NumSubmatches; submatchIndex++)
                         {
                             Submatch submatchRe2 = output->Matches[matchIndex][submatchIndex];
-                            int submatchTextStartIndex = submatchRe2.Index;
-                            int submatchLength = submatchRe2.Length;
+                            int submatchUtf8BytesStartIndex = submatchRe2.Index;
+                            int submatchUtf8BytesLength = submatchRe2.Length;
 
+                            // Convert submatch to string and UTF-16 indices.
                             string submatchString;
-                            if ((submatchTextStartIndex == -1) && (submatchLength == -1))
+                            int submatchUtf16BytesStartIndex;
+                            int submatchUtf16BytesLength;
+                            if ((submatchUtf8BytesStartIndex == -1) && (submatchUtf8BytesLength == -1))
                             {
-                                submatchString = string.Empty;
+                                // This is a optional group that was not matched.
+                                submatchString = null;
+                                submatchUtf16BytesStartIndex = -1;
+                                submatchUtf16BytesLength = -1;
+                            }
+                            else if (submatchUtf8BytesStartIndex >= expression8.Length)
+                            {
+                                // This match occured past the end of the string.
+                                submatchString = null;
+                                submatchUtf16BytesStartIndex = text.Length;
+                                submatchUtf16BytesLength = 0;
                             }
                             else
                             {
-                                submatchString = Encoding.UTF8.GetString(textUtf8Bytes, submatchTextStartIndex, submatchLength);
+                                // This is a regular match.
+                                submatchString = Encoding.UTF8.GetString(buffer, submatchUtf8BytesStartIndex, submatchUtf8BytesLength);
+                                submatchUtf16BytesStartIndex = indexMap[submatchUtf8BytesStartIndex];
+                                submatchUtf16BytesLength = submatchString.Length;
                             }
 
+                            // Create FlexMatch.
+                            var flexMatch = new FlexMatch()
+                            {
+                                Success = true,
+                                Index = submatchUtf16BytesStartIndex,
+                                Length = submatchUtf16BytesLength,
+                                Value = submatchString,
+                            };
+
+                            // Associate submatches with group names or indices.
                             if (submatchIndex2GroupName.ContainsKey(submatchIndex))
                             {
                                 string groupName = submatchIndex2GroupName[submatchIndex];
-                                newSubmatch[groupName] = submatchString;
+                                newSubmatchIndices[groupName] = flexMatch;
                             }
                             else
                             {
-                                newSubmatch[submatchIndex.ToString()] = submatchString;
+                                newSubmatchIndices[submatchIndex.ToString()] = flexMatch;
                             }
                         }
                     }
@@ -294,6 +299,55 @@ namespace Microsoft.RE2.Managed
             finally
             {
                 CheckinCache(cache);
+            }
+        }
+
+        private static int[] GetMapOfUtf8ToUtf16ByteIndices(byte[] utf8Bytes)
+        {
+            int[] indexMap = new int[utf8Bytes.Length];
+
+            int utf8ByteIndex = 0;
+            int utf16ByteIndex = 0;
+            while (utf8ByteIndex < utf8Bytes.Length)
+            {
+                indexMap[utf8ByteIndex] = utf16ByteIndex;
+                GetCharacterSizeInBytes(utf8Bytes[utf8ByteIndex], out int utf8CharacterSizeInBytes, out int utf16CharacterSizeInBytes);
+                utf8ByteIndex += utf8CharacterSizeInBytes;
+                utf16ByteIndex += utf16CharacterSizeInBytes;
+            }
+
+            return indexMap;
+        }
+
+        private static void GetCharacterSizeInBytes(byte b, out int utf8CharacterSizeInBytes, out int utf16CharacterSizeInBytes)
+        {
+            if (b < 0x80)
+            {
+                utf8CharacterSizeInBytes = 1;
+                utf16CharacterSizeInBytes = 1;
+            }
+            else if (b < 0xC0)
+            {
+                throw new Exception($"found unexpected byte when decoding UTF-8: {b}");
+            }
+            else if (b < 0xE0)
+            {
+                utf8CharacterSizeInBytes = 2;
+                utf16CharacterSizeInBytes = 1;
+            }
+            else if (b < 0xF0)
+            {
+                utf8CharacterSizeInBytes = 3;
+                utf16CharacterSizeInBytes = 1;
+            }
+            else if (b < 0xF8)
+            {
+                utf8CharacterSizeInBytes = 4;
+                utf16CharacterSizeInBytes = 2;
+            }
+            else
+            {
+                throw new Exception($"found unexpected byte when decoding UTF-8: {b}");
             }
         }
 
@@ -318,7 +372,7 @@ namespace Microsoft.RE2.Managed
         }
 
         // Get the integer ID of the cached copy of the Regex from the native side; cache it if it hasn't been parsed.
-        private static unsafe int BuildRegex(ParsedRegexCache cache, string expression, RegexOptions options)
+        private static unsafe int BuildRegex(ParsedRegexCache cache, string expression, RegexOptions options, long maxMemory)
         {
             if (string.IsNullOrEmpty(expression)) { throw new ArgumentNullException(nameof(expression)); }
 
@@ -338,7 +392,7 @@ namespace Microsoft.RE2.Managed
                     // The native BuildRegex code is thread-safe for creating compiled expressions.
                     fixed (byte* expressionPtr = expression8.Array)
                     {
-                        expressionIndex = NativeMethods.BuildRegex(new String8Interop(expressionPtr, expression8.Index, expression8.Length), (int)options);
+                        expressionIndex = NativeMethods.BuildRegex(new String8Interop(expressionPtr, expression8.Index, expression8.Length), (int)options, maxMemory);
                     }
 
                     // Throw if RE2 couldn't parse the regex.

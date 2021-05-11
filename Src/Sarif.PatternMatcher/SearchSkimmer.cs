@@ -428,21 +428,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;
 
-            foreach (FlexMatch flexMatch in _engine.Matches(searchText, matchExpression.ContentsRegex))
+            if (!_engine.Matches(matchExpression.ContentsRegex, searchText, out List<Dictionary<string, FlexMatch>> matches))
             {
-                if (!flexMatch.Success) { continue; }
+                return;
+            }
 
+            foreach (Dictionary<string, FlexMatch> match in matches)
+            {
                 ReportingDescriptor reportingDescriptor = this;
 
-                Regex regex =
-                    CachedDotNetRegex.GetOrCreateRegex(matchExpression.ContentsRegex,
-                                                       RegexDefaults.DefaultOptionsCaseSensitive);
-
-                Match match = regex.Match(flexMatch.Value);
-
-                string refinedMatchedPattern = match.Groups["refine"].Value;
-
-                IDictionary<string, string> groups = match.Groups.CopyToDictionary(regex.GetGroupNames());
+                IDictionary<string, string> groups = match.CopyToDictionary();
 
                 Debug.Assert(!groups.ContainsKey("scanTargetFullPath"), "Full path should always exist.");
                 groups["scanTargetFullPath"] = filePath;
@@ -463,9 +458,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     }
                 }
 
-                if (string.IsNullOrEmpty(refinedMatchedPattern))
+                FlexMatch flexMatch = match["0"];
+                string refinedMatchedPattern = flexMatch.Value;
+                if (match.TryGetValue("refine", out FlexMatch refineMatch))
                 {
-                    refinedMatchedPattern = flexMatch.Value;
+                    refinedMatchedPattern = refineMatch.Value;
                 }
 
                 Fingerprint fingerprint = default;
@@ -510,7 +507,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                   filePath,
                                                                   flexMatch,
                                                                   reportingDescriptor,
-                                                                  match,
+                                                                  groups,
                                                                   refinedMatchedPattern,
                                                                   validationResult.Fingerprint,
                                                                   validatorMessage,
@@ -529,7 +526,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                           filePath,
                                                           flexMatch,
                                                           reportingDescriptor,
-                                                          match,
+                                                          groups,
                                                           refinedMatchedPattern,
                                                           fingerprint,
                                                           validatorMessage,
@@ -547,7 +544,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                            string filePath,
                                                            FlexMatch flexMatch,
                                                            ReportingDescriptor reportingDescriptor,
-                                                           Match match,
+                                                           IDictionary<string, string> groups,
                                                            string refinedMatchedPattern,
                                                            Fingerprint fingerprint,
                                                            string validatorMessage,
@@ -572,7 +569,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             messageArguments["validationPrefix"] = validationPrefix;
             messageArguments["validationSuffix"] = validationSuffix;
 
-            IList<string> arguments = GetMessageArguments(match,
+            IList<string> arguments = GetMessageArguments(groups,
                                                           matchExpression.ArgumentNameToIndexMap,
                                                           filePath,
                                                           validatorMessage: NormalizeValidatorMessage(validatorMessage),
@@ -803,7 +800,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             messageArguments["validationSuffix"] = validationSuffix;
 
             IList<string> arguments = GetMessageArguments(
-                match: null,
+                groups: null,
                 matchExpression.ArgumentNameToIndexMap,
                 filePath,
                 validatorMessage: NormalizeValidatorMessage(validatorMessage),
@@ -1021,7 +1018,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         private IList<string> GetMessageArguments(
-            Match match,
+            IDictionary<string, string> groups,
             Dictionary<string, int> namedArgumentToIndexMap,
             string scanTargetPath,
             string validatorMessage,
@@ -1033,17 +1030,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (KeyValuePair<string, int> kv in namedArgumentToIndexMap)
             {
-                string value = kv.Key == "scanTarget"
-                    ? Path.GetFileName(scanTargetPath)
-                    : match?.Groups[kv.Key]?.Value;
+                string value = string.Empty;
 
-                value = kv.Key == nameof(scanTargetPath)
-                    ? scanTargetPath
-                    : value;
-
-                value = kv.Key == "validatorMessage"
-                    ? validatorMessage ?? string.Empty
-                    : value;
+                if (kv.Key == "scanTarget")
+                {
+                    value = Path.GetFileName(scanTargetPath);
+                }
+                else if (kv.Key == nameof(scanTargetPath))
+                {
+                    value = scanTargetPath;
+                }
+                else if (kv.Key == "validatorMessage")
+                {
+                    value = validatorMessage ?? string.Empty;
+                }
+                else if (groups != null && groups.TryGetValue(kv.Key, out string groupValue))
+                {
+                    value = groupValue;
+                }
 
                 arguments[kv.Value] = value;
             }
