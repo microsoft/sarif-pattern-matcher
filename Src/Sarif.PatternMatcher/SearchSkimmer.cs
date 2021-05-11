@@ -552,14 +552,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                            string validatorMessage,
                                                            string validationPrefix,
                                                            string validationSuffix,
-                                                           int? overrideIndex)
+                                                           int? overrideIndex,
+                                                           int? overrideLength)
         {
             // If we're matching against decoded contents, the region should
             // relate to the base64-encoded scan target content. We do use
             // the decoded content for the fingerprint, however.
             FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch;
 
-            Region region = ConstructRegion(context, regionFlexMatch, refinedMatchedPattern, overrideIndex);
+            Region region = ConstructRegion(context, regionFlexMatch, refinedMatchedPattern, overrideIndex, overrideLength);
 
             Dictionary<string, string> messageArguments = matchExpression.MessageArguments != null ?
                 new Dictionary<string, string>(matchExpression.MessageArguments) :
@@ -823,25 +824,33 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.Logger.Log(reportingDescriptor, result);
         }
 
-        private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch, string fingerprint, int? overrideIndex)
+        private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch, string fingerprint, int? overrideIndex, int? overrideLength)
         {
             // TODO: this code is wrong!! We no longer use the fingerprint to refine the region
 
             int indexOffset = overrideIndex ?? regionFlexMatch.Value.String.IndexOf(fingerprint);
-            int lengthOffset = fingerprint.Length - regionFlexMatch.Length;
+            int length = overrideLength ?? fingerprint.Length;
 
-            if (indexOffset == -1)
+            if (indexOffset == -1 ||
+                (regionFlexMatch.Index + indexOffset) >= regionFlexMatch.Length)
             {
                 // If we can't find the fingerprint in the match, that means we matched against
                 // base64-decoded content (and therefore there is no region refinement to make).
                 indexOffset = 0;
-                lengthOffset = 0;
+                length = regionFlexMatch.Length;
+            }
+
+            if ((regionFlexMatch.Index + indexOffset + length) > regionFlexMatch.Length)
+            {
+                // match should be within the original full string
+                // update lengthOffset to till end of regionFlexMatch
+                length = regionFlexMatch.Length - (regionFlexMatch.Index + indexOffset);
             }
 
             var region = new Region
             {
                 CharOffset = regionFlexMatch.Index + indexOffset,
-                CharLength = regionFlexMatch.Length + lengthOffset,
+                CharLength = length,
             };
 
             return _fileRegionsCache.PopulateTextRegionProperties(
