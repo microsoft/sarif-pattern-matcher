@@ -132,8 +132,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 if (orgNames.Length == 0)
                 {
                     orgNames = "[None]";
-                    message += $" which has access to the following orgs '{orgNames}'";
                 }
+
+                message += $" which has access to the following orgs '{orgNames}'";
 
                 return ValidationState.Authorized;
             }
