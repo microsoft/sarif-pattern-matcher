@@ -831,28 +831,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // TODO: this code is wrong!! We no longer use the fingerprint to refine the region
 
             int indexOffset = overrideIndex ?? regionFlexMatch.Value.String.IndexOf(fingerprint);
-            int length = overrideLength ?? fingerprint.Length;
+            int lengthOffset = (overrideLength ?? fingerprint.Length) - regionFlexMatch.Length;
 
-            if (indexOffset == -1 ||
-                (regionFlexMatch.Index + indexOffset) >= regionFlexMatch.Length)
+            if (indexOffset == -1 || indexOffset >= regionFlexMatch.Length)
             {
                 // If we can't find the fingerprint in the match, that means we matched against
                 // base64-decoded content (and therefore there is no region refinement to make).
                 indexOffset = 0;
-                length = regionFlexMatch.Length;
+                lengthOffset = 0;
             }
 
-            if ((regionFlexMatch.Index + indexOffset + length) > regionFlexMatch.Length)
+            if ((indexOffset + regionFlexMatch.Length + lengthOffset) > regionFlexMatch.Length)
             {
                 // match should be within the original full string
                 // update lengthOffset to till end of regionFlexMatch
-                length = regionFlexMatch.Length - (regionFlexMatch.Index + indexOffset);
+                lengthOffset = indexOffset - regionFlexMatch.Length;
             }
 
             var region = new Region
             {
                 CharOffset = regionFlexMatch.Index + indexOffset,
-                CharLength = length,
+                CharLength = regionFlexMatch.Length + lengthOffset,
             };
 
             return _fileRegionsCache.PopulateTextRegionProperties(
