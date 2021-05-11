@@ -97,7 +97,7 @@ namespace Microsoft.RE2.Managed
                 var matches = new Match2[32];
 
                 // Get or Cache the Regex on the native side and retrieve an index to it
-                int expressionIndex = BuildRegex(cache, expression, options);
+                int expressionIndex = BuildRegex(cache, expression, options, -1);
 
                 while (true)
                 {
@@ -157,7 +157,7 @@ namespace Microsoft.RE2.Managed
             {
                 cache = CheckoutCache();
                 var matches = new Match2[1];
-                int expressionIndex = BuildRegex(cache, expression, options);
+                int expressionIndex = BuildRegex(cache, expression, options, -1);
 
                 int countFound = Matches(expressionIndex, text, 0, matches, timeout.RemainingMilliseconds);
                 if (countFound == 0)
@@ -187,39 +187,7 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        /// <summary>
-        /// Searches the text for the specified pattern.
-        ///
-        /// For simplicity, the implementation uses 32-bit signed integers throughout. There is no size-related error checking.
-        /// Hence, if some count or size exceeds that (e.g. number of named groups, length of text), there may be silent errors.
-        /// </summary>
-        ///
-        /// <param name="pattern">Pattern to search for in RE2 syntax.</param>
-        /// <param name="text">Text to search.</param>
-        /// <param name="matches">A list of successive, non-overlapping matches.</param>
-        /// <returns>A bool indicating if 1 or more matches were found.</returns>
-        ///
-        /// <example>
-        /// <code>
-        ///
-        /// Input pattern = @"(?P<g1>a)(b)(?P<g2>c)"
-        /// Input text    = @"abc abc"
-        /// Output = [
-        ///     {"0": "abc", "g1": "a", "2": "b", "g2": "c"},
-        ///     {"0": "abc", "g1": "a", "2": "b", "g2": "c"}
-        /// ]
-        ///
-        /// Input pattern = @"aa"
-        /// Input text    = @"aaaaaa"
-        /// Output = [
-        ///     {"0": "aa"},
-        ///     {"0": "aa"},
-        ///     {"0": "aa"}
-        /// ]
-        ///
-        /// </code>
-        /// </example>
-        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches)
+        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes)
         {
             ParsedRegexCache cache = null;
             try
@@ -233,7 +201,7 @@ namespace Microsoft.RE2.Managed
                 cache = CheckoutCache();
 
                 // Get or Cache the Regex on the native side and retrieve an index to it
-                int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None);
+                int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None, maxMemoryInBytes);
 
                 byte[] buffer = null;
                 var expression8 = String8.Convert(text, ref buffer);
@@ -404,7 +372,7 @@ namespace Microsoft.RE2.Managed
         }
 
         // Get the integer ID of the cached copy of the Regex from the native side; cache it if it hasn't been parsed.
-        private static unsafe int BuildRegex(ParsedRegexCache cache, string expression, RegexOptions options)
+        private static unsafe int BuildRegex(ParsedRegexCache cache, string expression, RegexOptions options, long maxMemory)
         {
             if (string.IsNullOrEmpty(expression)) { throw new ArgumentNullException(nameof(expression)); }
 
@@ -424,7 +392,7 @@ namespace Microsoft.RE2.Managed
                     // The native BuildRegex code is thread-safe for creating compiled expressions.
                     fixed (byte* expressionPtr = expression8.Array)
                     {
-                        expressionIndex = NativeMethods.BuildRegex(new String8Interop(expressionPtr, expression8.Index, expression8.Length), (int)options);
+                        expressionIndex = NativeMethods.BuildRegex(new String8Interop(expressionPtr, expression8.Index, expression8.Length), (int)options, maxMemory);
                     }
 
                     // Throw if RE2 couldn't parse the regex.
