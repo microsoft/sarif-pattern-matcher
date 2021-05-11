@@ -281,17 +281,17 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
-        public void Regex2_CaptureGroups_OverlappingMatchesComplex()
+        public void Regex2_CaptureGroups_OverlappingMatches_WithGroups()
         {
             List<Dictionary<string, FlexMatch>> matches;
 
             string pattern = @"(?P<g1>a)(a)(?P<g2>a)";
-            string text = @"aaaa";
+            string text = @"aaaaaa";
 
             bool hasMatches = Regex2.Matches(pattern, text, out matches);
 
             Assert.True(hasMatches);
-            Assert.Equal(2, matches.Count);
+            Assert.Equal(4, matches.Count);
             for (int i = 0; i < 4; i++)
             {
                 Assert.Equal(4, matches[0].Count);
