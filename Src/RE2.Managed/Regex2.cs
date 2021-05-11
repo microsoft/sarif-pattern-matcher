@@ -187,39 +187,6 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        /// <summary>
-        /// Searches the text for the specified pattern.
-        ///
-        /// For simplicity, the implementation uses 32-bit signed integers throughout. There is no size-related error checking.
-        /// Hence, if some count or size exceeds that (e.g. number of named groups, length of text), there may be silent errors.
-        /// </summary>
-        ///
-        /// <param name="pattern">Pattern to search for in RE2 syntax.</param>
-        /// <param name="text">Text to search.</param>
-        /// <param name="matches">A list of successive, non-overlapping matches.</param>
-        /// <param name="maxMemoryInBytes">Maximum memory in bytes allocated for compiled regular expression.</param>
-        /// <returns>A bool indicating if 1 or more matches were found.</returns>
-        ///
-        /// <example>
-        /// <code>
-        ///
-        /// Input pattern = @"(?P<g1>a)(b)(?P<g2>c)"
-        /// Input text    = @"abc abc"
-        /// Output = [
-        ///     {"0": "abc", "g1": "a", "2": "b", "g2": "c"},
-        ///     {"0": "abc", "g1": "a", "2": "b", "g2": "c"}
-        /// ]
-        ///
-        /// Input pattern = @"aa"
-        /// Input text    = @"aaaaaa"
-        /// Output = [
-        ///     {"0": "aa"},
-        ///     {"0": "aa"},
-        ///     {"0": "aa"}
-        /// ]
-        ///
-        /// </code>
-        /// </example>
         public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes)
         {
             ParsedRegexCache cache = null;
