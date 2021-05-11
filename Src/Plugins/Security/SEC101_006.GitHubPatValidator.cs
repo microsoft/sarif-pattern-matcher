@@ -75,14 +75,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
-            if (matchedPattern.IndexOf("commit", StringComparison.OrdinalIgnoreCase) >= 0 ||
+            if (matchedPattern.IndexOf("raw", StringComparison.OrdinalIgnoreCase) >= 0 ||
                 matchedPattern.IndexOf("tree", StringComparison.OrdinalIgnoreCase) >= 0 ||
                 matchedPattern.IndexOf("blob", StringComparison.OrdinalIgnoreCase) >= 0 ||
                 matchedPattern.IndexOf("gist", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                matchedPattern.IndexOf("raw", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                matchedPattern.IndexOf("repos", StringComparison.OrdinalIgnoreCase) >= 0 ||
                 matchedPattern.IndexOf("spec", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                matchedPattern.IndexOf("repos", StringComparison.OrdinalIgnoreCase) >= 0 ||
                 matchedPattern.IndexOf("assets", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                matchedPattern.IndexOf("commit", StringComparison.OrdinalIgnoreCase) >= 0 ||
                 matchedPattern.IndexOf("using ref", StringComparison.OrdinalIgnoreCase) >= 0 ||
                 matchedPattern.IndexOf("githubusercontent.com", StringComparison.OrdinalIgnoreCase) >= 0)
             {
@@ -119,29 +119,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string id = user.Login;
                 string name = user.Name;
 
+                if (!string.IsNullOrEmpty(user.Name))
+                {
+                    name = $" ({name})";
+                }
+
+                message = $"the compromised GitHub account is '[{id}{name}](https://github.com/{id})'";
+
                 IReadOnlyList<Organization> orgs = client.Organization.GetAllForCurrent().GetAwaiter().GetResult();
                 string orgNames = string.Join(", ", orgs.Select(o => o.Login));
 
-                message = $"the compromised GitHub account '{id} ({name})' has access to the following orgs '{orgNames}'";
+                if (orgNames.Length == 0)
+                {
+                    orgNames = "[None]";
+                    message += $" which has access to the following orgs '{orgNames}'";
+                }
+
+                return ValidationState.Authorized;
+            }
+            catch (ForbiddenException)
+            {
+                // The token is valid but doesn't have sufficient scope to retrieve org data.
+                return ValidationState.Authorized;
             }
             catch (AuthorizationException)
             {
                 // The token is either invalid or has been killed
                 return ValidationState.Unauthorized;
             }
-            catch (ForbiddenException)
-            {
-                // The token is valid but doesn't have read/user access. Write only perhaps?
-                return ValidationState.Authorized;
-            }
             catch (Exception e)
             {
-                // ¯\_(ツ)_/¯
-                message = $"An unexpected exception was caught attempting to validate PAT: {e.Message}";
-                return ValidationState.Unknown;
+                return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Authorized;
         }
     }
 }
