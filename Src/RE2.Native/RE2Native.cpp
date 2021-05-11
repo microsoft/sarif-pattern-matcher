@@ -253,7 +253,7 @@ extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 		// Advance the starting position past this match.
 		re2::StringPiece fullMatchSp = submatchesSp[0];
 		int matchStartIndex = static_cast<int>(fullMatchSp.data() - allContentSp.data());
-		startpos = matchStartIndex + fullMatchSp.length();
+		startpos = matchStartIndex + 1;
 	}
 
 	// Assign outputs.
