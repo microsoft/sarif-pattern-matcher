@@ -322,7 +322,7 @@ namespace Microsoft.RE2.Managed
             bool hasMatch = Regex2.Matches(pattern, text, out matches);
 
             Assert.True(hasMatch);
-            Assert.Single(matches);
+            Assert.Equal(2, matches.Count);
             ValidateMatchIndices(text, matches);
         }
 
