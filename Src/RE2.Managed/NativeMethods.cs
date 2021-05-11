@@ -50,11 +50,11 @@ namespace Microsoft.RE2.Managed
             return Environment.Is64BitProcess ? NativeMethodsX64.Test() : NativeMethodsX86.Test();
         }
 
-        public static int BuildRegex(String8Interop regex, int regexOptions, long maxMemory)
+        public static int BuildRegex(String8Interop regex, int regexOptions, long maxMemoryInBytes)
         {
             return Environment.Is64BitProcess
-                ? NativeMethodsX64.BuildRegex(regex, regexOptions, maxMemory)
-                : NativeMethodsX86.BuildRegex(regex, regexOptions, maxMemory);
+                ? NativeMethodsX64.BuildRegex(regex, regexOptions, maxMemoryInBytes)
+                : NativeMethodsX86.BuildRegex(regex, regexOptions, maxMemoryInBytes);
         }
 
         public static void ClearRegexes()
