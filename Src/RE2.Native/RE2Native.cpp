@@ -49,7 +49,7 @@ std::mutex cachedExpressionsMutex;
 std::vector<re2::RE2*>* cachedExpressions;
 
 // Parse and Cache a Regular Expression for later runs
-extern "C" __declspec(dllexport) int BuildRegex(String8 regex, int regexOptions)
+extern "C" __declspec(dllexport) int BuildRegex(String8 regex, int regexOptions, int64_t maxMemoryInBytes)
 {
 	std::lock_guard<std::mutex> lock(cachedExpressionsMutex);
 
@@ -67,6 +67,10 @@ extern "C" __declspec(dllexport) int BuildRegex(String8 regex, int regexOptions)
 	re2::RE2::Options* options = new re2::RE2::Options();
 	if ((regexOptions & RegexOptions_IgnoreCase) != 0) options->set_case_sensitive(false);
 	if ((regexOptions & RegexOptions_Singleline) != 0) options->set_dot_nl(true);
+	if (maxMemoryInBytes != -1)
+	{
+		options->set_max_mem(maxMemoryInBytes);
+	}
 
 	// Parse and construct an RE2 instance for the regular expression
 	re2::RE2* expression = new re2::RE2(expressionSp, *options);
@@ -253,7 +257,7 @@ extern "C" __declspec(dllexport) void MatchesCaptureGroups(
 		// Advance the starting position past this match.
 		re2::StringPiece fullMatchSp = submatchesSp[0];
 		int matchStartIndex = static_cast<int>(fullMatchSp.data() - allContentSp.data());
-		startpos = matchStartIndex + fullMatchSp.length();
+		startpos = matchStartIndex + 1;
 	}
 
 	// Assign outputs.
