@@ -200,6 +200,22 @@ namespace Microsoft.RE2.Managed
         }
 
         [Fact]
+        public void Regex2_CaptureGroups_CustomMaxMemory()
+        {
+            List<Dictionary<string, FlexMatch>> matches;
+
+            string pattern = @"abc";
+            string text = @"abc";
+
+            bool hasMatches = Regex2.Matches(pattern, text, out matches, 1000);
+            Assert.True(hasMatches);
+            Assert.Single(matches);
+            Assert.True(matches[0].ContainsKey("0"));
+            Assert.Equal("abc", matches[0]["0"].Value);
+            ValidateMatchIndices(text, matches);
+        }
+
+        [Fact]
         public void Regex2_CaptureGroups_NoMatch()
         {
             List<Dictionary<string, FlexMatch>> matches;
