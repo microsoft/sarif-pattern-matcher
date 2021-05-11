@@ -513,7 +513,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                   validatorMessage,
                                                                   validationPrefix,
                                                                   validationSuffix,
-                                                                  validationResult.OverrideIndex);
+                                                                  validationResult.OverrideIndex,
+                                                                  validationResult.OverrideLength);
                         }
                     }
                 }
@@ -533,6 +534,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                           validatorMessage,
                                                           validationPrefix,
                                                           validationSuffix,
+                                                          null,
                                                           null);
                 }
             }
