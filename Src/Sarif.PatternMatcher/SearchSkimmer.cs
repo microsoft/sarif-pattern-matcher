@@ -251,17 +251,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     {
                         // An illegal state was returned running check '{0}' against '{1}' ({2}).
                         context.Logger.LogToolNotification(
-                            Errors.CreateNotification(
-                                context.TargetUri,
-                                "ERR998.ValidatorReturnedIllegalValidationState",
-                                context.Rule.Id,
-                                FailureLevel.Error,
-                                exception: null,
-                                persistExceptionStack: false,
-                                messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
-                                context.Rule.Id,
-                                context.TargetUri.GetFileName(),
-                                validatorMessage));
+                            Errors.CreateNotification(context.TargetUri,
+                                                      "ERR998.ValidatorReturnedIllegalValidationState",
+                                                      context.Rule.Id,
+                                                      FailureLevel.Error,
+                                                      exception: null,
+                                                      persistExceptionStack: false,
+                                                      messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
+                                                      context.Rule.Id,
+                                                      context.TargetUri.GetFileName(),
+                                                      validatorMessage));
                     }
 
                     level = FailureLevel.Error;
@@ -416,10 +415,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private void RunMatchExpressionForContentsRegex(
-            FlexMatch binary64DecodedMatch,
-            AnalyzeContext context,
-            MatchExpression matchExpression)
+        private void RunMatchExpressionForContentsRegex(FlexMatch binary64DecodedMatch,
+                                                        AnalyzeContext context,
+                                                        MatchExpression matchExpression)
         {
             ResultKind kind = matchExpression.Kind;
             FailureLevel level = matchExpression.Level;
@@ -489,6 +487,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             }
 
                             validatorMessage = validationResult.Message;
+
                             SetPropertiesBasedOnValidationState(validationResult.ValidationState,
                                                                 context,
                                                                 validationResult.ResultLevelKind,
@@ -498,8 +497,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                 ref validationSuffix,
                                                                 ref validatorMessage,
                                                                 pluginSupportsDynamicValidation);
+
                             validationResult.Message = validatorMessage;
                             validationResult.ResultLevelKind = new ResultLevelKind { Kind = kind, Level = level };
+
                             ConstructResultAndLogForContentsRegex(binary64DecodedMatch,
                                                                   context,
                                                                   matchExpression,
@@ -566,6 +567,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             messageArguments["validationPrefix"] = validationPrefix;
             messageArguments["validationSuffix"] = validationSuffix;
+            messageArguments["truncatedSecret"] = validationResult.Fingerprint.Secret.Truncate();
 
             IList<string> arguments = GetMessageArguments(groups,
                                                           matchExpression.ArgumentNameToIndexMap,
@@ -804,16 +806,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 validatorMessage: NormalizeValidatorMessage(validatorMessage),
                 messageArguments);
 
-            Result result = this.ConstructResult(
-                    context.TargetUri,
-                    reportingDescriptor.Id,
-                    level,
-                    kind,
-                    region: null,
-                    flexMatch: null,
-                    fingerprint,
-                    matchExpression,
-                    arguments);
+            Result result = this.ConstructResult(context.TargetUri,
+                                                 reportingDescriptor.Id,
+                                                 level,
+                                                 kind,
+                                                 region: null,
+                                                 flexMatch: null,
+                                                 fingerprint,
+                                                 matchExpression,
+                                                 arguments);
 
             context.Logger.Log(reportingDescriptor, result);
         }
@@ -853,16 +854,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 fileText: context.FileContents);
         }
 
-        private Result ConstructResult(
-            Uri targetUri,
-            string ruleId,
-            FailureLevel level,
-            ResultKind kind,
-            Region region,
-            FlexMatch flexMatch,
-            Fingerprint fingerprint,
-            MatchExpression matchExpression,
-            IList<string> arguments)
+        private Result ConstructResult(Uri targetUri,
+                                       string ruleId,
+                                       FailureLevel level,
+                                       ResultKind kind,
+                                       Region region,
+                                       FlexMatch flexMatch,
+                                       Fingerprint fingerprint,
+                                       MatchExpression matchExpression,
+                                       IList<string> arguments)
         {
             var location = new Location()
             {
@@ -886,7 +886,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // We'll limit rank precision to two decimal places. Because this value
             // is actually converted from a nomalized range of 0.0 to 1.0, to the
             // SARIF 0.0 to 100.0 equivalent, this is effectively four decimal places
-            // of precision as far as the normalized Shannon entrop is concerned.
+            // of precision in terms of the normalized Shannon entropy value.
             rank = Math.Round(rank, 2, MidpointRounding.AwayFromZero);
 
             var result = new Result()
