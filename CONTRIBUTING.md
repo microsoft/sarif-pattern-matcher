@@ -11,9 +11,13 @@ On all platforms, the minimum requirements are:
 
 ### Windows
 
-* Visual Studio 2019
-* Component MSVC Spectre-mitigated libs (latest one)
-* Desktop development with C++
+* Visual Studio 2019, any edition
+* In the Visual Studio Installer, install the following:
+  * Workloads
+    * .NET desktop development
+    * Desktop development with C++
+  * Individual components
+    * C++ x64/x86 Spectre-mitigated libs (Latest)
 
 ## Style Guide
 
@@ -38,7 +42,7 @@ git submodule update --init --recursive
 
 To build the solution you can:
 
-* Use the `BuildAndTest.cmd` script in `Developer Command Prompt for VS 2019`:
+* Open `Developer Command Prompt for VS 2019` and run the following:
 
 ```bat
 .\BuildAndTest.cmd
