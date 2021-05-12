@@ -498,44 +498,41 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                 ref validationSuffix,
                                                                 ref validatorMessage,
                                                                 pluginSupportsDynamicValidation);
-
+                            validationResult.Message = validatorMessage;
+                            validationResult.ResultLevelKind = new ResultLevelKind { Kind = kind, Level = level };
                             ConstructResultAndLogForContentsRegex(binary64DecodedMatch,
                                                                   context,
                                                                   matchExpression,
-                                                                  level,
-                                                                  kind,
                                                                   filePath,
                                                                   flexMatch,
                                                                   reportingDescriptor,
                                                                   groups,
                                                                   refinedMatchedPattern,
-                                                                  validationResult.Fingerprint,
-                                                                  validatorMessage,
                                                                   validationPrefix,
                                                                   validationSuffix,
-                                                                  validationResult.OverrideIndex,
-                                                                  validationResult.OverrideLength);
+                                                                  validationResult);
                         }
                     }
                 }
                 else
                 {
+                    var result = new ValidationResult
+                    {
+                        Fingerprint = fingerprint,
+                        Message = validatorMessage,
+                        ResultLevelKind = new ResultLevelKind { Kind = kind, Level = level },
+                    };
                     ConstructResultAndLogForContentsRegex(binary64DecodedMatch,
                                                           context,
                                                           matchExpression,
-                                                          level,
-                                                          kind,
                                                           filePath,
                                                           flexMatch,
                                                           reportingDescriptor,
                                                           groups,
                                                           refinedMatchedPattern,
-                                                          fingerprint,
-                                                          validatorMessage,
                                                           validationPrefix,
                                                           validationSuffix,
-                                                          null,
-                                                          null);
+                                                          result);
                 }
             }
         }
@@ -543,26 +540,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private void ConstructResultAndLogForContentsRegex(FlexMatch binary64DecodedMatch,
                                                            AnalyzeContext context,
                                                            MatchExpression matchExpression,
-                                                           FailureLevel level,
-                                                           ResultKind kind,
                                                            string filePath,
                                                            FlexMatch flexMatch,
                                                            ReportingDescriptor reportingDescriptor,
                                                            IDictionary<string, string> groups,
                                                            string refinedMatchedPattern,
-                                                           Fingerprint fingerprint,
-                                                           string validatorMessage,
                                                            string validationPrefix,
                                                            string validationSuffix,
-                                                           int? overrideIndex,
-                                                           int? overrideLength)
+                                                           ValidationResult validationResult)
         {
             // If we're matching against decoded contents, the region should
             // relate to the base64-encoded scan target content. We do use
             // the decoded content for the fingerprint, however.
             FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch;
 
-            Region region = ConstructRegion(context, regionFlexMatch, refinedMatchedPattern, overrideIndex, overrideLength);
+            Region region = ConstructRegion(context, regionFlexMatch, refinedMatchedPattern, validationResult.OverrideIndex, validationResult.OverrideLength);
 
             Dictionary<string, string> messageArguments = matchExpression.MessageArguments != null ?
                 new Dictionary<string, string>(matchExpression.MessageArguments) :
@@ -578,16 +570,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IList<string> arguments = GetMessageArguments(groups,
                                                           matchExpression.ArgumentNameToIndexMap,
                                                           filePath,
-                                                          validatorMessage: NormalizeValidatorMessage(validatorMessage),
+                                                          validatorMessage: NormalizeValidatorMessage(validationResult.Message),
                                                           messageArguments);
 
             Result result = ConstructResult(context.TargetUri,
                                             reportingDescriptor.Id,
-                                            level,
-                                            kind,
+                                            validationResult.ResultLevelKind.Level,
+                                            validationResult.ResultLevelKind.Kind,
                                             region,
                                             flexMatch,
-                                            fingerprint,
+                                            validationResult.Fingerprint,
                                             matchExpression,
                                             arguments);
 
