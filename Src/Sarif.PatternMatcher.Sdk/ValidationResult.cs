@@ -15,6 +15,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public ValidationState ValidationState { get; set; }
 
+        /// <summary>
+        /// Gets or sets the override index of match found in matched pattern by validator.
+        /// </summary>
+        public int? OverrideIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the override length of match found in matched pattern by validator.
+        /// </summary>
+        public int? OverrideLength { get; set; }
+
         public static IEnumerable<ValidationResult> CreateNoMatch()
         {
             return new[]
