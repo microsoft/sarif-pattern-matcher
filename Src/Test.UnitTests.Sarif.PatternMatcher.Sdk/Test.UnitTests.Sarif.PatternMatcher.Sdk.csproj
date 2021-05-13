@@ -14,6 +14,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
+    <ProjectReference Include="..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
   </ItemGroup>
 
 </Project>
