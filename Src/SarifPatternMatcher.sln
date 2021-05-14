@@ -85,6 +85,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalModernization", "Plugins
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.SalModernization", "Plugins\Tests.SalModernization\Tests.SalModernization.csproj", "{843E818B-1BC2-43FB-97E0-56F6005CE12A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.UnitTests.Sarif.PatternMatcher.Sdk", "Test.UnitTests.Sarif.PatternMatcher.Sdk\Test.UnitTests.Sarif.PatternMatcher.Sdk.csproj", "{DA444E2B-28A2-4884-BECC-656CE22690F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -335,6 +337,18 @@ Global
 		{843E818B-1BC2-43FB-97E0-56F6005CE12A}.Release|x64.Build.0 = Release|Any CPU
 		{843E818B-1BC2-43FB-97E0-56F6005CE12A}.Release|x86.ActiveCfg = Release|Any CPU
 		{843E818B-1BC2-43FB-97E0-56F6005CE12A}.Release|x86.Build.0 = Release|Any CPU
+		{DA444E2B-28A2-4884-BECC-656CE22690F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA444E2B-28A2-4884-BECC-656CE22690F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA444E2B-28A2-4884-BECC-656CE22690F5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DA444E2B-28A2-4884-BECC-656CE22690F5}.Debug|x64.Build.0 = Debug|Any CPU
+		{DA444E2B-28A2-4884-BECC-656CE22690F5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DA444E2B-28A2-4884-BECC-656CE22690F5}.Debug|x86.Build.0 = Debug|Any CPU
+		{DA444E2B-28A2-4884-BECC-656CE22690F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA444E2B-28A2-4884-BECC-656CE22690F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA444E2B-28A2-4884-BECC-656CE22690F5}.Release|x64.ActiveCfg = Release|Any CPU
+		{DA444E2B-28A2-4884-BECC-656CE22690F5}.Release|x64.Build.0 = Release|Any CPU
+		{DA444E2B-28A2-4884-BECC-656CE22690F5}.Release|x86.ActiveCfg = Release|Any CPU
+		{DA444E2B-28A2-4884-BECC-656CE22690F5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,7 +23,7 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains {1}{2}{3}{4}{5}."
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -44,7 +44,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_022.PayPalBraintreeAccessToken.ps1",
+              "111111…",
               "an apparent ",
               "",
               "PayPal/Braintree Access Token",
@@ -87,7 +87,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC101_022.PayPalBraintreeAccessToken.ps1",
+              "222222…",
               "an apparent ",
               "",
               "PayPal/Braintree Access Token",
