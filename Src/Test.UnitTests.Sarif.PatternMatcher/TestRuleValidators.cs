@@ -37,7 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                          Dictionary<string, string> groups)
+                                                                  Dictionary<string, string> groups)
         {
             var result = new ValidationResult
             {
@@ -55,7 +55,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                          Dictionary<string, string> groups)
+                                                                  Dictionary<string, string> groups)
         {
             // result multiple results
             ValidationResult[] results = new[]
@@ -105,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                          Dictionary<string, string> groups)
+                                                                  Dictionary<string, string> groups)
         {
             // matchedPatrtern "TestTerm Another-TEST-TERM", length is 26
             ValidationResult[] results = new[]
