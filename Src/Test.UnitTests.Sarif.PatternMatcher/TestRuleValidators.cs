@@ -14,7 +14,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                          Dictionary<string, string> groups)
+                                                                  Dictionary<string, string> groups)
         {
             // "TestTerm Another-TEST-TERM"
             // original index is 0, override it to 17, length to 9

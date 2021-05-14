@@ -61,19 +61,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             results[0].Locations[0].PhysicalLocation.Should().NotBeNull();
             results[0].Locations[0].PhysicalLocation.Region.Should().NotBeNull();
 
-            // region points to 2nd uppercase "testterm"
+            // matchedPattern is "TestTerm Another-TEST-TERM"
+            // OverrideIndexTestValidator overrides index to 17 and length 9
+            // the snippet text should be "TEST-TERM"
             Region region = results[0].Locations[0].PhysicalLocation.Region;
-            region.CharOffset.Should().Be(17);
-            region.CharLength.Should().Be(9);
-            region.StartColumn.Should().Be(18);
-            region.EndColumn.Should().Be(27);
+            int index = 17;
+            region.CharOffset.Should().Be(index);
+            region.CharLength.Should().Be("TEST-TERM".Length);
+            region.StartColumn.Should().Be(index + 1);
+            region.EndColumn.Should().Be(index + 1 + "TEST-TERM".Length);
             region.Snippet.Text.Should().Be("TEST-TERM");
         }
 
         [Fact]
         public void SearchSkimmer_ValidatorDoesNotExist()
         {
-            // test using OverrideIndexValidator
+            // without validator
             string ruleName = "NonExistValidatorTest";
             string validatorAssemblyPath = $@"c:\{Guid.NewGuid()}.dll";
             string scanTargetExtension = Guid.NewGuid().ToString();
@@ -109,6 +112,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             results.Should().NotBeNull();
             results.Count.Should().Be(2);
 
+            // since validator doesn't exist, there should be 2 results:
+            // first result points to first "TestTerm" at index 0
+            // and second result points to second "TestTerm" at index 17
+            // in orginal text "TestTerm Another-TestTerm"
+
             // verify first result
             Result result = results[0];
             result.Kind.Should().Be(ResultKind.Fail);
@@ -119,10 +127,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             result.Locations[0].PhysicalLocation.Region.Should().NotBeNull();
 
             Region region = result.Locations[0].PhysicalLocation.Region;
-            region.CharOffset.Should().Be(0);
-            region.CharLength.Should().Be(8);
-            region.StartColumn.Should().Be(1);
-            region.EndColumn.Should().Be(9);
+            int index = 0;
+            region.CharOffset.Should().Be(index);
+            region.CharLength.Should().Be("TestTerm".Length);
+            region.StartColumn.Should().Be(index + 1);
+            region.EndColumn.Should().Be(index + 1 + "TestTerm".Length);
             region.Snippet.Text.Should().Be("TestTerm");
 
             // verify second result
@@ -135,17 +144,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             result.Locations[0].PhysicalLocation.Region.Should().NotBeNull();
 
             region = result.Locations[0].PhysicalLocation.Region;
-            region.CharOffset.Should().Be(17);
-            region.CharLength.Should().Be(8);
-            region.StartColumn.Should().Be(18);
-            region.EndColumn.Should().Be(26);
+            index = 17;
+            region.CharOffset.Should().Be(index);
+            region.CharLength.Should().Be("TestTerm".Length);
+            region.StartColumn.Should().Be(index + 1);
+            region.EndColumn.Should().Be(index + 1 + "TestTerm".Length);
             region.Snippet.Text.Should().Be("TestTerm");
         }
 
         [Fact]
         public void SearchSkimmer_ValidatorDoesNotOverride()
         {
-            // test using OverrideIndexTestValidator
+            // test using DoesNotOverrideTestValidator
             string ruleName = "DoesNotOverrideTest";
             string validatorAssemblyPath = $@"c:\{Guid.NewGuid()}.dll";
             string scanTargetExtension = Guid.NewGuid().ToString();
@@ -181,6 +191,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             results.Should().NotBeNull();
             results.Count.Should().Be(2);
 
+            // validator doesn't override index and length, there should be 2 results:
+            // first result points to first "TestTerm" at index 0
+            // and second result points to second "TestTerm" at index 17
+            // in orginal text "TestTerm Another-TestTerm"
+
             // verify first result
             Result result = results[0];
             result.Kind.Should().Be(ResultKind.Fail);
@@ -191,10 +206,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             result.Locations[0].PhysicalLocation.Region.Should().NotBeNull();
 
             Region region = result.Locations[0].PhysicalLocation.Region;
-            region.CharOffset.Should().Be(0);
-            region.CharLength.Should().Be(8);
-            region.StartColumn.Should().Be(1);
-            region.EndColumn.Should().Be(9);
+            int index = 0;
+            region.CharOffset.Should().Be(index);
+            region.CharLength.Should().Be("TestTerm".Length);
+            region.StartColumn.Should().Be(index + 1);
+            region.EndColumn.Should().Be(index + 1 + "TestTerm".Length);
             region.Snippet.Text.Should().Be("TestTerm");
 
             // verify second result
@@ -207,10 +223,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             result.Locations[0].PhysicalLocation.Region.Should().NotBeNull();
 
             region = result.Locations[0].PhysicalLocation.Region;
-            region.CharOffset.Should().Be(17);
-            region.CharLength.Should().Be(8);
-            region.StartColumn.Should().Be(18);
-            region.EndColumn.Should().Be(26);
+            index = 17;
+            region.CharOffset.Should().Be(index);
+            region.CharLength.Should().Be("TestTerm".Length);
+            region.StartColumn.Should().Be(index + 1);
+            region.EndColumn.Should().Be(index + 1 + "TestTerm".Length);
             region.Snippet.Text.Should().Be("TestTerm");
         }
 
@@ -253,6 +270,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             results.Should().NotBeNull();
             results.Count.Should().Be(8);
 
+            // VerifyResultKindLevelTestValidator creates 8 results which ValidationState are
+            // Authorized / PasswordProtected / Unauthorized / Expired / UnknownHost /
+            // InvalidForConsultedAuthorities / Unknown / ValidatorNotFound
             // check VerifyResultKindLevelTestValidator class for expected result level
             results[0].Level.Should().Be(FailureLevel.Error);
             results[1].Level.Should().Be(FailureLevel.Warning);
@@ -299,11 +319,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             skimmer.Analyze(context);
 
+            // InvalidIndexLengthTestValidator create 3 results with invalid override index and length
             // check InvalidIndexLengthTestValidator class for expected results
             IList<Result> results = ((TestLogger)context.Logger).Results;
             results.Should().NotBeNull();
             results.Count.Should().Be(3);
 
+            // 1st result overrides index to -1, the region is expected to be the full file content
             // verify first result
             Result result = results[0];
             result.Kind.Should().Be(ResultKind.Fail);
@@ -315,11 +337,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             Region region = result.Locations[0].PhysicalLocation.Region;
             region.CharOffset.Should().Be(0);
-            region.CharLength.Should().Be(26);
+            region.CharLength.Should().Be(fileContent.Length);
             region.StartColumn.Should().Be(1);
-            region.EndColumn.Should().Be(27);
+            region.EndColumn.Should().Be(1 + fileContent.Length);
             region.Snippet.Text.Should().Be(fileContent);
 
+            // 2nd result overrides index to 26, the region is expected to be the full file content
             // verify second result
             result = results[1];
             result.Kind.Should().Be(ResultKind.Fail);
@@ -331,11 +354,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             region = result.Locations[0].PhysicalLocation.Region;
             region.CharOffset.Should().Be(0);
-            region.CharLength.Should().Be(26);
+            region.CharLength.Should().Be(fileContent.Length);
             region.StartColumn.Should().Be(1);
-            region.EndColumn.Should().Be(27);
+            region.EndColumn.Should().Be(1 + fileContent.Length);
             region.Snippet.Text.Should().Be(fileContent);
 
+            // 3rd result overrides index to 17 and length to 100, the region is expected to be
+            // from the index (17) till end of file content
             // verify third result
             result = results[2];
             result.Kind.Should().Be(ResultKind.Fail);
@@ -346,10 +371,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             result.Locations[0].PhysicalLocation.Region.Should().NotBeNull();
 
             region = result.Locations[0].PhysicalLocation.Region;
-            region.CharOffset.Should().Be(17);
-            region.CharLength.Should().Be(9);
-            region.StartColumn.Should().Be(18);
-            region.EndColumn.Should().Be(27);
+            int index = 17;
+            region.CharOffset.Should().Be(index);
+            region.CharLength.Should().Be("TEST-TERM".Length);
+            region.StartColumn.Should().Be(1 + index);
+            region.EndColumn.Should().Be(1 + index + "TEST-TERM".Length);
             region.Snippet.Text.Should().Be("TEST-TERM");
         }
 
