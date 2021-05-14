@@ -13,6 +13,7 @@ using System.Xml;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -26,7 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -71,16 +72,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, string> groups)
+                                                                             Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("host", out string xmlHost) ||
-                !groups.TryGetNonEmptyValue("secret", out string xmlCredentials))
+            if (!groups.TryGetNonEmptyValue("host", out FlexMatch xmlHost) ||
+                !groups.TryGetNonEmptyValue("secret", out FlexMatch xmlCredentials))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
-            IEnumerable<string> hosts = ExtractHosts(xmlHost);
-            List<(string user, string password)> credentials = ExtractCredentials(xmlCredentials);
+            IEnumerable<string> hosts = ExtractHosts(xmlHost.Value);
+            List<(string user, string password)> credentials = ExtractCredentials(xmlCredentials.Value);
             var validationResults = new List<ValidationResult>();
             foreach (string host in hosts)
             {

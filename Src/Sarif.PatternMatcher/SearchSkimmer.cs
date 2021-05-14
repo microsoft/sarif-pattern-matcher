@@ -402,12 +402,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
-            if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
+            if (matchExpression.ContentsRegexes?.Count > 0)
+            {
+                Debug.Assert(binary64DecodedMatch == null);
+                RunMatchExpressionForContentsRegexes(context, matchExpression);
+            }
+            else if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
             {
                 RunMatchExpressionForContentsRegex(binary64DecodedMatch, context, matchExpression);
             }
             else if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
             {
+                Debug.Assert(binary64DecodedMatch == null);
                 RunMatchExpressionForFileNameRegex(context, matchExpression);
             }
             else
@@ -416,10 +422,106 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private void RunMatchExpressionForContentsRegex(
-            FlexMatch binary64DecodedMatch,
-            AnalyzeContext context,
-            MatchExpression matchExpression)
+        private void RunMatchExpressionForContentsRegexes(AnalyzeContext context, MatchExpression matchExpression)
+        {
+            ResultKind kind = matchExpression.Kind;
+            FailureLevel level = matchExpression.Level;
+            string searchText = context.FileContents;
+            string filePath = context.TargetUri.GetFilePath();
+
+            var mergedGroups = new Dictionary<string, IList<FlexMatch>>();
+
+            foreach (string contentsRegex in matchExpression.ContentsRegexes)
+            {
+                if (!_engine.Matches(contentsRegex, searchText, out List<Dictionary<string, FlexMatch>> matches))
+                {
+                    continue;
+                }
+
+                MergeDictionary(matches, mergedGroups);
+            }
+
+            ReportingDescriptor reportingDescriptor = this;
+            string refinedMatchedPattern = "THISVALUESHOULDNEVERBEDISPLAYEDORFCONSUMED";
+            string validatorMessage = null;
+            string validationPrefix = string.Empty;
+            string validationSuffix = string.Empty;
+
+            if (_validators != null && matchExpression.IsValidatorEnabled)
+            {
+                matchExpression.Properties ??= new Dictionary<string, string>();
+                matchExpression.Properties["scanTargetFullPath"] = filePath;
+
+                IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
+                                                                                       context,
+                                                                                       ref refinedMatchedPattern,
+                                                                                       mergedGroups,
+                                                                                       matchExpression.Properties,
+                                                                                       out bool pluginSupportsDynamicValidation);
+                if (validationResults != null)
+                {
+                    foreach (ValidationResult validationResult in validationResults)
+                    {
+                        if (validationResult.ValidationState == ValidationState.None ||
+                            validationResult.ValidationState == ValidationState.NoMatch ||
+                            validationResult.ValidationState == ValidationState.ValidatorReturnedIllegalValidationState)
+                        {
+                            continue;
+                        }
+
+                        validatorMessage = validationResult.Message;
+                        SetPropertiesBasedOnValidationState(validationResult.ValidationState,
+                                                            context,
+                                                            validationResult.ResultLevelKind,
+                                                            ref level,
+                                                            ref kind,
+                                                            ref validationPrefix,
+                                                            ref validationSuffix,
+                                                            ref validatorMessage,
+                                                            pluginSupportsDynamicValidation);
+                        validationResult.Message = validatorMessage;
+                        validationResult.ResultLevelKind = new ResultLevelKind { Kind = kind, Level = level };
+                        ConstructResultAndLogForContentsRegex(null,
+                                                              context,
+                                                              matchExpression,
+                                                              filePath,
+                                                              validationResult.RegionFlexMatch,
+                                                              reportingDescriptor,
+                                                              null,
+                                                              validationPrefix,
+                                                              validationSuffix,
+                                                              validationResult);
+                    }
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("All multiline rules must have a validator.");
+            }
+        }
+
+        private static void MergeDictionary(IList<Dictionary<string, FlexMatch>> mergeFrom, IDictionary<string, IList<FlexMatch>> mergedGroups)
+        {
+            foreach (Dictionary<string, FlexMatch> groups in mergeFrom)
+            {
+                foreach (KeyValuePair<string, FlexMatch> keyValue in groups)
+                {
+                    // We only persist named groups, not groups specified by index.
+                    if (int.TryParse(keyValue.Key, out int val)) { continue; }
+
+                    if (!mergedGroups.TryGetValue(keyValue.Key, out IList<FlexMatch> flexMatches))
+                    {
+                        mergedGroups[keyValue.Key] = flexMatches = new List<FlexMatch>();
+                    }
+
+                    flexMatches.Add(keyValue.Value);
+                }
+            }
+        }
+
+        private void RunMatchExpressionForContentsRegex(FlexMatch binary64DecodedMatch,
+                                                        AnalyzeContext context,
+                                                        MatchExpression matchExpression)
         {
             ResultKind kind = matchExpression.Kind;
             FailureLevel level = matchExpression.Level;
@@ -437,23 +539,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 ReportingDescriptor reportingDescriptor = this;
 
-                IDictionary<string, string> groups = match.CopyToDictionary();
-
-                Debug.Assert(!groups.ContainsKey("scanTargetFullPath"), "Full path should always exist.");
-                groups["scanTargetFullPath"] = filePath;
-                groups["enhancedReporting"] = context.EnhancedReporting ? bool.TrueString : bool.FalseString;
+                Debug.Assert(!match.ContainsKey("scanTargetFullPath"), "Full path should only be populated by engine.");
+                match["scanTargetFullPath"] = new FlexMatch { Value = filePath };
+                match["enhancedReporting"] = new FlexMatch { Value = context.EnhancedReporting ? bool.TrueString : bool.FalseString };
 
                 if (matchExpression.Properties != null)
                 {
                     foreach (KeyValuePair<string, string> kv in matchExpression.Properties)
                     {
-                        // We will never allow a group returned by a dynamically executing
-                        // regex to overwrite a static value in the match expression. This
-                        // allows the match expression to provide a default value that
-                        // may be replaced by the analysis.
-                        if (!groups.ContainsKey(kv.Key))
+                        if (!match.ContainsKey(kv.Key))
                         {
-                            groups[kv.Key] = kv.Value;
+                            match[kv.Key] = new FlexMatch() { Value = kv.Value };
                         }
                     }
                 }
@@ -475,7 +571,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
                                                                                            context,
                                                                                            ref refinedMatchedPattern,
-                                                                                           groups,
+                                                                                           match,
                                                                                            out bool pluginSupportsDynamicValidation);
                     if (validationResults != null)
                     {
@@ -506,8 +602,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                   filePath,
                                                                   flexMatch,
                                                                   reportingDescriptor,
-                                                                  groups,
-                                                                  refinedMatchedPattern,
+                                                                  match,
                                                                   validationPrefix,
                                                                   validationSuffix,
                                                                   validationResult);
@@ -528,8 +623,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                           filePath,
                                                           flexMatch,
                                                           reportingDescriptor,
-                                                          groups,
-                                                          refinedMatchedPattern,
+                                                          match,
                                                           validationPrefix,
                                                           validationSuffix,
                                                           result);
@@ -543,8 +637,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                            string filePath,
                                                            FlexMatch flexMatch,
                                                            ReportingDescriptor reportingDescriptor,
-                                                           IDictionary<string, string> groups,
-                                                           string refinedMatchedPattern,
+                                                           IDictionary<string, FlexMatch> groups,
                                                            string validationPrefix,
                                                            string validationSuffix,
                                                            ValidationResult validationResult)
@@ -552,9 +645,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // If we're matching against decoded contents, the region should
             // relate to the base64-encoded scan target content. We do use
             // the decoded content for the fingerprint, however.
-            FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch;
+            FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch ?? validationResult.RegionFlexMatch;
 
-            Region region = ConstructRegion(context, regionFlexMatch, refinedMatchedPattern, validationResult.OverrideIndex, validationResult.OverrideLength);
+            Region region = ConstructRegion(context,
+                                            regionFlexMatch);
 
             Dictionary<string, string> messageArguments = matchExpression.MessageArguments != null ?
                 new Dictionary<string, string>(matchExpression.MessageArguments) :
@@ -595,11 +689,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ResultKind kind = matchExpression.Kind;
             FailureLevel level = matchExpression.Level;
             ReportingDescriptor reportingDescriptor = this;
-            IDictionary<string, string> groups = new Dictionary<string, string>();
+            IDictionary<string, FlexMatch> groups = new Dictionary<string, FlexMatch>();
 
             if (!string.IsNullOrEmpty(context.FileContents))
             {
-                groups["content"] = context.FileContents;
+                groups["content"] = new FlexMatch
+                {
+                    Index = 0,
+                    Length = context.FileContents.String8.Length,
+                    Success = true,
+                    Value = context.FileContents,
+                };
             }
 
             Fingerprint fingerprint = default;
@@ -611,10 +711,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
-                                                 context,
-                                                 ref filePath,
-                                                 groups,
-                                                 out bool pluginSupportsDynamicValidation);
+                                                                                       context,
+                                                                                       ref filePath,
+                                                                                       groups,
+                                                                                       out bool pluginSupportsDynamicValidation);
 
                 if (validationResults != null)
                 {
@@ -818,32 +918,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.Logger.Log(reportingDescriptor, result);
         }
 
-        private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch, string fingerprint, int? overrideIndex, int? overrideLength)
+        private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch)
         {
-            // TODO: this code is wrong!! We no longer use the fingerprint to refine the region
-
-            int indexOffset = overrideIndex ?? regionFlexMatch.Value.String.IndexOf(fingerprint);
-            int lengthOffset = (overrideLength ?? fingerprint.Length) - regionFlexMatch.Length;
-
-            if (indexOffset == -1 || indexOffset >= regionFlexMatch.Length)
-            {
-                // If we can't find the fingerprint in the match, that means we matched against
-                // base64-decoded content (and therefore there is no region refinement to make).
-                indexOffset = 0;
-                lengthOffset = 0;
-            }
-
-            if ((indexOffset + regionFlexMatch.Length + lengthOffset) > regionFlexMatch.Length)
-            {
-                // match should be within the original full string
-                // update lengthOffset to till end of regionFlexMatch
-                lengthOffset = indexOffset - regionFlexMatch.Length;
-            }
-
             var region = new Region
             {
-                CharOffset = regionFlexMatch.Index + indexOffset,
-                CharLength = regionFlexMatch.Length + lengthOffset,
+                CharOffset = regionFlexMatch.Index,
+                CharLength = regionFlexMatch.Length,
             };
 
             return _fileRegionsCache.PopulateTextRegionProperties(
@@ -1022,12 +1102,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return namedArgumentsToIndexMap;
         }
 
-        private IList<string> GetMessageArguments(
-            IDictionary<string, string> groups,
-            Dictionary<string, int> namedArgumentToIndexMap,
-            string scanTargetPath,
-            string validatorMessage,
-            Dictionary<string, string> additionalArguments)
+        private IList<string> GetMessageArguments(IDictionary<string, FlexMatch> groups,
+                                                  Dictionary<string, int> namedArgumentToIndexMap,
+                                                  string scanTargetPath,
+                                                  string validatorMessage,
+                                                  Dictionary<string, string> additionalArguments)
         {
             int argsCount = namedArgumentToIndexMap.Count;
 
@@ -1049,9 +1128,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     value = validatorMessage ?? string.Empty;
                 }
-                else if (groups != null && groups.TryGetValue(kv.Key, out string groupValue))
+                else if (groups != null && groups.TryGetValue(kv.Key, out FlexMatch groupValue))
                 {
-                    value = groupValue;
+                    value = groupValue.Value;
                 }
 
                 arguments[kv.Value] = value;

@@ -25,9 +25,9 @@
 
   $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?P<scheme>http|ftp|https):\/\/(?P<host>[\w_.-]{1,200})(?P<path>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= "']+(basic)[\s\r\n]{0,10}(?P<secret>[^'"><;\s]{1,500})
   $SEC101/002.GoogleOAuthCredentials=(?s)\b(?P<id>[0-9]{12}\-[0-9a-z]{32})\.apps\.googleusercontent\.com.{1,500}?\b(?i)(?P<secret>[0-9a-z\-]{24})
-  $SEC101/003.GoogleApiKey=\b(?P<refine>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
+  $SEC101/003.GoogleApiKey=\b(?P<secret>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
   $SEC101/004.FacebookAppCredentials=(?si)facebook.{1,50}\b(?P<id>[0-9]{15}).{1,500}?\b(?P<secret>[0-9a-f]{32})
-  $SEC101/005.SlackToken=\b(?P<refine>xox(?P<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
+  $SEC101/005.SlackToken=\b(?P<secret>xox(?P<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
   $SEC101/006.GitHubPatLegacy=(?si)(?P<refine>github.{0,50}[^0-9a-z](?P<secret>[0-9a-z]{40}))([^0-9a-z]|$)
   $SEC101/006.GitHubPatCurrent=gh(p|o|u|s|r)_(?P<secret>[\w]{30})(?P<checksum>[\w]{6})
   $SEC101/007.GitHubAppCredentials=(?s)((\b(?P<id>Iv1\.[0-9a-z]{16}).{1,50}?)|(\b(?i)(?P<secret>[0-9a-z]{35,40})\b.{0,50}?)){2}
@@ -41,12 +41,12 @@
   $SEC101/013/PemCer.CryptographicPrivateKey=(?si)-{5}BEGIN CERTIFICATE-{5}\n?(?P<secret>[^:]*?)-{5}END CERTIFICATE-{5}
   $SEC101/013/Putty.CryptographicPrivateKey=(?is)PuTTY-User-Key-File-2.+?Private-Lines:\s*[0-9]+\s*(?P<secret>.+?)Private-MAC:\s[0-9a-z]+([^0-9a-d]|$)
   $SEC101/013/Pem.CryptographicPrivateKey=(?si)-{5}BEGIN (DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (KEY BLOCK|KEY)-{5}.*?(VERSION: [^\n]+\n)*\n(?P<secret>[^:]*?)-{5}END (DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (KEY BLOCK|KEY)-{5}
-  $SEC101/014.FacebookAccessToken=\b(?P<refine>EAACEdEose0cBA(?i)[0-9a-z]+)
+  $SEC101/014.FacebookAccessToken=\b(?P<secret>EAACEdEose0cBA(?i)[0-9a-z]+)
   $SEC101/015.AkamaiCredentials=(?si)https:\/\/(?P<resource>[\w\-\.]+)\.akamaiapis\.net.{0,150}((client_token.{0,10}\b(?P<id>akab[\w\-]+).{0,50})|(access_token.{0,10}\b(?P<id>akab[\w\-]+).{0,200})|((client_secret).{0,10}\b(?P<secret>[a-z0-9\/\\+]{43}=))){3}
-  $SEC101/016.StripeApiKey=\b(?P<refine>(?P<secret>(?:r|s)k_(live|test)_(?i)[0-9a-z]{24,99}))([^0-9a-z]|$)
+  $SEC101/016.StripeApiKey=\b(?P<secret>(?:r|s)k_(live|test)_(?i)[0-9a-z]{24,99})([^0-9a-z]|$)
   $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?P<refine>(?P<secret>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}))[^0-9A-Za-z]
   $SEC101/018.TwilioCredentials=(?si)twilio.{1,50}\b(?P<id>AC[0-9a-z]{32}).{1,500}?\b(?P<secret>[0-9a-f]{32})
-  $SEC101/019.PicaticApiKey=\b(?P<refine>sk_(live|test)_[0-9a-z]{32})(?i)([^0-9a-z]|$)
+  $SEC101/019.PicaticApiKey=\b(?P<secret>sk_(live|test)_[0-9a-z]{32})(?i)([^0-9a-z]|$)
   $SEC101/020.DropboxAccessTokenNoExpiration=(?si)dropbox.{1,50}[^0-9a-z](?P<refine>[0-9a-z_-]{64})([^0-9a-z]|$)
   $SEC101/020.DropboxAccessTokenShortExpiration=(?si)dropbox.{1,50}\b(?P<refine>sl\.(?i)[0-9a-z-_]{135,139})(?i)([^0-9a-z]|$)
   $SEC101/021.DropboxAppCredentials=(?si)dropbox.{0,50}key.{0,10}[^0-9a-z](?P<id>(?-i)[0-9a-z]{15})([^0-9a-z]|$).{0,50}secret.{0,10}[^0-9a-z](?P<secret>(?-i)[0-9a-z]{15})([^0-9a-z]|$)

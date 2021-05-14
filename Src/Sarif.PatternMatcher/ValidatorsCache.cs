@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
@@ -66,7 +68,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public static IEnumerable<ValidationResult> ValidateStaticHelper(MethodInfo isValidStaticMethodInfo,
                                                                          ref string matchedPattern,
-                                                                         IDictionary<string, string> groups)
+                                                                         IDictionary<string, FlexMatch> groups)
         {
             IEnumerable<ValidationResult> validationResults;
 
@@ -99,16 +101,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             matchedPattern = (string)arguments[0];
-            groups = (Dictionary<string, string>)arguments[1];
+            groups = (Dictionary<string, FlexMatch>)arguments[1];
 
             return validationResults;
         }
 
         public static ValidationState ValidateDynamicHelper(MethodInfo isValidDynamicMethodInfo,
-                                                       ref Fingerprint fingerprint,
-                                                       ref string message,
-                                                       IDictionary<string, string> options,
-                                                       ref ResultLevelKind resultLevelKind)
+                                                            ref Fingerprint fingerprint,
+                                                            ref string message,
+                                                            IDictionary<string, string> options,
+                                                            ref ResultLevelKind resultLevelKind)
         {
             ValidationState validationText;
 
@@ -179,10 +181,87 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         public IEnumerable<ValidationResult> Validate(string ruleName,
-                                        AnalyzeContext context,
-                                        ref string matchedPattern,
-                                        IDictionary<string, string> groups,
-                                        out bool pluginCanPerformDynamicAnalysis)
+                                                      AnalyzeContext context,
+                                                      ref string matchedPattern,
+                                                      IDictionary<string, IList<FlexMatch>> mergedGroups,
+                                                      IDictionary<string, string> properties,
+                                                      out bool pluginCanPerformDynamicAnalysis)
+        {
+            pluginCanPerformDynamicAnalysis = false;
+
+            var results = new List<ValidationResult>();
+            IList<Dictionary<string, FlexMatch>> combinations = GetCombinations(mergedGroups);
+
+            var flexMatchProperties = new Dictionary<string, FlexMatch>();
+            if (properties != null)
+            {
+                foreach (string key in properties.Keys)
+                {
+                    flexMatchProperties[key] = new FlexMatch { Value = properties[key] };
+                }
+            }
+
+            foreach (Dictionary<string, FlexMatch> groups in combinations)
+            {
+                foreach (string key in flexMatchProperties.Keys)
+                {
+                    groups[key] = flexMatchProperties[key];
+                }
+
+                results.AddRange(ValidateHelper(RuleNameToValidationMethods,
+                                                ruleName,
+                                                context,
+                                                ref matchedPattern,
+                                                groups,
+                                                out pluginCanPerformDynamicAnalysis));
+            }
+
+            return results;
+        }
+
+        internal static IList<Dictionary<string, FlexMatch>> GetCombinations(IDictionary<string, IList<FlexMatch>> mergedGroups)
+        {
+            string[] keys = mergedGroups.Keys.ToArray<string>();
+
+            return GetCombinations(mergedGroups, keys, 0, null, null);
+        }
+
+        private static IList<Dictionary<string, FlexMatch>> GetCombinations(IDictionary<string, IList<FlexMatch>> mergedGroups,
+                                                                            string[] keys,
+                                                                            int currentIndex,
+                                                                            IList<Dictionary<string, FlexMatch>> combinations,
+                                                                            IDictionary<string, FlexMatch> currentCombination)
+        {
+            combinations ??= new List<Dictionary<string, FlexMatch>>();
+            currentCombination ??= new Dictionary<string, FlexMatch>();
+
+            if (currentIndex + 1 > mergedGroups.Count) { return combinations; }
+
+            string key = keys[currentIndex];
+            IList<FlexMatch> currentSet = mergedGroups[key];
+
+            for (int i = 0; i < currentSet.Count; i++)
+            {
+                Dictionary<string, FlexMatch> copy = currentCombination.Copy();
+                copy[key] = currentSet[i];
+
+                if (currentIndex + 1 >= mergedGroups.Count)
+                {
+                    combinations.Add(copy);
+                    continue;
+                }
+
+                combinations = GetCombinations(mergedGroups, keys, currentIndex + 1, combinations, copy);
+            }
+
+            return combinations;
+        }
+
+        public IEnumerable<ValidationResult> Validate(string ruleName,
+                                                      AnalyzeContext context,
+                                                      ref string matchedPattern,
+                                                      IDictionary<string, FlexMatch> groups,
+                                                      out bool pluginCanPerformDynamicAnalysis)
         {
             return ValidateHelper(RuleNameToValidationMethods,
                                   ruleName,
@@ -193,11 +272,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         internal static IEnumerable<ValidationResult> ValidateHelper(Dictionary<string, ValidationMethods> ruleIdToMethodMap,
-                                                       string ruleName,
-                                                       AnalyzeContext context,
-                                                       ref string matchedPattern,
-                                                       IDictionary<string, string> groups,
-                                                       out bool pluginCanPerformDynamicAnalysis)
+                                                                     string ruleName,
+                                                                     AnalyzeContext context,
+                                                                     ref string matchedPattern,
+                                                                     IDictionary<string, FlexMatch> groups,
+                                                                     out bool pluginCanPerformDynamicAnalysis)
         {
             pluginCanPerformDynamicAnalysis = false;
 
@@ -245,11 +324,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     {
                         ResultLevelKind resultLevelKind = default;
                         string message = validationResult.Message;
+                        IDictionary<string, string> stringGroups = groups.ToStringDictionary();
                         Fingerprint fingerprint = validationResult.Fingerprint;
                         validationResult.ValidationState = ValidateDynamicHelper(validationMethods.IsValidDynamic,
                                                                                  ref fingerprint,
                                                                                  ref message,
-                                                                                 groups,
+                                                                                 stringGroups,
                                                                                  ref resultLevelKind);
                         validationResult.ResultLevelKind = resultLevelKind;
                         validationResult.Message = message;
@@ -297,7 +377,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             new[]
                             {
                                 typeof(string).MakeByRefType(), // Matched pattern.
-                                typeof(Dictionary<string, string>), // Regex groups.
+                                typeof(Dictionary<string, FlexMatch>), // Regex groups.
                             },
                             null);
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -80,17 +81,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 #pragma warning disable IDE0060 // Remove unused parameter
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
 #pragma warning restore IDE0060
-            if (!groups.TryGetNonEmptyValue("secret", out string secret))
+            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
             ValidationState state =
-                IsChecksumValid(secret, ChecksumPat) ||
-                IsChecksumValid(secret, ChecksumAdoAppSecret) ?
+                IsChecksumValid(secret.Value, ChecksumPat) ||
+                IsChecksumValid(secret.Value, ChecksumAdoAppSecret) ?
                     ValidationState.Unknown :
                     ValidationState.NoMatch;
 
@@ -103,7 +104,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Fingerprint = new Fingerprint()
                 {
-                    Secret = secret,
+                    Secret = secret.Value,
                     Platform = nameof(AssetPlatform.AzureDevOps),
                 },
                 ValidationState = state,

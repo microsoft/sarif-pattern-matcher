@@ -7,6 +7,7 @@ using System.Linq;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 using Octokit;
 using Octokit.Internal;
@@ -23,7 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -43,23 +44,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, string> groups)
+                                                                             Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("secret", out string pat))
+            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch pat))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
             ValidationResult validationResult;
-            if (groups.TryGetNonEmptyValue("checksum", out string checksum))
+            if (groups.TryGetNonEmptyValue("checksum", out FlexMatch checksum))
             {
                 // TODO: #365 Utilize checksum https://github.com/microsoft/sarif-pattern-matcher/issues/365
 
                 validationResult = new ValidationResult
                 {
+                    RegionFlexMatch = pat,
                     Fingerprint = new Fingerprint
                     {
-                        Secret = matchedPattern,
+                        Secret = pat.Value,
                         Platform = nameof(AssetPlatform.GitHub),
                     },
                     ValidationState = ValidationState.Unknown,
@@ -70,7 +72,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             // It is highly likely we do not have a key if we can't
             // find at least one letter and digit within the pattern.
-            if (!ContainsDigitAndChar(pat))
+            if (!ContainsDigitAndChar(pat.Value))
             {
                 return ValidationResult.CreateNoMatch();
             }
@@ -91,9 +93,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             validationResult = new ValidationResult
             {
+                RegionFlexMatch = pat,
                 Fingerprint = new Fingerprint
                 {
-                    Secret = pat,
+                    Secret = pat.Value,
                     Platform = nameof(AssetPlatform.GitHub),
                 },
                 ValidationState = ValidationState.Unknown,

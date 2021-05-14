@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.Mail;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -13,7 +14,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 #pragma warning disable IDE0060 // Unused parameter.
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                    Dictionary<string, string> groups)
+                                                    Dictionary<string, FlexMatch> groups)
 #pragma warning restore IDE0060 // Unused parameter.
         {
             try
