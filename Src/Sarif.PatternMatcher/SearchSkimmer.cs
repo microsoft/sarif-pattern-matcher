@@ -838,7 +838,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 // match should be within the original full string
                 // update lengthOffset to till end of regionFlexMatch
-                lengthOffset = indexOffset - regionFlexMatch.Length;
+                lengthOffset = -indexOffset;
             }
 
             var region = new Region
