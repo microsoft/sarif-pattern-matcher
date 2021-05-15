@@ -90,7 +90,7 @@ if (-not $NoTest) {
         $CodeCoverageCommand = ""
     }
 
-    dotnet test $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration --no-build $CodeCoverageCommand --settings $RepoRoot\Src\SarifPatternMatcher.runsettings
+    dotnet test $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration --no-build $CodeCoverageCommand --settings $RepoRoot\Src\SarifPatternMatcher.runsettings /p:IncludeTestAssembly=false
 
     if ($LASTEXITCODE -ne 0) {
         Exit-WithFailureMessage $ScriptName "Test of SarifPatternMatcher failed."
