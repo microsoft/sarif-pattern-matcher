@@ -399,11 +399,44 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return validatorMessage.Substring(dynamicValidationMessageIndex, DynamicValidationNotEnabled.Length);
         }
 
+        internal static Fingerprint CreateFingerprintFromMatch(IDictionary<string, FlexMatch> match)
+        {
+            var fingerprint = default(Fingerprint);
+
+            foreach (KeyValuePair<string, FlexMatch> kv in match)
+            {
+                fingerprint.SetProperty(kv.Key,
+                                        kv.Value.Value,
+                                        ignoreRecognizedKeyNames: true);
+            }
+
+            return fingerprint;
+        }
+
+        private static void MergeDictionary(IList<Dictionary<string, FlexMatch>> mergeFrom, IDictionary<string, IList<FlexMatch>> mergedGroups)
+        {
+            foreach (Dictionary<string, FlexMatch> groups in mergeFrom)
+            {
+                foreach (KeyValuePair<string, FlexMatch> keyValue in groups)
+                {
+                    // We only persist named groups, not groups specified by index.
+                    if (int.TryParse(keyValue.Key, out int val)) { continue; }
+
+                    if (!mergedGroups.TryGetValue(keyValue.Key, out IList<FlexMatch> flexMatches))
+                    {
+                        mergedGroups[keyValue.Key] = flexMatches = new List<FlexMatch>();
+                    }
+
+                    flexMatches.Add(keyValue.Value);
+                }
+            }
+        }
+
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
             if (matchExpression.ContentsRegexes?.Count > 0)
             {
-                Debug.Assert(binary64DecodedMatch == null);
+                Debug.Assert(binary64DecodedMatch == null, "Decoded binary64 should not be null");
                 RunMatchExpressionForContentsRegexes(context, matchExpression);
             }
             else if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
@@ -412,7 +445,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
             else if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
             {
-                Debug.Assert(binary64DecodedMatch == null);
+                Debug.Assert(binary64DecodedMatch == null, "Decoded binary64 should not be null");
                 RunMatchExpressionForFileNameRegex(context, matchExpression);
             }
             else
@@ -499,25 +532,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private static void MergeDictionary(IList<Dictionary<string, FlexMatch>> mergeFrom, IDictionary<string, IList<FlexMatch>> mergedGroups)
-        {
-            foreach (Dictionary<string, FlexMatch> groups in mergeFrom)
-            {
-                foreach (KeyValuePair<string, FlexMatch> keyValue in groups)
-                {
-                    // We only persist named groups, not groups specified by index.
-                    if (int.TryParse(keyValue.Key, out int val)) { continue; }
-
-                    if (!mergedGroups.TryGetValue(keyValue.Key, out IList<FlexMatch> flexMatches))
-                    {
-                        mergedGroups[keyValue.Key] = flexMatches = new List<FlexMatch>();
-                    }
-
-                    flexMatches.Add(keyValue.Value);
-                }
-            }
-        }
-
         private void RunMatchExpressionForContentsRegex(FlexMatch binary64DecodedMatch,
                                                         AnalyzeContext context,
                                                         MatchExpression matchExpression)
@@ -541,17 +555,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Debug.Assert(!match.ContainsKey("scanTargetFullPath"), "Full path should only be populated by engine.");
                 match["scanTargetFullPath"] = new FlexMatch { Value = filePath };
                 match["enhancedReporting"] = new FlexMatch { Value = context.EnhancedReporting ? bool.TrueString : bool.FalseString };
-
-                if (matchExpression.Properties != null)
-                {
-                    foreach (KeyValuePair<string, string> kv in matchExpression.Properties)
-                    {
-                        if (!match.ContainsKey(kv.Key))
-                        {
-                            match[kv.Key] = new FlexMatch() { Value = kv.Value };
-                        }
-                    }
-                }
+                match.AddProperties(matchExpression.Properties);
 
                 FlexMatch flexMatch = match["0"];
                 string refinedMatchedPattern = flexMatch.Value;
@@ -575,7 +579,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                                            out bool pluginSupportsDynamicValidation);
 
                     int refinementIndex = flexMatch.Value.String.IndexOf(refinedMatchedPattern);
-                    Debug.Assert(refinementIndex != -1);
+                    Debug.Assert(refinementIndex != -1, "Refinement index should be different from -1");
 
                     flexMatch = new FlexMatch()
                     {
@@ -622,7 +626,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
                 else
                 {
-                    Debug.Assert(fingerprint == default(Fingerprint));
+                    Debug.Assert(fingerprint == default, "Fingerprint should be default.");
                     fingerprint = CreateFingerprintFromMatch(match);
 
                     var result = new ValidationResult
@@ -643,20 +647,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                           result);
                 }
             }
-        }
-
-        internal static Fingerprint CreateFingerprintFromMatch(IDictionary<string, FlexMatch> match)
-        {
-            var fingerprint = default(Fingerprint);
-
-            foreach (KeyValuePair<string, FlexMatch> kv in match)
-            {
-                fingerprint.SetProperty(kv.Key,
-                                        kv.Value.Value,
-                                        ignoreRecognizedKeyNames: true);
-            }
-
-            return fingerprint;
         }
 
         private void ConstructResultAndLogForContentsRegex(FlexMatch binary64DecodedMatch,

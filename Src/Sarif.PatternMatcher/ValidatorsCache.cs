@@ -53,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         public static ValidationMethods GetValidationMethods(string ruleName,
-                                                                   Dictionary<string, ValidationMethods> ruleIdToMethodMap)
+                                                             Dictionary<string, ValidationMethods> ruleIdToMethodMap)
         {
             if (ruleName.Contains("/"))
             {
@@ -183,6 +183,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public IEnumerable<ValidationResult> Validate(string ruleName,
                                                       AnalyzeContext context,
                                                       ref string matchedPattern,
+                                                      IDictionary<string, FlexMatch> groups,
+                                                      out bool pluginCanPerformDynamicAnalysis)
+        {
+            return ValidateHelper(RuleNameToValidationMethods,
+                                  ruleName,
+                                  context,
+                                  ref matchedPattern,
+                                  groups,
+                                  out pluginCanPerformDynamicAnalysis);
+        }
+
+        public IEnumerable<ValidationResult> Validate(string ruleName,
+                                                      AnalyzeContext context,
+                                                      ref string matchedPattern,
                                                       IDictionary<string, IList<FlexMatch>> mergedGroups,
                                                       IDictionary<string, string> properties,
                                                       out bool pluginCanPerformDynamicAnalysis)
@@ -226,51 +240,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return GetCombinations(mergedGroups, keys, 0, null, null);
         }
 
-        private static IList<Dictionary<string, FlexMatch>> GetCombinations(IDictionary<string, IList<FlexMatch>> mergedGroups,
-                                                                            string[] keys,
-                                                                            int currentIndex,
-                                                                            IList<Dictionary<string, FlexMatch>> combinations,
-                                                                            IDictionary<string, FlexMatch> currentCombination)
-        {
-            combinations ??= new List<Dictionary<string, FlexMatch>>();
-            currentCombination ??= new Dictionary<string, FlexMatch>();
-
-            if (currentIndex + 1 > mergedGroups.Count) { return combinations; }
-
-            string key = keys[currentIndex];
-            IList<FlexMatch> currentSet = mergedGroups[key];
-
-            for (int i = 0; i < currentSet.Count; i++)
-            {
-                Dictionary<string, FlexMatch> copy = currentCombination.Copy();
-                copy[key] = currentSet[i];
-
-                if (currentIndex + 1 >= mergedGroups.Count)
-                {
-                    combinations.Add(copy);
-                    continue;
-                }
-
-                combinations = GetCombinations(mergedGroups, keys, currentIndex + 1, combinations, copy);
-            }
-
-            return combinations;
-        }
-
-        public IEnumerable<ValidationResult> Validate(string ruleName,
-                                                      AnalyzeContext context,
-                                                      ref string matchedPattern,
-                                                      IDictionary<string, FlexMatch> groups,
-                                                      out bool pluginCanPerformDynamicAnalysis)
-        {
-            return ValidateHelper(RuleNameToValidationMethods,
-                                  ruleName,
-                                  context,
-                                  ref matchedPattern,
-                                  groups,
-                                  out pluginCanPerformDynamicAnalysis);
-        }
-
         internal static IEnumerable<ValidationResult> ValidateHelper(Dictionary<string, ValidationMethods> ruleIdToMethodMap,
                                                                      string ruleName,
                                                                      AnalyzeContext context,
@@ -294,7 +263,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // This condition occurs in cases when a regex does not provide a group that
                 // maps to a fingerprint member. This is the case for binary detections, i.e.,
                 // analysis that is simply looking for specific file kinds.
-                if (validationResult.Fingerprint == default(Fingerprint) &&
+                if (validationResult.Fingerprint == default &&
                     context.TargetUri.IsAbsoluteUri)
                 {
                     string secret = HashUtilities.ComputeSha256Hash(context.TargetUri.LocalPath);
@@ -344,6 +313,37 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return validationResults;
+        }
+
+        private static IList<Dictionary<string, FlexMatch>> GetCombinations(IDictionary<string, IList<FlexMatch>> mergedGroups,
+                                                                            string[] keys,
+                                                                            int currentIndex,
+                                                                            IList<Dictionary<string, FlexMatch>> combinations,
+                                                                            IDictionary<string, FlexMatch> currentCombination)
+        {
+            combinations ??= new List<Dictionary<string, FlexMatch>>();
+            currentCombination ??= new Dictionary<string, FlexMatch>();
+
+            if (currentIndex + 1 > mergedGroups.Count) { return combinations; }
+
+            string key = keys[currentIndex];
+            IList<FlexMatch> currentSet = mergedGroups[key];
+
+            for (int i = 0; i < currentSet.Count; i++)
+            {
+                Dictionary<string, FlexMatch> copy = currentCombination.Copy();
+                copy[key] = currentSet[i];
+
+                if (currentIndex + 1 >= mergedGroups.Count)
+                {
+                    combinations.Add(copy);
+                    continue;
+                }
+
+                combinations = GetCombinations(mergedGroups, keys, currentIndex + 1, combinations, copy);
+            }
+
+            return combinations;
         }
 
         private Dictionary<string, ValidationMethods> LoadValidationAssemblies(IEnumerable<string> validatorPaths)

@@ -220,6 +220,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     {
                         throw new ArgumentOutOfRangeException(nameof(keyName));
                     }
+
                     break;
                 }
             }
