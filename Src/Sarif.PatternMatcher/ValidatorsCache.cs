@@ -207,13 +207,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IList<Dictionary<string, FlexMatch>> combinations = GetCombinations(mergedGroups);
 
             var flexMatchProperties = new Dictionary<string, FlexMatch>();
-            if (properties != null)
-            {
-                foreach (string key in properties.Keys)
-                {
-                    flexMatchProperties[key] = new FlexMatch { Value = properties[key] };
-                }
-            }
+            flexMatchProperties.AddProperties(properties);
 
             foreach (Dictionary<string, FlexMatch> groups in combinations)
             {
