@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using FluentAssertions;
 
@@ -184,6 +185,112 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 result.Level.Should().Be(FailureLevel.Error);
                 result.RuleId.Should().Be($"Test1002/{subId}");
+            }
+        }
+
+        [Fact]
+        public void AnalyzeCommand_PushInheritedDataTest()
+        {
+            string guid = Guid.NewGuid().ToString();
+            var searchDefinition = new SearchDefinition()
+            {
+                FileNameAllowRegex = guid,
+                Description = guid,
+                Id = guid,
+                Level = FailureLevel.Error,
+                MatchExpressions = new List<MatchExpression>(),
+                Message = guid,
+                Name = guid,
+            };
+
+            var testCases = new[]
+            {
+                new
+                {
+                    Id = "TEST001",
+                    ContentsRegex =  (string)null,
+                    Expected = (string)null,
+                },
+                new
+                {
+                    Id = "TEST002",
+                    ContentsRegex =  string.Empty,
+                    Expected = string.Empty,
+                },
+                new
+                {
+                    Id = "TEST003",
+                    ContentsRegex = "(?!)\\bRegexString\\b",
+                    Expected = "(?!)\\bRegexString\\b",
+                },
+                // this will throw exception if DEBUG macro defined
+                //new
+                //{
+                //    Id = "TEST004",
+                //    ContentsRegex = "$TEST.DoesNotExistString",
+                //    Expected = "$TEST.DoesNotExistString",
+                //},
+                new
+                {
+                    Id = "TEST005",
+                    ContentsRegex = "$TEST.RegexString1",
+                    Expected = "(?!)\\bregex string 1\\b",
+                },
+                new
+                {
+                    Id = "TEST006",
+                    ContentsRegex = "$TEST.RegexString2",
+                    Expected = "(?!)\\bregex string 2\\b",
+                },
+                new
+                {
+                    Id = "TEST007",
+                    ContentsRegex = "{$TEST.RegexString2}-[$TEST.RegexString1]",
+                    Expected = "{(?!)\\bregex string 2\\b}-[(?!)\\bregex string 1\\b]",
+                },
+                new
+                {
+                    Id = "TEST008",
+                    ContentsRegex = "This Is $TEST.RegexString1",
+                    Expected = "This Is (?!)\\bregex string 1\\b",
+                },
+                new
+                {
+                    Id = "TEST009",
+                    ContentsRegex = "$TEST.RegexString2 is here",
+                    Expected = "(?!)\\bregex string 2\\b is here",
+                },
+                new
+                {
+                    Id = "TEST010",
+                    ContentsRegex = "$TEST.RegexString111",
+                    Expected = "This is not RegexString1",
+                },
+            };
+
+            var sharedStrings = new Dictionary<string, string>()
+            {
+                { "$TEST.RegexString1", "(?!)\\bregex string 1\\b" },
+                { "$TEST.RegexString2", "(?!)\\bregex string 2\\b" },
+                { "$TEST.RegexString111", "This is not RegexString1" },
+            };
+
+            searchDefinition.MatchExpressions.AddRange(
+                testCases.Select(t => new MatchExpression { SubId = t.Id, ContentsRegex = t.ContentsRegex }));
+
+            var searchDefinitions = new SearchDefinitions()
+            {
+                Definitions = new List<SearchDefinition>() { searchDefinition }
+            };
+
+            searchDefinitions = PatternMatcher.AnalyzeCommand.PushInheritedData(searchDefinitions, sharedStrings);
+
+            foreach (var test in testCases)
+            {
+                bool result;
+                string actual = searchDefinitions.Definitions[0].MatchExpressions.Where(m => m.SubId == test.Id).First().ContentsRegex;
+                result = test.Expected == null ? actual == null : test.Expected.Equals(actual);
+                result.Should().BeTrue();
             }
         }
 
