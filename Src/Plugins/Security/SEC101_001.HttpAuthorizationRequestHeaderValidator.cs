@@ -56,10 +56,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
+                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint
                 {
                     Host = host.Value,
-                    Path = path.Value,
+                    Path = path?.Value,
                     Scheme = scheme.Value,
                     Secret = secret.Value,
                 },

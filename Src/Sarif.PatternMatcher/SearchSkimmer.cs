@@ -251,17 +251,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     {
                         // An illegal state was returned running check '{0}' against '{1}' ({2}).
                         context.Logger.LogToolNotification(
-                            Errors.CreateNotification(
-                                context.TargetUri,
-                                "ERR998.ValidatorReturnedIllegalValidationState",
-                                context.Rule.Id,
-                                FailureLevel.Error,
-                                exception: null,
-                                persistExceptionStack: false,
-                                messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
-                                context.Rule.Id,
-                                context.TargetUri.GetFileName(),
-                                validatorMessage));
+                            Errors.CreateNotification(context.TargetUri,
+                                                      "ERR998.ValidatorReturnedIllegalValidationState",
+                                                      context.Rule.Id,
+                                                      FailureLevel.Error,
+                                                      exception: null,
+                                                      persistExceptionStack: false,
+                                                      messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
+                                                      context.Rule.Id,
+                                                      context.TargetUri.GetFileName(),
+                                                      validatorMessage));
                     }
 
                     level = FailureLevel.Error;
@@ -600,7 +599,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                   context,
                                                                   matchExpression,
                                                                   filePath,
-                                                                  flexMatch,
+                                                                  validationResult.RegionFlexMatch ?? flexMatch,
                                                                   reportingDescriptor,
                                                                   match,
                                                                   validationPrefix,
@@ -660,6 +659,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             messageArguments["validationPrefix"] = validationPrefix;
             messageArguments["validationSuffix"] = validationSuffix;
+            messageArguments["truncatedSecret"] = validationResult.Fingerprint.Secret.Truncate();
 
             IList<string> arguments = GetMessageArguments(groups,
                                                           matchExpression.ArgumentNameToIndexMap,
@@ -897,23 +897,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             messageArguments["validationPrefix"] = validationPrefix;
             messageArguments["validationSuffix"] = validationSuffix;
 
-            IList<string> arguments = GetMessageArguments(
-                groups: null,
-                matchExpression.ArgumentNameToIndexMap,
-                filePath,
-                validatorMessage: NormalizeValidatorMessage(validatorMessage),
-                messageArguments);
+            IList<string> arguments = GetMessageArguments(groups: null,
+                                                          matchExpression.ArgumentNameToIndexMap,
+                                                          filePath,
+                                                          validatorMessage: NormalizeValidatorMessage(validatorMessage),
+                                                          messageArguments);
 
-            Result result = this.ConstructResult(
-                    context.TargetUri,
-                    reportingDescriptor.Id,
-                    level,
-                    kind,
-                    region: null,
-                    flexMatch: null,
-                    fingerprint,
-                    matchExpression,
-                    arguments);
+            Result result = this.ConstructResult(context.TargetUri,
+                                                 reportingDescriptor.Id,
+                                                 level,
+                                                 kind,
+                                                 region: null,
+                                                 flexMatch: null,
+                                                 fingerprint,
+                                                 matchExpression,
+                                                 arguments);
 
             context.Logger.Log(reportingDescriptor, result);
         }

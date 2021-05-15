@@ -41,7 +41,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             groups.TryGetValue("kind", out FlexMatch kind);
-            string kindValue = matchedPattern.Contains(" PGP ") ? "Pgp" : kind.Value.String;
+            string kindValue = matchedPattern.Contains(" PGP ") ? "Pgp" : kind?.Value.String;
 
             string secretValue = secret.Value.String.Trim();
 
@@ -85,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 case "Pgp":
                 {
-                    state = GetPrivatePgpKey(secret.Value);
+                    state = GetPrivatePgpKey(secretValue);
                     break;
                 }
 
@@ -103,7 +103,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     string thumbprint = string.Empty;
                     try
                     {
-                        byte[] rawData = Convert.FromBase64String(secret.Value);
+                        byte[] rawData = Convert.FromBase64String(secretValue);
                         state = CertificateHelper.TryLoadCertificate(rawData,
                                                                      ref fingerprint,
                                                                      ref message);
@@ -121,6 +121,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Message = message,
                 ValidationState = state,
+                RegionFlexMatch = secret,
                 Fingerprint = fingerprint,
             };
 

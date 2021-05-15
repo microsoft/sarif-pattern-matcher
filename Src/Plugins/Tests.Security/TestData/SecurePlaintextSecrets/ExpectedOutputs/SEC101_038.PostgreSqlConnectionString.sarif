@@ -61,13 +61,13 @@
                 },
                 "region": {
                   "startLine": 4,
-                  "startColumn": 45,
+                  "startColumn": 109,
                   "endLine": 4,
-                  "endColumn": 117,
-                  "charOffset": 91,
-                  "charLength": 72,
+                  "endColumn": 116,
+                  "charOffset": 155,
+                  "charLength": 7,
                   "snippet": {
-                    "text": "host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_1\""
+                    "text": "my_pw_1"
                   }
                 }
               }
@@ -104,13 +104,13 @@
                 },
                 "region": {
                   "startLine": 5,
-                  "startColumn": 45,
+                  "startColumn": 99,
                   "endLine": 5,
-                  "endColumn": 116,
-                  "charOffset": 268,
-                  "charLength": 71,
+                  "endColumn": 106,
+                  "charOffset": 322,
+                  "charLength": 7,
                   "snippet": {
-                    "text": "host=my_host;Database=my_db;Username=my_user;Password=my_pw_2;Port=5555"
+                    "text": "my_pw_2"
                   }
                 }
               }
@@ -147,13 +147,13 @@
                 },
                 "region": {
                   "startLine": 6,
-                  "startColumn": 45,
+                  "startColumn": 94,
                   "endLine": 6,
-                  "endColumn": 102,
-                  "charOffset": 438,
-                  "charLength": 57,
+                  "endColumn": 101,
+                  "charOffset": 487,
+                  "charLength": 7,
                   "snippet": {
-                    "text": "Host=my_host;Port=5555;UsErname=my_user;Password=my_pw_3\""
+                    "text": "my_pw_3"
                   }
                 }
               }
@@ -190,13 +190,13 @@
                 },
                 "region": {
                   "startLine": 7,
-                  "startColumn": 45,
+                  "startColumn": 54,
                   "endLine": 7,
-                  "endColumn": 102,
-                  "charOffset": 577,
-                  "charLength": 57,
+                  "endColumn": 61,
+                  "charOffset": 586,
+                  "charLength": 7,
                   "snippet": {
-                    "text": "Password=my_pw_4;Host=my_host;Port=5555;Username=my_user;"
+                    "text": "my_pw_4"
                   }
                 }
               }
@@ -233,13 +233,13 @@
                 },
                 "region": {
                   "startLine": 8,
-                  "startColumn": 45,
+                  "startColumn": 64,
                   "endLine": 8,
-                  "endColumn": 137,
-                  "charOffset": 741,
-                  "charLength": 92,
+                  "endColumn": 71,
+                  "charOffset": 760,
+                  "charLength": 7,
                   "snippet": {
-                    "text": "Port=5555;Password=my_pw_5;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;"
+                    "text": "my_pw_5"
                   }
                 }
               }
@@ -276,13 +276,13 @@
                 },
                 "region": {
                   "startLine": 8,
-                  "startColumn": 55,
+                  "startColumn": 64,
                   "endLine": 8,
-                  "endColumn": 137,
-                  "charOffset": 751,
-                  "charLength": 82,
+                  "endColumn": 71,
+                  "charOffset": 760,
+                  "charLength": 7,
                   "snippet": {
-                    "text": "Password=my_pw_5;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;"
+                    "text": "my_pw_5"
                   }
                 }
               }
@@ -319,13 +319,13 @@
                 },
                 "region": {
                   "startLine": 9,
-                  "startColumn": 45,
+                  "startColumn": 64,
                   "endLine": 9,
-                  "endColumn": 159,
-                  "charOffset": 924,
-                  "charLength": 114,
+                  "endColumn": 71,
+                  "charOffset": 943,
+                  "charLength": 7,
                   "snippet": {
-                    "text": "Port=5555;Password=my_pw_6;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true;Port=5555"
+                    "text": "my_pw_6"
                   }
                 }
               }
@@ -362,13 +362,13 @@
                 },
                 "region": {
                   "startLine": 10,
-                  "startColumn": 45,
+                  "startColumn": 79,
                   "endLine": 10,
-                  "endColumn": 175,
-                  "charOffset": 1137,
-                  "charLength": 130,
+                  "endColumn": 86,
+                  "charOffset": 1171,
+                  "charLength": 7,
                   "snippet": {
-                    "text": "Database=my_db;Port=5555;Password=my_pw_7;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"
+                    "text": "my_pw_7"
                   }
                 }
               }
@@ -405,13 +405,13 @@
                 },
                 "region": {
                   "startLine": 10,
-                  "startColumn": 60,
+                  "startColumn": 79,
                   "endLine": 10,
-                  "endColumn": 175,
-                  "charOffset": 1152,
-                  "charLength": 115,
+                  "endColumn": 86,
+                  "charOffset": 1171,
+                  "charLength": 7,
                   "snippet": {
-                    "text": "Port=5555;Password=my_pw_7;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"
+                    "text": "my_pw_7"
                   }
                 }
               }
@@ -448,13 +448,13 @@
                 },
                 "region": {
                   "startLine": 18,
-                  "startColumn": 27,
+                  "startColumn": 91,
                   "endLine": 18,
-                  "endColumn": 99,
-                  "charOffset": 1532,
-                  "charLength": 72,
+                  "endColumn": 98,
+                  "charOffset": 1596,
+                  "charLength": 7,
                   "snippet": {
-                    "text": "host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_8\""
+                    "text": "my_pw_8"
                   }
                 }
               }
@@ -491,13 +491,13 @@
                 },
                 "region": {
                   "startLine": 25,
-                  "startColumn": 15,
+                  "startColumn": 79,
                   "endLine": 25,
-                  "endColumn": 87,
-                  "charOffset": 1696,
-                  "charLength": 72,
+                  "endColumn": 86,
+                  "charOffset": 1760,
+                  "charLength": 7,
                   "snippet": {
-                    "text": "host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_9<"
+                    "text": "my_pw_9"
                   }
                 }
               }

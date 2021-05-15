@@ -129,6 +129,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
+                RegionFlexMatch = secret,
                 Fingerprint = fingerprint,
                 ValidationState = ValidationState.Unknown,
             };

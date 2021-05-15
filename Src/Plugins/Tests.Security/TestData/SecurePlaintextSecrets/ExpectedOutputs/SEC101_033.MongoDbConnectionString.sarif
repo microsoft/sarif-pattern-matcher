@@ -61,13 +61,13 @@
                 },
                 "region": {
                   "startLine": 1,
-                  "startColumn": 1,
+                  "startColumn": 19,
                   "endLine": 1,
-                  "endColumn": 48,
-                  "charOffset": 0,
-                  "charLength": 47,
+                  "endColumn": 29,
+                  "charOffset": 18,
+                  "charLength": 10,
                   "snippet": {
-                    "text": "mongodb://dbuser1:<password>@database.com:10250"
+                    "text": "<password>"
                   }
                 }
               }
@@ -104,13 +104,13 @@
                 },
                 "region": {
                   "startLine": 3,
-                  "startColumn": 1,
+                  "startColumn": 23,
                   "endLine": 3,
-                  "endColumn": 46,
-                  "charOffset": 60,
-                  "charLength": 45,
+                  "endColumn": 33,
+                  "charOffset": 82,
+                  "charLength": 10,
                   "snippet": {
-                    "text": "mongodb+srv://dbuser2:<password>@database.com"
+                    "text": "<password>"
                   }
                 }
               }
@@ -147,13 +147,13 @@
                 },
                 "region": {
                   "startLine": 5,
-                  "startColumn": 13,
+                  "startColumn": 35,
                   "endLine": 5,
-                  "endColumn": 58,
-                  "charOffset": 122,
-                  "charLength": 45,
+                  "endColumn": 45,
+                  "charOffset": 144,
+                  "charLength": 10,
                   "snippet": {
-                    "text": "mongodb+srv://dbuser3:<password>@database.com"
+                    "text": "<password>"
                   }
                 }
               }
@@ -190,13 +190,13 @@
                 },
                 "region": {
                   "startLine": 7,
-                  "startColumn": 2,
+                  "startColumn": 32,
                   "endLine": 7,
-                  "endColumn": 55,
-                  "charOffset": 173,
-                  "charLength": 53,
+                  "endColumn": 42,
+                  "charOffset": 203,
+                  "charLength": 10,
                   "snippet": {
-                    "text": "mongodb>mongodb+srv://dbuser4:<password>@database.com"
+                    "text": "<password>"
                   }
                 }
               }
@@ -233,13 +233,13 @@
                 },
                 "region": {
                   "startLine": 12,
-                  "startColumn": 59,
+                  "startColumn": 77,
                   "endLine": 12,
-                  "endColumn": 101,
-                  "charOffset": 503,
-                  "charLength": 42,
+                  "endColumn": 85,
+                  "charOffset": 521,
+                  "charLength": 8,
                   "snippet": {
-                    "text": "mongodb://dbuser5:password@localhost:55555"
+                    "text": "password"
                   }
                 }
               }

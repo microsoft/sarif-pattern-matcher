@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
                                                                              Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch pat))
+            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
@@ -58,10 +58,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 validationResult = new ValidationResult
                 {
-                    RegionFlexMatch = pat,
+                    RegionFlexMatch = secret,
                     Fingerprint = new Fingerprint
                     {
-                        Secret = pat.Value,
+                        Secret = secret.Value,
                         Platform = nameof(AssetPlatform.GitHub),
                     },
                     ValidationState = ValidationState.Unknown,
@@ -72,7 +72,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             // It is highly likely we do not have a key if we can't
             // find at least one letter and digit within the pattern.
-            if (!ContainsDigitAndChar(pat.Value))
+            if (!ContainsDigitAndChar(secret.Value))
             {
                 return ValidationResult.CreateNoMatch();
             }
@@ -91,12 +91,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
+            matchedPattern = secret.Value;
+
             validationResult = new ValidationResult
             {
-                RegionFlexMatch = pat,
+                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint
                 {
-                    Secret = pat.Value,
+                    Secret = secret.Value,
                     Platform = nameof(AssetPlatform.GitHub),
                 },
                 ValidationState = ValidationState.Unknown,

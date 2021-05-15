@@ -58,7 +58,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
-            groups.TryGetValue("id", out FlexMatch id);
+            groups.TryGetNonEmptyValue("id", out FlexMatch id);
 
             string decodedId;
             string decodedString;
@@ -76,7 +76,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 }
                 else
                 {
-                    decodedId = id.Value;
+                    decodedId = id?.Value;
                     decodedString = secret.Value;
                 }
             }

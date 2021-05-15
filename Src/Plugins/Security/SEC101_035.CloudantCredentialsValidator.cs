@@ -56,12 +56,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
+                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint()
                 {
                     Id = id.Value,
                     Host = host.Value,
                     Secret = secret.Value,
-                    Resource = resource.Value,
+                    Resource = resource?.Value,
                     Platform = nameof(AssetPlatform.Cloudant),
                 },
                 ValidationState = ValidationState.Unknown,

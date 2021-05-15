@@ -104,6 +104,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             fingerprint.Resource = database;
 
             SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint);
+            validationResult.RegionFlexMatch = secret;
             validationResult.Fingerprint = fingerprint;
             validationResult.ValidationState = ValidationState.Unknown;
 

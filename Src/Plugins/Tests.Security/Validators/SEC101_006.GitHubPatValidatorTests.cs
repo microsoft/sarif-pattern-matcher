@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             string matchedPattern = "ghp_stuffchecksum"; // Insert new GitHub PAT here
             var groups = new Dictionary<string, FlexMatch>();
-            groups.Add("secret", new FlexMatch() { Value = "stuff" });
+            groups.Add("secret", new FlexMatch() { Value = matchedPattern });
             groups.Add("checksum", new FlexMatch() { Value = "checksum" });
             groups.Add("scanTargetFullPath", new FlexMatch() { Value = "GitHitPatTest" });
 

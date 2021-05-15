@@ -29,13 +29,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
                                                                              Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("refine", out FlexMatch secret))
+            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
             var validationResult = new ValidationResult
             {
+                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint()
                 {
                     Secret = secret.Value,

@@ -74,14 +74,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
                                                                              Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("host", out FlexMatch xmlHost) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch xmlCredentials))
+            if (!groups.TryGetNonEmptyValue("host", out FlexMatch hostsXml) ||
+                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
-            IEnumerable<string> hosts = ExtractHosts(xmlHost.Value);
-            List<(string user, string password)> credentials = ExtractCredentials(xmlCredentials.Value);
+            IEnumerable<string> hosts = ExtractHosts(hostsXml.Value);
+            List<(string user, string password)> credentials = ExtractCredentials(secret.Value);
             var validationResults = new List<ValidationResult>();
             foreach (string host in hosts)
             {
@@ -94,6 +94,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     validationResults.Add(new ValidationResult
                     {
+                        RegionFlexMatch = secret,
                         Fingerprint = new Fingerprint
                         {
                             Id = user,
