@@ -39,6 +39,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         public bool ValidateOptions(ExportRulesMetatadaOptions options)
         {
+            if (options == null)
+            {
+                return false;
+            }
+
             if (options.SearchDefinitionsPaths?.Any() != true)
             {
                 return false;
