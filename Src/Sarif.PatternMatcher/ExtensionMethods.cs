@@ -11,7 +11,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     {
         public static Dictionary<string, string> ToStringDictionary(this IDictionary<string, FlexMatch> dictionary)
         {
-            var stringDictionary = new Dictionary<string, string>();
+            var stringDictionary = new Dictionary<string, string>(dictionary.Count);
 
             foreach (KeyValuePair<string, FlexMatch> kv in dictionary)
             {
@@ -23,14 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public static Dictionary<string, FlexMatch> Copy(this IDictionary<string, FlexMatch> dictionary)
         {
-            var copy = new Dictionary<string, FlexMatch>();
-
-            foreach (KeyValuePair<string, FlexMatch> kv in dictionary)
-            {
-                copy[kv.Key] = kv.Value;
-            }
-
-            return copy;
+            return new Dictionary<string, FlexMatch>(dictionary);
         }
     }
 }
