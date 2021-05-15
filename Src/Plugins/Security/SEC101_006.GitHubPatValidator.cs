@@ -91,8 +91,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
-            matchedPattern = secret.Value;
-
             validationResult = new ValidationResult
             {
                 RegionFlexMatch = secret,

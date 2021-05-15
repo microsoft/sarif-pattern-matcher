@@ -34,8 +34,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
-            matchedPattern = secret.Value;
-
             var validationResult = new ValidationResult
             {
                 RegionFlexMatch = secret,

@@ -68,8 +68,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
                                                                              Dictionary<string, FlexMatch> groups)
         {
-            matchedPattern = matchedPattern.Trim();
-
             FlexMatch id, host, secret, database;
 
             id = host = secret = database = null;
