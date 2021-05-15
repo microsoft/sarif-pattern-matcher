@@ -558,6 +558,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (match.TryGetValue("refine", out FlexMatch refineMatch))
                 {
                     refinedMatchedPattern = refineMatch.Value;
+                    flexMatch = refineMatch;
                 }
 
                 Fingerprint fingerprint = default;
@@ -572,6 +573,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                                            ref refinedMatchedPattern,
                                                                                            match,
                                                                                            out bool pluginSupportsDynamicValidation);
+
+                    int refinementIndex = flexMatch.Value.String.IndexOf(refinedMatchedPattern);
+                    Debug.Assert(refinementIndex != -1);
+
+                    flexMatch = new FlexMatch()
+                    {
+                        Value = refinedMatchedPattern,
+                        Length = refinedMatchedPattern.Length,
+                        Index = flexMatch.Index - refinementIndex,
+                    };
+
                     if (validationResults != null)
                     {
                         foreach (ValidationResult validationResult in validationResults)
@@ -610,6 +622,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
                 else
                 {
+                    Debug.Assert(fingerprint == default(Fingerprint));
+                    fingerprint = CreateFingerprintFromMatch(match);
+
                     var result = new ValidationResult
                     {
                         Fingerprint = fingerprint,
@@ -628,6 +643,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                           result);
                 }
             }
+        }
+
+        internal static Fingerprint CreateFingerprintFromMatch(IDictionary<string, FlexMatch> match)
+        {
+            var fingerprint = default(Fingerprint);
+
+            foreach (KeyValuePair<string, FlexMatch> kv in match)
+            {
+                fingerprint.SetProperty(kv.Key,
+                                        kv.Value.Value,
+                                        ignoreRecognizedKeyNames: true);
+            }
+
+            return fingerprint;
         }
 
         private void ConstructResultAndLogForContentsRegex(FlexMatch binary64DecodedMatch,

@@ -64,22 +64,21 @@
                   "startLine": 10,
                   "startColumn": 10,
                   "endLine": 10,
-                  "endColumn": 19,
+                  "endColumn": 18,
                   "charOffset": 178,
-                  "charLength": 9,
+                  "charLength": 8,
                   "snippet": {
-                    "text": "_malloca("
+                    "text": "_malloca"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=E3EE29CD7A8EF1E076AC13F921A48D18B021085CF2DC2913FBF6A794CB9DA2F0]",
-            "ValidationFingerprintHash/v1": "b7591dea032cc4e4f935ea0766800ee8ff2927816f4d55f2376ea6a43e4547bf"
-          },
-          "rank": 55.53
+            "AssetFingerprint/v1": "[id=_malloca]",
+            "ValidationFingerprint/v1": "[id=_malloca]",
+            "ValidationFingerprintHash/v1": "582290aa80b7a22d4aa98aa1227346b61831fcdc156e2a570bc6ad5b8763ccf2"
+          }
         }
       ],
       "columnKind": "utf16CodeUnits"

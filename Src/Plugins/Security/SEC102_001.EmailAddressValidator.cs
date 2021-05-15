@@ -14,7 +14,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 #pragma warning disable IDE0060 // Unused parameter.
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                    Dictionary<string, FlexMatch> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
 #pragma warning restore IDE0060 // Unused parameter.
         {
             try
@@ -28,13 +28,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     };
 
                     string[] parts = matchedPattern.Split('@');
+
                     if (parts.Length == 2)
                     {
+                        string id = parts[0];
+                        string host = parts[1];
                         validationResult.Fingerprint = new Fingerprint()
                         {
                             Id = parts[0],
                             Host = parts[1],
                         };
+
+                        groups.Add("id", new FlexMatch() { Value = id });
+                        groups.Add("host", new FlexMatch() { Value = host });
                     }
 
                     return new[] { validationResult };

@@ -23,7 +23,7 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains an apparent {1}."
+                  "text": "'{0}@{1}' is an apparent {2}."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -44,7 +44,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "example.com",
               "email address"
             ]
           },
@@ -82,7 +83,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "firstname.lastname",
+              "example.com",
               "email address"
             ]
           },
@@ -120,7 +122,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "lastname",
+              "example.com",
               "email address"
             ]
           },
@@ -158,7 +161,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "subdomain.example.com",
               "email address"
             ]
           },
@@ -196,7 +200,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "firstname+lastname",
+              "example.com",
               "email address"
             ]
           },
@@ -234,7 +239,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "+lastname",
+              "example.com",
               "email address"
             ]
           },
@@ -272,7 +278,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "lastname",
+              "example.com",
               "email address"
             ]
           },
@@ -310,7 +317,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "123.123.123.123",
               "email address"
             ]
           },
@@ -348,7 +356,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "1234567890",
+              "example.com",
               "email address"
             ]
           },
@@ -386,7 +395,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "example-one.com",
               "email address"
             ]
           },
@@ -424,7 +434,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "example.co.jp",
               "email address"
             ]
           },
@@ -462,7 +473,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "firstname-lastname",
+              "example.com",
               "email address"
             ]
           },
@@ -500,7 +512,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "-lastname",
+              "example.com",
               "email address"
             ]
           },
@@ -538,7 +551,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "lastname",
+              "example.com",
               "email address"
             ]
           },
@@ -576,7 +590,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "example.name",
               "email address"
             ]
           },
@@ -614,7 +629,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "example.museum",
               "email address"
             ]
           },
@@ -652,7 +668,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "addressSurroundedBySpaces",
+              "example.com",
               "email address"
             ]
           },
@@ -690,7 +707,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "addressSurroundedByTabs",
+              "example.com",
               "email address"
             ]
           },
@@ -728,7 +746,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "addressSurroundedByPipes",
+              "example.com",
               "email address"
             ]
           },
@@ -766,7 +785,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "addressSurroundedByDoubleQuotes",
+              "example.com",
               "email address"
             ]
           },
@@ -804,7 +824,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "addressSurroundedBySingleQuotes",
+              "example.com",
               "email address"
             ]
           },
@@ -842,7 +863,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "htmlAddress",
+              "example.com",
               "email address"
             ]
           },
@@ -880,7 +902,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "addressInTags",
+              "example.com",
               "email address"
             ]
           },
@@ -918,7 +941,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "addressPrecededByColon",
+              "example.com",
               "email address"
             ]
           },
@@ -956,7 +980,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "addressPrecededByColonAndFollowedByPeriod",
+              "example.com",
               "email address"
             ]
           },
@@ -994,7 +1019,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "111.222.333.44444",
               "email address"
             ]
           },
@@ -1032,7 +1058,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email..email",
+              "example.com",
               "email address"
             ]
           },
@@ -1070,7 +1097,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "example.com",
               "email address"
             ]
           },
@@ -1108,7 +1136,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "example..com",
               "email address"
             ]
           },
@@ -1146,7 +1175,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "Abc..123",
+              "example.com",
               "email address"
             ]
           },
@@ -1184,7 +1214,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "123",
+              "example.com",
               "email address"
             ]
           },
@@ -1222,7 +1253,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "unusual.com",
+              "example.com",
               "email address"
             ]
           },
@@ -1260,7 +1292,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "com",
+              "example.com",
               "email address"
             ]
           },
@@ -1298,7 +1331,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "unusual",
+              "strange.example.com",
               "email address"
             ]
           },
@@ -1336,7 +1370,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "example.com",
               "email address"
             ]
           },
@@ -1374,7 +1409,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "example",
+              "example.com",
               "email address"
             ]
           },
@@ -1412,7 +1448,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "example.com",
               "email address"
             ]
           },
@@ -1450,7 +1487,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "email",
+              "example.com",
               "email address"
             ]
           },
@@ -1488,7 +1526,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "user",
+              "example.com",
               "email address"
             ]
           },
@@ -1526,7 +1565,8 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_001.EmailAddress_with_email_addresses.txt",
+              "endOfLineCheck",
+              "example.com",
               "email address"
             ]
           },

@@ -7,19 +7,20 @@
       "Level": "Note",
       "FileNameAllowRegex": "(?i)\\.(azure|bat|c|cmd|config|cpp|cs|cscfg|definitions|dtsx|h|hxx|hpp|ini|java|jsx?|json|keys|kt|loadtest|m|md|php|properties|ps1|psm1|pubxml|py|resx|sample|sql|ste|swift|test|tsx?|txt|waz|xml)$",
       "Description": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc.",
-      "Message": "'{0:scanTarget}' contains an apparent {1:dataKind}.",
+      "Message": "'{0:truncatedSecret}' is an apparent {1:dataKind}.",
       "MatchExpressions": [
         {
           "Id": "SEC102/001",
           "Name": "ReviewPotentiallySensitiveData/EmailAddress",
-          "ContentsRegex": "\\b(?i)[0-9a-z._%+-]*[0-9a-z]+@[0-9a-z]+[0-9a-z.-]*\\.[0-9a-z]{2,}",
+          "ContentsRegex": "\\b(?i)(?P<refine>[0-9a-z._%+-]*[0-9a-z]+@[0-9a-z]+[0-9a-z.-]*\\.[0-9a-z]{2,})",
+          "Message": "'{0:id}@{1:host}' is an apparent {2:dataKind}.",
           "MessageArguments": { "dataKind": "email address" },
           "Notes": [ "This will not catch every possible email address.  According to https://www.regular-expressions.info/email.html it is not reasonable to expect to do so.  The formal RFC definition of an email address includes things which some systems can't support, such as double quotes, spaces, and other special characters.  What we have here should capture about 99% of email addresses in use today." ]
         },
         {
           "Id": "SEC102/002",
           "Name": "ReviewPotentiallySensitiveData/SocialSecurityNumber",
-          "ContentsRegex": "\\b[0-9]{3}-[0-9]{2}-[0-9]{4}\\b",
+          "ContentsRegex": "\\b(?P<refine>(?P<secret>[0-9]{3}-[0-9]{2}-[0-9]{4}))\\b",
           "MessageArguments": { "dataKind": "social security number" }
         }
       ]
