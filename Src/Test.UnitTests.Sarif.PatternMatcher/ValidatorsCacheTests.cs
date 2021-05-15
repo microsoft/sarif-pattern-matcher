@@ -57,7 +57,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 foreach (string key in results[i].Keys)
                 {
-                   elements.Add(results[i][key].Value);
+                    elements.Add(results[i][key].Value);
                 }
             }
 
@@ -87,8 +87,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private int CombinationsCount(Dictionary<string, IList<FlexMatch>> input)
         {
             int count = 1;
-            
-            foreach(string key in input.Keys)
+
+            foreach (string key in input.Keys)
             {
                 count = count * input[key].Count;
             }
