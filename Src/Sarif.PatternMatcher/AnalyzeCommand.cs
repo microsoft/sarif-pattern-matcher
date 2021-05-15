@@ -252,7 +252,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     DefaultTraces.None;
 
             context.Retry = options.Retry;
-            context.MaxMemory = options.MaxMemory;
+            context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
             context.EnhancedReporting = options.EnhancedReporting;
             context.DynamicValidation = options.DynamicValidation;
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;

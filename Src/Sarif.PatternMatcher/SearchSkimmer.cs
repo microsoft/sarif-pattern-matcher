@@ -426,7 +426,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;
 
-            if (!_engine.Matches(matchExpression.ContentsRegex, searchText, out List<Dictionary<string, FlexMatch>> matches, context.MaxMemory))
+            if (!_engine.Matches(matchExpression.ContentsRegex,
+                                 searchText,
+                                 out List<Dictionary<string, FlexMatch>> matches,
+                                 1024 * context.MaxMemoryInKilobytes))
             {
                 return;
             }
