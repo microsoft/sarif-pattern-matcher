@@ -51,5 +51,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             "enhanced-reporting",
             HelpText = "Enable enhanced reporting provided by dynamic validators (when --dynamic-validation is also enabled).")]
         public bool EnhancedReporting { get; internal set; }
+
+        [Option(
+            "retry",
+            HelpText = "Enable retry connection if enabled.")]
+        public bool Retry { get; set; }
+
+        [Option(
+            "max-memory",
+            HelpText = "The maximum memory that can be used for RE2.",
+            Default = -1)]
+        public long MaxMemory { get; internal set; }
     }
 }

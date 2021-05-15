@@ -251,11 +251,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     (DefaultTraces)Enum.Parse(typeof(DefaultTraces), string.Join("|", options.Traces)) :
                     DefaultTraces.None;
 
+            context.Retry = options.Retry;
+            context.MaxMemory = options.MaxMemory;
+            context.EnhancedReporting = options.EnhancedReporting;
             context.DynamicValidation = options.DynamicValidation;
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;
             context.FileSizeInKilobytes = options.FileSizeInKilobytes;
             context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
-            context.EnhancedReporting = options.EnhancedReporting;
 
             return context;
         }

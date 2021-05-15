@@ -426,7 +426,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;
 
-            if (!_engine.Matches(matchExpression.ContentsRegex, searchText, out List<Dictionary<string, FlexMatch>> matches))
+            if (!_engine.Matches(matchExpression.ContentsRegex, searchText, out List<Dictionary<string, FlexMatch>> matches, context.MaxMemory))
             {
                 return;
             }
@@ -439,6 +439,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Debug.Assert(!groups.ContainsKey("scanTargetFullPath"), "Full path should always exist.");
                 groups["scanTargetFullPath"] = filePath;
+                groups["retry"] = context.Retry ? bool.TrueString : bool.FalseString;
                 groups["enhancedReporting"] = context.EnhancedReporting ? bool.TrueString : bool.FalseString;
 
                 if (matchExpression.Properties != null)

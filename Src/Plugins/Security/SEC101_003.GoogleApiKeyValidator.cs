@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 
-using GoogleApi.Entities.Common;
 using GoogleApi.Entities.Maps.Directions.Request;
 using GoogleApi.Exceptions;
 
