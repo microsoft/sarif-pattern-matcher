@@ -25,5 +25,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             return new Dictionary<string, FlexMatch>(dictionary);
         }
+
+        public static void AddProperties(this IDictionary<string, FlexMatch> dictionary, IDictionary<string, string> properties)
+        {
+            if (properties == null || properties.Count == 0)
+            {
+                return;
+            }
+
+            foreach (KeyValuePair<string, string> kv in properties)
+            {
+                if (!dictionary.ContainsKey(kv.Key))
+                {
+                    dictionary[kv.Key] = new FlexMatch() { Value = kv.Value };
+                }
+            }
+        }
     }
 }

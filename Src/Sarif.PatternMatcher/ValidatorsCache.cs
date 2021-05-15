@@ -53,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         public static ValidationMethods GetValidationMethods(string ruleName,
-                                                                   Dictionary<string, ValidationMethods> ruleIdToMethodMap)
+                                                             Dictionary<string, ValidationMethods> ruleIdToMethodMap)
         {
             if (ruleName.Contains("/"))
             {
@@ -263,7 +263,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // This condition occurs in cases when a regex does not provide a group that
                 // maps to a fingerprint member. This is the case for binary detections, i.e.,
                 // analysis that is simply looking for specific file kinds.
-                if (validationResult.Fingerprint == default(Fingerprint) &&
+                if (validationResult.Fingerprint == default &&
                     context.TargetUri.IsAbsoluteUri)
                 {
                     string secret = HashUtilities.ComputeSha256Hash(context.TargetUri.LocalPath);

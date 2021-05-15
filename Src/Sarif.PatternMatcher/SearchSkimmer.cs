@@ -555,17 +555,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Debug.Assert(!match.ContainsKey("scanTargetFullPath"), "Full path should only be populated by engine.");
                 match["scanTargetFullPath"] = new FlexMatch { Value = filePath };
                 match["enhancedReporting"] = new FlexMatch { Value = context.EnhancedReporting ? bool.TrueString : bool.FalseString };
-
-                if (matchExpression.Properties != null)
-                {
-                    foreach (KeyValuePair<string, string> kv in matchExpression.Properties)
-                    {
-                        if (!match.ContainsKey(kv.Key))
-                        {
-                            match[kv.Key] = new FlexMatch() { Value = kv.Value };
-                        }
-                    }
-                }
+                match.AddProperties(matchExpression.Properties);
 
                 FlexMatch flexMatch = match["0"];
                 string refinedMatchedPattern = flexMatch.Value;

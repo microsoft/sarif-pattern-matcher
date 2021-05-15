@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 using FluentAssertions;
 
@@ -54,6 +52,43 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             copy = dict.Copy();
             copy.Should().NotBeEmpty();
             copy["key1"].Should().Be(flexMatch);
+        }
+
+        [Fact]
+        public void ExtensionMethods_AddPropertiesShouldAddToOriginalDictionary()
+        {
+            var dict = new Dictionary<string, FlexMatch>();
+            Dictionary<string, string> properties = null;
+
+            // Null properties should not affect dictionary
+            dict.AddProperties(properties);
+            dict.Should().BeEmpty();
+
+            // Empty properties sould not affect dictionary
+            properties = new Dictionary<string, string>();
+            dict.Should().BeEmpty();
+
+            // Adding single, should generate single.
+            properties.Add("key1", "value1");
+            dict.AddProperties(properties);
+            dict.Should().NotBeEmpty();
+            dict.Count.Should().Be(1);
+
+            // Duplicated items should not throw exception.
+            properties.Add("key2", "value2");
+            dict.AddProperties(properties);
+            dict.Count.Should().Be(2);
+            foreach (KeyValuePair<string, string> kv in properties)
+            {
+                dict[kv.Key].Value.Should().Be(kv.Value);
+            }
+
+            // Duplicated items should not replace original value.
+            dict.Add("key3", new FlexMatch { Value = "original" });
+            properties.Add("key3", "value3");
+            dict.AddProperties(properties);
+            dict.Count.Should().Be(3);
+            dict["key3"].Value.Should().Be("original");
         }
     }
 }
