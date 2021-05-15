@@ -132,6 +132,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 foreach (MatchExpression matchExpression in definition.MatchExpressions)
                 {
+                    if (matchExpression.ContentsRegexes?.Count > 0)
+                    {
+                        for (int i = 0; i < matchExpression.ContentsRegexes.Count; i++)
+                        {
+                            matchExpression.ContentsRegexes[i] =
+                                PushData(matchExpression.ContentsRegexes[i],
+                                         definition.SharedStrings,
+                                         sharedStrings);
+                        }
+                    }
+
                     matchExpression.FileNameDenyRegex = PushData(matchExpression.FileNameDenyRegex,
                                                                  definition.SharedStrings,
                                                                  sharedStrings);

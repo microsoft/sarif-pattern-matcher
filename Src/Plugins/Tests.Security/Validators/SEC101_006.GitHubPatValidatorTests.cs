@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 using Xunit;
 
@@ -17,10 +18,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             ValidationState expectedValidationState = ValidationState.Unknown;
 
             string matchedPattern = "ghp_stuffchecksum"; // Insert new GitHub PAT here
-            var groups = new Dictionary<string, string>();
-            groups.Add("secret", "stuff");
-            groups.Add("checksum", "checksum");
-            groups.Add("scanTargetFullPath", "GitHitPatTest");
+            var groups = new Dictionary<string, FlexMatch>();
+            groups.Add("secret", new FlexMatch() { Value = matchedPattern });
+            groups.Add("checksum", new FlexMatch() { Value = "checksum" });
+            groups.Add("scanTargetFullPath", new FlexMatch() { Value = "GitHitPatTest" });
 
             IEnumerable<ValidationResult> validationResults = GitHubPatValidator.IsValidStatic(ref matchedPattern, groups);
             foreach (ValidationResult validationResult in validationResults)

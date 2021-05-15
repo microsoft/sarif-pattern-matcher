@@ -35,7 +35,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -55,10 +55,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, string> groups)
+                                                                             Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("secret", out string secret))
+            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
+                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
@@ -69,29 +69,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var fingerprint = new Fingerprint()
             {
-                Id = id,
-                Secret = secret,
+                Id = id.Value,
+                Secret = secret.Value,
             };
             var validationResult = new ValidationResult();
 
-            if (!groups.TryGetNonEmptyValue("host", out string host))
+            if (!groups.TryGetNonEmptyValue("host", out FlexMatch host))
             {
                 validationResult.Fingerprint = fingerprint;
                 validationResult.ValidationState = ValidationState.Unknown;
                 return new[] { validationResult };
             }
 
-            if (host == "tcp")
+            if (host.Value == "tcp")
             {
                 return ValidationResult.CreateNoMatch();
             }
 
-            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex);
-            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex);
+            FlexMatch unused = null;
+            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex, ref unused);
+            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex, ref unused);
 
-            host = FilteringHelpers.StandardizeLocalhostName(host);
+            string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
 
-            ValidationState exclusionResult = FilteringHelpers.HostExclusion(host, HostsToExclude);
+            ValidationState exclusionResult = FilteringHelpers.HostExclusion(hostValue, HostsToExclude);
 
             if (exclusionResult == ValidationState.NoMatch)
             {
@@ -99,10 +100,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             fingerprint.Port = port;
-            fingerprint.Host = host.Replace("\"", string.Empty).Replace(",", ";");
+            fingerprint.Host = hostValue.Replace("\"", string.Empty).Replace(",", ";");
             fingerprint.Resource = database;
 
-            SharedUtilities.PopulateAssetFingerprint(host, ref fingerprint);
+            SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint);
+            validationResult.RegionFlexMatch = secret;
             validationResult.Fingerprint = fingerprint;
             validationResult.ValidationState = ValidationState.Unknown;
 

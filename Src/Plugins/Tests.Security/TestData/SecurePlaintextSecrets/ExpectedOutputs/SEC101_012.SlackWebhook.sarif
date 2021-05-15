@@ -61,13 +61,13 @@
                 },
                 "region": {
                   "startLine": 1,
-                  "startColumn": 1,
+                  "startColumn": 46,
                   "endLine": 1,
                   "endColumn": 82,
-                  "charOffset": 0,
-                  "charLength": 81,
+                  "charOffset": 45,
+                  "charLength": 36,
                   "snippet": {
-                    "text": "https://hooks.slack.com/services/T01JYS3KLKU/B0123456789/deedbeefdeaffeeddeadbeef"
+                    "text": "B0123456789/deedbeefdeaffeeddeadbeef"
                   }
                 }
               }

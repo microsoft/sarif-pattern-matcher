@@ -200,7 +200,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
 #pragma warning disable SA1107 // Code should not contain multiple statements on one line
 
-        public void SetProperty(string keyName, string value)
+        public void SetProperty(string keyName, string value, bool ignoreRecognizedKeyNames = false)
         {
             switch (keyName)
             {
@@ -214,7 +214,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 case PlatformKeyName: { Platform = value; break; }
                 case ResourceKeyName: { Resource = value; break; }
                 case ThumbprintKeyName: { Thumbprint = value; break; }
-                default: throw new ArgumentOutOfRangeException(nameof(keyName));
+                default:
+                {
+                    if (!ignoreRecognizedKeyNames)
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(keyName));
+                    }
+
+                    break;
+                }
             }
         }
 

@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 using Xunit;
 
@@ -21,9 +22,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void CryptographicPrivateKeyValidator_Test()
         {
-            var keyValuePairs = new Dictionary<string, string>
+            var keyValuePairs = new Dictionary<string, FlexMatch>
             {
-                { "secret", TestKey }
+                { "secret", new FlexMatch() { Value = TestKey } }
             };
 
             IEnumerable<ValidationResult> validationResults = CryptographicPrivateKeyValidator.IsValidStatic(ref TestMatchedPattern, keyValuePairs);

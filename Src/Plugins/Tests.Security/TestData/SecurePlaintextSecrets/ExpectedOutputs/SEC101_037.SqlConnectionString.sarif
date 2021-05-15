@@ -93,13 +93,13 @@
                 },
                 "region": {
                   "startLine": 61,
-                  "startColumn": 30,
+                  "startColumn": 74,
                   "endLine": 61,
-                  "endColumn": 97,
-                  "charOffset": 3663,
-                  "charLength": 67,
+                  "endColumn": 84,
+                  "charOffset": 3707,
+                  "charLength": 10,
                   "snippet": {
-                    "text": "SERVER=servername18;DATABASE=database18;PWD=password18;UID=username"
+                    "text": "password18"
                   }
                 }
               }
@@ -136,13 +136,13 @@
                 },
                 "region": {
                   "startLine": 63,
-                  "startColumn": 19,
+                  "startColumn": 58,
                   "endLine": 63,
                   "endColumn": 68,
-                  "charOffset": 3757,
-                  "charLength": 49,
+                  "charOffset": 3796,
+                  "charLength": 10,
                   "snippet": {
-                    "text": "SERVER=servername19;UID=username19;PWD=password19"
+                    "text": "password19"
                   }
                 }
               }
@@ -162,7 +162,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "passwo…",
+              "Pwd=pa…",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -178,584 +178,584 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 5,
-                  "startColumn": 40,
-                  "endLine": 5,
-                  "endColumn": 136,
-                  "charOffset": 401,
-                  "charLength": 96,
-                  "snippet": {
-                    "text": "Server=tcp:servername2.database.windows.net,1433;Database=database2;Uid=username2;Pwd=password2;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=tcp:servername2.database.windows.net,1433][id=username2][part=servers][platform=Azure][resource=database2]",
-            "ValidationFingerprint/v1": "[host=tcp:servername2.database.windows.net,1433][id=username2][resource=database2][secret=password2]",
-            "ValidationFingerprintHash/v1": "072414dbfa70d7057a4f83f8490d2aef10c1955570cc3772f9b561de4298d85c"
-          },
-          "rank": 42.11
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 14,
-                  "startColumn": 27,
-                  "endLine": 14,
-                  "endColumn": 114,
-                  "charOffset": 892,
-                  "charLength": 87,
-                  "snippet": {
-                    "text": "Data Source=servername4;Initial Catalog=database4;User ID=username4;Password=password4;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername4][id=username4][platform=SqlOnPremise][resource=database4]",
-            "ValidationFingerprint/v1": "[host=servername4][id=username4][resource=database4][secret=password4]",
-            "ValidationFingerprintHash/v1": "7b47611605372ae80ee4a6bbf983dc13e7653080a1badf8b5cee9e055133da36"
-          },
-          "rank": 42.11
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 17,
-                  "startColumn": 27,
-                  "endLine": 17,
-                  "endColumn": 112,
-                  "charOffset": 1099,
-                  "charLength": 85,
-                  "snippet": {
-                    "text": "Password=password5;User ID=username5;Initial Catalog=database5;Data Source=database5;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=database5][id=username5][platform=SqlOnPremise][resource=database5]",
-            "ValidationFingerprint/v1": "[host=database5][id=username5][resource=database5][secret=password5]",
-            "ValidationFingerprintHash/v1": "332b68e2b4ec9ef7a4fc431331ac815e3eaeb51576db36bd3a2bafe26e86b0f9"
-          },
-          "rank": 42.11
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 20,
-                  "startColumn": 27,
-                  "endLine": 20,
-                  "endColumn": 114,
-                  "charOffset": 1304,
-                  "charLength": 87,
-                  "snippet": {
-                    "text": "Initial Catalog=database6;Data Source=servername6;Password=password6;User ID=username6;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername6][id=username6][platform=SqlOnPremise][resource=database6]",
-            "ValidationFingerprint/v1": "[host=servername6][id=username6][resource=database6][secret=password6]",
-            "ValidationFingerprintHash/v1": "cd7a46283b6fc0975a51803c5b56c97751e40d63cfed366fb6613d7fdcd4da36"
-          },
-          "rank": 42.11
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 29,
-                  "startColumn": 16,
-                  "endLine": 29,
-                  "endColumn": 107,
-                  "charOffset": 1692,
-                  "charLength": 91,
-                  "snippet": {
-                    "text": "Data Source=servername15;Initial Catalog=database15;User ID=username15;Password=password15<"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername15][id=username15][platform=SqlOnPremise][resource=database15]",
-            "ValidationFingerprint/v1": "[host=servername15][id=username15][resource=database15][secret=password15]",
-            "ValidationFingerprintHash/v1": "a81c39d355db9dbf19af840efecf89b73cac54db0d64ed550b9ff7919fc9a128"
-          },
-          "rank": 44.6
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 34,
-                  "startColumn": 38,
-                  "endLine": 34,
-                  "endColumn": 125,
-                  "charOffset": 1886,
-                  "charLength": 87,
-                  "snippet": {
-                    "text": "Data Source=servername8;Initial Catalog=database8;User ID=username8;Password=password8;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername8][id=username8][platform=SqlOnPremise][resource=database8]",
-            "ValidationFingerprint/v1": "[host=servername8][id=username8][resource=database8][secret=password8]",
-            "ValidationFingerprintHash/v1": "20ea611671918e8de72ebc58c7287ba275d19997174d5b500d5ae1accbc19b7d"
-          },
-          "rank": 42.11
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 35,
-                  "startColumn": 38,
-                  "endLine": 35,
-                  "endColumn": 125,
-                  "charOffset": 2016,
-                  "charLength": 87,
-                  "snippet": {
-                    "text": "Password=password9;User ID=username9;Initial Catalog=database9;Data Source=servername9;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername9][id=username9][platform=SqlOnPremise][resource=database9]",
-            "ValidationFingerprint/v1": "[host=servername9][id=username9][resource=database9][secret=password9]",
-            "ValidationFingerprintHash/v1": "cc1755d41b99214770461ee24ac9959b6e0c3f2e6c4f6e98fbb1d3c6792f60a0"
-          },
-          "rank": 42.11
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 36,
-                  "startColumn": 38,
-                  "endLine": 36,
-                  "endColumn": 129,
-                  "charOffset": 2146,
-                  "charLength": 91,
-                  "snippet": {
-                    "text": "Initial Catalog=database10;Data Source=servername10;Password=password10;User ID=username10;"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername10][id=username10][platform=SqlOnPremise][resource=database10]",
-            "ValidationFingerprint/v1": "[host=servername10][id=username10][resource=database10][secret=password10]",
-            "ValidationFingerprintHash/v1": "6a46351e5ff2fc2cebeb525dc6cb3cb1ef56ec1533dc5d9c7b192bdf99d75e48"
-          },
-          "rank": 44.6
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 37,
-                  "startColumn": 38,
-                  "endLine": 37,
-                  "endColumn": 129,
-                  "charOffset": 2280,
-                  "charLength": 91,
-                  "snippet": {
-                    "text": "Data Source=servername17;Initial Catalog=database17;User ID=username17;Password=password17\""
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername17][id=username17][platform=SqlOnPremise][resource=database17]",
-            "ValidationFingerprint/v1": "[host=servername17][id=username17][resource=database17][secret=password17]",
-            "ValidationFingerprintHash/v1": "4d20fef5fd331b6da2354112a1254c4c495365f14a05af1c2b37df4d25fb3076"
-          },
-          "rank": 44.6
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 46,
-                  "startColumn": 61,
-                  "endLine": 46,
-                  "endColumn": 152,
-                  "charOffset": 3136,
-                  "charLength": 91,
-                  "snippet": {
-                    "text": "Data Source=servername14;Initial Catalog=database14;User ID=username14;Password=password14\""
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername14][id=username14][platform=SqlOnPremise][resource=database14]",
-            "ValidationFingerprint/v1": "[host=servername14][id=username14][resource=database14][secret=password14]",
-            "ValidationFingerprintHash/v1": "7935b1ebb05aabd4db17fad5e2ab160f7719b2fd429c9643addc17691caea2d5"
-          },
-          "rank": 44.6
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 51,
-                  "startColumn": 27,
-                  "endLine": 51,
-                  "endColumn": 118,
-                  "charOffset": 3315,
-                  "charLength": 91,
-                  "snippet": {
-                    "text": "Data Source=servername16;Initial Catalog=database16;User ID=username16;Password=password16\""
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername16][id=username16][platform=SqlOnPremise][resource=database16]",
-            "ValidationFingerprint/v1": "[host=servername16][id=username16][resource=database16][secret=password16]",
-            "ValidationFingerprintHash/v1": "65e694cdd0a261d90a4b52ddb602ea260de58bd07a463116aff0982c2393bc68"
-          },
-          "rank": 44.6
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "a1Pass…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 57,
-                  "startColumn": 1,
-                  "endLine": 58,
-                  "endColumn": 35,
-                  "charOffset": 3488,
-                  "charLength": 118,
-                  "snippet": {
-                    "text": "Data Source=(local);Initial Catalog=AdventureWorks;User ID=ab;Password= a1Pass@@11\r\n    Modified: Data Source=(local);"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=localhost][id=ab][platform=SqlOnPremise][resource=AdventureWorks]",
-            "ValidationFingerprint/v1": "[host=localhost][id=ab][resource=AdventureWorks][secret=a1Pass@@11]",
-            "ValidationFingerprintHash/v1": "ef8b5d918269308fd5210dfb4040724e9293a50feaa5d3ec7165f3077b67196c"
-          },
-          "rank": 32.09
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 61,
-                  "startColumn": 30,
-                  "endLine": 61,
-                  "endColumn": 100,
-                  "charOffset": 3663,
-                  "charLength": 70,
-                  "snippet": {
-                    "text": "SERVER=servername18;DATABASE=database18;PWD=password18;UID=username18'"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername18][id=username18][platform=SqlOnPremise][resource=database18]",
-            "ValidationFingerprint/v1": "[host=servername18][id=username18][resource=database18][secret=password18]",
-            "ValidationFingerprintHash/v1": "cbcd24b3e3ee716c43d9005eedba43f9a1da427bf393232e7a3c790e5c81d9d2"
-          },
-          "rank": 44.6
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 63,
+                  "startLine": 2,
                   "startColumn": 19,
-                  "endLine": 63,
-                  "endColumn": 111,
-                  "charOffset": 3757,
-                  "charLength": 92,
+                  "endLine": 2,
+                  "endColumn": 32,
+                  "charOffset": 82,
+                  "charLength": 13,
                   "snippet": {
-                    "text": "SERVER=servername19;UID=username19;PWD=password19;APP=Microsoft ODBC SDK;DATABASE=database19"
+                    "text": "ervername1.da"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername19][id=username19][platform=SqlOnPremise][resource=database19]",
-            "ValidationFingerprint/v1": "[host=servername19][id=username19][resource=database19][secret=password19]",
-            "ValidationFingerprintHash/v1": "2a1f66a285ce407a7c23228b40ec2446c7d5c31cea96b2b3a901b46e8bfcecf6"
+            "AssetFingerprint/v1": "[host=Server=tcp:servername2.database.windows.net,1433][id=Uid=username2][part=servers][platform=Azure][resource=Database=database2]",
+            "ValidationFingerprint/v1": "[host=Server=tcp:servername2.database.windows.net,1433][id=Uid=username2][resource=Database=database2][secret=Pwd=password2]",
+            "ValidationFingerprintHash/v1": "548e4e45407578c344d7cb2727472e67d9ee30799622240ed4e8991374da7b41"
           },
-          "rank": 44.6
+          "rank": 46.27
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "Passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 5,
+                  "endLine": 2,
+                  "endColumn": 23,
+                  "charOffset": 68,
+                  "charLength": 18,
+                  "snippet": {
+                    "text": ":sqlserver://serve"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=Data Source=servername4][id=User ID=username4][platform=SqlOnPremise][resource=Initial Catalog=database4]",
+            "ValidationFingerprint/v1": "[host=Data Source=servername4][id=User ID=username4][resource=Initial Catalog=database4][secret=Password=password4]",
+            "ValidationFingerprintHash/v1": "84238179788bc1a99d3ce5ad87d5794d079a9bbd0f87ed7e8e76989b6f9861a8"
+          },
+          "rank": 45.28
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "Passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 19,
+                  "charOffset": 0,
+                  "charLength": 18,
+                  "snippet": {
+                    "text": "# This is a well-f"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=Data Source=database5][id=User ID=username5][platform=SqlOnPremise][resource=Initial Catalog=database5]",
+            "ValidationFingerprint/v1": "[host=Data Source=database5][id=User ID=username5][resource=Initial Catalog=database5][secret=Password=password5]",
+            "ValidationFingerprintHash/v1": "664acb5fffa13d38374b0985583bcea9355eab51725bc7b8f37ad5adfd2fb433"
+          },
+          "rank": 45.28
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "Passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 51,
+                  "endLine": 2,
+                  "endColumn": 5,
+                  "charOffset": 50,
+                  "charLength": 18,
+                  "snippet": {
+                    "text": "ction string\r\njdbc"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=Data Source=servername6][id=User ID=username6][platform=SqlOnPremise][resource=Initial Catalog=database6]",
+            "ValidationFingerprint/v1": "[host=Data Source=servername6][id=User ID=username6][resource=Initial Catalog=database6][secret=Password=password6]",
+            "ValidationFingerprintHash/v1": "5f0ff12eca087ba22cc2644cee21482fd0c7f042d023d39212ddf739a3958218"
+          },
+          "rank": 45.28
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "Passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 8,
+                  "endLine": 2,
+                  "endColumn": 27,
+                  "charOffset": 71,
+                  "charLength": 19,
+                  "snippet": {
+                    "text": "lserver://servernam"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=Data Source=servername15][id=User ID=username15][platform=SqlOnPremise][resource=Initial Catalog=database15]",
+            "ValidationFingerprint/v1": "[host=Data Source=servername15][id=User ID=username15][resource=Initial Catalog=database15][secret=Password=password15]",
+            "ValidationFingerprintHash/v1": "f6ec8f26500e1eed4120499d4cb85849f4d11e4fb7e57c07cd122f3cdac295b2"
+          },
+          "rank": 47.15
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "Passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 5,
+                  "endLine": 2,
+                  "endColumn": 23,
+                  "charOffset": 68,
+                  "charLength": 18,
+                  "snippet": {
+                    "text": ":sqlserver://serve"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=Data Source=servername8][id=User ID=username8][platform=SqlOnPremise][resource=Initial Catalog=database8]",
+            "ValidationFingerprint/v1": "[host=Data Source=servername8][id=User ID=username8][resource=Initial Catalog=database8][secret=Password=password8]",
+            "ValidationFingerprintHash/v1": "518912f4d0365022f46734697a786dc4ac139bd2c0b513e65bb2908d4ff5f4c3"
+          },
+          "rank": 45.28
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "Passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 19,
+                  "charOffset": 0,
+                  "charLength": 18,
+                  "snippet": {
+                    "text": "# This is a well-f"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=Data Source=servername9][id=User ID=username9][platform=SqlOnPremise][resource=Initial Catalog=database9]",
+            "ValidationFingerprint/v1": "[host=Data Source=servername9][id=User ID=username9][resource=Initial Catalog=database9][secret=Password=password9]",
+            "ValidationFingerprintHash/v1": "ef72c0429f9885e05eb115cff8f527f1f6e19a75dc7a0b15df8e580aca651348"
+          },
+          "rank": 45.28
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "Passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 53,
+                  "endLine": 2,
+                  "endColumn": 8,
+                  "charOffset": 52,
+                  "charLength": 19,
+                  "snippet": {
+                    "text": "ion string\r\njdbc:sq"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=Data Source=servername10][id=User ID=username10][platform=SqlOnPremise][resource=Initial Catalog=database10]",
+            "ValidationFingerprint/v1": "[host=Data Source=servername10][id=User ID=username10][resource=Initial Catalog=database10][secret=Password=password10]",
+            "ValidationFingerprintHash/v1": "3116f31c075bce30a35845f26150405853f98663d92f34995af6de7147fac0ed"
+          },
+          "rank": 47.15
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "Passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 8,
+                  "endLine": 2,
+                  "endColumn": 27,
+                  "charOffset": 71,
+                  "charLength": 19,
+                  "snippet": {
+                    "text": "lserver://servernam"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=Data Source=servername17][id=User ID=username17][platform=SqlOnPremise][resource=Initial Catalog=database17]",
+            "ValidationFingerprint/v1": "[host=Data Source=servername17][id=User ID=username17][resource=Initial Catalog=database17][secret=Password=password17]",
+            "ValidationFingerprintHash/v1": "06f960171173a42ba456c9a814a136cdf067786b9c75a1906adafbdd0cf8cbb6"
+          },
+          "rank": 47.15
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "Passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 8,
+                  "endLine": 2,
+                  "endColumn": 27,
+                  "charOffset": 71,
+                  "charLength": 19,
+                  "snippet": {
+                    "text": "lserver://servernam"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=Data Source=servername14][id=User ID=username14][platform=SqlOnPremise][resource=Initial Catalog=database14]",
+            "ValidationFingerprint/v1": "[host=Data Source=servername14][id=User ID=username14][resource=Initial Catalog=database14][secret=Password=password14]",
+            "ValidationFingerprintHash/v1": "44b481cabc5adda6558668696a878ce2323ffdcfaf80850da12f31ca575726c7"
+          },
+          "rank": 47.15
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "Passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 8,
+                  "endLine": 2,
+                  "endColumn": 27,
+                  "charOffset": 71,
+                  "charLength": 19,
+                  "snippet": {
+                    "text": "lserver://servernam"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=Data Source=servername16][id=User ID=username16][platform=SqlOnPremise][resource=Initial Catalog=database16]",
+            "ValidationFingerprint/v1": "[host=Data Source=servername16][id=User ID=username16][resource=Initial Catalog=database16][secret=Password=password16]",
+            "ValidationFingerprintHash/v1": "45db68803fdca082e8920ee856940a0bbe3fd6214f24f0212af7d780cf66e4d6"
+          },
+          "rank": 47.15
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "Passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 63,
+                  "endLine": 2,
+                  "endColumn": 19,
+                  "charOffset": 62,
+                  "charLength": 20,
+                  "snippet": {
+                    "text": "\r\njdbc:sqlserver://s"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=Data Source=(local)][id=User ID=ab][platform=SqlOnPremise][resource=Initial Catalog=AdventureWorks]",
+            "ValidationFingerprint/v1": "[host=Data Source=(local)][id=User ID=ab][resource=Initial Catalog=AdventureWorks][secret=Password= a1Pass@@11]",
+            "ValidationFingerprintHash/v1": "f8e5210f7b70a235f3e53beecfab44de3e4f8db37af9c7474d9e07b401a99bc3"
+          },
+          "rank": 46.38
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "PWD=pa…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 41,
+                  "endLine": 1,
+                  "endColumn": 55,
+                  "charOffset": 40,
+                  "charLength": 14,
+                  "snippet": {
+                    "text": " sql connectio"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=SERVER=servername18][id=UID=username18][platform=SqlOnPremise][resource=DATABASE=database18]",
+            "ValidationFingerprint/v1": "[host=SERVER=servername18][id=UID=username18][resource=DATABASE=database18][secret=PWD=password18]",
+            "ValidationFingerprintHash/v1": "89be482af22a1fd575434c71640c586c7041a0f6c411a3c013d8f5ec500f240b"
+          },
+          "rank": 52.35
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "PWD=pa…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 36,
+                  "endLine": 1,
+                  "endColumn": 50,
+                  "charOffset": 35,
+                  "charLength": 14,
+                  "snippet": {
+                    "text": " ODBC sql conn"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=SERVER=servername19][id=UID=username19][platform=SqlOnPremise][resource=DATABASE=database19]",
+            "ValidationFingerprint/v1": "[host=SERVER=servername19][id=UID=username19][resource=DATABASE=database19][secret=PWD=password19]",
+            "ValidationFingerprintHash/v1": "628acf8a9d6184c46850326ba6b06dc376a41efc7dd41fc2761892b1d45d29e0"
+          },
+          "rank": 52.35
         },
         {
           "ruleId": "SEC101/037",
@@ -781,13 +781,13 @@
                 },
                 "region": {
                   "startLine": 2,
-                  "startColumn": 1,
+                  "startColumn": 118,
                   "endLine": 2,
-                  "endColumn": 128,
-                  "charOffset": 64,
-                  "charLength": 127,
+                  "endColumn": 127,
+                  "charOffset": 181,
+                  "charLength": 9,
                   "snippet": {
-                    "text": "jdbc:sqlserver://servername1.database.windows.net:1433;database=database1;user=username1@some-database-name;password=password1;"
+                    "text": "password1"
                   }
                 }
               }
@@ -824,13 +824,13 @@
                 },
                 "region": {
                   "startLine": 41,
-                  "startColumn": 1,
+                  "startColumn": 92,
                   "endLine": 41,
-                  "endColumn": 103,
-                  "charOffset": 2453,
-                  "charLength": 102,
+                  "endColumn": 102,
+                  "charOffset": 2544,
+                  "charLength": 10,
                   "snippet": {
-                    "text": "jdbc:sqlserver://localhost;database=database11;user=username11@some-database-name;password=password11;"
+                    "text": "password11"
                   }
                 }
               }
@@ -867,13 +867,13 @@
                 },
                 "region": {
                   "startLine": 42,
-                  "startColumn": 1,
+                  "startColumn": 90,
                   "endLine": 42,
-                  "endColumn": 101,
-                  "charOffset": 2660,
-                  "charLength": 100,
+                  "endColumn": 100,
+                  "charOffset": 2749,
+                  "charLength": 10,
                   "snippet": {
-                    "text": "jdbc:sqlserver://(local);database=database12;user=username12@some-database-name;password=password12;"
+                    "text": "password12"
                   }
                 }
               }
@@ -910,13 +910,13 @@
                 },
                 "region": {
                   "startLine": 43,
-                  "startColumn": 1,
+                  "startColumn": 92,
                   "endLine": 43,
-                  "endColumn": 103,
-                  "charOffset": 2865,
-                  "charLength": 102,
+                  "endColumn": 102,
+                  "charOffset": 2956,
+                  "charLength": 10,
                   "snippet": {
-                    "text": "jdbc:sqlserver://127.0.0.1;database=database13;user=username13@some-database-name;password=password13;"
+                    "text": "password13"
                   }
                 }
               }
@@ -953,13 +953,13 @@
                 },
                 "region": {
                   "startLine": 8,
-                  "startColumn": 10,
+                  "startColumn": 105,
                   "endLine": 8,
-                  "endColumn": 115,
-                  "charOffset": 633,
-                  "charLength": 105,
+                  "endColumn": 114,
+                  "charOffset": 728,
+                  "charLength": 9,
                   "snippet": {
-                    "text": "sqlsrv:server = tcp:servername3.database.windows.net,1433; Database = databse3\", \"username3\", \"password3\""
+                    "text": "password3"
                   }
                 }
               }
@@ -996,13 +996,13 @@
                 },
                 "region": {
                   "startLine": 61,
-                  "startColumn": 30,
+                  "startColumn": 74,
                   "endLine": 61,
-                  "endColumn": 102,
-                  "charOffset": 3663,
-                  "charLength": 72,
+                  "endColumn": 84,
+                  "charOffset": 3707,
+                  "charLength": 10,
                   "snippet": {
-                    "text": "SERVER=servername18;DATABASE=database18;PWD=password18;UID=username18') "
+                    "text": "password18"
                   }
                 }
               }
@@ -1039,13 +1039,13 @@
                 },
                 "region": {
                   "startLine": 63,
-                  "startColumn": 19,
+                  "startColumn": 58,
                   "endLine": 63,
-                  "endColumn": 69,
-                  "charOffset": 3757,
-                  "charLength": 50,
+                  "endColumn": 68,
+                  "charOffset": 3796,
+                  "charLength": 10,
                   "snippet": {
-                    "text": "SERVER=servername19;UID=username19;PWD=password19;"
+                    "text": "password19"
                   }
                 }
               }

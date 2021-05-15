@@ -60,14 +60,14 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 1,
-                  "startColumn": 44,
+                  "startLine": 5,
+                  "startColumn": 2,
                   "endLine": 5,
                   "endColumn": 42,
-                  "charOffset": 43,
-                  "charLength": 82,
+                  "charOffset": 85,
+                  "charLength": 40,
                   "snippet": {
-                    "text": "GitHubPat\r\n\r\n# Xml style\r\n<GithubToken>\r\n\tff34885a8624460a855540c6592698d2f1812843"
+                    "text": "ff34885a8624460a855540c6592698d2f1812843"
                   }
                 }
               }
@@ -104,13 +104,13 @@
                 },
                 "region": {
                   "startLine": 10,
-                  "startColumn": 13,
+                  "startColumn": 31,
                   "endLine": 10,
                   "endColumn": 71,
-                  "charOffset": 193,
-                  "charLength": 58,
+                  "charOffset": 211,
+                  "charLength": 40,
                   "snippet": {
-                    "text": "GitHubPat\" value=\"dead885a8624460a855540c6592698d2f1812843"
+                    "text": "dead885a8624460a855540c6592698d2f1812843"
                   }
                 }
               }
@@ -147,13 +147,13 @@
                 },
                 "region": {
                   "startLine": 14,
-                  "startColumn": 7,
+                  "startColumn": 36,
                   "endLine": 14,
                   "endColumn": 76,
-                  "charOffset": 295,
-                  "charLength": 69,
+                  "charOffset": 324,
+                  "charLength": 40,
                   "snippet": {
-                    "text": "GitHubPersonalAccessToken = \"ff34885a8624460a855540c6592698d2f181dead"
+                    "text": "ff34885a8624460a855540c6592698d2f181dead"
                   }
                 }
               }

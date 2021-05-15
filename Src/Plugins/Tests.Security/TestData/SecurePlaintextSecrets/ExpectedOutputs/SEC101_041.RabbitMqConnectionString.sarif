@@ -61,13 +61,13 @@
                 },
                 "region": {
                   "startLine": 2,
-                  "startColumn": 1,
+                  "startColumn": 13,
                   "endLine": 2,
-                  "endColumn": 36,
-                  "charOffset": 17,
-                  "charLength": 35,
+                  "endColumn": 21,
+                  "charOffset": 29,
+                  "charLength": 8,
                   "snippet": {
-                    "text": "amqp://user:password@host/database1"
+                    "text": "password"
                   }
                 }
               }
@@ -104,13 +104,13 @@
                 },
                 "region": {
                   "startLine": 5,
-                  "startColumn": 2,
+                  "startColumn": 14,
                   "endLine": 5,
-                  "endColumn": 37,
-                  "charOffset": 83,
-                  "charLength": 35,
+                  "endColumn": 22,
+                  "charOffset": 95,
+                  "charLength": 8,
                   "snippet": {
-                    "text": "amqp://user:password@host/database2"
+                    "text": "password"
                   }
                 }
               }
@@ -147,13 +147,13 @@
                 },
                 "region": {
                   "startLine": 8,
-                  "startColumn": 6,
+                  "startColumn": 19,
                   "endLine": 8,
-                  "endColumn": 42,
-                  "charOffset": 152,
-                  "charLength": 36,
+                  "endColumn": 27,
+                  "charOffset": 165,
+                  "charLength": 8,
                   "snippet": {
-                    "text": "amqps://user:password@host/database3"
+                    "text": "password"
                   }
                 }
               }
@@ -190,13 +190,13 @@
                 },
                 "region": {
                   "startLine": 11,
-                  "startColumn": 1,
+                  "startColumn": 13,
                   "endLine": 11,
-                  "endColumn": 41,
-                  "charOffset": 225,
-                  "charLength": 40,
+                  "endColumn": 21,
+                  "charOffset": 237,
+                  "charLength": 8,
                   "snippet": {
-                    "text": "amqp://user:password@host:1234/database4"
+                    "text": "password"
                   }
                 }
               }

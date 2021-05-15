@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 using Xunit;
 
@@ -52,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 bool performDynamicValidation = testCase.PerformDynamicValidation;
                 string failureLevel = testCase.FailureLevel;
                 string fingerprintText = null;
-                var groups = new Dictionary<string, string>();
+                var groups = new Dictionary<string, FlexMatch>();
 
                 IEnumerable<ValidationResult> validationResults = AdoPatValidator.IsValidStatic(ref testCase.Input,
                                                                                                 groups);
