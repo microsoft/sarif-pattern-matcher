@@ -11,6 +11,7 @@ using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -24,7 +25,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -44,35 +45,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, string> groups)
+                                                                             Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("host", out string host) ||
-                !groups.TryGetNonEmptyValue("secret", out string secret))
+            if (!groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
+                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
-            if (!ContainsDigitAndChar(secret))
+            if (!ContainsDigitAndChar(secret.Value))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
-            groups.TryGetValue("id", out string id);
+            groups.TryGetNonEmptyValue("id", out FlexMatch id);
+
+            string decodedId;
+            string decodedString;
 
             try
             {
-                byte[] data = Convert.FromBase64String(secret);
-                string decodedString = Encoding.UTF8.GetString(data);
+                byte[] data = Convert.FromBase64String(secret.Value);
+                decodedString = Encoding.UTF8.GetString(data);
 
                 if (decodedString.Contains(':'))
                 {
                     string[] parts = decodedString.Split(':');
-                    id = parts[0];
-                    secret = parts[1];
+                    decodedId = parts[0];
+                    decodedString = parts[1];
                 }
                 else
                 {
-                    secret = decodedString;
+                    decodedId = id?.Value;
+                    decodedString = secret.Value;
                 }
             }
             catch (FormatException)
@@ -82,11 +87,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
+                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint
                 {
-                    Id = id,
-                    Host = host,
-                    Secret = secret,
+                    Id = decodedId,
+                    Host = host.Value,
+                    Secret = decodedString,
                     Platform = nameof(AssetPlatform.Npm),
                 },
                 ValidationState = ValidationState.Unknown,

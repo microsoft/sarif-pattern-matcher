@@ -23,7 +23,7 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "'{0}' contains an apparent {1}."
+                  "text": "'{0}' is an apparent {1}."
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -44,7 +44,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+              "123-45…",
               "social security number"
             ]
           },
@@ -71,10 +71,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=626B314E07BDE35B105543A8A75E2D257C9D4B2EB75B8BC7166489B6B01D19D3]",
-            "ValidationFingerprintHash/v1": "7550a76d0dcf856cd9325ff0f8dd10dfe306d35aa0f0973726381cbf0ae70a16"
+            "ValidationFingerprint/v1": "[secret=123-45-6789]",
+            "ValidationFingerprintHash/v1": "e24918902d0a1fcc33cbded1f97ce06a372acb99a255b0a934600e5abcacd6d7"
           },
-          "rank": 54.3
+          "rank": 46.82
         },
         {
           "ruleId": "SEC102/002",
@@ -83,7 +83,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+              "111-45…",
               "social security number"
             ]
           },
@@ -110,10 +110,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=626B314E07BDE35B105543A8A75E2D257C9D4B2EB75B8BC7166489B6B01D19D3]",
-            "ValidationFingerprintHash/v1": "7550a76d0dcf856cd9325ff0f8dd10dfe306d35aa0f0973726381cbf0ae70a16"
+            "ValidationFingerprint/v1": "[secret=111-45-6789]",
+            "ValidationFingerprintHash/v1": "45b4cec67315682d05693fec840472963e76da5ae6dfe071bee8ae662712e4d6"
           },
-          "rank": 54.3
+          "rank": 40.65
         },
         {
           "ruleId": "SEC102/002",
@@ -122,7 +122,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+              "123-44…",
               "social security number"
             ]
           },
@@ -149,10 +149,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=626B314E07BDE35B105543A8A75E2D257C9D4B2EB75B8BC7166489B6B01D19D3]",
-            "ValidationFingerprintHash/v1": "7550a76d0dcf856cd9325ff0f8dd10dfe306d35aa0f0973726381cbf0ae70a16"
+            "ValidationFingerprint/v1": "[secret=123-44-6789]",
+            "ValidationFingerprintHash/v1": "d79d4d3f92125fb103c1619cc4701b61313119b25ff5cc9b0573d2e747a9d46e"
           },
-          "rank": 54.3
+          "rank": 44.23
         },
         {
           "ruleId": "SEC102/002",
@@ -161,7 +161,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+              "123-45…",
               "social security number"
             ]
           },
@@ -188,10 +188,10 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=626B314E07BDE35B105543A8A75E2D257C9D4B2EB75B8BC7166489B6B01D19D3]",
-            "ValidationFingerprintHash/v1": "7550a76d0dcf856cd9325ff0f8dd10dfe306d35aa0f0973726381cbf0ae70a16"
+            "ValidationFingerprint/v1": "[secret=123-45-6666]",
+            "ValidationFingerprintHash/v1": "0ff33c39a69c033141f37181b7881af96cd4997738752932f7984613b5212e6e"
           },
-          "rank": 54.3
+          "rank": 36.43
         }
       ],
       "columnKind": "utf16CodeUnits"

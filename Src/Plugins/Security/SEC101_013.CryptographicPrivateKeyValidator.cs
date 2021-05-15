@@ -9,6 +9,7 @@ using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 using Org.BouncyCastle.Bcpg.OpenPgp;
 
@@ -24,7 +25,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -32,41 +33,41 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, string> groups)
+                                                                             Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("secret", out string secret))
+            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
-            groups.TryGetValue("kind", out string kind);
-            kind = matchedPattern.Contains(" PGP ") ? "Pgp" : kind;
+            groups.TryGetValue("kind", out FlexMatch kind);
+            string kindValue = matchedPattern.Contains(" PGP ") ? "Pgp" : kind?.Value.String;
 
-            secret = secret.Trim();
+            string secretValue = secret.Value.String.Trim();
 
             // Attempt to cleanup the secret
-            if (secret.IndexOf('"') > -1)
+            if (secretValue.IndexOf('"') > -1)
             {
-                string[] linesArray = secret.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                string[] linesArray = secret.Value.String.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
                 linesArray = linesArray.Select(x => string.Join(string.Empty, x.Replace("\\n", string.Empty)
                                                       .Replace("\"", string.Empty)
                                                       .Where(c => !char.IsWhiteSpace(c)))).ToArray();
-                secret = string.Join(Environment.NewLine, linesArray);
+                secretValue = string.Join(Environment.NewLine, linesArray);
             }
 
             var fingerprint = new Fingerprint
             {
-                Secret = secret,
+                Secret = secretValue,
             };
 
             ValidationState state = ValidationState.Unknown;
             string message = string.Empty;
 
-            switch (kind)
+            switch (kindValue)
             {
                 case "PrivateKeyBlob":
                 {
-                    byte[] bytes = Convert.FromBase64String(secret);
+                    byte[] bytes = Convert.FromBase64String(secret.Value);
 
                     // https://docs.microsoft.com/en-us/windows/win32/seccrypto/base-provider-secret-blobs#private-secret-blobs
                     // This offset is the RSAPUBKEY structure. The magic
@@ -84,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 case "Pgp":
                 {
-                    state = GetPrivatePgpKey(secret);
+                    state = GetPrivatePgpKey(secretValue);
                     break;
                 }
 
@@ -102,7 +103,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     string thumbprint = string.Empty;
                     try
                     {
-                        byte[] rawData = Convert.FromBase64String(secret);
+                        byte[] rawData = Convert.FromBase64String(secretValue);
                         state = CertificateHelper.TryLoadCertificate(rawData,
                                                                      ref fingerprint,
                                                                      ref message);
@@ -120,6 +121,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Message = message,
                 ValidationState = state,
+                RegionFlexMatch = secret,
                 Fingerprint = fingerprint,
             };
 

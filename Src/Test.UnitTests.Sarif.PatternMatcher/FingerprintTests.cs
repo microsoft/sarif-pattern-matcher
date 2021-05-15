@@ -167,6 +167,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
+        public void Fingerprint_SetProperty_UnrecognizedKeyNames()
+        {
+            var fingerprint = new Fingerprint();
+
+            fingerprint.SetProperty(Guid.NewGuid().ToString(), "test", ignoreRecognizedKeyNames: true);
+            fingerprint.Should().BeEquivalentTo(default(Fingerprint));
+
+            Action action = () => fingerprint.SetProperty(Guid.NewGuid().ToString(), "test");
+            action.Should().Throw<ArgumentException>();
+        }
+
+        [Fact]
         public void Fingerprint_SetProperty()
         {
             var failedTestCases = new List<string>();
@@ -182,7 +194,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 object boxed = fingerprint;
                 MethodInfo mi = type.GetMethod("SetProperty");
-                mi.Invoke(boxed, new[] { key, expected });
+                mi.Invoke(boxed, new object[] { key, expected, false });
                 fingerprint = (Fingerprint)boxed;
 
                 string actual = (string)pi.GetGetMethod().Invoke(fingerprint, null);

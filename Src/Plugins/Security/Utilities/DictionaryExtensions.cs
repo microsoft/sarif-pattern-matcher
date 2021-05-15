@@ -3,13 +3,15 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
+using Microsoft.RE2.Managed;
+
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public static class DictionaryExtensions
     {
-        public static bool TryGetNonEmptyValue<TKey>(this Dictionary<TKey, string> dictionary, TKey key, out string value)
+        public static bool TryGetNonEmptyValue<TKey>(this Dictionary<TKey, FlexMatch> dictionary, TKey key, out FlexMatch value)
         {
-            return dictionary.TryGetValue(key, out value) && !string.IsNullOrWhiteSpace(value);
+            return dictionary.TryGetValue(key, out value) && !string.IsNullOrWhiteSpace(value.Value);
         }
     }
 }

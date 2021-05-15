@@ -5,13 +5,14 @@ using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public static class MicrosoftSerializedCertificateStoreFileValidator
     {
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
             string message = string.Empty;
             Fingerprint fingerprint = default;

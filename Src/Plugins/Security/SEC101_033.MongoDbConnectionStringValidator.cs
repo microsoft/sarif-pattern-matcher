@@ -7,6 +7,7 @@ using System.Linq;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -23,7 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -39,22 +40,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         // }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, string> groups)
+                                                                             Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("host", out string host) ||
-                !groups.TryGetNonEmptyValue("secret", out string secret))
+            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
+                !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
+                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
             var validationResult = new ValidationResult
             {
+                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint()
                 {
-                    Id = id,
-                    Host = host,
-                    Secret = secret,
+                    Id = id.Value,
+                    Host = host.Value,
+                    Secret = secret.Value,
                 },
                 ValidationState = ValidationState.Unknown,
             };

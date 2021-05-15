@@ -81,7 +81,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public static IEnumerable<ValidationResult> IsValidStatic(ValidatorBase validator,
                                                                   ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
             IEnumerable<ValidationResult> validationResults = validator.IsValidStaticHelper(ref matchedPattern,
                                                                                             groups);
@@ -93,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     continue;
                 }
 
-                string scanTarget = groups["scanTargetFullPath"];
+                string scanTarget = groups["scanTargetFullPath"].Value;
                 string key = $"{scanTarget}#{validationResult.Fingerprint}";
 
                 if (validator.PerFileFingerprintCache.Contains(key))
@@ -109,10 +109,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         }
 
         public static ValidationState IsValidDynamic(ValidatorBase validator,
-                                            ref Fingerprint fingerprint,
-                                            ref string message,
-                                            Dictionary<string, string> options,
-                                            ref ResultLevelKind resultLevelKind)
+                                                     ref Fingerprint fingerprint,
+                                                     ref string message,
+                                                     Dictionary<string, string> options,
+                                                     ref ResultLevelKind resultLevelKind)
         {
             resultLevelKind = default;
 
@@ -239,9 +239,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return ValidationState.Unknown;
         }
 
-        public static string ParseExpression(IRegex regexEngine, string matchedPattern, string expression)
+        public static string ParseExpression(IRegex regexEngine, string matchedPattern, string expression, ref FlexMatch match)
         {
-            FlexMatch match = regexEngine.Match(matchedPattern, expression);
+            match = regexEngine.Match(matchedPattern, expression);
             return match?.Success ?? false ? ParseValue(match.Value) : null;
         }
 
@@ -306,14 +306,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// added in order to refine or add argument values that will be used in result messages.
         /// </param>
         ///
-        /// <returns>Return an ienumerable of ValidationResult.</returns>
+        /// <returns>Return an enumerable ValidationResult collection.</returns>
         protected abstract IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, string> groups);
+                                                                             Dictionary<string, FlexMatch> groups);
 
         protected virtual ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                      ref string message,
-                                                      Dictionary<string, string> options,
-                                                      ref ResultLevelKind resultLevelKind)
+                                                               ref string message,
+                                                               Dictionary<string, string> options,
+                                                               ref ResultLevelKind resultLevelKind)
         {
             return ValidationState.NoMatch;
         }

@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 
+using Microsoft.RE2.Managed;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public class ValidationResult
@@ -16,14 +18,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public ValidationState ValidationState { get; set; }
 
         /// <summary>
-        /// Gets or sets the override index of match found in matched pattern by validator.
+        /// Gets or sets the FlexMatch that describes the result SARIF region.
         /// </summary>
-        public int? OverrideIndex { get; set; }
-
-        /// <summary>
-        /// Gets or sets the override length of match found in matched pattern by validator.
-        /// </summary>
-        public int? OverrideLength { get; set; }
+        public FlexMatch RegionFlexMatch { get; set; }
 
         public static IEnumerable<ValidationResult> CreateNoMatch()
         {

@@ -8,6 +8,7 @@ using System.Net.Http;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -21,7 +22,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -41,26 +42,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, string> groups)
+                                                                             Dictionary<string, FlexMatch> groups)
         {
             // We need uri and neither account nor password, or uri and both account and password.  Use XOR
-            if (!groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("host", out string host) ||
-                !groups.TryGetNonEmptyValue("secret", out string secret))
+            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
+                !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
+                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
-            groups.TryGetNonEmptyValue("resource", out string resource);
+            groups.TryGetNonEmptyValue("resource", out FlexMatch resource);
 
             var validationResult = new ValidationResult
             {
+                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint()
                 {
-                    Id = id,
-                    Host = host,
-                    Secret = secret,
-                    Resource = resource,
+                    Id = id.Value,
+                    Host = host.Value,
+                    Secret = secret.Value,
+                    Resource = resource?.Value,
                     Platform = nameof(AssetPlatform.Cloudant),
                 },
                 ValidationState = ValidationState.Unknown,

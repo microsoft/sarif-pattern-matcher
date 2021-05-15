@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -66,11 +66,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, string> groups)
+                                                                             Dictionary<string, FlexMatch> groups)
         {
-            matchedPattern = matchedPattern.Trim();
+            FlexMatch id, host, secret, database;
 
-            string id, host, secret, database;
+            id = host = secret = database = null;
 
             if (groups.ContainsKey("id") &&
                 groups.ContainsKey("host") &&
@@ -84,23 +84,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             else
             {
-                id = ParseExpression(RegexEngine, matchedPattern, AccountExpression);
-                host = ParseExpression(RegexEngine, matchedPattern, HostExpression);
-                secret = ParseExpression(RegexEngine, matchedPattern, PasswordExpression);
-                database = ParseExpression(RegexEngine, matchedPattern, DatabaseExpression);
+                ParseExpression(RegexEngine, matchedPattern, AccountExpression, ref id);
+                ParseExpression(RegexEngine, matchedPattern, HostExpression, ref host);
+                ParseExpression(RegexEngine, matchedPattern, PasswordExpression, ref secret);
+                ParseExpression(RegexEngine, matchedPattern, DatabaseExpression, ref database);
             }
 
-            if (string.IsNullOrWhiteSpace(id) ||
-                string.IsNullOrWhiteSpace(host) ||
-                string.IsNullOrWhiteSpace(secret) ||
-                string.IsNullOrWhiteSpace(database))
+            if (string.IsNullOrWhiteSpace(id.Value) ||
+                string.IsNullOrWhiteSpace(host.Value) ||
+                string.IsNullOrWhiteSpace(secret.Value) ||
+                string.IsNullOrWhiteSpace(database.Value))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
-            host = FilteringHelpers.StandardizeLocalhostName(host);
+            string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
 
-            ValidationState exclusionResult = FilteringHelpers.HostExclusion(host, HostsToExclude);
+            ValidationState exclusionResult = FilteringHelpers.HostExclusion(hostValue, HostsToExclude);
 
             if (exclusionResult == ValidationState.NoMatch)
             {
@@ -117,16 +117,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var fingerprint = new Fingerprint()
             {
-                Id = id,
-                Host = host,
-                Secret = secret,
-                Resource = database,
+                Id = id.Value,
+                Host = hostValue,
+                Secret = secret.Value,
+                Resource = database.Value,
             };
 
-            SharedUtilities.PopulateAssetFingerprint(host, ref fingerprint);
+            SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint);
 
             var validationResult = new ValidationResult
             {
+                RegionFlexMatch = secret,
                 Fingerprint = fingerprint,
                 ValidationState = ValidationState.Unknown,
             };

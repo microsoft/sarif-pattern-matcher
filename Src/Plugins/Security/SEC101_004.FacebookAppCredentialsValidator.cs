@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 using Newtonsoft.Json;
 
@@ -21,7 +22,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -41,20 +42,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, string> groups)
+                                                                             Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetValue("id", out string id) ||
-                !groups.TryGetValue("secret", out string secret))
+            if (!groups.TryGetValue("id", out FlexMatch id) ||
+                !groups.TryGetValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
             var validationResult = new ValidationResult
             {
+                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint
                 {
-                    Id = id,
-                    Secret = secret,
+                    Id = id.Value,
+                    Secret = secret.Value,
                     Platform = nameof(AssetPlatform.Facebook),
                 },
                 ValidationState = ValidationState.Unknown,

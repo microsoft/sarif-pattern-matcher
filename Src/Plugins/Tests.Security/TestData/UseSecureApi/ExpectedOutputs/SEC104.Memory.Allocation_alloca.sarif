@@ -73,11 +73,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=D62A0E587857E47344ED096CC889828D53B1AB3EA83E005D277AC18A2AB80B4F]",
-            "ValidationFingerprintHash/v1": "b344d33a3519f593c86ad5274421711b348eb2b250a69bdb4b6d3600bc069563"
-          },
-          "rank": 54.99
+            "AssetFingerprint/v1": "[id=_alloca]",
+            "ValidationFingerprint/v1": "[id=_alloca]",
+            "ValidationFingerprintHash/v1": "b7def400029e894d96939eb68b0a7a65a04509f2c20b83ba65fb68be26a56e81"
+          }
         }
       ],
       "columnKind": "utf16CodeUnits"

@@ -10,6 +10,7 @@ using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -23,7 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, string> groups)
+                                                                  Dictionary<string, FlexMatch> groups)
         {
             return IsValidStatic(Instance,
                                  ref matchedPattern,
@@ -43,20 +44,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, string> groups)
+                                                                             Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out string id) ||
-                !groups.TryGetNonEmptyValue("secret", out string secret))
+            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
+                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
             var validationResult = new ValidationResult
             {
+                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint
                 {
-                    Id = id,
-                    Secret = secret,
+                    Id = id.Value,
+                    Secret = secret.Value,
                     Platform = nameof(AssetPlatform.Twilio),
                 },
                 ValidationState = ValidationState.Unknown,
