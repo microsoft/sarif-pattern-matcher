@@ -132,12 +132,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 foreach (MatchExpression matchExpression in definition.MatchExpressions)
                 {
-                    if (matchExpression.ContentsRegexes?.Count > 0)
+                    if (matchExpression.IntrafileRegexes?.Count > 0)
                     {
-                        for (int i = 0; i < matchExpression.ContentsRegexes.Count; i++)
+                        matchExpression.IntrafileRegexMetadata =
+                            new List<RegexMetadata>(matchExpression.IntrafileRegexes.Count);
+
+                        for (int i = 0; i < matchExpression.IntrafileRegexes.Count; i++)
                         {
-                            matchExpression.ContentsRegexes[i] =
-                                PushData(matchExpression.ContentsRegexes[i],
+                            string regex = matchExpression.IntrafileRegexes[i];
+                            matchExpression.IntrafileRegexMetadata.Add(RegexMetadata.None);
+
+                            if (regex.StartsWith("?"))
+                            {
+                                matchExpression.IntrafileRegexMetadata[i] = RegexMetadata.Optional;
+
+                                // Once we record this regex as optional, mark it with the standard
+                                // prefix so that the rest of processing happens as usual.
+                                matchExpression.IntrafileRegexes[i] = "$" + regex.Substring(1);
+                            }
+
+                            matchExpression.IntrafileRegexes[i] =
+                                PushData(matchExpression.IntrafileRegexes[i],
                                          definition.SharedStrings,
                                          sharedStrings);
                         }
