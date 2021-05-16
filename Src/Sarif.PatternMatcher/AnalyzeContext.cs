@@ -55,6 +55,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public bool EnhancedReporting { get; set; }
 
+        public bool Retry { get; set; }
+
+        public long MaxMemoryInKilobytes { get; set; }
+
         public void Dispose()
         {
         }

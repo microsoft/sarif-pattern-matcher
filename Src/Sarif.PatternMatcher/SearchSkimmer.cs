@@ -543,7 +543,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;
 
-            if (!_engine.Matches(matchExpression.ContentsRegex, searchText, out List<Dictionary<string, FlexMatch>> matches))
+            if (!_engine.Matches(matchExpression.ContentsRegex,
+                                 searchText,
+                                 out List<Dictionary<string, FlexMatch>> matches,
+                                 1024 * context.MaxMemoryInKilobytes))
             {
                 return;
             }
@@ -554,6 +557,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Debug.Assert(!match.ContainsKey("scanTargetFullPath"), "Full path should only be populated by engine.");
                 match["scanTargetFullPath"] = new FlexMatch { Value = filePath };
+                match["retry"] = new FlexMatch { Value = context.Retry ? bool.TrueString : bool.FalseString };
                 match["enhancedReporting"] = new FlexMatch { Value = context.EnhancedReporting ? bool.TrueString : bool.FalseString };
                 match.AddProperties(matchExpression.Properties);
 

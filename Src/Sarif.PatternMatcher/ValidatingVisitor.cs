@@ -9,12 +9,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatingVisitor : SarifRewritingVisitor
     {
+        private readonly bool _retry;
         private readonly bool _enhancedReporting;
         private readonly ValidatorsCache _validators;
         private Run _run;
 
-        public ValidatingVisitor(ValidatorsCache validators, bool enhancedReporting = false)
+        public ValidatingVisitor(ValidatorsCache validators, bool enhancedReporting = false, bool retry = false)
         {
+            _retry = retry;
             _validators = validators;
             _enhancedReporting = enhancedReporting;
         }
@@ -47,6 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string message = null;
                 IDictionary<string, string> options = new Dictionary<string, string>
                 {
+                    { "retry", _retry ? bool.TrueString : bool.FalseString },
                     { "enhancedReporting", _enhancedReporting ? bool.TrueString : bool.FalseString },
                 };
 

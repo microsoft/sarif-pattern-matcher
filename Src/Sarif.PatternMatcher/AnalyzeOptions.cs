@@ -37,7 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public string FileNameDenyRegex { get; internal set; }
 
         [Option(
-            "file-size",
+            "file-size-in-kb",
             HelpText = "The maximum file size (in kilobytes) that will be analyzed.",
             Default = 1024)]
         public int FileSizeInKilobytes { get; internal set; }
@@ -51,5 +51,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             "enhanced-reporting",
             HelpText = "Enable enhanced reporting provided by dynamic validators (when --dynamic-validation is also enabled).")]
         public bool EnhancedReporting { get; internal set; }
+
+        [Option(
+            "retry",
+            HelpText = "Enable retry connection if enabled.")]
+        public bool Retry { get; set; }
+
+        [Option(
+            "max-memory-in-kb",
+            HelpText = "The maximum memory (in kilobytes) that can be used for RE2.",
+            Default = -1)]
+        public long MaxMemoryInKilobytes { get; internal set; }
     }
 }
