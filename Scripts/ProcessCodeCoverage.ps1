@@ -1,4 +1,4 @@
-nuget install Microsoft.CodeCoverage -version 16.8.3
+nuget install Microsoft.CodeCoverage -version 16.9.4
 
 $files = Get-ChildItem "bld\TestResults" -Filter "*.coverage" -Recurse
 
