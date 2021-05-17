@@ -148,8 +148,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message = CreateUnexpectedResponseCodeMessage(responseWithCredentials.StatusCode, host);
-                        return ValidationState.Unknown;
+                        return ReturnUnexpectedResponseCode(ref message, responseWithCredentials.StatusCode, asset: host);
                     }
                 }
             }

@@ -109,8 +109,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message = CreateUnexpectedResponseCodeMessage(status);
-                        break;
+                        return ReturnUnexpectedResponseCode(ref message, status);
                     }
                 }
             }
@@ -118,8 +117,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }

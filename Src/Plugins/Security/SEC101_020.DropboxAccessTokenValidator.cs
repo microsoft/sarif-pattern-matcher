@@ -117,9 +117,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             return ValidationState.Authorized;
                         }
 
-                        // We don't recognize this message.
-                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
-                        break;
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
                     }
 
                     case HttpStatusCode.Unauthorized:
@@ -129,8 +127,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
-                        break;
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
                     }
                 }
             }
@@ -138,8 +135,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }

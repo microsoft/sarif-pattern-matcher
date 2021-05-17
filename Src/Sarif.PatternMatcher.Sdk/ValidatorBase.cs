@@ -154,16 +154,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return false;
         }
 
-        public static string CreateUnexpectedResponseCodeMessage(HttpStatusCode status, string asset = null)
+        public static ValidationState ReturnUnexpectedResponseCode(ref string message, HttpStatusCode status, string asset = null)
         {
-            return CreateUnexpectedResponseCodeMessage(status, ref asset);
-        }
-
-        public static string CreateUnexpectedResponseCodeMessage(HttpStatusCode status, ref string asset)
-        {
-            return asset == null ?
+            message = asset == null ?
                 $"An unexpected HTTP response code was received: '{status}'." :
                 $"An unexpected HTTP response code was received from '{asset}': '{status}'.";
+
+            return ValidationState.Unknown;
         }
 
         public static ValidationState ReturnUnhandledException(ref string message,
@@ -328,7 +325,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             Match match = regex.Match(e.Message);
             if (match.Success)
             {
-                asset = asset ?? match.Groups?["asset"].Value;
+                asset ??= match.Groups?["asset"].Value;
                 return true;
             }
 
