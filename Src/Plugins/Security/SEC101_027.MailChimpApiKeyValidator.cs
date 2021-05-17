@@ -75,7 +75,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                using HttpClient client = CreateHttpClient();
+                HttpClient client = CreateHttpClient();
                 string[] keys = secret.Split('-');
 
                 client.DefaultRequestHeaders.Authorization =

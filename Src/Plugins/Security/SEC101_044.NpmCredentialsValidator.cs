@@ -111,7 +111,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string secret = fingerprint.Secret;
             string uri = $"https://{host}";
 
-            using HttpClient client = CreateHttpClient();
+            HttpClient client = CreateHttpClient();
 
             try
             {
