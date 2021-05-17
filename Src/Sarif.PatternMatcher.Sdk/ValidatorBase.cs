@@ -34,7 +34,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             new Regex($@"The underlying connection was closed: Could not establish " +
                          "trust relationship for the SSL/TLS secure channel.", s_options);
 
-        private static readonly object sync = new object();
+        [ThreadStatic]
         private static HttpClient httpClient;
 
         private static bool shouldUseDynamicCache;
@@ -280,25 +280,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             if (httpClient == null)
             {
-                lock (sync)
+                var httpClientHandler = new HttpClientHandler()
                 {
-                    if (httpClient == null)
-                    {
-                        var httpClientHandler = new HttpClientHandler()
-                        {
-                            AllowAutoRedirect = true,
-                            MaxAutomaticRedirections = 10,
-                        };
+                    AllowAutoRedirect = true,
+                    MaxAutomaticRedirections = 10,
+                };
 
-                        httpClient = new HttpClient(httpClientHandler);
+                httpClient = new HttpClient(httpClientHandler);
 
-                        httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
-                                                             ScanIdentityHttpCustomHeaderValue);
+                httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
+                                                     ScanIdentityHttpCustomHeaderValue);
 
-                        httpClient.DefaultRequestHeaders.Add("User-Agent",
-                                                             UserAgentValue);
-                    }
-                }
+                httpClient.DefaultRequestHeaders.Add("User-Agent",
+                                                     UserAgentValue);
             }
 
             return httpClient;
