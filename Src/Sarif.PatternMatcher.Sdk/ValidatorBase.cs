@@ -34,6 +34,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             new Regex($@"The underlying connection was closed: Could not establish " +
                          "trust relationship for the SSL/TLS secure channel.", s_options);
 
+        private static readonly object sync = new object();
         private static HttpClient httpClient;
 
         private static bool shouldUseDynamicCache;
@@ -277,24 +278,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected HttpClient CreateHttpClient()
         {
-            if (httpClient != null)
+            if (httpClient == null)
             {
-                return httpClient;
+                lock (sync)
+                {
+                    if (httpClient == null)
+                    {
+                        var httpClientHandler = new HttpClientHandler()
+                        {
+                            AllowAutoRedirect = true,
+                            MaxAutomaticRedirections = 10,
+                        };
+
+                        httpClient = new HttpClient(httpClientHandler);
+
+                        httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
+                                                             ScanIdentityHttpCustomHeaderValue);
+
+                        httpClient.DefaultRequestHeaders.Add("User-Agent",
+                                                             UserAgentValue);
+                    }
+                }
             }
-
-            var httpClientHandler = new HttpClientHandler()
-            {
-                AllowAutoRedirect = true,
-                MaxAutomaticRedirections = 10,
-            };
-
-            httpClient = new HttpClient(httpClientHandler);
-
-            httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
-                                                 ScanIdentityHttpCustomHeaderValue);
-
-            httpClient.DefaultRequestHeaders.Add("User-Agent",
-                                                 UserAgentValue);
 
             return httpClient;
         }
