@@ -413,7 +413,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return fingerprint;
         }
 
-        private static void MergeDictionary(IList<Dictionary<string, FlexMatch>> mergeFrom, IDictionary<string, IList<FlexMatch>> mergedGroups)
+        private static void MergeDictionary(IList<Dictionary<string, FlexMatch>> mergeFrom, IDictionary<string, ISet<FlexMatch>> mergedGroups)
         {
             foreach (Dictionary<string, FlexMatch> groups in mergeFrom)
             {
@@ -422,9 +422,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // We only persist named groups, not groups specified by index.
                     if (int.TryParse(keyValue.Key, out int val)) { continue; }
 
-                    if (!mergedGroups.TryGetValue(keyValue.Key, out IList<FlexMatch> flexMatches))
+                    if (!mergedGroups.TryGetValue(keyValue.Key, out ISet<FlexMatch> flexMatches))
                     {
-                        mergedGroups[keyValue.Key] = flexMatches = new List<FlexMatch>();
+                        mergedGroups[keyValue.Key] = flexMatches = new HashSet<FlexMatch>(FlexMatchValueComparer.Instance);
                     }
 
                     flexMatches.Add(keyValue.Value);
@@ -434,10 +434,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
-            if (matchExpression.ContentsRegexes?.Count > 0)
+            if (matchExpression.IntrafileRegexes?.Count > 0)
             {
                 Debug.Assert(binary64DecodedMatch == null, "Decoded binary64 should not be null");
-                RunMatchExpressionForContentsRegexes(context, matchExpression);
+                RunMatchExpressionForIntrafileRegexes(context, matchExpression);
             }
             else if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
             {
@@ -454,20 +454,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private void RunMatchExpressionForContentsRegexes(AnalyzeContext context, MatchExpression matchExpression)
+        private void RunMatchExpressionForIntrafileRegexes(AnalyzeContext context, MatchExpression matchExpression)
         {
             ResultKind kind = matchExpression.Kind;
             FailureLevel level = matchExpression.Level;
             string searchText = context.FileContents;
             string filePath = context.TargetUri.GetFilePath();
 
-            var mergedGroups = new Dictionary<string, IList<FlexMatch>>();
+            var mergedGroups = new Dictionary<string, ISet<FlexMatch>>();
 
-            foreach (string contentsRegex in matchExpression.ContentsRegexes)
+            for (int i = 0; i < matchExpression.IntrafileRegexes.Count; i++)
             {
+                string contentsRegex = matchExpression.IntrafileRegexes[i];
+
                 if (!_engine.Matches(contentsRegex, searchText, out List<Dictionary<string, FlexMatch>> matches))
                 {
-                    continue;
+                    if (matchExpression.IntrafileRegexMetadata[i] == RegexMetadata.Optional)
+                    {
+                        continue;
+                    }
+
+                    return;
                 }
 
                 MergeDictionary(matches, mergedGroups);

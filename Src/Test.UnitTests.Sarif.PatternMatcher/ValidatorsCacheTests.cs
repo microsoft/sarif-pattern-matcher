@@ -20,12 +20,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void ValidatorsCache_GetCombinations()
         {
-            var input = new Dictionary<string, IList<FlexMatch>>();
+            var input = new Dictionary<string, ISet<FlexMatch>>();
             IList<Dictionary<string, FlexMatch>> results = ValidatorsCache.GetCombinations(input);
 
             results.Should().BeEmpty();
 
-            input["a"] = new List<FlexMatch>(new[]
+            input["a"] = new HashSet<FlexMatch>(new[]
                 { new FlexMatch() { Value = "a1" },
                   new FlexMatch() { Value = "a2" },
                 });
@@ -33,7 +33,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             results = ValidatorsCache.GetCombinations(input);
             results.Count.Should().Be(CombinationsCount(input));
 
-            input["b"] = new List<FlexMatch>(new[]
+            input["b"] = new HashSet<FlexMatch>(new[]
                 { new FlexMatch() { Value = "b1" },
                   new FlexMatch() { Value = "b2" },
                   new FlexMatch() { Value = "b3" }
@@ -42,7 +42,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             results = ValidatorsCache.GetCombinations(input);
             results.Count.Should().Be(CombinationsCount(input));
 
-            input["c"] = new List<FlexMatch>(new[]
+            input["c"] = new HashSet<FlexMatch>(new[]
                 { new FlexMatch() { Value = "c1" },
                   new FlexMatch() { Value = "c2" },
                   new FlexMatch() { Value = "c3" },
@@ -81,10 +81,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 (elements.Where(e => e == flexMatch.Value).Count() == aCount * bCount).Should().BeTrue();
             }
-
         }
 
-        private int CombinationsCount(Dictionary<string, IList<FlexMatch>> input)
+        private int CombinationsCount(Dictionary<string, ISet<FlexMatch>> input)
         {
             int count = 1;
 

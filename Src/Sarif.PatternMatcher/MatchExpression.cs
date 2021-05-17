@@ -7,9 +7,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class MatchExpression
     {
-        public string SniffReg { get; set; }
+        public IList<RegexMetadata> IntrafileRegexMetadata { get; set; }
 
-        public IList<string> ContentsRegexes { get; set; }
+        public IList<string> IntrafileRegexes { get; set; }
 
         public string Id { get; set; }
 
