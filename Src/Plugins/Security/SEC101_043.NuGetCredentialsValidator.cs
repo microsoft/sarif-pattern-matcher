@@ -165,14 +165,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                             default:
                             {
-                                return ReturnUnexpectedResponseCode(ref message, responseWithCredentials.StatusCode, asset: host);
+                                return ReturnUnexpectedResponseCode(ref message, responseWithCredentials.StatusCode, asset: host, account: username);
                             }
                         }
                     }
 
                     default:
                     {
-                        return ReturnUnexpectedResponseCode(ref message, responseWithNoCredentials.StatusCode, asset: host);
+                        return ReturnUnexpectedResponseCode(ref message, responseWithNoCredentials.StatusCode, asset: host, account: username);
                     }
                 }
             }

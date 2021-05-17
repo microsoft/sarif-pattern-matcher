@@ -115,12 +115,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             return ValidationState.Unauthorized;
                         }
 
-                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode, account: id);
                     }
 
                     default:
                     {
-                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode, account: id);
                     }
                 }
             }

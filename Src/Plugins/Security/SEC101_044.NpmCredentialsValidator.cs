@@ -148,7 +148,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        return ReturnUnexpectedResponseCode(ref message, responseWithCredentials.StatusCode, asset: host);
+                        return ReturnUnexpectedResponseCode(ref message, responseWithCredentials.StatusCode, asset: host, account: id);
                     }
                 }
             }

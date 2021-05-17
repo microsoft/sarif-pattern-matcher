@@ -109,7 +109,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        return ReturnUnexpectedResponseCode(ref message, status);
+                        return ReturnUnexpectedResponseCode(ref message, status, account: id);
                     }
                 }
             }
