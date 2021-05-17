@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.RE2.Managed
 {
-    internal class FlexMatchValueComparer : IEqualityComparer<FlexMatch>
+    public class FlexMatchValueComparer : IEqualityComparer<FlexMatch>
     {
         private static FlexMatchValueComparer _instance;
 
