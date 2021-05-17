@@ -126,13 +126,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                using HttpResponseMessage httpResponse = httpClient.GetAsync(url).GetAwaiter().GetResult();
+                using HttpResponseMessage response = httpClient.GetAsync(url).GetAwaiter().GetResult();
 
-                switch (httpResponse.StatusCode)
+                switch (response.StatusCode)
                 {
                     case System.Net.HttpStatusCode.OK:
                     {
-                        obj = JsonConvert.DeserializeObject<T>(httpResponse
+                        obj = JsonConvert.DeserializeObject<T>(response
                             .Content
                             .ReadAsStringAsync()
                             .GetAwaiter()
@@ -147,14 +147,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     }
 
                     case System.Net.HttpStatusCode.BadRequest:
+                    case System.Net.HttpStatusCode.InternalServerError:
                     {
                         return ReturnUnauthorizedAccess(ref message, asset: id);
                     }
 
                     default:
                     {
-                        message = $"Unexpected response status code: '{httpResponse.StatusCode}'";
-                        return ReturnUnknownAuthorization(ref message, asset: id);
+                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode, asset: id);
+                        return ValidationState.Unknown;
+
                     }
                 }
             }

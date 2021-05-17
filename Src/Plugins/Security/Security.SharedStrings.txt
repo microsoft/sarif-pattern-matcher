@@ -23,15 +23,23 @@
 
 # $FacebookAppCredentials=(?si)(((facebook|fb)(.{0,20})?[`'"\s>](?P<id>[0-9]{13,17})[^0-9].{1,500}?)|((facebook|fb)(.{0,20})?[`'"\s>](?P<secret>[0-9a-f]{32})([^0-9a-f]?)).{1,500}?){2}
 
-  $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?P<scheme>http|ftp|https):\/\/(?P<host>[\w_.-]{1,200})(?P<path>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= "']+(basic)[\s\r\n]{0,10}(?P<secret>[^'"><;\s]{1,500})
+# Intrafile analysis
+  $SEC101/004.FacebookAppCredentialsId=(?si)facebook.{1,50}\b(?P<id>[0-9]{15})([^0-9]|$)
+  $SEC101/004.FacebookAppCredentialsSecret=(?si)facebook.{1,50}\b(?P<secret>[0-9a-f]{32})([^0-9]|$)
+
+  $SEC101/008.AwsCredentialsId=(?s)\b(?P<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16})([^0-9A-Z]|$)
+  $SEC101/008.AwsCredentialsSecret=(?i)\b(?P<secret>[0-9a-z\/+]{40})([^0-9a-z\/+]|$)
+
+# Legacy analysis model : no dynamic validator
   $SEC101/002.GoogleOAuthCredentials=(?s)\b(?P<id>[0-9]{12}\-[0-9a-z]{32})\.apps\.googleusercontent\.com.{1,500}?\b(?i)(?P<secret>[0-9a-z\-]{24})
-  $SEC101/003.GoogleApiKey=\b(?P<secret>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
-  $SEC101/004.FacebookAppCredentials=(?si)facebook.{1,50}\b(?P<id>[0-9]{15}).{1,500}?\b(?P<secret>[0-9a-f]{32})
-  $SEC101/005.SlackToken=\b(?P<secret>xox(?P<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
-  $SEC101/006.GitHubPatLegacy=(?si)(?P<refine>github.{0,50}[^0-9a-z](?P<secret>[0-9a-z]{40}))([^0-9a-z]|$)
-  $SEC101/006.GitHubPatCurrent=(?P<secret>gh(p|o|u|s|r)_[\w]{30}(?P<checksum>[\w]{6}))
   $SEC101/007.GitHubAppCredentials=(?s)((\b(?P<id>Iv1\.[0-9a-z]{16}).{1,50}?)|(\b(?i)(?P<secret>[0-9a-z]{35,40})\b.{0,50}?)){2}
-  $SEC101/008.AwsCredentials=(?s)\b(?P<id>(A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}).{1,500}?\b(?i)(?P<secret>[0-9a-z\/+]{40})
+
+# Legacy analysis model : with dynamic validator
+  $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?P<scheme>http|ftp|https):\/\/(?P<host>[\w_.-]{1,200})(?P<path>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(.|\n){0,100}?authorization[,\[:= "']+(basic)[\s\r\n]{0,10}(?P<secret>[^'"><;\s]{1,500})
+  $SEC101/003.GoogleApiKey=\b(?P<secret>AIza(?i)[0-9a-z-_]{35})([^0-9a-z-_]|$)
+  $SEC101/005.SlackToken=\b(?P<secret>xox(?P<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
+  $SEC101/006.GitHubPatLegacy=(?si)github.{0,50}[^0-9a-z](?P<secret>[0-9a-z]{40})([^0-9a-z]|$)
+  $SEC101/006.GitHubPatCurrent=(?P<secret>gh(p|o|u|s|r)_[\w]{30}(?P<checksum>[\w]{6}))
   $SEC101/009.LinkedInCredentials=(?si)linkedin(.{0,50})?\b(?-i)(?P<id>[0-9a-z]{14})\b.{0,50}?\b(?i)(?P<secret>[0-9a-z]{16})\b
   $SEC101/010.SquarePat=(?si)(?P<refine>square.{0,50}[^0-9a-z](?P<secret>(?-i)EAAAE[\w\-]{59}))([^0-9a-z]|$)
   $SEC101/011.SquareCredentials=(?s)((\b(?P<id>sq0idp\-[\w\-]{22}).{1,50}?)|(\b(?P<secret>sq0csp-(?i)[0-9a-z\-_]{43}).{0,50}?)){2}

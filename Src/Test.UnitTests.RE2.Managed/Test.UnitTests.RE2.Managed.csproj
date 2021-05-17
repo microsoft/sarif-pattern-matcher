@@ -6,9 +6,12 @@
   <PropertyGroup Label="AssemblyAttributes">
     <RootNamespace>Microsoft.RE2.Managed</RootNamespace>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\RE2.Managed\RE2.Managed.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+  </ItemGroup>
 </Project>
