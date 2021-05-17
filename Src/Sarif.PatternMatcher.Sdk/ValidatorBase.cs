@@ -34,6 +34,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             new Regex($@"The underlying connection was closed: Could not establish " +
                          "trust relationship for the SSL/TLS secure channel.", s_options);
 
+        [ThreadStatic]
+        private static HttpClient httpClient;
+
         private static bool shouldUseDynamicCache;
 
         static ValidatorBase()
@@ -275,19 +278,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected HttpClient CreateHttpClient()
         {
-            var httpClientHandler = new HttpClientHandler()
+            if (httpClient == null)
             {
-                AllowAutoRedirect = true,
-                MaxAutomaticRedirections = 10,
-            };
+                var httpClientHandler = new HttpClientHandler()
+                {
+                    AllowAutoRedirect = true,
+                    MaxAutomaticRedirections = 10,
+                };
 
-            var httpClient = new HttpClient(httpClientHandler);
+                httpClient = new HttpClient(httpClientHandler);
 
-            httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
-                                                 ScanIdentityHttpCustomHeaderValue);
+                httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
+                                                     ScanIdentityHttpCustomHeaderValue);
 
-            httpClient.DefaultRequestHeaders.Add("User-Agent",
-                                                 UserAgentValue);
+                httpClient.DefaultRequestHeaders.Add("User-Agent",
+                                                     UserAgentValue);
+            }
 
             return httpClient;
         }
@@ -328,7 +334,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             Match match = regex.Match(e.Message);
             if (match.Success)
             {
-                asset = asset ?? match.Groups?["asset"].Value;
+                asset ??= match.Groups?["asset"].Value;
                 return true;
             }
 

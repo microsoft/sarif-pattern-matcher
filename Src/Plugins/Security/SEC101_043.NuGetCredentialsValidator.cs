@@ -119,7 +119,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string username = fingerprint.Id;
             string password = fingerprint.Secret;
 
-            using HttpClient client = CreateHttpClient();
+            HttpClient client = CreateHttpClient();
 
             try
             {

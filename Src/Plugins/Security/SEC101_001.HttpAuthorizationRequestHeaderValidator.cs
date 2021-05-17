@@ -82,7 +82,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                using HttpClient client = CreateHttpClient();
+                HttpClient client = CreateHttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Guid.NewGuid().ToString());
 
                 using HttpResponseMessage responseDummy = client
