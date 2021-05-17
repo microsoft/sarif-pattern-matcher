@@ -121,7 +121,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private ValidationState RetrieveInformation<T>(string url, string id, ref string message, out T obj)
         {
-            using HttpClient httpClient = CreateHttpClient();
+            HttpClient httpClient = CreateHttpClient();
             obj = default;
 
             try
