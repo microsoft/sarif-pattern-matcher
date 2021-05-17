@@ -157,16 +157,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return false;
         }
 
-        public static string CreateUnexpectedResponseCodeMessage(HttpStatusCode status, string asset = null)
+        public static ValidationState ReturnUnexpectedResponseCode(ref string message,
+                                                                   HttpStatusCode status,
+                                                                   string asset = null,
+                                                                   string account = null)
         {
-            return CreateUnexpectedResponseCodeMessage(status, ref asset);
-        }
+            if (string.IsNullOrEmpty(asset))
+            {
+                message = $"An unexpected HTTP response code was received: '{status}'.";
+            }
+            else if (string.IsNullOrEmpty(account))
+            {
+                message = $"An unexpected HTTP response code was received from '{asset}': '{status}'.";
+            }
+            else
+            {
+                message = $"An unexpected HTTP response code was received from '{account}' account on '{asset}': {status}";
+            }
 
-        public static string CreateUnexpectedResponseCodeMessage(HttpStatusCode status, ref string asset)
-        {
-            return asset == null ?
-                $"An unexpected HTTP response code was received: '{status}'." :
-                $"An unexpected HTTP response code was received from '{asset}': '{status}'.";
+            return ValidationState.Unknown;
         }
 
         public static ValidationState ReturnUnhandledException(ref string message,

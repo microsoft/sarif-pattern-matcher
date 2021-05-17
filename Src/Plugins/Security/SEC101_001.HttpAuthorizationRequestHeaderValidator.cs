@@ -124,8 +124,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             return ValidationState.NoMatch;
                         }
 
-                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode, asset: host);
-                        return ValidationState.Unknown;
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode, asset: host);
                     }
                 }
             }
