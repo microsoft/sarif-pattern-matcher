@@ -197,7 +197,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public IEnumerable<ValidationResult> Validate(string ruleName,
                                                       AnalyzeContext context,
                                                       ref string matchedPattern,
-                                                      IDictionary<string, IList<FlexMatch>> mergedGroups,
+                                                      IDictionary<string, ISet<FlexMatch>> mergedGroups,
                                                       IDictionary<string, string> properties,
                                                       out bool pluginCanPerformDynamicAnalysis)
         {
@@ -227,7 +227,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return results;
         }
 
-        internal static IList<Dictionary<string, FlexMatch>> GetCombinations(IDictionary<string, IList<FlexMatch>> mergedGroups)
+        internal static IList<Dictionary<string, FlexMatch>> GetCombinations(IDictionary<string, ISet<FlexMatch>> mergedGroups)
         {
             string[] keys = mergedGroups.Keys.ToArray<string>();
 
@@ -309,7 +309,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return validationResults;
         }
 
-        private static IList<Dictionary<string, FlexMatch>> GetCombinations(IDictionary<string, IList<FlexMatch>> mergedGroups,
+        private static IList<Dictionary<string, FlexMatch>> GetCombinations(IDictionary<string, ISet<FlexMatch>> mergedGroups,
                                                                             string[] keys,
                                                                             int currentIndex,
                                                                             IList<Dictionary<string, FlexMatch>> combinations,
@@ -321,12 +321,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (currentIndex + 1 > mergedGroups.Count) { return combinations; }
 
             string key = keys[currentIndex];
-            IList<FlexMatch> currentSet = mergedGroups[key];
+            ISet<FlexMatch> currentSet = mergedGroups[key];
 
-            for (int i = 0; i < currentSet.Count; i++)
+            foreach (FlexMatch flexMatch in currentSet)
             {
                 Dictionary<string, FlexMatch> copy = currentCombination.Copy();
-                copy[key] = currentSet[i];
+                copy[key] = flexMatch;
 
                 if (currentIndex + 1 >= mergedGroups.Count)
                 {
