@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
@@ -85,7 +84,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 content.Add(new StringContent(Guid.NewGuid().ToString()), "subject");
 
                 using HttpResponseMessage response = client
-                    .PostAsync($"https://api.mailgun.net/v3/{id}/messages", content)
+                    .PostAsync($"https://api.mailgun.net/v3/{id}.mailgun.org/messages", content)
                     .GetAwaiter()
                     .GetResult();
 
@@ -103,9 +102,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message = $"An unexpected response code was returned attempting to " +
-                                  $"validate the '{id}' account: '{response.StatusCode}'";
-                        break;
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode, account: id);
                     }
                 }
             }
@@ -113,8 +110,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e, asset: id);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }
