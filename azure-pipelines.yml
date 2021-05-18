@@ -37,8 +37,8 @@ steps:
     summaryFileLocation: 'TestResults/Cobertura.xml'
 
 # Enable if you need to debug the tests
-- task: PublishPipelineArtifact@1
-  condition: always()
-  inputs:
-    targetPath: bld/bin/AnyCPU_Debug/Tests.Security/netcoreapp3.1/
-    artifactName: Tests.Security
+#- task: PublishPipelineArtifact@1
+#  condition: always()
+#  inputs:
+#    targetPath: bld/bin/AnyCPU_Debug/Tests.Security/netcoreapp3.1/
+#    artifactName: Tests.Security
