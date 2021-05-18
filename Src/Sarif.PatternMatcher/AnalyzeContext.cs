@@ -57,7 +57,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public bool Retry { get; set; }
 
-        public long MaxMemoryInKilobytes { get; set; }
+        public long MaxMemoryInKilobytes { get; set; } = -1;
 
         public void Dispose()
         {
