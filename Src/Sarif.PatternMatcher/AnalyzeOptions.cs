@@ -60,7 +60,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Option(
             "max-memory-in-kb",
             HelpText = "The maximum memory (in kilobytes) that can be used for RE2.",
-            Default = -1)]
+            Default = 16 * 1024 * 1024)]
         public long MaxMemoryInKilobytes { get; internal set; }
     }
 }
