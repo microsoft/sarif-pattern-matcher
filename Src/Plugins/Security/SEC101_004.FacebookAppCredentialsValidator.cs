@@ -121,7 +121,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private ValidationState RetrieveInformation<T>(string url, string id, ref string message, out T obj)
         {
-            using HttpClient httpClient = CreateHttpClient();
+            HttpClient httpClient = CreateHttpClient();
             obj = default;
 
             try
@@ -154,9 +154,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode, asset: id);
-                        return ValidationState.Unknown;
-
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode, asset: id);
                     }
                 }
             }

@@ -93,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 using var hmacSignature = new HMACSHA256(Convert.FromBase64String(signingKey));
                 string signature = Convert.ToBase64String(hmacSignature.ComputeHash(Convert.FromBase64String(textToSign)));
 
-                using HttpClient httpClient = CreateHttpClient();
+                HttpClient httpClient = CreateHttpClient();
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                     $"EG1-HMAC-SHA256",
                     $"{header};signature={signature}");
@@ -111,8 +111,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message = CreateUnexpectedResponseCodeMessage(httpResponse.StatusCode);
-                        return ValidationState.Unknown;
+                        return ReturnUnexpectedResponseCode(ref message, httpResponse.StatusCode);
                     }
                 }
             }

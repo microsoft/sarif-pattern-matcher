@@ -82,7 +82,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                using HttpClient client = CreateHttpClient();
+                HttpClient client = CreateHttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Guid.NewGuid().ToString());
 
                 using HttpResponseMessage responseDummy = client
@@ -124,8 +124,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             return ValidationState.NoMatch;
                         }
 
-                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode, asset: host);
-                        return ValidationState.Unknown;
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode, asset: host);
                     }
                 }
             }
