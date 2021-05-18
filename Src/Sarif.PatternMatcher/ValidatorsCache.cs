@@ -91,10 +91,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     (IEnumerable<ValidationResult>)isValidStaticMethodInfo.Invoke(
                         obj: null, arguments);
             }
-            catch (TargetInvocationException e)
-            {
-                throw e.InnerException;
-            }
             finally
             {
                 Environment.CurrentDirectory = currentDirectory;
@@ -135,10 +131,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     (ValidationState)isValidDynamicMethodInfo.Invoke(
                         obj: null, arguments);
             }
-            catch (TargetInvocationException e)
-            {
-                throw e.InnerException;
-            }
             finally
             {
                 Environment.CurrentDirectory = currentDirectory;
@@ -169,10 +161,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
 
                 shouldCacheMethodInfo.Invoke(obj: null, arguments);
-            }
-            catch (TargetInvocationException e)
-            {
-                throw e.InnerException;
             }
             finally
             {
@@ -257,8 +245,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // This condition occurs in cases when a regex does not provide a group that
                 // maps to a fingerprint member. This is the case for binary detections, i.e.,
                 // analysis that is simply looking for specific file kinds.
-                if (validationResult.Fingerprint == default &&
-                    context.TargetUri.IsAbsoluteUri)
+                if (validationResult.Fingerprint == default && context.TargetUri.IsAbsoluteUri)
                 {
                     string secret = HashUtilities.ComputeSha256Hash(context.TargetUri.LocalPath);
 
