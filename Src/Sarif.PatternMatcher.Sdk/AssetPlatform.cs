@@ -106,6 +106,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         Picatic,
 
         /// <summary>
+        /// Postman platform.
+        /// </summary>
+        Postman,
+
+        /// <summary>
         /// SendGrid platform.
         /// </summary>
         SendGrid,

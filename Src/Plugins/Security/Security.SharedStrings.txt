@@ -102,5 +102,6 @@
   $SEC101/044.NpmCredentialsAuth=(?is)registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s)(?:.{0,200})?_auth\s*=\s*(?P<secret>[^\s]+)
   $SEC101/044.NpmCredentialsUserPassword=(?is)(((registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(username\s*=\s*(?P<id>[^\s]+)(?:$|\s))|(_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){3}
   $SEC101/044.NpmCredentialsPassword=(?is)(((registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){2}
+  $SEC101/045.PostmanApiKey=\b(?P<secret>PMAK-[0-9a-z]{24}-[0-9a-z]{34})([^0-9a-z]|$)
   $SEC101/102.AdoPat=\b(?P<secret>[2-7a-z]{52})(\b|$)
   

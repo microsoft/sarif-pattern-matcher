@@ -5,20 +5,19 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class SlackWebhookValidator : ValidatorBase
+    public class PostmanApiKeyValidator : ValidatorBase
     {
-        internal static SlackWebhookValidator Instance;
+        internal static PostmanApiKeyValidator Instance;
 
-        static SlackWebhookValidator()
+        static PostmanApiKeyValidator()
         {
-            Instance = new SlackWebhookValidator();
+            Instance = new PostmanApiKeyValidator();
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
@@ -44,8 +43,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
                                                                              Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
+            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
+            {
+                return ValidationResult.CreateNoMatch();
+            }
+
+            if (!ContainsDigitAndChar(secret.Value))
             {
                 return ValidationResult.CreateNoMatch();
             }
@@ -55,9 +58,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint
                 {
-                    Id = id.Value,
                     Secret = secret.Value,
-                    Platform = nameof(AssetPlatform.Slack),
+                    Platform = nameof(AssetPlatform.Postman),
                 },
                 ValidationState = ValidationState.Unknown,
             };
@@ -70,45 +72,36 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 Dictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
-            string id = fingerprint.Id;
+            const string uri = "https://api.getpostman.com/me";
+
             string secret = fingerprint.Secret;
-            string uri = $"https://hooks.slack.com/services/{id}/{secret}";
 
             HttpClient client = CreateHttpClient();
 
-            string payload = Guid.NewGuid().ToString();
-            var content = new StringContent(payload, Encoding.UTF8, "application/json");
-
             try
             {
-                using HttpResponseMessage response =
-                    client.PostAsync(uri, content).GetAwaiter().GetResult();
+                client.DefaultRequestHeaders.Add("X-Api-Key", secret);
 
-                HttpStatusCode status = response.StatusCode;
+                using HttpResponseMessage response = client
+                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
+                    .GetAwaiter()
+                    .GetResult();
 
-                switch (status)
+                switch (response.StatusCode)
                 {
-                    case HttpStatusCode.BadRequest:
+                    case HttpStatusCode.OK:
                     {
-                        // We authenticated and our bogus payload was read.
                         return ValidationState.Authorized;
                     }
 
-                    case HttpStatusCode.NotFound:
-                    {
-                        // The slack app itself could not be found.
-                        message = "The specified Slack app could not be found.";
-                        return ValidationState.UnknownHost;
-                    }
-
-                    case HttpStatusCode.Forbidden:
+                    case HttpStatusCode.Unauthorized:
                     {
                         return ValidationState.Unauthorized;
                     }
 
                     default:
                     {
-                        return ReturnUnexpectedResponseCode(ref message, status, account: id);
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
                     }
                 }
             }
