@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using Amazon.IdentityManagement;
 using Amazon.IdentityManagement.Model;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 

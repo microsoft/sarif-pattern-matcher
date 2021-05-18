@@ -5,17 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class MailgunApiCredentialsValidator : ValidatorBase
+    public class PostmanApiKeyValidator : ValidatorBase
     {
-        internal static MailgunApiCredentialsValidator Instance = new MailgunApiCredentialsValidator();
+        internal static PostmanApiKeyValidator Instance;
+
+        static PostmanApiKeyValidator()
+        {
+            Instance = new PostmanApiKeyValidator();
+        }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
                                                                   Dictionary<string, FlexMatch> groups)
@@ -40,8 +43,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
                                                                              Dictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
+            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
+            {
+                return ValidationResult.CreateNoMatch();
+            }
+
+            if (!ContainsDigitAndChar(secret.Value))
             {
                 return ValidationResult.CreateNoMatch();
             }
@@ -51,9 +58,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint
                 {
-                    Id = id.Value,
                     Secret = secret.Value,
-                    Platform = nameof(AssetPlatform.Mailgun),
+                    Platform = nameof(AssetPlatform.Postman),
                 },
                 ValidationState = ValidationState.Unknown,
             };
@@ -66,54 +72,43 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 Dictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
-            string id = fingerprint.Id;
+            const string uri = "https://api.getpostman.com/me";
+
             string secret = fingerprint.Secret;
+
+            HttpClient client = CreateHttpClient();
 
             try
             {
-                HttpClient client = CreateHttpClient();
-
-                string credentials = $"api:{secret}";
-                byte[] bytes = Encoding.UTF8.GetBytes(credentials);
-                credentials = Convert.ToBase64String(bytes);
-
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Basic", credentials);
-
-                var content = new MultipartFormDataContent();
-                content.Add(new StringContent(Guid.NewGuid().ToString()), "subject");
+                client.DefaultRequestHeaders.Add("X-Api-Key", secret);
 
                 using HttpResponseMessage response = client
-                    .PostAsync($"https://api.mailgun.net/v3/{id}/messages", content)
+                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
                 switch (response.StatusCode)
                 {
-                    case HttpStatusCode.BadRequest:
+                    case HttpStatusCode.OK:
                     {
-                        return ReturnAuthorizedAccess(ref message, asset: id);
+                        return ValidationState.Authorized;
                     }
 
                     case HttpStatusCode.Unauthorized:
                     {
-                        return ReturnUnauthorizedAccess(ref message, asset: id);
+                        return ValidationState.Unauthorized;
                     }
 
                     default:
                     {
-                        message = $"An unexpected response code was returned attempting to " +
-                                  $"validate the '{id}' account: '{response.StatusCode}'";
-                        break;
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
                     }
                 }
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e, asset: id);
+                return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }
