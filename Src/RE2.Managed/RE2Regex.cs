@@ -47,7 +47,7 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = -1)
+        public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = 256L * 1024L * 1024L)
         {
             return Regex2.Matches(pattern, text, out matches, maxMemoryInBytes);
         }

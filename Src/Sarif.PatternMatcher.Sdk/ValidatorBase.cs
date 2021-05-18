@@ -251,10 +251,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return ValidationState.Unknown;
         }
 
-        public static string ParseExpression(IRegex regexEngine, string matchedPattern, string expression, ref FlexMatch match)
+        public static string ParseExpression(IRegex regexEngine, FlexMatch baseMatch, string expression, ref FlexMatch match)
         {
-            match = regexEngine.Match(matchedPattern, expression);
-            return match?.Success ?? false ? ParseValue(match.Value) : null;
+            match = regexEngine.Match(baseMatch.Value, expression);
+
+            if (match.Success)
+            {
+                match.Index = baseMatch.Index + match.Index;
+
+                string value = ParseValue(match.Value);
+
+                match = new FlexMatch
+                {
+                    Value = value,
+                    Index = match.Index + match.Value.String.IndexOf(value),
+                    Length = value.Length,
+                };
+            }
+
+            return match.Value;
         }
 
         internal static string ParseValue(string value)
