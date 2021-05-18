@@ -17,17 +17,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static IRegex RegexEngine;
 
         private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;""<\n]+";
-        private const string DatabaseExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;""<>*%&:\/?\n]+"; // Your database name can't end with '.' or ' ', can't contain '<,>,*,%,&,:,\,/,?' or control characters
-        private const string AccountExpression = @"(?i)(User ID|Uid)\s*=\s*[^;""'<\n]+";
-        private const string PasswordExpression = @"(?i)(Password|Pwd)\s*=\s*[^;""<\s]+";
+        // Your database name can't end with '.' or ' ', can't contain '<,>,*,%,&,:,\,/,?' or control characters
+        private const string ResourceExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;""<>*%&:\/?\n]+";
+        private const string IdExpression = @"(?i)(User ID|Uid)\s*=\s*[^;""'<\n]+";
+        private const string SecretExpression = @"(?i)(Password|Pwd)\s*=\s*[^;""<\s]+";
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
             "postgres.database.azure.com",
             "mysql.database.azure.com",
-            "mysqldb.chinacloudapi.cn", // Azure China domain
-            "mysql.database.chinacloudapi.cn", // Azure China domain
+            "mysqldb.chinacloudapi.cn",
+            "mysql.database.chinacloudapi.cn",
         };
 
         static SqlConnectionStringValidator()
@@ -40,9 +41,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // threading problems).
             RegexEngine.Match(string.Empty, ClientIPExpression);
             RegexEngine.Match(string.Empty, HostExpression);
-            RegexEngine.Match(string.Empty, DatabaseExpression);
-            RegexEngine.Match(string.Empty, AccountExpression);
-            RegexEngine.Match(string.Empty, PasswordExpression);
+            RegexEngine.Match(string.Empty, ResourceExpression);
+            RegexEngine.Match(string.Empty, IdExpression);
+            RegexEngine.Match(string.Empty, SecretExpression);
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
@@ -84,10 +85,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             else
             {
-                ParseExpression(RegexEngine, matchedPattern, AccountExpression, ref id);
-                ParseExpression(RegexEngine, matchedPattern, HostExpression, ref host);
-                ParseExpression(RegexEngine, matchedPattern, PasswordExpression, ref secret);
-                ParseExpression(RegexEngine, matchedPattern, DatabaseExpression, ref database);
+                ParseExpression(RegexEngine, groups["0"], IdExpression, ref id);
+                ParseExpression(RegexEngine, groups["0"], HostExpression, ref host);
+                ParseExpression(RegexEngine, groups["0"], SecretExpression, ref secret);
+                ParseExpression(RegexEngine, groups["0"], ResourceExpression, ref database);
             }
 
             if (string.IsNullOrWhiteSpace(id.Value) ||

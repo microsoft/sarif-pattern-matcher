@@ -506,7 +506,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "Pwd=yo…",
+              "your-p…",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -522,25 +522,25 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 1,
-                  "startColumn": 79,
-                  "endLine": 1,
+                  "startLine": 30,
+                  "startColumn": 83,
+                  "endLine": 30,
                   "endColumn": 96,
-                  "charOffset": 78,
-                  "charLength": 17,
+                  "charOffset": 2834,
+                  "charLength": 13,
                   "snippet": {
-                    "text": "in MySqlConnectio"
+                    "text": "your-password"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=Server=your-host][id=Uid=username@servername][platform=SqlOnPremise][resource=Database=your-database]",
-            "ValidationFingerprint/v1": "[host=Server=your-host][id=Uid=username@servername][resource=Database=your-database][secret=Pwd=your-password]",
-            "ValidationFingerprintHash/v1": "1337d2bba8fd8e841b26085229c913c441c67f1d33963628b5f0c3a66ebd3d5c"
+            "AssetFingerprint/v1": "[host=your-host][id=username@servername][platform=SqlOnPremise][resource=your-database]",
+            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][resource=your-database][secret=your-password]",
+            "ValidationFingerprintHash/v1": "7dfa5ccb4f4e5c7b00d778adcf153a6093e2f83afaed3e57f1d8d3f592ede760"
           },
-          "rank": 49.99
+          "rank": 46.27
         },
         {
           "ruleId": "SEC101/037",
@@ -549,7 +549,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "Pwd=pa…",
+              "passwo…",
               "an apparent ",
               "",
               "ADO or ODBC SQL connection string",
@@ -565,25 +565,25 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 1,
-                  "startColumn": 79,
-                  "endLine": 1,
-                  "endColumn": 94,
-                  "charOffset": 78,
-                  "charLength": 15,
+                  "startLine": 32,
+                  "startColumn": 104,
+                  "endLine": 32,
+                  "endColumn": 115,
+                  "charOffset": 2974,
+                  "charLength": 11,
                   "snippet": {
-                    "text": "in MySqlConnect"
+                    "text": "password_11"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=Server=your-host][id=Uid=username@servername][platform=SqlOnPremise][resource=Database=your-database]",
-            "ValidationFingerprint/v1": "[host=Server=your-host][id=Uid=username@servername][resource=Database=your-database][secret=Pwd=password_11]",
-            "ValidationFingerprintHash/v1": "e5b914f1aed3a4e89d0e95c940aa54394027c9fd36cc0960677e5757662f1e06"
+            "AssetFingerprint/v1": "[host=your-host][id=username@servername][platform=SqlOnPremise][resource=your-database]",
+            "ValidationFingerprint/v1": "[host=your-host][id=username@servername][resource=your-database][secret=password_11]",
+            "ValidationFingerprintHash/v1": "5f715907a3363e3a57f6bf3ecf76e7806a223d0f5cc81c9a491da62a7a0becc3"
           },
-          "rank": 48.19
+          "rank": 44.23
         },
         {
           "ruleId": "SEC101/038",
