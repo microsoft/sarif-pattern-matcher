@@ -86,7 +86,11 @@ namespace Microsoft.RE2.Managed
         /// <param name="timeout">Timeout for runtime (checked between matches only).</param>
         /// <param name="fromIndex">Index in text to start searching from (used to resume matching).</param>
         /// <returns>IEnumerable of matches found.</returns>
-        public static IEnumerable<Match2> Matches(String8 text, string expression, RegexOptions options = RegexOptions.None, Timeout timeout = default, int fromIndex = 0)
+        public static IEnumerable<Match2> Matches(String8 text,
+                                                  string expression,
+                                                  RegexOptions options = RegexOptions.None,
+                                                  Timeout timeout = default,
+                                                  int fromIndex = 0)
         {
             ParsedRegexCache cache = null;
             try

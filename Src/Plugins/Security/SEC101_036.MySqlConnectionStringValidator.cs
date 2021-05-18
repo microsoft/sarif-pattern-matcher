@@ -87,8 +87,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             FlexMatch unused = null;
-            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex, ref unused);
-            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex, ref unused);
+            string port = ParseExpression(RegexEngine, groups["0"], PortRegex, ref unused);
+            string database = ParseExpression(RegexEngine, groups["0"], DatabaseRegex, ref unused);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
 

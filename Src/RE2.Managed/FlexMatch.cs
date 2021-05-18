@@ -17,5 +17,12 @@ namespace Microsoft.RE2.Managed
         public int Length { get; set; }
 
         public FlexString Value { get; set; }
+
+#if DEBUG
+        public override string ToString()
+        {
+            return Value?.String ?? string.Empty;
+        }
+#endif
     }
 }
