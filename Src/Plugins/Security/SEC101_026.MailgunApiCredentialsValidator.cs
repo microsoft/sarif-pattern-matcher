@@ -72,7 +72,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                using HttpClient client = CreateHttpClient();
+                HttpClient client = CreateHttpClient();
 
                 string credentials = $"api:{secret}";
                 byte[] bytes = Encoding.UTF8.GetBytes(credentials);

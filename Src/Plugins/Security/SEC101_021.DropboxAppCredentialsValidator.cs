@@ -81,7 +81,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
             string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
-            using HttpClient httpClient = CreateHttpClient();
+            HttpClient httpClient = CreateHttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
             httpClient.DefaultRequestHeaders.Add("Dropbox-API-Arg", @"{""resource"": {"".tag"": ""path"",""path"": ""/a.docx""},""format"": ""jpeg"",""size"": ""w64h64"",""mode"": ""strict""}");
 
@@ -115,15 +115,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             return ValidationState.Unauthorized;
                         }
 
-                        // We don't recognize this message.
-                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
-                        break;
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode, account: id);
                     }
 
                     default:
                     {
-                        message = CreateUnexpectedResponseCodeMessage(response.StatusCode);
-                        break;
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode, account: id);
                     }
                 }
             }
@@ -131,8 +128,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }

@@ -278,12 +278,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     DefaultTraces.None;
 
             context.Retry = options.Retry;
-            context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
             context.EnhancedReporting = options.EnhancedReporting;
             context.DynamicValidation = options.DynamicValidation;
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;
             context.FileSizeInKilobytes = options.FileSizeInKilobytes;
             context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
+            context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
 
             return context;
         }

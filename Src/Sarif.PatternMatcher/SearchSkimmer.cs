@@ -553,7 +553,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (!_engine.Matches(matchExpression.ContentsRegex,
                                  searchText,
                                  out List<Dictionary<string, FlexMatch>> matches,
-                                 1024 * context.MaxMemoryInKilobytes))
+                                 context.MaxMemoryInKilobytes == -1 ? context.MaxMemoryInKilobytes : 1024 * context.MaxMemoryInKilobytes))
             {
                 return;
             }

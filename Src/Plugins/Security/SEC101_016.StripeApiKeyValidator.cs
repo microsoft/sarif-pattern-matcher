@@ -88,7 +88,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 message = $"The detected secret is a {keyKind} secret.";
 
-                using HttpClient client = CreateHttpClient();
+                HttpClient client = CreateHttpClient();
 
                 client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", secret);

@@ -75,7 +75,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string secret = fingerprint.Secret;
             string uri = $"https://hooks.slack.com/services/{id}/{secret}";
 
-            using HttpClient client = CreateHttpClient();
+            HttpClient client = CreateHttpClient();
 
             string payload = Guid.NewGuid().ToString();
             var content = new StringContent(payload, Encoding.UTF8, "application/json");
@@ -109,8 +109,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message = CreateUnexpectedResponseCodeMessage(status);
-                        break;
+                        return ReturnUnexpectedResponseCode(ref message, status, account: id);
                     }
                 }
             }
@@ -118,8 +117,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }

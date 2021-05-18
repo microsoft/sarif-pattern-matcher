@@ -34,6 +34,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             new Regex($@"The underlying connection was closed: Could not establish " +
                          "trust relationship for the SSL/TLS secure channel.", s_options);
 
+        [ThreadStatic]
+        private static HttpClient httpClient;
+
         private static bool shouldUseDynamicCache;
 
         static ValidatorBase()
@@ -154,16 +157,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return false;
         }
 
-        public static string CreateUnexpectedResponseCodeMessage(HttpStatusCode status, string asset = null)
+        public static ValidationState ReturnUnexpectedResponseCode(ref string message,
+                                                                   HttpStatusCode status,
+                                                                   string asset = null,
+                                                                   string account = null)
         {
-            return CreateUnexpectedResponseCodeMessage(status, ref asset);
-        }
+            if (string.IsNullOrEmpty(asset))
+            {
+                message = $"An unexpected HTTP response code was received: '{status}'.";
+            }
+            else if (string.IsNullOrEmpty(account))
+            {
+                message = $"An unexpected HTTP response code was received from '{asset}': '{status}'.";
+            }
+            else
+            {
+                message = $"An unexpected HTTP response code was received from '{account}' account on '{asset}': {status}";
+            }
 
-        public static string CreateUnexpectedResponseCodeMessage(HttpStatusCode status, ref string asset)
-        {
-            return asset == null ?
-                $"An unexpected HTTP response code was received: '{status}'." :
-                $"An unexpected HTTP response code was received from '{asset}': '{status}'.";
+            return ValidationState.Unknown;
         }
 
         public static ValidationState ReturnUnhandledException(ref string message,
@@ -290,19 +302,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected HttpClient CreateHttpClient()
         {
-            var httpClientHandler = new HttpClientHandler()
+            if (httpClient == null)
             {
-                AllowAutoRedirect = true,
-                MaxAutomaticRedirections = 10,
-            };
+                var httpClientHandler = new HttpClientHandler()
+                {
+                    AllowAutoRedirect = true,
+                    MaxAutomaticRedirections = 10,
+                };
 
-            var httpClient = new HttpClient(httpClientHandler);
+                httpClient = new HttpClient(httpClientHandler);
 
-            httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
-                                                 ScanIdentityHttpCustomHeaderValue);
+                httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
+                                                     ScanIdentityHttpCustomHeaderValue);
 
-            httpClient.DefaultRequestHeaders.Add("User-Agent",
-                                                 UserAgentValue);
+                httpClient.DefaultRequestHeaders.Add("User-Agent",
+                                                     UserAgentValue);
+            }
 
             return httpClient;
         }
@@ -343,7 +358,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             Match match = regex.Match(e.Message);
             if (match.Success)
             {
-                asset = asset ?? match.Groups?["asset"].Value;
+                asset ??= match.Groups?["asset"].Value;
                 return true;
             }
 

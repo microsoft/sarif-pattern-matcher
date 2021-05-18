@@ -111,7 +111,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string secret = fingerprint.Secret;
             string uri = $"https://{host}";
 
-            using HttpClient client = CreateHttpClient();
+            HttpClient client = CreateHttpClient();
 
             try
             {
@@ -148,8 +148,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message = CreateUnexpectedResponseCodeMessage(responseWithCredentials.StatusCode, host);
-                        return ValidationState.Unknown;
+                        return ReturnUnexpectedResponseCode(ref message, responseWithCredentials.StatusCode, asset: host, account: id);
                     }
                 }
             }
