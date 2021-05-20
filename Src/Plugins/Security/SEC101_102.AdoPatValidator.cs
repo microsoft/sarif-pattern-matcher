@@ -79,8 +79,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
 #pragma warning disable IDE0060 // Remove unused parameter
 
-        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, FlexMatch> groups)
+        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
         {
 #pragma warning restore IDE0060
             if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))

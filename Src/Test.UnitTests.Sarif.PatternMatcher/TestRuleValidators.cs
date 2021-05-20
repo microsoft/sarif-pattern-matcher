@@ -13,8 +13,7 @@
 //    public class OverrideIndexTestValidator
 //    {
 //        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
-//        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-//                                                                  Dictionary<string, string> groups)
+//        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, string> groups)
 //        {
 //            // "TestTerm Another-TEST-TERM"
 //            // original index is 0, override it to 17, length to 9
@@ -36,8 +35,7 @@
 //    public class DoesNotOverrideTestValidator
 //    {
 //        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
-//        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-//                                                                  Dictionary<string, string> groups)
+//        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, string> groups)
 //        {
 //            var result = new ValidationResult
 //            {
@@ -54,8 +52,7 @@
 //    public class VerifyResultKindLevelTestValidator
 //    {
 //        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
-//        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-//                                                                  Dictionary<string, string> groups)
+//        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, string> groups)
 //        {
 //            // result multiple results
 //            ValidationResult[] results = new[]
@@ -104,8 +101,7 @@
 //    public class InvalidIndexLengthTestValidator
 //    {
 //        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
-//        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-//                                                                  Dictionary<string, string> groups)
+//        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, string> groups)
 //        {
 //            // matchedPatrtern "TestTerm Another-TEST-TERM", length is 26
 //            ValidationResult[] results = new[]

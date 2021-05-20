@@ -24,21 +24,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new CryptographicPrivateKeyValidator();
         }
 
-        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, FlexMatch> groups)
+        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
         {
-            return IsValidStatic(Instance,
-                                 ref matchedPattern,
-                                 groups);
+            return IsValidStatic(Instance, groups);
         }
 
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
+
+            string matchedPattern = groups["0"].Value;
 
             groups.TryGetValue("kind", out FlexMatch kind);
             string kindValue = matchedPattern.Contains(" PGP ") ? "Pgp" : kind?.Value.String;

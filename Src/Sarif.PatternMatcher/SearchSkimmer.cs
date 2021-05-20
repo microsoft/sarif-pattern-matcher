@@ -493,7 +493,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
                                                                                        context,
-                                                                                       ref refinedMatchedPattern,
                                                                                        mergedGroups,
                                                                                        matchExpression.Properties,
                                                                                        out bool pluginSupportsDynamicValidation);
@@ -585,7 +584,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
                                                                                            context,
-                                                                                           ref refinedMatchedPattern,
                                                                                            match,
                                                                                            out bool pluginSupportsDynamicValidation);
 
@@ -740,9 +738,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 : context.TargetUri.OriginalString;
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
+                groups["scanTargetFullPath"] = new FlexMatch() { Value = filePath };
                 IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
                                                                                        context,
-                                                                                       ref filePath,
                                                                                        groups,
                                                                                        out bool pluginSupportsDynamicValidation);
 

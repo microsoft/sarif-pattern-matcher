@@ -55,8 +55,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string fingerprintText = null;
                 var groups = new Dictionary<string, FlexMatch>();
 
-                IEnumerable<ValidationResult> validationResults = AdoPatValidator.IsValidStatic(ref testCase.Input,
-                                                                                                groups);
+                IEnumerable<ValidationResult> validationResults = AdoPatValidator.IsValidStatic(groups);
 
                 string title = testCase.Title;
 

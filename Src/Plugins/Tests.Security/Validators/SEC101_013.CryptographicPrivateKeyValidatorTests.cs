@@ -24,10 +24,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         {
             var keyValuePairs = new Dictionary<string, FlexMatch>
             {
+                { "0", new FlexMatch() { Value = TestMatchedPattern } },
                 { "secret", new FlexMatch() { Value = TestKey } }
             };
 
-            IEnumerable<ValidationResult> validationResults = CryptographicPrivateKeyValidator.IsValidStatic(ref TestMatchedPattern, keyValuePairs);
+            IEnumerable<ValidationResult> validationResults = CryptographicPrivateKeyValidator.IsValidStatic(keyValuePairs);
             foreach (ValidationResult validationResult in validationResults)
             {
                 Assert.Equal(ExpectedValidationState, validationResult.ValidationState);

@@ -83,11 +83,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         protected ISet<string> PerFileFingerprintCache { get; }
 
         public static IEnumerable<ValidationResult> IsValidStatic(ValidatorBase validator,
-                                                                  ref string matchedPattern,
                                                                   Dictionary<string, FlexMatch> groups)
         {
-            IEnumerable<ValidationResult> validationResults = validator.IsValidStaticHelper(ref matchedPattern,
-                                                                                            groups);
+            IEnumerable<ValidationResult> validationResults = validator.IsValidStaticHelper(groups);
 
             foreach (ValidationResult validationResult in validationResults)
             {
@@ -325,20 +323,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// <summary>
         /// Validate if the match is a secret or credential.
         /// </summary>
-        /// <param name="matchedPattern">
-        /// The matched text to be validated. This pattern can be further refined
-        /// to a substring of the original parameter value, with the result that
-        /// the refined matched pattern will be used as the code region associated
-        /// with the match.
-        /// </param>
         /// <param name="groups">
         /// Capture groups from the regex match. Dictionary entries can be modified or new entries
         /// added in order to refine or add argument values that will be used in result messages.
         /// </param>
         ///
         /// <returns>Return an enumerable ValidationResult collection.</returns>
-        protected abstract IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, FlexMatch> groups);
+        protected abstract IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups);
 
         protected virtual ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                ref string message,
