@@ -65,8 +65,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
         }
 
         public static ValidationState TryLoadCertificateCollection(string certificatePath,
-                                                          ref Fingerprint fingerprint,
-                                                          ref string message)
+                                                                   ref Fingerprint fingerprint,
+                                                                   ref string message)
         {
             var certificates = new X509Certificate2Collection();
             try

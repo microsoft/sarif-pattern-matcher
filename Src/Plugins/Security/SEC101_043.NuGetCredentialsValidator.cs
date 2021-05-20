@@ -25,12 +25,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new NuGetCredentialsValidator();
         }
 
-        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, FlexMatch> groups)
+        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
         {
-            return IsValidStatic(Instance,
-                                 ref matchedPattern,
-                                 groups);
+            return IsValidStatic(Instance, groups);
         }
 
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
@@ -70,8 +67,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
         }
 
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("host", out FlexMatch hostsXml) ||
                 !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))

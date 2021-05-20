@@ -11,13 +11,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public static class MicrosoftSerializedCertificateStoreFileValidator
     {
-        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, FlexMatch> groups)
+        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
         {
             string message = string.Empty;
             Fingerprint fingerprint = default;
             ResultLevelKind resultLevelKind = default;
-            ValidationState validationState = CertificateHelper.TryLoadCertificateCollection(matchedPattern,
+            ValidationState validationState = CertificateHelper.TryLoadCertificateCollection(groups["scanTargetFullPath"].Value,
                                                                                              ref fingerprint,
                                                                                              ref message);
 

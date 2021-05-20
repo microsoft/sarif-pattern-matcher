@@ -20,12 +20,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             Instance = new CloudantCredentialsValidator();
         }
 
-        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, FlexMatch> groups)
+        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
         {
-            return IsValidStatic(Instance,
-                                 ref matchedPattern,
-                                 groups);
+            return IsValidStatic(Instance, groups);
         }
 
         public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
@@ -40,8 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                   ref resultLevelKind);
         }
 
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(ref string matchedPattern,
-                                                                             Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
         {
             // We need uri and neither account nor password, or uri and both account and password.  Use XOR
             if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||

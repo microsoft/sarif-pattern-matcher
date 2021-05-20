@@ -12,7 +12,7 @@
         {
           "Id": "SEC102/001",
           "Name": "ReviewPotentiallySensitiveData/EmailAddress",
-          "ContentsRegex": "\\b(?i)(?P<refine>[0-9a-z._%+-]*[0-9a-z]+@[0-9a-z]+[0-9a-z.-]*\\.[0-9a-z]{2,})",
+          "ContentsRegex": "\\b(?i)(?P<id>[0-9a-z._%+-]*[0-9a-z]+)@(?P<host>[0-9a-z]+[0-9a-z.-]*\\.[0-9a-z]{2,})",
           "Message": "'{0:id}@{1:host}' is an apparent {2:dataKind}.",
           "MessageArguments": { "dataKind": "email address" },
           "Notes": [ "This will not catch every possible email address.  According to https://www.regular-expressions.info/email.html it is not reasonable to expect to do so.  The formal RFC definition of an email address includes things which some systems can't support, such as double quotes, spaces, and other special characters.  What we have here should capture about 99% of email addresses in use today." ]

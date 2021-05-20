@@ -67,14 +67,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         public static IEnumerable<ValidationResult> ValidateStaticHelper(MethodInfo isValidStaticMethodInfo,
-                                                                         ref string matchedPattern,
                                                                          IDictionary<string, FlexMatch> groups)
         {
             IEnumerable<ValidationResult> validationResults;
 
             object[] arguments = new object[]
             {
-                matchedPattern,
                 groups,
             };
 
@@ -96,8 +94,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Environment.CurrentDirectory = currentDirectory;
             }
 
-            matchedPattern = (string)arguments[0];
-            groups = (Dictionary<string, FlexMatch>)arguments[1];
+            groups = (Dictionary<string, FlexMatch>)arguments[0];
 
             return validationResults;
         }
@@ -170,21 +167,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public IEnumerable<ValidationResult> Validate(string ruleName,
                                                       AnalyzeContext context,
-                                                      ref string matchedPattern,
                                                       IDictionary<string, FlexMatch> groups,
                                                       out bool pluginCanPerformDynamicAnalysis)
         {
             return ValidateHelper(RuleNameToValidationMethods,
                                   ruleName,
                                   context,
-                                  ref matchedPattern,
                                   groups,
                                   out pluginCanPerformDynamicAnalysis);
         }
 
         public IEnumerable<ValidationResult> Validate(string ruleName,
                                                       AnalyzeContext context,
-                                                      ref string matchedPattern,
                                                       IDictionary<string, ISet<FlexMatch>> mergedGroups,
                                                       IDictionary<string, string> properties,
                                                       out bool pluginCanPerformDynamicAnalysis)
@@ -207,7 +201,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 results.AddRange(ValidateHelper(RuleNameToValidationMethods,
                                                 ruleName,
                                                 context,
-                                                ref matchedPattern,
                                                 groups,
                                                 out pluginCanPerformDynamicAnalysis));
             }
@@ -225,7 +218,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         internal static IEnumerable<ValidationResult> ValidateHelper(Dictionary<string, ValidationMethods> ruleIdToMethodMap,
                                                                      string ruleName,
                                                                      AnalyzeContext context,
-                                                                     ref string matchedPattern,
                                                                      IDictionary<string, FlexMatch> groups,
                                                                      out bool pluginCanPerformDynamicAnalysis)
         {
@@ -266,7 +258,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             IEnumerable<ValidationResult> validationResults = ValidateStaticHelper(validationMethods.IsValidStatic,
-                                                                                   ref matchedPattern,
                                                                                    groups);
 
             pluginCanPerformDynamicAnalysis = validationMethods.IsValidDynamic != null;
@@ -363,7 +354,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             "IsValidStatic",
                             new[]
                             {
-                                typeof(string).MakeByRefType(), // Matched pattern.
                                 typeof(Dictionary<string, FlexMatch>), // Regex groups.
                             },
                             null);

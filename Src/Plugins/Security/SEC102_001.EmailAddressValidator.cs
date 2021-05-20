@@ -13,45 +13,41 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
 #pragma warning disable IDE0060 // Unused parameter.
 
-        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, FlexMatch> groups)
+        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
 #pragma warning restore IDE0060 // Unused parameter.
         {
+            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
+                !groups.TryGetNonEmptyValue("host", out FlexMatch host))
+            {
+                return ValidationResult.CreateNoMatch();
+            }
+
+            string candidateAddress = $"{id}.Value@{host?.Value}";
+
             try
             {
-                var addr = new MailAddress(matchedPattern);
-                if (addr.Address == matchedPattern)
+                var actualAddress = new MailAddress(candidateAddress);
+                if (actualAddress.Address == candidateAddress)
                 {
                     var validationResult = new ValidationResult
                     {
+                        Fingerprint = new Fingerprint()
+                        {
+                            Id = id.Value,
+                            Host = host.Value,
+                        },
                         ValidationState = ValidationState.Unknown,
                     };
 
-                    string[] parts = matchedPattern.Split('@');
-
-                    if (parts.Length == 2)
-                    {
-                        string id = parts[0];
-                        string host = parts[1];
-                        validationResult.Fingerprint = new Fingerprint()
-                        {
-                            Id = parts[0],
-                            Host = parts[1],
-                        };
-
-                        groups.Add("id", new FlexMatch() { Value = id });
-                        groups.Add("host", new FlexMatch() { Value = host });
-                    }
-
                     return new[] { validationResult };
                 }
+
+                return ValidationResult.CreateNoMatch();
             }
             catch
             {
                 return ValidationResult.CreateNoMatch();
             }
-
-            return ValidationResult.CreateNoMatch();
         }
     }
 }

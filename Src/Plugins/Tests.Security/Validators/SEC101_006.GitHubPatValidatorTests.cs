@@ -19,11 +19,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             string matchedPattern = "ghp_stuffchecksum"; // Insert new GitHub PAT here
             var groups = new Dictionary<string, FlexMatch>();
+            groups.Add("0", new FlexMatch() { Value = matchedPattern });
             groups.Add("secret", new FlexMatch() { Value = matchedPattern });
             groups.Add("checksum", new FlexMatch() { Value = "checksum" });
             groups.Add("scanTargetFullPath", new FlexMatch() { Value = "GitHitPatTest" });
 
-            IEnumerable<ValidationResult> validationResults = GitHubPatValidator.IsValidStatic(ref matchedPattern, groups);
+            IEnumerable<ValidationResult> validationResults = GitHubPatValidator.IsValidStatic(groups);
             foreach (ValidationResult validationResult in validationResults)
             {
                 Assert.Equal(matchedPattern, validationResult.Fingerprint.Secret);

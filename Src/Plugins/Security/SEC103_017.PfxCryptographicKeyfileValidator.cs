@@ -12,8 +12,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public static class PfxCryptographicKeyfileValidator
     {
-        public static IEnumerable<ValidationResult> IsValidStatic(ref string matchedPattern,
-                                                                  Dictionary<string, FlexMatch> groups)
+        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
         {
             groups.TryGetValue("content", out FlexMatch content);
 
@@ -28,7 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string message = string.Empty;
             Fingerprint fingerprint = default;
             ResultLevelKind resultLevelKind = default;
-            ValidationState validationState = CertificateHelper.TryLoadCertificate(matchedPattern,
+            ValidationState validationState = CertificateHelper.TryLoadCertificate(groups["scanTargetFullPath"].Value,
                                                                                    ref fingerprint,
                                                                                    ref message,
                                                                                    ref resultLevelKind);
