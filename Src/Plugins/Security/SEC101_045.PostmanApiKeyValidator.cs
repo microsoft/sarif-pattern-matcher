@@ -76,10 +76,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                client.DefaultRequestHeaders.Add("X-Api-Key", secret);
+                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+                request.Headers.Add("X-Api-Key", secret);
 
                 using HttpResponseMessage response = client
-                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 

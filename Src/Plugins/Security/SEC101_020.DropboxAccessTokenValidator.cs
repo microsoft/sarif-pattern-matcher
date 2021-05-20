@@ -71,15 +71,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             const string NoAccessMessage = "Your app is not permitted to access this endpoint";
             const string DisabledMessage = "This app is currently disabled.";
+            const string uri = "https://api.dropboxapi.com/2/file_requests/count";
 
             string secret = fingerprint.Secret;
             HttpClient httpClient = CreateHttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
             try
             {
+                using var request = new HttpRequestMessage(HttpMethod.Post, uri);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
+
                 using HttpResponseMessage response = httpClient
-                    .PostAsync("https://api.dropboxapi.com/2/file_requests/count", null)
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
