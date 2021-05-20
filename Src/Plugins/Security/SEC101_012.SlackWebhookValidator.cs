@@ -72,13 +72,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             HttpClient client = CreateHttpClient();
 
-            string payload = Guid.NewGuid().ToString();
-            var content = new StringContent(payload, Encoding.UTF8, "application/json");
-
             try
             {
-                using HttpResponseMessage response =
-                    client.PostAsync(uri, content).GetAwaiter().GetResult();
+                string payload = Guid.NewGuid().ToString();
+                using var request = new HttpRequestMessage(HttpMethod.Post, uri);
+                request.Content = new StringContent(payload, Encoding.UTF8, "application/json");
+
+                using HttpResponseMessage response = client
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+                    .GetAwaiter()
+                    .GetResult();
 
                 HttpStatusCode status = response.StatusCode;
 

@@ -136,11 +136,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     {
                         // Credentials may resolve this, try again with them.
                         byte[] byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
-                        client.DefaultRequestHeaders.Authorization =
-                            new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+                        using var request = new HttpRequestMessage(HttpMethod.Get, host);
+                        request.Headers.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
                         using HttpResponseMessage responseWithCredentials = client
-                            .GetAsync(host, HttpCompletionOption.ResponseHeadersRead)
+                            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                             .GetAwaiter()
                             .GetResult();
 

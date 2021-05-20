@@ -73,11 +73,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 HttpClient client = CreateHttpClient();
                 string[] keys = secret.Split('-');
 
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Basic", keys[0]);
+                using var request = new HttpRequestMessage(HttpMethod.Get, $"https://{keys[1]}.api.mailchimp.com/3.0/?fields=account_name");
+                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", keys[0]);
 
                 using HttpResponseMessage response = client
-                    .GetAsync($"https://{keys[1]}.api.mailchimp.com/3.0/?fields=account_name", HttpCompletionOption.ResponseHeadersRead)
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 

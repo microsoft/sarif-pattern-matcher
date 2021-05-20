@@ -79,17 +79,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string keyKind = secret.Contains("_test_") ? "test" : "live production";
 
+            const string uri = "https://api.stripe.com/v1/customers";
+
             try
             {
                 message = $"The detected secret is a {keyKind} secret.";
 
                 HttpClient client = CreateHttpClient();
 
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", secret);
+                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
                 using HttpResponseMessage response = client
-                    .GetAsync($"https://api.stripe.com/v1/customers", HttpCompletionOption.ResponseHeadersRead)
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 

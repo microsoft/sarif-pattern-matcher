@@ -73,14 +73,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 byte[] bytes = Encoding.UTF8.GetBytes(credentials);
                 credentials = Convert.ToBase64String(bytes);
 
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Basic", credentials);
-
-                var content = new MultipartFormDataContent();
-                content.Add(new StringContent(Guid.NewGuid().ToString()), "subject");
+                using var request = new HttpRequestMessage(HttpMethod.Post, $"https://api.mailgun.net/v3/{id}.mailgun.org/messages");
+                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+                request.Content = new MultipartFormDataContent
+                {
+                    { new StringContent(Guid.NewGuid().ToString()), "subject" },
+                };
 
                 using HttpResponseMessage response = client
-                    .PostAsync($"https://api.mailgun.net/v3/{id}.mailgun.org/messages", content)
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
