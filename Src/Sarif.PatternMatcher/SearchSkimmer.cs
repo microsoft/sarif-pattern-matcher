@@ -42,7 +42,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly MultiformatMessageString _fullDescription;
         private readonly Dictionary<string, MultiformatMessageString> _messageStrings;
 
-        public SearchSkimmer(IRegex engine, ValidatorsCache validators, FileRegionsCache fileRegionsCache, SearchDefinition definition, IFileSystem fileSystem = null)
+        public SearchSkimmer(IRegex engine,
+                             ValidatorsCache validators,
+                             FileRegionsCache fileRegionsCache,
+                             SearchDefinition definition,
+                             IFileSystem fileSystem = null)
         {
             _engine = engine;
             _id = definition.Id;
@@ -480,11 +484,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 MergeDictionary(matches, mergedGroups);
             }
 
-            ReportingDescriptor reportingDescriptor = this;
-            string refinedMatchedPattern = "THISVALUESHOULDNEVERBEDISPLAYEDORFCONSUMED";
             string validatorMessage = null;
             string validationPrefix = string.Empty;
             string validationSuffix = string.Empty;
+            ReportingDescriptor reportingDescriptor = this;
 
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
@@ -672,7 +675,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // If we're matching against decoded contents, the region should
             // relate to the base64-encoded scan target content. We do use
             // the decoded content for the fingerprint, however.
-            FlexMatch regionFlexMatch = binary64DecodedMatch ?? flexMatch ?? validationResult.RegionFlexMatch;
+            FlexMatch regionFlexMatch = binary64DecodedMatch ??
+                                        flexMatch ??
+                                        validationResult.RegionFlexMatch;
 
             Region region = ConstructRegion(context,
                                             regionFlexMatch);

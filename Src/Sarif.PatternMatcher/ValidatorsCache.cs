@@ -198,14 +198,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     groups[key] = flexMatchProperties[key];
                 }
 
-                results.AddRange(ValidateHelper(RuleNameToValidationMethods,
-                                                ruleName,
-                                                context,
-                                                groups,
-                                                out pluginCanPerformDynamicAnalysis));
+                foreach (ValidationResult result in ValidateHelper(RuleNameToValidationMethods,
+                                                                   ruleName,
+                                                                   context,
+                                                                   groups,
+                                                                   out pluginCanPerformDynamicAnalysis))
+                {
+                    result.RegionFlexMatch ??= ConstructRegionFromGroups(groups);
+                    results.Add(result);
+                }
             }
 
             return results;
+        }
+
+        internal static FlexMatch ConstructRegionFromGroups(IDictionary<string, FlexMatch> groups)
+        {
+            int minimalOffset = int.MaxValue;
+            int maximalOffset = 0;
+
+            foreach (KeyValuePair<string, FlexMatch> kv in groups)
+            {
+                // This indicates a reserved value or property
+                if (kv.Value.Length == 0) { continue; }
+
+                minimalOffset = Math.Min(minimalOffset, kv.Value.Index);
+                maximalOffset = Math.Max(maximalOffset, kv.Value.Index + kv.Value.Length);
+            }
+
+            return new FlexMatch()
+            {
+                Index = minimalOffset,
+                Length = maximalOffset - minimalOffset,
+            };
         }
 
         internal static IList<Dictionary<string, FlexMatch>> GetCombinations(IDictionary<string, ISet<FlexMatch>> mergedGroups)
