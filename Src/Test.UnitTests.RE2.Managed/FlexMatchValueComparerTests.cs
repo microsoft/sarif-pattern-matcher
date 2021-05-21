@@ -48,6 +48,9 @@ namespace Microsoft.RE2.Managed
             FlexMatchValueComparer comparer = FlexMatchValueComparer.Instance;
             comparer.GetHashCode(flex).Should().Be(0);
 
+            flex = new FlexMatch();
+            comparer.GetHashCode(flex).Should().Be(0);
+
             flex = new FlexMatch { Value = "1" };
             comparer.GetHashCode(flex).Should().Be("1".GetHashCode());
         }

@@ -40,7 +40,7 @@ namespace Microsoft.RE2.Managed
                 return 0;
             }
 
-            return obj.Value.String.GetHashCode();
+            return obj.Value?.String?.GetHashCode() ?? 0;
         }
     }
 }
