@@ -214,7 +214,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         internal static FlexMatch ConstructRegionFromGroups(IDictionary<string, FlexMatch> groups)
         {
-            int minimalOffset = 0;
+            int minimalOffset = int.MaxValue;
             int maximalOffset = 0;
 
             foreach (KeyValuePair<string, FlexMatch> kv in groups)

@@ -37,15 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             
             result.Should().NotBeNull();
             result.Locations?[0].PhysicalLocation?.Region?.StartLine.Should().Be(2);
-            result.Locations?[0].PhysicalLocation?.Region?.EndLine.Should().Be(3);
-
-            bool debug = true;
-
-            if (debug)
-            {
-                File.WriteAllText(@"e:\repros\out.sarif", JsonConvert.SerializeObject(sarifLog));
-                Process.Start(string.Empty, @"e:\repros\out.sarif");
-            }
+            result.Locations?[0].PhysicalLocation?.Region?.EndLine.Should().Be(4);
         }
 
         private SarifLog RunAnalyzeCommand(string definitionsText, string fileContents)
