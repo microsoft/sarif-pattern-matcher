@@ -73,17 +73,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                  Dictionary<string, string> options,
                                                                  ref ResultLevelKind resultLevelKind)
         {
+            const string uri = "https://content.dropboxapi.com/2/files/get_thumbnail_v2";
+
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
             string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
             HttpClient httpClient = CreateHttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
-            httpClient.DefaultRequestHeaders.Add("Dropbox-API-Arg", @"{""resource"": {"".tag"": ""path"",""path"": ""/a.docx""},""format"": ""jpeg"",""size"": ""w64h64"",""mode"": ""strict""}");
 
             try
             {
+                using var request = new HttpRequestMessage(HttpMethod.Post, uri);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+                request.Headers.Add("Dropbox-API-Arg", @"{""resource"": {"".tag"": ""path"",""path"": ""/a.docx""},""format"": ""jpeg"",""size"": ""w64h64"",""mode"": ""strict""}");
+
                 using HttpResponseMessage response = httpClient
-                    .PostAsync("https://content.dropboxapi.com/2/files/get_thumbnail_v2", null)
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 

@@ -78,10 +78,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             try
             {
                 HttpClient client = CreateHttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Guid.NewGuid().ToString());
+                using var requestDummy = new HttpRequestMessage(HttpMethod.Get, uri);
+                requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", Guid.NewGuid().ToString());
 
                 using HttpResponseMessage responseDummy = client
-                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
+                    .SendAsync(requestDummy, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
@@ -92,9 +93,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     return ValidationState.NoMatch;
                 }
 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", fingerprint.Secret);
+                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", fingerprint.Secret);
                 using HttpResponseMessage response = client
-                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 

@@ -66,15 +66,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string pat = fingerprint.Secret;
 
+            const string uri = "https://connect.squareup.com/v2/catalog/list";
+
             try
             {
                 HttpClient client = CreateHttpClient();
 
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", pat);
+                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", pat);
 
                 using HttpResponseMessage response = client
-                    .GetAsync($"https://connect.squareup.com/v2/catalog/list")
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 

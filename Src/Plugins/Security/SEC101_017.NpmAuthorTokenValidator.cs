@@ -68,15 +68,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string secret = fingerprint.Secret;
 
+            const string uri = "https://registry.npmjs.com/-/npm/v1/tokens";
+
             try
             {
                 HttpClient client = CreateHttpClient();
 
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", secret);
+                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
                 using HttpResponseMessage response = client
-                    .GetAsync($"https://registry.npmjs.com/-/npm/v1/tokens", HttpCompletionOption.ResponseHeadersRead)
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
@@ -94,9 +96,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message += $" An unexpected response code was returned attempting to " +
-                                   $"validate: '{response.StatusCode}'";
-                        break;
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
                     }
                 }
             }
@@ -104,8 +104,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
 
         private static ValidationState CheckInformation(string content, string secret, ref string message, ref ResultLevelKind resultLevelKind)

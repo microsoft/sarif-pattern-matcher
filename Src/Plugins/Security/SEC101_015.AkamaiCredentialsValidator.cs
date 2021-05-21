@@ -89,14 +89,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string signature = Convert.ToBase64String(hmacSignature.ComputeHash(Convert.FromBase64String(textToSign)));
 
                 HttpClient httpClient = CreateHttpClient();
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                using var request = new HttpRequestMessage(HttpMethod.Get, $"{host}/ccu/v2/queues/default");
+                request.Headers.Authorization = new AuthenticationHeaderValue(
                     $"EG1-HMAC-SHA256",
                     $"{header};signature={signature}");
 
                 using HttpResponseMessage httpResponse = httpClient
-                    .GetAsync($"{host}/ccu/v2/queues/default")
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
+
                 switch (httpResponse.StatusCode)
                 {
                     case System.Net.HttpStatusCode.OK:

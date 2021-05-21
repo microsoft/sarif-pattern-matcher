@@ -70,14 +70,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
 
+            const string uri = "https://api.twilio.com/2010-04-01/Accounts.json";
+
             try
             {
                 string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
                 HttpClient httpClient = CreateHttpClient();
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 using HttpResponseMessage response = httpClient
-                    .GetAsync($"https://api.twilio.com/2010-04-01/Accounts.json", HttpCompletionOption.ResponseHeadersRead)
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
