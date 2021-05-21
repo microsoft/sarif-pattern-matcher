@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 
 using FluentAssertions;
@@ -24,9 +23,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             string definitionsText = GetIntrafileRuleDefinition();
 
             string fileContents = "unused leading space" + Environment.NewLine +
-                                  "secret1" + Environment.NewLine + 
+                                  "secret1" + Environment.NewLine +
                                   "host1" + Environment.NewLine +
-                                  "id1" + Environment.NewLine + 
+                                  "id1" + Environment.NewLine +
                                   "unused trailing space";
 
             SarifLog sarifLog = RunAnalyzeCommand(definitionsText, fileContents);
@@ -34,7 +33,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             sarifLog.Runs?[0].Results?.Count.Should().Be(1);
 
             Result result = sarifLog.Runs?[0].Results?[0];
-            
+
             result.Should().NotBeNull();
             result.Locations?[0].PhysicalLocation?.Region?.StartLine.Should().Be(2);
             result.Locations?[0].PhysicalLocation?.Region?.EndLine.Should().Be(4);
@@ -59,9 +58,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>()))
                 .Returns<string>((path) =>
-                                    { return path == scanTargetPath ? 
-                                        fileContents :
-                                        definitionsText; });
+                                    {
+                                        return path == scanTargetPath ?
+                                          fileContents :
+                                          definitionsText;
+                                    });
 
             mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
@@ -120,8 +121,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                             {
                                 IntrafileRegexes = new List<string>()
                                 {
-                                    "(?P<id>id[0-9])", 
-                                    "(?P<host>host[0-9])", 
+                                    "(?P<id>id[0-9])",
+                                    "(?P<host>host[0-9])",
                                     "(?P<secret>secret[0-9])"
                                 },
                             }
