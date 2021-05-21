@@ -11,6 +11,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public IList<string> IntrafileRegexes { get; set; }
 
+        public IList<string> SingleLineRegexes { get; set; }
+
         public string Id { get; set; }
 
         public string SubId { get; set; }

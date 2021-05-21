@@ -16,6 +16,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
+        public AnalyzeCommand(IFileSystem fileSystem = null)
+            : base(fileSystem)
+        {
+        }
+
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(
             IFileSystem fileSystem,
             IEnumerable<string> searchDefinitionsPaths,
@@ -84,11 +89,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     }
 
                     skimmers.Add(
-                        new SearchSkimmer(
-                            engine: engine,
-                            validators: validators,
-                            fileRegionsCache: fileRegionsCache,
-                            definition));
+                        new SearchSkimmer(engine: engine,
+                                          validators: validators,
+                                          fileRegionsCache: fileRegionsCache,
+                                          definition,
+                                          fileSystem));
 
                     const string singleSpace = " ";
 

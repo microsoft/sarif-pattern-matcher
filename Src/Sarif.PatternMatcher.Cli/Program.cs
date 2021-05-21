@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 using CommandLine;
@@ -12,7 +13,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
     internal static class Program
     {
-        private static int Main(string[] args)
+        [ThreadStatic]
+        internal static IFileSystem FileSystem;
+
+        internal static int Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
 
@@ -26,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
               .MapResult(
                 (AnalyzeDatabaseOptions options) => new AnalyzeDatabaseCommand().Run(options),
                 (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),
-                (AnalyzeOptions options) => new AnalyzeCommand().Run(options),
+                (AnalyzeOptions options) => new AnalyzeCommand(FileSystem).Run(options),
                 (ExportRulesMetatadaOptions options) => new ExportRulesMetatadaCommand().Run(options),
                 (ExportSearchDefinitionsOptions options) => new ExportSearchDefinitionsCommand().Run(options),
                 (ValidateOptions options) => new ValidateCommand().Run(options),
