@@ -26,19 +26,19 @@
 # Intrafile analysis
   $SEC101/004.FacebookAppCredentialsId=(?si)facebook.{1,50}\b(?P<id>[0-9]{15})(?:[^0-9]|$)
   $SEC101/004.FacebookAppCredentialsSecret=(?si)facebook.{1,50}\b(?P<secret>[0-9a-f]{32})(?:[^0-9]|$)
-  
-  $SEC101/007.GitHubAppCredentialsId=(?s)\b(?P<id>Iv1\.[0-9a-z]{16})(?:[^0-9a-z]|$)
-  $SEC101/007.GitHubAppCredentialsSecret=(?si)\b(?P<secret>[0-9a-z]{35,40})(?:[^0-9a-z]|$)
 
-  $SEC101/008.AwsCredentialsId=(?s)\b(?P<id>(?:A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16})(?:[^0-9A-Z]|$)
+  $SEC101/007.GitHubAppCredentialsId=\b(?P<id>Iv1\.[0-9a-z]{16})(?:[^0-9a-z]|$)
+  $SEC101/007.GitHubAppCredentialsSecret=(?i)\b(?P<secret>[0-9a-z]{35,40})(?:[^0-9a-z]|$)
+
+  $SEC101/008.AwsCredentialsId=\b(?P<id>(?:A3T[0-9A-Z]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16})(?:[^0-9A-Z]|$)
   $SEC101/008.AwsCredentialsSecret=(?i)\b(?P<secret>[0-9a-z\/+]{40})(?:[^0-9a-z\/+]|$)
 
   $SEC101/009.LinkedInCredentialsId=(?si)linkedin(?:.{0,50})?\b(?-i)(?P<id>[0-9a-z]{14})(?:[^0-9a-z]|$)
   $SEC101/009.LinkedInCredentialsSecret=(?si)linkedin(?:.{0,50})?\b(?i)(?P<secret>[0-9a-z]{16})(?:[^0-9a-z]|$)
 
-  $SEC101/011.SquareCredentialsId=(?s)\b(?P<id>sq0idp\-[\w\-]{22})(?:[^\w\-]|$)
-  $SEC101/011.SquareCredentialsSecret=(?s)\b(?P<secret>sq0csp-(?i)[\w\-]{43})(?:[^\w\-]|$)
-
+  $SEC101/011.SquareCredentialsId=\b(?P<id>sq0idp\-[\w\-]{22})(?:[^\w\-]|$)
+  $SEC101/011.SquareCredentialsSecret=\b(?P<secret>sq0csp-(?i)[\w\-]{43})(?:[^\w\-]|$)
+  
   $SEC101/018.TwilioCredentialsId=(?si)twilio.{1,50}\b(?P<id>AC[0-9a-z]{32})(?:[^0-9a-z]|$)
   $SEC101/018.TwilioCredentialsSecret=(?si)twilio.{1,50}\b(?P<secret>[0-9a-f]{32})(?:[^0-9a-f]|$)
 
