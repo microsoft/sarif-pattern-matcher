@@ -180,13 +180,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public IEnumerable<ValidationResult> Validate(string ruleName,
                                                       AnalyzeContext context,
                                                       IDictionary<string, ISet<FlexMatch>> mergedGroups,
+                                                      IList<IDictionary<string, FlexMatch>> combinations,
                                                       IDictionary<string, string> properties,
                                                       out bool pluginCanPerformDynamicAnalysis)
         {
             pluginCanPerformDynamicAnalysis = false;
 
             var results = new List<ValidationResult>();
-            IList<Dictionary<string, FlexMatch>> combinations = GetCombinations(mergedGroups);
+            combinations ??= GetCombinations(mergedGroups);
 
             var flexMatchProperties = new Dictionary<string, FlexMatch>();
             flexMatchProperties.AddProperties(properties);
@@ -220,7 +221,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             foreach (KeyValuePair<string, FlexMatch> kv in groups)
             {
                 // This indicates a reserved value or property
-                if (kv.Value.Length == 0) { continue; }
+                if (kv.Value.Length == 0 ||
+                    int.TryParse(kv.Key, out int result))
+                {
+                    continue;
+                }
 
                 minimalOffset = Math.Min(minimalOffset, kv.Value.Index);
                 maximalOffset = Math.Max(maximalOffset, kv.Value.Index + kv.Value.Length);
@@ -233,7 +238,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             };
         }
 
-        internal static IList<Dictionary<string, FlexMatch>> GetCombinations(IDictionary<string, ISet<FlexMatch>> mergedGroups)
+        internal static IList<IDictionary<string, FlexMatch>> GetCombinations(IDictionary<string, ISet<FlexMatch>> mergedGroups)
         {
             string[] keys = mergedGroups.Keys.ToArray<string>();
 
@@ -312,13 +317,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return validationResults;
         }
 
-        private static IList<Dictionary<string, FlexMatch>> GetCombinations(IDictionary<string, ISet<FlexMatch>> mergedGroups,
+        private static IList<IDictionary<string, FlexMatch>> GetCombinations(IDictionary<string, ISet<FlexMatch>> mergedGroups,
                                                                             string[] keys,
                                                                             int currentIndex,
-                                                                            IList<Dictionary<string, FlexMatch>> combinations,
+                                                                            IList<IDictionary<string, FlexMatch>> combinations,
                                                                             IDictionary<string, FlexMatch> currentCombination)
         {
-            combinations ??= new List<Dictionary<string, FlexMatch>>();
+            combinations ??= new List<IDictionary<string, FlexMatch>>();
             currentCombination ??= new Dictionary<string, FlexMatch>();
 
             if (currentIndex + 1 > mergedGroups.Count) { return combinations; }
