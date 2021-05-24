@@ -81,10 +81,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             else
             {
-                ParseExpression(RegexEngine, groups["0"], IdExpression, ref id);
-                ParseExpression(RegexEngine, groups["0"], HostExpression, ref host);
-                ParseExpression(RegexEngine, groups["0"], SecretExpression, ref secret);
-                ParseExpression(RegexEngine, groups["0"], ResourceExpression, ref database);
+                FlexMatch matchedPattern = groups["0"];
+                ParseExpression(RegexEngine, matchedPattern, IdExpression, ref id);
+                ParseExpression(RegexEngine, matchedPattern, HostExpression, ref host);
+                ParseExpression(RegexEngine, matchedPattern, SecretExpression, ref secret);
+                ParseExpression(RegexEngine, matchedPattern, ResourceExpression, ref database);
             }
 
             if (string.IsNullOrWhiteSpace(id.Value) ||

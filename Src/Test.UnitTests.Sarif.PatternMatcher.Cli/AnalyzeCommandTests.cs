@@ -18,25 +18,82 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
     public class AnalyzeCommandTests
     {
         [Fact]
+        public void AnalyzeCommand_SingleLineRuleBasic()
+        {
+            string definitionsText = GetSingleLineRuleDefinition();
+
+            string fileContents = "unused leading space  \r\n" +
+                                  " id1 host1 secret1    \r\n" +
+                                  " id2 secret2 host2    \r\n" +
+                                  " host3 id3 secret3    \r\n" +
+                                  " host4 secret3 id4    \r\n" +
+                                  " secret5 id5 host5    \r\n" +
+                                  " secret6 host6 id6    \r\n" +
+                                  "unused trailing space \r\n";
+
+            SarifLog sarifLog = RunAnalyzeCommand(definitionsText, fileContents);
+            sarifLog.Should().NotBeNull();
+            sarifLog.Runs?[0].Results?.Count.Should().Be(6);
+
+            for (int i = 0; i < sarifLog.Runs[0].Results.Count; i++)
+            {
+                // Start line is 1-indexed. Add another line to
+                // account for the 'unused leading space' line.
+                int startLine = i + 2;
+
+                Result result = sarifLog.Runs[0].Results[i];
+                Region region = result.Locations?[0].PhysicalLocation?.Region;
+                region.Should().NotBeNull();
+
+                int matchLength = "id1 host1 secret1".Length;
+
+                // StartColumn is 1-indexed and we add a leading space
+                // to every pattern;
+                int startColumn = 2;
+                int endColumn = startColumn + matchLength;
+
+                region.StartColumn.Should().Be(startColumn);
+                region.EndColumn.Should().Be(startColumn + matchLength);
+
+                region.StartLine.Should().Be(startLine);
+                region.EndLine.Should().Be(startLine);
+            }
+        }
+
+
+        [Fact]
         public void AnalyzeCommand_IntrafileBasic()
         {
             string definitionsText = GetIntrafileRuleDefinition();
 
-            string fileContents = "unused leading space" + Environment.NewLine +
-                                  "secret1" + Environment.NewLine +
-                                  "host1" + Environment.NewLine +
-                                  "id1" + Environment.NewLine +
-                                  "unused trailing space";
+            string fileContents = "unused leading space  \r\n" +
+                                  " secret1              \r\n" +
+                                  " host1                \r\n" +
+                                  " id1                  \r\n" +
+                                  " secret2              \r\n" +
+                                  "unused trailing space \r\n";
 
             SarifLog sarifLog = RunAnalyzeCommand(definitionsText, fileContents);
             sarifLog.Should().NotBeNull();
-            sarifLog.Runs?[0].Results?.Count.Should().Be(1);
+            sarifLog.Runs?[0].Results?.Count.Should().Be(2);
 
-            Result result = sarifLog.Runs?[0].Results?[0];
+            Result result = sarifLog.Runs[0].Results[0];
+            Region region = result.Locations?[0].PhysicalLocation?.Region;
+            region.Should().NotBeNull();
+            region?.StartLine.Should().Be(2);
+            region?.EndLine.Should().Be(4);
 
-            result.Should().NotBeNull();
-            result.Locations?[0].PhysicalLocation?.Region?.StartLine.Should().Be(2);
-            result.Locations?[0].PhysicalLocation?.Region?.EndLine.Should().Be(4);
+            // This is a special check to ensure that our matches don't
+            // include region information that derives from unnamed groups,
+            // e.g., groups["1].
+            region.StartColumn.Should().Be(2);
+
+            result = sarifLog.Runs[0].Results[1];
+            region = result.Locations?[0].PhysicalLocation?.Region;
+            region.Should().NotBeNull();
+            region?.StartLine.Should().Be(3);
+            region?.EndLine.Should().Be(5);
+            region.StartColumn.Should().Be(2);
         }
 
         private SarifLog RunAnalyzeCommand(string definitionsText, string fileContents)
@@ -104,6 +161,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return sarifLog;
         }
 
+        private static List<string> GetMultipartRuleRegexes()
+        {
+            return new List<string>()
+            {
+                "(x|y)?(?P<id>id[0-9])",
+                "(x|y)?(?P<host>host[0-9])",
+                "(x|y)?(?P<secret>secret[0-9])"
+            };
+        }
+
         private static string GetIntrafileRuleDefinition()
         {
             var definitions = new SearchDefinitions()
@@ -119,12 +186,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         {
                             new MatchExpression()
                             {
-                                IntrafileRegexes = new List<string>()
-                                {
-                                    "(?P<id>id[0-9])",
-                                    "(?P<host>host[0-9])",
-                                    "(?P<secret>secret[0-9])"
-                                },
+                                IntrafileRegexes = GetMultipartRuleRegexes(),
                             }
                         })
                     }
@@ -133,5 +195,31 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             return JsonConvert.SerializeObject(definitions);
         }
+
+        private static string GetSingleLineRuleDefinition()
+        {
+            var definitions = new SearchDefinitions()
+            {
+                Definitions = new List<SearchDefinition>(new[]
+                {
+                    new SearchDefinition()
+                    {
+                        Name = "SingleLineRule", Id = "SingleLine1001",
+                        Level = FailureLevel.Error,
+                        Message = "A problem occurred in '{0:scanTarget}'.",
+                        MatchExpressions = new List<MatchExpression>(new[]
+                        {
+                            new MatchExpression()
+                            {
+                                SingleLineRegexes = GetMultipartRuleRegexes(),
+                            }
+                        })
+                    }
+                })
+            };
+
+            return JsonConvert.SerializeObject(definitions);
+        }
+
     }
 }

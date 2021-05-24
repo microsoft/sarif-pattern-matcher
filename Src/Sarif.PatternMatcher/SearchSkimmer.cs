@@ -423,6 +423,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 foreach (KeyValuePair<string, FlexMatch> keyValue in groups)
                 {
+                    string key = keyValue.Key;
+
                     // We only persist named groups, not groups specified by index.
                     if (int.TryParse(keyValue.Key, out int val)) { continue; }
 
@@ -438,36 +440,44 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
-            if (matchExpression.IntrafileRegexes?.Count > 0)
-            {
-                Debug.Assert(binary64DecodedMatch == null, "Decoded binary64 should not be null");
-                RunMatchExpressionForIntrafileRegexes(context, matchExpression);
-            }
-            else if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
+            if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
             {
                 RunMatchExpressionForContentsRegex(binary64DecodedMatch, context, matchExpression);
+                return;
+            }
+
+            Debug.Assert(binary64DecodedMatch == null, "Decoded binary64 should be null");
+
+            if (matchExpression.IntrafileRegexes?.Count > 0 ||
+                matchExpression.SingleLineRegexes?.Count > 0)
+            {
+                RunMatchExpressionForSingleLineAndIntrafileRegexes(context, matchExpression);
             }
             else if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
             {
-                Debug.Assert(binary64DecodedMatch == null, "Decoded binary64 should not be null");
                 RunMatchExpressionForFileNameRegex(context, matchExpression);
             }
             else
             {
-                // Both FileNameAllowRegex and ContentRegex are null or empty.
+                throw new InvalidOperationException("Malformed expression contains no regexes.");
             }
+        }
+
+        private void RunMatchExpressionForSingleLineAndIntrafileRegexes(AnalyzeContext context, MatchExpression matchExpression)
+        {
+            RunMatchExpressionForIntrafileRegexes(context, matchExpression);
+            RunMatchExpressionForSingleLineRegexes(context, matchExpression);
         }
 
         private void RunMatchExpressionForIntrafileRegexes(AnalyzeContext context, MatchExpression matchExpression)
         {
             ResultKind kind = matchExpression.Kind;
-            FailureLevel level = matchExpression.Level;
             string searchText = context.FileContents;
-            string filePath = context.TargetUri.GetFilePath();
+            FailureLevel level = matchExpression.Level;
 
             var mergedGroups = new Dictionary<string, ISet<FlexMatch>>();
 
-            for (int i = 0; i < matchExpression.IntrafileRegexes.Count; i++)
+            for (int i = 0; i < matchExpression.IntrafileRegexes?.Count; i++)
             {
                 string contentsRegex = matchExpression.IntrafileRegexes[i];
 
@@ -484,6 +494,95 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 MergeDictionary(matches, mergedGroups);
             }
 
+            if (mergedGroups.Count > 0)
+            {
+                ValidateMatch(context,
+                              matchExpression,
+                              mergedGroups,
+                              groups: null,
+                              ref kind,
+                              ref level);
+            }
+        }
+
+        private void RunMatchExpressionForSingleLineRegexes(AnalyzeContext context, MatchExpression matchExpression)
+        {
+            IList<string> regexes = matchExpression.SingleLineRegexes;
+
+            if (regexes == null || regexes.Count == 0)
+            {
+                return;
+            }
+
+            ResultKind kind = matchExpression.Kind;
+            string searchText = context.FileContents;
+            FailureLevel level = matchExpression.Level;
+
+            string firstRegex = matchExpression.SingleLineRegexes[0];
+
+            // 'm' is multiline mode, i.e., ^ and $ match the beginning and
+            // end of lines as well as the beginning or end of the search text.
+            string lineRegex = $"(?m)^.*{firstRegex}.*";
+
+            if (!_engine.Matches(lineRegex, searchText, out List<Dictionary<string, FlexMatch>> singleLineMatches))
+            {
+                return;
+            }
+
+            var combinations = new List<IDictionary<string, FlexMatch>>();
+
+            foreach (Dictionary<string, FlexMatch> lineMatch in singleLineMatches)
+            {
+                if (matchExpression.SingleLineRegexes.Count == 1)
+                {
+                    combinations.Add(lineMatch);
+                    continue;
+                }
+
+                string lineText = lineMatch["0"].Value;
+
+                for (int i = 1; i < matchExpression.SingleLineRegexes.Count; i++)
+                {
+                    string regex = matchExpression.SingleLineRegexes[i];
+
+                    if (!_engine.Matches(regex, lineText, out List<Dictionary<string, FlexMatch>> intralineMatches))
+                    {
+                        continue;
+                    }
+
+                    // TODO: we only support a single intraline match per expression. How shoud
+                    // we report or error out in cases where this expectation isn't met?
+                    Dictionary<string, FlexMatch> intralineMatch = intralineMatches[0];
+
+                    // We will copy the component groups into the per-line match.
+                    foreach (KeyValuePair<string, FlexMatch> kv in intralineMatch)
+                    {
+                        if (int.TryParse(kv.Key, out int val)) { continue; }
+
+                        kv.Value.Index += lineMatch["0"].Index;
+                        lineMatch[kv.Key] = kv.Value;
+                    }
+                }
+
+                combinations.Add(lineMatch);
+            }
+
+            ValidateMatch(context,
+                         matchExpression,
+                         mergedGroups: null,
+                         groups: combinations,
+                         ref kind,
+                         ref level);
+
+        }
+
+        private void ValidateMatch(AnalyzeContext context,
+                                   MatchExpression matchExpression,
+                                   Dictionary<string, ISet<FlexMatch>> mergedGroups,
+                                   IList<IDictionary<string, FlexMatch>> groups,
+                                   ref ResultKind kind,
+                                   ref FailureLevel level)
+        {
             string validatorMessage = null;
             string validationPrefix = string.Empty;
             string validationSuffix = string.Empty;
@@ -492,11 +591,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 matchExpression.Properties ??= new Dictionary<string, string>();
+
+                string filePath = context.TargetUri.GetFilePath();
                 matchExpression.Properties["scanTargetFullPath"] = filePath;
 
                 IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
                                                                                        context,
                                                                                        mergedGroups,
+                                                                                       groups,
                                                                                        matchExpression.Properties,
                                                                                        out bool pluginSupportsDynamicValidation);
                 if (validationResults != null)
@@ -522,22 +624,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                             pluginSupportsDynamicValidation);
                         validationResult.Message = validatorMessage;
                         validationResult.ResultLevelKind = new ResultLevelKind { Kind = kind, Level = level };
-                        ConstructResultAndLogForContentsRegex(null,
+
+                        // TODO: we do not have the ability to provide arbitrary match data from
+                        // groups to the result construction API, except for the single-line
+                        // match case. This could be a good improvement for intrafile analysis.
+                        ConstructResultAndLogForContentsRegex(binary64DecodedMatch: null,
                                                               context,
                                                               matchExpression,
                                                               filePath,
                                                               validationResult.RegionFlexMatch,
                                                               reportingDescriptor,
-                                                              null,
+                                                              groups?[0],
                                                               validationPrefix,
                                                               validationSuffix,
                                                               validationResult);
                     }
                 }
-            }
-            else
-            {
-                throw new InvalidOperationException("All multiline rules must have a validator.");
             }
         }
 

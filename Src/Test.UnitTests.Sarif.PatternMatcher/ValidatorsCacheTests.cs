@@ -21,7 +21,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public void ValidatorsCache_GetCombinations()
         {
             var input = new Dictionary<string, ISet<FlexMatch>>();
-            IList<Dictionary<string, FlexMatch>> results = ValidatorsCache.GetCombinations(input);
+            IList<IDictionary<string, FlexMatch>> results = ValidatorsCache.GetCombinations(input);
 
             results.Should().BeEmpty();
 
