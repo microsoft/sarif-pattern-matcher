@@ -18,11 +18,9 @@ namespace Microsoft.RE2.Managed
 
         public FlexString Value { get; set; }
 
-#if DEBUG
         public override string ToString()
         {
             return Value?.String ?? string.Empty;
         }
-#endif
     }
 }
