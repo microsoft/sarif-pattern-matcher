@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         // Set this value to 'true' temporarily and rerun tests to update
         // test files in all \ExpectedOutputs\ locations. This value needs
         // to be set to 'false' against in order for suites to actually pass.
-        protected override bool RebaselineExpectedResults => false
+        protected override bool RebaselineExpectedResults => false;
 
         // We set this to false to prevent the base class from verifying this
         // condition after executing every single test. Doing so would result in
