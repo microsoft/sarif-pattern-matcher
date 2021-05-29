@@ -111,8 +111,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                                                 It.IsAny<SearchOption>()))
                                                                     .Returns(new[] { scanTargetPath });
 
+            // Search definitions location and loading
             mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
-
             mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>()))
                 .Returns<string>((path) =>
                                     {
@@ -120,6 +120,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                           fileContents :
                                           definitionsText;
                                     });
+
+            // Shared strings location and loading
+            mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
+                .Returns<string>((path) => { return GetSharedStrings(); });
 
             mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
@@ -161,11 +165,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return sarifLog;
         }
 
+        private string[] GetSharedStrings()
+        {
+            string stringsLocation = this.GetType().Assembly.Location;
+            stringsLocation = Path.GetDirectoryName(stringsLocation);
+            stringsLocation = Path.Combine(stringsLocation, "SharedStrings.Txt");
+            return File.ReadAllLines(stringsLocation);
+        }
+
         private static List<string> GetMultipartRuleRegexes()
         {
             return new List<string>()
             {
-                "(x|y)?(?P<id>id[0-9])",
+                "$MultipartRegexesId",
                 "(x|y)?(?P<host>host[0-9])",
                 "(x|y)?(?P<secret>secret[0-9])"
             };
@@ -173,8 +185,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         private static string GetIntrafileRuleDefinition()
         {
+            string assemblyName = typeof(AnalyzeCommandTests).Assembly.Location;
+            assemblyName = Path.GetFileName(assemblyName);
             var definitions = new SearchDefinitions()
             {
+                ValidatorsAssemblyName = assemblyName,
+                SharedStringsFileName = "SharedStrings.txt",
                 Definitions = new List<SearchDefinition>(new[]
                 {
                     new SearchDefinition()
@@ -198,8 +214,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         private static string GetSingleLineRuleDefinition()
         {
+            string assemblyName = typeof(AnalyzeCommandTests).Assembly.Location;
+            assemblyName = Path.GetFileName(assemblyName);
             var definitions = new SearchDefinitions()
             {
+                ValidatorsAssemblyName = assemblyName,
+                SharedStringsFileName = "SharedStrings.txt",
+
                 Definitions = new List<SearchDefinition>(new[]
                 {
                     new SearchDefinition()
@@ -220,6 +241,5 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             return JsonConvert.SerializeObject(definitions);
         }
-
     }
 }

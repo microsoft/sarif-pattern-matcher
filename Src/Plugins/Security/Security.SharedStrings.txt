@@ -93,9 +93,19 @@
   $SEC101/035.CloudantCredentialsUrl=(?i)https:\/\/(?P<id>[^:]+):(?P<secret>[\w]{64}|[a-z]{24})@[\w-]+\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/036.MySqlConnectionStringAdo=(?i)(?:Port\s*=\s*(?:[0-9]{4,5}).*)?(?:(?:(?:Server\s*=\s*(?P<host>[\w\-.]{3,90}))|(?:Uid=(?-i)(?P<id>[a-z\@\-]{1,120})(?i))|(?:Pwd\s*=\s*(?P<secret>[^;"]{8,128}))).*?){3}(?:.*Port\s*=\s*(?:[0-9]{4,5}))?
   $SEC101/036.MySqlConnectionStringPlainJdbc=(?:jdbc:mysql:\/\/(?P<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?P<url>[^,(?:]+),\s*"(?P<id>[\w@-]{1,200})",\s*"(?P<secret>[^"';<>=]{7,200})"
-  $SEC101/037.SqlConnectionStringAdo=(?i)(?:(?:(?:server|data source)\s*=\s*[^;"<\n]{0,50}|(?:initial catalog|database)\s*=\s*[^;"<>*%&:\/?\n]{0,50}|(?:user id|uid)\s*=\s*[^;"'<]{0,50}|(?:password|pwd)\s*=\s*[^;"<]{0,50}).+?){4}
-  $SEC101/037.SqlConnectionStringJdbc=(?i)jdbc:sqlserver:\/\/(?P<host>[^;"<]+);(?:(?:(?:database\s*=\s*(?P<database>[^;"<>*%&:\/?\n]{1,128}))|(?:user\s*=\s*(?P<id>[^@]+)@[^;"<]+)|(?:password\s*=\s*(?P<secret>[^;"<]+))).{1,50}?){3}
-  $SEC101/037.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?P<host>[^;"<]+);\s*Database\s*=\s*(?P<database>[^;"<>*%&:\/?\n]+)",\s*"(?P<id>[^"]+)",\s*"(?P<secret>[^"]+)"
+  
+  $SEC101/037.SqlConnectionStringJdbcId=(?i)user\s*=\s*(?P<id>[^@]+?)@[^;"<'\n]+(?:[;"<'\n]|$)
+  $SEC101/037.SqlConnectionStringJdbcHost=(?i)jdbc:sqlserver:\/\/(?P<host>[^;"<'\n]+?)(?:[;"<'\n]|$)
+  $SEC101/037.SqlConnectionStringJdbcSecret=(?i)password\s*=\s*(?P<secret>[^;"<'\n]+?)(?:[;"<'\n]|$)
+  $SEC101/037.SqlConnectionStringJdbcResource=(?i)database\s*=\s*(?P<resource>[^;"<>*%&:\/?'\n]+?)(?:[;"<>*%&:\/?'\n]|$)
+
+  $SEC101/037.SqlConnectionStringAdoId=(?i)(?:user id|uid)\s*=\s*(?P<id>[^;"<'\n]+?)(?:[;"<'\n]|$)
+  $SEC101/037.SqlConnectionStringAdoHost=(?i)(?:server|data source)\s*=\s*(?P<host>[^;"<'\n].+?)(?:[;"<'\n]|$)
+  $SEC101/037.SqlConnectionStringAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^;"<'\n].+?)(?:[;"<'\n]|$)
+  $SEC101/037.SqlConnectionStringAdoResource=(?i)(?:initial catalog|database)\s*=\s*(?P<resource>[^;"<>*%&:\/?'\n]+?)(?:[;"<>*%&:\/?'\n]|$)
+
+  $SEC101/037.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?P<host>[^;"<]+);\s*Database\s*=\s*(?P<resource>[^;"<>*%&:\/?\n]+)",\s*"(?P<id>[^"]+)",\s*"(?P<secret>[^"]+)"  
+  
   $SEC101/038.PostgreSqlConnectionStringAdo=(?:(?i)(?:(?:(?:Port\s*=\s*[0-9]{1,5})|(?:(?:database|db)\s*=\s*[^;"<]+));.*)?(?:(?:host|server)\s*=\s*(?P<host>[\w\-_\.]{3,91})|(?:username|uid|user id)\s*=\s*(?P<id>[^,;"<\s]+)|(?:password|pwd)\s*=\s*(?P<secret>[^,;"<\s]+)).+?){3}(?:.*(?:(?:Port\s*=\s*[0-9]{1,5})|(?:(?:database|db)\s*=\s*[^;"<]+)))?
   $SEC101/041.RabbitMqConnectionString=(?i)amqps?:\/\/(?P<id>[^:]+):(?P<secret>[^@]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
   $SEC101/043.NuGetPackageSourceCredentialsXml=(?i)(?P<host><\s*packageSources\s*>(?s).{0,500}?(?-s)<\\?\/packageSources\s*>)(?s).{0,200}?(?-s)[^\/](?P<secret><\s*packageSourceCredentials\s*>(?s).{0,500}?(?-s)<\\?\/packageSourceCredentials\s*>)
@@ -103,5 +113,4 @@
   $SEC101/044.NpmCredentialsUserPassword=(?is)(?:(?:(?:registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(?:username\s*=\s*(?P<id>[^\s]+)(?:$|\s))|(?:_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){3}
   $SEC101/044.NpmCredentialsPassword=(?is)(?:(?:(?:registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(?:_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){2}
   $SEC101/045.PostmanApiKey=\b(?P<secret>PMAK-[0-9a-z]{24}-[0-9a-z]{34})(?:[^0-9a-z]|$)
-  $SEC101/102.AdoPat=\b(?P<secret>[2-7a-z]{52})(?:\b|$)
-  
+  $SEC101/102.AdoPat=\b(?P<secret>[2-7a-z]{52})(?:\b|$) 
