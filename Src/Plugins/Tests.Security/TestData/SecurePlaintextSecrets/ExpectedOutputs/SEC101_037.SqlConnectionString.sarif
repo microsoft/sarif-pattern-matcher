@@ -106,9 +106,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=tcp][id=username][platform=SqlOnPremise][resource=database2]",
-            "ValidationFingerprint/v1": "[host=tcp][id=username][resource=database2][secret=password2]",
-            "ValidationFingerprintHash/v1": "523e019ffef4849385170347e7166a90af6c0e7c14d76b10a2279b44384cd78c"
+            "AssetFingerprint/v1": "[host=servername2.database.windows.net][id=username][part=servers][platform=Azure][resource=database2]",
+            "ValidationFingerprint/v1": "[host=servername2.database.windows.net][id=username][resource=database2][secret=password2]",
+            "ValidationFingerprintHash/v1": "48a28f18c0e8c3510e7c4fe390af1a5f65fd971363c7b9c6854bd75e254aa030"
           },
           "rank": 42.11
         },
@@ -235,9 +235,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=tcp:servername2.database.windows.net,1433][id=username2][part=servers][platform=Azure][resource=database2]",
-            "ValidationFingerprint/v1": "[host=tcp:servername2.database.windows.net,1433][id=username2][resource=database2][secret=password2]",
-            "ValidationFingerprintHash/v1": "072414dbfa70d7057a4f83f8490d2aef10c1955570cc3772f9b561de4298d85c"
+            "AssetFingerprint/v1": "[host=servername2.database.windows.net,1433][id=username2][part=servers][platform=Azure][resource=database2]",
+            "ValidationFingerprint/v1": "[host=servername2.database.windows.net,1433][id=username2][resource=database2][secret=password2]",
+            "ValidationFingerprintHash/v1": "d79c54c338cf6b8786b93457bee7bed8e7090750f873a0ce06ed4dca3431acd0"
           },
           "rank": 42.11
         },
@@ -837,9 +837,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=tcp:servername3.database.windows.net,1433][id=username3][part=servers][platform=Azure][resource=databse3]",
-            "ValidationFingerprint/v1": "[host=tcp:servername3.database.windows.net,1433][id=username3][resource=databse3][secret=password3]",
-            "ValidationFingerprintHash/v1": "92c6746875b8d1bbedf717f80310b7175893235b8804e4779f12c05597d52ec4"
+            "AssetFingerprint/v1": "[host=servername3.database.windows.net,1433][id=username3][part=servers][platform=Azure][resource=databse3]",
+            "ValidationFingerprint/v1": "[host=servername3.database.windows.net,1433][id=username3][resource=databse3][secret=password3]",
+            "ValidationFingerprintHash/v1": "eeccc815a478632178473bd1bc7a2f96c633106af83c25ef7e52fa6a0de16c84"
           },
           "rank": 42.11
         },
@@ -880,9 +880,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=tcp][id=username2][platform=SqlOnPremise][resource=database2]",
-            "ValidationFingerprint/v1": "[host=tcp][id=username2][resource=database2][secret=password2]",
-            "ValidationFingerprintHash/v1": "740f282eee15a1005b406c6544e6f80d610738ce0d06e9bb99d47c41fc2ed51e"
+            "AssetFingerprint/v1": "[host=servername2.database.windows.net][id=username2][part=servers][platform=Azure][resource=database2]",
+            "ValidationFingerprint/v1": "[host=servername2.database.windows.net][id=username2][resource=database2][secret=password2]",
+            "ValidationFingerprintHash/v1": "450ee40ee72b51d8dc24adeaef3bdf92ce9680b5ce66feaeeda1e58844eed6c3"
           },
           "rank": 42.11
         },

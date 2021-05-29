@@ -91,22 +91,22 @@
   $SEC101/035.CloudantCredentialsPython=(?is)cloudant\s*\(\s*"(?P<id>[\w-]+)"\s*\,\s*"(?P<secret>[\w]{64})"\s*\,\s*.{0,200}url=\s*"https:\/\/(?P<resource>[\w.-]+)\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsJson=(?is)apiKey"[^"]+"(?P<secret>[\w-]+)".{1,100}[^0-9a-z\.-](?P<id>[0-9a-z\.-]{32,44})\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsUrl=(?i)https:\/\/(?P<id>[^:]+):(?P<secret>[\w]{64}|[a-z]{24})@[\w-]+\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
-  $SEC101/036.MySqlConnectionStringAdo=(?i)(?:Port\s*=\s*(?:[0-9]{4,5}).*)?(?:(?:(?:Server\s*=\s*(?P<host>[\w\-.]{3,90}))|(?:Uid=(?-i)(?P<id>[a-z\@\-]{1,120})(?i))|(?:Pwd\s*=\s*(?P<secret>[^;"]{8,128}))).*?){3}(?:.*Port\s*=\s*(?:[0-9]{4,5}))?
+  $SEC101/036.MySqlConnectionStringAdo=(?i)(?:Port\s*=\s*(?:[0-9]{4,5}).*)?(?:(?:(?:Server\s*=\s*(tcp:)?(?P<host>[\w\-.]{3,90}))|(?:Uid=(?-i)(?P<id>[a-z\@\-]{1,120})(?i))|(?:Pwd\s*=\s*(?P<secret>[^;"]{8,128}))).*?){3}(?:.*Port\s*=\s*(?:[0-9]{4,5}))?
   $SEC101/036.MySqlConnectionStringPlainJdbc=(?:jdbc:mysql:\/\/(?P<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?P<url>[^,(?:]+),\s*"(?P<id>[\w@-]{1,200})",\s*"(?P<secret>[^"';<>=]{7,200})"
   
   $SEC101/037.SqlConnectionStringJdbcId=(?i)user\s*=\s*(?P<id>[^@]+?)@[^;"<'\n]+(?:[;"<'\n]|$)
   $SEC101/037.SqlConnectionStringJdbcHost=(?i)jdbc:sqlserver:\/\/(?P<host>[^;"<'\n]+?)(?:[;"<'\n]|$)
   $SEC101/037.SqlConnectionStringJdbcSecret=(?i)password\s*=\s*(?P<secret>[^;"<'\n]+?)(?:[;"<'\n]|$)
-  $SEC101/037.SqlConnectionStringJdbcResource=(?i)database\s*=\s*(?P<resource>[^;"<>*%&:\/?'\n]+?)(?:[;"<>*%&:\/?'\n]|$)
+  $SEC101/037.SqlConnectionStringJdbcResource=(?i)database\s*=\s*(?P<resource>[^;"<>*%&\/?'\n]+?)(?:[;"<>*%&\/?'\n]|$)
 
   $SEC101/037.SqlConnectionStringAdoId=(?i)(?:user id|uid)\s*=\s*(?P<id>[^;"<'\n]+?)(?:[;"<'\n]|$)
-  $SEC101/037.SqlConnectionStringAdoHost=(?i)(?:server|data source)\s*=\s*(?P<host>[^;"<'\n].+?)(?:[;"<'\n]|$)
+  $SEC101/037.SqlConnectionStringAdoHost=(?i)(?:server|data source)\s*=\s*(tcp:)?(?P<host>[^;"<'\n].+?)(?:[;"<'\n]|$)
   $SEC101/037.SqlConnectionStringAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^;"<'\n].+?)(?:[;"<'\n]|$)
   $SEC101/037.SqlConnectionStringAdoResource=(?i)(?:initial catalog|database)\s*=\s*(?P<resource>[^;"<>*%&:\/?'\n]+?)(?:[;"<>*%&:\/?'\n]|$)
 
-  $SEC101/037.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(?P<host>[^;"<]+);\s*Database\s*=\s*(?P<resource>[^;"<>*%&:\/?\n]+)",\s*"(?P<id>[^"]+)",\s*"(?P<secret>[^"]+)"  
+  $SEC101/037.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(tcp:)?(?P<host>[^;"<]+);\s*Database\s*=\s*(?P<resource>[^;"<>*%&:\/?\n]+)",\s*"(?P<id>[^"]+)",\s*"(?P<secret>[^"]+)"  
   
-  $SEC101/038.PostgreSqlConnectionStringAdo=(?:(?i)(?:(?:(?:Port\s*=\s*[0-9]{1,5})|(?:(?:database|db)\s*=\s*[^;"<]+));.*)?(?:(?:host|server)\s*=\s*(?P<host>[\w\-_\.]{3,91})|(?:username|uid|user id)\s*=\s*(?P<id>[^,;"<\s]+)|(?:password|pwd)\s*=\s*(?P<secret>[^,;"<\s]+)).+?){3}(?:.*(?:(?:Port\s*=\s*[0-9]{1,5})|(?:(?:database|db)\s*=\s*[^;"<]+)))?
+  $SEC101/038.PostgreSqlConnectionStringAdo=(?:(?i)(?:(?:(?:Port\s*=\s*[0-9]{1,5})|(?:(?:database|db)\s*=\s*[^;"<]+));.*)?(?:(?:host|server)\s*=\s*(tcp:)?(?P<host>[\w\-_\.]{3,91})|(?:username|uid|user id)\s*=\s*(?P<id>[^,;"<\s]+)|(?:password|pwd)\s*=\s*(?P<secret>[^,;"<\s]+)).+?){3}(?:.*(?:(?:Port\s*=\s*[0-9]{1,5})|(?:(?:database|db)\s*=\s*[^;"<]+)))?
   $SEC101/041.RabbitMqConnectionString=(?i)amqps?:\/\/(?P<id>[^:]+):(?P<secret>[^@]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
   $SEC101/043.NuGetPackageSourceCredentialsXml=(?i)(?P<host><\s*packageSources\s*>(?s).{0,500}?(?-s)<\\?\/packageSources\s*>)(?s).{0,200}?(?-s)[^\/](?P<secret><\s*packageSourceCredentials\s*>(?s).{0,500}?(?-s)<\\?\/packageSourceCredentials\s*>)
   $SEC101/044.NpmCredentialsAuth=(?is)registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s)(?:.{0,200})?_auth\s*=\s*(?P<secret>[^\s]+)

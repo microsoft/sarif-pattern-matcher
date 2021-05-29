@@ -59,7 +59,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
-
             FlexMatch unused = null;
             FlexMatch matchedPattern = groups["0"];
             string port = ParseExpression(RegexEngine, matchedPattern, PortRegex, ref unused);
