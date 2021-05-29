@@ -24,7 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             "localhost",
             "database.windows.net",
-            "database.chinacloudapi.cn", 
+            "database.chinacloudapi.cn",
             "postgres.database.azure.com",
         };
 
