@@ -91,7 +91,13 @@
   $SEC101/035.CloudantCredentialsPython=(?is)cloudant\s*\(\s*"(?P<id>[\w-]+)"\s*\,\s*"(?P<secret>[\w]{64})"\s*\,\s*.{0,200}url=\s*"https:\/\/(?P<resource>[\w.-]+)\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsJson=(?is)apiKey"[^"]+"(?P<secret>[\w-]+)".{1,100}[^0-9a-z\.-](?P<id>[0-9a-z\.-]{32,44})\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsUrl=(?i)https:\/\/(?P<id>[^:]+):(?P<secret>[\w]{64}|[a-z]{24})@[\w-]+\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
-  $SEC101/036.MySqlConnectionStringAdo=(?i)(?:Port\s*=\s*(?:[0-9]{4,5}).*)?(?:(?:(?:Server\s*=\s*(tcp:)?(?P<host>[\w\-.]{3,90}))|(?:Uid=(?-i)(?P<id>[a-z\@\-]{1,120})(?i))|(?:Pwd\s*=\s*(?P<secret>[^;"]{8,128}))).*?){3}(?:.*Port\s*=\s*(?:[0-9]{4,5}))?
+  
+  $SEC101/036.MySqlConnectionStringAdoId=(?i)(?:user|user id|uid)\s*=\s*(?P<id>[^;"<'\n]+)(?:[;"<'\n]|$)
+  $SEC101/036.MySqlConnectionStringAdoHost=(?i)server\s*=\s*(tcp:)?(?P<host>[^;"<'\n]+)(?:[;"<'\n]|$)
+  $SEC101/036.MySqlConnectionStringAdoPort=(?i)port\s*=\s*(?P<port>[0-9]{4,5})(?:[^0-9]|$)
+  $SEC101/036.MySqlConnectionStringAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^;"<'\n]{8,128})(?:[;"<'\n]|$)
+  $SEC101/036.MySqlConnectionStringAdoResource=(?i)database\s*=\s*(?P<resource>[^;"]{8,128})(?:[;"]|$)
+  
   $SEC101/036.MySqlConnectionStringPlainJdbc=(?:jdbc:mysql:\/\/(?P<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?P<url>[^,(?:]+),\s*"(?P<id>[\w@-]{1,200})",\s*"(?P<secret>[^"';<>=]{7,200})"
   
   $SEC101/037.SqlConnectionStringJdbcId=(?i)user\s*=\s*(?P<id>[^@]+?)@[^;"<'\n]+(?:[;"<'\n]|$)
