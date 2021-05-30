@@ -128,38 +128,50 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private static ValidationState GetPrivatePgpKey(string secret)
         {
-            using Stream keyIn = new MemoryStream(Encoding.UTF8.GetBytes(secret));
-            using Stream stream = PgpUtilities.GetDecoderStream(keyIn);
-            var secretKeyRingBundle = new PgpSecretKeyRingBundle(stream);
-
-            bool oneOrMorePassphraseProtectedKeys = false;
-
-            foreach (PgpSecretKeyRing kRing in secretKeyRingBundle.GetKeyRings())
+            try
             {
-                foreach (PgpSecretKey secretKey in kRing.GetSecretKeys())
+                using Stream keyIn = new MemoryStream(Encoding.UTF8.GetBytes(secret));
+                using Stream stream = PgpUtilities.GetDecoderStream(keyIn);
+                var secretKeyRingBundle = new PgpSecretKeyRingBundle(stream);
+
+                bool oneOrMorePassphraseProtectedKeys = false;
+
+                foreach (PgpSecretKeyRing kRing in secretKeyRingBundle.GetKeyRings())
                 {
-                    PgpPrivateKey privateKey = null;
-                    try
+                    foreach (PgpSecretKey secretKey in kRing.GetSecretKeys())
                     {
-                        char[] noPassphrase = Array.Empty<char>();
-                        privateKey = secretKey.ExtractPrivateKey(noPassphrase);
-                    }
-                    catch (PgpException)
-                    {
-                        oneOrMorePassphraseProtectedKeys = true;
-                        continue;
-                    }
+                        PgpPrivateKey privateKey = null;
+                        try
+                        {
+                            char[] noPassphrase = Array.Empty<char>();
+                            privateKey = secretKey.ExtractPrivateKey(noPassphrase);
+                        }
+                        catch (PgpException)
+                        {
+                            oneOrMorePassphraseProtectedKeys = true;
+                            continue;
+                        }
 
-                    return ValidationState.Authorized;
+                        return ValidationState.Authorized;
+                    }
                 }
-            }
 
-            if (oneOrMorePassphraseProtectedKeys)
+                if (oneOrMorePassphraseProtectedKeys)
+                {
+                    return ValidationState.PasswordProtected;
+                }
+
+                return ValidationState.NoMatch;
+            }
+            catch (Exception ex)
             {
-                return ValidationState.PasswordProtected;
-            }
+                if (ex.Message == "unknown object in stream Reserved")
+                {
+                    return ValidationState.NoMatch;
+                }
 
-            return ValidationState.NoMatch;
+                throw;
+            }
         }
     }
 }
