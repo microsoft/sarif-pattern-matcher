@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
@@ -66,8 +67,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
 
-            if (HostsToExclude.Contains(hostValue) ||
-                hostValue.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1)
+            if (hostValue.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1 ||
+                HostsToExclude.Any(hostToExclude => hostValue.IndexOf(hostToExclude, StringComparison.OrdinalIgnoreCase) != -1))
             {
                 return ValidationResult.CreateNoMatch();
             }
