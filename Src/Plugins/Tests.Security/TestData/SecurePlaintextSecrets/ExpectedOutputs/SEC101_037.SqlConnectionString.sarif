@@ -93,13 +93,13 @@
                 },
                 "region": {
                   "startLine": 61,
-                  "startColumn": 74,
+                  "startColumn": 37,
                   "endLine": 61,
-                  "endColumn": 84,
-                  "charOffset": 3707,
-                  "charLength": 10,
+                  "endColumn": 99,
+                  "charOffset": 3670,
+                  "charLength": 62,
                   "snippet": {
-                    "text": "password18"
+                    "text": "servername18;DATABASE=database18;PWD=password18;UID=username18"
                   }
                 }
               }
@@ -136,13 +136,13 @@
                 },
                 "region": {
                   "startLine": 63,
-                  "startColumn": 58,
+                  "startColumn": 26,
                   "endLine": 63,
-                  "endColumn": 68,
-                  "charOffset": 3796,
-                  "charLength": 10,
+                  "endColumn": 112,
+                  "charOffset": 3764,
+                  "charLength": 86,
                   "snippet": {
-                    "text": "password19"
+                    "text": "servername19;UID=username19;PWD=password19;APP=Microsoft ODBC SDK;DATABASE=database19\r"
                   }
                 }
               }
@@ -824,22 +824,22 @@
                 },
                 "region": {
                   "startLine": 61,
-                  "startColumn": 74,
+                  "startColumn": 37,
                   "endLine": 61,
-                  "endColumn": 84,
-                  "charOffset": 3707,
-                  "charLength": 10,
+                  "endColumn": 99,
+                  "charOffset": 3670,
+                  "charLength": 62,
                   "snippet": {
-                    "text": "password18"
+                    "text": "servername18;DATABASE=database18;PWD=password18;UID=username18"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername18][id=username18')][platform=SqlOnPremise][resource=database18]",
-            "ValidationFingerprint/v1": "[host=servername18][id=username18')][resource=database18][secret=password18]",
-            "ValidationFingerprintHash/v1": "7fe7074e696c2cf4b064364bc3b85263b3a42cd1d84468ae70747174fd48bbde"
+            "AssetFingerprint/v1": "[host=servername18][id=username18][platform=SqlOnPremise][resource=database18]",
+            "ValidationFingerprint/v1": "[host=servername18][id=username18][resource=database18][secret=password18]",
+            "ValidationFingerprintHash/v1": "cbcd24b3e3ee716c43d9005eedba43f9a1da427bf393232e7a3c790e5c81d9d2"
           },
           "rank": 44.6
         },
@@ -867,22 +867,22 @@
                 },
                 "region": {
                   "startLine": 63,
-                  "startColumn": 58,
+                  "startColumn": 26,
                   "endLine": 63,
-                  "endColumn": 68,
-                  "charOffset": 3796,
-                  "charLength": 10,
+                  "endColumn": 111,
+                  "charOffset": 3764,
+                  "charLength": 85,
                   "snippet": {
-                    "text": "password19"
+                    "text": "servername19;UID=username19;PWD=password19;APP=Microsoft ODBC SDK;DATABASE=database19"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=servername19][id=username19][platform=SqlOnPremise]",
-            "ValidationFingerprint/v1": "[host=servername19][id=username19][secret=password19]",
-            "ValidationFingerprintHash/v1": "a98eba54cdf4416da6e9fdd02ce4eebd0f4bf9d5c3f0572fd2339ebfa85ec7b6"
+            "AssetFingerprint/v1": "[host=servername19][id=username19][platform=SqlOnPremise][resource=database19]",
+            "ValidationFingerprint/v1": "[host=servername19][id=username19][resource=database19][secret=password19]",
+            "ValidationFingerprintHash/v1": "2a1f66a285ce407a7c23228b40ec2446c7d5c31cea96b2b3a901b46e8bfcecf6"
           },
           "rank": 44.6
         }

@@ -17,9 +17,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public class PostgreSqlConnectionStringValidator : ValidatorBase
     {
         internal static PostgreSqlConnectionStringValidator Instance;
-        internal static IRegex RegexEngine;
-        private const string PortRegex = @"(?i)Port\s*=\s*(?<port>[0-9]{1,5})";
-        private const string DatabaseRegex = @"(?i)(database|db)\s*=\s*(?<database>[^;]+)";
 
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
@@ -31,7 +28,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         static PostgreSqlConnectionStringValidator()
         {
             Instance = new PostgreSqlConnectionStringValidator();
-            RegexEngine = RE2Regex.Instance;
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
@@ -60,13 +56,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
-            FlexMatch unused = null;
-            FlexMatch matchedPattern = groups["0"];
-            string port = ParseExpression(RegexEngine, matchedPattern, PortRegex, ref unused);
-            string database = ParseExpression(RegexEngine, matchedPattern, DatabaseRegex, ref unused);
+            groups.TryGetNonEmptyValue("port", out FlexMatch port);
+            groups.TryGetNonEmptyValue("resource", out FlexMatch resource);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
-
             if (hostValue.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1 ||
                 HostsToExclude.Any(hostToExclude => hostValue.IndexOf(hostToExclude, StringComparison.OrdinalIgnoreCase) != -1))
             {
@@ -75,18 +68,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var fingerprint = new Fingerprint()
             {
-                Host = hostValue,
-                Port = port,
-                Secret = secret.Value,
                 Id = id.Value,
-                Resource = database,
+                Host = hostValue,
+                Port = port?.Value,
+                Secret = secret.Value,
+                Resource = resource?.Value,
             };
 
             SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint);
-
             var validationResult = new ValidationResult
             {
-                RegionFlexMatch = secret,
                 Fingerprint = fingerprint,
                 ValidationState = ValidationState.Unknown,
             };
