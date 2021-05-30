@@ -92,6 +92,49 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
+                  "startLine": 5,
+                  "startColumn": 126,
+                  "endLine": 5,
+                  "endColumn": 135,
+                  "charOffset": 487,
+                  "charLength": 9,
+                  "snippet": {
+                    "text": "password2"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername2.database.windows.net][id=username][part=servers][platform=Azure][resource=database2]",
+            "ValidationFingerprint/v1": "[host=servername2.database.windows.net][id=username][resource=database2][secret=password2]",
+            "ValidationFingerprintHash/v1": "48a28f18c0e8c3510e7c4fe390af1a5f65fd971363c7b9c6854bd75e254aa030"
+          },
+          "rank": 42.11
+        },
+        {
+          "ruleId": "SEC101/036",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC MySQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
                   "startLine": 61,
                   "startColumn": 74,
                   "endLine": 61,
@@ -192,9 +235,9 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=tcp:servername2.database.windows.net,1433][id=username2][part=servers][platform=Azure][resource=database2]",
-            "ValidationFingerprint/v1": "[host=tcp:servername2.database.windows.net,1433][id=username2][resource=database2][secret=password2]",
-            "ValidationFingerprintHash/v1": "072414dbfa70d7057a4f83f8490d2aef10c1955570cc3772f9b561de4298d85c"
+            "AssetFingerprint/v1": "[host=servername2.database.windows.net,1433][id=username2][part=servers][platform=Azure][resource=database2]",
+            "ValidationFingerprint/v1": "[host=servername2.database.windows.net,1433][id=username2][resource=database2][secret=password2]",
+            "ValidationFingerprintHash/v1": "d79c54c338cf6b8786b93457bee7bed8e7090750f873a0ce06ed4dca3431acd0"
           },
           "rank": 42.11
         },
@@ -635,49 +678,6 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "a1Pass…",
-              "an apparent ",
-              "",
-              "ADO or ODBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 57,
-                  "startColumn": 73,
-                  "endLine": 57,
-                  "endColumn": 83,
-                  "charOffset": 3560,
-                  "charLength": 10,
-                  "snippet": {
-                    "text": "a1Pass@@11"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=localhost][id=ab][platform=SqlOnPremise][resource=AdventureWorks]",
-            "ValidationFingerprint/v1": "[host=localhost][id=ab][resource=AdventureWorks][secret=a1Pass@@11]",
-            "ValidationFingerprintHash/v1": "ef8b5d918269308fd5210dfb4040724e9293a50feaa5d3ec7165f3077b67196c"
-          },
-          "rank": 32.09
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
               "passwo…",
               "an apparent ",
               "",
@@ -810,135 +810,6 @@
               "passwo…",
               "an apparent ",
               "",
-              "JDBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 41,
-                  "startColumn": 92,
-                  "endLine": 41,
-                  "endColumn": 102,
-                  "charOffset": 2544,
-                  "charLength": 10,
-                  "snippet": {
-                    "text": "password11"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=localhost][id=username11][platform=SqlOnPremise][resource=database11]",
-            "ValidationFingerprint/v1": "[host=localhost][id=username11][resource=database11][secret=password11]",
-            "ValidationFingerprintHash/v1": "37d9b8293cd71aedd5327ced92dd13c8753c520ee31a7f39f930b018cc2a909d"
-          },
-          "rank": 41.74
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "JDBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 42,
-                  "startColumn": 90,
-                  "endLine": 42,
-                  "endColumn": 100,
-                  "charOffset": 2749,
-                  "charLength": 10,
-                  "snippet": {
-                    "text": "password12"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=localhost][id=username12][platform=SqlOnPremise][resource=database12]",
-            "ValidationFingerprint/v1": "[host=localhost][id=username12][resource=database12][secret=password12]",
-            "ValidationFingerprintHash/v1": "2242261dc34b6015f57a5098ef68d6b398f66381a581fd377d1b9443eab3e2f8"
-          },
-          "rank": 44.6
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
-              "JDBC SQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 43,
-                  "startColumn": 92,
-                  "endLine": 43,
-                  "endColumn": 102,
-                  "charOffset": 2956,
-                  "charLength": 10,
-                  "snippet": {
-                    "text": "password13"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=localhost][id=username13][platform=SqlOnPremise][resource=database13]",
-            "ValidationFingerprint/v1": "[host=localhost][id=username13][resource=database13][secret=password13]",
-            "ValidationFingerprintHash/v1": "d4c7c34fab08637c5c9eaefd4d3620b628b57910897e297ded75712bf85f5711"
-          },
-          "rank": 44.6
-        },
-        {
-          "ruleId": "SEC101/037",
-          "ruleIndex": 1,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "passwo…",
-              "an apparent ",
-              "",
               "PHP SQL connection string",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
@@ -966,9 +837,52 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=tcp:servername3.database.windows.net,1433][id=username3][part=servers][platform=Azure][resource=databse3]",
-            "ValidationFingerprint/v1": "[host=tcp:servername3.database.windows.net,1433][id=username3][resource=databse3][secret=password3]",
-            "ValidationFingerprintHash/v1": "92c6746875b8d1bbedf717f80310b7175893235b8804e4779f12c05597d52ec4"
+            "AssetFingerprint/v1": "[host=servername3.database.windows.net,1433][id=username3][part=servers][platform=Azure][resource=databse3]",
+            "ValidationFingerprint/v1": "[host=servername3.database.windows.net,1433][id=username3][resource=databse3][secret=password3]",
+            "ValidationFingerprintHash/v1": "eeccc815a478632178473bd1bc7a2f96c633106af83c25ef7e52fa6a0de16c84"
+          },
+          "rank": 42.11
+        },
+        {
+          "ruleId": "SEC101/038",
+          "ruleIndex": 2,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL connection string",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlConnectionString.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 126,
+                  "endLine": 5,
+                  "endColumn": 135,
+                  "charOffset": 487,
+                  "charLength": 9,
+                  "snippet": {
+                    "text": "password2"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername2.database.windows.net][id=username2][part=servers][platform=Azure][resource=database2]",
+            "ValidationFingerprint/v1": "[host=servername2.database.windows.net][id=username2][resource=database2][secret=password2]",
+            "ValidationFingerprintHash/v1": "450ee40ee72b51d8dc24adeaef3bdf92ce9680b5ce66feaeeda1e58844eed6c3"
           },
           "rank": 42.11
         },

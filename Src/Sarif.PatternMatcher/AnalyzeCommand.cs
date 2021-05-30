@@ -141,7 +141,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     {
                         for (int i = 0; i < matchExpression.SingleLineRegexes.Count; i++)
                         {
-                            PushData(matchExpression.SingleLineRegexes[i],
+                            string current = matchExpression.SingleLineRegexes[i];
+                            matchExpression.SingleLineRegexes[i] =
+                                PushData(current,
                                          definition.SharedStrings,
                                          sharedStrings);
                         }

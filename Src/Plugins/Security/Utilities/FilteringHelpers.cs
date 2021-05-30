@@ -19,35 +19,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             ".",
         };
 
-        public static string StandardizeLocalhostName(string hostName)
+        public static string StandardizeLocalhostName(string host)
         {
-            if (LocalhostList.Contains(hostName))
-            {
-                return "localhost";
-            }
-
-            return hostName;
-        }
-
-        public static ValidationState HostExclusion(string host, IEnumerable<string> hostList = null)
-        {
-            if (hostList == null || !hostList.Any())
-            {
-                return ValidationState.Unknown;
-            }
-
-            string lowerHost = host.ToLower();
-
-            // Other rules will handle these cases.
-            foreach (string hostToExclude in hostList)
-            {
-                if (lowerHost.Contains(hostToExclude.ToLower()))
-                {
-                    return ValidationState.NoMatch;
-                }
-            }
-
-            return ValidationState.Unknown;
+            return LocalhostList.Contains(host)
+                ? "localhost"
+                : host;
         }
 
         public static bool LikelyPowershellVariable(string input)

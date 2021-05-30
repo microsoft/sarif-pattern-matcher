@@ -22,11 +22,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
+            "localhost",
             "database.windows.net",
-            "database.chinacloudapi.cn", // Azure China domain
-            "mysql.database.azure.com",
-            "mysqldb.chinacloudapi.cn", // Azure China domain
-            "mysql.database.chinacloudapi.cn", // Azure China domain
+            "database.chinacloudapi.cn",
         };
 
         static PostgreSqlConnectionStringValidator()
@@ -61,11 +59,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
-            if (host.Value == "tcp")
-            {
-                return ValidationResult.CreateNoMatch();
-            }
-
             FlexMatch unused = null;
             FlexMatch matchedPattern = groups["0"];
             string port = ParseExpression(RegexEngine, matchedPattern, PortRegex, ref unused);
@@ -73,9 +66,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
 
-            ValidationState exclusionResult = FilteringHelpers.HostExclusion(hostValue, HostsToExclude);
-
-            if (exclusionResult == ValidationState.NoMatch)
+            if (HostsToExclude.Contains(hostValue) ||
+                hostValue.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1)
             {
                 return ValidationResult.CreateNoMatch();
             }

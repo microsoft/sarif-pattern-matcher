@@ -16,20 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static SqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
 
-        private const string HostExpression = @"(?i)(Server|Data Source)\s*=\s*[^;""<\n]+";
-        // Your database name can't end with '.' or ' ', can't contain '<,>,*,%,&,:,\,/,?' or control characters
-        private const string ResourceExpression = @"(?i)(Initial Catalog|Database)\s*=\s*[^;""<>*%&:\/?\n]+";
-        private const string IdExpression = @"(?i)(User ID|Uid)\s*=\s*[^;""'<\n]+";
-        private const string SecretExpression = @"(?i)(Password|Pwd)\s*=\s*[^;""<\s]+";
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
-
-        private static readonly HashSet<string> HostsToExclude = new HashSet<string>
-        {
-            "postgres.database.azure.com",
-            "mysql.database.azure.com",
-            "mysqldb.chinacloudapi.cn",
-            "mysql.database.chinacloudapi.cn",
-        };
 
         static SqlConnectionStringValidator()
         {
@@ -40,10 +27,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // expressions (an operation which otherwise can cause
             // threading problems).
             RegexEngine.Match(string.Empty, ClientIPExpression);
-            RegexEngine.Match(string.Empty, HostExpression);
-            RegexEngine.Match(string.Empty, ResourceExpression);
-            RegexEngine.Match(string.Empty, IdExpression);
-            RegexEngine.Match(string.Empty, SecretExpression);
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
@@ -65,42 +48,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
         {
-            FlexMatch id, host, secret, database;
-
-            id = host = secret = database = null;
-
-            if (groups.ContainsKey("id") &&
-                groups.ContainsKey("host") &&
-                groups.ContainsKey("secret") &&
-                groups.ContainsKey("database"))
-            {
-                id = groups["id"];
-                host = groups["host"];
-                secret = groups["secret"];
-                database = groups["database"];
-            }
-            else
-            {
-                FlexMatch matchedPattern = groups["0"];
-                ParseExpression(RegexEngine, matchedPattern, IdExpression, ref id);
-                ParseExpression(RegexEngine, matchedPattern, HostExpression, ref host);
-                ParseExpression(RegexEngine, matchedPattern, SecretExpression, ref secret);
-                ParseExpression(RegexEngine, matchedPattern, ResourceExpression, ref database);
-            }
-
-            if (string.IsNullOrWhiteSpace(id.Value) ||
-                string.IsNullOrWhiteSpace(host.Value) ||
-                string.IsNullOrWhiteSpace(secret.Value) ||
-                string.IsNullOrWhiteSpace(database.Value))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
-
-            string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
-
-            ValidationState exclusionResult = FilteringHelpers.HostExclusion(hostValue, HostsToExclude);
-
-            if (exclusionResult == ValidationState.NoMatch)
+            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
+                !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
+                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret) ||
+                !groups.TryGetNonEmptyValue("resource", out FlexMatch resource))
             {
                 return ValidationResult.CreateNoMatch();
             }
@@ -108,7 +59,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             if (id.Length > 128 ||
                 host.Length > 128 ||
                 secret.Length > 128 ||
-                database.Length > 128)
+                resource.Length > 128)
+            {
+                return ValidationResult.CreateNoMatch();
+            }
+
+            string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
+
+            if (hostValue == "localhost" ||
+                hostValue.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1 ||
+                hostValue.IndexOf("postgres", StringComparison.OrdinalIgnoreCase) != -1)
             {
                 return ValidationResult.CreateNoMatch();
             }
@@ -118,7 +78,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Id = id.Value,
                 Host = hostValue,
                 Secret = secret.Value,
-                Resource = database.Value,
+                Resource = resource.Value,
             };
 
             SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint);
@@ -138,10 +98,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 Dictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
+            string id = fingerprint.Id;
             string host = fingerprint.Host;
-            string account = fingerprint.Id;
-            string password = fingerprint.Secret;
-            string database = fingerprint.Resource;
+            string secret = fingerprint.Secret;
+            string resource = fingerprint.Resource;
 
             if (FilteringHelpers.LocalhostList.Contains(host))
             {
@@ -155,9 +115,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             string connString =
-                $"Server={host};Initial Catalog={database};User ID={account};Password={password};" +
+                $"Server={host};Initial Catalog={resource};User ID={id};Password={secret};" +
                 $"Trusted_Connection=False;Encrypt=True;TrustServerCertificate=True;{timeoutString}";
-            message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
+            message = $"the '{id}' account was authenticated against database '{resource}' hosted on '{host}'";
 
             // Validating ConnectionString with database.
             ValidationState validation = ValidateConnectionString(ref message, host, connString, out bool shouldRetry);
@@ -167,11 +127,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             connString =
-               $"Server={host};User ID={account};Password={password};" +
+               $"Server={host};User ID={id};Password={secret};" +
                $"Trusted_Connection=False;Encrypt=True;{timeoutString}";
-            message = $"the '{account}' account is compromised for server '{host}'";
+            message = $"the '{id}' account is compromised for server '{host}'";
 
-            // Validating ConnectionString without database.
+            // Validating the connection string without the database.
             return ValidateConnectionString(ref message, host, connString, out shouldRetry);
         }
 
@@ -200,6 +160,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             e.Message.EndsWith("The login failed."))
                         {
                             return ReturnUnauthorizedAccess(ref message, asset: host);
+                        }
+
+                        if (e.Message.Contains("The server was not found"))
+                        {
+                            return ReturnUnknownHost(ref message, host);
                         }
 
                         FlexMatch match = RegexEngine.Match(e.Message, ClientIPExpression);

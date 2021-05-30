@@ -17,13 +17,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static MySqlConnectionStringValidator Instance;
         internal static IRegex RegexEngine;
 
-        private const string DatabaseRegex = @"(?i)(Database\s*=\s*(?<database>[^\<>:""\/\\|?;.]{1,64}))";
         private const string PortRegex = "(?i)(Port\\s*=\\s*(?<port>[0-9]{4,5}))";
+        private const string DatabaseRegex = @"(?i)(Database\s*=\s*(?<database>[^\<>:""\/\\|?;.]{1,64}))";
 
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
+            "localhost",
             "database.windows.net",
-            "database.chinacloudapi.cn", // Azure China domain
+            "database.chinacloudapi.cn",
             "postgres.database.azure.com",
         };
 
@@ -76,20 +77,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return new[] { validationResult };
             }
 
-            if (host.Value == "tcp")
-            {
-                return ValidationResult.CreateNoMatch();
-            }
-
             FlexMatch unused = null;
             string port = ParseExpression(RegexEngine, groups["0"], PortRegex, ref unused);
             string database = ParseExpression(RegexEngine, groups["0"], DatabaseRegex, ref unused);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
 
-            ValidationState exclusionResult = FilteringHelpers.HostExclusion(hostValue, HostsToExclude);
-
-            if (exclusionResult == ValidationState.NoMatch)
+            if (HostsToExclude.Contains(hostValue) ||
+                hostValue.IndexOf("postgres", StringComparison.OrdinalIgnoreCase) != -1)
             {
                 return ValidationResult.CreateNoMatch();
             }
