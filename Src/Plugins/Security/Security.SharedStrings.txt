@@ -95,14 +95,14 @@
   $SEC101/036.MySqlConnectionStringPlainJdbc=(?:jdbc:mysql:\/\/(?P<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?P<url>[^,(?:]+),\s*"(?P<id>[\w@-]{1,200})",\s*"(?P<secret>[^"';<>=]{7,200})"
   
   $SEC101/037.SqlConnectionStringJdbcId=(?i)user\s*=\s*(?P<id>[^@]+?)@[^;"<'\n]+(?:[;"<'\n]|$)
-  $SEC101/037.SqlConnectionStringJdbcHost=(?i)jdbc:sqlserver:\/\/(?P<host>[^;"<'\n]+?)(?:[;"<'\n]|$)
-  $SEC101/037.SqlConnectionStringJdbcSecret=(?i)password\s*=\s*(?P<secret>[^;"<'\n]+?)(?:[;"<'\n]|$)
-  $SEC101/037.SqlConnectionStringJdbcResource=(?i)database\s*=\s*(?P<resource>[^;"<>*%&\/?'\n]+?)(?:[;"<>*%&\/?'\n]|$)
+  $SEC101/037.SqlConnectionStringJdbcHost=(?i)jdbc:sqlserver:\/\/(?P<host>[^;"<'\n]+)(?:[;"<'\n]|$)
+  $SEC101/037.SqlConnectionStringJdbcSecret=(?i)password\s*=\s*(?P<secret>[^;"<'\n]+)(?:[;"<'\n]|$)
+  $SEC101/037.SqlConnectionStringJdbcResource=(?i)database\s*=\s*(?P<resource>[^;"<>*%&\/?'\n]+)(?:[;"<>*%&\/?'\n]|$)
 
-  $SEC101/037.SqlConnectionStringAdoId=(?i)(?:user id|uid)\s*=\s*(?P<id>[^;"<'\n]+?)(?:[;"<'\n]|$)
-  $SEC101/037.SqlConnectionStringAdoHost=(?i)(?:server|data source)\s*=\s*(tcp:)?(?P<host>[^;"<'\n].+?)(?:[;"<'\n]|$)
-  $SEC101/037.SqlConnectionStringAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^;"<'\n].+?)(?:[;"<'\n]|$)
-  $SEC101/037.SqlConnectionStringAdoResource=(?i)(?:initial catalog|database)\s*=\s*(?P<resource>[^;"<>*%&:\/?'\n]+?)(?:[;"<>*%&:\/?'\n]|$)
+  $SEC101/037.SqlConnectionStringAdoId=(?i)(?:user id|uid)\s*=\s*(?P<id>[^;"<'\n]+)(?:[;"<'\n]|$)
+  $SEC101/037.SqlConnectionStringAdoHost=(?i)(?:server|data source)\s*=\s*(tcp:)?(?P<host>[^;"<'\n]+)(?:[;"<'\n]|$)
+  $SEC101/037.SqlConnectionStringAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^;"<'\n]+)(?:[;"<'\n]|$)
+  $SEC101/037.SqlConnectionStringAdoResource=(?i)(?:initial catalog|database)\s*=\s*(?P<resource>[^;"<>*%&:\/?'\n]+)(?:[;"<>*%&:\/?'\n]|$)
 
   $SEC101/037.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(tcp:)?(?P<host>[^;"<]+);\s*Database\s*=\s*(?P<resource>[^;"<>*%&:\/?\n]+)",\s*"(?P<id>[^"]+)",\s*"(?P<secret>[^"]+)"  
   
