@@ -61,13 +61,13 @@
                 },
                 "region": {
                   "startLine": 4,
-                  "startColumn": 109,
+                  "startColumn": 50,
                   "endLine": 4,
                   "endColumn": 116,
-                  "charOffset": 155,
-                  "charLength": 7,
+                  "charOffset": 96,
+                  "charLength": 66,
                   "snippet": {
-                    "text": "my_pw_1"
+                    "text": "my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_1"
                   }
                 }
               }
@@ -104,13 +104,13 @@
                 },
                 "region": {
                   "startLine": 5,
-                  "startColumn": 99,
+                  "startColumn": 50,
                   "endLine": 5,
-                  "endColumn": 106,
-                  "charOffset": 322,
-                  "charLength": 7,
+                  "endColumn": 116,
+                  "charOffset": 273,
+                  "charLength": 66,
                   "snippet": {
-                    "text": "my_pw_2"
+                    "text": "my_host;Database=my_db;Username=my_user;Password=my_pw_2;Port=5555"
                   }
                 }
               }
@@ -147,13 +147,13 @@
                 },
                 "region": {
                   "startLine": 6,
-                  "startColumn": 94,
+                  "startColumn": 50,
                   "endLine": 6,
                   "endColumn": 101,
-                  "charOffset": 487,
-                  "charLength": 7,
+                  "charOffset": 443,
+                  "charLength": 51,
                   "snippet": {
-                    "text": "my_pw_3"
+                    "text": "my_host;Port=5555;UsErname=my_user;Password=my_pw_3"
                   }
                 }
               }
@@ -192,11 +192,11 @@
                   "startLine": 7,
                   "startColumn": 54,
                   "endLine": 7,
-                  "endColumn": 61,
+                  "endColumn": 101,
                   "charOffset": 586,
-                  "charLength": 7,
+                  "charLength": 47,
                   "snippet": {
-                    "text": "my_pw_4"
+                    "text": "my_pw_4;Host=my_host;Port=5555;Username=my_user"
                   }
                 }
               }
@@ -233,13 +233,13 @@
                 },
                 "region": {
                   "startLine": 8,
-                  "startColumn": 64,
+                  "startColumn": 50,
                   "endLine": 8,
-                  "endColumn": 71,
-                  "charOffset": 760,
-                  "charLength": 7,
+                  "endColumn": 136,
+                  "charOffset": 746,
+                  "charLength": 86,
                   "snippet": {
-                    "text": "my_pw_5"
+                    "text": "5555;Password=my_pw_5;Connection Pruning Interval=doodle;Host=my_host;Username=my_user"
                   }
                 }
               }
@@ -275,57 +275,14 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 8,
-                  "startColumn": 64,
-                  "endLine": 8,
-                  "endColumn": 71,
-                  "charOffset": 760,
-                  "charLength": 7,
-                  "snippet": {
-                    "text": "my_pw_5"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise]",
-            "ValidationFingerprint/v1": "[host=my_host][id=my_user][secret=my_pw_5]",
-            "ValidationFingerprintHash/v1": "62699f9469245fcd726072ab32c94b2db498784e7897761c2c201e9c84d15263"
-          },
-          "rank": 36.02
-        },
-        {
-          "ruleId": "SEC101/038",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "my_pw_…",
-              "an apparent ",
-              "",
-              "ADO PostgreSQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
                   "startLine": 9,
-                  "startColumn": 64,
+                  "startColumn": 50,
                   "endLine": 9,
-                  "endColumn": 71,
-                  "charOffset": 943,
-                  "charLength": 7,
+                  "endColumn": 136,
+                  "charOffset": 929,
+                  "charLength": 86,
                   "snippet": {
-                    "text": "my_pw_6"
+                    "text": "5555;Password=my_pw_6;Connection Pruning Interval=doodle;Host=my_host;Username=my_user"
                   }
                 }
               }
@@ -362,13 +319,13 @@
                 },
                 "region": {
                   "startLine": 10,
-                  "startColumn": 79,
+                  "startColumn": 54,
                   "endLine": 10,
-                  "endColumn": 86,
-                  "charOffset": 1171,
-                  "charLength": 7,
+                  "endColumn": 151,
+                  "charOffset": 1146,
+                  "charLength": 97,
                   "snippet": {
-                    "text": "my_pw_7"
+                    "text": "my_db;Port=5555;Password=my_pw_7;Connection Pruning Interval=doodle;Host=my_host;Username=my_user"
                   }
                 }
               }
@@ -404,57 +361,14 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 10,
-                  "startColumn": 79,
-                  "endLine": 10,
-                  "endColumn": 86,
-                  "charOffset": 1171,
-                  "charLength": 7,
-                  "snippet": {
-                    "text": "my_pw_7"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=my_host][id=my_user][platform=SqlOnPremise][port=5555]",
-            "ValidationFingerprint/v1": "[host=my_host][id=my_user][port=5555][secret=my_pw_7]",
-            "ValidationFingerprintHash/v1": "8083529e9e26321f5065eb13ff72f77a08bf863f08e163861915fbfa3bc589c5"
-          },
-          "rank": 36.02
-        },
-        {
-          "ruleId": "SEC101/038",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "my_pw_…",
-              "an apparent ",
-              "",
-              "ADO PostgreSQL connection string",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_038.PostgreSqlConnectionString.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
                   "startLine": 18,
-                  "startColumn": 91,
+                  "startColumn": 32,
                   "endLine": 18,
                   "endColumn": 98,
-                  "charOffset": 1596,
-                  "charLength": 7,
+                  "charOffset": 1537,
+                  "charLength": 66,
                   "snippet": {
-                    "text": "my_pw_8"
+                    "text": "my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_8"
                   }
                 }
               }
@@ -491,13 +405,13 @@
                 },
                 "region": {
                   "startLine": 25,
-                  "startColumn": 79,
+                  "startColumn": 20,
                   "endLine": 25,
                   "endColumn": 86,
-                  "charOffset": 1760,
-                  "charLength": 7,
+                  "charOffset": 1701,
+                  "charLength": 66,
                   "snippet": {
-                    "text": "my_pw_9"
+                    "text": "my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_9"
                   }
                 }
               }
