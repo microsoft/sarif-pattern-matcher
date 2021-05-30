@@ -179,13 +179,13 @@
                 },
                 "region": {
                   "startLine": 5,
-                  "startColumn": 126,
+                  "startColumn": 51,
                   "endLine": 5,
                   "endColumn": 135,
-                  "charOffset": 487,
-                  "charLength": 9,
+                  "charOffset": 412,
+                  "charLength": 84,
                   "snippet": {
-                    "text": "password2"
+                    "text": "servername2.database.windows.net,1433;Database=database2;Uid=username2;Pwd=password2"
                   }
                 }
               }
@@ -222,13 +222,13 @@
                 },
                 "region": {
                   "startLine": 14,
-                  "startColumn": 104,
+                  "startColumn": 39,
                   "endLine": 14,
                   "endColumn": 113,
-                  "charOffset": 969,
-                  "charLength": 9,
+                  "charOffset": 904,
+                  "charLength": 74,
                   "snippet": {
-                    "text": "password4"
+                    "text": "servername4;Initial Catalog=database4;User ID=username4;Password=password4"
                   }
                 }
               }
@@ -267,11 +267,11 @@
                   "startLine": 17,
                   "startColumn": 36,
                   "endLine": 17,
-                  "endColumn": 45,
+                  "endColumn": 111,
                   "charOffset": 1108,
-                  "charLength": 9,
+                  "charLength": 75,
                   "snippet": {
-                    "text": "password5"
+                    "text": "password5;User ID=username5;Initial Catalog=database5;Data Source=database5"
                   }
                 }
               }
@@ -308,13 +308,13 @@
                 },
                 "region": {
                   "startLine": 20,
-                  "startColumn": 86,
+                  "startColumn": 43,
                   "endLine": 20,
-                  "endColumn": 95,
-                  "charOffset": 1363,
-                  "charLength": 9,
+                  "endColumn": 113,
+                  "charOffset": 1320,
+                  "charLength": 70,
                   "snippet": {
-                    "text": "password6"
+                    "text": "database6;Data Source=servername6;Password=password6;User ID=username6"
                   }
                 }
               }
@@ -351,13 +351,13 @@
                 },
                 "region": {
                   "startLine": 29,
-                  "startColumn": 96,
+                  "startColumn": 28,
                   "endLine": 29,
                   "endColumn": 106,
-                  "charOffset": 1772,
-                  "charLength": 10,
+                  "charOffset": 1704,
+                  "charLength": 78,
                   "snippet": {
-                    "text": "password15"
+                    "text": "servername15;Initial Catalog=database15;User ID=username15;Password=password15"
                   }
                 }
               }
@@ -394,13 +394,13 @@
                 },
                 "region": {
                   "startLine": 34,
-                  "startColumn": 115,
+                  "startColumn": 50,
                   "endLine": 34,
                   "endColumn": 124,
-                  "charOffset": 1963,
-                  "charLength": 9,
+                  "charOffset": 1898,
+                  "charLength": 74,
                   "snippet": {
-                    "text": "password8"
+                    "text": "servername8;Initial Catalog=database8;User ID=username8;Password=password8"
                   }
                 }
               }
@@ -439,11 +439,11 @@
                   "startLine": 35,
                   "startColumn": 47,
                   "endLine": 35,
-                  "endColumn": 56,
+                  "endColumn": 124,
                   "charOffset": 2025,
-                  "charLength": 9,
+                  "charLength": 77,
                   "snippet": {
-                    "text": "password9"
+                    "text": "password9;User ID=username9;Initial Catalog=database9;Data Source=servername9"
                   }
                 }
               }
@@ -480,13 +480,13 @@
                 },
                 "region": {
                   "startLine": 36,
-                  "startColumn": 99,
+                  "startColumn": 54,
                   "endLine": 36,
-                  "endColumn": 109,
-                  "charOffset": 2207,
-                  "charLength": 10,
+                  "endColumn": 128,
+                  "charOffset": 2162,
+                  "charLength": 74,
                   "snippet": {
-                    "text": "password10"
+                    "text": "database10;Data Source=servername10;Password=password10;User ID=username10"
                   }
                 }
               }
@@ -523,13 +523,13 @@
                 },
                 "region": {
                   "startLine": 37,
-                  "startColumn": 118,
+                  "startColumn": 50,
                   "endLine": 37,
                   "endColumn": 128,
-                  "charOffset": 2360,
-                  "charLength": 10,
+                  "charOffset": 2292,
+                  "charLength": 78,
                   "snippet": {
-                    "text": "password17"
+                    "text": "servername17;Initial Catalog=database17;User ID=username17;Password=password17"
                   }
                 }
               }
@@ -566,13 +566,13 @@
                 },
                 "region": {
                   "startLine": 46,
-                  "startColumn": 141,
+                  "startColumn": 73,
                   "endLine": 46,
                   "endColumn": 151,
-                  "charOffset": 3216,
-                  "charLength": 10,
+                  "charOffset": 3148,
+                  "charLength": 78,
                   "snippet": {
-                    "text": "password14"
+                    "text": "servername14;Initial Catalog=database14;User ID=username14;Password=password14"
                   }
                 }
               }
@@ -609,13 +609,13 @@
                 },
                 "region": {
                   "startLine": 51,
-                  "startColumn": 107,
+                  "startColumn": 39,
                   "endLine": 51,
                   "endColumn": 117,
-                  "charOffset": 3395,
-                  "charLength": 10,
+                  "charOffset": 3327,
+                  "charLength": 78,
                   "snippet": {
-                    "text": "password16"
+                    "text": "servername16;Initial Catalog=database16;User ID=username16;Password=password16"
                   }
                 }
               }
@@ -652,13 +652,13 @@
                 },
                 "region": {
                   "startLine": 61,
-                  "startColumn": 74,
+                  "startColumn": 37,
                   "endLine": 61,
-                  "endColumn": 84,
-                  "charOffset": 3707,
-                  "charLength": 10,
+                  "endColumn": 99,
+                  "charOffset": 3670,
+                  "charLength": 62,
                   "snippet": {
-                    "text": "password18"
+                    "text": "servername18;DATABASE=database18;PWD=password18;UID=username18"
                   }
                 }
               }
@@ -695,13 +695,13 @@
                 },
                 "region": {
                   "startLine": 63,
-                  "startColumn": 58,
+                  "startColumn": 26,
                   "endLine": 63,
-                  "endColumn": 68,
-                  "charOffset": 3796,
-                  "charLength": 10,
+                  "endColumn": 112,
+                  "charOffset": 3764,
+                  "charLength": 86,
                   "snippet": {
-                    "text": "password19"
+                    "text": "servername19;UID=username19;PWD=password19;APP=Microsoft ODBC SDK;DATABASE=database19\r"
                   }
                 }
               }
@@ -738,13 +738,13 @@
                 },
                 "region": {
                   "startLine": 2,
-                  "startColumn": 118,
+                  "startColumn": 18,
                   "endLine": 2,
                   "endColumn": 127,
-                  "charOffset": 181,
-                  "charLength": 9,
+                  "charOffset": 81,
+                  "charLength": 109,
                   "snippet": {
-                    "text": "password1"
+                    "text": "servername1.database.windows.net:1433;database=database1;user=username1@some-database-name;password=password1"
                   }
                 }
               }
@@ -781,13 +781,13 @@
                 },
                 "region": {
                   "startLine": 8,
-                  "startColumn": 105,
+                  "startColumn": 10,
                   "endLine": 8,
-                  "endColumn": 114,
-                  "charOffset": 728,
-                  "charLength": 9,
+                  "endColumn": 115,
+                  "charOffset": 633,
+                  "charLength": 105,
                   "snippet": {
-                    "text": "password3"
+                    "text": "sqlsrv:server = tcp:servername3.database.windows.net,1433; Database = databse3\", \"username3\", \"password3\""
                   }
                 }
               }

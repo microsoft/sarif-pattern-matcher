@@ -394,13 +394,13 @@
                 },
                 "region": {
                   "startLine": 30,
-                  "startColumn": 83,
+                  "startColumn": 8,
                   "endLine": 30,
                   "endColumn": 96,
-                  "charOffset": 2834,
-                  "charLength": 13,
+                  "charOffset": 2759,
+                  "charLength": 88,
                   "snippet": {
-                    "text": "your-password"
+                    "text": "your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=your-password"
                   }
                 }
               }
@@ -437,13 +437,13 @@
                 },
                 "region": {
                   "startLine": 32,
-                  "startColumn": 104,
+                  "startColumn": 29,
                   "endLine": 32,
                   "endColumn": 115,
-                  "charOffset": 2974,
-                  "charLength": 11,
+                  "charOffset": 2899,
+                  "charLength": 86,
                   "snippet": {
-                    "text": "password_11"
+                    "text": "your-host; Port=3306; Database=your-database; Uid=username@servername; Pwd=password_11"
                   }
                 }
               }

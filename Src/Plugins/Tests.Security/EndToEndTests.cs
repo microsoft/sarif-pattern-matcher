@@ -20,18 +20,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public abstract class EndToEndTests : FileDiffingUnitTests
     {
-        // Set this value to 'true' temporarily and rerun tests to update
-        // test files in all \ExpectedOutputs\ locations. This value needs
-        // to be set to 'false' against in order for suites to actually pass.
-        protected override bool RebaselineExpectedResults => false;
-
-        // We set this to false to prevent the base class from verifying this
-        // condition after executing every single test. Doing so would result in
-        // only a single test file being rebaselined (before the valdation failed).
-        // This derived type ensures RebaselineExpectedResults is not checked in
-        // as 'true' at the end of RunAllTests execution.
-        protected override bool VerifyRebaselineExpectedResultsIsFalse => false;
-
         protected EndToEndTests(ITestOutputHelper outputHelper) : base(outputHelper)
         {
         }
@@ -149,7 +137,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             RunTest(inputFiles, expectedOutputResourceMap, enforceNotificationsFree: true);
-            RebaselineExpectedResults.Should().BeFalse();
         }
     }
 }

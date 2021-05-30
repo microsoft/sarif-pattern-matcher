@@ -10,29 +10,27 @@
     <Product>Microsoft Managed RE2</Product>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- Change this to Debug if required for RE2 debugging... -->
+    <Re2Configuration>Release</Re2Configuration>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-
+  
   <ItemGroup>
     <!-- Copy native outputs to the correct platform-specific folder in the NuGet Package output -->
-    <Content Include="$(MSBuildThisFileDirectory)..\..\Bld\bin\$(Configuration)\x86\RE2.Native.x86.dll" Pack="true" Link="runtimes/win-x86/native/RE2.Native.x86.dll">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\Bld\bin\$(Re2Configuration)\x86\RE2.Native.x86.dll" Pack="true" Link="runtimes/win-x86/native/RE2.Native.x86.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x86/native</PackagePath>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\Bld\bin\$(Configuration)\x86\RE2.Native.x86.pdb" Pack="true" Link="runtimes/win-x86/native/RE2.Native.x86.pdb">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\Bld\bin\$(Re2Configuration)\x86\RE2.Native.x86.pdb" Pack="true" Link="runtimes/win-x86/native/RE2.Native.x86.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x86/native</PackagePath>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\Bld\bin\$(Configuration)\x64\RE2.Native.x64.dll" Pack="true" Link="runtimes/win-x64/native/RE2.Native.x64.dll">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\Bld\bin\$(Re2Configuration)\x64\RE2.Native.x64.dll" Pack="true" Link="runtimes/win-x64/native/RE2.Native.x64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x64/native</PackagePath>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\Bld\bin\$(Configuration)\x64\RE2.Native.x64.pdb" Pack="true" Link="runtimes/win-x64/native/RE2.Native.x64.pdb">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\Bld\bin\$(Re2Configuration)\x64\RE2.Native.x64.pdb" Pack="true" Link="runtimes/win-x64/native/RE2.Native.x64.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x64/native</PackagePath>
     </Content>
