@@ -16,7 +16,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public class MySqlConnectionStringValidator : ValidatorBase
     {
         internal static MySqlConnectionStringValidator Instance;
-        internal static IRegex RegexEngine;
 
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
