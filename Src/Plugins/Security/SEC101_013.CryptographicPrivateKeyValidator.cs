@@ -44,7 +44,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string secretValue = secret.Value.String.Trim();
 
             // Attempt to cleanup the secret
-            if (secretValue.IndexOf('"') > -1)
+            if (secretValue.IndexOf('"') > -1 || secretValue.IndexOf("\\n") > -1)
             {
                 string[] linesArray = secret.Value.String.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
                 linesArray = linesArray.Select(x => string.Join(string.Empty, x.Replace("\\n", string.Empty)
