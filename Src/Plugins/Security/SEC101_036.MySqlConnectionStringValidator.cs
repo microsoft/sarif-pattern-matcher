@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
@@ -15,10 +16,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public class MySqlConnectionStringValidator : ValidatorBase
     {
         internal static MySqlConnectionStringValidator Instance;
-        internal static IRegex RegexEngine;
-
-        private const string PortRegex = "(?i)(Port\\s*=\\s*(?<port>[0-9]{4,5}))";
-        private const string DatabaseRegex = @"(?i)(Database\s*=\s*(?<database>[^\<>:""\/\\|?;.]{1,64}))";
 
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
@@ -31,7 +28,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         static MySqlConnectionStringValidator()
         {
             Instance = new MySqlConnectionStringValidator();
-            RegexEngine = RE2Regex.Instance;
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
@@ -54,49 +50,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
+                !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
                 !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
-            // Our matches can sometimes fail to find a host (due to it being constructed in code)
-            // However, the credentials can still be valid, so we should return "unknown".
-            // Grab the empty host here and then short circuit in dynamic validation.
-
-            var fingerprint = new Fingerprint()
-            {
-                Id = id.Value,
-                Secret = secret.Value,
-            };
-            var validationResult = new ValidationResult();
-
-            if (!groups.TryGetNonEmptyValue("host", out FlexMatch host))
-            {
-                validationResult.Fingerprint = fingerprint;
-                validationResult.ValidationState = ValidationState.Unknown;
-                return new[] { validationResult };
-            }
-
-            FlexMatch unused = null;
-            string port = ParseExpression(RegexEngine, groups["0"], PortRegex, ref unused);
-            string database = ParseExpression(RegexEngine, groups["0"], DatabaseRegex, ref unused);
+            groups.TryGetNonEmptyValue("port", out FlexMatch port);
+            groups.TryGetNonEmptyValue("resource", out FlexMatch resource);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
-
-            if (HostsToExclude.Contains(hostValue) ||
-                hostValue.IndexOf("postgres", StringComparison.OrdinalIgnoreCase) != -1)
+            if (hostValue.IndexOf("postgres", StringComparison.OrdinalIgnoreCase) != -1 ||
+                HostsToExclude.Any(hostToExclude => hostValue.IndexOf(hostToExclude, StringComparison.OrdinalIgnoreCase) != -1))
             {
                 return ValidationResult.CreateNoMatch();
             }
 
-            fingerprint.Port = port;
-            fingerprint.Host = hostValue.Replace("\"", string.Empty).Replace(",", ";");
-            fingerprint.Resource = database;
+            var fingerprint = new Fingerprint()
+            {
+                Id = id.Value,
+                Host = hostValue,
+                Port = port?.Value,
+                Secret = secret.Value,
+                Resource = resource?.Value,
+            };
 
             SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint);
-            validationResult.RegionFlexMatch = secret;
-            validationResult.Fingerprint = fingerprint;
-            validationResult.ValidationState = ValidationState.Unknown;
+            var validationResult = new ValidationResult
+            {
+                RegionFlexMatch = secret,
+                Fingerprint = fingerprint,
+                ValidationState = ValidationState.Unknown,
+            };
 
             return new[] { validationResult };
         }
