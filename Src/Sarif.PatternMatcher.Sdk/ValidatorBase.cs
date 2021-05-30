@@ -53,9 +53,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
+        protected virtual string ScanIdentityId => "F2693A8D-55C4-4E4D-A40F-42D060F6D792";
+
         protected virtual string ScanIdentityHttpCustomHeaderValue =>
             "This call originates with a build of the SARIF pattern matcher " +
-            "(https://github.com/microsoft/sarif-pattern/matcher. Someone is " +
+            "(https://github.com/microsoft/sarif-pattern-matcher. Someone is " +
             "running an automated scan and attempting to validate detected credentials.";
 
         protected virtual string UserAgentValue => "SARIF Pattern Matcher scan tool";

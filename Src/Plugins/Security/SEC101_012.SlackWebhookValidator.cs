@@ -74,9 +74,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                string payload = Guid.NewGuid().ToString();
                 using var request = new HttpRequestMessage(HttpMethod.Post, uri);
-                request.Content = new StringContent(payload, Encoding.UTF8, "application/json");
+                request.Content = new StringContent(ScanIdentityId, Encoding.UTF8, "application/json");
 
                 using HttpResponseMessage response = client
                     .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
