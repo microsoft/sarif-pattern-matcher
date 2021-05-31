@@ -43,7 +43,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             Assert.Throws<ArgumentException>(() => ScanIdentityGuid = "notGuid");
 
+            string firstGuidValue = ScanIdentityGuid;
             ScanIdentityGuid.Should().NotBeNullOrEmpty();
+            ScanIdentityGuid.Should().Be(firstGuidValue);
 
             var guid = Guid.NewGuid();
             ScanIdentityGuid = $"{guid}";

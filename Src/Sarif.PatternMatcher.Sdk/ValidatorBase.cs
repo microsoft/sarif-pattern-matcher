@@ -59,11 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             get
             {
-                if (string.IsNullOrEmpty(scanIdentityGuid))
-                {
-                    scanIdentityGuid = $"{Guid.NewGuid()}";
-                }
-
+                scanIdentityGuid ??= $"{Guid.NewGuid()}";
                 return scanIdentityGuid;
             }
 
@@ -71,7 +67,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             {
                 if (!Guid.TryParse(value, out _))
                 {
-                    throw new ArgumentException($"The '{value}' is not a GUID.");
+                    throw new ArgumentException($"'{value}' is not a GUID.");
                 }
 
                 scanIdentityGuid = value;
