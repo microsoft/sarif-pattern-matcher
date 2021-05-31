@@ -163,7 +163,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 return ValidationState.NoMatch;
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                 if (ex.Message == "unknown object in stream Reserved")
                 {
