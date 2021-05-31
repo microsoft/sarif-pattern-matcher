@@ -573,7 +573,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                          groups: combinations,
                          ref kind,
                          ref level);
-
         }
 
         private void ValidateMatch(AnalyzeContext context,
