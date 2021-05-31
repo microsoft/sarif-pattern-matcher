@@ -85,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 var handler = new HttpClientHandler
                 {
-                    Credentials = new NetworkCredential(ScanIdentityId, ScanIdentityId),
+                    Credentials = new NetworkCredential(ScanIdentityGuid, ScanIdentityGuid),
                 };
 
                 using var clientWithNoCredentials = new HttpClient(handler)

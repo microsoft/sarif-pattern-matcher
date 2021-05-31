@@ -39,6 +39,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         private static bool shouldUseDynamicCache;
 
+        private string scanIdentityGuid;
+
         static ValidatorBase()
         {
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
@@ -53,7 +55,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
-        protected virtual string ScanIdentityId => "F2693A8D-55C4-4E4D-A40F-42D060F6D792";
+        protected virtual string ScanIdentityGuid
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(scanIdentityGuid))
+                {
+                    scanIdentityGuid = $"{Guid.NewGuid()}";
+                }
+
+                return scanIdentityGuid;
+            }
+
+            set
+            {
+                if (!Guid.TryParse(value, out _))
+                {
+                    throw new ArgumentException($"The '{value}' is not a GUID.");
+                }
+
+                scanIdentityGuid = value;
+            }
+        }
 
         protected virtual string ScanIdentityHttpCustomHeaderValue =>
             "This call originates with a build of the SARIF pattern matcher " +

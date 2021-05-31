@@ -79,7 +79,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 HttpClient client = CreateHttpClient();
                 using var requestDummy = new HttpRequestMessage(HttpMethod.Get, uri);
-                requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", ScanIdentityId);
+                requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", ScanIdentityGuid);
 
                 using HttpResponseMessage responseDummy = client
                     .SendAsync(requestDummy, HttpCompletionOption.ResponseHeadersRead)

@@ -77,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
                 request.Content = new MultipartFormDataContent
                 {
-                    { new StringContent(ScanIdentityId), "subject" },
+                    { new StringContent(ScanIdentityGuid), "subject" },
                 };
 
                 using HttpResponseMessage response = client

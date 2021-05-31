@@ -77,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             try
             {
                 string timestamp = $"{DateTime.UtcNow:yyyyMMddTHH:mm:ss}";
-                string header = $"client_token={id};access_token={resource};timestamp={timestamp}+0000;nonce={ScanIdentityId}";
+                string header = $"client_token={id};access_token={resource};timestamp={timestamp}+0000;nonce={ScanIdentityGuid}";
                 string textToSign = $"EG1-HMAC-SHA256 {header};";
 
                 // Generating signing key based on timestamp.

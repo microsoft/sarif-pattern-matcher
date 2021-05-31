@@ -113,7 +113,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 var credentials = new Credentials(pat);
                 var credentialsStore = new InMemoryCredentialStore(credentials);
-                var client = new GitHubClient(new ProductHeaderValue(ScanIdentityId), credentialsStore);
+                var client = new GitHubClient(new ProductHeaderValue(ScanIdentityGuid), credentialsStore);
 
                 User user = client.User.Current().GetAwaiter().GetResult();
                 string id = user.Login;
