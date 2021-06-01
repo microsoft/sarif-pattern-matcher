@@ -1,5 +1,157 @@
 # Release History
 
+## *v1.5.0-alpha-0021-gd7197e02cd*
+
+- [d7197e0](https://github.com/microsoft/sarif-pattern-matcher/commit/d7197e0) Replace file name in output with a truncated secret. (#442)
+
+## *v1.5.0-alpha-0020-g427c4d51a5*
+
+- [427c4d5](https://github.com/microsoft/sarif-pattern-matcher/commit/427c4d5) Update contributing (#441)
+- [047e8be](https://github.com/microsoft/sarif-pattern-matcher/commit/047e8be) Add override index to ValidationResult (#431)
+- [de0b97e](https://github.com/microsoft/sarif-pattern-matcher/commit/de0b97e) Git validator (#440)
+- [5f93b47](https://github.com/microsoft/sarif-pattern-matcher/commit/5f93b47) Implement max memory option for RE2 regex (#438)
+- [d9b3516](https://github.com/microsoft/sarif-pattern-matcher/commit/d9b3516) Switch from non-overlapping to overlapping matches (#439)
+
+## *v1.5.0-alpha-0015-g11d2baa765*
+
+- [11d2baa](https://github.com/microsoft/sarif-pattern-matcher/commit/11d2baa) updating sarif-sdk submodules (v2.4.8) (#437)
+- [117a990](https://github.com/microsoft/sarif-pattern-matcher/commit/117a990) Analyze database command (#424)
+- [5021fe8](https://github.com/microsoft/sarif-pattern-matcher/commit/5021fe8) Fixing empty text analysis (#436)
+- [e6ff77c](https://github.com/microsoft/sarif-pattern-matcher/commit/e6ff77c) Refactor stringUtf8 (#435)
+- [8918452](https://github.com/microsoft/sarif-pattern-matcher/commit/8918452) Replacing .NET regex for RE2 regex (#414)
+- [86e60fa](https://github.com/microsoft/sarif-pattern-matcher/commit/86e60fa) Handle end match case (#434)
+- [cdfb104](https://github.com/microsoft/sarif-pattern-matcher/commit/cdfb104) Fix issue in shared string interpretation. (#432)
+- [fa2340f](https://github.com/microsoft/sarif-pattern-matcher/commit/fa2340f)  Convert UTF-8 match indices to UTF-16 (#433)
+- [7732151](https://github.com/microsoft/sarif-pattern-matcher/commit/7732151) Fixing conversion (submodules) (#430)
+- [02ace2a](https://github.com/microsoft/sarif-pattern-matcher/commit/02ace2a) Adding ownership message (submodules) (#429)
+- [e749c7e](https://github.com/microsoft/sarif-pattern-matcher/commit/e749c7e) Updating FileRegionsCache (submodule) (#428)
+- [780eeef](https://github.com/microsoft/sarif-pattern-matcher/commit/780eeef) Adding ownership from submodules (#427)
+- [b1432e6](https://github.com/microsoft/sarif-pattern-matcher/commit/b1432e6) Improving kusto messages (submodule) (#426)
+- [a72b8f0](https://github.com/microsoft/sarif-pattern-matcher/commit/a72b8f0) Updating kusto messages (sarif-sdk submodule) (#425)
+- [fd92e6e](https://github.com/microsoft/sarif-pattern-matcher/commit/fd92e6e) Changing back to alpha (#423)
+
+## *v1.4.0-g6e8cafe228*
+
+- [6e8cafe](https://github.com/microsoft/sarif-pattern-matcher/commit/6e8cafe) Releasing stable version (#422)
+- [a75ad6b](https://github.com/microsoft/sarif-pattern-matcher/commit/a75ad6b) NpmCredentialsValidator (#420)
+- [886d4f5](https://github.com/microsoft/sarif-pattern-matcher/commit/886d4f5) Add test for different overlapping implementations (#419)
+- [a34bb4d](https://github.com/microsoft/sarif-pattern-matcher/commit/a34bb4d) Updating sarif-sdk submodule (#421)
+- [7700140](https://github.com/microsoft/sarif-pattern-matcher/commit/7700140) Improving RE2 performance (#416)
+- [4d2de5d](https://github.com/microsoft/sarif-pattern-matcher/commit/4d2de5d) Fix handling of optional groups in RE2 wrapper (#417)
+- [feedca5](https://github.com/microsoft/sarif-pattern-matcher/commit/feedca5) Fixing dynamic validation message (#415)
+- [79d3e49](https://github.com/microsoft/sarif-pattern-matcher/commit/79d3e49) Updating sarif-sdk submodules (#413)
+- [74dfe13](https://github.com/microsoft/sarif-pattern-matcher/commit/74dfe13) Implement multi-matching for named groups (#411)
+- [abd2a9e](https://github.com/microsoft/sarif-pattern-matcher/commit/abd2a9e) Improving SecureApi rules (#412)
+- [9dd53bd](https://github.com/microsoft/sarif-pattern-matcher/commit/9dd53bd) Fixing package vulnerability (#410)
+- [23e3a33](https://github.com/microsoft/sarif-pattern-matcher/commit/23e3a33) Updating sarif-sdk submodules (#409)
+- [cb6d799](https://github.com/microsoft/sarif-pattern-matcher/commit/cb6d799) Enable CodeCoverage when using EnableCoverage (#408)
+- [dab173f](https://github.com/microsoft/sarif-pattern-matcher/commit/dab173f) Improving nuget rule (#407)
+- [a2c2894](https://github.com/microsoft/sarif-pattern-matcher/commit/a2c2894) Improving MySql validator (#406)
+- [8663b29](https://github.com/microsoft/sarif-pattern-matcher/commit/8663b29) Improving kusto query (#405)
+- [0277921](https://github.com/microsoft/sarif-pattern-matcher/commit/0277921) Improving SAL messages (#404)
+
+## *v1.4.0-alpha-0293-g5d749ed3d0*
+
+- [5d749ed](https://github.com/microsoft/sarif-pattern-matcher/commit/5d749ed) Fixing command line (#403)
+
+## *v1.4.0-alpha-0292-g333441a1c9*
+
+- [333441a](https://github.com/microsoft/sarif-pattern-matcher/commit/333441a) Updating submodules (#402)
+
+## *v1.4.0-alpha-0291-gb869932a54*
+
+- [b869932](https://github.com/microsoft/sarif-pattern-matcher/commit/b869932) Improving SubId MessageStrings/RuleId handling (#401)
+- [e6bc997](https://github.com/microsoft/sarif-pattern-matcher/commit/e6bc997) Enabling Pass in SearchDefinition (#398)
+- [3922574](https://github.com/microsoft/sarif-pattern-matcher/commit/3922574) Add new validator for Nuget Credentials (#372)
+- [ca6801b](https://github.com/microsoft/sarif-pattern-matcher/commit/ca6801b) Use 32-bit signed integers throughout implementation for named capturing groups (#397)
+- [1eacbe3](https://github.com/microsoft/sarif-pattern-matcher/commit/1eacbe3) Update contributing (#396)
+- [8862e0d](https://github.com/microsoft/sarif-pattern-matcher/commit/8862e0d) ResultLevelKind should be ref (#395)
+- [d83a571](https://github.com/microsoft/sarif-pattern-matcher/commit/d83a571) sql/mysql validator improvement (#394)
+- [d89253e](https://github.com/microsoft/sarif-pattern-matcher/commit/d89253e) Improving SAL message strings (#388)
+- [86152e5](https://github.com/microsoft/sarif-pattern-matcher/commit/86152e5) Improving SQL regex (#393)
+- [47d9052](https://github.com/microsoft/sarif-pattern-matcher/commit/47d9052) Refactor dynamic methods (#389)
+- [e4a5c76](https://github.com/microsoft/sarif-pattern-matcher/commit/e4a5c76) ResultKindLevel refactor (#387)
+- [7231b76](https://github.com/microsoft/sarif-pattern-matcher/commit/7231b76) named capturing groups using RE2 (#381)
+- [e343b0b](https://github.com/microsoft/sarif-pattern-matcher/commit/e343b0b) Improving import-and-analyze command (#384)
+- [45fceeb](https://github.com/microsoft/sarif-pattern-matcher/commit/45fceeb) Use file has as secret in file extension checks with no validator. (#385)
+
+## *v1.4.0-alpha-0277-g74bb923045*
+
+- [74bb923](https://github.com/microsoft/sarif-pattern-matcher/commit/74bb923) Improving mysql validator (#383)
+- [a8c872f](https://github.com/microsoft/sarif-pattern-matcher/commit/a8c872f) Adding inactive account for slack (#382)
+
+## *v1.4.0-alpha-0275-g6b3254faeb*
+
+- [6b3254f](https://github.com/microsoft/sarif-pattern-matcher/commit/6b3254f) Refactoring fingerprint (#380)
+- [273a4d5](https://github.com/microsoft/sarif-pattern-matcher/commit/273a4d5) Update HttpAuthorizationRequestHeaderValidator (#379)
+- [5d04548](https://github.com/microsoft/sarif-pattern-matcher/commit/5d04548) Update mongo DB regex, add test case (#378)
+- [ed6415e](https://github.com/microsoft/sarif-pattern-matcher/commit/ed6415e) Improving httpAuthorization (#377)
+- [cb70ab2](https://github.com/microsoft/sarif-pattern-matcher/commit/cb70ab2) Fingerprint should not require Provider (#376)
+- [860a33f](https://github.com/microsoft/sarif-pattern-matcher/commit/860a33f) Add debugging unit test (#369)
+- [32da8f0](https://github.com/microsoft/sarif-pattern-matcher/commit/32da8f0) Add deprecated name to exported rules markdown. (#375)
+
+## *v1.4.0-alpha-0268-gb482699566*
+
+- [b482699](https://github.com/microsoft/sarif-pattern-matcher/commit/b482699) Fixing dll movements (#374)
+- [6403c39](https://github.com/microsoft/sarif-pattern-matcher/commit/6403c39) Fixing CVE-2021-24112 (#373)
+- [4ea05ca](https://github.com/microsoft/sarif-pattern-matcher/commit/4ea05ca) Import and analyze (#368)
+
+## *v1.4.0-alpha-0265-g1ff44b1a6d*
+
+- [1ff44b1](https://github.com/microsoft/sarif-pattern-matcher/commit/1ff44b1) Add regex for new GitHub PAT (#366)
+- [15b2be7](https://github.com/microsoft/sarif-pattern-matcher/commit/15b2be7) Improving nupkg file movements (#370)
+- [425ee1b](https://github.com/microsoft/sarif-pattern-matcher/commit/425ee1b) Updating submodules (#367)
+
+## *v1.4.0-alpha-0262-gdbe94bb457*
+
+- [dbe94bb](https://github.com/microsoft/sarif-pattern-matcher/commit/dbe94bb) Fixing indentation and twilio validator (#364)
+- [ae0a3a2](https://github.com/microsoft/sarif-pattern-matcher/commit/ae0a3a2) Cloudant (#362)
+- [52a9a5e](https://github.com/microsoft/sarif-pattern-matcher/commit/52a9a5e) Examine innerexception for timeouts (#361)
+- [611a3bc](https://github.com/microsoft/sarif-pattern-matcher/commit/611a3bc) Enforce that no notifications are generated during file diff tests. (#360)
+- [e1b3ff3](https://github.com/microsoft/sarif-pattern-matcher/commit/e1b3ff3) Update SDK API. (#359)
+- [13ac5bb](https://github.com/microsoft/sarif-pattern-matcher/commit/13ac5bb) Add SalModernization plugin (#347)
+- [1714a34](https://github.com/microsoft/sarif-pattern-matcher/commit/1714a34) Minor improvement (#357)
+- [db6cecf](https://github.com/microsoft/sarif-pattern-matcher/commit/db6cecf) Part in asset fingerprint only (#358)
+- [71bb99f](https://github.com/microsoft/sarif-pattern-matcher/commit/71bb99f) Resource provider and type (#356)
+- [6db9feb](https://github.com/microsoft/sarif-pattern-matcher/commit/6db9feb) Renaming rules (#355)
+- [75ca3f5](https://github.com/microsoft/sarif-pattern-matcher/commit/75ca3f5) Add case for PostgreSql (#354)
+- [6da552f](https://github.com/microsoft/sarif-pattern-matcher/commit/6da552f) Rule name conventions (#353)
+- [1d31777](https://github.com/microsoft/sarif-pattern-matcher/commit/1d31777) Tweak HttpAuthorizationRequestHeader (#352)
+- [b2a5950](https://github.com/microsoft/sarif-pattern-matcher/commit/b2a5950) Account to id. (#351)
+- [4db73df](https://github.com/microsoft/sarif-pattern-matcher/commit/4db73df) Exporting rules metadata (#350)
+- [faf82bc](https://github.com/microsoft/sarif-pattern-matcher/commit/faf82bc) Fingerprint simplification (#349)
+- [dc4850a](https://github.com/microsoft/sarif-pattern-matcher/commit/dc4850a) MovingFiles after building (#348)
+- [aeecbeb](https://github.com/microsoft/sarif-pattern-matcher/commit/aeecbeb) Fake credentials.
+- [456d341](https://github.com/microsoft/sarif-pattern-matcher/commit/456d341) Cleaning warnings (#346)
+- [1a0ce93](https://github.com/microsoft/sarif-pattern-matcher/commit/1a0ce93) Retrieve unknown host from exception (#345)
+- [e4588b5](https://github.com/microsoft/sarif-pattern-matcher/commit/e4588b5) Refactor ValidatorBase (#344)
+- [9350fa8](https://github.com/microsoft/sarif-pattern-matcher/commit/9350fa8) Commenting Alibaba DynamicValidator (#343)
+- [136c0f5](https://github.com/microsoft/sarif-pattern-matcher/commit/136c0f5) Improving validators (#341)
+- [2e21134](https://github.com/microsoft/sarif-pattern-matcher/commit/2e21134) Various fixes for windows. Truncate shannon entropy to two decimal places. (#342)
+- [68bce5c](https://github.com/microsoft/sarif-pattern-matcher/commit/68bce5c) Akamai validator (#339)
+- [d469a5c](https://github.com/microsoft/sarif-pattern-matcher/commit/d469a5c) Update SARIF SDK (#340)
+
+## *v1.4.0-alpha-0236-ge5606a2332*
+
+- [e5606a2](https://github.com/microsoft/sarif-pattern-matcher/commit/e5606a2) Removing Hockey and GCM validator (#337)
+- [def439d](https://github.com/microsoft/sarif-pattern-matcher/commit/def439d) Improving RabbitMQ regex/tests (#336)
+- [485a409](https://github.com/microsoft/sarif-pattern-matcher/commit/485a409) Adding more tests (#335)
+- [935bc79](https://github.com/microsoft/sarif-pattern-matcher/commit/935bc79) Improving slack webhook (#334)
+- [4aa28ed](https://github.com/microsoft/sarif-pattern-matcher/commit/4aa28ed) Add rank to all results (which is the normalized shannon entropy of the password/key component of the fingerprint). (#333)
+- [891bdd2](https://github.com/microsoft/sarif-pattern-matcher/commit/891bdd2) Testing relative paths while running SEC103 (#329)
+- [92714a8](https://github.com/microsoft/sarif-pattern-matcher/commit/92714a8) Enable EnhancedReporting in ValidatingVisitor (#327)
+- [9d2de6f](https://github.com/microsoft/sarif-pattern-matcher/commit/9d2de6f) Plaintext password (#328)
+
+## *v1.4.0-alpha-0228-g4eac90f931*
+
+- [4eac90f](https://github.com/microsoft/sarif-pattern-matcher/commit/4eac90f) Fixing PAT regex (#326)
+- [e79eb09](https://github.com/microsoft/sarif-pattern-matcher/commit/e79eb09) Adding Sdk to README (#325)
+- [f5162bf](https://github.com/microsoft/sarif-pattern-matcher/commit/f5162bf) Improving regex and file analyzer (#324)
+- [12bb143](https://github.com/microsoft/sarif-pattern-matcher/commit/12bb143) Fix some exceptions in scanning (#321)
+- [ad653d3](https://github.com/microsoft/sarif-pattern-matcher/commit/ad653d3) Updating sarif-sdk (#323)
+- [163d571](https://github.com/microsoft/sarif-pattern-matcher/commit/163d571) Updating sarif-sdk submodule (#322)
+- [af12e68](https://github.com/microsoft/sarif-pattern-matcher/commit/af12e68) Updating release history (#320)
+
 ## *v1.4.0-alpha-0221-gc18b188ba9*
 
 - [c18b188](https://github.com/microsoft/sarif-pattern-matcher/commit/c18b188) Twilio credential validator (#319)
@@ -68,7 +220,7 @@
 - [7640b10](https://github.com/microsoft/sarif-pattern-matcher/commit/7640b10) Adding limit to size of file when analyzing. (#246)
 - [24141a5](https://github.com/microsoft/sarif-pattern-matcher/commit/24141a5) Add new PSCredentialsValidator. (#245)
 - [fa8a51a](https://github.com/microsoft/sarif-pattern-matcher/commit/fa8a51a) Correcting Ids. (#248)
-- [9594727](https://github.com/microsoft/sarif-pattern-matcher/commit/9594727) Add new SqlCredentialValidator. (#247) 
+- [9594727](https://github.com/microsoft/sarif-pattern-matcher/commit/9594727) Add new SqlCredentialValidator. (#247)
 - [a7f98b6](https://github.com/microsoft/sarif-pattern-matcher/commit/a7f98b6) New gpg credential validator. (#249)
 
 ## *v1.4.0-alpha-0145-gb5575bfb74*
