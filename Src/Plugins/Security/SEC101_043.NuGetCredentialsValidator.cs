@@ -227,6 +227,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string password = null;
                 foreach (XmlNode item in credential.ChildNodes.Cast<XmlNode>())
                 {
+                    if (item.Attributes == null)
+                    {
+                        continue;
+                    }
+
                     IEnumerable<XmlNode> current = item.Attributes.Cast<XmlNode>();
                     if (current.Any(a => a.Value.Equals("username", StringComparison.OrdinalIgnoreCase)))
                     {

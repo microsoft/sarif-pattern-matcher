@@ -112,8 +112,8 @@
 
   $SEC101/037.SqlConnectionStringPhp=(?i)sqlsrv:server\s*=\s*(tcp:)?(?P<host>[^;"<]+);\s*Database\s*=\s*(?P<resource>[^;"<>*%&:\/?\n]+)",\s*"(?P<id>[^"]+)",\s*"(?P<secret>[^"]+)"  
   
-  $SEC101/038.PostgreSqlConnectionStringAdoId=(?i)(?:username|uid|user id)\s*=\s*(?P<id>[^,;"'<\s\n]+)(?:[,;"'<\s\n]|$)
-  $SEC101/038.PostgreSqlConnectionStringAdoHost=(?i)(?:host|server)\s*=\s*(tcp:)?(?P<host>[^,;"'<\s\n]+)(?:[,;"'<\s\n]|$)
+  $SEC101/038.PostgreSqlConnectionStringAdoId=(?i)(?:username|uid|user id)\s*=\s*(?P<id>[^,;"'&\]\[<\s\n]+)(?:[,;"'&\]\[<\s\n]|$)
+  $SEC101/038.PostgreSqlConnectionStringAdoHost=(?i)(?:host|server)\s*=\s*(tcp:)?(?P<host>[^,;"'\]\[<\s\n]+)(?:[,;"'\]\[<\s\n]|$)
   $SEC101/038.PostgreSqlConnectionStringAdoPort=(?i)port\s*=\s*(?P<port>[0-9]{1,5})(?:[^0-9]|$)
   $SEC101/038.PostgreSqlConnectionStringAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^,;"'<\s\n]+)(?:[,;"'<\s\n]|$)
   $SEC101/038.PostgreSqlConnectionStringAdoResource=(?i)(?:database|db)\s*=\s*(?P<resource>[^,;"'<\s\n]+)(?:[,;"'<\s\n]|$)
