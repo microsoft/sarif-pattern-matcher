@@ -9,10 +9,10 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    public class MySqlConnectionStringValidatorTests
+    public class MySqlCredentialsValidatorTests
     {
         [Fact]
-        public void MySqlConnectionStringValidator_Test()
+        public void MySqlCredentialsValidator_Test()
         {
             string fingerprintText = "";
             if (string.IsNullOrEmpty(fingerprintText))
@@ -25,7 +25,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            MySqlConnectionStringValidator.IsValidDynamic(ref fingerprint,
+            MySqlCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                           ref message,
                                                           keyValuePairs,
                                                           ref resultLevelKind);
