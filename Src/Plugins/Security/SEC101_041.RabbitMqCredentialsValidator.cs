@@ -12,13 +12,13 @@ using RabbitMQ.Client;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class RabbitMqConnectionStringValidator : ValidatorBase
+    public class RabbitMqCredentialsValidator : ValidatorBase
     {
-        internal static RabbitMqConnectionStringValidator Instance;
+        internal static RabbitMqCredentialsValidator Instance;
 
-        static RabbitMqConnectionStringValidator()
+        static RabbitMqCredentialsValidator()
         {
-            Instance = new RabbitMqConnectionStringValidator();
+            Instance = new RabbitMqCredentialsValidator();
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)

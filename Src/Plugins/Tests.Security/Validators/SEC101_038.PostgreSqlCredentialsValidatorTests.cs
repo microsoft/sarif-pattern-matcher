@@ -9,12 +9,12 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    public class PostgreSqlConnectionStringValidatorTests
+    public class PostgreSqlCredentialsValidatorTests
     {
         private const ValidationState ExpectedValidationState = ValidationState.Unknown;
 
         [Fact]
-        public void PostgreSqlConnectionStringValidator_Test()
+        public void PostgreSqlCredentialsValidator_Test()
         {
             string fingerprintText = "[host=99.9.9.99][id=accoutName][resource=database][secret=password]";
 
@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            ValidationState actualValidationState = PostgreSqlConnectionStringValidator.IsValidDynamic(ref fingerprint,
+            ValidationState actualValidationState = PostgreSqlCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                                                                        ref message,
                                                                                                        keyValuePairs,
                                                                                                        ref resultLevelKind);

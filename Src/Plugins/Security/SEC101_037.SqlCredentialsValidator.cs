@@ -11,16 +11,16 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class SqlConnectionStringValidator : ValidatorBase
+    public class SqlCredentialsValidator : ValidatorBase
     {
-        internal static SqlConnectionStringValidator Instance;
+        internal static SqlCredentialsValidator Instance;
         internal static IRegex RegexEngine;
 
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
-        static SqlConnectionStringValidator()
+        static SqlCredentialsValidator()
         {
-            Instance = new SqlConnectionStringValidator();
+            Instance = new SqlCredentialsValidator();
             RegexEngine = RE2Regex.Instance;
 
             // We perform this work in order to force caching of these

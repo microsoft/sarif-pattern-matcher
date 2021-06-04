@@ -13,13 +13,13 @@ using MongoDB.Driver;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
 {
-    public class MongoDbConnectionStringValidator : ValidatorBase
+    public class MongoDbCredentialsValidator : ValidatorBase
     {
-        internal static MongoDbConnectionStringValidator Instance;
+        internal static MongoDbCredentialsValidator Instance;
 
-        static MongoDbConnectionStringValidator()
+        static MongoDbCredentialsValidator()
         {
-            Instance = new MongoDbConnectionStringValidator();
+            Instance = new MongoDbCredentialsValidator();
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)

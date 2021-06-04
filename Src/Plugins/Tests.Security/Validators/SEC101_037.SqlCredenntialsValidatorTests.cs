@@ -9,10 +9,10 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    public class SqlConnectionStringValidatorTests
+    public class SqlCredenntialsValidatorTests
     {
         [Fact]
-        public void SqlConnectionStringValidatorTests_Test()
+        public void SqlCredentialsValidatorTests_Test()
         {
             string fingerprintText = "[host=server][id=account][resource=database][secret=password]";
             string message = null;
@@ -20,7 +20,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            ValidationState actualValidationState = SqlConnectionStringValidator.IsValidDynamic(ref fingerprint,
+            ValidationState actualValidationState = SqlCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                                                                 ref message,
                                                                                                 keyValuePairs,
                                                                                                 ref resultLevelKind);

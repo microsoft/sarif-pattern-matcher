@@ -4,30 +4,30 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
-using MySqlConnector;
+using Npgsql;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class MySqlConnectionStringValidator : ValidatorBase
+    public class PostgreSqlCredentialsValidator : ValidatorBase
     {
-        internal static MySqlConnectionStringValidator Instance;
+        internal static PostgreSqlCredentialsValidator Instance;
 
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
             "localhost",
             "database.windows.net",
             "database.chinacloudapi.cn",
-            "postgres.database.azure.com",
         };
 
-        static MySqlConnectionStringValidator()
+        static PostgreSqlCredentialsValidator()
         {
-            Instance = new MySqlConnectionStringValidator();
+            Instance = new PostgreSqlCredentialsValidator();
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
@@ -60,7 +60,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.TryGetNonEmptyValue("resource", out FlexMatch resource);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
-            if (hostValue.IndexOf("postgres", StringComparison.OrdinalIgnoreCase) != -1 ||
+            if (hostValue.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1 ||
                 HostsToExclude.Any(hostToExclude => hostValue.IndexOf(hostToExclude, StringComparison.OrdinalIgnoreCase) != -1))
             {
                 return ValidationResult.CreateNoMatch();
@@ -96,71 +96,56 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string password = fingerprint.Secret;
             string database = fingerprint.Resource;
 
-            if (string.IsNullOrWhiteSpace(host) ||
-                FilteringHelpers.LocalhostList.Contains(host))
+            if (FilteringHelpers.LocalhostList.Contains(host))
             {
                 return ValidationState.Unknown;
             }
 
-            bool shouldRetry;
-            string connString;
-            if (!string.IsNullOrWhiteSpace(database))
-            {
-                connString = $"Server={host}; Database={database}; Uid={account}; Pwd={password}; SslMode=Preferred;";
-                message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
-
-                if (!string.IsNullOrWhiteSpace(port))
-                {
-                    connString += $"Port={port}";
-                }
-
-                // Validating ConnectionString with database.
-                ValidationState validationState = ValidateConnectionString(ref message, host, connString, out shouldRetry);
-                if (validationState != ValidationState.Unknown || !shouldRetry)
-                {
-                    return validationState;
-                }
-            }
-
-            connString = $"Server={host}; Uid={account}; Pwd={password}; SslMode=Preferred;";
+            var connectionStringBuilder = new StringBuilder();
             message = $"the '{account}' account is compromised for server '{host}'";
+            connectionStringBuilder.Append($"Host={host};Username={account};Password={password};Ssl Mode=Require;");
 
             if (!string.IsNullOrWhiteSpace(port))
             {
-                connString += $"Port={port}";
+                connectionStringBuilder.Append($"Port={port};");
             }
 
-            // Validating ConnectionString without database.
-            return ValidateConnectionString(ref message, host, connString, out _);
-        }
-
-        private static ValidationState ValidateConnectionString(ref string message, string host, string connString, out bool shouldRetry)
-        {
-            shouldRetry = true;
+            if (!string.IsNullOrWhiteSpace(database))
+            {
+                message = $"the '{account}' account was authenticated against database '{database}' hosted on '{host}'";
+                connectionStringBuilder.Append($"Database={database};");
+            }
 
             try
             {
-                using var connection = new MySqlConnection(connString);
-                connection.Open();
+                using var postgreSqlconnection = new NpgsqlConnection(connectionStringBuilder.ToString());
+                postgreSqlconnection.Open();
             }
             catch (Exception e)
             {
-                if (e is MySqlException mysqlException)
+                if (e is PostgresException postgresException)
                 {
-                    // ErrorCode = 9000: Client with IP address is not allowed to connect to this MySQL server.
-                    if (mysqlException.ErrorCode == (MySqlErrorCode)9000 ||
-                        mysqlException.ErrorCode == MySqlErrorCode.AccessDenied)
+                    // Database does not exist, but the creds are valid
+                    if (postgresException.SqlState == "3D000")
+                    {
+                        return ReturnAuthorizedAccess(ref message, asset: host);
+                    }
+
+                    // password authentication failed for user
+                    if (postgresException.SqlState == "28P01")
                     {
                         return ReturnUnauthorizedAccess(ref message, asset: host);
                     }
-
-                    if (mysqlException.ErrorCode == MySqlErrorCode.UnableToConnectToHost)
-                    {
-                        return ReturnUnknownHost(ref message, host);
-                    }
                 }
 
-                return ReturnUnhandledException(ref message, e, asset: host);
+                if (e?.InnerException is TimeoutException)
+                {
+                    // default timeout is more than long enough to establish a connection, if we
+                    // timeout, it's more likely that the server silently rejected our attempt to connect
+                    return ReturnUnknownAuthorization(ref message, asset: host);
+                }
+
+                return ReturnUnhandledException(ref message, e.InnerException ?? e, asset: host);
             }
 
             return ValidationState.Authorized;
