@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Channels;
 
+using Newtonsoft.Json.Linq;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli.DatabaseReaders
 {
     internal abstract class BaseReader
@@ -39,14 +41,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli.DatabaseReaders
                 {
                     if (!reader.IsDBNull(i))
                     {
-                        if (!(values[i] is string columnData))
+                        string data = string.Empty;
+                        switch (values[i])
                         {
-                            continue;
+                            case string stringData:
+                            {
+                                data = stringData;
+                                break;
+                            }
+
+                            case JValue jsonData:
+                            {
+                                data = jsonData.ToString();
+                                break;
+                            }
+
+                            default:
+                            {
+                                continue;
+                            }
                         }
 
                         string columnName = reader.GetName(i);
                         string contentName = $"{indexValue}_{columnName}";
-                        content[contentName] = columnData;
+                        content[contentName] = data;
                         contentChannel.Writer.TryWrite(contentName);
                     }
                 }
