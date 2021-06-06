@@ -81,6 +81,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 node.Message.Arguments[1] = validationPrefix;
                 node.Message.Arguments[4] = validationSuffix;
                 node.Message.Arguments[5] = SearchSkimmer.NormalizeValidatorMessage(message);
+
+                if (node.Fingerprints.ContainsKey(SearchSkimmer.AssetFingerprint))
+                {
+                    node.Fingerprints[SearchSkimmer.AssetFingerprint] = fingerprint.GetAssetFingerprintText();
+                }
             }
 
             return node;
