@@ -108,6 +108,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string pat = fingerprint.Secret;
+            fingerprint.Platform = nameof(AssetPlatform.GitHub);
 
             try
             {
@@ -116,7 +117,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 var client = new GitHubClient(new ProductHeaderValue(ScanIdentityGuid), credentialsStore);
 
                 User user = client.User.Current().GetAwaiter().GetResult();
-                string id = user.Login;
+                string id = fingerprint.Id = user.Login;
                 string name = user.Name;
 
                 if (!string.IsNullOrEmpty(user.Name))
@@ -132,6 +133,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 if (orgNames.Length == 0)
                 {
                     orgNames = "[None]";
+                }
+                else
+                {
+                    fingerprint.Resource = orgNames;
                 }
 
                 message += $" which has access to the following orgs '{orgNames}'";
