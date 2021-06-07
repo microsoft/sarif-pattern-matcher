@@ -122,6 +122,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 if (!string.IsNullOrEmpty(user.Name))
                 {
                     name = $" ({name})";
+                    fingerprint.Id = name;
                 }
 
                 message = $"the compromised GitHub account is '[{id}{name}](https://github.com/{id})'";
@@ -132,6 +133,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 if (orgNames.Length == 0)
                 {
                     orgNames = "[None]";
+                }
+                else
+                {
+                    fingerprint.Resource = orgNames;
                 }
 
                 message += $" which has access to the following orgs '{orgNames}'";
