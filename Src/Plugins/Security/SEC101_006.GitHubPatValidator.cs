@@ -108,6 +108,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string pat = fingerprint.Secret;
+            fingerprint.Platform = nameof(AssetPlatform.GitHub);
 
             try
             {
@@ -116,13 +117,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 var client = new GitHubClient(new ProductHeaderValue(ScanIdentityGuid), credentialsStore);
 
                 User user = client.User.Current().GetAwaiter().GetResult();
-                string id = user.Login;
+                string id = fingerprint.Id = user.Login;
                 string name = user.Name;
 
                 if (!string.IsNullOrEmpty(user.Name))
                 {
                     name = $" ({name})";
-                    fingerprint.Id = name;
                 }
 
                 message = $"the compromised GitHub account is '[{id}{name}](https://github.com/{id})'";
