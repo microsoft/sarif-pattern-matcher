@@ -42,6 +42,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ValidationMethods validationPair =
                 ValidatorsCache.GetValidationMethods(rule.Name, _validators.RuleNameToValidationMethods);
 
+            if (validationPair == null)
+            {
+                string name = rule.Name.Replace("ConnectionString", "Credentials");
+                validationPair = ValidatorsCache.GetValidationMethods(name, _validators.RuleNameToValidationMethods);
+            }
+
             if (validationPair.IsValidDynamic != null)
             {
                 // Our validation messages currently look like so.
