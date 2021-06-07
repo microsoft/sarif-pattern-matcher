@@ -45,10 +45,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (validationPair == null)
             {
                 string name = rule.Name.Replace("ConnectionString", "Credentials");
+                name = name.Replace("Secret", "Credentials");
                 validationPair = ValidatorsCache.GetValidationMethods(name, _validators.RuleNameToValidationMethods);
             }
 
-            if (validationPair.IsValidDynamic != null)
+            if (validationPair?.IsValidDynamic != null)
             {
                 // Our validation messages currently look like so.
                 // {0:scanTarget}' contains {1:validationPrefix}{2:encoding}{3:secretKind}{4:validationSuffix}{5:validatorMessage}
