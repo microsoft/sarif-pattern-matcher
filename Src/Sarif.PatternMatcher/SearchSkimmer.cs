@@ -602,14 +602,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 matchExpression.Properties ??= new Dictionary<string, string>();
 
+                var properties = new Dictionary<string, string>(matchExpression.Properties);
+
                 string filePath = context.TargetUri.GetFilePath();
-                matchExpression.Properties["scanTargetFullPath"] = filePath;
+                properties["scanTargetFullPath"] = filePath;
 
                 IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
                                                                                        context,
                                                                                        mergedGroups,
                                                                                        groups,
-                                                                                       matchExpression.Properties,
+                                                                                       properties,
                                                                                        out bool pluginSupportsDynamicValidation);
                 if (validationResults != null)
                 {
