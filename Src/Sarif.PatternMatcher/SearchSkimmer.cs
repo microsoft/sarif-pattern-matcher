@@ -38,8 +38,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly IFileSystem _fileSystem;
         private readonly FileRegionsCache _fileRegionsCache;
         private readonly ValidatorsCache _validators;
-        private readonly IList<MatchExpression> _matchExpressions;
         private readonly IList<string> _deprecatedNames;
+        private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
         private readonly Dictionary<string, MultiformatMessageString> _messageStrings;
 
