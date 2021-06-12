@@ -595,7 +595,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                                        context,
                                                                                        mergedGroups,
                                                                                        groups,
-                                                                                       properties,
+                                                                                       matchExpression.Properties,
                                                                                        out bool pluginSupportsDynamicValidation);
                 if (validationResults != null)
                 {
