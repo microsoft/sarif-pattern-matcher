@@ -589,18 +589,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
-                matchExpression.Properties ??= new Dictionary<string, string>();
-
-                var properties = new Dictionary<string, string>(matchExpression.Properties);
-
                 string filePath = context.TargetUri.GetFilePath();
-                properties["scanTargetFullPath"] = filePath;
 
                 IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
                                                                                        context,
                                                                                        mergedGroups,
                                                                                        groups,
-                                                                                       properties,
+                                                                                       matchExpression.Properties,
                                                                                        out bool pluginSupportsDynamicValidation);
                 if (validationResults != null)
                 {

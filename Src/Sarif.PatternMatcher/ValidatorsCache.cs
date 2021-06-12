@@ -189,8 +189,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var results = new List<ValidationResult>();
             combinations ??= GetCombinations(mergedGroups);
 
+            string filePath = context.TargetUri.GetFilePath();
             var flexMatchProperties = new Dictionary<string, FlexMatch>();
             flexMatchProperties.AddProperties(properties);
+            flexMatchProperties["scanTargetFullPath"] = new FlexMatch { Value = filePath };
 
             foreach (Dictionary<string, FlexMatch> groups in combinations)
             {
