@@ -294,6 +294,75 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
+        [Fact]
+        public void AnalyzeCommand_WithDeprecatedName()
+        {
+            const string messageId = "NewId";
+            const string deprecatedName = "deprecated-rule-name";
+            var definitions = new SearchDefinitions()
+            {
+                Definitions = new List<SearchDefinition>(new[]
+                {
+                    new SearchDefinition()
+                    {
+                        Name = "MinimalRule", Id = "Test1002",
+                        Level = FailureLevel.Error, FileNameAllowRegex = "(?i)\\.test$",
+                        Message = "A problem occurred in '{0:scanTarget}'.",
+                        MatchExpressions = new List<MatchExpression>(new[]
+                        {
+                            new MatchExpression()
+                            {
+                                ContentsRegex = "foo",
+                                MessageId = messageId,
+                                Message = "Custom message.",
+                                DeprecatedName = deprecatedName
+                            }
+                        })
+                    }
+                })
+            };
+
+            string definitionsText = JsonConvert.SerializeObject(definitions);
+
+            string searchDefinitionsPath = Guid.NewGuid().ToString();
+
+            var disabledSkimmers = new HashSet<string>();
+            var testLogger = new TestLogger();
+
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
+
+            // Acquire skimmers for searchers
+            ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
+                mockFileSystem.Object,
+                new string[] { searchDefinitionsPath },
+                RE2Regex.Instance);
+
+            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
+            FlexString fileContents = "bar foo foo";
+            FlexString fixedFileContents = "bar bar bar";
+
+            var context = new AnalyzeContext()
+            {
+                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                FileContents = fileContents,
+                Logger = testLogger
+            };
+
+            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
+
+            PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
+
+            testLogger.Results.Should().NotBeNull();
+            testLogger.Results.Count.Should().Be(2);
+
+            foreach (ReportingDescriptor rule in testLogger.Rules)
+            {
+                rule.DeprecatedNames.Should().NotBeNullOrEmpty();
+                rule.DeprecatedNames[0].Should().Be(deprecatedName);
+            }
+        }
+
         private static void AnalyzeCommand(IRegex engine)
         {
             var definitions = new SearchDefinitions()

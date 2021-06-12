@@ -7,6 +7,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class TestLogger : IAnalysisLogger
     {
+        public ISet<ReportingDescriptor> Rules { get; set; }
         public IList<Result> Results { get; set; }
 
         public void AnalysisStarted()
@@ -25,6 +26,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             Results ??= new List<Result>();
             Results.Add(result);
+
+            Rules ??= new HashSet<ReportingDescriptor>(ReportingDescriptor.ValueComparer);
+            Rules.Add(rule);
         }
 
         public void LogConfigurationNotification(Notification notification)

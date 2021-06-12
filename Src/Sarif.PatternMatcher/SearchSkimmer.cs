@@ -38,6 +38,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly IFileSystem _fileSystem;
         private readonly FileRegionsCache _fileRegionsCache;
         private readonly ValidatorsCache _validators;
+        private readonly IList<string> _deprecatedNames;
         private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
         private readonly Dictionary<string, MultiformatMessageString> _messageStrings;
@@ -66,6 +67,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string matchExpressionMessage = matchExpression.Message;
                 matchExpression.ArgumentNameToIndexMap = GenerateIndicesForNamedArguments(ref matchExpressionMessage);
 
+                if (!string.IsNullOrEmpty(matchExpression.DeprecatedName) && _deprecatedNames == null)
+                {
+                    _deprecatedNames = new List<string>
+                    {
+                        matchExpression.DeprecatedName,
+                    };
+                }
+
                 string messageId = matchExpression.MessageId;
                 if (_messageStrings.ContainsKey(messageId))
                 {
@@ -86,6 +95,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public override string Id => _id;
 
         public override string Name => _name;
+
+        public override IList<string> DeprecatedNames => _deprecatedNames;
 
         public override MultiformatMessageString FullDescription => _fullDescription;
 
