@@ -104,7 +104,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 request: TestHelper.MockAnalyzeFunctionRequest(patTextFile, lines[0]),
                 log: logger,
                 context: TestHelper.ContextSetup());
-            ValidateResult(lines[0], result, runCount: 1, resultCount: 1, FailureLevel.Note);
+            ValidateResult(lines[0], result, runCount: 1, resultCount: 1, FailureLevel.None);
 
             result = await HttpAnalyzeFunction.Analyze(
                request: TestHelper.MockAnalyzeFunctionRequest(patTextFile, lines[1]),
