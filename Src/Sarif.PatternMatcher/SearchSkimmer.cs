@@ -589,10 +589,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
-                matchExpression.Properties ??= new Dictionary<string, string>();
-
                 string filePath = context.TargetUri.GetFilePath();
-                matchExpression.Properties["scanTargetFullPath"] = filePath;
 
                 IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
                                                                                        context,
