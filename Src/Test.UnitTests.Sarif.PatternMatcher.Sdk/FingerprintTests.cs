@@ -177,8 +177,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     JsonConvert.DeserializeObject(fingerprintText).Should().NotBeNull();
                 }
 
-
-                if (!fingerprintText.Contains($"[{keyName}={guidText}]"))
+                if (!fingerprintText.Contains($"{prefix}{keyName}{separator}{guidText}{suffix}"))
                 {
                     toStringUnexpectedConditions.Add(
                         $"{Environment.NewLine}ToString() not rendering property value " +
