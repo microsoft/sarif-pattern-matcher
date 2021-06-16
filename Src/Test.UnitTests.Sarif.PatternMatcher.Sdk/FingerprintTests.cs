@@ -9,6 +9,8 @@ using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
+using Newtonsoft.Json;
+
 using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
@@ -77,8 +79,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void Fingerprint_AllPropertiesPersistedInToString()
         {
+            Fingerprint_AllPropertiesPersistedInToStringHelper(jsonFormat: true);
+            Fingerprint_AllPropertiesPersistedInToStringHelper(jsonFormat: false);
+        }
+
+        private static void Fingerprint_AllPropertiesPersistedInToStringHelper(bool jsonFormat)
+        {
             // Invariant: fingerprint.ToString() should
             // render all property values if set.
+
+            string prefix = jsonFormat ? "\"" : "[";
+            string suffix = jsonFormat ? "\"" : "]";
+            string separator = jsonFormat ? "\":\"" : "=";
 
             var fingerprint = new Fingerprint();
             var propertyValues = new Dictionary<string, string>();
@@ -94,7 +106,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 propertyValues[guidText] = pi.Name;
             }
 
-            string fingerprintText = fingerprint.ToString();
+            var emptyDenyList = new HashSet<string>();
+            string fingerprintText = Fingerprint.ToString(fingerprint, emptyDenyList, jsonFormat);
+
+            // If we are operating against JSON representation,
+            // let's make sure that the data returned is valid JSON.
+            if (jsonFormat)
+            {
+                JsonConvert.DeserializeObject(fingerprintText).Should().NotBeNull();
+            }
 
             var unexpectedConditions = new List<string>();
 
@@ -102,7 +122,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 string keyName = GetKeyNameForProperty(propertyValues[guidText]);
                 if (!fingerprintText.Contains(guidText) ||
-                    !fingerprintText.Contains($"[{keyName}={guidText}]"))
+                    !fingerprintText.Contains($"{prefix}{keyName}{separator}{guidText}{suffix}"))
                 {
                     unexpectedConditions.Add(
                         $"{Environment.NewLine}ToString() not rendering property: {propertyValues[guidText]}.");
@@ -121,12 +141,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void Fingerprint_IndividualPropertiesPersistedInToString()
         {
+            Fingerprint_IndividualPropertiesPersistedInToStringHelper(jsonFormat: true);
+            Fingerprint_IndividualPropertiesPersistedInToStringHelper(jsonFormat: false);
+        }
+
+        private static void Fingerprint_IndividualPropertiesPersistedInToStringHelper(bool jsonFormat)
+        {
             // Invariant: fingerprint.ToString() should
             // render individual properties when set
+
+            string prefix = jsonFormat ? "\"" : "[";
+            string suffix = jsonFormat ? "\"" : "]";
+            string separator = jsonFormat ? "\":\"" : "=";
 
             Type type = typeof(Fingerprint);
             var toStringUnexpectedConditions = new List<string>();
             var roundTrippingUnexpectedConditions = new List<string>();
+
+            var emptyDenyList = new HashSet<string>();
 
             foreach (PropertyInfo pi in GetTestableFingerprintProperties())
             {
@@ -136,7 +168,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 pi.SetMethod.Invoke(boxed, new[] { guidText });
                 fingerprint = (Fingerprint)boxed;
                 string keyName = GetKeyNameForProperty(pi.Name);
-                if (!fingerprint.ToString().Contains($"[{keyName}={guidText}]"))
+                string fingerprintText = Fingerprint.ToString(fingerprint, emptyDenyList, jsonFormat);
+
+                // If we are operating against JSON representation,
+                // let's make sure that the data returned is valid JSON.
+                if (jsonFormat)
+                {
+                    JsonConvert.DeserializeObject(fingerprintText).Should().NotBeNull();
+                }
+
+                if (!fingerprintText.Contains($"{prefix}{keyName}{separator}{guidText}{suffix}"))
                 {
                     toStringUnexpectedConditions.Add(
                         $"{Environment.NewLine}ToString() not rendering property value " +
@@ -210,7 +251,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             failedTestCases.Should().BeEmpty();
         }
 
-        private IEnumerable<PropertyInfo> GetTestableFingerprintProperties()
+        private static IEnumerable<PropertyInfo> GetTestableFingerprintProperties()
         {
             foreach (PropertyInfo pi in typeof(Fingerprint).GetProperties())
             {
@@ -391,7 +432,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 ExceptionType = typeof(ArgumentException) },
         };
 
-        private string GetKeyNameForProperty(string propertyName)
+        private static string GetKeyNameForProperty(string propertyName)
         {
             FieldInfo fi = typeof(Fingerprint).GetField($"{propertyName}KeyName");
             return (string)fi.GetValue(null);

@@ -236,16 +236,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public override bool Equals(object obj)
         {
             return obj is Fingerprint equatable &&
-                Id == equatable.Id &&
-                Host == equatable.Host &&
-                Part == equatable.Part &&
-                Path == equatable.Path &&
-                Port == equatable.Port &&
-                Scheme == equatable.Scheme &&
-                Secret == equatable.Secret &&
-                Platform == equatable.Platform &&
-                Resource == equatable.Resource &&
-                Thumbprint == equatable.Thumbprint;
+                   Id == equatable.Id &&
+                   Host == equatable.Host &&
+                   Part == equatable.Part &&
+                   Path == equatable.Path &&
+                   Port == equatable.Port &&
+                   Scheme == equatable.Scheme &&
+                   Secret == equatable.Secret &&
+                   Platform == equatable.Platform &&
+                   Resource == equatable.Resource &&
+                   Thumbprint == equatable.Thumbprint;
         }
 
         public override int GetHashCode()
@@ -307,66 +307,82 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return result;
         }
 
-        internal static string ToString(Fingerprint f, ISet<string> denyList)
+        internal static string ToJson(Fingerprint f, ISet<string> denyList)
+        {
+            return ToString(f, denyList, jsonFormat: true);
+        }
+
+        internal static string ToString(Fingerprint f, ISet<string> denyList, bool jsonFormat = false)
         {
             denyList ??= s_emptyDenyList;
+
+            string prefix = jsonFormat ? "\"" : "[";
+            string suffix = jsonFormat ? "\"" : "]";
+            string separator = jsonFormat ? "\":\"" : "=";
 
             var components = new Dictionary<string, string>(3);
 
             // These need to remain in alphabetical order.
             if (!string.IsNullOrEmpty(f.Host) && !denyList.Contains(HostKeyName))
             {
-                components.Add(HostKeyName, $"[{HostKeyName}={f.Host.Trim()}]");
+                components.Add(HostKeyName, $"{prefix}{HostKeyName}{separator}{f.Host.Trim()}{suffix}");
             }
 
             if (!string.IsNullOrEmpty(f.Id) && !denyList.Contains(IdKeyName))
             {
-                components.Add(IdKeyName, $"[{IdKeyName}={f.Id.Trim()}]");
+                components.Add(IdKeyName, $"{prefix}{IdKeyName}{separator}{f.Id.Trim()}{suffix}");
             }
 
             if (!string.IsNullOrEmpty(f.Part) && !denyList.Contains(PartKeyName))
             {
-                components.Add(PartKeyName, $"[{PartKeyName}={f.Part.Trim()}]");
+                components.Add(PartKeyName, $"{prefix}{PartKeyName}{separator}{f.Part.Trim()}{suffix}");
             }
 
             if (!string.IsNullOrEmpty(f.Path) && !denyList.Contains(PathKeyName))
             {
-                components.Add(PathKeyName, $"[{PathKeyName}={f.Path.Trim()}]");
+                components.Add(PathKeyName, $"{prefix}{PathKeyName}{separator}{f.Path.Trim()}{suffix}");
             }
 
             if (!string.IsNullOrEmpty(f.Platform) && !denyList.Contains(PlatformKeyName))
             {
-                components.Add(PlatformKeyName, $"[{PlatformKeyName}={f.Platform.Trim()}]");
+                components.Add(PlatformKeyName, $"{prefix}{PlatformKeyName}{separator}{f.Platform.Trim()}{suffix}");
             }
 
             if (!string.IsNullOrEmpty(f.Port) && !denyList.Contains(PortKeyName))
             {
-                components.Add(PortKeyName, $"[{PortKeyName}={f.Port.Trim()}]");
+                components.Add(PortKeyName, $"{prefix}{PortKeyName}{separator}{f.Port.Trim()}{suffix}");
             }
 
             if (!string.IsNullOrEmpty(f.Resource) && !denyList.Contains(ResourceKeyName))
             {
-                components.Add(ResourceKeyName, $"[{ResourceKeyName}={f.Resource.Trim()}]");
+                components.Add(ResourceKeyName, $"{prefix}{ResourceKeyName}{separator}{f.Resource.Trim()}{suffix}");
             }
 
-            if (!string.IsNullOrEmpty(f.Scheme) && !denyList.Contains(SchemeKeyName) && !f.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
+            // "https:" is considered the default in any case where scheme is absent.
+            if (!string.IsNullOrEmpty(f.Scheme) &&
+                !denyList.Contains(SchemeKeyName) &&
+                !f.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
             {
-                components.Add(SchemeKeyName, $"[{SchemeKeyName}={f.Scheme.Trim()}]");
+                components.Add(SchemeKeyName, $"{prefix}{SchemeKeyName}{separator}{f.Scheme.Trim()}{suffix}");
             }
 
             if (!string.IsNullOrEmpty(f.Secret) && !denyList.Contains(SecretKeyName))
             {
-                components.Add(SecretKeyName, $"[{SecretKeyName}={f.Secret.Trim()}]");
+                components.Add(SecretKeyName, $"{prefix}{SecretKeyName}{separator}{f.Secret.Trim()}{suffix}");
             }
 
             if (!string.IsNullOrEmpty(f.Thumbprint) && !denyList.Contains(ThumbprintKeyName))
             {
-                components.Add(ThumbprintKeyName, $"[{ThumbprintKeyName}={f.Thumbprint.Trim()}]");
+                components.Add(ThumbprintKeyName, $"{prefix}{ThumbprintKeyName}{separator}{f.Thumbprint.Trim()}{suffix}");
             }
 
-            return components.Count > 0 ?
-                string.Concat(components.Where(c => !string.IsNullOrEmpty(c.Value)).OrderBy(c => c.Key).Select(v => v.Value)) :
+            separator = jsonFormat ? "," : string.Empty;
+
+            string result = components.Count > 0 ?
+                string.Join(separator, components.Where(c => !string.IsNullOrEmpty(c.Value)).OrderBy(c => c.Key).Select(v => v.Value)) :
                 string.Empty;
+
+            return jsonFormat ? $"{{{result}}}" : result;
         }
 
         internal void Parse(string fingerprintText)
