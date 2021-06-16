@@ -82,7 +82,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Fingerprint_AllPropertiesPersistedInToStringHelper(jsonFormat: true);
             Fingerprint_AllPropertiesPersistedInToStringHelper(jsonFormat: false);
         }
-         
+
         private static void Fingerprint_AllPropertiesPersistedInToStringHelper(bool jsonFormat)
         {
             // Invariant: fingerprint.ToString() should
@@ -158,7 +158,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var toStringUnexpectedConditions = new List<string>();
             var roundTrippingUnexpectedConditions = new List<string>();
 
-           var emptyDenyList = new HashSet<string>();
+            var emptyDenyList = new HashSet<string>();
 
             foreach (PropertyInfo pi in GetTestableFingerprintProperties())
             {
