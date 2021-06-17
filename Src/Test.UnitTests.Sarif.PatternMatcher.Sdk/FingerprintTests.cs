@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
 using FluentAssertions;
 
@@ -267,7 +268,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 yield return pi;
             }
-            yield break;
         }
 
         [Fact]
@@ -401,6 +401,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint.Host.Should().Be("host");
             fingerprint.Part.Should().Be("part");
             fingerprint.Secret.Should().Be("secret");
+
+            var sb = new StringBuilder();
+            foreach (PropertyInfo property in GetTestableFingerprintProperties())
+            {
+                if (property.Name == "Id" || property.Name == "Host" || property.Name == "Part" || property.Name == "Secret")
+                {
+                    continue;
+                }
+
+                string value = (string)property.GetValue(fingerprint);
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    sb.AppendLine($"Property '{property.Name}' should be empty.");
+                }
+            }
+
+            sb.Length.Should().Be(0, because: sb.ToString());
         }
 
         private static readonly FingerprintTestCase[] s_workingTestCases = new[]
