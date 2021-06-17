@@ -414,7 +414,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (!string.IsNullOrEmpty(value))
                 {
-                    sb.AppendLine($"Property '{property.Name}' should be empty.");
+                    sb.AppendLine($"Property '{property.Name}' should be null/empty.");
                 }
             }
 
