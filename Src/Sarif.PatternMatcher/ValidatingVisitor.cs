@@ -83,6 +83,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                   ref message,
                                                                   pluginSupportsDynamicValidation: true);
 
+                fingerprint.Merge(node.Fingerprints[SearchSkimmer.AssetFingerprint]);
                 node.Level = level;
                 node.Kind = kind;
                 node.Message.Arguments[1] = validationPrefix;

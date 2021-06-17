@@ -108,7 +108,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string pat = fingerprint.Secret;
-            fingerprint.Platform = nameof(AssetPlatform.GitHub);
 
             try
             {

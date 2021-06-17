@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
 using FluentAssertions;
 
@@ -267,7 +268,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 yield return pi;
             }
-            yield break;
         }
 
         [Fact]
@@ -384,6 +384,41 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string fingerprintText = "[id=[]123][port=123][secret=secret[]]";
             var fingerprint = new Fingerprint(fingerprintText);
             fingerprint.ToString().Should().Be(fingerprintText);
+        }
+
+        [Fact]
+        public void Fingerprint_ShouldMergeNormally()
+        {
+            string previousFingerprint = "[host=host][part=part]";
+            var fingerprint = new Fingerprint
+            {
+                Id = "id",
+                Secret = "secret"
+            };
+
+            fingerprint.Merge(previousFingerprint);
+            fingerprint.Id.Should().Be("id");
+            fingerprint.Host.Should().Be("host");
+            fingerprint.Part.Should().Be("part");
+            fingerprint.Secret.Should().Be("secret");
+
+            var sb = new StringBuilder();
+            foreach (PropertyInfo property in GetTestableFingerprintProperties())
+            {
+                if (property.Name == "Id" || property.Name == "Host" || property.Name == "Part" || property.Name == "Secret")
+                {
+                    continue;
+                }
+
+                string value = (string)property.GetValue(fingerprint);
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    sb.AppendLine($"Property '{property.Name}' should be null/empty.");
+                }
+            }
+
+            sb.Length.Should().Be(0, because: sb.ToString());
         }
 
         private static readonly FingerprintTestCase[] s_workingTestCases = new[]
