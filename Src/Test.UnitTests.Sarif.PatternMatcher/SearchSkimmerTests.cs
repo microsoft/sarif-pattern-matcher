@@ -271,6 +271,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             // This Id will match us up with the TestRuleValidator type.
             definition.Id = "TestRule";
+            definition.Name = "TestRule";
 
             AnalyzeContext context =
                 CreateGuidMatchingSkimmer(

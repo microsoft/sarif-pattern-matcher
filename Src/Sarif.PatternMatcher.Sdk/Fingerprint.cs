@@ -228,6 +228,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
 #pragma warning restore SA1107
 
+        public void Merge(string previousFingerprintText)
+        {
+            var previousFingerprint = new Fingerprint(previousFingerprintText);
+
+            this.Id ??= previousFingerprint.Id;
+            this.Host ??= previousFingerprint.Host;
+            this.Part ??= previousFingerprint.Part;
+            this.Path ??= previousFingerprint.Path;
+            this.Port ??= previousFingerprint.Port;
+            this.Scheme ??= previousFingerprint.Scheme;
+            this.Secret ??= previousFingerprint.Secret;
+            this.Platform ??= previousFingerprint.Platform;
+            this.Resource ??= previousFingerprint.Resource;
+            this.Thumbprint ??= previousFingerprint.Thumbprint;
+        }
+
         public override string ToString()
         {
             return ToString(this, s_emptyDenyList);

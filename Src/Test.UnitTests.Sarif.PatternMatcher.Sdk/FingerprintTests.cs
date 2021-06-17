@@ -386,6 +386,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint.ToString().Should().Be(fingerprintText);
         }
 
+        [Fact]
+        public void Fingerprint_ShouldMergeNormally()
+        {
+            string previousFingerprint = "[host=host][part=part]";
+            var fingerprint = new Fingerprint
+            {
+                Id = "id",
+                Secret = "secret"
+            };
+
+            fingerprint.Merge(previousFingerprint);
+            fingerprint.Id.Should().Be("id");
+            fingerprint.Host.Should().Be("host");
+            fingerprint.Part.Should().Be("part");
+            fingerprint.Secret.Should().Be("secret");
+        }
+
         private static readonly FingerprintTestCase[] s_workingTestCases = new[]
         {
             new FingerprintTestCase {
