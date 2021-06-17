@@ -9,6 +9,7 @@ using System.Text;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
 using Moq;
@@ -283,6 +284,72 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             skimmer.Analyze(context);
 
             //((TestLogger)context.Logger).Results.Should().BeNull();
+        }
+
+        [Fact]
+        public void SearchSkimmer_ValidatorResultsAreProperlyNotChangingFingerprintAfterDynamicValidation()
+        {
+            TestRuleValidator.OverrideIsValidStatic = (groups) =>
+            {
+                return new[] {
+                    new ValidationResult
+                    {
+                        Fingerprint = new Fingerprint
+                        {
+                            Secret = "secret",
+                            Platform = nameof(AssetPlatform.GitHub),
+                        },
+                        ValidationState = ValidationState.Unknown,
+                    }
+                };
+            };
+
+            TestRuleValidator.OverrideIsValidDynamic = (ref Fingerprint fingerprint,
+                                                        ref string message,
+                                                        Dictionary<string, string> options,
+                                                        ref ResultLevelKind resultLevelKind) =>
+            {
+                fingerprint.Id = "test";
+                return ValidationState.Authorized;
+            };
+
+            string validatorAssemblyPath = $@"c:\{Guid.NewGuid()}.dll";
+            string scanTargetExtension = Guid.NewGuid().ToString();
+
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileExists(validatorAssemblyPath)).Returns(true);
+            mockFileSystem.Setup(x => x.AssemblyLoadFrom(validatorAssemblyPath)).Returns(this.GetType().Assembly);
+
+            var validators = new ValidatorsCache(
+                new string[] { validatorAssemblyPath },
+                fileSystem: mockFileSystem.Object);
+
+            MatchExpression expression =
+                CreateGuidDetectingMatchExpression(
+                    allowFileExtension: scanTargetExtension);
+
+            expression.ContentsRegex = "TestRule";
+
+            SearchDefinition definition = CreateDefaultSearchDefinition(expression);
+
+            // This Id will match us up with the TestRuleValidator type.
+            definition.Id = "TestRule";
+            definition.Name = "TestRule";
+
+            AnalyzeContext context =
+                CreateGuidMatchingSkimmer(
+                    scanTargetExtension: scanTargetExtension,
+                    ref definition,
+                    out SearchSkimmer skimmer,
+                    validators: validators);
+            context.DynamicValidation = true;
+
+            skimmer.Analyze(context);
+
+            ((TestLogger)context.Logger).Results.Should().NotBeNull();
+            Result result = ((TestLogger)context.Logger).Results[0];
+            result.Fingerprints[SearchSkimmer.AssetFingerprint].Should().Be("[platform=GitHub]");
+            result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be("[secret=secret]");
         }
 
         private AnalyzeContext CreateGuidMatchingSkimmer(
