@@ -107,7 +107,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 propertyValues[guidText] = pi.Name;
             }
 
-            var emptyDenyList = new HashSet<string>();
+            var emptyDenyList = new List<string>();
             string fingerprintText = Fingerprint.ToString(fingerprint, emptyDenyList, jsonFormat);
 
             // If we are operating against JSON representation,
@@ -159,7 +159,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var toStringUnexpectedConditions = new List<string>();
             var roundTrippingUnexpectedConditions = new List<string>();
 
-            var emptyDenyList = new HashSet<string>();
+            var emptyDenyList = new List<string>();
 
             foreach (PropertyInfo pi in GetTestableFingerprintProperties())
             {
@@ -419,6 +419,50 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             sb.Length.Should().Be(0, because: sb.ToString());
+        }
+
+        [Fact]
+        public void Fingerprint_PersistPathShouldNotHideDataFromValidationFingerprint()
+        {
+            const string id = "[id=id]";
+            const string path = "[path=path]";
+            var fingerprint = new Fingerprint($"{id}{path}");
+            fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
+            fingerprint.GetValidationFingerprintText().Should().Contain(path);
+
+            fingerprint.IgnorePathInAssetFingerprint = true;
+            fingerprint.GetAssetFingerprintText().Should().Be(id);
+            fingerprint.GetValidationFingerprintText().Should().Contain(path);
+
+            fingerprint = new Fingerprint
+            {
+                Id = "id",
+                Path = "path"
+            };
+            fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
+            fingerprint.GetValidationFingerprintText().Should().Contain(path);
+
+            fingerprint = new Fingerprint
+            {
+                Id = "id",
+                Path = "path",
+                IgnorePathInAssetFingerprint = true
+            };
+            fingerprint.GetAssetFingerprintText().Should().Be(id);
+            fingerprint.GetValidationFingerprintText().Should().Contain(path);
+
+            fingerprint = new Fingerprint
+            {
+                Id = "id",
+                Path = "path",
+                Secret = "secret"
+            };
+            fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
+            fingerprint.GetValidationFingerprintText().Should().Be($"{id}{path}[secret=secret]");
+
+            fingerprint.IgnorePathInAssetFingerprint = true;
+            fingerprint.GetAssetFingerprintText().Should().Be($"{id}");
+            fingerprint.GetValidationFingerprintText().Should().Be($"{id}{path}[secret=secret]");
         }
 
         private static readonly FingerprintTestCase[] s_workingTestCases = new[]
