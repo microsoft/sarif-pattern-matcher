@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -26,25 +27,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         private const char RightBracketReplacement = '\t';
         private const string HashKey = "7B2FD4B8B55B49428DBFB22C9E61D817";
-
         private const string Base64EncodingSymbolSet =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-        private static readonly HashSet<string> s_emptyDenyList = new HashSet<string>();
+        private static readonly ReadOnlyCollection<string> s_emptyDenyList = new ReadOnlyCollection<string>(Array.Empty<string>());
         private static readonly byte[] HashKeyBytes = Encoding.UTF8.GetBytes(HashKey);
 
-        private static readonly HashSet<string> s_assetOnlyKeys =
-            new HashSet<string>(new string[]
-            {
-                PartKeyName,
-                PlatformKeyName,
-            });
+        private static readonly ReadOnlyCollection<string> s_assetOnlyKeys =
+            new ReadOnlyCollection<string>(new string[] { PartKeyName, PlatformKeyName });
 
-        private static readonly HashSet<string> s_secretKeys =
-            new HashSet<string>(new string[]
-            {
-                SecretKeyName,
-            });
+        private static readonly ReadOnlyCollection<string> s_secretOnlyKeys =
+            new ReadOnlyCollection<string>(new string[] { SecretKeyName });
 
         public Fingerprint(string fingerprintText, bool validate = true)
         {
@@ -55,6 +48,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
             // Asset fingerprint properties.
             Platform = Part = null;
+
+            IgnorePath = false;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -106,11 +101,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string Secret { get; set; }
 
+        public bool IgnorePath { get; set; }
+
         public string Resource { get; set; }
 
-        public string Thumbprint { get; set; }
-
         public string Platform { get; set; }
+
+        public string Thumbprint { get; set; }
 
         /// <summary>
         /// Gets or sets a value that is the count of the valid symbols that
@@ -163,7 +160,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string GetComprehensiveFingerprintText() => ToString(this, denyList: s_emptyDenyList);
 
-        public string GetAssetFingerprintText() => ToString(this, denyList: s_secretKeys);
+        public string GetAssetFingerprintText()
+        {
+            if (IgnorePath)
+            {
+                var secrets = new List<string>(s_secretOnlyKeys)
+                {
+                    PathKeyName,
+                };
+                return ToString(this, denyList: secrets);
+            }
+
+            return ToString(this, denyList: s_secretOnlyKeys);
+        }
 
         public string GetValidationFingerprintText() => ToString(this, denyList: s_assetOnlyKeys);
 
@@ -323,12 +332,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return result;
         }
 
-        internal static string ToJson(Fingerprint f, ISet<string> denyList)
+        internal static string ToJson(Fingerprint f, IList<string> denyList)
         {
             return ToString(f, denyList, jsonFormat: true);
         }
 
-        internal static string ToString(Fingerprint f, ISet<string> denyList, bool jsonFormat = false)
+        internal static string ToString(Fingerprint f, IList<string> denyList, bool jsonFormat = false)
         {
             denyList ??= s_emptyDenyList;
 
