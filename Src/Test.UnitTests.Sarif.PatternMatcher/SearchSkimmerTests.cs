@@ -287,7 +287,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
-        public void SearchSkimmer_ValidatorResultsAreProperlyNotChangingFingerprintAfterDynamicValidation()
+        public void SearchSkimmer_ValidatorResultsAreProperlyChangingFingerprintAfterDynamicValidation()
         {
             TestRuleValidator.OverrideIsValidStatic = (groups) =>
             {
@@ -348,8 +348,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             ((TestLogger)context.Logger).Results.Should().NotBeNull();
             Result result = ((TestLogger)context.Logger).Results[0];
-            result.Fingerprints[SearchSkimmer.AssetFingerprint].Should().Be("[platform=GitHub]");
-            result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be("[secret=secret]");
+            result.Fingerprints[SearchSkimmer.AssetFingerprint].Should().Be("[id=test][platform=GitHub]");
+            result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be("[id=test][secret=secret]");
         }
 
         private AnalyzeContext CreateGuidMatchingSkimmer(
