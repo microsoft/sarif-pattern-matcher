@@ -39,6 +39,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         private static readonly ReadOnlyCollection<string> s_secretOnlyKeys =
             new ReadOnlyCollection<string>(new string[] { SecretKeyName });
 
+        private static readonly ReadOnlyCollection<string> s_secretAndPathOnlyKeys =
+            new ReadOnlyCollection<string>(new string[] { PathKeyName, SecretKeyName });
+
         public Fingerprint(string fingerprintText, bool validate = true)
         {
             SecretSymbolSetCount = 0;
@@ -49,7 +52,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             // Asset fingerprint properties.
             Platform = Part = null;
 
-            IgnorePath = false;
+            IgnorePathInAssetFingerprint = false;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -101,7 +104,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string Secret { get; set; }
 
-        public bool IgnorePath { get; set; }
+        public bool IgnorePathInAssetFingerprint { get; set; }
 
         public string Resource { get; set; }
 
@@ -162,16 +165,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string GetAssetFingerprintText()
         {
-            if (IgnorePath)
-            {
-                var secrets = new List<string>(s_secretOnlyKeys)
-                {
-                    PathKeyName,
-                };
-                return ToString(this, denyList: secrets);
-            }
-
-            return ToString(this, denyList: s_secretOnlyKeys);
+            return IgnorePathInAssetFingerprint
+                ? ToString(this, denyList: s_secretAndPathOnlyKeys)
+                : ToString(this, denyList: s_secretOnlyKeys);
         }
 
         public string GetValidationFingerprintText() => ToString(this, denyList: s_assetOnlyKeys);

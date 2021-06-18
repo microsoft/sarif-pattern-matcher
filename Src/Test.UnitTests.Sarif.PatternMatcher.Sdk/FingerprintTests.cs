@@ -430,7 +430,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
             fingerprint.GetValidationFingerprintText().Should().Contain(path);
 
-            fingerprint.IgnorePath = true;
+            fingerprint.IgnorePathInAssetFingerprint = true;
             fingerprint.GetAssetFingerprintText().Should().Be(id);
             fingerprint.GetValidationFingerprintText().Should().Contain(path);
 
@@ -446,10 +446,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 Id = "id",
                 Path = "path",
-                IgnorePath = true
+                IgnorePathInAssetFingerprint = true
             };
             fingerprint.GetAssetFingerprintText().Should().Be(id);
             fingerprint.GetValidationFingerprintText().Should().Contain(path);
+
+            fingerprint = new Fingerprint
+            {
+                Id = "id",
+                Path = "path",
+                Secret = "secret"
+            };
+            fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
+            fingerprint.GetValidationFingerprintText().Should().Be($"{id}{path}[secret=secret]");
+
+            fingerprint.IgnorePathInAssetFingerprint = true;
+            fingerprint.GetAssetFingerprintText().Should().Be($"{id}");
+            fingerprint.GetValidationFingerprintText().Should().Be($"{id}{path}[secret=secret]");
         }
 
         private static readonly FingerprintTestCase[] s_workingTestCases = new[]
