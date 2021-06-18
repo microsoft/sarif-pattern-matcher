@@ -310,8 +310,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                                  ref message,
                                                                                  stringGroups,
                                                                                  ref resultLevelKind);
-                        validationResult.ResultLevelKind = resultLevelKind;
                         validationResult.Message = message;
+                        validationResult.Fingerprint = fingerprint;
+                        validationResult.ResultLevelKind = resultLevelKind;
                     }
                 }
             }
