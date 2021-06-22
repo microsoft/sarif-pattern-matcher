@@ -76,7 +76,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=AzureDevOps]",
             "ValidationFingerprint/v1": "[secret=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]",
-            "ValidationFingerprintHash/v1": "ac1cfad77095aba4ae1cc93880abfba4f396f4db89f0954a8b8327790f0f0edd"
+            "ValidationFingerprintHash/v1": "ac1cfad77095aba4ae1cc93880abfba4f396f4db89f0954a8b8327790f0f0edd",
+            "AssetFingerprint/v2": "{\"platform\":\"AzureDevOps\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q\"}",
+            "ValidationFingerprintHash/v2": "2746a85122e38b67691a66148be5ad4131adf38a57fc576bf32764ecf6fc8774"
           },
           "rank": 62.14
         },
@@ -119,7 +122,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=AzureDevOps]",
             "ValidationFingerprint/v1": "[secret=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]",
-            "ValidationFingerprintHash/v1": "ac1cfad77095aba4ae1cc93880abfba4f396f4db89f0954a8b8327790f0f0edd"
+            "ValidationFingerprintHash/v1": "ac1cfad77095aba4ae1cc93880abfba4f396f4db89f0954a8b8327790f0f0edd",
+            "AssetFingerprint/v2": "{\"platform\":\"AzureDevOps\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q\"}",
+            "ValidationFingerprintHash/v2": "2746a85122e38b67691a66148be5ad4131adf38a57fc576bf32764ecf6fc8774"
           },
           "rank": 62.14
         }

@@ -76,7 +76,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Google]",
             "ValidationFingerprint/v1": "[secret=AIza0deadbeef00deadbeef00deadbeef00dead]",
-            "ValidationFingerprintHash/v1": "8bdc58a544a5b0d75ba5ff5d19e10fb001cb71064c3fccd7907253eb01768f1c"
+            "ValidationFingerprintHash/v1": "8bdc58a544a5b0d75ba5ff5d19e10fb001cb71064c3fccd7907253eb01768f1c",
+            "AssetFingerprint/v2": "{\"platform\":\"Google\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"AIza0deadbeef00deadbeef00deadbeef00dead\"}",
+            "ValidationFingerprintHash/v2": "68fcb0c4aa13dabd119dfe2adaf028d9addfe9f9ca4e4be9bd0b364882f29dc6"
           },
           "rank": 39.61
         }

@@ -75,7 +75,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[id=_alloca]",
             "ValidationFingerprint/v1": "[id=_alloca]",
-            "ValidationFingerprintHash/v1": "b7def400029e894d96939eb68b0a7a65a04509f2c20b83ba65fb68be26a56e81"
+            "ValidationFingerprintHash/v1": "b7def400029e894d96939eb68b0a7a65a04509f2c20b83ba65fb68be26a56e81",
+            "AssetFingerprint/v2": "{\"id\":\"_alloca\"}",
+            "ValidationFingerprint/v2": "{\"id\":\"_alloca\"}",
+            "ValidationFingerprintHash/v2": "fb4b5bb7c2018946fe51d38bcd1cfe1d283d0957c78f78a94493894dbecb1d3e"
           }
         }
       ],

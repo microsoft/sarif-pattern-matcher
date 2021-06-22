@@ -76,7 +76,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[host=example.com]",
             "ValidationFingerprint/v1": "[host=example.com][secret=SomeAuthorizationKey1111111]",
-            "ValidationFingerprintHash/v1": "d7b0a75b3370f57faa45ddaa2d0315a3c9455e05d7a000deb888c24bf17d48e0"
+            "ValidationFingerprintHash/v1": "d7b0a75b3370f57faa45ddaa2d0315a3c9455e05d7a000deb888c24bf17d48e0",
+            "AssetFingerprint/v2": "{\"host\":\"example.com\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"secret\":\"SomeAuthorizationKey1111111\"}",
+            "ValidationFingerprintHash/v2": "59b832e19540a4233ab72df4188a37472d13f1383f540f6e7406b5d2fde83519"
           },
           "rank": 51.84
         },
@@ -119,7 +122,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[host=example.com][path=?some=parameters&that=should&appear=inresults]",
             "ValidationFingerprint/v1": "[host=example.com][path=?some=parameters&that=should&appear=inresults][secret=SomeAuthorizationKey2222222]",
-            "ValidationFingerprintHash/v1": "cd5084c4a230ab60acdedc79a1da7ef8d5d8038e750285e0d47152c122e75e4e"
+            "ValidationFingerprintHash/v1": "cd5084c4a230ab60acdedc79a1da7ef8d5d8038e750285e0d47152c122e75e4e",
+            "AssetFingerprint/v2": "{\"host\":\"example.com\",\"path\":\"?some=parameters&that=should&appear=inresults\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"path\":\"?some=parameters&that=should&appear=inresults\",\"secret\":\"SomeAuthorizationKey2222222\"}",
+            "ValidationFingerprintHash/v2": "3b6b9b295d26c4b41f668b4cf0e0ec2f0bb1049f9362759967825d032850aef2"
           },
           "rank": 51.84
         },
@@ -162,7 +168,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[host=example.com]",
             "ValidationFingerprint/v1": "[host=example.com][secret=SomeAuthorizationKey3333333=]",
-            "ValidationFingerprintHash/v1": "9b16c07b5818ffcb568f4c2243f818f05a2f8d9bb3ae9de58d3ae8c7a981e6b5"
+            "ValidationFingerprintHash/v1": "9b16c07b5818ffcb568f4c2243f818f05a2f8d9bb3ae9de58d3ae8c7a981e6b5",
+            "AssetFingerprint/v2": "{\"host\":\"example.com\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"secret\":\"SomeAuthorizationKey3333333=\"}",
+            "ValidationFingerprintHash/v2": "ed46e268ebe9e2a6d16f33e2209d82e5f080fe741f954fabc3f461aaa7e9e99b"
           },
           "rank": 53.16
         },
@@ -205,7 +214,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[host=example.com][path=/]",
             "ValidationFingerprint/v1": "[host=example.com][path=/][secret=SomeAuthorizationKey4444444]",
-            "ValidationFingerprintHash/v1": "e2430a2c03fc75d8298ed86889936780cc6a23559451965dab54715e4b2491e0"
+            "ValidationFingerprintHash/v1": "e2430a2c03fc75d8298ed86889936780cc6a23559451965dab54715e4b2491e0",
+            "AssetFingerprint/v2": "{\"host\":\"example.com\",\"path\":\"/\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"path\":\"/\",\"secret\":\"SomeAuthorizationKey4444444\"}",
+            "ValidationFingerprintHash/v2": "ca6253ea060947c3dd282a0f406a7ffb040aac1e10caba1f585c3375ad33cb35"
           },
           "rank": 51.84
         },
@@ -248,7 +260,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[host=we.want.that.site.com][path=/16][scheme=http]",
             "ValidationFingerprint/v1": "[host=we.want.that.site.com][path=/16][scheme=http][secret=6666666b29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29uZw==]",
-            "ValidationFingerprintHash/v1": "2e15426e76483150597c0611c0ad9a2b180046aeb5e1611a455f23d2e55eb4b3"
+            "ValidationFingerprintHash/v1": "2e15426e76483150597c0611c0ad9a2b180046aeb5e1611a455f23d2e55eb4b3",
+            "AssetFingerprint/v2": "{\"host\":\"we.want.that.site.com\",\"path\":\"/16\",\"scheme\":\"http\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"we.want.that.site.com\",\"path\":\"/16\",\"scheme\":\"http\",\"secret\":\"6666666b29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29uZw==\"}",
+            "ValidationFingerprintHash/v2": "dc7077d82ac904ced11b3a71b03f143da0a12f35653159c7a0b697f0ba56ce9f"
           },
           "rank": 32.62
         }

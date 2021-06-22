@@ -76,7 +76,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Dynatrace]",
             "ValidationFingerprint/v1": "[secret=dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123]",
-            "ValidationFingerprintHash/v1": "c03a91fe2e9488302fdffa31e60346c6ba7a08f79aa345c456f963088770f51a"
+            "ValidationFingerprintHash/v1": "c03a91fe2e9488302fdffa31e60346c6ba7a08f79aa345c456f963088770f51a",
+            "AssetFingerprint/v2": "{\"platform\":\"Dynatrace\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123\"}",
+            "ValidationFingerprintHash/v2": "a360609024007e0ee25f294a6844fbc8e1be83370107fc4868057d973dc2d4fd"
           },
           "rank": 49.07
         },
@@ -119,7 +122,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Dynatrace]",
             "ValidationFingerprint/v1": "[secret=dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123]",
-            "ValidationFingerprintHash/v1": "06f1446690c1d649571bc2a9f0fa367a857ae4277fc123014bed7051236f752e"
+            "ValidationFingerprintHash/v1": "06f1446690c1d649571bc2a9f0fa367a857ae4277fc123014bed7051236f752e",
+            "AssetFingerprint/v2": "{\"platform\":\"Dynatrace\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123\"}",
+            "ValidationFingerprintHash/v2": "2ebd4dec392eb66522715326b003b42e32f453cd0aac1f0553db179742c54c90"
           },
           "rank": 49.37
         }

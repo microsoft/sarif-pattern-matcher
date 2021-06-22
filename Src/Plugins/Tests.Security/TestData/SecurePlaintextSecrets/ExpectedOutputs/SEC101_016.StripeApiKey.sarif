@@ -76,7 +76,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Stripe]",
             "ValidationFingerprint/v1": "[secret=sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]",
-            "ValidationFingerprintHash/v1": "72b30afe882333ec2c3c051f1922bbbc94ba6f43af19ae71de44f260819dbf35"
+            "ValidationFingerprintHash/v1": "72b30afe882333ec2c3c051f1922bbbc94ba6f43af19ae71de44f260819dbf35",
+            "AssetFingerprint/v2": "{\"platform\":\"Stripe\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}",
+            "ValidationFingerprintHash/v2": "edf1e039990516ea6534dca0ae1df9d4c1a9ae482b55751604e04c851d009feb"
           },
           "rank": 38.3
         },
@@ -119,7 +122,10 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Stripe]",
             "ValidationFingerprint/v1": "[secret=sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]",
-            "ValidationFingerprintHash/v1": "d32d85683e21369010a37c401e0ec45a5ecd09d6f3073c8a84866a9529f556c0"
+            "ValidationFingerprintHash/v1": "d32d85683e21369010a37c401e0ec45a5ecd09d6f3073c8a84866a9529f556c0",
+            "AssetFingerprint/v2": "{\"platform\":\"Stripe\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}",
+            "ValidationFingerprintHash/v2": "fea458040857dd3a00ef6004acd50b848352661633a4cbe907836537e47d0a92"
           },
           "rank": 38.84
         }
