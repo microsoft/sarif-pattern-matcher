@@ -78,8 +78,7 @@
             "ValidationFingerprint/v1": "[secret=EAACEdEose0cBAtestjunk111111]",
             "ValidationFingerprintHash/v1": "edfa7f059db84fd0c3a1dbc8011f86849725f19c20f18bfb8e21a2cf690c5752",
             "AssetFingerprint/v2": "{\"platform\":\"Facebook\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"EAACEdEose0cBAtestjunk111111\"}",
-            "ValidationFingerprintHash/v2": "a9e57fe95cd1cce2bc5440ba090ae24fca3fcfa61969c6d4c2cf3e70f06a147d"
+            "ValidationFingerprint/v2": "{\"secret\":\"EAACEdEose0cBAtestjunk111111\"}"
           },
           "rank": 52.85
         },
@@ -124,8 +123,7 @@
             "ValidationFingerprint/v1": "[secret=EAACEdEose0cBAtestjunk22222222]",
             "ValidationFingerprintHash/v1": "f882ac7a29fbe83f340fb4040af4c2a19a2cc156aca6bbb95dc833142571916e",
             "AssetFingerprint/v2": "{\"platform\":\"Facebook\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"EAACEdEose0cBAtestjunk22222222\"}",
-            "ValidationFingerprintHash/v2": "19f396ec3ab2b13e84b6d5274fe2922264a0d5eb15ce8c559ba9a5edb8e31447"
+            "ValidationFingerprint/v2": "{\"secret\":\"EAACEdEose0cBAtestjunk22222222\"}"
           },
           "rank": 51.28
         }

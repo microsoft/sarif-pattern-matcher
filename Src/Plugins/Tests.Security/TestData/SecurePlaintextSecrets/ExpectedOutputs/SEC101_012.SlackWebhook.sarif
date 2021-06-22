@@ -78,8 +78,7 @@
             "ValidationFingerprint/v1": "[id=T01JYS3KLKU][secret=B0123456789/deedbeefdeaffeeddeadbeef]",
             "ValidationFingerprintHash/v1": "7287fd0b7057f4726d34ec2b6881a537ae271ac5152b31b6e127140d2b34009f",
             "AssetFingerprint/v2": "{\"id\":\"T01JYS3KLKU\",\"platform\":\"Slack\"}",
-            "ValidationFingerprint/v2": "{\"id\":\"T01JYS3KLKU\",\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}",
-            "ValidationFingerprintHash/v2": "96ae70929ae01b9bb68c2b93ed9648fa14c62207fa214e1bf7eb44c06b53d886"
+            "ValidationFingerprint/v2": "{\"id\":\"T01JYS3KLKU\",\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}"
           },
           "rank": 49.76
         }

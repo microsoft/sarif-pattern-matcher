@@ -75,8 +75,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=email]",
             "ValidationFingerprintHash/v1": "6064325b0dd768a320862c00c981779e3bccd9a3fa3ce9dc1473a9a41f188f53",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "c89468871d6fac0cf53557da99f0bcc70f909d0e3c4de4057235a16d84813ef7"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}"
           }
         },
         {
@@ -117,8 +116,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=firstname.lastname]",
             "ValidationFingerprintHash/v1": "48623f5b740358c7b366aba4f7e136c4513dfdcd8554be56b07c623bab1262ab",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"firstname.lastname\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"firstname.lastname\"}",
-            "ValidationFingerprintHash/v2": "32d208f841133245d4e25a1f6ed4275496d1667547381bff0a751bf889dbbfdf"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"firstname.lastname\"}"
           }
         },
         {
@@ -159,8 +157,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=lastname]",
             "ValidationFingerprintHash/v1": "a82a08b8f8cd5a7eabf30386974158e85fa1f0982b13d273aa94373c2638eb42",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}",
-            "ValidationFingerprintHash/v2": "65239dfdf58556fb32003f6fdbe9ddb0e124364c8af4524aeaa13cef08fdf0ff"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}"
           }
         },
         {
@@ -201,8 +198,7 @@
             "ValidationFingerprint/v1": "[host=subdomain.example.com][id=email]",
             "ValidationFingerprintHash/v1": "61eb44030fe4950989b7af277b297e91b1c7034ef36eb63ae62ef5080afa50f2",
             "AssetFingerprint/v2": "{\"host\":\"subdomain.example.com\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"subdomain.example.com\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "31cda7b129cc7e398005ff92662f3fd00e6939ae500e8f012530588bb87001db"
+            "ValidationFingerprint/v2": "{\"host\":\"subdomain.example.com\",\"id\":\"email\"}"
           }
         },
         {
@@ -243,8 +239,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=firstname+lastname]",
             "ValidationFingerprintHash/v1": "7af5b1303045cec177cc89be61d3fb01391432c1a4a44b09bc10888a84bc9c47",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"firstname+lastname\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"firstname+lastname\"}",
-            "ValidationFingerprintHash/v2": "bdbb658ccc6e830aa9e8346e5631b725e4ba0874400be857f062185663d8509d"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"firstname+lastname\"}"
           }
         },
         {
@@ -285,8 +280,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=+lastname]",
             "ValidationFingerprintHash/v1": "cbc35502c6e8c14144383884857c7beff799a422f96a3c92149722b9f2716111",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"+lastname\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"+lastname\"}",
-            "ValidationFingerprintHash/v2": "49af3ef3629f89daf881de5816bcb926065dfd2e483e701588a6b5db51ec03fe"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"+lastname\"}"
           }
         },
         {
@@ -327,8 +321,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=lastname]",
             "ValidationFingerprintHash/v1": "a82a08b8f8cd5a7eabf30386974158e85fa1f0982b13d273aa94373c2638eb42",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}",
-            "ValidationFingerprintHash/v2": "65239dfdf58556fb32003f6fdbe9ddb0e124364c8af4524aeaa13cef08fdf0ff"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}"
           }
         },
         {
@@ -369,8 +362,7 @@
             "ValidationFingerprint/v1": "[host=123.123.123.123][id=email]",
             "ValidationFingerprintHash/v1": "d5c18c7162ccdd4dc5b07c0f5f3cdc3d730721da67fb71d2154ac2b57e2b2e97",
             "AssetFingerprint/v2": "{\"host\":\"123.123.123.123\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"123.123.123.123\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "455846a8b37c276e1108cd44c715248f9833ad2380eb3d405b4b308081a51f52"
+            "ValidationFingerprint/v2": "{\"host\":\"123.123.123.123\",\"id\":\"email\"}"
           }
         },
         {
@@ -411,8 +403,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=1234567890]",
             "ValidationFingerprintHash/v1": "3bfb151cf708568200d07956f416e9fd7e1e3b2b26ec41cf95b58468389da3ce",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"1234567890\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"1234567890\"}",
-            "ValidationFingerprintHash/v2": "6d7fca1822a15eb4122d70a1e90f9a2b5eb01ab80b3bc05bfecf82d84ab3e228"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"1234567890\"}"
           }
         },
         {
@@ -453,8 +444,7 @@
             "ValidationFingerprint/v1": "[host=example-one.com][id=email]",
             "ValidationFingerprintHash/v1": "227a9792dc339a845fa10898fe0455cbd524a656c2ba0e6e834a07504478c34f",
             "AssetFingerprint/v2": "{\"host\":\"example-one.com\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example-one.com\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "21faa456a3dc79f4b64ddd88d15f85a2c1d12cd2e751a1d83443033d0bd3a14c"
+            "ValidationFingerprint/v2": "{\"host\":\"example-one.com\",\"id\":\"email\"}"
           }
         },
         {
@@ -495,8 +485,7 @@
             "ValidationFingerprint/v1": "[host=example.co.jp][id=email]",
             "ValidationFingerprintHash/v1": "a3ee289893f0ceddd43f11af10a3294e0da135537a0fa98b26ca396c03119216",
             "AssetFingerprint/v2": "{\"host\":\"example.co.jp\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.co.jp\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "85f8118c80cfa2b7224ecfec8c0549aae1354ace68d58fec6c5cf1352fdc9176"
+            "ValidationFingerprint/v2": "{\"host\":\"example.co.jp\",\"id\":\"email\"}"
           }
         },
         {
@@ -537,8 +526,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=firstname-lastname]",
             "ValidationFingerprintHash/v1": "9464450cf5308e61657808c720c0a39c4573c3700d52cfed88d0ae1a49c9fc04",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"firstname-lastname\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"firstname-lastname\"}",
-            "ValidationFingerprintHash/v2": "7b1568b4224a6f6cdf89693824d902ddf2e6e863ffac453a43e494bcd786a5aa"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"firstname-lastname\"}"
           }
         },
         {
@@ -579,8 +567,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=-lastname]",
             "ValidationFingerprintHash/v1": "44fc36b4677c11bf0194f8a2103b4a525911eb452573e5a68d03def8f63c7f3c",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"-lastname\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"-lastname\"}",
-            "ValidationFingerprintHash/v2": "a891490ace1b81c6ffd8437b8f4d8681d1c283834de41c58d70b4079cdad8bf5"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"-lastname\"}"
           }
         },
         {
@@ -621,8 +608,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=lastname]",
             "ValidationFingerprintHash/v1": "a82a08b8f8cd5a7eabf30386974158e85fa1f0982b13d273aa94373c2638eb42",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}",
-            "ValidationFingerprintHash/v2": "65239dfdf58556fb32003f6fdbe9ddb0e124364c8af4524aeaa13cef08fdf0ff"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}"
           }
         },
         {
@@ -663,8 +649,7 @@
             "ValidationFingerprint/v1": "[host=example.name][id=email]",
             "ValidationFingerprintHash/v1": "984d1a7a3a24cf8f80223a52cfbfcb3a001e64c12502773fa7ab80d752522cf5",
             "AssetFingerprint/v2": "{\"host\":\"example.name\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.name\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "395d54b0c8033029eb323d5c1897b118ed67d03484a8ce2ab476357ae342a596"
+            "ValidationFingerprint/v2": "{\"host\":\"example.name\",\"id\":\"email\"}"
           }
         },
         {
@@ -705,8 +690,7 @@
             "ValidationFingerprint/v1": "[host=example.museum][id=email]",
             "ValidationFingerprintHash/v1": "197fa854faf5c9316a0ae38e20d9a09819c8a8af03eb86eb225998ef36d7eeaa",
             "AssetFingerprint/v2": "{\"host\":\"example.museum\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.museum\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "137a5d0d77669d3243b4c35dc5b8c3b493558076529712c54affe9f7ebf65768"
+            "ValidationFingerprint/v2": "{\"host\":\"example.museum\",\"id\":\"email\"}"
           }
         },
         {
@@ -747,8 +731,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=addressSurroundedBySpaces]",
             "ValidationFingerprintHash/v1": "f359232c8fccbcedcaaac5a6f0b8d55a6a1400465518e6d9e8008514fd6e375a",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedBySpaces\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedBySpaces\"}",
-            "ValidationFingerprintHash/v2": "f26993f8e651f397ddefc8263f542cf00afd2fe2f9ba2c6a6eb32b7243d20915"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedBySpaces\"}"
           }
         },
         {
@@ -789,8 +772,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=addressSurroundedByTabs]",
             "ValidationFingerprintHash/v1": "c5e6076c1d6a62df8b9f8c5046c93034e1595f9d744be599c1b616983e617bc5",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByTabs\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByTabs\"}",
-            "ValidationFingerprintHash/v2": "75590f733af68e77545a07d9b0df15d09606a9654c573b07bd5796c3b4a79274"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByTabs\"}"
           }
         },
         {
@@ -831,8 +813,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=addressSurroundedByPipes]",
             "ValidationFingerprintHash/v1": "69221dff6dfef0bf8325d799d712891d2fd1a6f3798b88e565ef92288602fd0c",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByPipes\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByPipes\"}",
-            "ValidationFingerprintHash/v2": "6b2211bbd453b659b127f7fa10efd54e82da8f0d8900257edd44d9e62f205ce1"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByPipes\"}"
           }
         },
         {
@@ -873,8 +854,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=addressSurroundedByDoubleQuotes]",
             "ValidationFingerprintHash/v1": "169695ce98ded43435b2d9eee4a50d9367eaa6e5ef4aa9a53051996fca92057c",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByDoubleQuotes\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByDoubleQuotes\"}",
-            "ValidationFingerprintHash/v2": "531f965863e2d7f0e947b81b89e9cb8fd4ce7507ae7dade3e6e7bcb0c6325eca"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByDoubleQuotes\"}"
           }
         },
         {
@@ -915,8 +895,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=addressSurroundedBySingleQuotes]",
             "ValidationFingerprintHash/v1": "e89f209cadf29299dfc65f79bf4b4ce6e6549cec0f043ce9a0af41b2664ffeb3",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedBySingleQuotes\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedBySingleQuotes\"}",
-            "ValidationFingerprintHash/v2": "652483acbfcd3e9ec3b21ca5e7da7d556f672795ec27b312d0ad2524c77c7be7"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressSurroundedBySingleQuotes\"}"
           }
         },
         {
@@ -957,8 +936,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=htmlAddress]",
             "ValidationFingerprintHash/v1": "8c4fe6c6f0e4a10c6f453743020236c3a399aaacec394bc8b507c2e7cd64d928",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"htmlAddress\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"htmlAddress\"}",
-            "ValidationFingerprintHash/v2": "4c3d02f6c57a1091391d8ad6f8f76a4f7b7b3fb9d4e873a885656b377a4fb8b8"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"htmlAddress\"}"
           }
         },
         {
@@ -999,8 +977,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=addressInTags]",
             "ValidationFingerprintHash/v1": "1844846aa9a2aa9dce6ab1cfb8721b83e1ea12bde4f1c7dc271626f53b3e92b4",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressInTags\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressInTags\"}",
-            "ValidationFingerprintHash/v2": "e86ac18b07ec7c95a83b56927cf65ddee97ed92051764ef92fdfe987202cba8d"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressInTags\"}"
           }
         },
         {
@@ -1041,8 +1018,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=addressPrecededByColon]",
             "ValidationFingerprintHash/v1": "9012848ee2b1f1a35073488e9ba98eee1d59f177ae237997372718292d1155d4",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressPrecededByColon\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressPrecededByColon\"}",
-            "ValidationFingerprintHash/v2": "3c1ed9e5e1abae5d16957e3ba8e13107ecb86fd00adad658617e1b556f5dfcf2"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressPrecededByColon\"}"
           }
         },
         {
@@ -1083,8 +1059,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=addressPrecededByColonAndFollowedByPeriod]",
             "ValidationFingerprintHash/v1": "1cd562b96e20b8a175cc07b0d40b654d885697172fc282ff8e39dc89289580f6",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressPrecededByColonAndFollowedByPeriod\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressPrecededByColonAndFollowedByPeriod\"}",
-            "ValidationFingerprintHash/v2": "a78d735afb8b9931ffaa7d22deacb896d10eb44b49f5beafa4e9ba332cfbf71a"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"addressPrecededByColonAndFollowedByPeriod\"}"
           }
         },
         {
@@ -1125,8 +1100,7 @@
             "ValidationFingerprint/v1": "[host=111.222.333.44444][id=email]",
             "ValidationFingerprintHash/v1": "7477e6be69efa7648a9b2e34abe994360365b0fcb2e9f4968b94f1ec690e4c8e",
             "AssetFingerprint/v2": "{\"host\":\"111.222.333.44444\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"111.222.333.44444\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "3b9da9ee40202cce44f31fd7a8cbeb5892b9941895240d350b782896375b45ff"
+            "ValidationFingerprint/v2": "{\"host\":\"111.222.333.44444\",\"id\":\"email\"}"
           }
         },
         {
@@ -1167,8 +1141,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=email..email]",
             "ValidationFingerprintHash/v1": "b59b4ba4b2ea7ce0b6f410c1f986fa1374a7d201b3a47008723c8f5d27a2a9a6",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email..email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email..email\"}",
-            "ValidationFingerprintHash/v2": "59526f5d4013143b8e2724c10e3b2a177c619fb1bd64b7a40c40e8326b93a212"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email..email\"}"
           }
         },
         {
@@ -1209,8 +1182,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=email]",
             "ValidationFingerprintHash/v1": "6064325b0dd768a320862c00c981779e3bccd9a3fa3ce9dc1473a9a41f188f53",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "c89468871d6fac0cf53557da99f0bcc70f909d0e3c4de4057235a16d84813ef7"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}"
           }
         },
         {
@@ -1251,8 +1223,7 @@
             "ValidationFingerprint/v1": "[host=example..com][id=email]",
             "ValidationFingerprintHash/v1": "964e9b88a671ba61632d20dfac41a98f471b4d43198e33e26f7fe7f1dd6c1783",
             "AssetFingerprint/v2": "{\"host\":\"example..com\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example..com\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "04cc0f22f52f98e3965412c45b134a7cfe3528b536a276c0012682f1e46fefc4"
+            "ValidationFingerprint/v2": "{\"host\":\"example..com\",\"id\":\"email\"}"
           }
         },
         {
@@ -1293,8 +1264,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=Abc..123]",
             "ValidationFingerprintHash/v1": "c11d9e141061f9e789b57e72001275419eb50bad7c813e3cdb08d1bdda5f1309",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"Abc..123\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"Abc..123\"}",
-            "ValidationFingerprintHash/v2": "81b17dd4bda1e169ec202de4a7a01761f38ebc84d431293f2f2ca38a7bbc7059"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"Abc..123\"}"
           }
         },
         {
@@ -1335,8 +1305,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=123]",
             "ValidationFingerprintHash/v1": "3d28a5c753479d15937440a6bc98f886b5ff9dbffc27ba28fad2d6eb9195ee82",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"123\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"123\"}",
-            "ValidationFingerprintHash/v2": "ddac3f2247bb1567420305bb01a606b7bdc7989981e4d57e04a9d93cf82d1238"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"123\"}"
           }
         },
         {
@@ -1377,8 +1346,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=unusual.com]",
             "ValidationFingerprintHash/v1": "ade0ce09b9ce277c133da60e2a54aae7ec6f2a18051323699d2bde9939b2a3de",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"unusual.com\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"unusual.com\"}",
-            "ValidationFingerprintHash/v2": "a40e92fe319fcceeb2d4bcb8a5cad3b903c0434da3e7ca16aa282286887ea399"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"unusual.com\"}"
           }
         },
         {
@@ -1419,8 +1387,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=com]",
             "ValidationFingerprintHash/v1": "f44716f15a4d4412ddf8b3fec33ddabafaa0ff6a1d2a970f8e4d87a65cd18fc1",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"com\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"com\"}",
-            "ValidationFingerprintHash/v2": "1851407f64e63aab8264a8e64d3acfb626540c681ee7a54a45d8272e1f56c242"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"com\"}"
           }
         },
         {
@@ -1461,8 +1428,7 @@
             "ValidationFingerprint/v1": "[host=strange.example.com][id=unusual]",
             "ValidationFingerprintHash/v1": "483b6b24e4ea2734245f1217a6ee3c96d82b862fb47deda5912d68ba8425b943",
             "AssetFingerprint/v2": "{\"host\":\"strange.example.com\",\"id\":\"unusual\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"strange.example.com\",\"id\":\"unusual\"}",
-            "ValidationFingerprintHash/v2": "d414c6ab8389f79a3bd223133cb7a4f56490ab6f6f47fe61df3bcfcfde3c0236"
+            "ValidationFingerprint/v2": "{\"host\":\"strange.example.com\",\"id\":\"unusual\"}"
           }
         },
         {
@@ -1503,8 +1469,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=email]",
             "ValidationFingerprintHash/v1": "6064325b0dd768a320862c00c981779e3bccd9a3fa3ce9dc1473a9a41f188f53",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "c89468871d6fac0cf53557da99f0bcc70f909d0e3c4de4057235a16d84813ef7"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}"
           }
         },
         {
@@ -1545,8 +1510,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=example]",
             "ValidationFingerprintHash/v1": "7b3301b5b6cf4020be9fe65c04031623d62bfb2819ca3f7e642823f3c5d67f14",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"example\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"example\"}",
-            "ValidationFingerprintHash/v2": "56e6b01ee8a611c3147cd3daee10a5bcd0b864bc77cb344842383f89b1ff46d3"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"example\"}"
           }
         },
         {
@@ -1587,8 +1551,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=email]",
             "ValidationFingerprintHash/v1": "6064325b0dd768a320862c00c981779e3bccd9a3fa3ce9dc1473a9a41f188f53",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "c89468871d6fac0cf53557da99f0bcc70f909d0e3c4de4057235a16d84813ef7"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}"
           }
         },
         {
@@ -1629,8 +1592,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=email]",
             "ValidationFingerprintHash/v1": "6064325b0dd768a320862c00c981779e3bccd9a3fa3ce9dc1473a9a41f188f53",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprintHash/v2": "c89468871d6fac0cf53557da99f0bcc70f909d0e3c4de4057235a16d84813ef7"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}"
           }
         },
         {
@@ -1671,8 +1633,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=user]",
             "ValidationFingerprintHash/v1": "a659322ba9fe35fd2a2304e37d49e8a381a31756d1ea9d2079e53d6f3d1df37e",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"user\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"user\"}",
-            "ValidationFingerprintHash/v2": "205d14de6fcdada6799dee7c6cfa8ec0f10478a42fb63902807bffb993a72740"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"user\"}"
           }
         },
         {
@@ -1713,8 +1674,7 @@
             "ValidationFingerprint/v1": "[host=example.com][id=endOfLineCheck]",
             "ValidationFingerprintHash/v1": "82e3b649d41d3996a7a323f3f169eb2ec0a26992e9fbeeaca7f93abd06d38aa0",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"endOfLineCheck\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"endOfLineCheck\"}",
-            "ValidationFingerprintHash/v2": "2d9347c5636c1d1c40c40e32c93729c751823af8b388ba97bbdb514831237a9e"
+            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"endOfLineCheck\"}"
           }
         }
       ],

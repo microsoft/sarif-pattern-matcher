@@ -78,8 +78,7 @@
             "ValidationFingerprint/v1": "[secret=PMAK-dead0000dead11113c1e4064-92f00edbc2d214a356c39a3dd537ad1921]",
             "ValidationFingerprintHash/v1": "c9b49e4731fb96dd02e603d3b7f02294d29d20bbbf1742a7d91dab621c2fb079",
             "AssetFingerprint/v2": "{\"platform\":\"Postman\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"PMAK-dead0000dead11113c1e4064-92f00edbc2d214a356c39a3dd537ad1921\"}",
-            "ValidationFingerprintHash/v2": "569865df0a806d56435d3db7b65e4ecb3993da5355a9af882ae0d8d14b6473b8"
+            "ValidationFingerprint/v2": "{\"secret\":\"PMAK-dead0000dead11113c1e4064-92f00edbc2d214a356c39a3dd537ad1921\"}"
           },
           "rank": 56.32
         }

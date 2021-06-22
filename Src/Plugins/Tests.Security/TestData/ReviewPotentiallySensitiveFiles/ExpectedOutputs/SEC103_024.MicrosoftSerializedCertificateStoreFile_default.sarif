@@ -66,8 +66,7 @@
             "ValidationFingerprint/v1": "[thumbprint=391550988FF0B079A0E712728F2EB95D542EF58F]",
             "ValidationFingerprintHash/v1": "d48c5a03838fd84c151d685ac2a84ba88673b2db653ede51a9a98c8bc4b7d624",
             "AssetFingerprint/v2": "{\"thumbprint\":\"391550988FF0B079A0E712728F2EB95D542EF58F\"}",
-            "ValidationFingerprint/v2": "{\"thumbprint\":\"391550988FF0B079A0E712728F2EB95D542EF58F\"}",
-            "ValidationFingerprintHash/v2": "a9278d4c077d1e2dfa1a01765baf58f2105ae4aa136ad8b7a23ed2192bf23a5a"
+            "ValidationFingerprint/v2": "{\"thumbprint\":\"391550988FF0B079A0E712728F2EB95D542EF58F\"}"
           }
         }
       ],

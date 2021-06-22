@@ -24,7 +24,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public const string AssetFingerprintV2 = "AssetFingerprint/v2";
         public const string ValidationFingerprintV2 = "ValidationFingerprint/v2";
-        public const string ValidationFingerprintHashV2 = "ValidationFingerprintHash/v2";
 
         public const string DynamicValidationNotEnabled = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
 
@@ -1166,7 +1165,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 { ValidationFingerprintHash, fingerprint.GetValidationFingerprintHashText() },
                 { AssetFingerprintV2, fingerprint.GetAssetFingerprintText(jsonFormat: true) },
                 { ValidationFingerprintV2, fingerprint.GetValidationFingerprintText(jsonFormat: true) },
-                { ValidationFingerprintHashV2, fingerprint.GetValidationFingerprintHashText(jsonFormat: true) },
             };
         }
 

@@ -78,8 +78,7 @@
             "ValidationFingerprint/v1": "[secret=xoxb-83112120353-1016171244646-sGMxuWapBw3w3qdK6OfTjORe]",
             "ValidationFingerprintHash/v1": "2da8823dda2b4951fcf1541ab17f450cda2d3e02e1d8b322d2502623882491d8",
             "AssetFingerprint/v2": "{\"platform\":\"Slack\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"xoxb-83112120353-1016171244646-sGMxuWapBw3w3qdK6OfTjORe\"}",
-            "ValidationFingerprintHash/v2": "c8ed2d82b21aeb7e4a34341fabdb45c23d23b5b2f104b9df43f2afbeba5622ff"
+            "ValidationFingerprint/v2": "{\"secret\":\"xoxb-83112120353-1016171244646-sGMxuWapBw3w3qdK6OfTjORe\"}"
           },
           "rank": 65.89
         }

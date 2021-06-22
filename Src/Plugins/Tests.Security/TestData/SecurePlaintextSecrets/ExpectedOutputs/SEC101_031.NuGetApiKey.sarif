@@ -78,8 +78,7 @@
             "ValidationFingerprint/v1": "[secret=oy20deadbeef0deadbee500deadbeef0deadbee50dead0]",
             "ValidationFingerprintHash/v1": "6811bdcc965a68f988f7d66d953af2618a73c079d8c3afcc14cde12706037436",
             "AssetFingerprint/v2": "{\"platform\":\"NuGet\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"oy20deadbeef0deadbee500deadbeef0deadbee50dead0\"}",
-            "ValidationFingerprintHash/v2": "8171827d25d626db0a049a8fc3496e690fa97c4e9937d13bf98fa7c3cf96dd9f"
+            "ValidationFingerprint/v2": "{\"secret\":\"oy20deadbeef0deadbee500deadbeef0deadbee50dead0\"}"
           },
           "rank": 40.22
         }

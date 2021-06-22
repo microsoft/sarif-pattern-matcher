@@ -65,8 +65,7 @@
             "ValidationFingerprint/v1": "[secret=07939EFF34140F8D8BBCC3DD59F958A72979C806BF02797AC2F8841C37541FAE]",
             "ValidationFingerprintHash/v1": "09d422748177efd90b0212a3072f3896978fe0404509f8d199a9bd1bb3f4fabb",
             "AssetFingerprint/v2": "{}",
-            "ValidationFingerprint/v2": "{\"secret\":\"07939EFF34140F8D8BBCC3DD59F958A72979C806BF02797AC2F8841C37541FAE\"}",
-            "ValidationFingerprintHash/v2": "de6098dea4c3cb10ee0d3c77c19e388d01883e5e0648079cb9103abe8767e10e"
+            "ValidationFingerprint/v2": "{\"secret\":\"07939EFF34140F8D8BBCC3DD59F958A72979C806BF02797AC2F8841C37541FAE\"}"
           },
           "rank": 55.25
         }
