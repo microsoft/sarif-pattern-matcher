@@ -429,8 +429,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var fingerprint = new Fingerprint($"{id}{path}");
             fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
             fingerprint.GetValidationFingerprintText().Should().Contain(path);
+            string originalHash = fingerprint.GetValidationFingerprintHashText();
 
-            fingerprint.IgnorePathInAssetFingerprint = true;
+            fingerprint.IgnorePathInFingerprint = true;
             fingerprint.GetAssetFingerprintText().Should().Be(id);
             fingerprint.GetValidationFingerprintText().Should().Contain(path);
 
@@ -441,15 +442,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             };
             fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
             fingerprint.GetValidationFingerprintText().Should().Contain(path);
+            string firstHash = fingerprint.GetValidationFingerprintHashText();
+            firstHash.Should().Be(originalHash);
 
             fingerprint = new Fingerprint
             {
                 Id = "id",
                 Path = "path",
-                IgnorePathInAssetFingerprint = true
+                IgnorePathInFingerprint = true
             };
             fingerprint.GetAssetFingerprintText().Should().Be(id);
             fingerprint.GetValidationFingerprintText().Should().Contain(path);
+            string secondHash = fingerprint.GetValidationFingerprintHashText();
+            firstHash.Should().NotBe(secondHash);
 
             fingerprint = new Fingerprint
             {
@@ -459,10 +464,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             };
             fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
             fingerprint.GetValidationFingerprintText().Should().Be($"{id}{path}[secret=secret]");
+            string thirdHash = fingerprint.GetValidationFingerprintHashText();
 
-            fingerprint.IgnorePathInAssetFingerprint = true;
+            fingerprint.IgnorePathInFingerprint = true;
             fingerprint.GetAssetFingerprintText().Should().Be($"{id}");
             fingerprint.GetValidationFingerprintText().Should().Be($"{id}{path}[secret=secret]");
+            string forthHash = fingerprint.GetValidationFingerprintHashText();
+            thirdHash.Should().NotBe(forthHash);
         }
 
         [Fact]

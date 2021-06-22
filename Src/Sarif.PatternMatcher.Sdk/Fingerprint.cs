@@ -39,6 +39,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         private static readonly ReadOnlyCollection<string> s_assetOnlyKeys =
             new ReadOnlyCollection<string>(new string[] { PartKeyName, PlatformKeyName });
 
+        private static readonly ReadOnlyCollection<string> s_assetAndPathOnlyKeys =
+            new ReadOnlyCollection<string>(new string[] { PathKeyName, PartKeyName, PlatformKeyName });
+
         private static readonly ReadOnlyCollection<string> s_secretOnlyKeys =
             new ReadOnlyCollection<string>(new string[] { SecretKeyName });
 
@@ -55,7 +58,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             // Asset fingerprint properties.
             Platform = Part = null;
 
-            IgnorePathInAssetFingerprint = false;
+            IgnorePathInFingerprint = false;
 
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
@@ -112,13 +115,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string Secret { get; set; }
 
-        public bool IgnorePathInAssetFingerprint { get; set; }
-
         public string Resource { get; set; }
 
         public string Platform { get; set; }
 
         public string Thumbprint { get; set; }
+
+        public bool IgnorePathInFingerprint { get; set; }
 
         /// <summary>
         /// Gets or sets a value that is the count of the valid symbols that
@@ -173,7 +176,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string GetAssetFingerprintText(bool jsonFormat = false)
         {
-            return IgnorePathInAssetFingerprint
+            return IgnorePathInFingerprint
                 ? ToString(this, denyList: s_secretAndPathOnlyKeys, jsonFormat)
                 : ToString(this, denyList: s_secretOnlyKeys, jsonFormat);
         }
@@ -182,7 +185,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string GetValidationFingerprintHashText(bool jsonFormat = false)
         {
-            string validationFingerprint = ToString(this, denyList: s_assetOnlyKeys, jsonFormat);
+            string validationFingerprint = IgnorePathInFingerprint
+                ? ToString(this, denyList: s_assetAndPathOnlyKeys, jsonFormat)
+                : ToString(this, denyList: s_assetOnlyKeys, jsonFormat);
+
             return ComputeHash(validationFingerprint);
         }
 
