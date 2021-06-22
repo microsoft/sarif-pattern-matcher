@@ -486,6 +486,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             failedTestCases.Should().BeEmpty();
         }
 
+        [Fact]
+        public void Fingerprinit_EmptyFingerprint()
+        {
+            var fingerprint = new Fingerprint("");
+
+            var sb = new StringBuilder();
+            foreach (PropertyInfo property in GetTestableFingerprintProperties())
+            {
+                string value = (string)property.GetValue(fingerprint);
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    sb.AppendLine($"Property '{property.Name}' should be null/empty.");
+                }
+            }
+
+            sb.Length.Should().Be(0, because: sb.ToString());
+        }
+
         private static readonly FingerprintTestCase[] s_workingTestCases = new[]
         {
             new FingerprintTestCase {

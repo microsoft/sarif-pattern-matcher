@@ -60,6 +60,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
 
+            if (fingerprintText.Length == 0)
+            {
+                return;
+            }
+
             try
             {
                 Parse(fingerprintText);
@@ -422,7 +427,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
             const string prefix = "[";
             const string suffix = "]";
-            string separator = "=";
+            const string separator = "=";
 
             var components = new Dictionary<string, string>(3);
 
