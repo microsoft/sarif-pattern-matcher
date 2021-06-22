@@ -61,6 +61,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             const string validationFingerprint = "[secret=secret]";
             const string originalAssetFingerprint = "[platform=GitHub]";
             const string updatedAssetFingerprint = "[id=test][platform=GitHub]";
+            var fingerprint = new Fingerprint(updatedAssetFingerprint);
 
             var result = new Result
             {
@@ -85,8 +86,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             };
 
             result = validatingVisitor.VisitResult(result);
-            result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be(validationFingerprint);
             result.Fingerprints[SearchSkimmer.AssetFingerprint].Should().Be(updatedAssetFingerprint);
+            result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be(validationFingerprint);
+            result.Fingerprints[SearchSkimmer.AssetFingerprintV2].Should().Be(fingerprint.GetAssetFingerprintText(jsonFormat: true));
         }
     }
 }
