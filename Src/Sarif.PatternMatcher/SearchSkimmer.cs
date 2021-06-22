@@ -19,9 +19,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {
         public const string AssetFingerprint = "AssetFingerprint/v1";
-        public const string GlobalFingerprint = "GlobalFingerprint/v1";
         public const string ValidationFingerprint = "ValidationFingerprint/v1";
         public const string ValidationFingerprintHash = "ValidationFingerprintHash/v1";
+
+        public const string AssetFingerprintV2 = "AssetFingerprint/v2";
+        public const string ValidationFingerprintV2 = "ValidationFingerprint/v2";
+
         public const string DynamicValidationNotEnabled = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
 
         private const string Base64DecodingFormatString = "\\b(?i)[0-9a-z\\/+]{0}";
@@ -1160,6 +1163,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 { AssetFingerprint, fingerprint.GetAssetFingerprintText() },
                 { ValidationFingerprint, fingerprint.GetValidationFingerprintText() },
                 { ValidationFingerprintHash, fingerprint.GetValidationFingerprintHashText() },
+                { AssetFingerprintV2, fingerprint.GetAssetFingerprintText(jsonFormat: true) },
+                { ValidationFingerprintV2, fingerprint.GetValidationFingerprintText(jsonFormat: true) },
             };
         }
 

@@ -72,7 +72,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[secret=123-45-6789]",
-            "ValidationFingerprintHash/v1": "e24918902d0a1fcc33cbded1f97ce06a372acb99a255b0a934600e5abcacd6d7"
+            "ValidationFingerprintHash/v1": "e24918902d0a1fcc33cbded1f97ce06a372acb99a255b0a934600e5abcacd6d7",
+            "AssetFingerprint/v2": "{}",
+            "ValidationFingerprint/v2": "{\"secret\":\"123-45-6789\"}"
           },
           "rank": 46.82
         },
@@ -111,7 +113,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[secret=111-45-6789]",
-            "ValidationFingerprintHash/v1": "45b4cec67315682d05693fec840472963e76da5ae6dfe071bee8ae662712e4d6"
+            "ValidationFingerprintHash/v1": "45b4cec67315682d05693fec840472963e76da5ae6dfe071bee8ae662712e4d6",
+            "AssetFingerprint/v2": "{}",
+            "ValidationFingerprint/v2": "{\"secret\":\"111-45-6789\"}"
           },
           "rank": 40.65
         },
@@ -150,7 +154,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[secret=123-44-6789]",
-            "ValidationFingerprintHash/v1": "d79d4d3f92125fb103c1619cc4701b61313119b25ff5cc9b0573d2e747a9d46e"
+            "ValidationFingerprintHash/v1": "d79d4d3f92125fb103c1619cc4701b61313119b25ff5cc9b0573d2e747a9d46e",
+            "AssetFingerprint/v2": "{}",
+            "ValidationFingerprint/v2": "{\"secret\":\"123-44-6789\"}"
           },
           "rank": 44.23
         },
@@ -189,7 +195,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "",
             "ValidationFingerprint/v1": "[secret=123-45-6666]",
-            "ValidationFingerprintHash/v1": "0ff33c39a69c033141f37181b7881af96cd4997738752932f7984613b5212e6e"
+            "ValidationFingerprintHash/v1": "0ff33c39a69c033141f37181b7881af96cd4997738752932f7984613b5212e6e",
+            "AssetFingerprint/v2": "{}",
+            "ValidationFingerprint/v2": "{\"secret\":\"123-45-6666\"}"
           },
           "rank": 36.43
         }

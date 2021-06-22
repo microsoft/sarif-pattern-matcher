@@ -76,7 +76,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=PayPal]",
             "ValidationFingerprint/v1": "[secret=1111111111012345$01234567890123456789012345678901]",
-            "ValidationFingerprintHash/v1": "46d5c6342d738e19ec1b89df0f6933f408cb6a5d4412e3751af4fb837a5aa186"
+            "ValidationFingerprintHash/v1": "46d5c6342d738e19ec1b89df0f6933f408cb6a5d4412e3751af4fb837a5aa186",
+            "AssetFingerprint/v2": "{\"platform\":\"PayPal\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"1111111111012345$01234567890123456789012345678901\"}"
           },
           "rank": 44.87
         },
@@ -119,7 +121,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=PayPal]",
             "ValidationFingerprint/v1": "[secret=2222222222012345$01234567890123456789012345678901]",
-            "ValidationFingerprintHash/v1": "e0e406e1513fbcdb3d512f332ed0830cce2a3806104c560c4c460c4c4d1c216f"
+            "ValidationFingerprintHash/v1": "e0e406e1513fbcdb3d512f332ed0830cce2a3806104c560c4c460c4c4d1c216f",
+            "AssetFingerprint/v2": "{\"platform\":\"PayPal\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"2222222222012345$01234567890123456789012345678901\"}"
           },
           "rank": 45.36
         }

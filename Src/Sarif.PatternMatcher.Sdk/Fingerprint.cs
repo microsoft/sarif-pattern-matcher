@@ -4,11 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
 using Microsoft.Strings.Interop;
+
+using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
@@ -57,6 +60,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             fingerprintText = fingerprintText ??
                 throw new ArgumentNullException(nameof(fingerprintText));
 
+            if (fingerprintText.Length == 0)
+            {
+                return;
+            }
+
             try
             {
                 Parse(fingerprintText);
@@ -69,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     nameof(fingerprintText));
             }
 
-            if (validate)
+            if (validate && fingerprintText.Length > 0 && fingerprintText[0] != '{')
             {
                 string computedFingerprint = this.GetComprehensiveFingerprintText();
                 if (!computedFingerprint.Equals(fingerprintText))
@@ -161,20 +169,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return entropy;
         }
 
-        public string GetComprehensiveFingerprintText() => ToString(this, denyList: s_emptyDenyList);
+        public string GetComprehensiveFingerprintText(bool jsonFormat = false) => ToString(this, denyList: s_emptyDenyList, jsonFormat);
 
-        public string GetAssetFingerprintText()
+        public string GetAssetFingerprintText(bool jsonFormat = false)
         {
             return IgnorePathInAssetFingerprint
-                ? ToString(this, denyList: s_secretAndPathOnlyKeys)
-                : ToString(this, denyList: s_secretOnlyKeys);
+                ? ToString(this, denyList: s_secretAndPathOnlyKeys, jsonFormat)
+                : ToString(this, denyList: s_secretOnlyKeys, jsonFormat);
         }
 
-        public string GetValidationFingerprintText() => ToString(this, denyList: s_assetOnlyKeys);
+        public string GetValidationFingerprintText(bool jsonFormat = false) => ToString(this, denyList: s_assetOnlyKeys, jsonFormat);
 
-        public string GetValidationFingerprintHashText()
+        public string GetValidationFingerprintHashText(bool jsonFormat = false)
         {
-            string validationFingerprint = ToString(this, denyList: s_assetOnlyKeys);
+            string validationFingerprint = ToString(this, denyList: s_assetOnlyKeys, jsonFormat);
             return ComputeHash(validationFingerprint);
         }
 
@@ -330,16 +338,96 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         internal static string ToJson(Fingerprint f, IList<string> denyList)
         {
-            return ToString(f, denyList, jsonFormat: true);
+            using var output = new StringWriter();
+            using var json = new JsonTextWriter(output)
+            {
+                Formatting = Formatting.None,
+                CloseOutput = true,
+            };
+
+            json.WriteStartObject();
+
+            // These need to remain in alphabetical order.
+            if (!string.IsNullOrEmpty(f.Host) && !denyList.Contains(HostKeyName))
+            {
+                json.WritePropertyName(HostKeyName);
+                json.WriteValue(f.Host.Trim());
+            }
+
+            if (!string.IsNullOrEmpty(f.Id) && !denyList.Contains(IdKeyName))
+            {
+                json.WritePropertyName(IdKeyName);
+                json.WriteValue(f.Id.Trim());
+            }
+
+            if (!string.IsNullOrEmpty(f.Part) && !denyList.Contains(PartKeyName))
+            {
+                json.WritePropertyName(PartKeyName);
+                json.WriteValue(f.Part.Trim());
+            }
+
+            if (!string.IsNullOrEmpty(f.Path) && !denyList.Contains(PathKeyName))
+            {
+                json.WritePropertyName(PathKeyName);
+                json.WriteValue(f.Path.Trim());
+            }
+
+            if (!string.IsNullOrEmpty(f.Platform) && !denyList.Contains(PlatformKeyName))
+            {
+                json.WritePropertyName(PlatformKeyName);
+                json.WriteValue(f.Platform.Trim());
+            }
+
+            if (!string.IsNullOrEmpty(f.Port) && !denyList.Contains(PortKeyName))
+            {
+                json.WritePropertyName(PortKeyName);
+                json.WriteValue(f.Port.Trim());
+            }
+
+            if (!string.IsNullOrEmpty(f.Resource) && !denyList.Contains(ResourceKeyName))
+            {
+                json.WritePropertyName(ResourceKeyName);
+                json.WriteValue(f.Resource.Trim());
+            }
+
+            // "https:" is considered the default in any case where scheme is absent.
+            if (!string.IsNullOrEmpty(f.Scheme) &&
+                !denyList.Contains(SchemeKeyName) &&
+                !f.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
+            {
+                json.WritePropertyName(SchemeKeyName);
+                json.WriteValue(f.Scheme.Trim());
+            }
+
+            if (!string.IsNullOrEmpty(f.Secret) && !denyList.Contains(SecretKeyName))
+            {
+                json.WritePropertyName(SecretKeyName);
+                json.WriteValue(f.Secret.Trim());
+            }
+
+            if (!string.IsNullOrEmpty(f.Thumbprint) && !denyList.Contains(ThumbprintKeyName))
+            {
+                json.WritePropertyName(ThumbprintKeyName);
+                json.WriteValue(f.Thumbprint.Trim());
+            }
+
+            json.WriteEndObject();
+
+            return output.ToString();
         }
 
         internal static string ToString(Fingerprint f, IList<string> denyList, bool jsonFormat = false)
         {
             denyList ??= s_emptyDenyList;
 
-            string prefix = jsonFormat ? "\"" : "[";
-            string suffix = jsonFormat ? "\"" : "]";
-            string separator = jsonFormat ? "\":\"" : "=";
+            if (jsonFormat)
+            {
+                return ToJson(f, denyList);
+            }
+
+            const string prefix = "[";
+            const string suffix = "]";
+            const string separator = "=";
 
             var components = new Dictionary<string, string>(3);
 
@@ -397,17 +485,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 components.Add(ThumbprintKeyName, $"{prefix}{ThumbprintKeyName}{separator}{f.Thumbprint.Trim()}{suffix}");
             }
 
-            separator = jsonFormat ? "," : string.Empty;
-
             string result = components.Count > 0 ?
-                string.Join(separator, components.Where(c => !string.IsNullOrEmpty(c.Value)).OrderBy(c => c.Key).Select(v => v.Value)) :
+                string.Join(string.Empty, components.Where(c => !string.IsNullOrEmpty(c.Value)).OrderBy(c => c.Key).Select(v => v.Value)) :
                 string.Empty;
 
-            return jsonFormat ? $"{{{result}}}" : result;
+            return result;
         }
 
         internal void Parse(string fingerprintText)
         {
+            if (fingerprintText[0] == '{')
+            {
+                ParseJson(fingerprintText);
+                return;
+            }
+
             ParseState parseState = ParseState.GatherKeyOpen;
             string currentKey = null;
 
@@ -448,6 +540,36 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                         string value = fingerprintText.Substring(valueStart, i - valueStart);
                         parseState = ParseState.GatherKeyOpen;
                         SetProperty(currentKey, value);
+                        break;
+                    }
+                }
+            }
+        }
+
+        internal void ParseJson(string fingerprintText)
+        {
+            using var stringReader = new StringReader(fingerprintText);
+            using var reader = new JsonTextReader(stringReader);
+            string currentKey = null;
+            while (reader.Read())
+            {
+                switch (reader.TokenType)
+                {
+                    case JsonToken.StartObject:
+                    case JsonToken.EndObject:
+                    {
+                        break;
+                    }
+
+                    case JsonToken.String:
+                    {
+                        SetProperty(currentKey, reader.Value as string);
+                        break;
+                    }
+
+                    case JsonToken.PropertyName:
+                    {
+                        currentKey = reader.Value as string;
                         break;
                     }
                 }

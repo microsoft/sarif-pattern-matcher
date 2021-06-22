@@ -465,6 +465,46 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint.GetValidationFingerprintText().Should().Be($"{id}{path}[secret=secret]");
         }
 
+        [Fact]
+        public void Fingerprint_ToJsonShouldBeAValidJson()
+        {
+            var failedTestCases = new List<string>();
+
+            foreach (FingerprintTestCase testCase in s_workingTestCases)
+            {
+                string actualJson = new Fingerprint(testCase.Text).GetComprehensiveFingerprintText(jsonFormat: true);
+
+                var newFingerprint = new Fingerprint(actualJson);
+
+                if (!newFingerprint.Equals(testCase.Expected))
+                {
+                    failedTestCases.Add(
+                        $"{Environment.NewLine}'{testCase.Title}' failed. Expected result '{testCase.Expected}' but observed '{newFingerprint}'.");
+                }
+            }
+
+            failedTestCases.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void Fingerprinit_EmptyFingerprint()
+        {
+            var fingerprint = new Fingerprint("");
+
+            var sb = new StringBuilder();
+            foreach (PropertyInfo property in GetTestableFingerprintProperties())
+            {
+                string value = (string)property.GetValue(fingerprint);
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    sb.AppendLine($"Property '{property.Name}' should be null/empty.");
+                }
+            }
+
+            sb.Length.Should().Be(0, because: sb.ToString());
+        }
+
         private static readonly FingerprintTestCase[] s_workingTestCases = new[]
         {
             new FingerprintTestCase {
