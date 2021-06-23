@@ -58,18 +58,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
             });
 
-            const string validationFingerprint = "[secret=secret]";
-            const string originalAssetFingerprint = "[platform=GitHub]";
+            var fingerprint = new Fingerprint
+            {
+                Secret = "secret",
+                Platform = nameof(AssetPlatform.GitHub),
+            };
+
             const string updatedAssetFingerprint = "[id=test][platform=GitHub]";
-            var fingerprint = new Fingerprint(updatedAssetFingerprint);
+            var updatedFingerprint = new Fingerprint(updatedAssetFingerprint);
 
             var result = new Result
             {
                 RuleId = "TestRule",
                 Fingerprints = new Dictionary<string, string>
                 {
-                    { SearchSkimmer.AssetFingerprint, originalAssetFingerprint },
-                    { SearchSkimmer.ValidationFingerprint, validationFingerprint }
+                    { SearchSkimmer.AssetFingerprint, fingerprint.GetAssetFingerprintText() },
+                    { SearchSkimmer.ValidationFingerprint, fingerprint.GetValidationFingerprintText() },
+                    { SearchSkimmer.ValidationFingerprintV2, fingerprint.GetValidationFingerprintText(jsonFormat: true)},
                 },
                 Message = new Message
                 {
@@ -87,8 +92,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             result = validatingVisitor.VisitResult(result);
             result.Fingerprints[SearchSkimmer.AssetFingerprint].Should().Be(updatedAssetFingerprint);
-            result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be(validationFingerprint);
-            result.Fingerprints[SearchSkimmer.AssetFingerprintV2].Should().Be(fingerprint.GetAssetFingerprintText(jsonFormat: true));
+            result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be(fingerprint.GetValidationFingerprintText());
+            result.Fingerprints[SearchSkimmer.AssetFingerprintV2].Should().Be(updatedFingerprint.GetAssetFingerprintText(jsonFormat: true));
         }
     }
 }
