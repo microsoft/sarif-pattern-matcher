@@ -29,10 +29,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override Result VisitResult(Result node)
         {
-            if (node.Fingerprints == null ||
-                !node.Fingerprints.TryGetValue(SearchSkimmer.ValidationFingerprint, out string fingerprintText))
+            if (node.Fingerprints == null)
             {
                 return node;
+            }
+
+            // Looking for V2 fingerprint
+            if (!node.Fingerprints.TryGetValue(SearchSkimmer.ValidationFingerprintV2, out string fingerprintText))
+            {
+                // Looking for v1 fingerprint
+                if (!node.Fingerprints.TryGetValue(SearchSkimmer.ValidationFingerprint, out fingerprintText))
+                {
+                    return node;
+                }
             }
 
             var fingerprint = new Fingerprint(fingerprintText, validate: false);
