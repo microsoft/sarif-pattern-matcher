@@ -19,6 +19,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void ValidatingVisitor_ShouldOverrideAssetFingerprint()
         {
+            for (int i = 0; i < s_validatingVisitorTestCases.Length; i++)
+            {
+                ValidatingVisitorTestCase testCase = s_validatingVisitorTestCases[i];
+                Validate(testCase.Original, testCase.Expected);
+            }
+        }
+
+        private void Validate(Fingerprint original, Fingerprint expected)
+        {
             TestRuleValidator.OverrideIsValidDynamic = (ref Fingerprint fingerprint,
                                                         ref string message,
                                                         Dictionary<string, string> options,
@@ -58,42 +67,72 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
             });
 
-            var fingerprint = new Fingerprint
-            {
-                Secret = "secret",
-                Platform = nameof(AssetPlatform.GitHub),
-            };
-
-            const string updatedAssetFingerprint = "[id=test][platform=GitHub]";
-            var updatedFingerprint = new Fingerprint(updatedAssetFingerprint);
-
             var result = new Result
             {
                 RuleId = "TestRule",
                 Fingerprints = new Dictionary<string, string>
                 {
-                    { SearchSkimmer.AssetFingerprint, fingerprint.GetAssetFingerprintText() },
-                    { SearchSkimmer.ValidationFingerprint, fingerprint.GetValidationFingerprintText() },
-                    { SearchSkimmer.ValidationFingerprintV2, fingerprint.GetValidationFingerprintText(jsonFormat: true)},
+                    { SearchSkimmer.AssetFingerprint, original.GetAssetFingerprintText() },
+                    { SearchSkimmer.AssetFingerprintV2, original.GetAssetFingerprintText(jsonFormat: true) },
+                    { SearchSkimmer.ValidationFingerprint, original.GetValidationFingerprintText() },
+                    { SearchSkimmer.ValidationFingerprintV2, original.GetValidationFingerprintText(jsonFormat: true)},
                 },
                 Message = new Message
                 {
-                    Arguments = new List<string>
-                    {
-                        "secret…",
-                        "a valid ",
-                        "",
-                        "legacy format GitHub personal access token",
-                        "",
-                        " (the compromised GitHub account is '[username](https://github.com/username)' which has access to the following orgs '[None]')"
-                    }
+                    Arguments = new List<string> { "", "", "", "", "", "" }
                 }
             };
 
             result = validatingVisitor.VisitResult(result);
-            result.Fingerprints[SearchSkimmer.AssetFingerprint].Should().Be(updatedAssetFingerprint);
-            result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be(fingerprint.GetValidationFingerprintText());
-            result.Fingerprints[SearchSkimmer.AssetFingerprintV2].Should().Be(updatedFingerprint.GetAssetFingerprintText(jsonFormat: true));
+
+            // AssetFingerprint should be updated.
+            result.Fingerprints[SearchSkimmer.AssetFingerprint].Should().Be(expected.GetAssetFingerprintText());
+            result.Fingerprints[SearchSkimmer.AssetFingerprintV2].Should().Be(expected.GetAssetFingerprintText(jsonFormat: true));
+
+            // ValidationFingerprint should be the same as original.
+            result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be(original.GetValidationFingerprintText());
+            result.Fingerprints[SearchSkimmer.ValidationFingerprintV2].Should().Be(original.GetValidationFingerprintText(jsonFormat: true));
+        }
+
+        private static readonly ValidatingVisitorTestCase[] s_validatingVisitorTestCases = new[]
+        {
+            new ValidatingVisitorTestCase
+            {
+                Original = new Fingerprint
+                {
+                    Secret = "secret",
+                    Platform = nameof(AssetPlatform.GitHub),
+                },
+                Expected = new Fingerprint
+                {
+                    Id = "test",
+                    Secret = "secret",
+                    Platform = nameof(AssetPlatform.GitHub),
+                },
+                Title = "Simple override test."
+            },
+            new ValidatingVisitorTestCase
+            {
+                Original = new Fingerprint
+                {
+                    Secret = "secret[id=id]",
+                    Platform = nameof(AssetPlatform.GitHub),
+                },
+                Expected = new Fingerprint
+                {
+                    Id = "test",
+                    Secret = "secret[id=id]",
+                    Platform = nameof(AssetPlatform.GitHub),
+                },
+                Title = "Broken square bracket fingerprint."
+            }
+        };
+
+        internal struct ValidatingVisitorTestCase
+        {
+            public string Title;
+            public Fingerprint Original;
+            public Fingerprint Expected;
         }
     }
 }

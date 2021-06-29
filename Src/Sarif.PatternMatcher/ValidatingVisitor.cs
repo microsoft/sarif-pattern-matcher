@@ -34,17 +34,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return node;
             }
 
-            // Looking for V2 fingerprint
-            if (!node.Fingerprints.TryGetValue(SearchSkimmer.ValidationFingerprintV2, out string fingerprintText))
-            {
-                // Looking for v1 fingerprint
-                if (!node.Fingerprints.TryGetValue(SearchSkimmer.ValidationFingerprint, out fingerprintText))
-                {
-                    return node;
-                }
-            }
-
-            var fingerprint = new Fingerprint(fingerprintText, validate: false);
+            var fingerprint = new Fingerprint(node.Fingerprints);
 
             ReportingDescriptor rule = node.GetRule(_run);
 
@@ -92,7 +82,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                   ref message,
                                                                   pluginSupportsDynamicValidation: true);
 
-                fingerprint.Merge(node.Fingerprints[SearchSkimmer.AssetFingerprint]);
                 node.Level = level;
                 node.Kind = kind;
                 node.Message.Arguments[1] = validationPrefix;

@@ -30,6 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         private const char RightBracketReplacement = '\t';
         private const string HashKey = "7B2FD4B8B55B49428DBFB22C9E61D817";
+
         private const string Base64EncodingSymbolSet =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
@@ -90,6 +91,40 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                         $"there are no spaces between components, etc. Initializer was '{fingerprintText}'. " +
                         $"Valid computed fingerprint was '{computedFingerprint}'.",
                         nameof(fingerprintText));
+                }
+            }
+        }
+
+        public Fingerprint(IDictionary<string, string> fingerprints)
+        {
+            SecretSymbolSetCount = 0;
+
+            // Validation fingerprint properties.
+            Id = Host = Path = Port = Scheme = Secret = Resource = Thumbprint = null;
+
+            // Asset fingerprint properties.
+            Platform = Part = null;
+
+            IgnorePathInFingerprint = false;
+
+            bool jsonFingerprintFound = false;
+
+            foreach (KeyValuePair<string, string> kp in fingerprints)
+            {
+                if (!kp.Value.StartsWith("{"))
+                {
+                    continue;
+                }
+
+                jsonFingerprintFound = true;
+                ParseJson(kp.Value);
+            }
+
+            if (!jsonFingerprintFound)
+            {
+                foreach (KeyValuePair<string, string> kp in fingerprints)
+                {
+                    Parse(kp.Value);
                 }
             }
         }

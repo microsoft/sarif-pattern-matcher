@@ -495,7 +495,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
-        public void Fingerprinit_EmptyFingerprint()
+        public void Fingerprint_EmptyFingerprint()
         {
             var fingerprint = new Fingerprint("");
 
@@ -511,6 +511,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             sb.Length.Should().Be(0, because: sb.ToString());
+        }
+
+        [Fact]
+        public void Fingerprint_ConstructingFromDictionaryShouldParseCorrectly()
+        {
+            var sb = new StringBuilder();
+            for (int i = 0; i < s_dictionaryContructorTestCases.Length; i++)
+            {
+                DictionaryFingerprintTestCase testCase = s_dictionaryContructorTestCases[i];
+                var currentFingerprint = new Fingerprint(testCase.Fingerprints);
+
+                if (currentFingerprint != testCase.Expected)
+                {
+                    sb.Append($"The test '{testCase.Title}' failed. Expected result '{testCase.Expected}' but observed '{currentFingerprint}'.");
+                }
+            }
         }
 
         private static readonly FingerprintTestCase[] s_workingTestCases = new[]
@@ -559,6 +575,75 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 ExceptionType = typeof(ArgumentException) },
         };
 
+        private static readonly DictionaryFingerprintTestCase[] s_dictionaryContructorTestCases = new[]
+        {
+            new DictionaryFingerprintTestCase
+            {
+                Title = "Square brackets fingerprints only.",
+                Fingerprints = new Dictionary<string, string>
+                {
+                    { "asset-v1", "[id=id][part=part]" },
+                    { "validation-v1", "[id=id][secret=secret]" },
+                },
+                Expected = new Fingerprint
+                {
+                    Id = "id",
+                    Part = "part",
+                    Secret = "secret",
+                }
+            },
+            new DictionaryFingerprintTestCase
+            {
+                Title = "Json fingerprints only.",
+                Fingerprints = new Dictionary<string, string>
+                {
+                    { "asset-v2", @"{""id"":""id"", ""part"":""part""}"},
+                    { "validation-v2", @"{""id"":""id"", ""secret"":""secret""}"},
+                },
+                Expected = new Fingerprint
+                {
+                    Id = "id",
+                    Part = "part",
+                    Secret = "secret",
+                }
+            },
+            new DictionaryFingerprintTestCase
+            {
+                Title = "Json and square brackets fingerprints.",
+                Fingerprints = new Dictionary<string, string>
+                {
+                    { "asset-v1", "[id=id][part=part]" },
+                    { "validation-v1", "[id=id][secret=secret]" },
+                    { "asset-v2", @"{""id"":""id"", ""part"":""part""}"},
+                    { "validation-v2", @"{""id"":""id"", ""secret"":""secret""}"},
+                },
+                Expected = new Fingerprint
+                {
+                    Id = "id",
+                    Part = "part",
+                    Secret = "secret",
+                }
+            },
+            new DictionaryFingerprintTestCase
+            {
+                Title = "Json and square brackets fingerprints.",
+                Fingerprints = new Dictionary<string, string>
+                {
+                    { "asset-v1", "[id=id][part=part][resource=resource[][part=]]" },
+                    { "validation-v1", "[id=id][secret=secret]" },
+                    { "asset-v2", @"{""id"":""id"", ""part"":""part"", ""resource"":""resource[][part=]""}"},
+                    { "validation-v2", @"{""id"":""id"", ""secret"":""secret""}"},
+                },
+                Expected = new Fingerprint
+                {
+                    Id = "id",
+                    Part = "part",
+                    Secret = "secret",
+                    Resource = "resource[][part=]"
+                }
+            },
+        };
+
         private static string GetKeyNameForProperty(string propertyName)
         {
             FieldInfo fi = typeof(Fingerprint).GetField($"{propertyName}KeyName");
@@ -571,6 +656,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             public string Text;
             public Fingerprint Expected;
             public Type ExceptionType;
+        }
+
+        internal struct DictionaryFingerprintTestCase
+        {
+            public string Title;
+            public Dictionary<string, string> Fingerprints;
+            public Fingerprint Expected;
         }
     }
 }
