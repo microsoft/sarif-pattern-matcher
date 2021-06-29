@@ -73,6 +73,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Fingerprints = new Dictionary<string, string>
                 {
                     { SearchSkimmer.AssetFingerprint, fingerprint.GetAssetFingerprintText() },
+                    { SearchSkimmer.AssetFingerprintV2, fingerprint.GetAssetFingerprintText(jsonFormat: true) },
                     { SearchSkimmer.ValidationFingerprint, fingerprint.GetValidationFingerprintText() },
                     { SearchSkimmer.ValidationFingerprintV2, fingerprint.GetValidationFingerprintText(jsonFormat: true)},
                 },
