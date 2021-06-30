@@ -23,6 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             "database.windows.net",
             "database.chinacloudapi.cn",
             "postgres.database.azure.com",
+            "database.secure.windows.net",
         };
 
         static MySqlCredentialsValidator()
