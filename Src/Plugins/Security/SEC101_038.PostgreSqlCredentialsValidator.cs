@@ -60,7 +60,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.TryGetNonEmptyValue("resource", out FlexMatch resource);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
-            if (hostValue.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1 ||
+            if (hostValue.Equals("tcp", StringComparison.OrdinalIgnoreCase) ||
+                hostValue.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1 ||
                 HostsToExclude.Any(hostToExclude => hostValue.IndexOf(hostToExclude, StringComparison.OrdinalIgnoreCase) != -1))
             {
                 return ValidationResult.CreateNoMatch();

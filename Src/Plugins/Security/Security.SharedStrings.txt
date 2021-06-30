@@ -112,11 +112,11 @@
 
   $SEC101/037.SqlCredentialsPhp=(?i)sqlsrv:server\s*=\s*(tcp:)?(?P<host>[^;"<]+);\s*Database\s*=\s*(?P<resource>[^;"<>*%&:\/?\n]+)",\s*"(?P<id>[^"]+)",\s*"(?P<secret>[^"]+)"  
   
-  $SEC101/038.PostgreSqlCredentialsAdoId=(?i)(?:username|uid|user id)\s*=\s*(?P<id>[^,;"'&\]\[<\s\n]+)(?:[,;"'&\]\[<\s\n]|$)
-  $SEC101/038.PostgreSqlCredentialsAdoHost=(?i)(?:host|server)\s*=\s*(tcp:)?(?P<host>[^,;"'=|\(\)\]\[><\s\n]+)(?:[,;"'=|\(\)\]\[><\s\n]|$)
+  $SEC101/038.PostgreSqlCredentialsAdoId=(?i)(?:username|user|uid|user id)\s*=\s*(?P<id>[^,;"'&\]\[<\s\n]{1,63})(?:[,;"'&\]\[<\s\n]|$)
+  $SEC101/038.PostgreSqlCredentialsAdoHost=(?i)(?:host|server)\s*=\s*(?P<host>[^,;:"'=|\(\)\]\[><\s\n]{3,63})(?:[,;:"'=|\(\)\]\[><\s\n]|$)
   $SEC101/038.PostgreSqlCredentialsAdoPort=(?i)port\s*=\s*(?P<port>[0-9]{1,5})(?:[^0-9]|$)
-  $SEC101/038.PostgreSqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^,;"'<\s\n]+)(?:[,;"'<\s\n]|$)
-  $SEC101/038.PostgreSqlCredentialsAdoResource=(?i)(?:database|db)\s*=\s*(?P<resource>[^,;"'<\s\n]+)(?:[,;"'<\s\n]|$)
+  $SEC101/038.PostgreSqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^,;"'<\s\n]{8,128})(?:[,;"'<\s\n]|$)
+  $SEC101/038.PostgreSqlCredentialsAdoResource=(?i)(?:database|db|dbname)\s*=\s*(?P<resource>[^,;"'<\s\n]+)(?:[,;"'<\s\n]|$)
 
   $SEC101/041.RabbitMqCredentials=(?i)amqps?:\/\/(?P<id>[^:]+):(?P<secret>[^@]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
   $SEC101/043.NuGetPackageSourceCredentialsXml=(?i)(?P<host><\s*packageSources\s*>(?s).{0,500}?(?-s)<\\?\/packageSources\s*>)(?s).{0,200}?(?-s)[^\/](?P<secret><\s*packageSourceCredentials\s*>(?s).{0,500}?(?-s)<\\?\/packageSourceCredentials\s*>)
