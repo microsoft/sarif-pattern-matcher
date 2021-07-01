@@ -23,6 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             "localhost",
             "database.windows.net",
             "database.chinacloudapi.cn",
+            "database.secure.windows.net",
         };
 
         static PostgreSqlCredentialsValidator()
