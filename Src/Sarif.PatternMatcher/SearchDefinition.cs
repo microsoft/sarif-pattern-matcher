@@ -13,11 +13,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string Name { get; set; }
 
+        public string HelpUri { get; set; }
+
         public string Message { get; set; }
 
-        public FailureLevel Level { get; set; }
-
         public ResultKind Kind { get; set; }
+
+        public FailureLevel Level { get; set; }
 
         public string Description { get; set; }
 
@@ -28,10 +30,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public List<MatchExpression> MatchExpressions { get; set; }
 
 #if DEBUG
+
         public override string ToString()
         {
             return $"{Id}.{Name}:{Level}";
         }
+
 #endif
     }
 }

@@ -193,6 +193,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     matchExpression.Id ??= definition.Id;
                     matchExpression.Name ??= definition.Name;
+                    matchExpression.HelpUri ??= definition.HelpUri;
                     matchExpression.Message ??= definition.Message;
                     matchExpression.Description ??= definition.Description;
 
@@ -232,6 +233,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Id = matchExpressions[0].Id,
                     Name = matchExpressions[0].Name,
                     MatchExpressions = matchExpressions,
+                    HelpUri = matchExpressions[0].HelpUri,
                     Description = matchExpressions[0].Description,
                 };
 

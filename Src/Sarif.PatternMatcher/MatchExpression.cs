@@ -21,6 +21,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string DeprecatedName { get; set; }
 
+        public string HelpUri { get; set; }
+
         public string Message { get; set; }
 
         public FailureLevel Level { get; set; }
