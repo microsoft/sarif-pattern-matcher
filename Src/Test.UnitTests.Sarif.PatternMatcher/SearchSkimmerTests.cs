@@ -352,6 +352,54 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be("[id=test][secret=secret]");
         }
 
+        [Fact]
+        public void SearchSkimmer_HelpUriShouldBePropagatedWhenExists()
+        {
+            const string defaultHelpUri = "https://github.com/microsoft/sarif-pattern-matcher";
+            string[] testCases = new[]
+            {
+                null,
+                "https://github.com/",
+                "https://www.microsoft.com"
+            };
+
+            var sb = new StringBuilder();
+            IRegex regexEngine = RE2Regex.Instance;
+            foreach (string testCase in testCases)
+            {
+                var searchDefinition = new SearchDefinition
+                {
+                    HelpUri = testCase,
+                    MatchExpressions = new List<MatchExpression>(),
+                };
+
+                var searchSkimmer = new SearchSkimmer(regexEngine, null, null, searchDefinition);
+                var reportingDescriptor = searchSkimmer as ReportingDescriptor;
+
+                if (reportingDescriptor.HelpUri != searchSkimmer.HelpUri)
+                {
+                    sb.AppendLine($"The helpUri wasn expected to equal to '{searchSkimmer.HelpUri}' but it was '{reportingDescriptor.HelpUri}'.");
+                }
+
+                if (testCase == null)
+                {
+                    if (searchSkimmer.HelpUri.OriginalString != defaultHelpUri)
+                    {
+                        sb.AppendLine($"It was expected to see '{defaultHelpUri}' but saw '{searchSkimmer.HelpUri.OriginalString}'.");
+                    }
+                }
+                else
+                {
+                    if (testCase != searchSkimmer.HelpUri.OriginalString)
+                    {
+                        sb.AppendLine($"It was expected to see '{testCase}' but saw '{searchSkimmer.HelpUri.OriginalString}'.");
+                    }
+                }
+            }
+
+            sb.Length.Should().Be(0, sb.ToString());
+        }
+
         private AnalyzeContext CreateGuidMatchingSkimmer(
             string scanTargetExtension,
             ref SearchDefinition definition,

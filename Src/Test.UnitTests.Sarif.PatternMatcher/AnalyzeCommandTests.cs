@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 using FluentAssertions;
 
@@ -288,10 +289,68 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             foreach (var test in testCases)
             {
                 bool result;
-                string actual = searchDefinitions.Definitions[0].MatchExpressions.Where(m => m.SubId == test.Id).First().ContentsRegex;
+                string actual = searchDefinitions.Definitions[0].MatchExpressions.First(m => m.SubId == test.Id).ContentsRegex;
                 result = test.Expected == null ? actual == null : test.Expected.Equals(actual);
                 result.Should().BeTrue();
             }
+        }
+
+        [Fact]
+        public void AnalyzeCommand_PushInheritedDataShouldPropagateHelpUri()
+        {
+            var testCases = new[]
+            {
+                new
+                {
+                    SearchDefinitionHelpUri = "https://github.com",
+                    MatchExpressionHelpUri = (string)null,
+                    ExpectedHelpUri = "https://github.com",
+                },
+                new
+                {
+                    SearchDefinitionHelpUri = "https://github.com",
+                    MatchExpressionHelpUri = "https://www.microsoft.com",
+                    ExpectedHelpUri = "https://www.microsoft.com",
+                },
+                new
+                {
+                    SearchDefinitionHelpUri = (string)null,
+                    MatchExpressionHelpUri = "https://www.microsoft.com",
+                    ExpectedHelpUri = "https://www.microsoft.com",
+                }
+            };
+
+            var sb = new StringBuilder();
+            foreach (var testCase in testCases)
+            {
+                var definitions = new SearchDefinitions
+                {
+                    Definitions = new List<SearchDefinition>
+                    {
+                        new SearchDefinition
+                        {
+                            HelpUri = testCase.SearchDefinitionHelpUri,
+                            MatchExpressions = new List<MatchExpression>
+                            {
+                                new MatchExpression
+                                {
+                                    Id = "Id0001",
+                                    HelpUri = testCase.MatchExpressionHelpUri
+                                }
+                            }
+                        },
+                    }
+                };
+
+                SearchDefinitions transformedDefinition = PatternMatcher.AnalyzeCommand.PushInheritedData(definitions, new Dictionary<string, string>());
+                string currentHelpUri = transformedDefinition.Definitions[0].HelpUri;
+                if (currentHelpUri != testCase.ExpectedHelpUri)
+                {
+                    sb.AppendLine($"Push should be '{testCase.ExpectedHelpUri}' but found '{currentHelpUri}'.");
+                }
+            }
+
+            sb.Length.Should().Be(0, sb.ToString());
         }
 
         [Fact]
