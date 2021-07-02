@@ -378,7 +378,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (reportingDescriptor.HelpUri != searchSkimmer.HelpUri)
                 {
-                    sb.AppendLine($"The helpUri wasn expected to equal to '{searchSkimmer.HelpUri}' but it was '{reportingDescriptor.HelpUri}'.");
+                    sb.AppendLine($"The helpUri was expected to be equal to '{searchSkimmer.HelpUri}' but it was '{reportingDescriptor.HelpUri}'.");
                 }
 
                 if (testCase == null)
