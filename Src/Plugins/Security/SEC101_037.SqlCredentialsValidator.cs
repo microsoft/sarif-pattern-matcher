@@ -73,10 +73,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
+            groups.TryGetNonEmptyValue("port", out FlexMatch port);
+
             var fingerprint = new Fingerprint()
             {
                 Id = id.Value,
                 Host = hostValue,
+                Port = port?.Value,
                 Secret = secret.Value,
                 Resource = resource.Value,
             };
