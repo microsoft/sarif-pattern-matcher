@@ -43,11 +43,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         private static readonly ReadOnlyCollection<string> s_assetAndPathOnlyKeys =
             new ReadOnlyCollection<string>(new string[] { PathKeyName, PartKeyName, PlatformKeyName });
 
-        private static readonly ReadOnlyCollection<string> s_secretOnlyKeys =
-            new ReadOnlyCollection<string>(new string[] { SecretKeyName });
+        private static readonly ReadOnlyCollection<string> s_portAndSecretOnlyKeys =
+            new ReadOnlyCollection<string>(new string[] { PortKeyName, SecretKeyName });
 
-        private static readonly ReadOnlyCollection<string> s_secretAndPathOnlyKeys =
-            new ReadOnlyCollection<string>(new string[] { PathKeyName, SecretKeyName });
+        private static readonly ReadOnlyCollection<string> s_pathPortAndSecretOnlyKeys =
+            new ReadOnlyCollection<string>(new string[] { PathKeyName, PortKeyName, SecretKeyName });
 
         public Fingerprint(string fingerprintText, bool validate = true)
         {
@@ -212,8 +212,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public string GetAssetFingerprintText(bool jsonFormat = false)
         {
             return IgnorePathInFingerprint
-                ? ToString(this, denyList: s_secretAndPathOnlyKeys, jsonFormat)
-                : ToString(this, denyList: s_secretOnlyKeys, jsonFormat);
+                ? ToString(this, denyList: s_pathPortAndSecretOnlyKeys, jsonFormat)
+                : ToString(this, denyList: s_portAndSecretOnlyKeys, jsonFormat);
         }
 
         public string GetValidationFingerprintText(bool jsonFormat = false) => ToString(this, denyList: s_assetOnlyKeys, jsonFormat);
