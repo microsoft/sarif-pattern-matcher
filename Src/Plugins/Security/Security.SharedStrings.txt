@@ -86,7 +86,7 @@
   $SEC101/020.DropboxAccessTokenShortExpiration=(?si)dropbox.{1,50}\b(?P<secret>sl\.(?i)[0-9a-z-_]{135,139})(?i)(?:[^0-9a-z]|$)
   $SEC101/025.SendGridApiKey=\b(?P<secret>SG\.(?i)[0-9a-z\-_]{22}\.(?i)[0-9a-z\-_]{43})(?:[^0-9a-z\-_]|$)
   $SEC101/027.MailChimpApiKey=\b(?P<secret>[0-9a-f]{32}-us[0-9]{12})
-  $SEC101/029.AlibabaCloudCredentials=\b(?P<id>LTAI(?:[0-9a-z]{12}|[0-9a-z]{20}))\b(?s).{0,50}(?-s)\b(?P<secret>[\w]{30})\b
+  $SEC101/029.AlibabaCloudCredentials=\b(?P<id>LTAI(?i)(?:[0-9a-z]{12}|[0-9a-z]{20}))\b(?s).{0,50}(?-s)\b(?P<secret>[\w]{30})\b
   $SEC101/033.MongoDbCredentials=(?i)mongodb(?:[^:]{0,50})?:\/\/(?P<id>[0-9a-z]+):(?P<secret>[^@\s]{1,200})@(?P<host>[^\/;"<]+)
   $SEC101/035.CloudantCredentialsPython=(?is)cloudant\s*\(\s*"(?P<id>[\w-]+)"\s*\,\s*"(?P<secret>[\w]{64})"\s*\,\s*.{0,200}url=\s*"https:\/\/(?P<resource>[\w.-]+)\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsJson=(?is)apiKey"[^"]+"(?P<secret>[\w-]+)".{1,100}[^0-9a-z\.-](?P<id>[0-9a-z\.-]{32,44})\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
