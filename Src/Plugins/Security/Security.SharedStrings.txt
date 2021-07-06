@@ -101,16 +101,18 @@
   $SEC101/036.MySqlCredentialsPlainJdbc=(?:jdbc:mysql:\/\/(?P<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?P<url>[^,(?:]+),\s*"(?P<id>[\w@-]{1,200})",\s*"(?P<secret>[^"';<>=]{7,200})"
   
   $SEC101/037.SqlCredentialsJdbcId=(?i)user\s*=\s*(?P<id>[^@]+?)@[^;"<'\n]+(?:[;"<'\n]|$)
-  $SEC101/037.SqlCredentialsJdbcHost=(?i)jdbc:sqlserver:\/\/(?P<host>[^;"<'\n]+)(?:[;"<'\n]|$)
+  $SEC101/037.SqlCredentialsJdbcHost=(?i)jdbc:sqlserver:\/\/(?P<host>[^:;"<'\n]+)(?:[:;"<'\n]|$)
+  $SEC101/037.SqlCredentialsJdbcPort=(?i):\s*(?P<port>[0-9]{4,5})(?:[^0-9]|$)
   $SEC101/037.SqlCredentialsJdbcSecret=(?i)password\s*=\s*(?P<secret>[^;"<'\n]+)(?:[;"<'\n]|$)
   $SEC101/037.SqlCredentialsJdbcResource=(?i)database\s*=\s*(?P<resource>[^;"<>*%&\/?'\n]+)(?:[;"<>*%&\/?'\n]|$)
 
   $SEC101/037.SqlCredentialsAdoId=(?i)(?:user id|uid)\s*=\s*(?P<id>[^;"<'\n]+)(?:[;"<'\n]|$)
-  $SEC101/037.SqlCredentialsAdoHost=(?i)(?:server|data source)\s*=\s*(tcp:)?(?P<host>[^;"<'\n]+)(?:[;"<'\n]|$)
+  $SEC101/037.SqlCredentialsAdoHost=(?i)(?:server|data source)\s*=\s*(tcp:)?(?P<host>[^;,"<'\n]+)(?:[;,"<'\n]|$)
+  $SEC101/037.SqlCredentialsAdoPort=(?i),\s*(?P<port>[0-9]{4,5})(?:[^0-9]|$)
   $SEC101/037.SqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^;"<'\n]+)(?:[;"<'\n]|$)
   $SEC101/037.SqlCredentialsAdoResource=(?i)(?:initial catalog|database)\s*=\s*(?P<resource>[^;"<>*%&:\/?'\n]+)(?:[;"<>*%&:\/?'\n]|$)
 
-  $SEC101/037.SqlCredentialsPhp=(?i)sqlsrv:server\s*=\s*(tcp:)?(?P<host>[^;"<]+);\s*Database\s*=\s*(?P<resource>[^;"<>*%&:\/?\n]+)",\s*"(?P<id>[^"]+)",\s*"(?P<secret>[^"]+)"  
+  $SEC101/037.SqlCredentialsPhp=(?i)sqlsrv:server\s*=\s*(tcp:)?(?P<host>[^,;"<]+)(?:,(?P<port>[0-9]{4,5}))?;\s*Database\s*=\s*(?P<resource>[^;"<>*%&:\/?\n]+)",\s*"(?P<id>[^"]+)",\s*"(?P<secret>[^"]+)"
   
   $SEC101/038.PostgreSqlCredentialsAdoId=(?i)(?:username|user|uid|user id)\s*=\s*(?P<id>[^,;"'&\]\[<\s\n]{1,63})(?:[,;"'&\]\[<\s\n]|$)
   $SEC101/038.PostgreSqlCredentialsAdoHost=(?i)(?:host|server)\s*=\s*(?P<host>[^,;:"'=|\(\)\]\[><\s\n]{3,63})(?:[,;:"'=|\(\)\]\[><\s\n]|$)
