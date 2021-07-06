@@ -79,7 +79,7 @@
   $SEC101/013/PemCer.CryptographicPrivateKey=(?si)-{5}BEGIN CERTIFICATE-{5}\n?(?P<secret>[^:]*?)-{5}END CERTIFICATE-{5}
   $SEC101/013/Putty.CryptographicPrivateKey=(?is)PuTTY-User-Key-File-2.+?Private-Lines:\s*[0-9]+\s*(?P<secret>.+?)Private-MAC:\s[0-9a-z]+(?:[^0-9a-d]|$)
   $SEC101/013/Pem.CryptographicPrivateKey=(?si)-{5}BEGIN (?:DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (?:KEY BLOCK|KEY)-{5}.*?(?:VERSION: [^\n]+\n)*\n?(?P<secret>[^:]*?)-{5}END (?:DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (?:KEY BLOCK|KEY)-{5}
-  $SEC101/015.AkamaiCredentials=(?si)https:\/\/(?P<resource>[\w\-\.]+)\.akamaiapis\.net.{0,150}(?:(?:client_token.{0,10}\b(?P<id>akab[\w\-]+).{0,50})|(?:access_token.{0,10}\b(?P<id>akab[\w\-]+).{0,200})|(?:(?:client_secret).{0,10}\b(?P<secret>[0-9a-z\/\\+]{43}=))){3}
+  $SEC101/015.AkamaiCredentials=(?si)https:\/\/(?P<resource>[\w\-\.]+)\.akamaiapis\.net.{0,150}(?:(?:client_token.{0,10}\b(?P<id>akab[\w\-]+).{0,50})|(?:access_token.{0,10}\b(?P<id>akab[\w\-]+).{0,200})|(?:(?:client_secret).{0,10}\b(?P<secret>[0-9a-z\/\+]{43}=))){3}
   $SEC101/016.StripeApiKey=\b(?P<secret>(?:r|s)k_(?:live|test)_(?i)[0-9a-z]{24,99})(?:[^0-9a-z]|$)
   $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?P<secret>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})[^0-9a-z]
   $SEC101/020.DropboxAccessTokenNoExpiration=(?si)dropbox.{1,50}[^0-9a-z](?P<secret>[0-9a-z_-]{64})(?:[^0-9a-z]|$)
