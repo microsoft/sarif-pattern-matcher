@@ -64,7 +64,7 @@
   $SEC101/034.CredentialObjectInitializer=(?s)(?:PSCredential|SqlCredential)\s*\(\)\s*{\s*.{0,50}User(?:Name|Id)\s*=\s*"(?P<id>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?P<secret>[^"]*)"  
   $SEC101/039.ShopifyAccessToken=\b(?P<secret>(?:shpat|shpca|shppa)_(?i)[0-9a-f]{32})
   $SEC101/040.ShopifySharedSecret=\b(?P<secret>shpss_(?i)[0-9a-f]{32})
-  $SEC101/042.DynatraceToken=\b(?P<secret>dt0(?i)[a-z]{1}[0-9]{2}\.[0-9A-Z]{24}\.[0-9A-Z]{64})
+  $SEC101/042.DynatraceToken=\b(?P<secret>dt0(?i)[a-z]{1}[0-9]{2}\.[0-9a-z]{24}\.[0-9a-z]{64})
   
 # Legacy analysis model : with dynamic validator
   $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?P<scheme>http|ftp|https):\/\/(?P<host>[\w_.-]{1,200})(?P<path>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(?:.|\n){0,100}?authorization[,\[:= "']+(?:basic)[\s\r\n]{0,10}(?P<secret>[^'"><;\s]{1,500})
@@ -84,7 +84,7 @@
   $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?P<secret>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})[^0-9a-z]
   $SEC101/020.DropboxAccessTokenNoExpiration=(?si)dropbox.{1,50}[^0-9a-z](?P<secret>[0-9a-z_-]{64})(?:[^0-9a-z]|$)
   $SEC101/020.DropboxAccessTokenShortExpiration=(?si)dropbox.{1,50}\b(?P<secret>sl\.(?i)[0-9a-z-_]{135,139})(?i)(?:[^0-9a-z]|$)
-  $SEC101/025.SendGridApiKey=\b(?P<secret>SG\.(?i)[0-9a-z\-_]{22}\.(?i)[0-9a-z\-_]{43})(?:[^0-9a-f]|$)
+  $SEC101/025.SendGridApiKey=\b(?P<secret>SG\.(?i)[0-9a-z\-_]{22}\.(?i)[0-9a-z\-_]{43})(?:[^0-9a-z\-_]|$)
   $SEC101/027.MailChimpApiKey=\b(?P<secret>[0-9a-f]{32}-us[0-9]{12})
   $SEC101/029.AlibabaCloudCredentials=\b(?P<id>LTAI(?:[0-9a-z]{12}|[0-9a-z]{20}))\b(?s).{0,50}(?-s)\b(?P<secret>[\w]{30})\b
   $SEC101/033.MongoDbCredentials=(?i)mongodb(?:[^:]{0,50})?:\/\/(?P<id>[0-9a-z]+):(?P<secret>[^@\s]{1,200})@(?P<host>[^\/;"<]+)
