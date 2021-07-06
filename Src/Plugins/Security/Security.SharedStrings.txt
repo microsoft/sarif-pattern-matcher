@@ -79,14 +79,14 @@
   $SEC101/013/PemCer.CryptographicPrivateKey=(?si)-{5}BEGIN CERTIFICATE-{5}\n?(?P<secret>[^:]*?)-{5}END CERTIFICATE-{5}
   $SEC101/013/Putty.CryptographicPrivateKey=(?is)PuTTY-User-Key-File-2.+?Private-Lines:\s*[0-9]+\s*(?P<secret>.+?)Private-MAC:\s[0-9a-z]+(?:[^0-9a-d]|$)
   $SEC101/013/Pem.CryptographicPrivateKey=(?si)-{5}BEGIN (?:DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (?:KEY BLOCK|KEY)-{5}.*?(?:VERSION: [^\n]+\n)*\n?(?P<secret>[^:]*?)-{5}END (?:DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (?:KEY BLOCK|KEY)-{5}
-  $SEC101/015.AkamaiCredentials=(?si)https:\/\/(?P<resource>[\w\-\.]+)\.akamaiapis\.net.{0,150}(?:(?:client_token.{0,10}\b(?P<id>akab[\w\-]+).{0,50})|(?:access_token.{0,10}\b(?P<id>akab[\w\-]+).{0,200})|(?:(?:client_secret).{0,10}\b(?P<secret>[a-z0-9\/\\+]{43}=))){3}
+  $SEC101/015.AkamaiCredentials=(?si)https:\/\/(?P<resource>[\w\-\.]+)\.akamaiapis\.net.{0,150}(?:(?:client_token.{0,10}\b(?P<id>akab[\w\-]+).{0,50})|(?:access_token.{0,10}\b(?P<id>akab[\w\-]+).{0,200})|(?:(?:client_secret).{0,10}\b(?P<secret>[0-9a-z\/\\+]{43}=))){3}
   $SEC101/016.StripeApiKey=\b(?P<secret>(?:r|s)k_(?:live|test)_(?i)[0-9a-z]{24,99})(?:[^0-9a-z]|$)
-  $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?P<secret>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})[^0-9A-Za-z]
+  $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?P<secret>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})[^0-9a-z]
   $SEC101/020.DropboxAccessTokenNoExpiration=(?si)dropbox.{1,50}[^0-9a-z](?P<secret>[0-9a-z_-]{64})(?:[^0-9a-z]|$)
   $SEC101/020.DropboxAccessTokenShortExpiration=(?si)dropbox.{1,50}\b(?P<secret>sl\.(?i)[0-9a-z-_]{135,139})(?i)(?:[^0-9a-z]|$)
   $SEC101/025.SendGridApiKey=\b(?P<secret>SG\.(?i)[0-9a-z\-_]{22}\.(?i)[0-9a-z\-_]{43})(?:[^0-9a-f]|$)
   $SEC101/027.MailChimpApiKey=\b(?P<secret>[0-9a-f]{32}-us[0-9]{12})
-  $SEC101/029.AlibabaCloudCredentials=\b(?P<id>LTAI(?:[0-9a-zA-Z]{12}|[0-9a-zA-Z]{20}))\b(?s).{0,50}(?-s)\b(?P<secret>[\w]{30})\b
+  $SEC101/029.AlibabaCloudCredentials=\b(?P<id>LTAI(?:[0-9a-z]{12}|[0-9a-z]{20}))\b(?s).{0,50}(?-s)\b(?P<secret>[\w]{30})\b
   $SEC101/033.MongoDbCredentials=(?i)mongodb(?:[^:]{0,50})?:\/\/(?P<id>[0-9a-z]+):(?P<secret>[^@\s]{1,200})@(?P<host>[^\/;"<]+)
   $SEC101/035.CloudantCredentialsPython=(?is)cloudant\s*\(\s*"(?P<id>[\w-]+)"\s*\,\s*"(?P<secret>[\w]{64})"\s*\,\s*.{0,200}url=\s*"https:\/\/(?P<resource>[\w.-]+)\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsJson=(?is)apiKey"[^"]+"(?P<secret>[\w-]+)".{1,100}[^0-9a-z\.-](?P<id>[0-9a-z\.-]{32,44})\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
