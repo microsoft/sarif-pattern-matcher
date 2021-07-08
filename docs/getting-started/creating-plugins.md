@@ -1,12 +1,15 @@
 # Creating plugins
 
 ## Basic structure
+
 A plugin contains the following structure:
+
 - A `txt` file (**optional**): it will contain all the regular expressions.
 - A `json` file (**required**): it will contain all definitions.
 - A `targets` file (**required**): it will move all the required files to the output folder.
 
 The `json` file contains the following structure:
+
 ```json
 {
   "ValidatorsAssemblyName": "name-of-the-assembly.dll",
@@ -34,39 +37,39 @@ The `json` file contains the following structure:
 
 Each `MatchExpression` can be mapped to a validator.
 Each validator can implement the following methods:
+
 ```csharp
-public static string IsValidStatic(ref string matchedPattern,
-                                   ref Dictionary<string, string> groups,
-                                   ref string failureLevel,
-                                   ref string fingerprint,
-                                   ref string message)
+public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
 {
 }
 
-public static string IsValidDynamic(ref string fingerprint, ref string message, ref Dictionary<string, string> options)
+public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
+                                             ref string message,
+                                             Dictionary<string, string> options,
+                                             ref ResultLevelKind resultLevelKind)
 {
 }
 ```
 
 You can extend `ValidatorBase` to use the helpers that we already have. If that is the case, you will need to implement:
+
 ```csharp
-protected override string IsValidStaticHelper(ref string matchedPattern,
-                                              ref Dictionary<string, string> groups,
-                                              ref string failureLevel,
-                                              ref string fingerprintText,
-                                              ref string message)
+protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
 {
-    return nameof(ValidationState.Unknown);
+  // TODO: add your static analysis implementation.
 }
 
-protected override string IsValidDynamicHelper(ref string fingerprintText,
-                                               ref string message,
-                                               ref Dictionary<string, string> options)
+protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
+                                                        ref string message,
+                                                        Dictionary<string, string> options,
+                                                        ref ResultLevelKind resultLevelKind)
 {
-    return nameof(ValidationState.Unknown);
+  // TODO: add your dynamic analysis implementation.
 }
 ```
 
 ## Examples
+
 For examples, check the public repository:
+
 - [sarif-pattern-matcher repository](https://github.com/microsoft/sarif-pattern-matcher/tree/main/Src/Plugins/Security)
