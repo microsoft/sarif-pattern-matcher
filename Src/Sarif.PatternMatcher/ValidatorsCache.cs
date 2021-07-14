@@ -220,6 +220,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             int minimalOffset = int.MaxValue;
             int maximalOffset = 0;
 
+            if (groups.TryGetValue("secret", out FlexMatch value))
+            {
+                return value;
+            }
+
             foreach (KeyValuePair<string, FlexMatch> kv in groups)
             {
                 // This indicates a reserved value or property

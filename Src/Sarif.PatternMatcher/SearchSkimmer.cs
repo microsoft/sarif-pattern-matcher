@@ -683,11 +683,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 match.AddProperties(matchExpression.Properties);
 
                 FlexMatch flexMatch = match["0"];
-                string refinedMatchedPattern = flexMatch.Value;
                 if (match.TryGetValue("refine", out FlexMatch refineMatch))
                 {
-                    refinedMatchedPattern = refineMatch.Value;
                     flexMatch = refineMatch;
+                }
+
+                if (match.TryGetValue("secret", out FlexMatch secretFlexMatch))
+                {
+                    flexMatch = secretFlexMatch;
                 }
 
                 Fingerprint fingerprint = default;
@@ -701,16 +704,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                                            context,
                                                                                            match,
                                                                                            out bool pluginSupportsDynamicValidation);
-
-                    int refinementIndex = flexMatch.Value.String.IndexOf(refinedMatchedPattern);
-                    Debug.Assert(refinementIndex != -1, "Refinement index should be different from -1");
-
-                    flexMatch = new FlexMatch()
-                    {
-                        Value = refinedMatchedPattern,
-                        Length = refinedMatchedPattern.Length,
-                        Index = flexMatch.Index - refinementIndex,
-                    };
 
                     if (validationResults != null)
                     {
