@@ -47,8 +47,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                 int matchLength = "secret1".Length;
 
-                region.Snippet.Text.Should().StartWith("secret");
-
                 region.EndColumn.Should().Be(region.StartColumn + matchLength);
 
                 region.StartLine.Should().Be(startLine);
