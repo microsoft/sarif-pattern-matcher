@@ -19,9 +19,5 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         [Fact]
         public void ReviewPotentiallySensitiveData_EndToEndFunctionalTests()
             => RunAllTests();
-
-        [Fact]
-        public void ReviewPotentiallySensitiveData_ValidateOutputFiles()
-            => ValidateOutputFiles();
     }
 }

@@ -138,9 +138,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             RunTest(inputFiles, expectedOutputResourceMap, enforceNotificationsFree: true);
+
+            ValidateOutputFiles();
         }
 
-        protected void ValidateOutputFiles()
+        private void ValidateOutputFiles()
         {
             Directory.Exists(ProductTestDataDirectory).Should().BeTrue();
 
@@ -162,17 +164,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     sb.AppendLine($"Results from file '{fileName}' should not be empty.");
                     continue;
                 }
-
-                //foreach (Result result in sarifLog.Runs[0].Results)
-                //{
-                //    var fingerprint = new Fingerprint(result.Fingerprints[SearchSkimmer.ValidationFingerprintV2]);
-                //    if (!result.Locations[0].PhysicalLocation.Region.Snippet.Text.StartsWith(fingerprint.Secret))
-                //    {
-                //        sb.AppendLine($"The 'secret' was expected to be at the beginning. " +
-                //            $"But it was not found at the file '{fileName}'.");
-                //        break;
-                //    }
-                //}
             }
 
             sb.Length.Should().Be(0, sb.ToString());
