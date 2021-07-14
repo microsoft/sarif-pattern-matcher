@@ -45,21 +45,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 Region region = result.Locations?[0].PhysicalLocation?.Region;
                 region.Should().NotBeNull();
 
-                int matchLength = "id1 host1 secret1".Length;
+                int matchLength = "secret1".Length;
 
-                // StartColumn is 1-indexed and we add a leading space
-                // to every pattern;
-                int startColumn = 2;
-                int endColumn = startColumn + matchLength;
+                region.Snippet.Text.Should().StartWith("secret");
 
-                region.StartColumn.Should().Be(startColumn);
-                region.EndColumn.Should().Be(startColumn + matchLength);
+                region.EndColumn.Should().Be(region.StartColumn + matchLength);
 
                 region.StartLine.Should().Be(startLine);
                 region.EndLine.Should().Be(startLine);
             }
         }
-
 
         [Fact]
         public void AnalyzeCommand_IntrafileBasic()
@@ -81,7 +76,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             Region region = result.Locations?[0].PhysicalLocation?.Region;
             region.Should().NotBeNull();
             region?.StartLine.Should().Be(2);
-            region?.EndLine.Should().Be(4);
+            region?.EndLine.Should().Be(2);
 
             // This is a special check to ensure that our matches don't
             // include region information that derives from unnamed groups,
@@ -91,7 +86,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             result = sarifLog.Runs[0].Results[1];
             region = result.Locations?[0].PhysicalLocation?.Region;
             region.Should().NotBeNull();
-            region?.StartLine.Should().Be(3);
+            region?.StartLine.Should().Be(5);
             region?.EndLine.Should().Be(5);
             region.StartColumn.Should().Be(2);
         }
