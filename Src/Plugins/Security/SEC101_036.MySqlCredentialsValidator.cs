@@ -79,6 +79,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint);
             var validationResult = new ValidationResult
             {
+                RegionFlexMatch = secret,
                 Fingerprint = fingerprint,
                 ValidationState = ValidationState.Unknown,
             };

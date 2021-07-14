@@ -19,5 +19,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         [Fact]
         public void UseSecureApi_EndToEndFunctionalTests()
             => RunAllTests();
+
+        [Fact]
+        public void UseSecureApi_ValidateOutputFiles()
+            => ValidateOutputFiles();
     }
 }

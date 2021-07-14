@@ -19,5 +19,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         [Fact]
         public void SecurePlaintextSecrets_EndToEndFunctionalTests()
             => RunAllTests();
+
+        [Fact]
+        public void SecurePlaintextSecrets_ValidateOutputFiles()
+            => ValidateOutputFiles();
     }
 }

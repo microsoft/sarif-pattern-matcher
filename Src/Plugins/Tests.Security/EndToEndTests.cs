@@ -9,6 +9,7 @@ using System.Text;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.CodeAnalysis.Sarif.Visitors;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 
@@ -137,6 +138,44 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             RunTest(inputFiles, expectedOutputResourceMap, enforceNotificationsFree: true);
+        }
+
+        protected void ValidateOutputFiles()
+        {
+            Directory.Exists(ProductTestDataDirectory).Should().BeTrue();
+
+            string testsDirectory = Path.Combine(ProductTestDataDirectory, @"ExpectedOutputs\");
+
+            var sb = new StringBuilder();
+            foreach (string testFile in Directory.GetFiles(testsDirectory))
+            {
+                string fileName = Path.GetFileName(testFile);
+                var sarifLog = SarifLog.Load(testFile);
+                if (sarifLog == null)
+                {
+                    sb.AppendLine($"SarifLog from file '{fileName}' should not be null.");
+                    continue;
+                }
+
+                if (sarifLog.Runs[0].Results == null || sarifLog.Runs[0].Results.Count == 0)
+                {
+                    sb.AppendLine($"Results from file '{fileName}' should not be empty.");
+                    continue;
+                }
+
+                //foreach (Result result in sarifLog.Runs[0].Results)
+                //{
+                //    var fingerprint = new Fingerprint(result.Fingerprints[SearchSkimmer.ValidationFingerprintV2]);
+                //    if (!result.Locations[0].PhysicalLocation.Region.Snippet.Text.StartsWith(fingerprint.Secret))
+                //    {
+                //        sb.AppendLine($"The 'secret' was expected to be at the beginning. " +
+                //            $"But it was not found at the file '{fileName}'.");
+                //        break;
+                //    }
+                //}
+            }
+
+            sb.Length.Should().Be(0, sb.ToString());
         }
     }
 }
