@@ -47,15 +47,16 @@ The `Definition` property has the following structure:
 
 ```json
 {
-  "Id": "Id shall contain a stable identifier for the rule",
-  "Name": "Name may contain an identifier that is understandable to an end user",
-  "HelpUri": "HelUri may contain the absolute URI of the primary documentation for the reporting item",
-  "Message": "Message may contain the default message that will be used",
-  "Kind": "ResultKind of the issue",
-  "Level": "FailureLevel of the issue",
-  "Description": "Description of the rule",
-  "FileNameDenyRegex": "Regular expression that will be denied during analysis",
-  "FileNameAllowRegex": "Regular expression that will be allowed  during analysis"
+  "Id": "'Id' shall contain a stable identifier for the rule.",
+  "Name": "'Name' may contain an identifier that is understandable to an end user.",
+  "HelpUri": "'HelpUri' may contain the absolute URI of the primary documentation for the reporting item.",
+  "Message": "'Message' may contain the default message that will be used.",
+  "Kind": "The kind, or 'ResultKind' that is associated with this rule (e.g., 'Pass', 'Open', 'Informational', 'NotApplicable', ''Review' or 'Fail').",
+  "Level": "The severity, or SARIF 'FailureLevel' that is associated with this rule (e.g., 'Error', Warning' or 'Note').",
+  "Description": "'Description' of the rule.",
+  "FileNameDenyRegex": "Any files whose names match the 'FileNameDenyRegex' pattern will be added to a deny list (i.e., they won't be scanned).",
+  "FileNameAllowRegex": "Any files whose names match the 'FileNameAllowRegex' will be added to an allow list (i.e., they will be scanned).",
+  "MatchExpressions": "List of 'MatchExpression' objects."
 }
 ```
 
@@ -65,18 +66,18 @@ The `MatchExpression` property has the following structure:
 
 ```json
 {
-  "Id": "Id shall contain a stable identifier for the rule",
-  "Name": "Name may contain an identifier that is understandable to an end user",
-  "HelpUri": "HelUri may contain the absolute URI of the primary documentation for the reporting item",
-  "Message": "Message may contain the default message that will be used",
-  "Kind": "ResultKind of the issue",
-  "Level": "FailureLevel of the issue",
-  "Description": "Description of the rule",
-  "FileNameDenyRegex": "Regular expression that will be denied during analysis",
-  "FileNameAllowRegex": "Regular expression that will be allowed  during analysis",
-  "ContentsRegex": "Regular expression or pointer to a regular expression in the txt file",
-  "IntrafileRegexes": "List of regular expressions or pointers to regular expressions in the txt file",
-  "SingleLineRegexes": "List of regular expressions or pointers to regular expressions in the txt file"
+  "Id": "'Id' shall contain a stable identifier for the rule.",
+  "Name": "'Name' may contain an identifier that is understandable to an end user.",
+  "HelpUri": "'HelpUri' may contain the absolute URI of the primary documentation for the reporting item.",
+  "Message": "'Message' may contain the default message that will be used.",
+  "Kind": "The kind, or 'ResultKind' that is associated with this rule (e.g., 'Pass', 'Open', 'Informational', 'NotApplicable', ''Review' or 'Fail').",
+  "Level": "The severity, or SARIF 'FailureLevel' that is associated with this rule (e.g., 'Error', Warning' or 'Note').",
+  "Description": "'Description' of the rule.",
+  "FileNameDenyRegex": "Any files whose names match the 'FileNameDenyRegex' pattern will be added to a deny list (i.e., they won't be scanned).",
+  "FileNameAllowRegex": "Any files whose names match the 'FileNameAllowRegex' will be added to an allow list (i.e., they will be scanned).",
+  "ContentsRegex": "Regular expression or pointer to a regular expression in the txt file.",
+  "IntrafileRegexes": "List of regular expressions or pointers to regular expressions in the txt file.",
+  "SingleLineRegexes": "List of regular expressions or pointers to regular expressions in the txt file."
 }
 ```
 
