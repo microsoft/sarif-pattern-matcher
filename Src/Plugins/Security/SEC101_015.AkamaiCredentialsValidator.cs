@@ -54,9 +54,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Fingerprint = new Fingerprint()
                 {
                     Id = id.Value,
+                    Host = host.Value,
                     Secret = secret.Value,
                     Resource = resource.Value,
-                    Host = host.Value,
                 },
                 ValidationState = ValidationState.Unknown,
             };
