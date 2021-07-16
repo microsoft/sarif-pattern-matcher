@@ -298,7 +298,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 case ValidationState.PasswordProtected:
                 {
-                    level = FailureLevel.Warning;
+                    level = FailureLevel.Note;
 
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains a valid but password-protected
@@ -309,7 +309,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 case ValidationState.Unauthorized:
                 {
-                    level = FailureLevel.Note;
+                    level = FailureLevel.None;
 
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains an invalid SomeApi token[...].
@@ -320,7 +320,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 case ValidationState.Expired:
                 {
-                    level = FailureLevel.Note;
+                    level = FailureLevel.None;
 
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains an expired SomeApi token[...].
@@ -330,7 +330,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 case ValidationState.UnknownHost:
                 {
-                    level = FailureLevel.Note;
+                    level = FailureLevel.None;
 
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains an apparent SomeApi token
@@ -342,7 +342,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 case ValidationState.InvalidForConsultedAuthorities:
                 {
-                    level = FailureLevel.Note;
+                    level = FailureLevel.None;
 
                     // Contributes to building a message fragment such as:
                     // 'SomeFile.txt' contains an apparent SomeApi token
@@ -904,7 +904,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                             case ValidationState.Expired:
                             {
-                                level = FailureLevel.Note;
+                                level = FailureLevel.None;
 
                                 // Contributes to building a message fragment such as:
                                 // 'SomeFile.txt' contains an expired SomeApi token[...].
@@ -914,7 +914,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                             case ValidationState.PasswordProtected:
                             {
-                                level = FailureLevel.Warning;
+                                level = FailureLevel.Note;
 
                                 // Contributes to building a message fragment such as:
                                 // 'SomeFile.txt' contains a password-protected SomeSecret file
