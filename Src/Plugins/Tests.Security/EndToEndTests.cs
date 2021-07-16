@@ -138,35 +138,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             RunTest(inputFiles, expectedOutputResourceMap, enforceNotificationsFree: true);
-
-            ValidateOutputFiles();
-        }
-
-        private void ValidateOutputFiles()
-        {
-            Directory.Exists(ProductTestDataDirectory).Should().BeTrue();
-
-            string testsDirectory = Path.Combine(ProductTestDataDirectory, @"ExpectedOutputs\");
-
-            var sb = new StringBuilder();
-            foreach (string testFile in Directory.GetFiles(testsDirectory))
-            {
-                string fileName = Path.GetFileName(testFile);
-                var sarifLog = SarifLog.Load(testFile);
-                if (sarifLog == null)
-                {
-                    sb.AppendLine($"SarifLog from file '{fileName}' should not be null.");
-                    continue;
-                }
-
-                if (sarifLog.Runs[0].Results == null || sarifLog.Runs[0].Results.Count == 0)
-                {
-                    sb.AppendLine($"Results from file '{fileName}' should not be empty.");
-                    continue;
-                }
-            }
-
-            sb.Length.Should().Be(0, sb.ToString());
         }
     }
 }
