@@ -53,7 +53,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 validationResult = new ValidationResult
                 {
-                    RegionFlexMatch = secret,
                     Fingerprint = new Fingerprint
                     {
                         Secret = secret.Value,
@@ -90,7 +89,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             validationResult = new ValidationResult
             {
-                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint
                 {
                     Secret = secret.Value,
