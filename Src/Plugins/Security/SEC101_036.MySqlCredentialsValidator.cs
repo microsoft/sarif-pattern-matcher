@@ -26,6 +26,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             "database.secure.windows.net",
         };
 
+        private static readonly HashSet<string> AzureHosts = new HashSet<string>
+        {
+            "mysqldb.chinacloudapi.cn",
+        };
+
         static MySqlCredentialsValidator()
         {
             Instance = new MySqlCredentialsValidator();
@@ -61,7 +66,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.TryGetNonEmptyValue("resource", out FlexMatch resource);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
-            if (hostValue.IndexOf("postgres", StringComparison.OrdinalIgnoreCase) != -1 ||
+            if (AzureHosts.Any(azHosts => hostValue.IndexOf(azHosts, StringComparison.OrdinalIgnoreCase) != -1))
+            {
+                // continue so we can do azure check?
+            }
+            else if (hostValue.IndexOf("postgres", StringComparison.OrdinalIgnoreCase) != -1 ||
                 HostsToExclude.Any(hostToExclude => hostValue.IndexOf(hostToExclude, StringComparison.OrdinalIgnoreCase) != -1))
             {
                 return ValidationResult.CreateNoMatch();
@@ -105,6 +114,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             bool shouldRetry;
             string connString;
+
+            // Azure Hosts must be in the form <username>@<hostname> if the username does not contain a host name, we can't connect.
+            if (AzureHosts.Any(azHosts => host.IndexOf(azHosts, StringComparison.OrdinalIgnoreCase) != -1) &&
+                              (!account.Contains("@") || !account.Contains("%40")))
+            {
+                return ValidationState.Unknown;
+            }
+
             if (!string.IsNullOrWhiteSpace(database))
             {
                 connString = $"Server={host}; Database={database}; Uid={account}; Pwd={password}; SslMode=Preferred;";
