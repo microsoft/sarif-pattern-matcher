@@ -29,6 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private static readonly HashSet<string> AzureHosts = new HashSet<string>
         {
             "mysqldb.chinacloudapi.cn",
+            "mysql.database.azure.com",
         };
 
         static MySqlCredentialsValidator()
@@ -66,11 +67,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.TryGetNonEmptyValue("resource", out FlexMatch resource);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
-            if (AzureHosts.Any(azHosts => hostValue.IndexOf(azHosts, StringComparison.OrdinalIgnoreCase) != -1))
+            string idValue = id.Value;
+
+            // Azure Hosts must be in the form <username>@<hostname> if the username does not contain a host name, we can't connect.
+            if (AzureHosts.Any(azHosts => hostValue.IndexOf(azHosts, StringComparison.OrdinalIgnoreCase) != -1) &&
+                              !idValue.Contains("@"))
             {
-                // continue so we can do azure check?
+                return ValidationResult.CreateNoMatch();
             }
-            else if (hostValue.IndexOf("postgres", StringComparison.OrdinalIgnoreCase) != -1 ||
+
+            if (hostValue.IndexOf("postgres", StringComparison.OrdinalIgnoreCase) != -1 ||
                 HostsToExclude.Any(hostToExclude => hostValue.IndexOf(hostToExclude, StringComparison.OrdinalIgnoreCase) != -1))
             {
                 return ValidationResult.CreateNoMatch();
@@ -78,14 +84,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var fingerprint = new Fingerprint()
             {
-                Id = id.Value,
+                Id = idValue,
                 Host = hostValue,
                 Port = port?.Value,
                 Secret = secret.Value,
                 Resource = resource?.Value,
             };
 
-            SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint);
+            SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint, AzureHosts.ToList());
             var validationResult = new ValidationResult
             {
                 Fingerprint = fingerprint,
@@ -114,14 +120,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             bool shouldRetry;
             string connString;
-
-            // Azure Hosts must be in the form <username>@<hostname> if the username does not contain a host name, we can't connect.
-            if (AzureHosts.Any(azHosts => host.IndexOf(azHosts, StringComparison.OrdinalIgnoreCase) != -1) &&
-                              (!account.Contains("@") || !account.Contains("%40")))
-            {
-                return ValidationState.Unknown;
-            }
-
             if (!string.IsNullOrWhiteSpace(database))
             {
                 connString = $"Server={host}; Database={database}; Uid={account}; Pwd={password}; SslMode=Preferred;";

@@ -9,9 +9,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public static class SharedUtilities
     {
-        public static void PopulateAssetFingerprint(string host, ref Fingerprint fingerprint)
+        public static void PopulateAssetFingerprint(string host, ref Fingerprint fingerprint, List<string> azureHosts = null)
         {
-            if (GetDatabasePlatformFromHost(host, out _) != nameof(AssetPlatform.Azure))
+            if (GetDatabasePlatformFromHost(host, out _, azureHosts) != nameof(AssetPlatform.Azure))
             {
                 fingerprint.Platform = nameof(AssetPlatform.SqlOnPremise);
                 return;
@@ -21,7 +21,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint.Platform = nameof(AssetPlatform.Azure);
         }
 
-        public static string GetDatabasePlatformFromHost(string host, out string resource)
+        public static string GetDatabasePlatformFromHost(string host, out string resource, List<string> platformHosts = null)
         {
             resource = null;
 
@@ -30,6 +30,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 ".database.windows.net",
                 ".database.azure.com",
             };
+
+            if (platformHosts != null)
+            {
+                list.AddRange(platformHosts);
+            }
 
             foreach (string item in list)
             {
