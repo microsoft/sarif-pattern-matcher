@@ -4,9 +4,6 @@ Port=3306; Server=some-database-name.mysql.database.azure.com; Database=catalog_
 Server=some-database-name.mysql.database.azure.com; Database=catalog_db; Uid=username@some-database-name; Pwd=password_3; SslMode=Preferred;Port=3306; 
 Server=some-database-name.mysql.database.azure.com;Database=catalog_db; SslMode=Preferred; Pwd=password_4; Uid=username@some-database-name;
 
-# This is a malformed and invalid ADO MySQL String. UiD should be in the form of <username>@<database-name>. This should be missed.
-Server=some-database-name.mysql.database.azure.com; Port=3306; Database=catalog_db; Uid=username; Pwd=password_12; SslMode=Preferred;
-
 # This is a well-formed but invalid JDBC MySql connection string - Implemented in MySqlConnectionStringPlainJdbc
 String url ="jdbc:mysql://some-database-name.mysql.database.azure.com:3306/catalog_db?useSSL=true&requireSSL=false"; myDbConn = DriverManager.getConnection(url, "username@some-database-name", "PASSword_5");
 
@@ -89,3 +86,6 @@ DATABASES['default'].update({
 
 if url.scheme == 'mysql':
     DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+
+# This is a malformed and invalid ADO MySQL String. UiD should be in the form of <username>@<database-name>. This should be missed.
+Server=some-database-name.mysql.database.azure.com; Port=3306; Database=catalog_db; Uid=username; Pwd=password_12; SslMode=Preferred;

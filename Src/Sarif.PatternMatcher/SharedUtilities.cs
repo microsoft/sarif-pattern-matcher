@@ -9,7 +9,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public static class SharedUtilities
     {
-        public static void PopulateAssetFingerprint(string host, ref Fingerprint fingerprint, List<string> azureHosts = null)
+        public static void PopulateAssetFingerprint(string host, ref Fingerprint fingerprint)
+        {
+            if (GetDatabasePlatformFromHost(host, out _) != nameof(AssetPlatform.Azure))
+            {
+                fingerprint.Platform = nameof(AssetPlatform.SqlOnPremise);
+                return;
+            }
+
+            fingerprint.Part = "servers";
+            fingerprint.Platform = nameof(AssetPlatform.Azure);
+        }
+
+        public static void PopulateAssetFingerprint(List<string> azureHosts, string host, ref Fingerprint fingerprint)
         {
             if (GetDatabasePlatformFromHost(host, out _, azureHosts) != nameof(AssetPlatform.Azure))
             {

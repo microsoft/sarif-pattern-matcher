@@ -69,7 +69,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
             string idValue = id.Value;
 
-            // Azure Hosts must be in the form <username>@<hostname> if the username does not contain a host name, we can't connect.
+            // Username must be in the form <username>@<hostname> to communicate with Azure.
+            // If the username does not contain a host name, we can't connect.
             if (AzureHosts.Any(azHosts => hostValue.IndexOf(azHosts, StringComparison.OrdinalIgnoreCase) != -1) &&
                               !idValue.Contains("@"))
             {
@@ -91,7 +92,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Resource = resource?.Value,
             };
 
-            SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint, AzureHosts.ToList());
+            SharedUtilities.PopulateAssetFingerprint(AzureHosts.ToList(), hostValue, ref fingerprint);
             var validationResult = new ValidationResult
             {
                 Fingerprint = fingerprint,
