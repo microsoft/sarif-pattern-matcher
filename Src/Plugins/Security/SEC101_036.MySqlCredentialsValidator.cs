@@ -26,6 +26,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             "database.secure.windows.net",
         };
 
+        private static readonly HashSet<string> AzureHosts = new HashSet<string>
+        {
+            "mysqldb.chinacloudapi.cn",
+            "mysql.database.azure.com",
+        };
+
         static MySqlCredentialsValidator()
         {
             Instance = new MySqlCredentialsValidator();
@@ -61,6 +67,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.TryGetNonEmptyValue("resource", out FlexMatch resource);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
+            string idValue = id.Value;
+
+            // Username must be in the form <username>@<hostname> to communicate with Azure.
+            // If the username does not contain a host name, we can't connect.
+            if (AzureHosts.Any(azHosts => hostValue.IndexOf(azHosts, StringComparison.OrdinalIgnoreCase) != -1) &&
+                              !idValue.Contains("@"))
+            {
+                return ValidationResult.CreateNoMatch();
+            }
+
             if (hostValue.IndexOf("postgres", StringComparison.OrdinalIgnoreCase) != -1 ||
                 HostsToExclude.Any(hostToExclude => hostValue.IndexOf(hostToExclude, StringComparison.OrdinalIgnoreCase) != -1))
             {
@@ -69,14 +85,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var fingerprint = new Fingerprint()
             {
-                Id = id.Value,
+                Id = idValue,
                 Host = hostValue,
                 Port = port?.Value,
                 Secret = secret.Value,
                 Resource = resource?.Value,
             };
 
-            SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint);
+            SharedUtilities.PopulateAssetFingerprint(AzureHosts.ToList(), hostValue, ref fingerprint);
             var validationResult = new ValidationResult
             {
                 Fingerprint = fingerprint,

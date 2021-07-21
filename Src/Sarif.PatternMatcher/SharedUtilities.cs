@@ -21,7 +21,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint.Platform = nameof(AssetPlatform.Azure);
         }
 
-        public static string GetDatabasePlatformFromHost(string host, out string resource)
+        public static void PopulateAssetFingerprint(List<string> azureHosts, string host, ref Fingerprint fingerprint)
+        {
+            if (GetDatabasePlatformFromHost(host, out _, azureHosts) != nameof(AssetPlatform.Azure))
+            {
+                fingerprint.Platform = nameof(AssetPlatform.SqlOnPremise);
+                return;
+            }
+
+            fingerprint.Part = "servers";
+            fingerprint.Platform = nameof(AssetPlatform.Azure);
+        }
+
+        public static string GetDatabasePlatformFromHost(string host, out string resource, List<string> platformHosts = null)
         {
             resource = null;
 
@@ -30,6 +42,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 ".database.windows.net",
                 ".database.azure.com",
             };
+
+            if (platformHosts != null)
+            {
+                list.AddRange(platformHosts);
+            }
 
             foreach (string item in list)
             {
