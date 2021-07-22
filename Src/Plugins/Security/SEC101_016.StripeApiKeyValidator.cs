@@ -98,6 +98,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
+                        if (keyKind == "test")
+                        {
+                            resultLevelKind = new ResultLevelKind { Level = FailureLevel.Warning };
+                        }
+
                         return ValidationState.Authorized;
                     }
 
@@ -108,9 +113,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message += $" An unexpected response code was returned attempting to " +
-                                   $"validate: '{response.StatusCode}'";
-                        break;
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
                     }
                 }
             }
@@ -118,8 +121,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }
