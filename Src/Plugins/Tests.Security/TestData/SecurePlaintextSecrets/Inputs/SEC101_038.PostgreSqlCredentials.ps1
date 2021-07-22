@@ -1,4 +1,8 @@
 ﻿# ADO.NET
+# Well-formed but invalid Azure connection string using ADO.NET formatting.
+
+Server=some-database-name.postgres.database.azure.com;Database=catalog_db;Port=5555;User Id=someuser@some-database-name;Password=pass_1234;Ssl Mode=Require;
+
 # Using Npgsql
 # Currently caught
 <add name="BlogDbContext" connectionString="host=my_host;Port=5555;Database=my_db;Username=my_user;Password=pass_1111"> # host not capitalized, optional properties in the middle
@@ -88,3 +92,9 @@ conn = psycopg2.connect(host="localhost",database="suppliers",user="postgres",pa
 # Ruby
 # Using libpq 
 con = PG.connect :dbname => 'testdb', :user => 'janbodnar', :password => 'pswd37'
+
+
+# Intentionally malformed and invalid Azure connection string using ADO.NET formatting.
+# Azure Connections require user ID to be in the form od <username>@<host>
+
+Server=some-database-name.postgres.database.azure.com;Database=catalog_db;Port=5555;User Id=someuser;Password=pass_1234;Ssl Mode=Require;

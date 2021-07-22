@@ -18,6 +18,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static PostgreSqlCredentialsValidator Instance;
 
+        // At the moment only public Azure has a PostGres host.
+        private const string AzureHost = "postgres.database.azure.com";
+
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
             "localhost",
@@ -61,6 +64,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.TryGetNonEmptyValue("resource", out FlexMatch resource);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
+            string idValue = id.Value;
+
+            // Username must be in the form <username>@<hostname> to communicate with Azure.
+            // If the username does not contain a host name, we can't connect.
+            if (hostValue.Contains(AzureHost) && !idValue.Contains("@"))
+            {
+                return ValidationResult.CreateNoMatch();
+            }
+
             if (hostValue.Equals("tcp", StringComparison.OrdinalIgnoreCase) ||
                 hostValue.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1 ||
                 HostsToExclude.Any(hostToExclude => hostValue.IndexOf(hostToExclude, StringComparison.OrdinalIgnoreCase) != -1))
@@ -70,14 +82,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var fingerprint = new Fingerprint()
             {
-                Id = id.Value,
+                Id = idValue,
                 Host = hostValue,
                 Port = port?.Value,
                 Secret = secret.Value,
                 Resource = resource?.Value,
             };
 
-            SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint);
+            SharedUtilities.PopulateAssetFingerprint(new List<string> { AzureHost }, hostValue, ref fingerprint);
             var validationResult = new ValidationResult
             {
                 Fingerprint = fingerprint,
