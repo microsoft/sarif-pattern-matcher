@@ -9,21 +9,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public static class SharedUtilities
     {
-        public static void PopulateAssetFingerprint(string host, ref Fingerprint fingerprint)
-        {
-            if (GetDatabasePlatformFromHost(host, out _) != nameof(AssetPlatform.Azure))
-            {
-                fingerprint.Platform = nameof(AssetPlatform.SqlOnPremise);
-                return;
-            }
-
-            fingerprint.Part = "servers";
-            fingerprint.Platform = nameof(AssetPlatform.Azure);
-        }
-
         public static void PopulateAssetFingerprint(List<string> azureHosts, string host, ref Fingerprint fingerprint)
         {
-            if (GetDatabasePlatformFromHost(host, out _, azureHosts) != nameof(AssetPlatform.Azure))
+            if (GetDatabasePlatformFromHost(azureHosts, host, out _) != nameof(AssetPlatform.Azure))
             {
                 fingerprint.Platform = nameof(AssetPlatform.SqlOnPremise);
                 return;
@@ -33,22 +21,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint.Platform = nameof(AssetPlatform.Azure);
         }
 
-        public static string GetDatabasePlatformFromHost(string host, out string resource, List<string> platformHosts = null)
+        private static string GetDatabasePlatformFromHost(List<string> platformHosts, string host, out string resource)
         {
             resource = null;
 
-            var list = new List<string>
-            {
-                ".database.windows.net",
-                ".database.azure.com",
-            };
-
-            if (platformHosts != null)
-            {
-                list.AddRange(platformHosts);
-            }
-
-            foreach (string item in list)
+            foreach (string item in platformHosts)
             {
                 string result = ExtractResource(item, host, out resource);
                 if (!string.IsNullOrEmpty(result))
