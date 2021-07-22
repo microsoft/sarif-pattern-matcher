@@ -18,15 +18,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static PostgreSqlCredentialsValidator Instance;
 
-        // At the moment only public Azure has a PostGres host.
-        private const string AzureHost = "postgres.database.azure.com";
-
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
             "localhost",
             "database.windows.net",
             "database.chinacloudapi.cn",
             "database.secure.windows.net",
+        };
+
+        private static readonly List<string> AzureHosts = new List<string>
+        {
+            "database.azure.com",
+            "postgres.database.azure.com",
         };
 
         static PostgreSqlCredentialsValidator()
@@ -68,7 +71,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             // Username must be in the form <username>@<hostname> to communicate with Azure.
             // If the username does not contain a host name, we can't connect.
-            if (hostValue.IndexOf(AzureHost, StringComparison.OrdinalIgnoreCase) != -1 && !idValue.Contains("@"))
+            if (AzureHosts.Any(azHosts => hostValue.IndexOf(azHosts, StringComparison.OrdinalIgnoreCase) != -1) &&
+                !idValue.Contains("@"))
             {
                 return ValidationResult.CreateNoMatch();
             }
@@ -89,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Resource = resource?.Value,
             };
 
-            SharedUtilities.PopulateAssetFingerprint(new List<string> { AzureHost }, hostValue, ref fingerprint);
+            SharedUtilities.PopulateAssetFingerprint(AzureHosts, hostValue, ref fingerprint);
             var validationResult = new ValidationResult
             {
                 Fingerprint = fingerprint,

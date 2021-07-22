@@ -17,14 +17,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void SharedUtilities_PopulateAssetFingerprint_WithHostList()
         {
-            string[] azureHosts = new string[]
-            {
-                "resource.database.windows.net",
-                "resource.database.azure.com",
-                "mysqldb.chinacloudapi.cn",
-                "mysql.database.azure.com",
-            };
-
             var testCases = new[]
             {
                 new
@@ -61,6 +53,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var otherAzureHosts = new List<string>
             {
+                "database.azure.com",
+                "database.windows.net",
                 "mysqldb.chinacloudapi.cn",
                 "mysql.database.azure.com",
             };

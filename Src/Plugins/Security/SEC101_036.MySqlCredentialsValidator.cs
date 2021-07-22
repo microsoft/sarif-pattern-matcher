@@ -28,6 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private static readonly List<string> AzureHosts = new List<string>
         {
+            "database.azure.com",
             "mysqldb.chinacloudapi.cn",
             "mysql.database.azure.com",
         };
@@ -72,7 +73,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // Username must be in the form <username>@<hostname> to communicate with Azure.
             // If the username does not contain a host name, we can't connect.
             if (AzureHosts.Any(azHosts => hostValue.IndexOf(azHosts, StringComparison.OrdinalIgnoreCase) != -1) &&
-                              !idValue.Contains("@"))
+                !idValue.Contains("@"))
             {
                 return ValidationResult.CreateNoMatch();
             }

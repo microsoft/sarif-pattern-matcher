@@ -25,9 +25,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             resource = null;
 
-            // Generic azure database pattern (MariaDb, MySql, Postgres, etc.)
-            platformHosts.Add(".database.azure.com");
-
             foreach (string item in platformHosts)
             {
                 string result = ExtractResource(item, host, out resource);

@@ -20,6 +20,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private static readonly List<string> AzureHosts = new List<string>
         {
+            "database.azure.com",
             "database.cloudapi.de",
             "database.windows.net",
             "database.chinacloudapi.cn",
