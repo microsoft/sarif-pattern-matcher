@@ -26,7 +26,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             "database.secure.windows.net",
         };
 
-        private static readonly HashSet<string> AzureHosts = new HashSet<string>
+        private static readonly List<string> AzureHosts = new List<string>
         {
             "mysqldb.chinacloudapi.cn",
             "mysql.database.azure.com",
@@ -92,7 +92,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Resource = resource?.Value,
             };
 
-            SharedUtilities.PopulateAssetFingerprint(AzureHosts.ToList(), hostValue, ref fingerprint);
+            SharedUtilities.PopulateAssetFingerprint(AzureHosts, hostValue, ref fingerprint);
             var validationResult = new ValidationResult
             {
                 Fingerprint = fingerprint,
