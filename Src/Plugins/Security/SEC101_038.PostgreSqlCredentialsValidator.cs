@@ -68,8 +68,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             // Username must be in the form <username>@<hostname> to communicate with Azure.
             // If the username does not contain a host name, we can't connect.
-            if (hostValue.Contains(AzureHost) &&
-                              !idValue.Contains("@"))
+            if (hostValue.Contains(AzureHost) && !idValue.Contains("@"))
             {
                 return ValidationResult.CreateNoMatch();
             }
