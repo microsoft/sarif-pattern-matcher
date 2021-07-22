@@ -26,8 +26,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             "database.secure.windows.net",
         };
 
-        private static readonly HashSet<string> AzureHosts = new HashSet<string>
+        private static readonly List<string> AzureHosts = new List<string>
         {
+            "database.azure.com",
             "mysqldb.chinacloudapi.cn",
             "mysql.database.azure.com",
         };
@@ -72,7 +73,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // Username must be in the form <username>@<hostname> to communicate with Azure.
             // If the username does not contain a host name, we can't connect.
             if (AzureHosts.Any(azHosts => hostValue.IndexOf(azHosts, StringComparison.OrdinalIgnoreCase) != -1) &&
-                              !idValue.Contains("@"))
+                !idValue.Contains("@"))
             {
                 return ValidationResult.CreateNoMatch();
             }
@@ -92,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 Resource = resource?.Value,
             };
 
-            SharedUtilities.PopulateAssetFingerprint(AzureHosts.ToList(), hostValue, ref fingerprint);
+            SharedUtilities.PopulateAssetFingerprint(AzureHosts, hostValue, ref fingerprint);
             var validationResult = new ValidationResult
             {
                 Fingerprint = fingerprint,
