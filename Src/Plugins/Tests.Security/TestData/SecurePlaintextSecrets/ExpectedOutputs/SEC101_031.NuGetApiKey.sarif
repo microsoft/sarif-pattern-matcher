@@ -44,7 +44,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "oy20de…",
+              "oy2ade…",
               "an apparent ",
               "",
               "NuGet API Key",
@@ -76,11 +76,11 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=NuGet]",
             "ValidationFingerprint/v1": "[secret=oy2adeadbeef0deadbeaf00deadbeefedeadbee50deada]",
-            "ValidationFingerprintHash/v1": "6811bdcc965a68f988f7d66d953af2618a73c079d8c3afcc14cde12706037436",
+            "ValidationFingerprintHash/v1": "bffc0dfed763580a72800bf5c2fc1effa0de2b2ba6dfe7be28b0b23a09a7755a",
             "AssetFingerprint/v2": "{\"platform\":\"NuGet\"}",
             "ValidationFingerprint/v2": "{\"secret\":\"oy2adeadbeef0deadbeaf00deadbeefedeadbee50deada\"}"
           },
-          "rank": 40.22
+          "rank": 39.75
         }
       ],
       "columnKind": "utf16CodeUnits"
