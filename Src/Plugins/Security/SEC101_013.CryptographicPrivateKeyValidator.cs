@@ -177,6 +177,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     return ValidationState.NoMatch;
                 }
 
+                if (ex.Message == "unknown PGP public key algorithm encountered")
+                {
+                    return ValidationState.Unknown;
+                }
+
                 throw;
             }
         }
