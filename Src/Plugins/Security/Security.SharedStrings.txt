@@ -61,8 +61,7 @@
   $SEC101/028.PlaintextPassword=(?i)ConvertTo-SecureString\s*(?:-[S]tring)?\s*["'](?P<secret>[^"')(?:]*)["']
   $SEC101/030.GoogleServiceAccountKeyConsoleFormat="private_key":\s*"-----BEGIN PRIVATE KEY-----\\n(?s)(?P<secret>[^"]+)(?-s)\\n-----END PRIVATE KEY-----\\n(?s).{1,200}(?-s)"client_id"\s*:\s*"(?P<id>[\w.-]+)"
   $SEC101/030.GoogleServiceAccountKeyConsoleRestFormat="name": "projects\/[\w-]+\/serviceAccounts\/[\w@.-]+\/keys\/(?P<secret>[^"]+)",
-  $SEC101/031.NuGetApiKey=\b(?P<secret>oy2[0-9a-z]{16}[aq][0-9a-z]{11}[eu]{1}[bdfhjlnprtvxz357][a-p][0-9a-z]{12})(?:^[0-9a-z]|$)
-  
+  $SEC101/031.NuGetApiKey=\b(?P<secret>oy2[a-p][0-9a-z]{15}[aq][0-9a-z]{11}[eu][bdfhjlnprtvxz357][a-p][0-9a-z]{12})(?:^[0-9a-z]|$)  
   $SEC101/032.GpgCredentials=(?is)gpg[._-](?:gen_key_input|sign|decrypt_file)\s*\(\s*(?:name_email\s*=\s*["'](?P<id>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?P<secret>[^"']*)["']
   $SEC101/034.CredentialObjectConstructor=(?:PSCredential|SqlCredential)\s*\(\s*"(?P<id>[^"]*)"\s*,\s*"(?P<secret>[^"]*)"
   $SEC101/034.CredentialObjectInitializer=(?s)(?:PSCredential|SqlCredential)\s*\(\)\s*{\s*.{0,50}User(?:Name|Id)\s*=\s*"(?P<id>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?P<secret>[^"]*)"  
