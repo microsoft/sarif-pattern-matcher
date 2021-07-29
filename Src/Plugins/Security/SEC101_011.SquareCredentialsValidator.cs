@@ -69,19 +69,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
 
+            const string codeForRequest = "123";
             const string uri = "https://connect.squareup.com/oauth2/token";
-            const string CodeNotFoundMessage = "Authorization code not found";
-            const string CodeForRequest = "123";
+            const string codeNotFoundMessage = "Authorization code not found";
 
             try
             {
                 HttpClient client = CreateHttpClient();
 
-                var dict = new Dictionary<string, string>();
-                dict.Add("grant_type", "authorization_code");
-                dict.Add("code", CodeForRequest); // Needs some value for call to work.
-                dict.Add("client_id", id);
-                dict.Add("client_secret", secret);
+                var dict = new Dictionary<string, string>()
+                {
+                    { "client_id", id },
+                    { "code", codeForRequest },
+                    { "client_secret", secret },
+                    { "grant_type", "authorization_code" },
+                };
 
                 using var request = new HttpRequestMessage(HttpMethod.Post, uri);
                 request.Content = new FormUrlEncodedContent(dict);
@@ -91,18 +93,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     .GetAwaiter()
                     .GetResult();
 
-                string res = response.Content.ReadAsStringAsync().Result; // Actually runs synchronously when "Result" is called.
-
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
                     {
-                        return ValidationState.Authorized; // This should theoretically never be hit, a "code" of 123 is much too short. But if we do get a 200, it's a valid Credential.
+                        // This should theoretically never be hit, a "code" of 123 is much too short.
+                        // But if we do get a 200, it's a valid Credential.
+                        return ValidationState.Authorized;
                     }
 
                     case HttpStatusCode.Unauthorized:
                     {
-                        if (res.Contains(CodeNotFoundMessage))
+                        string content = response.Content
+                                                 .ReadAsStringAsync()
+                                                 .GetAwaiter()
+                                                 .GetResult();
+                        if (content.Contains(codeNotFoundMessage))
                         {
                             // Credential was valid, code was not.
                             return ValidationState.Authorized;
@@ -111,6 +117,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         // Credential not valid.
                         return ValidationState.Unauthorized;
                     }
+
                     default:
                     {
                         return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
@@ -121,7 +128,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
         }
     }
 }
