@@ -320,6 +320,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return value.Substring(indexOfFirstEqualSign + 1).Trim();
         }
 
+        internal static void SetHttpClient(HttpClient client)
+        {
+            httpClient = client;
+        }
+
         protected HttpClient CreateHttpClient()
         {
             if (httpClient == null)
