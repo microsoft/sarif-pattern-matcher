@@ -95,19 +95,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 switch (response.StatusCode)
                 {
-                    case HttpStatusCode.OK:
-                    {
-                        // This should theoretically never be hit, a "code" of 123 is much too short.
-                        // But if we do get a 200, it's a valid Credential.
-                        return ValidationState.Authorized;
-                    }
-
                     case HttpStatusCode.Unauthorized:
                     {
                         string content = response.Content
                                                  .ReadAsStringAsync()
                                                  .GetAwaiter()
                                                  .GetResult();
+
                         if (content.Contains(codeNotFoundMessage))
                         {
                             // Credential was valid, code was not.
