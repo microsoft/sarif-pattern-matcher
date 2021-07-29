@@ -26,9 +26,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var keyValuePairs = new Dictionary<string, string>();
 
             SquareCredentialsValidator.IsValidDynamic(ref fingerprint,
-                                                          ref message,
-                                                          keyValuePairs,
-                                                          ref resultLevelKind);
+                                                      ref message,
+                                                      keyValuePairs,
+                                                      ref resultLevelKind);
         }
     }
 }
