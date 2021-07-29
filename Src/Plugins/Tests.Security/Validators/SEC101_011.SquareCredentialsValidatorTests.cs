@@ -4,8 +4,11 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
+using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
@@ -41,31 +44,60 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void SquareCredentialsValidator_TestingMock()
         {
+            var testCases = new[]
+            {
+                new
+                {
+                    Title = "Testing unexpected OK StatusCode",
+                    HttpStatusCode = HttpStatusCode.OK,
+                    HttpContent = (HttpContent)null,
+                    ExpectedValidationState = ValidationState.Unknown,
+                    ExpectedMessage = "An unexpected HTTP response code was received: 'OK'."
+                }
+            };
+
+            const string fingerprintText = "[id=a][secret=b]";
+
+            var sb = new StringBuilder();
+            foreach (var testCase in testCases)
+            {
+                string message = null;
+                ResultLevelKind resultLevelKind = default;
+                var fingerprint = new Fingerprint(fingerprintText);
+                var keyValuePairs = new Dictionary<string, string>();
+
+                SquareCredentialsValidator.SetHttpClient(new HttpClient(MockHttpMessageHandler(HttpStatusCode.OK, null)));
+
+                ValidationState currentState = SquareCredentialsValidator.IsValidDynamic(ref fingerprint,
+                                                                                         ref message,
+                                                                                         keyValuePairs,
+                                                                                         ref resultLevelKind);
+                if (currentState != testCase.ExpectedValidationState)
+                {
+                    sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedValidationState}' but found '{currentState}'.");
+                }
+
+                if (message != testCase.ExpectedMessage)
+                {
+                    sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedValidationState}' but found '{currentState}'.");
+                }
+            }
+
+            sb.Length.Should().Be(0, sb.ToString());
+        }
+
+        private HttpMessageHandler MockHttpMessageHandler(HttpStatusCode httpStatusCode, HttpContent httpContent)
+        {
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
                 {
-                    StatusCode = HttpStatusCode.OK
+                    StatusCode = httpStatusCode,
+                    Content = httpContent
                 });
 
-            SquareCredentialsValidator.SetHttpClient(new HttpClient(mockMessageHandler.Object));
-            string fingerprintText = "[id=a][secret=b]";
-            if (string.IsNullOrEmpty(fingerprintText))
-            {
-                return;
-            }
-
-            string message = null;
-            ResultLevelKind resultLevelKind = default;
-            var fingerprint = new Fingerprint(fingerprintText);
-            var keyValuePairs = new Dictionary<string, string>();
-
-            var state = SquareCredentialsValidator.IsValidDynamic(ref fingerprint,
-                                                      ref message,
-                                                      keyValuePairs,
-                                                      ref resultLevelKind);
-            // TODO: validate state
+            return mockMessageHandler.Object;
         }
     }
 }
