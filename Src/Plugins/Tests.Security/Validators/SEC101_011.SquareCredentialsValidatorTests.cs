@@ -42,7 +42,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         }
 
         [Fact]
-        public void SquareCredentialsValidator_TestingMock()
+        public void SquareCredentialsValidator_MockHttpTests()
         {
             var testCases = new[]
             {
@@ -53,7 +53,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     HttpContent = (HttpContent)null,
                     ExpectedValidationState = ValidationState.Unknown,
                     ExpectedMessage = "An unexpected HTTP response code was received: 'OK'."
-                }
+                },
+                new
+                {
+                    Title = "Testing Valid credentials",
+                    HttpStatusCode = HttpStatusCode.Unauthorized,
+                    HttpContent = new StringContent("{\"message\": \"Authorization code not found for app [a]\",\"type\": \"service.not_authorized\"}",
+                                                                  Encoding.UTF8,
+                                                                  "application/json").As<HttpContent>(),
+                    ExpectedValidationState = ValidationState.Authorized,
+                    ExpectedMessage = string.Empty
+                },
+                new
+                {
+                    Title = "Testing Invalid credentials",
+                    HttpStatusCode = HttpStatusCode.Unauthorized,
+                    HttpContent = new StringContent("{\n\"message\": \"Not Authorized\",\n\"type\": \"service.not_authorized\"\n}",
+                                                    Encoding.UTF8, 
+                                                    "application/json").As<HttpContent>(),
+                    ExpectedValidationState = ValidationState.Unauthorized,
+                    ExpectedMessage = string.Empty
+                },
             };
 
             const string fingerprintText = "[id=a][secret=b]";
@@ -61,12 +81,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var sb = new StringBuilder();
             foreach (var testCase in testCases)
             {
-                string message = null;
+                string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                SquareCredentialsValidator.SetHttpClient(new HttpClient(MockHttpMessageHandler(HttpStatusCode.OK, null)));
+                SquareCredentialsValidator.SetHttpClient(new HttpClient(MockHttpMessageHandler(testCase.HttpStatusCode, testCase.HttpContent)));
 
                 ValidationState currentState = SquareCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                                                          ref message,
@@ -77,14 +97,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedValidationState}' but found '{currentState}'.");
                 }
 
-                if (message != testCase.ExpectedMessage)
+                if (!message.Equals(testCase.ExpectedMessage))
                 {
-                    sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedValidationState}' but found '{currentState}'.");
+                    sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedMessage}' but found '{message}'.");
                 }
             }
 
             sb.Length.Should().Be(0, sb.ToString());
         }
+
+
 
         private HttpMessageHandler MockHttpMessageHandler(HttpStatusCode httpStatusCode, HttpContent httpContent)
         {
