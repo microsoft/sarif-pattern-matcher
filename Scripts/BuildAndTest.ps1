@@ -73,7 +73,7 @@ if (-not $NoBuild) {
     & $RepoRoot\Src\sarif-sdk\BuildAndTest.cmd -NoBuild -NoTest -NoPublish -NoSigningDirectory -NoPackage -NoFormat
     if ($LASTEXITCODE -ne 0) {	
         Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."	
-    }
+    }    
 
     Write-Information "Building SarifPatternMatcher.sln (dotnet)..."
     dotnet build $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true

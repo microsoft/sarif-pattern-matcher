@@ -119,9 +119,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationState.Unknown;
             }
 
+            string timeoutString = "Timeout=3;";
+            if (options.TryGetNonEmptyValue("retry", out string retry) && retry == bool.TrueString)
+            {
+                timeoutString = "Timeout=15;";
+            }
+
             var connectionStringBuilder = new StringBuilder();
             message = $"the '{account}' account is compromised for server '{host}'";
-            connectionStringBuilder.Append($"Host={host};Username={account};Password={password};Ssl Mode=Require;");
+            connectionStringBuilder.Append($"Host={host};Username={account};Password={password};Ssl Mode=Require;{timeoutString}");
 
             if (!string.IsNullOrWhiteSpace(port))
             {

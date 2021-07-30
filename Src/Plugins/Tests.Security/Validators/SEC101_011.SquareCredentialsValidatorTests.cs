@@ -5,20 +5,16 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
-using Moq;
-using Moq.Protected;
-
 using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    [Collection("Validator Tests Collection")]
     public class SquareCredentialsValidatorTests
     {
         [Fact]
@@ -86,7 +82,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                ValidatorBase.SetHttpClient(new HttpClient(MockHttpMessageHandler(testCase.HttpStatusCode, testCase.HttpContent)));
+                SquareCredentialsValidator.SetHttpClient(new HttpClient(MockHelper.MockHttpMessageHandler(testCase.HttpStatusCode, testCase.HttpContent)));
 
                 ValidationState currentState = SquareCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                                                          ref message,
@@ -104,22 +100,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             }
 
             sb.Length.Should().Be(0, sb.ToString());
-        }
-
-
-
-        private static HttpMessageHandler MockHttpMessageHandler(HttpStatusCode httpStatusCode, HttpContent httpContent)
-        {
-            var mockMessageHandler = new Mock<HttpMessageHandler>();
-            mockMessageHandler.Protected()
-                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(new HttpResponseMessage
-                {
-                    StatusCode = httpStatusCode,
-                    Content = httpContent
-                });
-
-            return mockMessageHandler.Object;
         }
     }
 }
