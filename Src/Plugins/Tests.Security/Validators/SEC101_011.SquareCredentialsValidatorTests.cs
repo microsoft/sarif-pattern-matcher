@@ -62,17 +62,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                                                                   Encoding.UTF8,
                                                                   "application/json").As<HttpContent>(),
                     ExpectedValidationState = ValidationState.Authorized,
-                    ExpectedMessage = string.Empty
+                    ExpectedMessage = "The compromised asset is 'a'."
                 },
                 new
                 {
                     Title = "Testing Invalid credentials",
                     HttpStatusCode = HttpStatusCode.Unauthorized,
                     HttpContent = new StringContent("{\n\"message\": \"Not Authorized\",\n\"type\": \"service.not_authorized\"\n}",
-                                                    Encoding.UTF8, 
+                                                    Encoding.UTF8,
                                                     "application/json").As<HttpContent>(),
                     ExpectedValidationState = ValidationState.Unauthorized,
-                    ExpectedMessage = string.Empty
+                    ExpectedMessage = "The provided secret is not authorized to access 'a'."
                 },
             };
 

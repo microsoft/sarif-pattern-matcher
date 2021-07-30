@@ -105,11 +105,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         if (content.Contains(codeNotFoundMessage))
                         {
                             // Credential was valid, code was not.
-                            return ValidationState.Authorized;
+                            return ReturnAuthorizedAccess(ref message, id);
                         }
 
                         // Credential not valid.
-                        return ValidationState.Unauthorized;
+                        return ReturnUnauthorizedAccess(ref message, id);
                     }
 
                     default:
