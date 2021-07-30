@@ -325,7 +325,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             httpClient = client;
         }
 
-        protected HttpClient CreateHttpClient()
+        protected HttpClient CreateOrUseCachedHttpClient()
         {
             if (httpClient == null)
             {

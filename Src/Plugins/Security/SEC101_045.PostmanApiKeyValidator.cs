@@ -71,7 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string secret = fingerprint.Secret;
 
-            HttpClient client = CreateHttpClient();
+            HttpClient client = CreateOrUseCachedHttpClient();
 
             try
             {
