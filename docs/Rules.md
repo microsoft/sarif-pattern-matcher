@@ -3,6 +3,7 @@
 ## Security.dll (1)
 
 ### SEC101.DoNotExposePlaintextSecrets (43)
+
 ID | Name | Validation
 ---| --- | ---
 SEC101/001 | DoNotExposePlaintextSecrets/HttpAuthorizationRequestHeader | Y
@@ -15,7 +16,7 @@ SEC101/007 | DoNotExposePlaintextSecrets/GitHubAppCredentials | -
 SEC101/008 | DoNotExposePlaintextSecrets/AwsCredentials | Y
 SEC101/009 | DoNotExposePlaintextSecrets/LinkedInCredentials | -
 SEC101/010 | DoNotExposePlaintextSecrets/SquarePat | Y
-SEC101/011 | DoNotExposePlaintextSecrets/SquareCredentials | -
+SEC101/011 | DoNotExposePlaintextSecrets/SquareCredentials | Y
 SEC101/012 | DoNotExposePlaintextSecrets/SlackWebhook | Y
 SEC101/013 | DoNotExposePlaintextSecrets/CryptographicPrivateKey | -
 SEC101/014 | DoNotExposePlaintextSecrets/FacebookAccessToken | -
@@ -48,4 +49,3 @@ SEC101/051 | DoNotExposePlaintextSecrets/GpgCredential | -
 SEC101/053 | DoNotExposePlaintextSecrets/GoogleServiceAccountKey | -
 SEC101/054 | DoNotExposePlaintextSecrets/AlibabaAccessKey | -
 SEC101/102 | DoNotExposePlaintextSecrets/AdoPat | -
-
