@@ -40,7 +40,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             // is appended to the data and the checksum is recomputed
             // (for the original data and the appended checksum).
             //
-            // This contanst is 0x2133DF1C for CRC-32.
+            // This contanst is 0x2144DF1C for CRC-32.
             uint crc32Constant = 0x2144DF1C;
 
             byte[] input = new byte[8];

@@ -5,7 +5,7 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.plugins.props" />
 
   <PropertyGroup Label="AssemblyAttributes">
-    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.Security</RootNamespace>
     <PackageId>Sarif.PatternMatcher.Security</PackageId>

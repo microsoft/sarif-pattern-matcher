@@ -11,14 +11,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         // https://crc32.online/
         // https://github.com/force-net/Crc32.NET
         // https://en.wikipedia.org/wiki/Cyclic_redundancy_check
+        // This is the 'reversed representation' polynomial for
+        // little-endian implementations, i.e., the bitwise
+        // reflection of 0x04C11DB7;
         private const uint Crc32Polynomial = 0xedb88320u;
 
         private static readonly uint[] Crc32Table = CreateCrcTable(Crc32Polynomial);
 
-        public static uint Calculate(string text, Encoding encoding = null)
+        public static uint Calculate(string text)
         {
-            encoding ??= Encoding.Unicode;
-            return Calculate(encoding.GetBytes(text));
+            byte[] data = Encoding.ASCII.GetBytes(text);
+            return Calculate(data);
         }
 
         public static uint Calculate(byte[] buffer)

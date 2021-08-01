@@ -143,11 +143,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             catch (ForbiddenException)
             {
                 // The token is valid but doesn't have sufficient scope to retrieve org data.
+                message += ". This token has insufficient permissions to retrieve organization data";
                 return ValidationState.Authorized;
             }
             catch (AuthorizationException)
             {
-                // The token is either invalid or has been killed
+                message = "The provided secret is not authorized to access github.com";
+
+                // The token is either invalid or has been killed.
                 return ValidationState.Unauthorized;
             }
             catch (Exception e)
