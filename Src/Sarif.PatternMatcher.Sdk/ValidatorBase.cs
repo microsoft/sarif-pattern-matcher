@@ -34,11 +34,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             new Regex($@"The underlying connection was closed: Could not establish " +
                          "trust relationship for the SSL/TLS secure channel.", s_options);
 
-        [ThreadStatic]
-        private static HttpClient httpClient;
-
         private static bool shouldUseDynamicCache;
-
+        private HttpClient httpClient;
         private string scanIdentityGuid;
 
         static ValidatorBase()
@@ -320,7 +317,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return value.Substring(indexOfFirstEqualSign + 1).Trim();
         }
 
-        internal static void SetHttpClient(HttpClient client)
+        internal void SetHttpClient(HttpClient client)
         {
             httpClient = client;
         }

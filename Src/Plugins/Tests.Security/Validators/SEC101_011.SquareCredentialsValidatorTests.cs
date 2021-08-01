@@ -14,7 +14,7 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    public class SquareCredentialsValidatorTests
+    public partial class HttpMockTests
     {
         [Fact]
         public void SquareCredentialsValidator_Test()
@@ -81,7 +81,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                SquareCredentialsValidator.SetHttpClient(new HttpClient(MockHelper.MockHttpMessageHandler(testCase.HttpStatusCode, testCase.HttpContent)));
+                SquareCredentialsValidator.Instance.SetHttpClient(new HttpClient(MockHelper.MockHttpMessageHandler(testCase.HttpStatusCode, testCase.HttpContent)));
 
                 ValidationState currentState = SquareCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                                                          ref message,
