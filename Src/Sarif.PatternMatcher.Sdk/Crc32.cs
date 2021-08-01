@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Text;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
@@ -13,6 +14,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         private const uint Crc32Polynomial = 0xedb88320u;
 
         private static readonly uint[] Crc32Table = CreateCrcTable(Crc32Polynomial);
+
+        public static uint Calculate(string text, Encoding encoding = null)
+        {
+            encoding ??= Encoding.Unicode;
+            return Calculate(encoding.GetBytes(text));
+        }
 
         public static uint Calculate(byte[] buffer)
         {
