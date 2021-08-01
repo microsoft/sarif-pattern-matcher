@@ -14,7 +14,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override string RuleId => "SEC103";
 
-        protected override string Framework => "netstandard2.0";
+        protected override string Framework => "netstandard2.1";
 
         [Fact]
         public void ReviewPotentiallySensitiveFiles_EndToEndFunctionalTests()
