@@ -7,10 +7,6 @@
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.Security</RootNamespace>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-  </PropertyGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="TestData\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
