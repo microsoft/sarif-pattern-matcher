@@ -69,7 +69,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string secret = fingerprint.Secret;
             string uri = $"https://hooks.slack.com/services/{id}/{secret}";
 
-            HttpClient client = CreateHttpClient();
+            HttpClient client = CreateOrUseCachedHttpClient();
 
             try
             {

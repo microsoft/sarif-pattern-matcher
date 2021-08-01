@@ -80,7 +80,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                HttpClient client = CreateHttpClient();
+                HttpClient client = CreateOrUseCachedHttpClient();
 
                 var dict = new Dictionary<string, string>();
                 dict.Add("grant_type", "client_credentials");
