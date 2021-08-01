@@ -14,7 +14,6 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    [Collection("Validator Tests Collection")]
     public class SquareCredentialsValidatorTests
     {
         [Fact]
