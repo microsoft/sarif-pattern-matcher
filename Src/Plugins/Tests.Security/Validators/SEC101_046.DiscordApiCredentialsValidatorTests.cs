@@ -97,6 +97,5 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             sb.Length.Should().Be(0, sb.ToString());
         }
-
     }
 }
