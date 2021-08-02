@@ -9,7 +9,6 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    [Collection("MockHttpTests")]
     public class HttpAuthorizationRequestHeaderValidatorTests
     {
         private const string TestScheme = "http";
