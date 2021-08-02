@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 
 using FluentAssertions;
 
@@ -77,6 +78,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 }
 
                 SquarePatValidator.Instance.SetHttpClient(null);
+                Thread.Sleep(1000);
             }
 
             sb.Length.Should().Be(0, sb.ToString());
