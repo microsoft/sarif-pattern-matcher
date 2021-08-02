@@ -16,7 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public static class MockHelper
     {
         /// <summary>
-        /// ResetStaticInstance is a method that will invoke the static instace creation.
+        /// ResetStaticInstance is a method that will invoke the static instance creation.
         /// This is required if we are injecting HttpClient, for example.
         /// </summary>
         /// <typeparam name="T">The class you want to reset.</typeparam>
