@@ -38,7 +38,7 @@ jobs:
       uses: github/codeql-action/init@v1
 
     - run: |
-        .\BuildAndTest.cmd
+        .\BuildAndTest.cmd -NoFormat -NoTest
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1

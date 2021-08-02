@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 
 using FluentAssertions;
 
@@ -73,6 +74,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedMessage}' but found '{message}'.");
                 }
+
+                SquarePatValidator.Instance.SetHttpClient(null);
             }
 
             sb.Length.Should().Be(0, sb.ToString());

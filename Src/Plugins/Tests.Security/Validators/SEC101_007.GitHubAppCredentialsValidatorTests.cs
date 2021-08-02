@@ -97,6 +97,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedMessage}' but found '{message}'.");
                 }
+
+                GitHubAppCredentialsValidator.Instance.SetHttpClient(null);
             }
 
             sb.Length.Should().Be(0, sb.ToString());
