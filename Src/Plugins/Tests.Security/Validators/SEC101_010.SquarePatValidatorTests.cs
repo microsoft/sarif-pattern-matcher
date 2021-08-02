@@ -58,7 +58,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                SquarePatValidator.Instance.SetHttpClient(new HttpClient(MockHelper.MockHttpMessageHandler(testCase.HttpStatusCode, testCase.HttpContent)));
+                MockHelper.ResetStaticInstance<SquarePatValidator>();
+                using var httpClient = new HttpClient(MockHelper.MockHttpMessageHandler(testCase.HttpStatusCode, testCase.HttpContent));
+                SquarePatValidator.Instance.SetHttpClient(httpClient);
 
                 ValidationState currentState = SquarePatValidator.IsValidDynamic(ref fingerprint,
                                                                                  ref message,
