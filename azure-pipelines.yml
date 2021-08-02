@@ -17,39 +17,28 @@ steps:
     filename: 'BuildAndTest.cmd'
     arguments: '-Configuration Release -EnableCoverage -NoTest'
 
-- task: VSTest@2
-  displayName: 'Run Tests'
+- task: PowerShell@2
+  displayName: Run ProcessCodeCoverage.ps1
   inputs:
-    testAssemblyVer2: |
-     **\AnyCPU_Release\**\Tests.*.dll
-     **\AnyCPU_Release\**\Test.UnitTests.*.dll
-     !**\obj\**
-    vsTestVersion: 16.0
-    codeCoverageEnabled: true
-    runSettingsFile: src\SarifPatternMatcher.runsettings
+    targetType: filePath
+    filePath: ./scripts/ProcessCodeCoverage.ps1
 
-#- task: PowerShell@2
-#  displayName: Run ProcessCodeCoverage.ps1
-#  inputs:
-#    targetType: filePath
-#    filePath: ./scripts/ProcessCodeCoverage.ps1
+- task: PowerShell@2
+  displayName: 'Merging TestResults'
+  inputs:
+    targetType: 'inline'
+    script: |
+      dotnet tool install -g dotnet-reportgenerator-globaltool      
+      reportgenerator -reports:**/*.coverage.xml -targetdir:TestResults -reporttypes:Cobertura -assemblyFilters:"-xunit*;-moq*;-sarif.driver*;-sarif.converters*;-sarif.dll;-test.utilities.sarif.dll;-*webjobs*;-octokit*;-bouncycastle*;-mysqlconnector*;-test*"
 
-#- task: PowerShell@2
-#  displayName: 'Merging TestResults'
-#  inputs:
-#    targetType: 'inline'
-#    script: |
-#      dotnet tool install -g dotnet-reportgenerator-globaltool      
-#      reportgenerator -reports:**/*.coverage.xml -targetdir:TestResults -reporttypes:Cobertura -assemblyFilters:"-xunit*;-moq*;-sarif.driver*;-sarif.converters*;-sarif.dll;-test.utilities.sarif.dll;-*webjobs*;-octokit*;-bouncycastle*;-mysqlconnector*;-test*"
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'cobertura'
+    summaryFileLocation: 'TestResults/Cobertura.xml'
 
-#- task: PublishCodeCoverageResults@1
-#  inputs:
-#    codeCoverageTool: 'cobertura'
-#    summaryFileLocation: 'TestResults/Cobertura.xml'
-
-# Enable if you need to debug the tests
-#- task: PublishPipelineArtifact@1
-#  condition: always()
-#  inputs:
-#    targetPath: bld/bin/AnyCPU_Debug/Tests.Security/netcoreapp3.1/
-#    artifactName: Tests.Security
+ Enable if you need to debug the tests
+- task: PublishPipelineArtifact@1
+  condition: always()
+  inputs:
+    targetPath: bld/bin/AnyCPU_Debug/Tests.Security/netcoreapp3.1/
+    artifactName: Tests.Security
