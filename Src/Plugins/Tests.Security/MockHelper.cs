@@ -11,7 +11,7 @@ using Moq.Protected;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal static class MockHelper
+    public static class MockHelper
     {
         public static HttpMessageHandler MockHttpMessageHandler(HttpStatusCode httpStatusCode, HttpContent httpContent)
         {
