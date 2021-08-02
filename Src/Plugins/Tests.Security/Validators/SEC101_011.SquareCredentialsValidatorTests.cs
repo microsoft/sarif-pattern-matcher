@@ -84,7 +84,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var keyValuePairs = new Dictionary<string, string>();
 
                 using var httpClient = new HttpClient(MockHelper.MockHttpMessageHandler(testCase.HttpStatusCode, testCase.HttpContent));
-                GitHubAppCredentialsValidator.Instance.SetHttpClient(httpClient);
                 SquareCredentialsValidator.Instance.SetHttpClient(httpClient);
 
                 ValidationState currentState = SquareCredentialsValidator.IsValidDynamic(ref fingerprint,
