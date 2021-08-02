@@ -14,7 +14,7 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    public partial class HttpMockTests
+    public class SquarePatValidatorTests
     {
         [Fact]
         public void SquarePatValidator_MockHttpTests()
