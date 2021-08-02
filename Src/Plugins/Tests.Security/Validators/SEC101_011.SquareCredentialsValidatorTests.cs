@@ -1,13 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
 using System.Text;
-using System.Threading;
 
 using FluentAssertions;
 
@@ -85,9 +82,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                ConstructorInfo constructor = typeof(SquareCredentialsValidator).GetConstructor(BindingFlags.Static | BindingFlags.NonPublic, null, new Type[0], null);
-                constructor.Invoke(null, null);
-
+                MockHelper.ResetStaticInstance<SquareCredentialsValidator>();
                 using var httpClient = new HttpClient(MockHelper.MockHttpMessageHandler(testCase.HttpStatusCode, testCase.HttpContent));
                 SquareCredentialsValidator.Instance.SetHttpClient(httpClient);
 
