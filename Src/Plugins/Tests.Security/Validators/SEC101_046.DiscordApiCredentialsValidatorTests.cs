@@ -37,7 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         }
 
         [Fact]
-        public void DiscorddCredentialsValidator_MockHttpTests()
+        public void DiscordCredentialsValidator_MockHttpTests()
         {
             var testCases = new[]
             {
