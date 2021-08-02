@@ -15,7 +15,18 @@ steps:
   displayName: 'Run BuildAndTest.cmd'
   inputs:
     filename: 'BuildAndTest.cmd'
-    arguments: '-Configuration Release -EnableCoverage'
+    arguments: '-Configuration Release -EnableCoverage -NoTest'
+
+- task: VSTest@2
+  displayName: 'Run Tests'
+  inputs:
+    testAssemblyVer2: |
+     **\AnyCPU_Release\**\Tests.*.dll
+     **\AnyCPU_Release\**\Test.UnitTests.*.dll
+     !**\obj\**
+    vsTestVersion: 16.0
+    codeCoverageEnabled: true
+    runSettingsFile: src\SarifPatternMatcher.runsettings
 
 - task: PowerShell@2
   displayName: Run ProcessCodeCoverage.ps1
