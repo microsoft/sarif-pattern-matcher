@@ -82,9 +82,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 HttpClient client = CreateOrUseCachedHttpClient();
 
-                var dict = new Dictionary<string, string>();
-                dict.Add("grant_type", "client_credentials");
-                dict.Add("scope", "identify connections");
+                var dict = new Dictionary<string, string>
+                {
+                    { "grant_type", "client_credentials" },
+                    { "scope", "identify connections" },
+                };
 
                 string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
                 using var request = new HttpRequestMessage(HttpMethod.Post, uri);
@@ -100,12 +102,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
-                        return ValidationState.Authorized;
+                        return ReturnAuthorizedAccess(ref message, id);
                     }
 
                     case HttpStatusCode.Unauthorized:
                     {
-                        return ValidationState.Unauthorized;
+                        return ReturnUnauthorizedAccess(ref message, id);
                     }
 
                     default:
