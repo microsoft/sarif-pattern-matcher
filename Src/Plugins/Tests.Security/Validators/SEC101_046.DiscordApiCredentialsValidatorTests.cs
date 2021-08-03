@@ -76,7 +76,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                MockHelper.ResetStaticInstance<SquareCredentialsValidator>();
+                MockHelper.ResetStaticInstance<DiscordApiCredentialsValidator>();
                 using var httpClient = new HttpClient(MockHelper.MockHttpMessageHandler(testCase.HttpStatusCode, testCase.HttpContent));
                 DiscordApiCredentialsValidator.Instance.SetHttpClient(httpClient);
 
