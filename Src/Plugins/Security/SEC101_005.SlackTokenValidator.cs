@@ -109,7 +109,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 message = BuildAuthTestResponseMessage(authResponse);
                 return ValidationState.Authorized;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return ReturnUnhandledException(ref message, e);
             }
