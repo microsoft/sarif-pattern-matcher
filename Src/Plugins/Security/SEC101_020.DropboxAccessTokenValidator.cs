@@ -52,7 +52,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
-                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint()
                 {
                     Secret = secret.Value,
@@ -74,7 +73,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             const string uri = "https://api.dropboxapi.com/2/file_requests/count";
 
             string secret = fingerprint.Secret;
-            HttpClient httpClient = CreateHttpClient();
+            HttpClient httpClient = CreateOrUseCachedHttpClient();
 
             try
             {

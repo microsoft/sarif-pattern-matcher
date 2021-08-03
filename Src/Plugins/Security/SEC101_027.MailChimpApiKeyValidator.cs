@@ -49,7 +49,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
-                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint()
                 {
                     Secret = secret.Value,
@@ -70,7 +69,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                HttpClient client = CreateHttpClient();
+                HttpClient client = CreateOrUseCachedHttpClient();
                 string[] keys = secret.Split('-');
 
                 using var request = new HttpRequestMessage(HttpMethod.Get, $"https://{keys[1]}.api.mailchimp.com/3.0/?fields=account_name");

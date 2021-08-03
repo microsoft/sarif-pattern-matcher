@@ -34,11 +34,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             new Regex($@"The underlying connection was closed: Could not establish " +
                          "trust relationship for the SSL/TLS secure channel.", s_options);
 
-        [ThreadStatic]
-        private static HttpClient httpClient;
-
         private static bool shouldUseDynamicCache;
-
+        private HttpClient httpClient;
         private string scanIdentityGuid;
 
         static ValidatorBase()
@@ -51,8 +48,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected ValidatorBase()
         {
-            FingerprintToResultCache = new ConcurrentDictionary<Fingerprint, Tuple<ValidationState, string>>();
             PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            FingerprintToResultCache = new ConcurrentDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>>();
         }
 
         protected virtual string ScanIdentityGuid
@@ -88,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// string representing a cached validation state and a user-facing
         /// message.
         /// </summary>
-        protected IDictionary<Fingerprint, Tuple<ValidationState, string>> FingerprintToResultCache { get; }
+        protected IDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>> FingerprintToResultCache { get; }
 
         /// <summary>
         /// Gets a cache of file + fingerprint combinations that have been
@@ -139,9 +136,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             resultLevelKind = default;
 
             if (shouldUseDynamicCache &&
-                validator.FingerprintToResultCache.TryGetValue(fingerprint, out Tuple<ValidationState, string> result))
+                validator.FingerprintToResultCache.TryGetValue(fingerprint, out Tuple<ValidationState, ResultLevelKind, string> result))
             {
-                message = result.Item2;
+                message = result.Item3;
+                resultLevelKind = result.Item2;
                 return result.Item1;
             }
 
@@ -152,7 +150,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                                                ref resultLevelKind);
 
             validator.FingerprintToResultCache[fingerprint] =
-                new Tuple<ValidationState, string>(validationState, message);
+                new Tuple<ValidationState, ResultLevelKind, string>(validationState, resultLevelKind, message);
 
             return validationState;
         }
@@ -319,7 +317,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return value.Substring(indexOfFirstEqualSign + 1).Trim();
         }
 
-        protected HttpClient CreateHttpClient()
+        internal void SetHttpClient(HttpClient client)
+        {
+            httpClient = client;
+        }
+
+        protected HttpClient CreateOrUseCachedHttpClient()
         {
             if (httpClient == null)
             {

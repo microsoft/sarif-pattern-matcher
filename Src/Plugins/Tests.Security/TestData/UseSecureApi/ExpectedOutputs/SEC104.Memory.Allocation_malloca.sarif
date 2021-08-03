@@ -77,7 +77,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[id=_malloca]",
             "ValidationFingerprint/v1": "[id=_malloca]",
-            "ValidationFingerprintHash/v1": "582290aa80b7a22d4aa98aa1227346b61831fcdc156e2a570bc6ad5b8763ccf2"
+            "ValidationFingerprintHash/v1": "582290aa80b7a22d4aa98aa1227346b61831fcdc156e2a570bc6ad5b8763ccf2",
+            "AssetFingerprint/v2": "{\"id\":\"_malloca\"}",
+            "ValidationFingerprint/v2": "{\"id\":\"_malloca\"}"
           }
         }
       ],

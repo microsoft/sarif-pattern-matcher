@@ -4,10 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
+using Newtonsoft.Json;
 
 using Xunit;
 
@@ -77,8 +80,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void Fingerprint_AllPropertiesPersistedInToString()
         {
+            Fingerprint_AllPropertiesPersistedInToStringHelper(jsonFormat: true);
+            Fingerprint_AllPropertiesPersistedInToStringHelper(jsonFormat: false);
+        }
+
+        private static void Fingerprint_AllPropertiesPersistedInToStringHelper(bool jsonFormat)
+        {
             // Invariant: fingerprint.ToString() should
             // render all property values if set.
+
+            string prefix = jsonFormat ? "\"" : "[";
+            string suffix = jsonFormat ? "\"" : "]";
+            string separator = jsonFormat ? "\":\"" : "=";
 
             var fingerprint = new Fingerprint();
             var propertyValues = new Dictionary<string, string>();
@@ -94,7 +107,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 propertyValues[guidText] = pi.Name;
             }
 
-            string fingerprintText = fingerprint.ToString();
+            var emptyDenyList = new List<string>();
+            string fingerprintText = Fingerprint.ToString(fingerprint, emptyDenyList, jsonFormat);
+
+            // If we are operating against JSON representation,
+            // let's make sure that the data returned is valid JSON.
+            if (jsonFormat)
+            {
+                JsonConvert.DeserializeObject(fingerprintText).Should().NotBeNull();
+            }
 
             var unexpectedConditions = new List<string>();
 
@@ -102,7 +123,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 string keyName = GetKeyNameForProperty(propertyValues[guidText]);
                 if (!fingerprintText.Contains(guidText) ||
-                    !fingerprintText.Contains($"[{keyName}={guidText}]"))
+                    !fingerprintText.Contains($"{prefix}{keyName}{separator}{guidText}{suffix}"))
                 {
                     unexpectedConditions.Add(
                         $"{Environment.NewLine}ToString() not rendering property: {propertyValues[guidText]}.");
@@ -121,12 +142,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void Fingerprint_IndividualPropertiesPersistedInToString()
         {
+            Fingerprint_IndividualPropertiesPersistedInToStringHelper(jsonFormat: true);
+            Fingerprint_IndividualPropertiesPersistedInToStringHelper(jsonFormat: false);
+        }
+
+        private static void Fingerprint_IndividualPropertiesPersistedInToStringHelper(bool jsonFormat)
+        {
             // Invariant: fingerprint.ToString() should
             // render individual properties when set
+
+            string prefix = jsonFormat ? "\"" : "[";
+            string suffix = jsonFormat ? "\"" : "]";
+            string separator = jsonFormat ? "\":\"" : "=";
 
             Type type = typeof(Fingerprint);
             var toStringUnexpectedConditions = new List<string>();
             var roundTrippingUnexpectedConditions = new List<string>();
+
+            var emptyDenyList = new List<string>();
 
             foreach (PropertyInfo pi in GetTestableFingerprintProperties())
             {
@@ -136,7 +169,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 pi.SetMethod.Invoke(boxed, new[] { guidText });
                 fingerprint = (Fingerprint)boxed;
                 string keyName = GetKeyNameForProperty(pi.Name);
-                if (!fingerprint.ToString().Contains($"[{keyName}={guidText}]"))
+                string fingerprintText = Fingerprint.ToString(fingerprint, emptyDenyList, jsonFormat);
+
+                // If we are operating against JSON representation,
+                // let's make sure that the data returned is valid JSON.
+                if (jsonFormat)
+                {
+                    JsonConvert.DeserializeObject(fingerprintText).Should().NotBeNull();
+                }
+
+                if (!fingerprintText.Contains($"{prefix}{keyName}{separator}{guidText}{suffix}"))
                 {
                     toStringUnexpectedConditions.Add(
                         $"{Environment.NewLine}ToString() not rendering property value " +
@@ -210,7 +252,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             failedTestCases.Should().BeEmpty();
         }
 
-        private IEnumerable<PropertyInfo> GetTestableFingerprintProperties()
+        private static IEnumerable<PropertyInfo> GetTestableFingerprintProperties()
         {
             foreach (PropertyInfo pi in typeof(Fingerprint).GetProperties())
             {
@@ -226,7 +268,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 yield return pi;
             }
-            yield break;
         }
 
         [Fact]
@@ -345,6 +386,149 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             fingerprint.ToString().Should().Be(fingerprintText);
         }
 
+        [Fact]
+        public void Fingerprint_ShouldMergeNormally()
+        {
+            string previousFingerprint = "[host=host][part=part]";
+            var fingerprint = new Fingerprint
+            {
+                Id = "id",
+                Secret = "secret"
+            };
+
+            fingerprint.Merge(previousFingerprint);
+            fingerprint.Id.Should().Be("id");
+            fingerprint.Host.Should().Be("host");
+            fingerprint.Part.Should().Be("part");
+            fingerprint.Secret.Should().Be("secret");
+
+            var sb = new StringBuilder();
+            foreach (PropertyInfo property in GetTestableFingerprintProperties())
+            {
+                if (property.Name == "Id" || property.Name == "Host" || property.Name == "Part" || property.Name == "Secret")
+                {
+                    continue;
+                }
+
+                string value = (string)property.GetValue(fingerprint);
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    sb.AppendLine($"Property '{property.Name}' should be null/empty.");
+                }
+            }
+
+            sb.Length.Should().Be(0, because: sb.ToString());
+        }
+
+        [Fact]
+        public void Fingerprint_PersistPathShouldNotHideDataFromValidationFingerprint()
+        {
+            const string id = "[id=id]";
+            const string path = "[path=path]";
+            var fingerprint = new Fingerprint($"{id}{path}");
+            fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
+            fingerprint.GetValidationFingerprintText().Should().Contain(path);
+            string originalHash = fingerprint.GetValidationFingerprintHashText();
+
+            fingerprint.IgnorePathInFingerprint = true;
+            fingerprint.GetAssetFingerprintText().Should().Be(id);
+            fingerprint.GetValidationFingerprintText().Should().Contain(path);
+
+            fingerprint = new Fingerprint
+            {
+                Id = "id",
+                Path = "path"
+            };
+            fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
+            fingerprint.GetValidationFingerprintText().Should().Contain(path);
+            string firstHash = fingerprint.GetValidationFingerprintHashText();
+            firstHash.Should().Be(originalHash);
+
+            fingerprint = new Fingerprint
+            {
+                Id = "id",
+                Path = "path",
+                IgnorePathInFingerprint = true
+            };
+            fingerprint.GetAssetFingerprintText().Should().Be(id);
+            fingerprint.GetValidationFingerprintText().Should().Contain(path);
+            string secondHash = fingerprint.GetValidationFingerprintHashText();
+            firstHash.Should().NotBe(secondHash);
+
+            fingerprint = new Fingerprint
+            {
+                Id = "id",
+                Path = "path",
+                Secret = "secret"
+            };
+            fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
+            fingerprint.GetValidationFingerprintText().Should().Be($"{id}{path}[secret=secret]");
+            string thirdHash = fingerprint.GetValidationFingerprintHashText();
+
+            fingerprint.IgnorePathInFingerprint = true;
+            fingerprint.GetAssetFingerprintText().Should().Be($"{id}");
+            fingerprint.GetValidationFingerprintText().Should().Be($"{id}{path}[secret=secret]");
+            string forthHash = fingerprint.GetValidationFingerprintHashText();
+            thirdHash.Should().NotBe(forthHash);
+        }
+
+        [Fact]
+        public void Fingerprint_ToJsonShouldBeAValidJson()
+        {
+            var failedTestCases = new List<string>();
+
+            foreach (FingerprintTestCase testCase in s_workingTestCases)
+            {
+                string actualJson = new Fingerprint(testCase.Text).GetComprehensiveFingerprintText(jsonFormat: true);
+
+                var newFingerprint = new Fingerprint(actualJson);
+
+                if (!newFingerprint.Equals(testCase.Expected))
+                {
+                    failedTestCases.Add(
+                        $"{Environment.NewLine}'{testCase.Title}' failed. Expected result '{testCase.Expected}' but observed '{newFingerprint}'.");
+                }
+            }
+
+            failedTestCases.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void Fingerprint_EmptyFingerprint()
+        {
+            var fingerprint = new Fingerprint("");
+
+            var sb = new StringBuilder();
+            foreach (PropertyInfo property in GetTestableFingerprintProperties())
+            {
+                string value = (string)property.GetValue(fingerprint);
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    sb.AppendLine($"Property '{property.Name}' should be null/empty.");
+                }
+            }
+
+            sb.Length.Should().Be(0, because: sb.ToString());
+        }
+
+        [Fact]
+        public void Fingerprint_ConstructingFromDictionaryShouldParseCorrectly()
+        {
+            var sb = new StringBuilder();
+            for (int i = 0; i < s_dictionaryContructorTestCases.Length; i++)
+            {
+                DictionaryFingerprintTestCase testCase = s_dictionaryContructorTestCases[i];
+                var currentFingerprint = new Fingerprint(testCase.Fingerprints);
+
+                if (currentFingerprint != testCase.Expected)
+                {
+                    sb.Append($"The test '{testCase.Title}' failed. Expected result '{testCase.Expected}' but observed '{currentFingerprint}'.");
+                }
+            }
+        }
+
         private static readonly FingerprintTestCase[] s_workingTestCases = new[]
         {
             new FingerprintTestCase {
@@ -391,7 +575,76 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 ExceptionType = typeof(ArgumentException) },
         };
 
-        private string GetKeyNameForProperty(string propertyName)
+        private static readonly DictionaryFingerprintTestCase[] s_dictionaryContructorTestCases = new[]
+        {
+            new DictionaryFingerprintTestCase
+            {
+                Title = "Square brackets fingerprints only.",
+                Fingerprints = new Dictionary<string, string>
+                {
+                    { "asset-v1", "[id=id][part=part]" },
+                    { "validation-v1", "[id=id][secret=secret]" },
+                },
+                Expected = new Fingerprint
+                {
+                    Id = "id",
+                    Part = "part",
+                    Secret = "secret",
+                }
+            },
+            new DictionaryFingerprintTestCase
+            {
+                Title = "Json fingerprints only.",
+                Fingerprints = new Dictionary<string, string>
+                {
+                    { "asset-v2", @"{""id"":""id"", ""part"":""part""}"},
+                    { "validation-v2", @"{""id"":""id"", ""secret"":""secret""}"},
+                },
+                Expected = new Fingerprint
+                {
+                    Id = "id",
+                    Part = "part",
+                    Secret = "secret",
+                }
+            },
+            new DictionaryFingerprintTestCase
+            {
+                Title = "Json and square brackets fingerprints.",
+                Fingerprints = new Dictionary<string, string>
+                {
+                    { "asset-v1", "[id=id][part=part]" },
+                    { "validation-v1", "[id=id][secret=secret]" },
+                    { "asset-v2", @"{""id"":""id"", ""part"":""part""}"},
+                    { "validation-v2", @"{""id"":""id"", ""secret"":""secret""}"},
+                },
+                Expected = new Fingerprint
+                {
+                    Id = "id",
+                    Part = "part",
+                    Secret = "secret",
+                }
+            },
+            new DictionaryFingerprintTestCase
+            {
+                Title = "Json and square brackets fingerprints.",
+                Fingerprints = new Dictionary<string, string>
+                {
+                    { "asset-v1", "[id=id][part=part][resource=resource[][part=]]" },
+                    { "validation-v1", "[id=id][secret=secret]" },
+                    { "asset-v2", @"{""id"":""id"", ""part"":""part"", ""resource"":""resource[][part=]""}"},
+                    { "validation-v2", @"{""id"":""id"", ""secret"":""secret""}"},
+                },
+                Expected = new Fingerprint
+                {
+                    Id = "id",
+                    Part = "part",
+                    Secret = "secret",
+                    Resource = "resource[][part=]"
+                }
+            },
+        };
+
+        private static string GetKeyNameForProperty(string propertyName)
         {
             FieldInfo fi = typeof(Fingerprint).GetField($"{propertyName}KeyName");
             return (string)fi.GetValue(null);
@@ -403,6 +656,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             public string Text;
             public Fingerprint Expected;
             public Type ExceptionType;
+        }
+
+        internal struct DictionaryFingerprintTestCase
+        {
+            public string Title;
+            public Dictionary<string, string> Fingerprints;
+            public Fingerprint Expected;
         }
     }
 }

@@ -92,7 +92,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Stripe]",
             "ValidationFingerprint/v1": "[secret=sk_test_01234567890123456789012345678901]",
-            "ValidationFingerprintHash/v1": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567"
+            "ValidationFingerprintHash/v1": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567",
+            "AssetFingerprint/v2": "{\"platform\":\"Stripe\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"sk_test_01234567890123456789012345678901\"}"
           },
           "rank": 54.59
         },
@@ -135,7 +137,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Stripe]",
             "ValidationFingerprint/v1": "[secret=sk_live_01234567890123456789012345678901]",
-            "ValidationFingerprintHash/v1": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91"
+            "ValidationFingerprintHash/v1": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91",
+            "AssetFingerprint/v2": "{\"platform\":\"Stripe\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"sk_live_01234567890123456789012345678901\"}"
           },
           "rank": 56.01
         },
@@ -178,7 +182,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Picatic]",
             "ValidationFingerprint/v1": "[secret=sk_test_01234567890123456789012345678901]",
-            "ValidationFingerprintHash/v1": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567"
+            "ValidationFingerprintHash/v1": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567",
+            "AssetFingerprint/v2": "{\"platform\":\"Picatic\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"sk_test_01234567890123456789012345678901\"}"
           },
           "rank": 54.59
         },
@@ -221,7 +227,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Picatic]",
             "ValidationFingerprint/v1": "[secret=sk_live_01234567890123456789012345678901]",
-            "ValidationFingerprintHash/v1": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91"
+            "ValidationFingerprintHash/v1": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91",
+            "AssetFingerprint/v2": "{\"platform\":\"Picatic\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"sk_live_01234567890123456789012345678901\"}"
           },
           "rank": 56.01
         }

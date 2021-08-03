@@ -48,7 +48,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
-                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint
                 {
                     Id = id.Value,
@@ -117,7 +116,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private ValidationState RetrieveInformation<T>(string url, string id, ref string message, out T obj)
         {
-            HttpClient httpClient = CreateHttpClient();
+            HttpClient httpClient = CreateOrUseCachedHttpClient();
             obj = default;
 
             try

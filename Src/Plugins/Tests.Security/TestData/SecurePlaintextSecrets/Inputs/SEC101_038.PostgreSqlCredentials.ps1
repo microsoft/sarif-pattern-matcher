@@ -1,28 +1,32 @@
 ﻿# ADO.NET
+# Well-formed but invalid Azure connection string using ADO.NET formatting.
+
+Server=some-database-name.postgres.database.azure.com;Database=catalog_db;Port=5555;User Id=someuser@some-database-name;Password=pass_1234;Ssl Mode=Require;
+
 # Using Npgsql
 # Currently caught
-<add name="BlogDbContext" connectionString="host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_1"> # host not capitalized, optional properties in the middle
-<add name="BlogDbContext" connectionString="host=my_host;Database=my_db;Username=my_user;Password=my_pw_2;Port=5555"> # optional properties in the middle and at the end
-<add name="BlogDbContext" connectionString="Host=my_host;Port=5555;UsErname=my_user;Password=my_pw_3"> # weird capitalization on UsErname
-<add name="BlogDbContext" connectionString="Password=my_pw_4;Host=my_host;Port=5555;Username=my_user;Pooling=true"> # weird order, unnecessary property at the end
-<add name="BlogDbContext" connectionString="Port=5555;Password=my_pw_5;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true"> # begin with optional property
-<add name="BlogDbContext" connectionString="Port=5555;Password=my_pw_6;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true;Port=5555"> # redundant optional property at beginning and end
-<add name="BlogDbContext" connectionString="Database=my_db;Port=5555;Password=my_pw_7;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"> # space preceeding optional property
+<add name="BlogDbContext" connectionString="host=my_host;Port=5555;Database=my_db;Username=my_user;Password=pass_1111"> # host not capitalized, optional properties in the middle
+<add name="BlogDbContext" connectionString="host=my_host;Database=my_db;Username=my_user;Password=pass_2222;Port=5555"> # optional properties in the middle and at the end
+<add name="BlogDbContext" connectionString="Host=my_host;Port=5555;UsErname=my_user;Password=pass_3333"> # weird capitalization on UsErname
+<add name="BlogDbContext" connectionString="Password=pass_4444;Host=my_host;Port=5555;Username=my_user;Pooling=true"> # weird order, unnecessary property at the end
+<add name="BlogDbContext" connectionString="Port=5555;Password=pass_5555;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true"> # begin with optional property
+<add name="BlogDbContext" connectionString="Port=5555;Password=pass_6666;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true;Port=5555"> # redundant optional property at beginning and end
+<add name="BlogDbContext" connectionString="Database=my_db;Port=5555;Password=pass_7777;Connection Pruning Interval=doodle;Host=my_host;Username=my_user;Pooling=true; Port=5555"> # space preceeding optional property
 
 ############### The rest of these patterns are not implemented!!
-Username=mylogin;Password=mypass;Database=mydatabase
-Password=mypass;Database=mydatabase;Username=mylogin;
+Username=mylogin;Password=pass_8888;Database=mydatabase
+Password=pass_9999;Database=mydatabase;Username=mylogin;
 
 # Json pattern
 {
-    "ConnectionString" : "host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_8",
+    "ConnectionString" : "host=my_host;Port=5555;Database=my_db;Username=my_user;Password=pass_0000",
     "PropertyA": "This should not be caught"
 }
 
 # Xml
 
 <Connections>
-    <Postgres>host=my_host;Port=5555;Database=my_db;Username=my_user;Password=my_pw_9</Postgres>
+    <Postgres>host=my_host;Port=5555;Database=my_db;Username=my_user;Password=pass_9999</Postgres>
 </Connections>
 
 
@@ -33,11 +37,11 @@ Password=mypass;Database=mydatabase;Username=mylogin;
 String url = "jdbc:postgresql://localhost/test";
 Properties props = new Properties();
 props.setProperty("user","fred");
-props.setProperty("password","secret");
+props.setProperty("password","secret123");
 props.setProperty("ssl","true");
 Connection conn = DriverManager.getConnection(url, props);
 
-jdbc:postgresql://localhost/test?user=fred&password=secret&ssl=true
+jdbc:postgresql://localhost/test?user=fred&password=secret123&ssl=true
 
 # Node.js
 # Using node-postgresql
@@ -88,3 +92,9 @@ conn = psycopg2.connect(host="localhost",database="suppliers",user="postgres",pa
 # Ruby
 # Using libpq 
 con = PG.connect :dbname => 'testdb', :user => 'janbodnar', :password => 'pswd37'
+
+
+# Intentionally malformed and invalid Azure connection string using ADO.NET formatting.
+# Azure Connections require user ID to be in the form od <username>@<host>
+
+Server=some-database-name.postgres.database.azure.com;Database=catalog_db;Port=5555;User Id=someuser;Password=pass_1234;Ssl Mode=Require;

@@ -23,6 +23,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             "localhost",
             "database.windows.net",
             "database.chinacloudapi.cn",
+            "database.secure.windows.net",
+        };
+
+        private static readonly List<string> AzureHosts = new List<string>
+        {
+            "database.azure.com",
+            "postgres.database.azure.com",
         };
 
         static PostgreSqlCredentialsValidator()
@@ -60,7 +67,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.TryGetNonEmptyValue("resource", out FlexMatch resource);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
-            if (hostValue.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1 ||
+            string idValue = id.Value;
+
+            // Username must be in the form <username>@<hostname> to communicate with Azure.
+            // If the username does not contain a host name, we can't connect.
+            if (AzureHosts.Any(azHosts => hostValue.IndexOf(azHosts, StringComparison.OrdinalIgnoreCase) != -1) &&
+                !idValue.Contains("@"))
+            {
+                return ValidationResult.CreateNoMatch();
+            }
+
+            if (hostValue.Equals("tcp", StringComparison.OrdinalIgnoreCase) ||
+                hostValue.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1 ||
                 HostsToExclude.Any(hostToExclude => hostValue.IndexOf(hostToExclude, StringComparison.OrdinalIgnoreCase) != -1))
             {
                 return ValidationResult.CreateNoMatch();
@@ -68,14 +86,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var fingerprint = new Fingerprint()
             {
-                Id = id.Value,
+                Id = idValue,
                 Host = hostValue,
                 Port = port?.Value,
                 Secret = secret.Value,
                 Resource = resource?.Value,
             };
 
-            SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint);
+            SharedUtilities.PopulateAssetFingerprint(AzureHosts, hostValue, ref fingerprint);
             var validationResult = new ValidationResult
             {
                 Fingerprint = fingerprint,
@@ -101,9 +119,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationState.Unknown;
             }
 
+            string timeoutString = "Timeout=3;";
+            if (options.TryGetNonEmptyValue("retry", out string retry) && retry == bool.TrueString)
+            {
+                timeoutString = "Timeout=15;";
+            }
+
             var connectionStringBuilder = new StringBuilder();
             message = $"the '{account}' account is compromised for server '{host}'";
-            connectionStringBuilder.Append($"Host={host};Username={account};Password={password};Ssl Mode=Require;");
+            connectionStringBuilder.Append($"Host={host};Username={account};Password={password};Ssl Mode=Require;{timeoutString}");
 
             if (!string.IsNullOrWhiteSpace(port))
             {

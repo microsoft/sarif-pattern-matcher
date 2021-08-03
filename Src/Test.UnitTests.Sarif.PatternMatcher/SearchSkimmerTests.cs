@@ -9,6 +9,7 @@ using System.Text;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
 using Moq;
@@ -271,6 +272,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             // This Id will match us up with the TestRuleValidator type.
             definition.Id = "TestRule";
+            definition.Name = "TestRule";
 
             AnalyzeContext context =
                 CreateGuidMatchingSkimmer(
@@ -282,6 +284,120 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             skimmer.Analyze(context);
 
             //((TestLogger)context.Logger).Results.Should().BeNull();
+        }
+
+        [Fact]
+        public void SearchSkimmer_ValidatorResultsAreProperlyChangingFingerprintAfterDynamicValidation()
+        {
+            TestRuleValidator.OverrideIsValidStatic = (groups) =>
+            {
+                return new[] {
+                    new ValidationResult
+                    {
+                        Fingerprint = new Fingerprint
+                        {
+                            Secret = "secret",
+                            Platform = nameof(AssetPlatform.GitHub),
+                        },
+                        ValidationState = ValidationState.Unknown,
+                    }
+                };
+            };
+
+            TestRuleValidator.OverrideIsValidDynamic = (ref Fingerprint fingerprint,
+                                                        ref string message,
+                                                        Dictionary<string, string> options,
+                                                        ref ResultLevelKind resultLevelKind) =>
+            {
+                fingerprint.Id = "test";
+                return ValidationState.Authorized;
+            };
+
+            string validatorAssemblyPath = $@"c:\{Guid.NewGuid()}.dll";
+            string scanTargetExtension = Guid.NewGuid().ToString();
+
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileExists(validatorAssemblyPath)).Returns(true);
+            mockFileSystem.Setup(x => x.AssemblyLoadFrom(validatorAssemblyPath)).Returns(this.GetType().Assembly);
+
+            var validators = new ValidatorsCache(
+                new string[] { validatorAssemblyPath },
+                fileSystem: mockFileSystem.Object);
+
+            MatchExpression expression =
+                CreateGuidDetectingMatchExpression(
+                    allowFileExtension: scanTargetExtension);
+
+            expression.ContentsRegex = "TestRule";
+
+            SearchDefinition definition = CreateDefaultSearchDefinition(expression);
+
+            // This Id will match us up with the TestRuleValidator type.
+            definition.Id = "TestRule";
+            definition.Name = "TestRule";
+
+            AnalyzeContext context =
+                CreateGuidMatchingSkimmer(
+                    scanTargetExtension: scanTargetExtension,
+                    ref definition,
+                    out SearchSkimmer skimmer,
+                    validators: validators);
+            context.DynamicValidation = true;
+
+            skimmer.Analyze(context);
+
+            ((TestLogger)context.Logger).Results.Should().NotBeNull();
+            Result result = ((TestLogger)context.Logger).Results[0];
+            result.Fingerprints[SearchSkimmer.AssetFingerprint].Should().Be("[id=test][platform=GitHub]");
+            result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be("[id=test][secret=secret]");
+        }
+
+        [Fact]
+        public void SearchSkimmer_HelpUriShouldBePropagatedWhenExists()
+        {
+            const string defaultHelpUri = "https://github.com/microsoft/sarif-pattern-matcher";
+            string[] testCases = new[]
+            {
+                null,
+                "https://github.com/",
+                "https://www.microsoft.com"
+            };
+
+            var sb = new StringBuilder();
+            IRegex regexEngine = RE2Regex.Instance;
+            foreach (string testCase in testCases)
+            {
+                var searchDefinition = new SearchDefinition
+                {
+                    HelpUri = testCase,
+                    MatchExpressions = new List<MatchExpression>(),
+                };
+
+                var searchSkimmer = new SearchSkimmer(regexEngine, null, null, searchDefinition);
+                var reportingDescriptor = searchSkimmer as ReportingDescriptor;
+
+                if (reportingDescriptor.HelpUri != searchSkimmer.HelpUri)
+                {
+                    sb.AppendLine($"The helpUri was expected to be equal to '{searchSkimmer.HelpUri}' but it was '{reportingDescriptor.HelpUri}'.");
+                }
+
+                if (testCase == null)
+                {
+                    if (searchSkimmer.HelpUri.OriginalString != defaultHelpUri)
+                    {
+                        sb.AppendLine($"It was expected to see '{defaultHelpUri}' but saw '{searchSkimmer.HelpUri.OriginalString}'.");
+                    }
+                }
+                else
+                {
+                    if (testCase != searchSkimmer.HelpUri.OriginalString)
+                    {
+                        sb.AppendLine($"It was expected to see '{testCase}' but saw '{searchSkimmer.HelpUri.OriginalString}'.");
+                    }
+                }
+            }
+
+            sb.Length.Should().Be(0, sb.ToString());
         }
 
         private AnalyzeContext CreateGuidMatchingSkimmer(

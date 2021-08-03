@@ -55,7 +55,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
-                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint()
                 {
                     Id = id.Value,
@@ -78,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
             string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
-            HttpClient httpClient = CreateHttpClient();
+            HttpClient httpClient = CreateOrUseCachedHttpClient();
 
             try
             {

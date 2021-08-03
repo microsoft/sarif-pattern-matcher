@@ -20,6 +20,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal static NuGetCredentialsValidator Instance;
 
+        private const string RandomGuid = "05C89BF5-9DF2-4F8C-8F93-FF3EF66E643D";
+
         static NuGetCredentialsValidator()
         {
             Instance = new NuGetCredentialsValidator();
@@ -89,7 +91,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     validationResults.Add(new ValidationResult
                     {
-                        RegionFlexMatch = secret,
                         Fingerprint = new Fingerprint
                         {
                             Id = user,
@@ -110,71 +111,56 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 Dictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
+            string id = fingerprint.Id;
             string host = fingerprint.Host;
-            string username = fingerprint.Id;
-            string password = fingerprint.Secret;
+            string secret = fingerprint.Secret;
 
-            HttpClient client = CreateHttpClient();
+            HttpClient client = CreateOrUseCachedHttpClient();
 
             try
             {
-                using HttpResponseMessage responseWithNoCredentials = client
-                    .GetAsync(host, HttpCompletionOption.ResponseHeadersRead)
+                ValidationState validationState = ValidateWithEmptyAndRandomKey(ref message,
+                                                                                host,
+                                                                                id);
+                if (validationState == ValidationState.NoMatch)
+                {
+                    return validationState;
+                }
+
+                // Credentials may resolve this, try again with them.
+                byte[] byteArray = Encoding.ASCII.GetBytes($"{id}:{secret}");
+
+                using var request = new HttpRequestMessage(HttpMethod.Get, host);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+                using HttpResponseMessage responseWithCredentials = client
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
-                switch (responseWithNoCredentials.StatusCode)
+                switch (responseWithCredentials.StatusCode)
                 {
                     case HttpStatusCode.OK:
                     {
-                        // Credentials not needed, this method of verification is indeterminate.
-                        return ReturnUnknownAuthorization(ref message, host, account: username);
+                        // Credentials resolved the forbidden/unauthorized message we received.
+                        return ReturnAuthorizedAccess(ref message, asset: host, account: id);
                     }
 
-                    case HttpStatusCode.Unauthorized:
                     case HttpStatusCode.Forbidden:
+                    case HttpStatusCode.Unauthorized:
                     {
-                        // Credentials may resolve this, try again with them.
-                        byte[] byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
-
-                        using var request = new HttpRequestMessage(HttpMethod.Get, host);
-                        request.Headers.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
-
-                        using HttpResponseMessage responseWithCredentials = client
-                            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                            .GetAwaiter()
-                            .GetResult();
-
-                        switch (responseWithCredentials.StatusCode)
-                        {
-                            case HttpStatusCode.OK:
-                            {
-                                // Credentials resolved the forbidden/unauthorized message we received.
-                                return ReturnAuthorizedAccess(ref message, asset: host, account: username);
-                            }
-
-                            case HttpStatusCode.Forbidden:
-                            case HttpStatusCode.Unauthorized:
-                            {
-                                return ReturnUnauthorizedAccess(ref message, asset: host, account: username);
-                            }
-
-                            default:
-                            {
-                                return ReturnUnexpectedResponseCode(ref message, responseWithCredentials.StatusCode, asset: host, account: username);
-                            }
-                        }
+                        return ReturnUnauthorizedAccess(ref message, asset: host, account: id);
                     }
 
                     default:
                     {
-                        return ReturnUnexpectedResponseCode(ref message, responseWithNoCredentials.StatusCode, asset: host, account: username);
+                        return ReturnUnexpectedResponseCode(ref message, responseWithCredentials.StatusCode, asset: host, account: id);
                     }
                 }
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e, asset: host, account: username);
+                return ReturnUnhandledException(ref message, e, asset: host, account: id);
             }
         }
 
@@ -252,6 +238,53 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             return list;
+        }
+
+        private ValidationState ValidateWithEmptyAndRandomKey(ref string message,
+                                                              string uri,
+                                                              string id)
+        {
+            HttpClient httpClient = CreateOrUseCachedHttpClient();
+
+            try
+            {
+                // Making a request without a key.
+                using HttpResponseMessage responseWithoutSecret = httpClient
+                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
+                    .GetAwaiter()
+                    .GetResult();
+
+                if (responseWithoutSecret.StatusCode == HttpStatusCode.OK ||
+                    responseWithoutSecret.StatusCode == HttpStatusCode.NotFound ||
+                    responseWithoutSecret.StatusCode == HttpStatusCode.NonAuthoritativeInformation)
+                {
+                    return ValidationState.NoMatch;
+                }
+
+                // Making a request with a random generated guid.
+                byte[] byteArray = Encoding.ASCII.GetBytes($"{id}:{RandomGuid}");
+
+                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+                using HttpResponseMessage responseDummy = httpClient
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+                    .GetAwaiter()
+                    .GetResult();
+
+                if (responseDummy.StatusCode == HttpStatusCode.OK ||
+                    responseDummy.StatusCode == HttpStatusCode.NotFound ||
+                    responseDummy.StatusCode == HttpStatusCode.NonAuthoritativeInformation)
+                {
+                    return ValidationState.NoMatch;
+                }
+
+                return ValidationState.Unknown;
+            }
+            catch (Exception e)
+            {
+                return ReturnUnhandledException(ref message, e, uri);
+            }
         }
     }
 }

@@ -58,7 +58,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
-                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint
                 {
                     Secret = secret.Value,
@@ -85,7 +84,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 message = $"The detected secret is a {keyKind} secret.";
 
-                HttpClient client = CreateHttpClient();
+                HttpClient client = CreateOrUseCachedHttpClient();
 
                 using var request = new HttpRequestMessage(HttpMethod.Get, uri);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
@@ -99,6 +98,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
+                        if (keyKind == "test")
+                        {
+                            resultLevelKind = new ResultLevelKind { Level = FailureLevel.Warning };
+                        }
+
                         return ValidationState.Authorized;
                     }
 
@@ -109,9 +113,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     default:
                     {
-                        message += $" An unexpected response code was returned attempting to " +
-                                   $"validate: '{response.StatusCode}'";
-                        break;
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
                     }
                 }
             }
@@ -119,8 +121,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-
-            return ValidationState.Unknown;
         }
     }
 }

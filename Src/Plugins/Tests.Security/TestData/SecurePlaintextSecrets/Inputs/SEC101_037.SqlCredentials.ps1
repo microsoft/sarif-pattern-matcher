@@ -5,7 +5,7 @@ jdbc:sqlserver://servername1.database.windows.net:1433;database=database1;user=u
 Driver={ODBC Driver 13 for SQL Server};Server=tcp:servername2.database.windows.net,1433;Database=database2;Uid=username2;Pwd=password2;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
 
 # This is a well-formed but invalid PHP SQL connection string
-new PDO("sqlsrv:server = tcp:servername3.database.windows.net,1433; Database = databse3", "username3", "password3");
+new PDO("sqlsrv:server = tcp:servername3.database.windows.net,1433; Database = database3", "username3", "password3");
 
 # Xml style
 <connectionStrings>

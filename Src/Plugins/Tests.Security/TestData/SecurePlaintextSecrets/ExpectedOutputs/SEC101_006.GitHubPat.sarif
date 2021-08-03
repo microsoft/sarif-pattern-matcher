@@ -76,7 +76,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=GitHub]",
             "ValidationFingerprint/v1": "[secret=ff34885a8624460a855540c6592698d2f1812843]",
-            "ValidationFingerprintHash/v1": "25799b447c11c0dec40e393f9b0349fbdf11bbb5bb8c2e6c698dbbd1bbe7cb7c"
+            "ValidationFingerprintHash/v1": "25799b447c11c0dec40e393f9b0349fbdf11bbb5bb8c2e6c698dbbd1bbe7cb7c",
+            "AssetFingerprint/v2": "{\"platform\":\"GitHub\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"ff34885a8624460a855540c6592698d2f1812843\"}"
           },
           "rank": 49.73
         },
@@ -119,7 +121,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=GitHub]",
             "ValidationFingerprint/v1": "[secret=dead885a8624460a855540c6592698d2f1812843]",
-            "ValidationFingerprintHash/v1": "84c67c32a414e0b735e075eed493dacf7d8f87ea2eab7548c748132818acb099"
+            "ValidationFingerprintHash/v1": "84c67c32a414e0b735e075eed493dacf7d8f87ea2eab7548c748132818acb099",
+            "AssetFingerprint/v2": "{\"platform\":\"GitHub\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"dead885a8624460a855540c6592698d2f1812843\"}"
           },
           "rank": 50.75
         },
@@ -162,7 +166,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=GitHub]",
             "ValidationFingerprint/v1": "[secret=ff34885a8624460a855540c6592698d2f181dead]",
-            "ValidationFingerprintHash/v1": "60358100a680426014c92b68f1ccfea4e8a0366a96b4c28e97f092c829c925a5"
+            "ValidationFingerprintHash/v1": "60358100a680426014c92b68f1ccfea4e8a0366a96b4c28e97f092c829c925a5",
+            "AssetFingerprint/v2": "{\"platform\":\"GitHub\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"ff34885a8624460a855540c6592698d2f181dead\"}"
           },
           "rank": 51.69
         },
@@ -205,7 +211,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=GitHub]",
             "ValidationFingerprint/v1": "[secret=ghp_000000000001234567890123456789012345]",
-            "ValidationFingerprintHash/v1": "b31f373817a4e1e56764a9513910d05163718322bd384f472dc67854aa855cda"
+            "ValidationFingerprintHash/v1": "b31f373817a4e1e56764a9513910d05163718322bd384f472dc67854aa855cda",
+            "AssetFingerprint/v2": "{\"platform\":\"GitHub\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"ghp_000000000001234567890123456789012345\"}"
           },
           "rank": 47.5
         },
@@ -248,7 +256,9 @@
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=GitHub]",
             "ValidationFingerprint/v1": "[secret=ghr_111111111101234567890123456789012345]",
-            "ValidationFingerprintHash/v1": "920386532da6dcd761a2e515339fd9b86c7512f7eabbaaa59034fff9dc71ac53"
+            "ValidationFingerprintHash/v1": "920386532da6dcd761a2e515339fd9b86c7512f7eabbaaa59034fff9dc71ac53",
+            "AssetFingerprint/v2": "{\"platform\":\"GitHub\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"ghr_111111111101234567890123456789012345\"}"
           },
           "rank": 47.5
         }

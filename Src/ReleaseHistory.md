@@ -1,5 +1,77 @@
 # Release History
 
+## *v1.5.0-alpha-0068-g5d32a6446f*
+
+- [5d32a64](https://github.com/microsoft/sarif-pattern-matcher/commit/5d32a64) ValidatingVisitor should prefer v2 if exists (#494)
+
+## *v1.5.0-alpha-0067-gaa1e470c62*
+
+- [aa1e470](https://github.com/microsoft/sarif-pattern-matcher/commit/aa1e470) Removing Path from fingerprint hash if option enabled (#493)
+
+## *v1.5.0-alpha-0066-ge3dc23555d*
+
+- [e3dc235](https://github.com/microsoft/sarif-pattern-matcher/commit/e3dc235) Enable json fingerprint (#492)
+
+## *v1.5.0-alpha-0065-g2c23518427*
+
+- [2c23518](https://github.com/microsoft/sarif-pattern-matcher/commit/2c23518) Propagate changes in fingerprint after dynamic validation (#491)
+- [8b9cfed](https://github.com/microsoft/sarif-pattern-matcher/commit/8b9cfed) Adding flag to persist path in asset fingerprint (#490)
+
+## *v1.5.0-alpha-0063-g9868382c12*
+
+- [9868382](https://github.com/microsoft/sarif-pattern-matcher/commit/9868382) Fixing AssetFingerprint when used in ValidatingVisitor (#489)
+- [6f00a60](https://github.com/microsoft/sarif-pattern-matcher/commit/6f00a60) Provide alternate JSON fingerprint (#488)- [b9b42ec](https://github.com/microsoft/sarif-pattern-matcher/commit/b9b42ec) Adding deprecated name to sarif (#485)
+- [53013a8](https://github.com/microsoft/sarif-pattern-matcher/commit/53013a8) Preventing new dictionary allocation (#486)
+- [36580c4](https://github.com/microsoft/sarif-pattern-matcher/commit/36580c4) Fixing shared properties (#484)
+
+## *v1.5.0-alpha-0058-g154cef6547*
+
+- [154cef6](https://github.com/microsoft/sarif-pattern-matcher/commit/154cef6) Fixing null reference, adding secret change (#483)
+- [132a8ce](https://github.com/microsoft/sarif-pattern-matcher/commit/132a8ce) Fixing ValidatingVisitor exception (due to  renaming) (#482)
+- [429e09f](https://github.com/microsoft/sarif-pattern-matcher/commit/429e09f) Changing asset fingerprint of GitHubPat rule (#481)
+- [49e0989](https://github.com/microsoft/sarif-pattern-matcher/commit/49e0989) Improving ValidatingVisitor and regex (#480)
+- [094ca63](https://github.com/microsoft/sarif-pattern-matcher/commit/094ca63) Catch FormatException when converting (#479)
+
+## *v1.5.0-alpha-0053-gd852f2a085*
+
+- [d852f2a](https://github.com/microsoft/sarif-pattern-matcher/commit/d852f2a) Fixing analyze database conversion (#478)- [02a61d8](https://github.com/microsoft/sarif-pattern-matcher/commit/02a61d8) Renaming connectionString rules (#477)
+
+## *v1.5.0-alpha-0051-ga2d0d590dc*
+
+- [a2d0d59](https://github.com/microsoft/sarif-pattern-matcher/commit/a2d0d59) Improving NugetCredentials and Postgres regex (#476)
+
+## *v1.5.0-alpha-0050-gb2e9608cc5*
+
+- [b2e9608](https://github.com/microsoft/sarif-pattern-matcher/commit/b2e9608) Preparing release (#475)
+- [b664d51](https://github.com/microsoft/sarif-pattern-matcher/commit/b664d51) Replacing Guid.NewGuid for ScanId (#474)
+- [ad3a04e](https://github.com/microsoft/sarif-pattern-matcher/commit/ad3a04e) Improving cert validator (#473)
+- [f63927a](https://github.com/microsoft/sarif-pattern-matcher/commit/f63927a) Postgres single line refactor (#472)
+- [43db81e](https://github.com/microsoft/sarif-pattern-matcher/commit/43db81e) Improve SQL region selection. (#471)
+- [0e3422e](https://github.com/microsoft/sarif-pattern-matcher/commit/0e3422e) MySQL single line refactor (#470)
+- [21d86c8](https://github.com/microsoft/sarif-pattern-matcher/commit/21d86c8) Update azure-pipelines.yml for Azure Pipelines
+- [e457fe2](https://github.com/microsoft/sarif-pattern-matcher/commit/e457fe2) Sql singleline (#469)
+- [cf8144a](https://github.com/microsoft/sarif-pattern-matcher/commit/cf8144a) Author single-line, multicomponent analysis. (#466)
+- [d4e28bf](https://github.com/microsoft/sarif-pattern-matcher/commit/d4e28bf) Enable FlexMatch.ToString() (#467)
+- [37c80e9](https://github.com/microsoft/sarif-pattern-matcher/commit/37c80e9) Improving intrafile regex (#464)
+- [3596c40](https://github.com/microsoft/sarif-pattern-matcher/commit/3596c40) Removing unnamed groups (#465)
+- [6fe0618](https://github.com/microsoft/sarif-pattern-matcher/commit/6fe0618) Fixing NullReferenceException in FlexMatchComparer (#463)
+- [8b53832](https://github.com/microsoft/sarif-pattern-matcher/commit/8b53832) Singleline regexes (#462)
+- [bd853a7](https://github.com/microsoft/sarif-pattern-matcher/commit/bd853a7) Fixing HttpClient cache (#461)
+- [cb3b499](https://github.com/microsoft/sarif-pattern-matcher/commit/cb3b499) Remove 'matchedPattern' argument from static validator phase. Instead… (#460)
+- [a9846e1](https://github.com/microsoft/sarif-pattern-matcher/commit/a9846e1) Update SDK. (#458)
+- [1e4e5b9](https://github.com/microsoft/sarif-pattern-matcher/commit/1e4e5b9) Adding postman validator (#456)
+- [aa8f6e4](https://github.com/microsoft/sarif-pattern-matcher/commit/aa8f6e4) Applying intrafile refactor (#454)
+- [c3d10e4](https://github.com/microsoft/sarif-pattern-matcher/commit/c3d10e4) Sarif update (#457)
+- [3334a80](https://github.com/microsoft/sarif-pattern-matcher/commit/3334a80) Fixing maxmemory conversion for default value (#455)
+- [ef718d6](https://github.com/microsoft/sarif-pattern-matcher/commit/ef718d6) Unhandled response code helper (#452)
+- [0033e7d](https://github.com/microsoft/sarif-pattern-matcher/commit/0033e7d) Do not dispose HttpClient (#451)
+- [95b153a](https://github.com/microsoft/sarif-pattern-matcher/commit/95b153a) Changing code coverage (#453)
+- [cbde3c8](https://github.com/microsoft/sarif-pattern-matcher/commit/cbde3c8) Improve match efficiency. Provide two specific examples. (#447)
+- [438ef03](https://github.com/microsoft/sarif-pattern-matcher/commit/438ef03) Adding retry and max-memory options (#445)
+- [152e71b](https://github.com/microsoft/sarif-pattern-matcher/commit/152e71b) New intrafile analysis (#446)
+- [9931610](https://github.com/microsoft/sarif-pattern-matcher/commit/9931610) Fixing coverage (#444)
+- [e31a53c](https://github.com/microsoft/sarif-pattern-matcher/commit/e31a53c) Add test cases for ValidationResult (#443)
+
 ## *v1.5.0-alpha-0021-gd7197e02cd*
 
 - [d7197e0](https://github.com/microsoft/sarif-pattern-matcher/commit/d7197e0) Replace file name in output with a truncated secret. (#442)

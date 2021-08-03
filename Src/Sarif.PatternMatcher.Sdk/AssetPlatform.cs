@@ -41,6 +41,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         Cloudant,
 
         /// <summary>
+        /// Discord platform. https://discord.com/developers
+        /// </summary>
+        Discord,
+
+        /// <summary>
         /// Dropbox platform. https://www.dropbox.com/developers
         /// </summary>
         Dropbox,

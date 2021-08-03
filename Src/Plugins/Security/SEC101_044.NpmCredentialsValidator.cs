@@ -82,7 +82,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
-                RegionFlexMatch = secret,
                 Fingerprint = new Fingerprint
                 {
                     Id = decodedId,
@@ -106,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string secret = fingerprint.Secret;
             string uri = $"https://{host}";
 
-            HttpClient client = CreateHttpClient();
+            HttpClient client = CreateOrUseCachedHttpClient();
 
             try
             {

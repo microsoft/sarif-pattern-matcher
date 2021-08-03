@@ -18,6 +18,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
+        private static readonly List<string> AzureHosts = new List<string>
+        {
+            "database.azure.com",
+            "database.cloudapi.de",
+            "database.windows.net",
+            "database.chinacloudapi.cn",
+            "database.secure.windows.net",
+        };
+
         static SqlCredentialsValidator()
         {
             Instance = new SqlCredentialsValidator();
@@ -73,15 +82,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
+            groups.TryGetNonEmptyValue("port", out FlexMatch port);
+
             var fingerprint = new Fingerprint()
             {
                 Id = id.Value,
                 Host = hostValue,
+                Port = port?.Value,
                 Secret = secret.Value,
                 Resource = resource.Value,
             };
 
-            SharedUtilities.PopulateAssetFingerprint(hostValue, ref fingerprint);
+            SharedUtilities.PopulateAssetFingerprint(AzureHosts, hostValue, ref fingerprint);
 
             var validationResult = new ValidationResult
             {

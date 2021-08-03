@@ -19,21 +19,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {
         public const string AssetFingerprint = "AssetFingerprint/v1";
-        public const string GlobalFingerprint = "GlobalFingerprint/v1";
         public const string ValidationFingerprint = "ValidationFingerprint/v1";
         public const string ValidationFingerprintHash = "ValidationFingerprintHash/v1";
+
+        public const string AssetFingerprintV2 = "AssetFingerprint/v2";
+        public const string ValidationFingerprintV2 = "ValidationFingerprint/v2";
+
         public const string DynamicValidationNotEnabled = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
 
+        private const string DefaultHelpUri = "https://github.com/microsoft/sarif-pattern-matcher";
         private const string Base64DecodingFormatString = "\\b(?i)[0-9a-z\\/+]{0}";
-
-        private static readonly Uri s_helpUri =
-            new Uri("https://github.com/microsoft/sarif-pattern-matcher");
 
         private static readonly Regex namedArgumentsRegex =
             new Regex(@"[^}]?{(?<index>\d+):(?i)(?<name>[a-z]+)}[\}]*", RegexDefaults.DefaultOptionsCaseSensitive);
 
         private readonly string _id;
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
+        private readonly Uri _helpUri;
         private readonly IRegex _engine;
         private readonly IFileSystem _fileSystem;
         private readonly FileRegionsCache _fileRegionsCache;
@@ -54,8 +56,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             _name = definition.Name;
             _validators = validators;
             _fileRegionsCache = fileRegionsCache;
-            _fullDescription = new MultiformatMessageString { Text = definition.Description };
             _fileSystem = fileSystem ?? FileSystem.Instance;
+            _helpUri = new Uri(definition.HelpUri ?? DefaultHelpUri);
+            _fullDescription = new MultiformatMessageString { Text = definition.Description };
 
             _messageStrings = new Dictionary<string, MultiformatMessageString>
             {
@@ -90,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             _matchExpressions = definition.MatchExpressions;
         }
 
-        public override Uri HelpUri => s_helpUri;
+        public override Uri HelpUri => _helpUri;
 
         public override string Id => _id;
 
@@ -680,11 +683,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 match.AddProperties(matchExpression.Properties);
 
                 FlexMatch flexMatch = match["0"];
-                string refinedMatchedPattern = flexMatch.Value;
                 if (match.TryGetValue("refine", out FlexMatch refineMatch))
                 {
-                    refinedMatchedPattern = refineMatch.Value;
                     flexMatch = refineMatch;
+                }
+
+                if (match.TryGetValue("secret", out FlexMatch secretFlexMatch))
+                {
+                    flexMatch = secretFlexMatch;
                 }
 
                 Fingerprint fingerprint = default;
@@ -698,16 +704,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                                            context,
                                                                                            match,
                                                                                            out bool pluginSupportsDynamicValidation);
-
-                    int refinementIndex = flexMatch.Value.String.IndexOf(refinedMatchedPattern);
-                    Debug.Assert(refinementIndex != -1, "Refinement index should be different from -1");
-
-                    flexMatch = new FlexMatch()
-                    {
-                        Value = refinedMatchedPattern,
-                        Length = refinedMatchedPattern.Length,
-                        Index = flexMatch.Index - refinementIndex,
-                    };
 
                     if (validationResults != null)
                     {
@@ -1160,6 +1156,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 { AssetFingerprint, fingerprint.GetAssetFingerprintText() },
                 { ValidationFingerprint, fingerprint.GetValidationFingerprintText() },
                 { ValidationFingerprintHash, fingerprint.GetValidationFingerprintHashText() },
+                { AssetFingerprintV2, fingerprint.GetAssetFingerprintText(jsonFormat: true) },
+                { ValidationFingerprintV2, fingerprint.GetValidationFingerprintText(jsonFormat: true) },
             };
         }
 

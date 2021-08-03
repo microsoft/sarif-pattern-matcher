@@ -29,13 +29,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override Result VisitResult(Result node)
         {
-            if (node.Fingerprints == null ||
-                !node.Fingerprints.TryGetValue(SearchSkimmer.ValidationFingerprint, out string fingerprintText))
+            if (node.Fingerprints == null)
             {
                 return node;
             }
 
-            var fingerprint = new Fingerprint(fingerprintText, validate: false);
+            var fingerprint = new Fingerprint(node.Fingerprints);
 
             ReportingDescriptor rule = node.GetRule(_run);
 
@@ -89,6 +88,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 node.Message.Arguments[4] = validationSuffix;
                 node.Message.Arguments[5] = SearchSkimmer.NormalizeValidatorMessage(message);
                 node.Fingerprints[SearchSkimmer.AssetFingerprint] = fingerprint.GetAssetFingerprintText();
+                node.Fingerprints[SearchSkimmer.AssetFingerprintV2] = fingerprint.GetAssetFingerprintText(jsonFormat: true);
             }
 
             return node;
