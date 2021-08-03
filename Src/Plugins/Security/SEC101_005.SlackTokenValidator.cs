@@ -102,7 +102,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case "token_revoked":
                     case "account_inactive": { return ValidationState.Expired; }
-                    case "invalid_auth": { return ReturnUnauthorizedAccess(ref message, fingerprint.Secret); }
+                    case "invalid_auth": { return ValidationState.Unauthorized; }
                 }
 
                 if (!string.IsNullOrEmpty(authResponse.Error))

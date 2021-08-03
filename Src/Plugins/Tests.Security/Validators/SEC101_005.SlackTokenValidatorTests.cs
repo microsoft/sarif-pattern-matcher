@@ -68,7 +68,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                                                     Encoding.UTF8,
                                                     "application/json").As<HttpContent>(),
                     ExpectedValidationState = ValidationState.Unauthorized,
-                    ExpectedMessage = "The provided secret is not authorized to access 'xoxb-1234'."
+                    ExpectedMessage = string.Empty
                 },
                 new
                 {
