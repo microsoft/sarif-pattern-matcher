@@ -103,6 +103,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     ExpectedValidationState = ValidationState.Unknown,
                     ExpectedMessage = "An unexpected error was observed attempting to validate token: 'unknown_error'"
                 },
+                new
+                {
+                    Title = "Testing Unknown Status code",
+                    HttpStatusCode = HttpStatusCode.InternalServerError,
+                    HttpContent = (HttpContent)null,
+                    ExpectedValidationState = ValidationState.Unknown,
+                    ExpectedMessage = "An unexpected HTTP response code was received: 'InternalServerError'.",
+                },
             };
 
             const string fingerprintText = "[secret=xoxb-1234]";

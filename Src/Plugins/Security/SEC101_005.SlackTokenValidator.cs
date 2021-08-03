@@ -86,6 +86,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     .GetAwaiter()
                     .GetResult();
 
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
+                }
+
                 string content = response.Content
                                          .ReadAsStringAsync()
                                          .GetAwaiter()
