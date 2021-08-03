@@ -93,23 +93,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 AuthTestResponse authResponse = JsonSerializer.Deserialize<AuthTestResponse>(content);
 
-                if (content.Contains("invalid_auth"))
-                {
-                    return ValidationState.Unauthorized;
-                }
-
                 switch (authResponse.Error)
                 {
                     case "token_revoked":
                     case "account_inactive": { return ValidationState.Expired; }
-                    case "invalid_auth": { return ReturnAuthorizedAccess(ref message, fingerprint.Secret); }
+                    case "invalid_auth": { return ReturnUnauthorizedAccess(ref message, fingerprint.Secret); }
                 }
 
                 if (!string.IsNullOrEmpty(authResponse.Error))
                 {
                     message = $"An unexpected error was observed " +
                               $"attempting to validate token: '{authResponse.Error}'";
-                    return ReturnUnknownAuthorization(ref message, fingerprint.Secret);
+                    return ValidationState.Unknown;
                 }
 
                 message = BuildAuthTestResponseMessage(authResponse);
