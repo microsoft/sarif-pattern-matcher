@@ -91,10 +91,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
                 }
 
-                string content = response.Content
-                                         .ReadAsStringAsync()
-                                         .GetAwaiter()
-                                         .GetResult();
+                string content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
                 AuthTestResponse authResponse = JsonSerializer.Deserialize<AuthTestResponse>(content);
 
@@ -108,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 if (!string.IsNullOrEmpty(authResponse.Error))
                 {
                     message = $"An unexpected error was observed " +
-                              $"attempting to validate token: '{authResponse.Error}'";
+                              $"attempting to validate the token: '{authResponse.Error}'";
                     return ValidationState.Unknown;
                 }
 

@@ -101,7 +101,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                                                     Encoding.UTF8,
                                                     "application/json").As<HttpContent>(),
                     ExpectedValidationState = ValidationState.Unknown,
-                    ExpectedMessage = "An unexpected error was observed attempting to validate token: 'unknown_error'"
+                    ExpectedMessage = "An unexpected error was observed attempting to validate the token: 'unknown_error'"
                 },
                 new
                 {
