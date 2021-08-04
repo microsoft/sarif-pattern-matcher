@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -66,40 +68,54 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 Dictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
-            var client = new WebClient();
-            var data = new NameValueCollection();
+            const string uri = "https://slack.com/api/auth.test";
 
-            data["token"] = fingerprint.Secret;
-
-            byte[] bytes = client.UploadValues("https://slack.com/api/auth.test",
-                                                  "POST",
-                                                  data);
-
-            string json = Encoding.UTF8.GetString(bytes);
-
-            if (json.Contains("invalid_auth"))
+            try
             {
-                return ValidationState.Unauthorized;
+                HttpClient client = CreateOrUseCachedHttpClient();
+                var dict = new Dictionary<string, string>
+                {
+                    {"token", fingerprint.Secret },
+                };
+
+                using var request = new HttpRequestMessage(HttpMethod.Post, uri);
+                request.Content = new FormUrlEncodedContent(dict);
+
+                using HttpResponseMessage response = client
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+                    .GetAwaiter()
+                    .GetResult();
+
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
+                }
+
+                string content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                AuthTestResponse authResponse = JsonSerializer.Deserialize<AuthTestResponse>(content);
+
+                switch (authResponse.Error)
+                {
+                    case "token_revoked":
+                    case "account_inactive": { return ValidationState.Expired; }
+                    case "invalid_auth": { return ValidationState.Unauthorized; }
+                }
+
+                if (!string.IsNullOrEmpty(authResponse.Error))
+                {
+                    message = $"An unexpected error was observed " +
+                              $"attempting to validate the token: '{authResponse.Error}'";
+                    return ValidationState.Unknown;
+                }
+
+                message = BuildAuthTestResponseMessage(authResponse);
+                return ValidationState.Authorized;
             }
-
-            AuthTestResponse response = JsonSerializer.Deserialize<AuthTestResponse>(json);
-
-            switch (response.Error)
+            catch (Exception e)
             {
-                case "token_revoked":
-                case "account_inactive": { return ValidationState.Expired; }
-                case "invalid_auth": { return ValidationState.Unauthorized; }
+                return ReturnUnhandledException(ref message, e);
             }
-
-            if (!string.IsNullOrEmpty(response.Error))
-            {
-                message = $"An unexpected error was observed " +
-                          $"attempting to validate token: '{response.Error}'";
-                return ValidationState.Unknown;
-            }
-
-            message = BuildAuthTestResponseMessage(response);
-            return ValidationState.Authorized;
         }
 
         private string BuildAuthTestResponseMessage(AuthTestResponse response)
