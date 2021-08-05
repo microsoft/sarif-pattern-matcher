@@ -75,7 +75,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 HttpClient client = CreateOrUseCachedHttpClient();
                 var dict = new Dictionary<string, string>
                 {
-                    {"token", fingerprint.Secret },
+                    { "token", fingerprint.Secret },
                 };
 
                 using var request = new HttpRequestMessage(HttpMethod.Post, uri);
