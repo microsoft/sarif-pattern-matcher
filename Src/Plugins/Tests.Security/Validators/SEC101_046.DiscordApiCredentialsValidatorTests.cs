@@ -8,6 +8,7 @@ using System.Text;
 
 using FluentAssertions;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 using Xunit;
@@ -76,8 +77,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                MockHelper.ResetStaticInstance<DiscordApiCredentialsValidator>();
-                using var httpClient = new HttpClient(MockHelper.MockHttpMessageHandler(testCase.HttpStatusCode, testCase.HttpContent));
+                ValidatorHelper.ResetStaticInstance<DiscordApiCredentialsValidator>();
+                using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
                 DiscordApiCredentialsValidator.Instance.SetHttpClient(httpClient);
 
                 ValidationState currentState = DiscordApiCredentialsValidator.IsValidDynamic(ref fingerprint,

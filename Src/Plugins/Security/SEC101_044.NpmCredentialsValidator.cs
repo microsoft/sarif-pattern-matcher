@@ -109,8 +109,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
+                using var requestWithNoCredentials = new HttpRequestMessage(HttpMethod.Get, uri);
                 using HttpResponseMessage responseWithNoCredentials = client
-                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
+                    .SendAsync(requestWithNoCredentials, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
