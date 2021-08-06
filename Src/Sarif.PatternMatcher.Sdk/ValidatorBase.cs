@@ -192,7 +192,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             }
             else
             {
-                message = $"An unexpected HTTP response code was received from '{account}' account on '{asset}': {status}";
+                message = $"An unexpected HTTP response code was received from '{account}' account on '{asset}': {status}.";
             }
 
             return ValidationState.Unknown;

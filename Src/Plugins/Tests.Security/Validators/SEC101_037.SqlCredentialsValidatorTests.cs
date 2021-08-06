@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    public class SqlCredenntialsValidatorTests
+    public class SqlCredentialsValidatorTests
     {
         [Fact]
         public void SqlCredentialsValidatorTests_Test()
@@ -21,9 +21,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var keyValuePairs = new Dictionary<string, string>();
 
             ValidationState actualValidationState = SqlCredentialsValidator.IsValidDynamic(ref fingerprint,
-                                                                                                ref message,
-                                                                                                keyValuePairs,
-                                                                                                ref resultLevelKind);
+                                                                                           ref message,
+                                                                                           keyValuePairs,
+                                                                                           ref resultLevelKind);
             Assert.True(actualValidationState == ValidationState.Unknown || actualValidationState == ValidationState.UnknownHost);
         }
     }
