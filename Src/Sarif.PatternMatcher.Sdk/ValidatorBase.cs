@@ -34,6 +34,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             new Regex($@"The underlying connection was closed: Could not establish " +
                          "trust relationship for the SSL/TLS secure channel.", s_options);
 
+        [ThreadStatic]
+        private static HttpClient s_httpClient;
+
         private static bool shouldUseDynamicCache;
         private HttpClient httpClient;
         private string scanIdentityGuid;
@@ -322,9 +325,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             httpClient = client;
         }
 
-        protected HttpClient CreateOrUseCachedHttpClient()
+        protected HttpClient CreateOrRetrieveCachedHttpClient()
         {
-            if (httpClient == null)
+            // The httpClient is the property that will be used for tests only.
+            if (httpClient != null)
+            {
+                return httpClient;
+            }
+
+            if (s_httpClient == null)
             {
                 var httpClientHandler = new HttpClientHandler()
                 {
@@ -332,16 +341,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     MaxAutomaticRedirections = 10,
                 };
 
-                httpClient = new HttpClient(httpClientHandler);
+                s_httpClient = new HttpClient(httpClientHandler);
 
-                httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
+                s_httpClient.DefaultRequestHeaders.Add(ScanIdentityHttpCustomHeaderKey,
                                                      ScanIdentityHttpCustomHeaderValue);
 
-                httpClient.DefaultRequestHeaders.Add("User-Agent",
+                s_httpClient.DefaultRequestHeaders.Add("User-Agent",
                                                      UserAgentValue);
             }
 
-            return httpClient;
+            return s_httpClient;
         }
 
         /// <summary>
