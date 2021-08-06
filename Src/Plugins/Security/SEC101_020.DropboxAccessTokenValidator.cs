@@ -73,7 +73,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             const string uri = "https://api.dropboxapi.com/2/file_requests/count";
 
             string secret = fingerprint.Secret;
-            HttpClient httpClient = CreateOrUseCachedHttpClient();
+            HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
 
             try
             {

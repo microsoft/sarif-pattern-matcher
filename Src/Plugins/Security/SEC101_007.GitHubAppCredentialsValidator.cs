@@ -78,7 +78,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                HttpClient client = CreateOrUseCachedHttpClient();
+                HttpClient client = CreateOrRetrieveCachedHttpClient();
 
                 using var request = new HttpRequestMessage(HttpMethod.Post, uri);
                 request.Content = new StringContent($@"{{""client_id"": ""{id}"",""client_secret"": ""{secret}""}}", Encoding.UTF8, "application/json");

@@ -74,7 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             try
             {
                 string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
-                HttpClient httpClient = CreateOrUseCachedHttpClient();
+                HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
                 using var request = new HttpRequestMessage(HttpMethod.Get, uri);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
