@@ -72,7 +72,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                HttpClient client = CreateOrUseCachedHttpClient();
+                HttpClient client = CreateOrRetrieveCachedHttpClient();
                 var dict = new Dictionary<string, string>
                 {
                     { "token", fingerprint.Secret },

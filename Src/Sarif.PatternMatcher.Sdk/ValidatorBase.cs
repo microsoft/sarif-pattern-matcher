@@ -325,7 +325,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             httpClient = client;
         }
 
-        protected HttpClient CreateOrUseCachedHttpClient()
+        protected HttpClient CreateOrRetrieveCachedHttpClient()
         {
             // The httpClient is the property that will be used for tests only.
             if (httpClient != null)
