@@ -15,10 +15,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public class HttpAuthorizationRequestHeaderValidator : ValidatorBase
     {
         internal static HttpAuthorizationRequestHeaderValidator Instance;
+        internal static string TestScanIdentityGuid;
 
         static HttpAuthorizationRequestHeaderValidator()
         {
             Instance = new HttpAuthorizationRequestHeaderValidator();
+            TestScanIdentityGuid = Instance.ScanIdentityGuid;
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
