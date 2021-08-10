@@ -61,7 +61,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             string expectedResultsMessage = string.Empty;
 
-            var testCases = new HttpMockTestCase[] {
+            var testCases = new HttpMockTestCase[]
+            {
             new HttpMockTestCase
             {
                 Title = "Dummy Status OK",
@@ -98,7 +99,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 ExpectedValidationState = ValidatorBase.ReturnAuthorizedAccess(ref expectedResultsMessage, TestHost),
                 ExpectedMessage = expectedResultsMessage
             },
-             new HttpMockTestCase
+            new HttpMockTestCase
             {
                 Title = "Invalid (HttpStatus Forbidden)",
                 HttpContents = new List<HttpContent> { null, null },
@@ -107,16 +108,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 ExpectedValidationState = ValidatorBase.ReturnUnauthorizedAccess(ref expectedResultsMessage, TestHost),
                 ExpectedMessage = expectedResultsMessage
             },
-              new HttpMockTestCase
+            new HttpMockTestCase
             {
                 Title = "Invalid (HttpStatus Unauthorized)",
-                 HttpContents = new List<HttpContent> { null, null },
+                HttpContents = new List<HttpContent> { null, null },
                 HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.Unauthorized, HttpStatusCode.Unauthorized },
                 HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy, requestReal  },
                 ExpectedValidationState = ValidatorBase.ReturnUnauthorizedAccess(ref expectedResultsMessage, TestHost),
                 ExpectedMessage = expectedResultsMessage
             },
-              new HttpMockTestCase
+            new HttpMockTestCase
             {
                 Title = "Dummy and Response Status Codes match (HTTP Status 500)",
                 HttpContents = new List<HttpContent> { null, null },
@@ -125,10 +126,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 ExpectedMessage = string.Empty,
                 ExpectedValidationState = ValidationState.NoMatch
             },
-              new HttpMockTestCase
+            new HttpMockTestCase
             {
                 Title = "Unexpected Response Code (Dummy is Unauthorized, Response is 500)",
-                 HttpContents = new List<HttpContent> { null, null },
+                HttpContents = new List<HttpContent> { null, null },
                 HttpStatusCodes = new List<HttpStatusCode> {HttpStatusCode.Unauthorized, HttpStatusCode.InternalServerError },
                 HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy, requestReal  },
                 ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref expectedResultsMessage, HttpStatusCode.InternalServerError, TestHost),
@@ -146,6 +147,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     mockHandler.Mock(testCase.HttpRequestMessages[i], testCase.HttpStatusCodes[i], testCase.HttpContents[i]);
                 }
+
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
                 var keyValuePairs = new Dictionary<string, string>() { { "TestGuid", TestGuid } };
@@ -154,9 +156,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 HttpAuthorizationRequestHeaderValidator.Instance.SetHttpClient(httpClient);
 
                 ValidationState currentState = HttpAuthorizationRequestHeaderValidator.IsValidDynamic(ref fingerprint,
-                                                                                      ref message,
-                                                                                      keyValuePairs,
-                                                                                      ref resultLevelKind);
+                                                                                                      ref message,
+                                                                                                      keyValuePairs,
+                                                                                                      ref resultLevelKind);
 
                 if (currentState != testCase.ExpectedValidationState)
                 {
