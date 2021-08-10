@@ -46,16 +46,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            Tuple<HttpRequestMessage, HttpStatusCode, HttpContent> fakeResponse = _fakeResponses.Find(fr =>
-                fr.Item1.RequestUri == request.RequestUri
-                && request.Headers.IsEmptyEnumerable()
-                && fr.Item1.Headers.IsEmptyEnumerable());
+            Tuple<HttpRequestMessage, HttpStatusCode, HttpContent> fakeResponse;
 
-            if (fakeResponse == null)
+            if (request.Headers.IsEmptyEnumerable()) {
+                fakeResponse = _fakeResponses.Find(fr =>
+                    fr.Item1.RequestUri == request.RequestUri
+                    && fr.Item1.Headers.IsEmptyEnumerable());
+            } else
             {
                 fakeResponse = _fakeResponses.Find(fr =>
                     fr.Item1.RequestUri == request.RequestUri
-                    && fr.Item1.Headers.Authorization.Equals(request.Headers.Authorization));
+                    && request.Headers.Authorization.Equals(fr.Item1.Headers.Authorization));
             }
 
             return Task.FromResult(
