@@ -83,7 +83,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", options["TestGuid"]);
                 } else
                 {
-                    requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", Instance.ScanIdentityGuid);
+                    requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", this.ScanIdentityGuid);
                 }
 
                 using HttpResponseMessage responseDummy = client
