@@ -22,6 +22,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
             Instance = new MongoDbCredentialsValidator();
         }
 
+        public static void Clear()
+        {
+            Clear(Instance);
+        }
+
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
         {
             return IsValidStatic(Instance, groups);

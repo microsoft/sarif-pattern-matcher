@@ -29,6 +29,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             RegexEngine.IsMatch(string.Empty, AwsUserExpression);
         }
 
+        public static void Clear()
+        {
+            Clear(Instance);
+        }
+
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
         {
             return IsValidStatic(Instance, groups);

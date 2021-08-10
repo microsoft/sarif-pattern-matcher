@@ -158,6 +158,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return validationState;
         }
 
+        public static void Clear(ValidatorBase validator)
+        {
+            validator.PerFileFingerprintCache.Clear();
+            validator.FingerprintToResultCache.Clear();
+        }
+
         public static void DisableDynamicValidationCaching(bool disable)
         {
             shouldUseDynamicCache = !disable;

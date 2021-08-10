@@ -289,6 +289,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void SearchSkimmer_ValidatorResultsAreProperlyChangingFingerprintAfterDynamicValidation()
         {
+            bool clearCalled = false;
             TestRuleValidator.OverrideIsValidStatic = (groups) =>
             {
                 return new[] {
@@ -311,6 +312,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 fingerprint.Id = "test";
                 return ValidationState.Authorized;
+            };
+
+            TestRuleValidator.OverrideClear = () =>
+            {
+                clearCalled = true;
             };
 
             string validatorAssemblyPath = $@"c:\{Guid.NewGuid()}.dll";
@@ -350,6 +356,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Result result = ((TestLogger)context.Logger).Results[0];
             result.Fingerprints[SearchSkimmer.AssetFingerprint].Should().Be("[id=test][platform=GitHub]");
             result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be("[id=test][secret=secret]");
+
+            // Checking if we called the clear method.
+            System.Reflection.MethodInfo clearMethod = validators.RuleNameToValidationMethods["TestRuleValidator"].Clear;
+            clearMethod.Invoke(null, null);
+            clearCalled.Should().BeTrue();
         }
 
         [Fact]

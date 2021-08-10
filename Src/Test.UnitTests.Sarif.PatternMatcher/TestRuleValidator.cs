@@ -11,6 +11,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class TestRuleValidator
     {
+        public delegate void ClearDelegate();
+
         public delegate IEnumerable<ValidationResult> IsValidStaticDelegate(Dictionary<string, FlexMatch> groups);
 
         public delegate ValidationState IsValidDynamicDelegate(ref Fingerprint fingerprint,
@@ -19,10 +21,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                ref ResultLevelKind resultLevelKind);
 
         [ThreadStatic]
+        public static ClearDelegate OverrideClear;
+
+        [ThreadStatic]
         public static IsValidStaticDelegate OverrideIsValidStatic;
 
         [ThreadStatic]
         public static IsValidDynamicDelegate OverrideIsValidDynamic;
+
+        public static void Clear()
+        {
+            if (OverrideClear == null) { return; }
+            OverrideClear();
+        }
 
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
         {

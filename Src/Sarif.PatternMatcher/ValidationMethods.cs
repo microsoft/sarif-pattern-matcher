@@ -7,6 +7,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidationMethods
     {
+        public MethodInfo Clear { get; set; }
+
         public MethodInfo IsValidStatic { get; set; }
 
         public MethodInfo IsValidDynamic { get; set; }

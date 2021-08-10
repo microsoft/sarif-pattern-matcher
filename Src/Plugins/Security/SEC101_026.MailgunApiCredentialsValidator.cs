@@ -15,7 +15,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class MailgunApiCredentialsValidator : ValidatorBase
     {
-        internal static MailgunApiCredentialsValidator Instance = new MailgunApiCredentialsValidator();
+        internal static MailgunApiCredentialsValidator Instance;
+
+        static MailgunApiCredentialsValidator()
+        {
+            Instance = new MailgunApiCredentialsValidator();
+        }
+
+        public static void Clear()
+        {
+            Clear(Instance);
+        }
 
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
         {

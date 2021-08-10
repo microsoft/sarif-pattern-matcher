@@ -3,10 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -17,7 +15,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class SlackTokenValidator : ValidatorBase
     {
-        internal static SlackTokenValidator Instance = new SlackTokenValidator();
+        internal static SlackTokenValidator Instance;
+
+        static SlackTokenValidator()
+        {
+            Instance = new SlackTokenValidator();
+        }
+
+        public static void Clear()
+        {
+            Clear(Instance);
+        }
 
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
         {

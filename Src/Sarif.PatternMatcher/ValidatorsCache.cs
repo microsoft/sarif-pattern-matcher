@@ -417,6 +417,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             isValidDynamic = null;
                         }
 
+                        MethodInfo clear = type.GetMethod("Clear");
+
                         MethodInfo disableDynamicValidationCaching = type.BaseType.GetMethod(
                             "DisableDynamicValidationCaching",
                             new[]
@@ -427,6 +429,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                         ruleToMethodMap[typeName] = new ValidationMethods
                         {
+                            Clear = clear,
                             IsValidStatic = isValidStatic,
                             IsValidDynamic = isValidDynamic,
                             DisableDynamicValidationCaching = disableDynamicValidationCaching,
