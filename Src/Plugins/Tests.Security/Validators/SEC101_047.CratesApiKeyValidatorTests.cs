@@ -18,26 +18,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
     public class CratesApiKeyValidatorTests
     {
         [Fact]
-        public void CratesApiKeyValidator_Test()
-        {
-            string fingerprintText = "";
-            if (string.IsNullOrEmpty(fingerprintText))
-            {
-                return;
-            }
-
-            string message = null;
-            ResultLevelKind resultLevelKind = default;
-            var fingerprint = new Fingerprint(fingerprintText);
-            var keyValuePairs = new Dictionary<string, string>();
-
-            CratesApiKeyValidator.IsValidDynamic(ref fingerprint,
-                                                 ref message,
-                                                 keyValuePairs,
-                                                 ref resultLevelKind);
-        }
-
-        [Fact]
         public void DiscordCredentialsValidator_MockHttpTests()
         {
             string unknownMessage = null;
