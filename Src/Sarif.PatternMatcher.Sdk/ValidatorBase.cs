@@ -55,7 +55,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             FingerprintToResultCache = new ConcurrentDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>>();
         }
 
-        protected virtual string ScanIdentityGuid
+        public virtual string ScanIdentityGuid
         {
             get
             {

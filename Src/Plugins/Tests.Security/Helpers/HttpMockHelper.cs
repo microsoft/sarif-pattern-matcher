@@ -46,13 +46,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
         {
             Tuple<HttpRequestMessage, HttpStatusCode, HttpContent> fakeResponse = _fakeResponses.Find(fr =>
                 fr.Item1.RequestUri == request.RequestUri
-                && fr.Item1.Headers.IsEmptyEnumerable() == request.Headers.IsEmptyEnumerable());
+                && request.Headers.IsEmptyEnumerable()
+                && fr.Item1.Headers.IsEmptyEnumerable());
 
             if (fakeResponse == null)
             {
                 fakeResponse = _fakeResponses.Find(fr =>
                     fr.Item1.RequestUri == request.RequestUri
-                    && fr.Item1.Headers.Authorization == request.Headers.Authorization);
+                    && fr.Item1.Headers.Authorization.Equals(request.Headers.Authorization));
             }
 
             return Task.FromResult(

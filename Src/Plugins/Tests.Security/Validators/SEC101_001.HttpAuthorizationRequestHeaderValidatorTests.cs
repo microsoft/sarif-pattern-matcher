@@ -48,10 +48,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         {
             string fingerprintText = string.Format("[host={0}][resource={1}][scheme={2}][secret={3}]", TestHost, TestResource, TestScheme, TestKey);
             var fingerprint = new Fingerprint(fingerprintText);
-            string uri = TestScheme + "://" + TestHost + TestResource;
+            string uri = TestScheme + "://" + TestHost;
+            string TestGuid = Guid.NewGuid().ToString();
 
             using var requestDummy = new HttpRequestMessage(HttpMethod.Get, uri);
-            requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", HttpAuthorizationRequestHeaderValidator.TestScanIdentityGuid);
+            requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", TestGuid);
 
             using var requestReal = new HttpRequestMessage(HttpMethod.Get, uri);
             requestReal.Headers.Authorization = new AuthenticationHeaderValue("Basic", fingerprint.Secret);
@@ -143,7 +144,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 }
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
-                var keyValuePairs = new Dictionary<string, string>();
+                var keyValuePairs = new Dictionary<string, string>() { { "TestGuid", TestGuid } };
                 ValidatorHelper.ResetStaticInstance<HttpAuthorizationRequestHeaderValidator>();
                 using var httpClient = new HttpClient(mockHandler);
                 HttpAuthorizationRequestHeaderValidator.Instance.SetHttpClient(httpClient);

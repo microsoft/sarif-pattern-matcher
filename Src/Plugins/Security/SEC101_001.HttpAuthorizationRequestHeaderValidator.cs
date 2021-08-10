@@ -15,12 +15,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public class HttpAuthorizationRequestHeaderValidator : ValidatorBase
     {
         internal static HttpAuthorizationRequestHeaderValidator Instance;
-        internal static string TestScanIdentityGuid;
 
         static HttpAuthorizationRequestHeaderValidator()
         {
             Instance = new HttpAuthorizationRequestHeaderValidator();
-            TestScanIdentityGuid = Instance.ScanIdentityGuid;
         }
 
         public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
@@ -80,7 +78,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 HttpClient client = CreateOrRetrieveCachedHttpClient();
                 using var requestDummy = new HttpRequestMessage(HttpMethod.Get, uri);
-                requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", ScanIdentityGuid);
+                if (options.ContainsKey("TestGuid"))
+                {
+                    requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", options["TestGuid"]);
+                } else
+                {
+                    requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", Instance.ScanIdentityGuid);
+                }
 
                 using HttpResponseMessage responseDummy = client
                     .SendAsync(requestDummy, HttpCompletionOption.ResponseHeadersRead)
