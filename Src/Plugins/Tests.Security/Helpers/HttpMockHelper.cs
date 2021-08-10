@@ -8,6 +8,8 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
 using Moq;
 using Moq.Protected;
 
@@ -63,5 +65,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
                     Content = fakeResponse.Item3
                 });
         }
+    }
+
+    public struct HttpMockTestCase
+    {
+        public string Title { get; set; }
+
+        // Inputs
+        public List<HttpContent> HttpContents { get; set; }
+        public List<HttpStatusCode> HttpStatusCodes { get; set; }
+        public List<HttpRequestMessage> HttpRequestMessages { get; set; }
+
+        // Expected Outputs
+        public string ExpectedMessage { get; set; }
+        public ValidationState ExpectedValidationState { get; set; }
     }
 }
