@@ -48,11 +48,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
         {
             Tuple<HttpRequestMessage, HttpStatusCode, HttpContent> fakeResponse;
 
-            if (request.Headers.IsEmptyEnumerable()) {
+            if (request.Headers.IsEmptyEnumerable())
+            {
                 fakeResponse = _fakeResponses.Find(fr =>
                     fr.Item1.RequestUri == request.RequestUri
                     && fr.Item1.Headers.IsEmptyEnumerable());
-            } else
+            }
+            else
             {
                 fakeResponse = _fakeResponses.Find(fr =>
                     fr.Item1.RequestUri == request.RequestUri

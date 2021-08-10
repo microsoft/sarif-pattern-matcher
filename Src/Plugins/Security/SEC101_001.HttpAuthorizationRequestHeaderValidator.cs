@@ -81,7 +81,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 if (options.ContainsKey("TestGuid"))
                 {
                     requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", options["TestGuid"]);
-                } else
+                }
+                else
                 {
                     requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", this.ScanIdentityGuid);
                 }

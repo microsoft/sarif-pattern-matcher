@@ -36,6 +36,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
+            ValidatorHelper.ResetStaticInstance<HttpAuthorizationRequestHeaderValidator>();
+
             ValidationState actualValidationState = HttpAuthorizationRequestHeaderValidator.IsValidDynamic(ref fingerprint,
                                                                                                            ref message,
                                                                                                            keyValuePairs,
@@ -137,7 +139,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var mockHandler = new HttpMockHelper();
 
             var sb = new StringBuilder();
-          
+
             foreach (HttpMockTestCase testCase in testCases)
             {
                 for (int i = 0; i < testCase.HttpStatusCodes.Count; i++)
