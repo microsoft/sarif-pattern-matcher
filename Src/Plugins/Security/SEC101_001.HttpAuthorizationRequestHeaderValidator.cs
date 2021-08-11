@@ -78,9 +78,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 HttpClient client = CreateOrRetrieveCachedHttpClient();
                 using var requestDummy = new HttpRequestMessage(HttpMethod.Get, uri);
-                if (options.ContainsKey("TestGuid"))
+
+                if (options.TryGetValue("TestGuid", out string testingGuid))
                 {
-                    requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", options["TestGuid"]);
+                    requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", testingGuid);
                 }
                 else
                 {

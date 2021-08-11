@@ -64,77 +64,77 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var testCases = new HttpMockTestCase[]
             {
             new HttpMockTestCase
-            {
-                Title = "Dummy Status OK",
-                HttpContents = new List<HttpContent> { null },
-                HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.OK },
-                HttpRequestMessages = new List<HttpRequestMessage> { requestDummy },
-                ExpectedMessage = string.Empty,
-                ExpectedValidationState = ValidationState.NoMatch
-            },
-            new HttpMockTestCase
-            {
-                Title = "Dummy Status NotFound",
-                HttpContents = new List<HttpContent> { null },
-                HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.NotFound },
-                HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy },
-                ExpectedMessage = string.Empty,
-                ExpectedValidationState = ValidationState.NoMatch
-            },
-             new HttpMockTestCase
-            {
-                Title = "Dummy Status NonAuthoritativeInformation",
-                HttpContents = new List<HttpContent> { null },
-                HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.NonAuthoritativeInformation },
-                HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy },
-                ExpectedMessage = string.Empty,
-                ExpectedValidationState = ValidationState.NoMatch
-            },
-            new HttpMockTestCase
-            {
-                Title = "Valid Credentials",
-                HttpContents = new List<HttpContent> { null, null },
-                HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.Unauthorized, HttpStatusCode.OK },
-                HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy, requestReal },
-                ExpectedValidationState = ValidatorBase.ReturnAuthorizedAccess(ref expectedResultsMessage, TestHost),
-                ExpectedMessage = expectedResultsMessage
-            },
-            new HttpMockTestCase
-            {
-                Title = "Invalid (HttpStatus Forbidden)",
-                HttpContents = new List<HttpContent> { null, null },
-                HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.Unauthorized, HttpStatusCode.Forbidden },
-                HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy, requestReal  },
-                ExpectedValidationState = ValidatorBase.ReturnUnauthorizedAccess(ref expectedResultsMessage, TestHost),
-                ExpectedMessage = expectedResultsMessage
-            },
-            new HttpMockTestCase
-            {
-                Title = "Invalid (HttpStatus Unauthorized)",
-                HttpContents = new List<HttpContent> { null, null },
-                HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.Unauthorized, HttpStatusCode.Unauthorized },
-                HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy, requestReal  },
-                ExpectedValidationState = ValidatorBase.ReturnUnauthorizedAccess(ref expectedResultsMessage, TestHost),
-                ExpectedMessage = expectedResultsMessage
-            },
-            new HttpMockTestCase
-            {
-                Title = "Dummy and Response Status Codes match (HTTP Status 500)",
-                HttpContents = new List<HttpContent> { null, null },
-                HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError },
-                HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy, requestReal   },
-                ExpectedMessage = string.Empty,
-                ExpectedValidationState = ValidationState.NoMatch
-            },
-            new HttpMockTestCase
-            {
-                Title = "Unexpected Response Code (Dummy is Unauthorized, Response is 500)",
-                HttpContents = new List<HttpContent> { null, null },
-                HttpStatusCodes = new List<HttpStatusCode> {HttpStatusCode.Unauthorized, HttpStatusCode.InternalServerError },
-                HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy, requestReal  },
-                ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref expectedResultsMessage, HttpStatusCode.InternalServerError, TestHost),
-                ExpectedMessage = expectedResultsMessage
-            },
+                {
+                    Title = "Dummy Status OK",
+                    HttpContents = new List<HttpContent> { null },
+                    HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.OK },
+                    HttpRequestMessages = new List<HttpRequestMessage> { requestDummy },
+                    ExpectedMessage = string.Empty,
+                    ExpectedValidationState = ValidationState.NoMatch
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Dummy Status NotFound",
+                    HttpContents = new List<HttpContent> { null },
+                    HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.NotFound },
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy },
+                    ExpectedMessage = string.Empty,
+                    ExpectedValidationState = ValidationState.NoMatch
+                },
+                 new HttpMockTestCase
+                {
+                    Title = "Dummy Status NonAuthoritativeInformation",
+                    HttpContents = new List<HttpContent> { null },
+                    HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.NonAuthoritativeInformation },
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy },
+                    ExpectedMessage = string.Empty,
+                    ExpectedValidationState = ValidationState.NoMatch
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Valid Credentials",
+                    HttpContents = new List<HttpContent> { null, null },
+                    HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.Unauthorized, HttpStatusCode.OK },
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy, requestReal },
+                    ExpectedValidationState = ValidatorBase.ReturnAuthorizedAccess(ref expectedResultsMessage, TestHost),
+                    ExpectedMessage = expectedResultsMessage
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Invalid (HttpStatus Forbidden)",
+                    HttpContents = new List<HttpContent> { null, null },
+                    HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.Unauthorized, HttpStatusCode.Forbidden },
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy, requestReal  },
+                    ExpectedValidationState = ValidatorBase.ReturnUnauthorizedAccess(ref expectedResultsMessage, TestHost),
+                    ExpectedMessage = expectedResultsMessage
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Invalid (HttpStatus Unauthorized)",
+                    HttpContents = new List<HttpContent> { null, null },
+                    HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.Unauthorized, HttpStatusCode.Unauthorized },
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy, requestReal  },
+                    ExpectedValidationState = ValidatorBase.ReturnUnauthorizedAccess(ref expectedResultsMessage, TestHost),
+                    ExpectedMessage = expectedResultsMessage
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Dummy and Response Status Codes match (HTTP Status 500)",
+                    HttpContents = new List<HttpContent> { null, null },
+                    HttpStatusCodes = new List<HttpStatusCode> { HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError },
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy, requestReal   },
+                    ExpectedMessage = string.Empty,
+                    ExpectedValidationState = ValidationState.NoMatch
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Unexpected Response Code (Dummy is Unauthorized, Response is 500)",
+                    HttpContents = new List<HttpContent> { null, null },
+                    HttpStatusCodes = new List<HttpStatusCode> {HttpStatusCode.Unauthorized, HttpStatusCode.InternalServerError },
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestDummy, requestReal  },
+                    ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref expectedResultsMessage, HttpStatusCode.InternalServerError, TestHost),
+                    ExpectedMessage = expectedResultsMessage
+                },
             };
 
             var mockHandler = new HttpMockHelper();
