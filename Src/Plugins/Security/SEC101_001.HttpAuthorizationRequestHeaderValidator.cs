@@ -78,7 +78,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 HttpClient client = CreateOrRetrieveCachedHttpClient();
                 using var requestDummy = new HttpRequestMessage(HttpMethod.Get, uri);
-                requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", ScanIdentityGuid);
+
+                if (options.TryGetValue("TestGuid", out string testingGuid))
+                {
+                    requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", testingGuid);
+                }
+                else
+                {
+                    requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", this.ScanIdentityGuid);
+                }
 
                 using HttpResponseMessage responseDummy = client
                     .SendAsync(requestDummy, HttpCompletionOption.ResponseHeadersRead)
