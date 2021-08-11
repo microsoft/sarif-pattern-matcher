@@ -41,6 +41,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         Cloudant,
 
         /// <summary>
+        /// Crates.io platform. https://crates.io/
+        /// </summary>
+        Crates,
+
+        /// <summary>
         /// Discord platform. https://discord.com/developers
         /// </summary>
         Discord,
