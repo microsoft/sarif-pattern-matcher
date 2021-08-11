@@ -63,7 +63,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             var testCases = new HttpMockTestCase[]
             {
-            new HttpMockTestCase
+                new HttpMockTestCase
                 {
                     Title = "Dummy Status OK",
                     HttpContents = new List<HttpContent> { null },
