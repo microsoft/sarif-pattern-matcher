@@ -44,6 +44,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{BB9FC0F2-57E
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.ruleset = .ruleset
+		Changelog.md = Changelog.md
+		ReleaseHistory.md = ReleaseHistory.md
 		SarifPatternMatcher.runsettings = SarifPatternMatcher.runsettings
 		stylecop.json = stylecop.json
 	EndProjectSection
