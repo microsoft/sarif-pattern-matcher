@@ -123,6 +123,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string fingerprintText = "[secret=abc123]";
 
             var sb = new StringBuilder();
+            var npmAuthorTokenValidator = new NpmAuthorTokenValidator();
             foreach (var testCase in testCases)
             {
                 string message = string.Empty;
@@ -130,11 +131,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                ValidatorHelper.ResetStaticInstance<NpmAuthorTokenValidator>();
                 using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
-                NpmAuthorTokenValidator.Instance.SetHttpClient(httpClient);
+                npmAuthorTokenValidator.SetHttpClient(httpClient);
 
-                ValidationState currentState = NpmAuthorTokenValidator.IsValidDynamic(ref fingerprint,
+                ValidationState currentState = npmAuthorTokenValidator.IsValidDynamic(ref fingerprint,
                                                                                       ref message,
                                                                                       keyValuePairs,
                                                                                       ref resultLevelKind);

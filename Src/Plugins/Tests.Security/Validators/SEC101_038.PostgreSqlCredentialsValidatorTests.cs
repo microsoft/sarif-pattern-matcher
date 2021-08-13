@@ -23,10 +23,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            ValidationState actualValidationState = PostgreSqlCredentialsValidator.IsValidDynamic(ref fingerprint,
-                                                                                                       ref message,
-                                                                                                       keyValuePairs,
-                                                                                                       ref resultLevelKind);
+            var postgreSqlCredentialsValidator = new PostgreSqlCredentialsValidator();
+            ValidationState actualValidationState = postgreSqlCredentialsValidator.IsValidDynamic(ref fingerprint,
+                                                                                                  ref message,
+                                                                                                  keyValuePairs,
+                                                                                                  ref resultLevelKind);
             Assert.Equal(ExpectedValidationState, actualValidationState);
         }
     }

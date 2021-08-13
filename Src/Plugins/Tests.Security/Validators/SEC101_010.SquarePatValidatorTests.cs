@@ -51,6 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string fingerprintText = "[secret=secret]";
 
             var sb = new StringBuilder();
+            var squarePatValidator = new SquarePatValidator();
             foreach (var testCase in testCases)
             {
                 string message = string.Empty;
@@ -58,11 +59,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                ValidatorHelper.ResetStaticInstance<SquarePatValidator>();
                 using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
-                SquarePatValidator.Instance.SetHttpClient(httpClient);
+                squarePatValidator.SetHttpClient(httpClient);
 
-                ValidationState currentState = SquarePatValidator.IsValidDynamic(ref fingerprint,
+                ValidationState currentState = squarePatValidator.IsValidDynamic(ref fingerprint,
                                                                                  ref message,
                                                                                  keyValuePairs,
                                                                                  ref resultLevelKind);

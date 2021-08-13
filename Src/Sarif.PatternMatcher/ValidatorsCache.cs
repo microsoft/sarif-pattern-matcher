@@ -192,28 +192,31 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             IEnumerable<ValidationResult> validationResults = staticValidator.IsValidStatic(groups);
 
-            if (context.DynamicValidation && staticValidator is DynamicValidatorBase dynamicValidator)
+            if (staticValidator is DynamicValidatorBase dynamicValidator)
             {
                 pluginCanPerformDynamicAnalysis = true;
 
-                staticValidator.DisableDynamicValidationCaching(context.DisableDynamicValidationCaching);
-
-                foreach (ValidationResult validationResult in validationResults)
+                if (context.DynamicValidation)
                 {
-                    if (validationResult.ValidationState != ValidationState.NoMatch &&
-                        validationResult.ValidationState != ValidationState.Expired)
+                    staticValidator.DisableDynamicValidationCaching(context.DisableDynamicValidationCaching);
+
+                    foreach (ValidationResult validationResult in validationResults)
                     {
-                        ResultLevelKind resultLevelKind = default;
-                        string message = validationResult.Message;
-                        IDictionary<string, string> stringGroups = groups.ToStringDictionary();
-                        Fingerprint fingerprint = validationResult.Fingerprint;
-                        validationResult.ValidationState = dynamicValidator.IsValidDynamic(ref fingerprint,
-                                                                                           ref message,
-                                                                                           stringGroups,
-                                                                                           ref resultLevelKind);
-                        validationResult.Message = message;
-                        validationResult.Fingerprint = fingerprint;
-                        validationResult.ResultLevelKind = resultLevelKind;
+                        if (validationResult.ValidationState != ValidationState.NoMatch &&
+                            validationResult.ValidationState != ValidationState.Expired)
+                        {
+                            ResultLevelKind resultLevelKind = default;
+                            string message = validationResult.Message;
+                            IDictionary<string, string> stringGroups = groups.ToStringDictionary();
+                            Fingerprint fingerprint = validationResult.Fingerprint;
+                            validationResult.ValidationState = dynamicValidator.IsValidDynamic(ref fingerprint,
+                                                                                               ref message,
+                                                                                               stringGroups,
+                                                                                               ref resultLevelKind);
+                            validationResult.Message = message;
+                            validationResult.Fingerprint = fingerprint;
+                            validationResult.ResultLevelKind = resultLevelKind;
+                        }
                     }
                 }
             }

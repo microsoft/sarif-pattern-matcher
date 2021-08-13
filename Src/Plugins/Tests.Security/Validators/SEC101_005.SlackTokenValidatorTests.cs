@@ -31,7 +31,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            SlackTokenValidator.IsValidDynamic(ref fingerprint,
+            var slackTokenValidator = new SlackTokenValidator();
+            slackTokenValidator.IsValidDynamic(ref fingerprint,
                                                ref message,
                                                keyValuePairs,
                                                ref resultLevelKind);
@@ -117,6 +118,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string fingerprintText = "[secret=xoxb-1234]";
 
             var sb = new StringBuilder();
+            var slackTokenValidator = new SlackTokenValidator();
             foreach (var testCase in testCases)
             {
                 string message = string.Empty;
@@ -124,11 +126,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                ValidatorHelper.ResetStaticInstance<SlackTokenValidator>();
                 using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
-                SlackTokenValidator.Instance.SetHttpClient(httpClient);
+                slackTokenValidator.SetHttpClient(httpClient);
 
-                ValidationState currentState = SlackTokenValidator.IsValidDynamic(ref fingerprint,
+                ValidationState currentState = slackTokenValidator.IsValidDynamic(ref fingerprint,
                                                                                   ref message,
                                                                                   keyValuePairs,
                                                                                   ref resultLevelKind);

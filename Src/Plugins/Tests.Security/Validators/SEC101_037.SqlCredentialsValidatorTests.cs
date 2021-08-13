@@ -20,7 +20,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            ValidationState actualValidationState = SqlCredentialsValidator.IsValidDynamic(ref fingerprint,
+            var sqlCredentialsValidator = new SqlCredentialsValidator();
+            ValidationState actualValidationState = sqlCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                                                            ref message,
                                                                                            keyValuePairs,
                                                                                            ref resultLevelKind);

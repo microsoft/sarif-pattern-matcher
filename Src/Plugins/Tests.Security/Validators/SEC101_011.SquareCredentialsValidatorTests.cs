@@ -31,7 +31,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            SquareCredentialsValidator.IsValidDynamic(ref fingerprint,
+            var squareCredentialsValidator = new SquareCredentialsValidator();
+            squareCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                       ref message,
                                                       keyValuePairs,
                                                       ref resultLevelKind);
@@ -75,6 +76,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string fingerprintText = "[id=a][secret=b]";
 
             var sb = new StringBuilder();
+            var squareCredentialsValidator = new SquareCredentialsValidator();
             foreach (var testCase in testCases)
             {
                 string message = string.Empty;
@@ -82,11 +84,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                ValidatorHelper.ResetStaticInstance<SquareCredentialsValidator>();
                 using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
-                SquareCredentialsValidator.Instance.SetHttpClient(httpClient);
+                squareCredentialsValidator.SetHttpClient(httpClient);
 
-                ValidationState currentState = SquareCredentialsValidator.IsValidDynamic(ref fingerprint,
+                ValidationState currentState = squareCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                                                          ref message,
                                                                                          keyValuePairs,
                                                                                          ref resultLevelKind);

@@ -31,7 +31,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            DiscordApiCredentialsValidator.IsValidDynamic(ref fingerprint,
+            var discordApiCredentialsValidator = new DiscordApiCredentialsValidator();
+            discordApiCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                           ref message,
                                                           keyValuePairs,
                                                           ref resultLevelKind);
@@ -70,6 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string fingerprintText = "[id=a][secret=b]";
 
             var sb = new StringBuilder();
+            var discordApiCredentialsValidator = new DiscordApiCredentialsValidator();
             foreach (var testCase in testCases)
             {
                 string message = string.Empty;
@@ -77,11 +79,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                ValidatorHelper.ResetStaticInstance<DiscordApiCredentialsValidator>();
                 using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
-                DiscordApiCredentialsValidator.Instance.SetHttpClient(httpClient);
+                discordApiCredentialsValidator.SetHttpClient(httpClient);
 
-                ValidationState currentState = DiscordApiCredentialsValidator.IsValidDynamic(ref fingerprint,
+                ValidationState currentState = discordApiCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                                                              ref message,
                                                                                              keyValuePairs,
                                                                                              ref resultLevelKind);

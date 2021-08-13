@@ -9,13 +9,13 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
-    public class TestRuleValidator
+    public class TestRuleValidator : DynamicValidatorBase
     {
-        public delegate IEnumerable<ValidationResult> IsValidStaticDelegate(Dictionary<string, FlexMatch> groups);
+        public delegate IEnumerable<ValidationResult> IsValidStaticDelegate(IDictionary<string, FlexMatch> groups);
 
         public delegate ValidationState IsValidDynamicDelegate(ref Fingerprint fingerprint,
                                                                ref string message,
-                                                               Dictionary<string, string> options,
+                                                               IDictionary<string, string> options,
                                                                ref ResultLevelKind resultLevelKind);
 
         [ThreadStatic]
@@ -24,16 +24,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [ThreadStatic]
         public static IsValidDynamicDelegate OverrideIsValidDynamic;
 
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (OverrideIsValidStatic == null) { return null; }
             return OverrideIsValidStatic(groups);
         }
 
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
+                                                                ref string message,
+                                                                IDictionary<string, string> options,
+                                                                ref ResultLevelKind resultLevelKind)
         {
             if (OverrideIsValidDynamic == null) { return 0; }
             return OverrideIsValidDynamic(ref fingerprint, ref message, options, ref resultLevelKind);

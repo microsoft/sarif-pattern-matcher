@@ -306,7 +306,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             TestRuleValidator.OverrideIsValidDynamic = (ref Fingerprint fingerprint,
                                                         ref string message,
-                                                        Dictionary<string, string> options,
+                                                        IDictionary<string, string> options,
                                                         ref ResultLevelKind resultLevelKind) =>
             {
                 fingerprint.Id = "test";
