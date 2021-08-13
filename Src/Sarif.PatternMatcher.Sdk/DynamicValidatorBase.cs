@@ -10,7 +10,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
     {
         public ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                               ref string message,
-                                              Dictionary<string, string> options,
+                                              IDictionary<string, string> options,
                                               ref ResultLevelKind resultLevelKind)
         {
             resultLevelKind = default;
@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected virtual ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                ref string message,
-                                                               Dictionary<string, string> options,
+                                                               IDictionary<string, string> options,
                                                                ref ResultLevelKind resultLevelKind)
         {
             return ValidationState.NoMatch;

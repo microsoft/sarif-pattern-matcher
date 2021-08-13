@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 using Newtonsoft.Json;
 
@@ -145,11 +146,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         string key = match.Id + match.Name;
                         if (!hash.Contains(key))
                         {
-                            ValidationMethods validationPair = null;
+                            StaticValidatorBase staticValidator = null;
 
                             if (!string.IsNullOrEmpty(match.Name))
                             {
-                                validationPair = ValidatorsCache.GetValidationMethods(match.Name, validators.RuleNameToValidationMethods);
+                                staticValidator = ValidatorsCache.GetValidationMethods(match.Name, validators.RuleNameToValidationMethods);
                             }
 
                             string deprecatedNameContent = hasOneOrMoreDeprecatedRuleNames ?
@@ -158,7 +159,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                             builder.AppendLine($"{match.Id} | " +
                                                $"{match.Name} | " +
-                                               $"{(validationPair?.IsValidDynamic != null ? "Y" : "-")}" +
+                                               $"{(staticValidator is DynamicValidatorBase ? "Y" : "-")}" +
                                                deprecatedNameContent);
 
                             hash.Add(key);

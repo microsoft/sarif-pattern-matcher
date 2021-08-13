@@ -232,7 +232,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return match.Value;
         }
 
-        public IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
+        public IEnumerable<ValidationResult> IsValidStatic(IDictionary<string, FlexMatch> groups)
         {
             IEnumerable<ValidationResult> validationResults = IsValidStaticHelper(groups);
 
@@ -333,7 +333,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// </param>
         ///
         /// <returns>Return an enumerable ValidationResult collection.</returns>
-        protected abstract IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups);
+        protected abstract IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups);
 
         private static bool TestExceptionForMessage(Exception e, Regex regex, ref string asset)
         {
