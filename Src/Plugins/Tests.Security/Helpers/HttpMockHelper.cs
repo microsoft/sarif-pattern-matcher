@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,6 +45,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
             return mockMessageHandler.Object;
         }
 
+        public bool CompareHeaders(HttpRequestHeaders headers1, HttpRequestHeaders headers2)
+        {
+            foreach (KeyValuePair<string, IEnumerable<string>> header in headers1)
+            {
+                string headerName = header.Key;
+                if (!headers2.TryGetValues(headerName, out IEnumerable<string> values))
+                {
+                    return false;
+                }
+
+                string headerContent1 = string.Join(",", header.Value);
+                string headerContent2 = string.Join(",", values);
+
+                if (headerContent1 != headerContent2)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             Tuple<HttpRequestMessage, HttpStatusCode, HttpContent> fakeResponse;
@@ -58,7 +81,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
             {
                 fakeResponse = _fakeResponses.Find(fr =>
                     fr.Item1.RequestUri == request.RequestUri
-                    && request.Headers.Authorization.Equals(fr.Item1.Headers.Authorization));
+                    && CompareHeaders(request.Headers, fr.Item1.Headers));
             }
 
             return Task.FromResult(
