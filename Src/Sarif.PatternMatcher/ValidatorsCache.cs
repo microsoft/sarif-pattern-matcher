@@ -19,6 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly IFileSystem _fileSystem;
         private readonly Dictionary<string, Assembly> _resolvedNames;
         private Dictionary<string, ValidationMethods> _ruleNameToValidationMethods;
+        private Dictionary<string, ValidatorBase2> _ruleNameToValidationMethods2;
 
         public ValidatorsCache(IEnumerable<string> validatorBinaryPaths = null, IFileSystem fileSystem = null)
         {
@@ -359,6 +360,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private Dictionary<string, ValidationMethods> LoadValidationAssemblies(IEnumerable<string> validatorPaths)
         {
             var ruleToMethodMap = new Dictionary<string, ValidationMethods>();
+            _ruleNameToValidationMethods2 = new Dictionary<string, ValidatorBase2>();
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
             foreach (string validatorPath in validatorPaths)
@@ -386,6 +388,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         if (!typeName.EndsWith("Validator") || typeName.Equals("Validator"))
                         {
                             continue;
+                        }
+
+                        if (type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(ValidatorBase2)))
+                        {
+                            _ruleNameToValidationMethods2[typeName] = Activator.CreateInstance(type) as ValidatorBase2;
                         }
 
                         MethodInfo isValidStatic = type.GetMethod(
