@@ -13,10 +13,12 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
-    public abstract class ValidatorBase2
+    public abstract class StaticValidatorBase
     {
         public const string ScanIdentityHttpCustomHeaderKey =
             "Automation-Scan-Description";
+
+        protected static bool shouldUseDynamicCache;
 
         private static readonly RegexOptions s_options =
             RegexOptions.ExplicitCapture | RegexOptions.Compiled;
@@ -36,12 +38,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         [ThreadStatic]
         private static HttpClient s_httpClient;
-
-        private static bool shouldUseDynamicCache;
         private HttpClient httpClient;
         private string scanIdentityGuid;
 
-        static ValidatorBase2()
+        static StaticValidatorBase()
         {
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
             ServicePointManager.DefaultConnectionLimit = Debugger.IsAttached
@@ -49,7 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 : int.MaxValue;
         }
 
-        protected ValidatorBase2()
+        protected StaticValidatorBase()
         {
             PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             FingerprintToResultCache = new ConcurrentDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>>();
@@ -102,65 +102,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// sufficient that we flag one instance of the unique secret.
         /// </summary>
         protected ISet<string> PerFileFingerprintCache { get; }
-
-        public IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            IEnumerable<ValidationResult> validationResults = IsValidStaticHelper(groups);
-
-            foreach (ValidationResult validationResult in validationResults)
-            {
-                if (validationResult.ValidationState == ValidationState.NoMatch)
-                {
-                    continue;
-                }
-
-                string scanTarget = groups["scanTargetFullPath"].Value;
-                string key = $"{scanTarget}#{validationResult.Fingerprint}";
-
-                if (PerFileFingerprintCache.Contains(key))
-                {
-                    validationResult.ValidationState = ValidationState.NoMatch;
-                    continue;
-                }
-
-                PerFileFingerprintCache.Add(key);
-            }
-
-            return validationResults;
-        }
-
-        public ValidationState IsValidDynamic(
-                                                     ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            resultLevelKind = default;
-
-            if (shouldUseDynamicCache &&
-                FingerprintToResultCache.TryGetValue(fingerprint, out Tuple<ValidationState, ResultLevelKind, string> result))
-            {
-                message = result.Item3;
-                resultLevelKind = result.Item2;
-                return result.Item1;
-            }
-
-            ValidationState validationState =
-                IsValidDynamicHelper(ref fingerprint,
-                                               ref message,
-                                               options,
-                                               ref resultLevelKind);
-
-            FingerprintToResultCache[fingerprint] =
-                new Tuple<ValidationState, ResultLevelKind, string>(validationState, resultLevelKind, message);
-
-            return validationState;
-        }
-
-        public void DisableDynamicValidationCaching(bool disable)
-        {
-            shouldUseDynamicCache = !disable;
-        }
 
         public static bool ContainsDigitAndChar(string matchedPattern)
         {
@@ -291,6 +232,37 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return match.Value;
         }
 
+        public IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
+        {
+            IEnumerable<ValidationResult> validationResults = IsValidStaticHelper(groups);
+
+            foreach (ValidationResult validationResult in validationResults)
+            {
+                if (validationResult.ValidationState == ValidationState.NoMatch)
+                {
+                    continue;
+                }
+
+                string scanTarget = groups["scanTargetFullPath"].Value;
+                string key = $"{scanTarget}#{validationResult.Fingerprint}";
+
+                if (PerFileFingerprintCache.Contains(key))
+                {
+                    validationResult.ValidationState = ValidationState.NoMatch;
+                    continue;
+                }
+
+                PerFileFingerprintCache.Add(key);
+            }
+
+            return validationResults;
+        }
+
+        public void DisableDynamicValidationCaching(bool disable)
+        {
+            shouldUseDynamicCache = !disable;
+        }
+
         internal static string ParseValue(string value)
         {
             // If ParseExpression passed us white space, we shouldn't pretend we successfully
@@ -362,14 +334,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         ///
         /// <returns>Return an enumerable ValidationResult collection.</returns>
         protected abstract IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups);
-
-        protected virtual ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                               ref string message,
-                                                               Dictionary<string, string> options,
-                                                               ref ResultLevelKind resultLevelKind)
-        {
-            return ValidationState.NoMatch;
-        }
 
         private static bool TestExceptionForMessage(Exception e, Regex regex, ref string asset)
         {

@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly IFileSystem _fileSystem;
         private readonly Dictionary<string, Assembly> _resolvedNames;
         private Dictionary<string, ValidationMethods> _ruleNameToValidationMethods;
-        private Dictionary<string, ValidatorBase2> _ruleNameToValidationMethods2;
+        private Dictionary<string, StaticValidatorBase> _ruleNameToValidationMethods2;
 
         public ValidatorsCache(IEnumerable<string> validatorBinaryPaths = null, IFileSystem fileSystem = null)
         {
@@ -360,7 +360,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private Dictionary<string, ValidationMethods> LoadValidationAssemblies(IEnumerable<string> validatorPaths)
         {
             var ruleToMethodMap = new Dictionary<string, ValidationMethods>();
-            _ruleNameToValidationMethods2 = new Dictionary<string, ValidatorBase2>();
+            _ruleNameToValidationMethods2 = new Dictionary<string, StaticValidatorBase>();
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
             foreach (string validatorPath in validatorPaths)
@@ -390,9 +390,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             continue;
                         }
 
-                        if (type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(ValidatorBase2)))
+                        if (type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(DynamicValidatorBase)))
                         {
-                            _ruleNameToValidationMethods2[typeName] = Activator.CreateInstance(type) as ValidatorBase2;
+                            _ruleNameToValidationMethods2[typeName] = Activator.CreateInstance(type) as DynamicValidatorBase;
+                            continue;
+                        }
+
+                        if (type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(StaticValidatorBase)))
+                        {
+                            _ruleNameToValidationMethods2[typeName] = Activator.CreateInstance(type) as StaticValidatorBase;
+                            continue;
                         }
 
                         MethodInfo isValidStatic = type.GetMethod(

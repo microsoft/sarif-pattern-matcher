@@ -13,7 +13,7 @@ using Octokit.Internal;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class GitHubPatValidator : ValidatorBase2
+    public class GitHubPatValidator : DynamicValidatorBase
     {
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
         {
