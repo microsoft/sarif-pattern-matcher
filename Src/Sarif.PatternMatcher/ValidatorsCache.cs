@@ -94,6 +94,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var flexMatchProperties = new Dictionary<string, FlexMatch>();
             flexMatchProperties.AddProperties(properties);
             flexMatchProperties["scanTargetFullPath"] = new FlexMatch { Value = filePath };
+            flexMatchProperties["retry"] = new FlexMatch { Value = context.Retry ? bool.TrueString : bool.FalseString };
+            flexMatchProperties["enhancedReporting"] = new FlexMatch { Value = context.EnhancedReporting ? bool.TrueString : bool.FalseString };
+
 
             foreach (Dictionary<string, FlexMatch> groups in combinations)
             {
