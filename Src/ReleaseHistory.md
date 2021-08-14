@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Regex Improvement: Replacing `\b` to the correct border regular expression. [#533](https://github.com/microsoft/sarif-pattern-matcher/pull/533)
+- Tool Improvement: Refactoring `ValidatorBase` in `StaticValidatorBase` and `DynamicValidatorBase`. [#534](https://github.com/microsoft/sarif-pattern-matcher/pull/534)
 
 ## *v1.5.0-alpha-0068-g5d32a6446f*
 

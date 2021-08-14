@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30626.31
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31612.449
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.UnitTests.RE2.Managed", "Test.UnitTests.RE2.Managed\Test.UnitTests.RE2.Managed.csproj", "{60987143-1D02-4901-87F2-9580B01EFE2E}"
 EndProject
@@ -88,6 +88,18 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.SalModernization", "Plugins\Tests.SalModernization\Tests.SalModernization.csproj", "{843E818B-1BC2-43FB-97E0-56F6005CE12A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.UnitTests.Sarif.PatternMatcher.Sdk", "Test.UnitTests.Sarif.PatternMatcher.Sdk\Test.UnitTests.Sarif.PatternMatcher.Sdk.csproj", "{DA444E2B-28A2-4884-BECC-656CE22690F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{8C5D6520-EE70-4838-B551-4A6EF48DD017}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\Rules.md = ..\docs\Rules.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "getting-started", "getting-started", "{9DAB0AC1-BF2D-49B0-93F7-5EB05304502B}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\getting-started\creating-plugins.md = ..\docs\getting-started\creating-plugins.md
+		..\docs\getting-started\using-the-client-tool.md = ..\docs\getting-started\using-the-client-tool.md
+		..\docs\getting-started\using-the-library.md = ..\docs\getting-started\using-the-library.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -367,6 +379,8 @@ Global
 		{DAB33D14-20D4-4F1E-B751-E46FE5E2B2E2} = {50216597-BDEE-4A04-B737-D9C7CD753653}
 		{D32E9414-DEF5-4C3D-86E3-C317FEA678EE} = {50216597-BDEE-4A04-B737-D9C7CD753653}
 		{843E818B-1BC2-43FB-97E0-56F6005CE12A} = {50216597-BDEE-4A04-B737-D9C7CD753653}
+		{8C5D6520-EE70-4838-B551-4A6EF48DD017} = {B599D6C7-953C-4080-AFF9-37BF98FD9C20}
+		{9DAB0AC1-BF2D-49B0-93F7-5EB05304502B} = {8C5D6520-EE70-4838-B551-4A6EF48DD017}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31BD334C-6711-44FF-B3E4-FAAC3A5D2F3A}
