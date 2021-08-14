@@ -25,7 +25,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             groups.Add("scanTargetFullPath", new FlexMatch() { Value = "GitHitPatTest" });
 
             var gitHubPatValidator = new GitHubPatValidator();
-
             IEnumerable<ValidationResult> validationResults = gitHubPatValidator.IsValidStatic(groups);
             foreach (ValidationResult validationResult in validationResults)
             {

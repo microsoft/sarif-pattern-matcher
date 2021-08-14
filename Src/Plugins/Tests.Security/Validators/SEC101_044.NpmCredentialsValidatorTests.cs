@@ -33,8 +33,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             using var requestWithCredentials = new HttpRequestMessage(HttpMethod.Get, uri);
             requestWithCredentials.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
-            var mockHandler = new HttpMockHelper();
-
             string fingerprintText = $"[host={host}][id={id}][secret={secret}]";
 
             var testCases = new TestCase[]
@@ -78,6 +76,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             };
 
             var sb = new StringBuilder();
+            var mockHandler = new HttpMockHelper();
             var npmCredentialsValidator = new NpmCredentialsValidator();
             foreach (TestCase testCase in testCases)
             {
