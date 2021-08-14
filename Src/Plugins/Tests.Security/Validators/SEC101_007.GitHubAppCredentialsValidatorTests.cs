@@ -76,6 +76,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string fingerprintText = "[id=Iv1.01234567testtest][secret=secret]";
 
             var sb = new StringBuilder();
+            var gitHubAppCredentialsValidator = new GitHubAppCredentialsValidator();
             foreach (var testCase in testCases)
             {
                 string message = string.Empty;
@@ -83,11 +84,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                ValidatorHelper.ResetStaticInstance<GitHubAppCredentialsValidator>();
                 using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
-                GitHubAppCredentialsValidator.Instance.SetHttpClient(httpClient);
+                gitHubAppCredentialsValidator.SetHttpClient(httpClient);
 
-                ValidationState currentState = GitHubAppCredentialsValidator.IsValidDynamic(ref fingerprint,
+                ValidationState currentState = gitHubAppCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                                                             ref message,
                                                                                             keyValuePairs,
                                                                                             ref resultLevelKind);

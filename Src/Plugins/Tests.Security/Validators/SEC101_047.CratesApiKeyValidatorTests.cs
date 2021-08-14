@@ -48,6 +48,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             };
 
             var sb = new StringBuilder();
+            var cratesApiKeyValidator = new CratesApiKeyValidator();
             foreach (HttpMockTestCase testCase in testCases)
             {
                 string message = null;
@@ -55,12 +56,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                ValidatorHelper.ResetStaticInstance<CratesApiKeyValidator>();
-
                 using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCodes[0], null));
-                CratesApiKeyValidator.Instance.SetHttpClient(httpClient);
+                cratesApiKeyValidator.SetHttpClient(httpClient);
 
-                ValidationState currentState = CratesApiKeyValidator.IsValidDynamic(ref fingerprint,
+                ValidationState currentState = cratesApiKeyValidator.IsValidDynamic(ref fingerprint,
                                                                                     ref message,
                                                                                     keyValuePairs,
                                                                                     ref resultLevelKind);

@@ -12,33 +12,9 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class GoogleApiKeyValidator : ValidatorBase
+    public class GoogleApiKeyValidator : DynamicValidatorBase
     {
-        internal static GoogleApiKeyValidator Instance;
-
-        static GoogleApiKeyValidator()
-        {
-            Instance = new GoogleApiKeyValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  options,
-                                  ref resultLevelKind);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
@@ -66,9 +42,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                                 ref string message,
-                                                                 Dictionary<string, string> options,
-                                                                 ref ResultLevelKind resultLevelKind)
+                                                                ref string message,
+                                                                IDictionary<string, string> options,
+                                                                ref ResultLevelKind resultLevelKind)
         {
             const string Invalid = "RequestDenied: The provided API key is invalid";
             const string Expired = "RequestDenied: The provided API key is expired";

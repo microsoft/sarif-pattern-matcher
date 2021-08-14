@@ -11,33 +11,9 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class PostmanApiKeyValidator : ValidatorBase
+    public class PostmanApiKeyValidator : DynamicValidatorBase
     {
-        internal static PostmanApiKeyValidator Instance;
-
-        static PostmanApiKeyValidator()
-        {
-            Instance = new PostmanApiKeyValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  options,
-                                  ref resultLevelKind);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
@@ -64,7 +40,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                Dictionary<string, string> options,
+                                                                IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             const string uri = "https://api.getpostman.com/me";

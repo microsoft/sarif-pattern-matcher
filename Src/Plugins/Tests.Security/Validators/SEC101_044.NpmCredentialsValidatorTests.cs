@@ -33,8 +33,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             using var requestWithCredentials = new HttpRequestMessage(HttpMethod.Get, uri);
             requestWithCredentials.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
-            var mockHandler = new HttpMockHelper();
-
             string fingerprintText = $"[host={host}][id={id}][secret={secret}]";
 
             var testCases = new TestCase[]
@@ -78,6 +76,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             };
 
             var sb = new StringBuilder();
+            var mockHandler = new HttpMockHelper();
+            var npmCredentialsValidator = new NpmCredentialsValidator();
             foreach (TestCase testCase in testCases)
             {
                 for (int i = 0; i < testCase.HttpStatusCodes.Count; i++)
@@ -90,11 +90,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                ValidatorHelper.ResetStaticInstance<NpmCredentialsValidator>();
                 using var httpClient = new HttpClient(mockHandler);
-                NpmCredentialsValidator.Instance.SetHttpClient(httpClient);
+                npmCredentialsValidator.SetHttpClient(httpClient);
 
-                ValidationState currentState = NpmCredentialsValidator.IsValidDynamic(ref fingerprint,
+                ValidationState currentState = npmCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                                                       ref message,
                                                                                       keyValuePairs,
                                                                                       ref resultLevelKind);

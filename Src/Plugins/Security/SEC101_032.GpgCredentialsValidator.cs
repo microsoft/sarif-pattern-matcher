@@ -8,21 +8,9 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class GpgCredentialsValidator : ValidatorBase
+    public class GpgCredentialsValidator : StaticValidatorBase
     {
-        internal static GpgCredentialsValidator Instance;
-
-        static GpgCredentialsValidator()
-        {
-            Instance = new GpgCredentialsValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {

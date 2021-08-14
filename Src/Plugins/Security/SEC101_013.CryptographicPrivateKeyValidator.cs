@@ -15,21 +15,9 @@ using Org.BouncyCastle.Bcpg.OpenPgp;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class CryptographicPrivateKeyValidator : ValidatorBase
+    public class CryptographicPrivateKeyValidator : StaticValidatorBase
     {
-        internal static CryptographicPrivateKeyValidator Instance;
-
-        static CryptographicPrivateKeyValidator()
-        {
-            Instance = new CryptographicPrivateKeyValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {

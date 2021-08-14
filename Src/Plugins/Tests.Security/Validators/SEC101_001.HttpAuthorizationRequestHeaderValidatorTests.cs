@@ -36,9 +36,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            ValidatorHelper.ResetStaticInstance<HttpAuthorizationRequestHeaderValidator>();
-
-            ValidationState actualValidationState = HttpAuthorizationRequestHeaderValidator.IsValidDynamic(ref fingerprint,
+            var httpAuthorizationRequestHeaderValidator = new HttpAuthorizationRequestHeaderValidator();
+            ValidationState actualValidationState = httpAuthorizationRequestHeaderValidator.IsValidDynamic(ref fingerprint,
                                                                                                            ref message,
                                                                                                            keyValuePairs,
                                                                                                            ref resultLevelKind);
@@ -137,10 +136,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
             };
 
-            var mockHandler = new HttpMockHelper();
-
             var sb = new StringBuilder();
-
+            var mockHandler = new HttpMockHelper();
+            var httpAuthorizationRequestHeaderValidator = new HttpAuthorizationRequestHeaderValidator();
             foreach (HttpMockTestCase testCase in testCases)
             {
                 for (int i = 0; i < testCase.HttpStatusCodes.Count; i++)
@@ -151,11 +149,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
                 var keyValuePairs = new Dictionary<string, string>() { { "TestGuid", TestGuid } };
-                ValidatorHelper.ResetStaticInstance<HttpAuthorizationRequestHeaderValidator>();
                 using var httpClient = new HttpClient(mockHandler);
-                HttpAuthorizationRequestHeaderValidator.Instance.SetHttpClient(httpClient);
+                httpAuthorizationRequestHeaderValidator.SetHttpClient(httpClient);
 
-                ValidationState currentState = HttpAuthorizationRequestHeaderValidator.IsValidDynamic(ref fingerprint,
+                ValidationState currentState = httpAuthorizationRequestHeaderValidator.IsValidDynamic(ref fingerprint,
                                                                                                       ref message,
                                                                                                       keyValuePairs,
                                                                                                       ref resultLevelKind);
