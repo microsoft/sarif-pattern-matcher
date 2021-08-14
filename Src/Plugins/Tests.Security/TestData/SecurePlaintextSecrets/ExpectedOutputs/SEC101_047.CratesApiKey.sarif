@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/102",
-              "name": "DoNotExposePlaintextSecrets/AdoPat",
+              "id": "SEC101/047",
+              "name": "DoNotExposePlaintextSecrets/CratesApiKey",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -38,49 +38,49 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/102",
+          "ruleId": "SEC101/047",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "h5lxeq…",
+              "ciodea…",
               "an apparent ",
-              "base64-encoded",
-              "Azure DevOps personal access token",
               "",
-              ""
+              "Crates API key",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_102.AdoPat.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_047.CratesApiKey.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 12,
+                  "startLine": 1,
                   "startColumn": 1,
-                  "endLine": 12,
-                  "endColumn": 73,
-                  "charOffset": 442,
-                  "charLength": 72,
+                  "endLine": 1,
+                  "endColumn": 36,
+                  "charOffset": 0,
+                  "charLength": 35,
                   "snippet": {
-                    "text": "aDVseGVxa3o0enVqa3l2emc1ZW1rZWpnZWx4ajR4NjR0dnl6Y2xwcmVrdWxvYXdiYno1cQ=="
+                    "text": "ciodeaddeaddead123412341234dead1234"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[platform=AzureDevOps]",
-            "ValidationFingerprint/v1": "[secret=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]",
-            "ValidationFingerprintHash/v1": "ac1cfad77095aba4ae1cc93880abfba4f396f4db89f0954a8b8327790f0f0edd",
-            "AssetFingerprint/v2": "{\"platform\":\"AzureDevOps\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q\"}"
+            "AssetFingerprint/v1": "[platform=Crates]",
+            "ValidationFingerprint/v1": "[secret=ciodeaddeaddead123412341234dead1234]",
+            "ValidationFingerprintHash/v1": "9ae3596b73b37748eac0f276b2ce08fa96a6ceebcd3270e5d4ec573df0e27e28",
+            "AssetFingerprint/v2": "{\"platform\":\"Crates\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"ciodeaddeaddead123412341234dead1234\"}"
           },
-          "rank": 62.14
+          "rank": 43.89
         }
       ],
       "columnKind": "utf16CodeUnits"

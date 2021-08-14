@@ -14,33 +14,9 @@ using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class MailChimpApiKeyValidator : ValidatorBase
+    public class MailChimpApiKeyValidator : DynamicValidatorBase
     {
-        internal static MailChimpApiKeyValidator Instance;
-
-        static MailChimpApiKeyValidator()
-        {
-            Instance = new MailChimpApiKeyValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  options,
-                                  ref resultLevelKind);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
@@ -62,14 +38,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                Dictionary<string, string> options,
+                                                                IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string secret = fingerprint.Secret;
 
             try
             {
-                HttpClient client = CreateOrUseCachedHttpClient();
+                HttpClient client = CreateOrRetrieveCachedHttpClient();
                 string[] keys = secret.Split('-');
 
                 using var request = new HttpRequestMessage(HttpMethod.Get, $"https://{keys[1]}.api.mailchimp.com/3.0/?fields=account_name");

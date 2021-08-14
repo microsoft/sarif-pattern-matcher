@@ -16,33 +16,9 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class NuGetCredentialsValidator : ValidatorBase
+    public class NuGetCredentialsValidator : DynamicValidatorBase
     {
-        internal static NuGetCredentialsValidator Instance;
-
         private const string RandomGuid = "05C89BF5-9DF2-4F8C-8F93-FF3EF66E643D";
-
-        static NuGetCredentialsValidator()
-        {
-            Instance = new NuGetCredentialsValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  options,
-                                  ref resultLevelKind);
-        }
 
         internal static List<string> ExtractHosts(string hostXmlAsString)
         {
@@ -69,7 +45,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
         }
 
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("host", out FlexMatch hostsXml) ||
                 !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
@@ -108,14 +84,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                Dictionary<string, string> options,
+                                                                IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string id = fingerprint.Id;
             string host = fingerprint.Host;
             string secret = fingerprint.Secret;
 
-            HttpClient client = CreateOrUseCachedHttpClient();
+            HttpClient client = CreateOrRetrieveCachedHttpClient();
 
             try
             {
@@ -244,7 +220,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                               string uri,
                                                               string id)
         {
-            HttpClient httpClient = CreateOrUseCachedHttpClient();
+            HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
 
             try
             {

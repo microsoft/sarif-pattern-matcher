@@ -38,17 +38,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             ReportingDescriptor rule = node.GetRule(_run);
 
-            ValidationMethods validationPair =
+            StaticValidatorBase staticValidator =
                 ValidatorsCache.GetValidationMethods(rule.Name, _validators.RuleNameToValidationMethods);
 
-            if (validationPair == null)
+            if (staticValidator == null)
             {
                 string name = rule.Name.Replace("ConnectionString", "Credentials");
                 name = name.Replace("Secret", "Credentials");
-                validationPair = ValidatorsCache.GetValidationMethods(name, _validators.RuleNameToValidationMethods);
+                staticValidator = ValidatorsCache.GetValidationMethods(name, _validators.RuleNameToValidationMethods);
             }
 
-            if (validationPair?.IsValidDynamic != null)
+            if (staticValidator is DynamicValidatorBase dynamicValidator)
             {
                 // Our validation messages currently look like so.
                 // {0:scanTarget}' contains {1:validationPrefix}{2:encoding}{3:secretKind}{4:validationSuffix}{5:validatorMessage}
@@ -63,8 +63,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 FailureLevel level = default;
                 ResultLevelKind resultLevelKind = default;
                 ValidationState state =
-                    ValidatorsCache.ValidateDynamicHelper(validationPair.IsValidDynamic,
-                                                          ref fingerprint,
+                    dynamicValidator.IsValidDynamic(ref fingerprint,
                                                           ref message,
                                                           options,
                                                           ref resultLevelKind);

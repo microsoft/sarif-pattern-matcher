@@ -12,33 +12,9 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class GitHubAppCredentialsValidator : ValidatorBase
+    public class GitHubAppCredentialsValidator : DynamicValidatorBase
     {
-        internal static GitHubAppCredentialsValidator Instance;
-
-        static GitHubAppCredentialsValidator()
-        {
-            Instance = new GitHubAppCredentialsValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  options,
-                                  ref resultLevelKind);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
                 !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
@@ -69,7 +45,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                Dictionary<string, string> options,
+                                                                IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string id = fingerprint.Id;
@@ -78,7 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                HttpClient client = CreateOrUseCachedHttpClient();
+                HttpClient client = CreateOrRetrieveCachedHttpClient();
 
                 using var request = new HttpRequestMessage(HttpMethod.Post, uri);
                 request.Content = new StringContent($@"{{""client_id"": ""{id}"",""client_secret"": ""{secret}""}}", Encoding.UTF8, "application/json");

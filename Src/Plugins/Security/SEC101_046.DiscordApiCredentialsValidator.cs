@@ -15,33 +15,9 @@ using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class DiscordApiCredentialsValidator : ValidatorBase
+    public class DiscordApiCredentialsValidator : DynamicValidatorBase
     {
-        internal static DiscordApiCredentialsValidator Instance;
-
-        static DiscordApiCredentialsValidator()
-        {
-            Instance = new DiscordApiCredentialsValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  options,
-                                  ref resultLevelKind);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
                 !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
@@ -70,7 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                Dictionary<string, string> options,
+                                                                IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string id = fingerprint.Id;
@@ -80,11 +56,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                HttpClient client = CreateOrUseCachedHttpClient();
+                HttpClient client = CreateOrRetrieveCachedHttpClient();
 
-                var dict = new Dictionary<string, string>();
-                dict.Add("grant_type", "client_credentials");
-                dict.Add("scope", "identify connections");
+                var dict = new Dictionary<string, string>
+                {
+                    { "grant_type", "client_credentials" },
+                    { "scope", "identify connections" },
+                };
 
                 string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
                 using var request = new HttpRequestMessage(HttpMethod.Post, uri);
@@ -100,12 +78,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
-                        return ValidationState.Authorized;
+                        return ReturnAuthorizedAccess(ref message, id);
                     }
 
                     case HttpStatusCode.Unauthorized:
                     {
-                        return ValidationState.Unauthorized;
+                        return ReturnUnauthorizedAccess(ref message, id);
                     }
 
                     default:

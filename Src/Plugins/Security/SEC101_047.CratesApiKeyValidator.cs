@@ -5,21 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class DropboxAccessTokenValidator : DynamicValidatorBase
+    public class CratesApiKeyValidator : DynamicValidatorBase
     {
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch secret = groups["secret"];
 
             if (!ContainsDigitAndChar(secret.Value))
             {
@@ -28,10 +24,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             var validationResult = new ValidationResult
             {
-                Fingerprint = new Fingerprint()
+                Fingerprint = new Fingerprint
                 {
                     Secret = secret.Value,
-                    Platform = nameof(AssetPlatform.Dropbox),
+                    Platform = nameof(AssetPlatform.Crates),
                 },
                 ValidationState = ValidationState.Unknown,
             };
@@ -44,19 +40,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
-            const string NoAccessMessage = "Your app is not permitted to access this endpoint";
-            const string DisabledMessage = "This app is currently disabled.";
-            const string uri = "https://api.dropboxapi.com/2/file_requests/count";
-
             string secret = fingerprint.Secret;
-            HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
+
+            const string uri = "https://crates.io/api/v1/crates/sarif-pattern-matcher/owners";
 
             try
             {
-                using var request = new HttpRequestMessage(HttpMethod.Post, uri);
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
+                HttpClient client = CreateOrRetrieveCachedHttpClient();
 
-                using HttpResponseMessage response = httpClient
+                using var request = new HttpRequestMessage(HttpMethod.Delete, uri);
+                request.Headers.Add("Authorization", secret);
+
+                using HttpResponseMessage response = client
                     .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
@@ -68,32 +63,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         return ValidationState.Authorized;
                     }
 
-                    case HttpStatusCode.BadRequest:
-                    {
-                        string body = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-
-                        // App deleted.
-                        if (body.EndsWith(DisabledMessage))
-                        {
-                            return ValidationState.Expired;
-                        }
-
-                        // Request was successful but AccessToken does not have access.
-                        if (body.Contains(NoAccessMessage))
-                        {
-                            if (secret.Length != 64)
-                            {
-                                // Short expiration token (4h).
-                                resultLevelKind = new ResultLevelKind { Level = FailureLevel.Warning };
-                            }
-
-                            return ValidationState.Authorized;
-                        }
-
-                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
-                    }
-
-                    case HttpStatusCode.Unauthorized:
+                    case HttpStatusCode.Forbidden:
                     {
                         return ValidationState.Unauthorized;
                     }

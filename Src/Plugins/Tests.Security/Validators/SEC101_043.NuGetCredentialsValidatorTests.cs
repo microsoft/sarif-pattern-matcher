@@ -24,7 +24,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             ResultLevelKind resultLevelKind = default;
             var keyValuePairs = new Dictionary<string, string>();
 
-            ValidationState actualValidationState = NuGetCredentialsValidator.IsValidDynamic(ref fingerprint, ref message, keyValuePairs, ref resultLevelKind);
+            var nuGetCredentialsValidator = new NuGetCredentialsValidator();
+            ValidationState actualValidationState = nuGetCredentialsValidator.IsValidDynamic(ref fingerprint, ref message, keyValuePairs, ref resultLevelKind);
             Assert.Equal(ExpectedValidationState, actualValidationState);
         }
 
@@ -40,7 +41,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             List<string> hosts = NuGetCredentialsValidator.ExtractHosts(xmlString);
 
-            Assert.Equal(3, hosts.Count());
+            Assert.Equal(3, hosts.Count);
             Assert.Contains("https://api.nuget.org/v3/index.json", hosts);
             Assert.Contains("https://contoso.com/packages/", hosts);
             Assert.Contains(@"c:\packages", hosts);

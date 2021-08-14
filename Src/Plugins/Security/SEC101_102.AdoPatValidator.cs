@@ -9,7 +9,7 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public static class AdoPatValidator
+    public class AdoPatValidator : StaticValidatorBase
     {
         /// <summary>
         /// Magic number to validate PAT checksum.
@@ -21,11 +21,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         /// </summary>
         private const uint ChecksumAdoAppSecret = 0x1019F92E;
 
-#pragma warning disable IDE0060 // Remove unused parameter
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-#pragma warning restore IDE0060
             if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();

@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         public void AzureDevOpsPersonalAccessTokenValidator_IsValidBasic()
         {
             var failedTestCases = new List<string>();
-
+            var adoPatValidator = new AdoPatValidator();
             foreach (TestCase testCase in s_coreTestCases)
             {
                 bool performDynamicValidation = testCase.PerformDynamicValidation;
@@ -55,7 +55,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string fingerprintText = null;
                 var groups = new Dictionary<string, FlexMatch>();
 
-                IEnumerable<ValidationResult> validationResults = AdoPatValidator.IsValidStatic(groups);
+                IEnumerable<ValidationResult> validationResults = adoPatValidator.IsValidStatic(groups);
 
                 string title = testCase.Title;
 

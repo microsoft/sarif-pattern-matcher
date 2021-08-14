@@ -9,12 +9,9 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public static class EmailAddressValidator
+    public class EmailAddressValidator : StaticValidatorBase
     {
-#pragma warning disable IDE0060 // Unused parameter.
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-#pragma warning restore IDE0060 // Unused parameter.
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
                 !groups.TryGetNonEmptyValue("host", out FlexMatch host))
