@@ -51,10 +51,5 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             ScanIdentityGuid = $"{guid}";
             ScanIdentityGuid.Should().Be($"{guid}");
         }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

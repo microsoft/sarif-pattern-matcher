@@ -26,15 +26,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     return;
                 }
 
-                string content = File.ReadAllText(@"SEC101.SecurePlaintextSecrets.json");
+                string content = File.ReadAllText("SEC101.SecurePlaintextSecrets.json");
 
-                JObject jObject = (JObject)JToken.Parse(content);
+                var jObject = (JObject)JToken.Parse(content);
 
                 IEnumerable<string> rules = jObject["Definitions"][0]["MatchExpressions"].Select(x => x["Name"].ToString().Split('/')[1]).Distinct();
 
                 Assembly assembly = typeof(HttpAuthorizationRequestHeaderValidator).Assembly;
                 // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
-                HashSet<string> validators = assembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
+                var validators = assembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
 
                 var rulesWithoutValidators = new List<string>();
 
