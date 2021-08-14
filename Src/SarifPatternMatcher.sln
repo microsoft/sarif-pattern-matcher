@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{B599D6C7-9
 		..\.gitmodules = ..\.gitmodules
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
 		..\BuildAndTest.cmd = ..\BuildAndTest.cmd
+		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
+		..\README.md = ..\README.md
 		..\version.json = ..\version.json
 	EndProjectSection
 EndProject
@@ -96,9 +98,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{8C5D6520-E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "getting-started", "getting-started", "{9DAB0AC1-BF2D-49B0-93F7-5EB05304502B}"
 	ProjectSection(SolutionItems) = preProject
-		..\docs\getting-started\creating-plugins.md = ..\docs\getting-started\creating-plugins.md
-		..\docs\getting-started\using-the-client-tool.md = ..\docs\getting-started\using-the-client-tool.md
-		..\docs\getting-started\using-the-library.md = ..\docs\getting-started\using-the-library.md
+		..\docs\getting-started\CreatingPlugins.md = ..\docs\getting-started\CreatingPlugins.md
+		..\docs\getting-started\UsingClientTool.md = ..\docs\getting-started\UsingClientTool.md
+		..\docs\getting-started\UsingLibrary.md = ..\docs\getting-started\UsingLibrary.md
 	EndProjectSection
 EndProject
 Global

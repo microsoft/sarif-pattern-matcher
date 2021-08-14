@@ -29,7 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             foreach (ValidationResult validationResult in validationResults)
             {
                 Assert.Equal(matchedPattern, validationResult.Fingerprint.Secret);
-                Assert.Equal(AssetPlatform.GitHub.ToString(), validationResult.Fingerprint.Platform);
+                Assert.Equal(nameof(AssetPlatform.GitHub), validationResult.Fingerprint.Platform);
                 Assert.Equal(expectedValidationState, validationResult.ValidationState);
             }
         }

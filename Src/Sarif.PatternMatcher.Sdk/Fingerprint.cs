@@ -527,7 +527,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             }
 
             string result = components.Count > 0 ?
-                string.Join(string.Empty, components.Where(c => !string.IsNullOrEmpty(c.Value)).OrderBy(c => c.Key).Select(v => v.Value)) :
+                string.Concat(components.Where(c => !string.IsNullOrEmpty(c.Value)).OrderBy(c => c.Key).Select(v => v.Value)) :
                 string.Empty;
 
             return result;
