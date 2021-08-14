@@ -18,6 +18,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public const string ScanIdentityHttpCustomHeaderKey =
             "Automation-Scan-Description";
 
+        protected bool shouldUseDynamicCache;
+
         private static readonly RegexOptions s_options =
             RegexOptions.ExplicitCapture | RegexOptions.Compiled;
 
@@ -37,7 +39,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         [ThreadStatic]
         private static HttpClient s_httpClient;
 
-        private static bool shouldUseDynamicCache;
         private HttpClient httpClient;
         private string scanIdentityGuid;
 
@@ -102,66 +103,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// sufficient that we flag one instance of the unique secret.
         /// </summary>
         protected ISet<string> PerFileFingerprintCache { get; }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(ValidatorBase validator,
-                                                                  Dictionary<string, FlexMatch> groups)
-        {
-            IEnumerable<ValidationResult> validationResults = validator.IsValidStaticHelper(groups);
-
-            foreach (ValidationResult validationResult in validationResults)
-            {
-                if (validationResult.ValidationState == ValidationState.NoMatch)
-                {
-                    continue;
-                }
-
-                string scanTarget = groups["scanTargetFullPath"].Value;
-                string key = $"{scanTarget}#{validationResult.Fingerprint}";
-
-                if (validator.PerFileFingerprintCache.Contains(key))
-                {
-                    validationResult.ValidationState = ValidationState.NoMatch;
-                    continue;
-                }
-
-                validator.PerFileFingerprintCache.Add(key);
-            }
-
-            return validationResults;
-        }
-
-        public static ValidationState IsValidDynamic(ValidatorBase validator,
-                                                     ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            resultLevelKind = default;
-
-            if (shouldUseDynamicCache &&
-                validator.FingerprintToResultCache.TryGetValue(fingerprint, out Tuple<ValidationState, ResultLevelKind, string> result))
-            {
-                message = result.Item3;
-                resultLevelKind = result.Item2;
-                return result.Item1;
-            }
-
-            ValidationState validationState =
-                validator.IsValidDynamicHelper(ref fingerprint,
-                                               ref message,
-                                               options,
-                                               ref resultLevelKind);
-
-            validator.FingerprintToResultCache[fingerprint] =
-                new Tuple<ValidationState, ResultLevelKind, string>(validationState, resultLevelKind, message);
-
-            return validationState;
-        }
-
-        public static void DisableDynamicValidationCaching(bool disable)
-        {
-            shouldUseDynamicCache = !disable;
-        }
 
         public static bool ContainsDigitAndChar(string matchedPattern)
         {
@@ -292,6 +233,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return match.Value;
         }
 
+        public void DisableDynamicValidationCaching(bool disable)
+        {
+            shouldUseDynamicCache = !disable;
+        }
+
         internal static string ParseValue(string value)
         {
             // If ParseExpression passed us white space, we shouldn't pretend we successfully
@@ -351,25 +297,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             }
 
             return s_httpClient;
-        }
-
-        /// <summary>
-        /// Validate if the match is a secret or credential.
-        /// </summary>
-        /// <param name="groups">
-        /// Capture groups from the regex match. Dictionary entries can be modified or new entries
-        /// added in order to refine or add argument values that will be used in result messages.
-        /// </param>
-        ///
-        /// <returns>Return an enumerable ValidationResult collection.</returns>
-        protected abstract IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups);
-
-        protected virtual ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                               ref string message,
-                                                               Dictionary<string, string> options,
-                                                               ref ResultLevelKind resultLevelKind)
-        {
-            return ValidationState.NoMatch;
         }
 
         private static bool TestExceptionForMessage(Exception e, Regex regex, ref string asset)

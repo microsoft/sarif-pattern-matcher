@@ -45,7 +45,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         // {
         //     string id = fingerprint.Id;
         //     string host = fingerprint.Host;
-        //     string password = fingerprint.Secret;           
+        //     string password = fingerprint.Secret;
         //     try
         //     {
         //         var dbClient = new MongoClient($"mongodb+srv://{id}:{password}@{host}/?connectTimeoutMS=3000");
@@ -61,7 +61,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Internal
         //             {
         //                 return ReturnUnauthorizedAccess(ref message, asset: host);
         //             }
-        //         }           
+        //         }
         //         return ReturnUnhandledException(ref message, e, asset: host);
         //     }
         // }
