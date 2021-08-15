@@ -17,10 +17,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch secret = groups["secret"];
 
             // It is highly likely we do not have a key if we can't
             // find at least one letter and digit within the pattern.
@@ -97,7 +94,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
         }
 
-        private string BuildAuthTestResponseMessage(AuthTestResponse response)
+        private static string BuildAuthTestResponseMessage(AuthTestResponse response)
         {
             string tokenLabel = GetTokenLabel(response);
 
@@ -111,7 +108,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                    $" The token {isEnterprise} associated with an enterprise installation.";
         }
 
-        private string GetTokenLabel(AuthTestResponse response)
+        private static string GetTokenLabel(AuthTestResponse response)
         {
             if (!string.IsNullOrEmpty(response.BotId))
             {

@@ -15,7 +15,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class AdoPatValidatorTests
     {
-        internal class TestCase
+        private struct TestCase
         {
             public string Title;
             public string Input;
@@ -24,7 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             public string FailureLevel;
         }
 
-        internal static TestCase[] s_coreTestCases = new[]
+        private static readonly TestCase[] s_coreTestCases = new[]
         {
             new TestCase
             {
@@ -53,7 +53,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 bool performDynamicValidation = testCase.PerformDynamicValidation;
                 string failureLevel = testCase.FailureLevel;
                 string fingerprintText = null;
-                var groups = new Dictionary<string, FlexMatch>();
+                var groups = new Dictionary<string, FlexMatch>
+                {
+                    { "secret", new FlexMatch { Value = testCase.Input } }
+                };
 
                 IEnumerable<ValidationResult> validationResults = adoPatValidator.IsValidStatic(groups);
 
@@ -61,8 +64,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 foreach (ValidationResult validationResult in validationResults)
                 {
-                    Verify(validationResult.ValidationState == testCase.ExpectedValidationState, title, failedTestCases);
-
                     Verify(failureLevel == testCase.FailureLevel, title, failedTestCases);
                     Verify(validationResult.ValidationState == testCase.ExpectedValidationState, title, failedTestCases);
 
