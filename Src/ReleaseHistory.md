@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Plugin Improvement: Required properties will throw exception if it does not exist. [#539](https://github.com/microsoft/sarif-pattern-matcher/pull/539)
+- Plugin Improvement: Required properties will throw exception if they do not exist. [#539](https://github.com/microsoft/sarif-pattern-matcher/pull/539)
 
 ## v1.5.0-alpha-0109-gf687e5e98a
 
