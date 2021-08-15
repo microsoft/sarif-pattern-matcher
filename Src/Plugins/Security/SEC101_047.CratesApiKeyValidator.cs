@@ -64,6 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     }
 
                     case HttpStatusCode.Forbidden:
+                    case HttpStatusCode.Unauthorized:
                     {
                         return ValidationState.Unauthorized;
                     }

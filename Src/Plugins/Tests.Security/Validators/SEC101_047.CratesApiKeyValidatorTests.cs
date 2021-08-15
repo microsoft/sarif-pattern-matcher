@@ -34,8 +34,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Testing Invalid Credentials",
+                    Title = "Testing Invalid Credentials (Forbidden StatusCode)",
                     HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.Forbidden },
+                    ExpectedValidationState = ValidationState.Unauthorized,
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Testing Invalid Credentials (Unauthorized StatusCode)",
+                    HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.Unauthorized },
                     ExpectedValidationState = ValidationState.Unauthorized,
                 },
                 new HttpMockTestCase
