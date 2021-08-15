@@ -97,7 +97,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             flexMatchProperties["retry"] = new FlexMatch { Value = context.Retry ? bool.TrueString : bool.FalseString };
             flexMatchProperties["enhancedReporting"] = new FlexMatch { Value = context.EnhancedReporting ? bool.TrueString : bool.FalseString };
 
-
             foreach (Dictionary<string, FlexMatch> groups in combinations)
             {
                 foreach (string key in flexMatchProperties.Keys)
