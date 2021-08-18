@@ -16,7 +16,7 @@
             "alternative": "'_malloca'"
           },
           "Fixes": {
-            "deleteAnnotation": {
+            "replaceInsecureApi": {
               "Description": "Replace '_alloca' for '_malloca'.",
               "Find": "_alloca",
               "ReplaceWith": "_malloca"
@@ -31,7 +31,7 @@
             "alternative": "'_malloca'"
           },
           "Fixes": {
-            "deleteAnnotation": {
+            "replaceInsecureApi": {
               "Description": "Replace 'alloca' for '_malloca'.",
               "Find": "alloca",
               "ReplaceWith": "_malloca"
