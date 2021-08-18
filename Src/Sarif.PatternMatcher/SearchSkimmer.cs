@@ -1130,10 +1130,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     argumentNameToValueMap["{" + kv.Key + "}"] = arguments[kv.Value];
                 }
 
+                // This will create one fixRegion that will be re-used for all matchExpression.Fixes
+                Region fixRegion = result.Locations[0].PhysicalLocation.Region.DeepClone();
+                fixRegion.Snippet = null;
                 foreach (SimpleFix fix in matchExpression.Fixes.Values)
                 {
                     ExpandArguments(fix, argumentNameToValueMap);
-                    AddFixToResult(flexMatch, fix, result);
+                    AddFixToResult(flexMatch, fix, result, fixRegion);
                 }
             }
 
@@ -1184,7 +1187,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return text;
         }
 
-        private void AddFixToResult(FlexMatch flexMatch, SimpleFix simpleFix, Result result)
+        private void AddFixToResult(FlexMatch flexMatch, SimpleFix simpleFix, Result result, Region region)
         {
             result.Fixes ??= new List<Fix>();
 
@@ -1202,11 +1205,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         {
                             new Replacement()
                             {
-                                DeletedRegion = new Region()
-                                {
-                                    CharOffset = flexMatch.Index,
-                                    CharLength = flexMatch.Length,
-                                },
+                                DeletedRegion = region,
                                 InsertedContent = new ArtifactContent()
                                 {
                                     Text = replacementText,
