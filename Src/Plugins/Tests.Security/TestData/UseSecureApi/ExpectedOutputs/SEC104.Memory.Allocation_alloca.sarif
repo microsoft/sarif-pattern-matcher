@@ -78,7 +78,37 @@
             "ValidationFingerprintHash/v1": "b7def400029e894d96939eb68b0a7a65a04509f2c20b83ba65fb68be26a56e81",
             "AssetFingerprint/v2": "{\"id\":\"_alloca\"}",
             "ValidationFingerprint/v2": "{\"id\":\"_alloca\"}"
-          }
+          },
+          "fixes": [
+            {
+              "description": {
+                "text": "Replace '_alloca' for '_malloca'."
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC104.Memory.Allocation_alloca.c",
+                    "uriBaseId": "SRC_ROOT"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 10,
+                        "startColumn": 13,
+                        "endLine": 10,
+                        "endColumn": 20,
+                        "charOffset": 187,
+                        "charLength": 7
+                      },
+                      "insertedContent": {
+                        "text": "_malloca"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ],
       "columnKind": "utf16CodeUnits"

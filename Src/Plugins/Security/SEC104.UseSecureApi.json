@@ -14,6 +14,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_alloca))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_malloca'"
+          },
+          "Fixes": {
+            "deleteAnnotation": {
+              "Description": "Replace '_alloca' for '_malloca'.",
+              "Find": "_alloca",
+              "ReplaceWith": "_malloca"
+            }
           }
         },
         {
@@ -22,6 +29,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>alloca))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_malloca'"
+          },
+          "Fixes": {
+            "deleteAnnotation": {
+              "Description": "Replace 'alloca' for '_malloca'.",
+              "Find": "alloca",
+              "ReplaceWith": "_malloca"
+            }
           }
         },
         {
