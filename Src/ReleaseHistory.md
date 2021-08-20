@@ -1,5 +1,15 @@
 # Release History
 
+## Unreleased
+
+- Plugin Improvement: Required properties will throw exception if they do not exist. [#539](https://github.com/microsoft/sarif-pattern-matcher/pull/539)
+- Tool Improvement: Tool will emit fixes with comprehensive region properties. [#540](https://github.com/microsoft/sarif-pattern-matcher/pull/540)
+
+## v1.5.0-alpha-0109-gf687e5e98a
+
+- Regex Improvement: Replacing `\b` to the correct border regular expression. [#533](https://github.com/microsoft/sarif-pattern-matcher/pull/533)
+- Tool Improvement: Refactoring `ValidatorBase` in `StaticValidatorBase` and `DynamicValidatorBase`. [#534](https://github.com/microsoft/sarif-pattern-matcher/pull/534)
+
 ## *v1.5.0-alpha-0068-g5d32a6446f*
 
 - [5d32a64](https://github.com/microsoft/sarif-pattern-matcher/commit/5d32a64) ValidatingVisitor should prefer v2 if exists (#494)

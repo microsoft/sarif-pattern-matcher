@@ -8,26 +8,11 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class GoogleServiceAccountKeyValidator : ValidatorBase
+    public class GoogleServiceAccountKeyValidator : StaticValidatorBase
     {
-        internal static GoogleServiceAccountKeyValidator Instance;
-
-        static GoogleServiceAccountKeyValidator()
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            Instance = new GoogleServiceAccountKeyValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
-        {
-            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch secret = groups["secret"];
 
             // We might not successfully retrieve the account id.
             groups.TryGetNonEmptyValue("id", out FlexMatch id);

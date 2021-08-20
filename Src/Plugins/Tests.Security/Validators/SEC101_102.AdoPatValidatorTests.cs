@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using FluentAssertions;
 
@@ -15,31 +16,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class AdoPatValidatorTests
     {
-        internal class TestCase
+        private struct TestCase
         {
             public string Title;
-            public string Input;
+            public string Secret;
+            public int ExpectedValidationResults;
             public ValidationState ExpectedValidationState;
-            public bool PerformDynamicValidation;
-            public string FailureLevel;
         }
 
-        internal static TestCase[] s_coreTestCases = new[]
+        private static readonly TestCase[] s_coreTestCases = new[]
         {
             new TestCase
             {
-                Title = "NoMatch due to invalid PAT CRC, no dynamic validation requested.",
-                Input = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead",
-                ExpectedValidationState = ValidationState.NoMatch,
-                FailureLevel = "Error",
-            },
-            new TestCase
-            {
-                Title = "NoMatch due to invalid PAT CRC, dynamic validation requested.",
-                Input = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead",
-                ExpectedValidationState = ValidationState.NoMatch,
-                FailureLevel = "Warning",
-                PerformDynamicValidation = true
+                Title = "NoMatch due to invalid PAT CRC.",
+                Secret = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdead",
+                ExpectedValidationResults = 1,
+                ExpectedValidationState = ValidationState.NoMatch
             }
         };
 
@@ -47,40 +39,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         public void AzureDevOpsPersonalAccessTokenValidator_IsValidBasic()
         {
             var failedTestCases = new List<string>();
-
+            var adoPatValidator = new AdoPatValidator();
             foreach (TestCase testCase in s_coreTestCases)
             {
-                bool performDynamicValidation = testCase.PerformDynamicValidation;
-                string failureLevel = testCase.FailureLevel;
-                string fingerprintText = null;
-                var groups = new Dictionary<string, FlexMatch>();
+                var groups = new Dictionary<string, FlexMatch>
+                {
+                    { "secret", new FlexMatch { Value = testCase.Secret } }
+                };
 
-                IEnumerable<ValidationResult> validationResults = AdoPatValidator.IsValidStatic(groups);
+                IEnumerable<ValidationResult> validationResults = adoPatValidator.IsValidStatic(groups);
 
                 string title = testCase.Title;
+
+                Verify(validationResults.Count() == testCase.ExpectedValidationResults, title, failedTestCases);
 
                 foreach (ValidationResult validationResult in validationResults)
                 {
                     Verify(validationResult.ValidationState == testCase.ExpectedValidationState, title, failedTestCases);
-
-                    Verify(failureLevel == testCase.FailureLevel, title, failedTestCases);
-                    Verify(validationResult.ValidationState == testCase.ExpectedValidationState, title, failedTestCases);
-
-                    if (validationResult.ValidationState != ValidationState.Unknown)
-                    {
-                        Verify(fingerprintText == null, title, failedTestCases);
-                    }
-                    else
-                    {
-                        Verify(fingerprintText == $"[pat/vs={testCase.Input}]", title, failedTestCases);
-                    }
                 }
             }
 
             failedTestCases.Should().BeEmpty();
         }
 
-        private void Verify(bool condition, string title, List<string> failedTestCases)
+        private static void Verify(bool condition, string title, List<string> failedTestCases)
         {
             if (!condition)
             {

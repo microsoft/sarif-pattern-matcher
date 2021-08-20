@@ -5,15 +5,11 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 using FluentAssertions;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
-
-using Moq;
-using Moq.Protected;
 
 using Xunit;
 
@@ -35,7 +31,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            SquareCredentialsValidator.IsValidDynamic(ref fingerprint,
+            var squareCredentialsValidator = new SquareCredentialsValidator();
+            squareCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                       ref message,
                                                       keyValuePairs,
                                                       ref resultLevelKind);
@@ -79,6 +76,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string fingerprintText = "[id=a][secret=b]";
 
             var sb = new StringBuilder();
+            var squareCredentialsValidator = new SquareCredentialsValidator();
             foreach (var testCase in testCases)
             {
                 string message = string.Empty;
@@ -86,9 +84,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                ValidatorBase.SetHttpClient(new HttpClient(MockHttpMessageHandler(testCase.HttpStatusCode, testCase.HttpContent)));
+                using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
+                squareCredentialsValidator.SetHttpClient(httpClient);
 
-                ValidationState currentState = SquareCredentialsValidator.IsValidDynamic(ref fingerprint,
+                ValidationState currentState = squareCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                                                          ref message,
                                                                                          keyValuePairs,
                                                                                          ref resultLevelKind);
@@ -104,22 +103,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             }
 
             sb.Length.Should().Be(0, sb.ToString());
-        }
-
-
-
-        private static HttpMessageHandler MockHttpMessageHandler(HttpStatusCode httpStatusCode, HttpContent httpContent)
-        {
-            var mockMessageHandler = new Mock<HttpMessageHandler>();
-            mockMessageHandler.Protected()
-                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(new HttpResponseMessage
-                {
-                    StatusCode = httpStatusCode,
-                    Content = httpContent
-                });
-
-            return mockMessageHandler.Object;
         }
     }
 }

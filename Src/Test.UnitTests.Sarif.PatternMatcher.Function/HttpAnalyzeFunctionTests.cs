@@ -51,7 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 log: logger,
                 context: TestHelper.ContextSetup());
 
-            ValidateResult(string.Empty, result, runCount: 1, resultCount: 2, FailureLevel.Note, ignoreRegionContent: true);
+            ValidateResult(string.Empty, result, runCount: 1, resultCount: 1, FailureLevel.Note, ignoreRegionContent: true);
         }
 
         [Fact]

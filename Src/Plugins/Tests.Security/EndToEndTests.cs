@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 using FluentAssertions;
 
@@ -36,11 +38,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override IDictionary<string, string> ConstructTestOutputsFromInputResources(IEnumerable<string> inputResourceNames, object parameter)
         {
             var results = new Dictionary<string, string>();
+            var dict = new Dictionary<string, Task<string>>();
 
             foreach (string inputResourceName in inputResourceNames)
             {
                 string secret = inputResourceName.Substring("Inputs.".Length);
-                results[secret] = ConstructTestOutputFromInputResource(inputResourceName, parameter);
+
+                dict[secret] = Task.Factory.StartNew(() => ConstructTestOutputFromInputResource(inputResourceName, parameter));
+            }
+
+            Task.WaitAll(dict.Values.ToArray());
+
+            foreach (KeyValuePair<string, Task<string>> item in dict)
+            {
+                results[item.Key] = item.Value.Result;
             }
 
             return results;

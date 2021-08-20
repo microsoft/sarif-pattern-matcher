@@ -81,51 +81,6 @@
             "ValidationFingerprint/v2": "{\"secret\":\"h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q\"}"
           },
           "rank": 62.14
-        },
-        {
-          "ruleId": "SEC101/102",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "h5lxeq…",
-              "an apparent ",
-              "",
-              "Azure DevOps personal access token",
-              "",
-              ""
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_102.AdoPat.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 1,
-                  "endLine": 9,
-                  "endColumn": 53,
-                  "charOffset": 326,
-                  "charLength": 52,
-                  "snippet": {
-                    "text": "h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[platform=AzureDevOps]",
-            "ValidationFingerprint/v1": "[secret=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]",
-            "ValidationFingerprintHash/v1": "ac1cfad77095aba4ae1cc93880abfba4f396f4db89f0954a8b8327790f0f0edd",
-            "AssetFingerprint/v2": "{\"platform\":\"AzureDevOps\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q\"}"
-          },
-          "rank": 62.14
         }
       ],
       "columnKind": "utf16CodeUnits"

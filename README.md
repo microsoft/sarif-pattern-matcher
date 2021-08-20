@@ -20,9 +20,9 @@ The following packages are published from this repository:
 | [Strings.Interop](https://www.nuget.org/packages/Strings.Interop/)| [![Nuget](https://img.shields.io/nuget/vpre/Strings.Interop)](https://www.nuget.org/packages/Strings.Interop/)|
 
 ## Getting started
-- [Creating plugins](./docs/getting-started/creating-plugins.md)
-- [Using the client tool](./docs/getting-started/using-the-client-tool.md)
-- [Using the library](./docs/getting-started/using-the-library.md)
+- [Creating plugins](./docs/getting-started/CreatingPlugins.md)
+- [Using the client tool](./docs/getting-started/UsingClientTool.md)
+- [Using the library](./docs/getting-started/UsingLibrary.md)
 
 ## How To Contribute
 

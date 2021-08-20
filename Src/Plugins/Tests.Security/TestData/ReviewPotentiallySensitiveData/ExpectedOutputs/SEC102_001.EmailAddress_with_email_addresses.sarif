@@ -290,47 +290,6 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "lastname",
-              "example.com",
-              "email address"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress_with_email_addresses.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 4,
-                  "startColumn": 11,
-                  "endLine": 4,
-                  "endColumn": 31,
-                  "charOffset": 277,
-                  "charLength": 20,
-                  "snippet": {
-                    "text": "lastname@example.com"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=example.com][id=lastname]",
-            "ValidationFingerprint/v1": "[host=example.com][id=lastname]",
-            "ValidationFingerprintHash/v1": "a82a08b8f8cd5a7eabf30386974158e85fa1f0982b13d273aa94373c2638eb42",
-            "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}"
-          }
-        },
-        {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
               "email",
               "123.123.123.123",
               "email address"
@@ -568,47 +527,6 @@
             "ValidationFingerprintHash/v1": "44fc36b4677c11bf0194f8a2103b4a525911eb452573e5a68d03def8f63c7f3c",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"-lastname\"}",
             "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"-lastname\"}"
-          }
-        },
-        {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "lastname",
-              "example.com",
-              "email address"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress_with_email_addresses.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 10,
-                  "startColumn": 11,
-                  "endLine": 10,
-                  "endColumn": 31,
-                  "charOffset": 606,
-                  "charLength": 20,
-                  "snippet": {
-                    "text": "lastname@example.com"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=example.com][id=lastname]",
-            "ValidationFingerprint/v1": "[host=example.com][id=lastname]",
-            "ValidationFingerprintHash/v1": "a82a08b8f8cd5a7eabf30386974158e85fa1f0982b13d273aa94373c2638eb42",
-            "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"lastname\"}"
           }
         },
         {
@@ -1152,47 +1070,6 @@
             "id": "Default",
             "arguments": [
               "email",
-              "example.com",
-              "email address"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress_with_email_addresses.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 28,
-                  "startColumn": 8,
-                  "endLine": 28,
-                  "endColumn": 25,
-                  "charOffset": 1716,
-                  "charLength": 17,
-                  "snippet": {
-                    "text": "email@example.com"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=example.com][id=email]",
-            "ValidationFingerprint/v1": "[host=example.com][id=email]",
-            "ValidationFingerprintHash/v1": "6064325b0dd768a320862c00c981779e3bccd9a3fa3ce9dc1473a9a41f188f53",
-            "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}"
-          }
-        },
-        {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "email",
               "example..com",
               "email address"
             ]
@@ -1438,47 +1315,6 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "email",
-              "example.com",
-              "email address"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress_with_email_addresses.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 46,
-                  "startColumn": 12,
-                  "endLine": 46,
-                  "endColumn": 29,
-                  "charOffset": 2719,
-                  "charLength": 17,
-                  "snippet": {
-                    "text": "email@example.com"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=example.com][id=email]",
-            "ValidationFingerprint/v1": "[host=example.com][id=email]",
-            "ValidationFingerprintHash/v1": "6064325b0dd768a320862c00c981779e3bccd9a3fa3ce9dc1473a9a41f188f53",
-            "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}"
-          }
-        },
-        {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
               "example",
               "example.com",
               "email address"
@@ -1511,88 +1347,6 @@
             "ValidationFingerprintHash/v1": "7b3301b5b6cf4020be9fe65c04031623d62bfb2819ca3f7e642823f3c5d67f14",
             "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"example\"}",
             "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"example\"}"
-          }
-        },
-        {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "email",
-              "example.com",
-              "email address"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress_with_email_addresses.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 49,
-                  "startColumn": 2,
-                  "endLine": 49,
-                  "endColumn": 19,
-                  "charOffset": 2850,
-                  "charLength": 17,
-                  "snippet": {
-                    "text": "email@example.com"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=example.com][id=email]",
-            "ValidationFingerprint/v1": "[host=example.com][id=email]",
-            "ValidationFingerprintHash/v1": "6064325b0dd768a320862c00c981779e3bccd9a3fa3ce9dc1473a9a41f188f53",
-            "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}"
-          }
-        },
-        {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "email",
-              "example.com",
-              "email address"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress_with_email_addresses.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 52,
-                  "startColumn": 1,
-                  "endLine": 52,
-                  "endColumn": 18,
-                  "charOffset": 2940,
-                  "charLength": 17,
-                  "snippet": {
-                    "text": "email@example.com"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[host=example.com][id=email]",
-            "ValidationFingerprint/v1": "[host=example.com][id=email]",
-            "ValidationFingerprintHash/v1": "6064325b0dd768a320862c00c981779e3bccd9a3fa3ce9dc1473a9a41f188f53",
-            "AssetFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"example.com\",\"id\":\"email\"}"
           }
         },
         {

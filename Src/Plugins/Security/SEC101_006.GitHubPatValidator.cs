@@ -13,38 +13,11 @@ using Octokit.Internal;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class GitHubPatValidator : ValidatorBase
+    public class GitHubPatValidator : DynamicValidatorBase
     {
-        internal static GitHubPatValidator Instance;
-
-        static GitHubPatValidator()
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            Instance = new GitHubPatValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  options,
-                                  ref resultLevelKind);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
-        {
-            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch secret = groups["secret"];
 
             ValidationResult validationResult;
             if (groups.TryGetNonEmptyValue("checksum", out FlexMatch checksum))
@@ -102,7 +75,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                Dictionary<string, string> options,
+                                                                IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string pat = fingerprint.Secret;

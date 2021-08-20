@@ -8,26 +8,11 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class PlaintextPasswordValidator : ValidatorBase
+    public class PlaintextPasswordValidator : StaticValidatorBase
     {
-        internal static PlaintextPasswordValidator Instance;
-
-        static PlaintextPasswordValidator()
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            Instance = new PlaintextPasswordValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
-        {
-            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch secret = groups["secret"];
 
             var validationResult = new ValidationResult
             {

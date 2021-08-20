@@ -25,10 +25,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            MySqlCredentialsValidator.IsValidDynamic(ref fingerprint,
-                                                          ref message,
-                                                          keyValuePairs,
-                                                          ref resultLevelKind);
+            var mySqlCredentialsValidator = new MySqlCredentialsValidator();
+            mySqlCredentialsValidator.IsValidDynamic(ref fingerprint,
+                                                     ref message,
+                                                     keyValuePairs,
+                                                     ref resultLevelKind);
         }
     }
 }

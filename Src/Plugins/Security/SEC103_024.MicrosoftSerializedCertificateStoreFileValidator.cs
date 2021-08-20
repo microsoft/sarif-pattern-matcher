@@ -9,9 +9,9 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public static class MicrosoftSerializedCertificateStoreFileValidator
+    public class MicrosoftSerializedCertificateStoreFileValidator : StaticValidatorBase
     {
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             string message = string.Empty;
             Fingerprint fingerprint = default;

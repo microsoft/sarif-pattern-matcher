@@ -8,21 +8,9 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class GoogleOAuthCredentialsValidator : ValidatorBase
+    public class GoogleOAuthCredentialsValidator : StaticValidatorBase
     {
-        internal static GoogleOAuthCredentialsValidator Instance;
-
-        static GoogleOAuthCredentialsValidator()
-        {
-            Instance = new GoogleOAuthCredentialsValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetValue("id", out FlexMatch id) ||
                 !groups.TryGetValue("secret", out FlexMatch secret))

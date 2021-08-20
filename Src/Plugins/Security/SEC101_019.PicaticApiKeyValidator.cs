@@ -8,26 +8,11 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class PicaticApiKeyValidator : ValidatorBase
+    public class PicaticApiKeyValidator : StaticValidatorBase
     {
-        internal static PicaticApiKeyValidator Instance;
-
-        static PicaticApiKeyValidator()
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            Instance = new PicaticApiKeyValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
-        {
-            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch secret = groups["secret"];
 
             var validationResult = new ValidationResult
             {

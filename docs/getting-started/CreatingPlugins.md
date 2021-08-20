@@ -90,35 +90,20 @@ The `MatchExpression` property has the following structure:
 #### Validator
 
 Each `MatchExpression` can be mapped to a validator.
-Each validator can implement the following methods:
+You can extend `StaticValidatorBase` or `DynamicValidatorBase` to use the helpers that we already have. If that is the case, you will need to implement:
 
 ```csharp
-public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
+protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
 {
-}
-
-public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                             ref string message,
-                                             Dictionary<string, string> options,
-                                             ref ResultLevelKind resultLevelKind)
-{
-}
-```
-
-You can extend `ValidatorBase` to use the helpers that we already have. If that is the case, you will need to implement:
-
-```csharp
-protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
-{
-  // TODO: add your static analysis implementation.
+    // TODO: add your static analysis implementation.
 }
 
 protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                         ref string message,
-                                                        Dictionary<string, string> options,
+                                                        IDictionary<string, string> options,
                                                         ref ResultLevelKind resultLevelKind)
 {
-  // TODO: add your dynamic analysis implementation.
+    // TODO: add your dynamic analysis implementation.
 }
 ```
 

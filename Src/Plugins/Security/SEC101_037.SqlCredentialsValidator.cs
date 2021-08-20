@@ -11,9 +11,8 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class SqlCredentialsValidator : ValidatorBase
+    public class SqlCredentialsValidator : DynamicValidatorBase
     {
-        internal static SqlCredentialsValidator Instance;
         internal static IRegex RegexEngine;
 
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
@@ -27,9 +26,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             "database.secure.windows.net",
         };
 
-        static SqlCredentialsValidator()
+        public SqlCredentialsValidator()
         {
-            Instance = new SqlCredentialsValidator();
             RegexEngine = RE2Regex.Instance;
 
             // We perform this work in order to force caching of these
@@ -38,24 +36,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             RegexEngine.Match(string.Empty, ClientIPExpression);
         }
 
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  options,
-                                  ref resultLevelKind);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
                 !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
@@ -106,7 +87,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                Dictionary<string, string> options,
+                                                                IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string id = fingerprint.Id;

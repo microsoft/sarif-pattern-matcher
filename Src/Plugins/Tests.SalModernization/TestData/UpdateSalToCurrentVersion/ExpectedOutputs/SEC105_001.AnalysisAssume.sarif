@@ -121,6 +121,10 @@
                   "replacements": [
                     {
                       "deletedRegion": {
+                        "startLine": 1,
+                        "startColumn": 8,
+                        "endLine": 1,
+                        "endColumn": 21,
                         "charOffset": 7,
                         "charLength": 13
                       },
@@ -186,6 +190,10 @@
                   "replacements": [
                     {
                       "deletedRegion": {
+                        "startLine": 1,
+                        "startColumn": 59,
+                        "endLine": 1,
+                        "endColumn": 72,
                         "charOffset": 58,
                         "charLength": 13
                       },
@@ -252,6 +260,10 @@
                   "replacements": [
                     {
                       "deletedRegion": {
+                        "startLine": 6,
+                        "startColumn": 2,
+                        "endLine": 7,
+                        "endColumn": 19,
                         "charOffset": 335,
                         "charLength": 19
                       },

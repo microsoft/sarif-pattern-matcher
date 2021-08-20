@@ -24,11 +24,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             groups.Add("checksum", new FlexMatch() { Value = "checksum" });
             groups.Add("scanTargetFullPath", new FlexMatch() { Value = "GitHitPatTest" });
 
-            IEnumerable<ValidationResult> validationResults = GitHubPatValidator.IsValidStatic(groups);
+            var gitHubPatValidator = new GitHubPatValidator();
+            IEnumerable<ValidationResult> validationResults = gitHubPatValidator.IsValidStatic(groups);
             foreach (ValidationResult validationResult in validationResults)
             {
                 Assert.Equal(matchedPattern, validationResult.Fingerprint.Secret);
-                Assert.Equal(AssetPlatform.GitHub.ToString(), validationResult.Fingerprint.Platform);
+                Assert.Equal(nameof(AssetPlatform.GitHub), validationResult.Fingerprint.Platform);
                 Assert.Equal(expectedValidationState, validationResult.ValidationState);
             }
         }
@@ -45,7 +46,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var options = new Dictionary<string, string>();
 
-            ValidationState actualValidationState = GitHubPatValidator.IsValidDynamic(ref fingerprint,
+            var gitHubPatValidator = new GitHubPatValidator();
+            ValidationState actualValidationState = gitHubPatValidator.IsValidDynamic(ref fingerprint,
                                                                                       ref message,
                                                                                       options,
                                                                                       ref resultLevelKind);

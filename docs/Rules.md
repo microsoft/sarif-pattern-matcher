@@ -12,7 +12,7 @@ SEC101/003 | DoNotExposePlaintextSecrets/GoogleApiKey | Y
 SEC101/004 | DoNotExposePlaintextSecrets/FacebookAppCredentials | Y
 SEC101/005 | DoNotExposePlaintextSecrets/SlackToken | Y
 SEC101/006 | DoNotExposePlaintextSecrets/GitHubPat | Y
-SEC101/007 | DoNotExposePlaintextSecrets/GitHubAppCredentials | -
+SEC101/007 | DoNotExposePlaintextSecrets/GitHubAppCredentials | Y
 SEC101/008 | DoNotExposePlaintextSecrets/AwsCredentials | Y
 SEC101/009 | DoNotExposePlaintextSecrets/LinkedInCredentials | -
 SEC101/010 | DoNotExposePlaintextSecrets/SquarePat | Y

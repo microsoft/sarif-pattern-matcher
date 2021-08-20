@@ -8,21 +8,9 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class LinkedInCredentialsValidator : ValidatorBase
+    public class LinkedInCredentialsValidator : StaticValidatorBase
     {
-        internal static LinkedInCredentialsValidator Instance;
-
-        static LinkedInCredentialsValidator()
-        {
-            Instance = new LinkedInCredentialsValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
                 !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))

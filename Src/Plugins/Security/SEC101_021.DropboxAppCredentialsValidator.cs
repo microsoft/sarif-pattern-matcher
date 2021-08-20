@@ -13,33 +13,9 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class DropboxAppCredentialsValidator : ValidatorBase
+    public class DropboxAppCredentialsValidator : DynamicValidatorBase
     {
-        internal static DropboxAppCredentialsValidator Instance;
-
-        static DropboxAppCredentialsValidator()
-        {
-            Instance = new DropboxAppCredentialsValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  options,
-                                  ref resultLevelKind);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
                 !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
@@ -68,16 +44,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                                 ref string message,
-                                                                 Dictionary<string, string> options,
-                                                                 ref ResultLevelKind resultLevelKind)
+                                                                ref string message,
+                                                                IDictionary<string, string> options,
+                                                                ref ResultLevelKind resultLevelKind)
         {
             const string uri = "https://content.dropboxapi.com/2/files/get_thumbnail_v2";
 
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
             string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
-            HttpClient httpClient = CreateOrUseCachedHttpClient();
+            HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
 
             try
             {

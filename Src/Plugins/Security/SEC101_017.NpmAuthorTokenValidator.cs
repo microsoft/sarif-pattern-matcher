@@ -14,38 +14,11 @@ using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class NpmAuthorTokenValidator : ValidatorBase
+    public class NpmAuthorTokenValidator : DynamicValidatorBase
     {
-        internal static NpmAuthorTokenValidator Instance;
-
-        static NpmAuthorTokenValidator()
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            Instance = new NpmAuthorTokenValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  options,
-                                  ref resultLevelKind);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
-        {
-            if (!groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch secret = groups["secret"];
 
             var validationResult = new ValidationResult
             {
@@ -62,7 +35,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                Dictionary<string, string> options,
+                                                                IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string secret = fingerprint.Secret;
@@ -71,7 +44,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                HttpClient client = CreateOrUseCachedHttpClient();
+                HttpClient client = CreateOrRetrieveCachedHttpClient();
 
                 using var request = new HttpRequestMessage(HttpMethod.Get, uri);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);

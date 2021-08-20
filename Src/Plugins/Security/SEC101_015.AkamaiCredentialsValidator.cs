@@ -12,33 +12,9 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class AkamaiCredentialsValidator : ValidatorBase
+    public class AkamaiCredentialsValidator : DynamicValidatorBase
     {
-        internal static AkamaiCredentialsValidator Instance;
-
-        static AkamaiCredentialsValidator()
-        {
-            Instance = new AkamaiCredentialsValidator();
-        }
-
-        public static IEnumerable<ValidationResult> IsValidStatic(Dictionary<string, FlexMatch> groups)
-        {
-            return IsValidStatic(Instance, groups);
-        }
-
-        public static ValidationState IsValidDynamic(ref Fingerprint fingerprint,
-                                                     ref string message,
-                                                     Dictionary<string, string> options,
-                                                     ref ResultLevelKind resultLevelKind)
-        {
-            return IsValidDynamic(Instance,
-                                  ref fingerprint,
-                                  ref message,
-                                  options,
-                                  ref resultLevelKind);
-        }
-
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(Dictionary<string, FlexMatch> groups)
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
                 !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
@@ -65,7 +41,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                 ref string message,
-                                                                Dictionary<string, string> options,
+                                                                IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string id = fingerprint.Id;
@@ -87,7 +63,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 using var hmacSignature = new HMACSHA256(Convert.FromBase64String(signingKey));
                 string signature = Convert.ToBase64String(hmacSignature.ComputeHash(Convert.FromBase64String(textToSign)));
 
-                HttpClient httpClient = CreateOrUseCachedHttpClient();
+                HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
                 using var request = new HttpRequestMessage(HttpMethod.Get, $"{host}/ccu/v2/queues/default");
                 request.Headers.Authorization = new AuthenticationHeaderValue(
                     $"EG1-HMAC-SHA256",
