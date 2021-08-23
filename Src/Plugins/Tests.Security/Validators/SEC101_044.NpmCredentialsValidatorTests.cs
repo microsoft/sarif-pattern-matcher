@@ -110,7 +110,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
                 mockHandler.Clear();
             }
-
             sb.Length.Should().Be(0, sb.ToString());
         }
     }
