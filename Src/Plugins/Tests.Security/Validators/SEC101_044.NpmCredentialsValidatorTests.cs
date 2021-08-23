@@ -35,9 +35,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             string fingerprintText = $"[host={host}][id={id}][secret={secret}]";
 
-            var testCases = new TestCase[]
+            var testCases = new HttpMockTestCase[]
             {
-                new TestCase
+                new HttpMockTestCase
                 {
                     HttpContents = new List<HttpContent>{ null },
                     HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.OK },
@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Endpoint does not require credential",
                     ExpectedValidationState = ValidationState.NoMatch,
                 },
-                new TestCase
+                new HttpMockTestCase
                 {
                     HttpContents = new List<HttpContent>{ null, null },
                     HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.Unauthorized, HttpStatusCode.OK },
@@ -55,7 +55,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Credential is valid",
                     ExpectedValidationState = ValidationState.Authorized,
                 },
-                new TestCase
+                new HttpMockTestCase
                 {
                     HttpContents = new List<HttpContent>{ null, null },
                     HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.Unauthorized, HttpStatusCode.Unauthorized },
@@ -64,7 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Credential is invalid",
                     ExpectedValidationState = ValidationState.Unauthorized,
                 },
-                new TestCase
+                new HttpMockTestCase
                 {
                     HttpContents = new List<HttpContent>{ null, null },
                     HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.Unauthorized, HttpStatusCode.NotFound },
@@ -78,7 +78,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var sb = new StringBuilder();
             var mockHandler = new HttpMockHelper();
             var npmCredentialsValidator = new NpmCredentialsValidator();
-            foreach (TestCase testCase in testCases)
+            foreach (HttpMockTestCase testCase in testCases)
             {
                 for (int i = 0; i < testCase.HttpStatusCodes.Count; i++)
                 {
@@ -112,17 +112,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             }
 
             sb.Length.Should().Be(0, sb.ToString());
-        }
-
-        private struct TestCase
-        {
-            public List<HttpContent> HttpContents { get; set; }
-            public List<HttpStatusCode> HttpStatusCodes { get; set; }
-            public List<HttpRequestMessage> HttpRequestMessages { get; set; }
-
-            public string Title { get; set; }
-            public string ExpectedMessage { get; set; }
-            public ValidationState ExpectedValidationState { get; set; }
         }
     }
 }
