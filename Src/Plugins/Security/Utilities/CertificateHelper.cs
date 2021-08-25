@@ -101,8 +101,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
         }
 
         public static ValidationState TryLoadCertificate(byte[] rawData,
-                                                ref Fingerprint fingerprint,
-                                                ref string message)
+                                                         ref Fingerprint fingerprint,
+                                                         ref string message)
         {
             try
             {
@@ -151,8 +151,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
         }
 
         public static ValidationState TryLoadCertificateCollection(byte[] rawData,
-                                                          ref Fingerprint fingerprint,
-                                                          ref string message)
+                                                                   ref Fingerprint fingerprint,
+                                                                   ref string message)
         {
             var certificates = new X509Certificate2Collection();
             try
