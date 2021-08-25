@@ -30,6 +30,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             "postgres.database.azure.com",
         };
 
+        private const string publicNetworkDisabled = "The public network access on this server is disabled";
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
@@ -135,6 +137,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     if (postgresException.SqlState == "28P01")
                     {
                         return ReturnUnauthorizedAccess(ref message, asset: host);
+                    }
+
+                    // Public Network access disabled.
+                    if (postgresException.SqlState == "28000" && postgresException.MessageText.Contains(publicNetworkDisabled))
+                    {
+                        return ReturnUnknownHost(ref message, host);
                     }
                 }
 
