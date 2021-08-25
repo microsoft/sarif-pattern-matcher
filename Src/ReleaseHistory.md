@@ -3,8 +3,8 @@
 ## Unreleased
 
 - Plugin Improvement: Required properties will throw exception if they do not exist. [#539](https://github.com/microsoft/sarif-pattern-matcher/pull/539)
-- Tool Improvement: Tool will emit fixes with comprehensive region properties. [#540](https://github.com/microsoft/sarif-pattern-matcher/pull/540)
-- Rule Improvement: Improving certificate handling. [#544](https://github.com/microsoft/sarif-pattern-matcher/pull/544)
+- Tool will emit fixes with comprehensive region properties. [#540](https://github.com/microsoft/sarif-pattern-matcher/pull/540)
+- Reducing unhandled exceptions for the certificate rules. [#544](https://github.com/microsoft/sarif-pattern-matcher/pull/544)
 
 ## v1.5.0-alpha-0109-gf687e5e98a
 

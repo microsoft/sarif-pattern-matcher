@@ -47,9 +47,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                            ref message,
                                                                            ref resultLevelKind);
                 }
-                catch (Exception)
+                catch (FormatException)
                 {
-                    validationState = ValidationState.Unknown;
+                    return ValidationResult.CreateNoMatch();
                 }
             }
 
