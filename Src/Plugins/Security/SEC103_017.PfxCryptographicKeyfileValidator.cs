@@ -42,7 +42,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 try
                 {
                     byte[] bytes = Convert.FromBase64String(content.Value);
-                    validationState = CertificateHelper.TryLoadCertificate(null,
+                    validationState = CertificateHelper.TryLoadCertificate(bytes,
                                                                            ref fingerprint,
                                                                            ref message,
                                                                            ref resultLevelKind);
