@@ -7,9 +7,11 @@
   [#539](https://github.com/microsoft/sarif-pattern-matcher/pull/539)
 - Tool Improvement: Tool should emit fixes with comprehensive region properties.
   [#540](https://github.com/microsoft/sarif-pattern-matcher/pull/540)
-- Plugin Improvement: Added `Fixes` property in SEC104 rules that provide only one option.
+- Plugin Improvement: Added `Fixes` property in SEC104 rules that provide only
+  one option.
   [#541](https://github.com/microsoft/sarif-pattern-matcher/pull/541)
-- Reduce Unhandled Exceptions: Add a check for PostgreSql instances that are not reachable from external networks, reducing total unhandled exceptions.
+- UER: Added a check for PostgreSql instances that are not reachable from
+  external networks, reducing total unhandled exceptions.
   [#545](https://github.com/microsoft/sarif-pattern-matcher/pull/545)
 
 ## v1.5.0-alpha-0109-gf687e5e98a
