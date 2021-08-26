@@ -82,7 +82,7 @@
           "fixes": [
             {
               "description": {
-                "text": "Replace '_alloca' for '_malloca'."
+                "text": "Replace '_alloca' with '_malloca'."
               },
               "artifactChanges": [
                 {
