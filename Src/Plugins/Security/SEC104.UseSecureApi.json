@@ -14,6 +14,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_alloca))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_malloca'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_alloca' with '_malloca'.",
+              "Find": "_alloca",
+              "ReplaceWith": "_malloca"
+            }
           }
         },
         {
@@ -22,6 +29,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>alloca))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_malloca'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'alloca' for '_malloca'.",
+              "Find": "alloca",
+              "ReplaceWith": "_malloca"
+            }
           }
         },
         {
@@ -150,6 +164,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_i64toa))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_i64toa_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_i64toa' with '_i64toa_s'.",
+              "Find": "_i64toa",
+              "ReplaceWith": "_i64toa_s"
+            }
           }
         },
         {
@@ -158,6 +179,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_i64tow))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_i64tow_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_i64tow' with '_i64tow_s'.",
+              "Find": "_i64tow",
+              "ReplaceWith": "_i64tow_s"
+            }
           }
         },
         {
@@ -166,6 +194,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_itoa))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_itoa_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_itoa' with '_itoa_s'.",
+              "Find": "_itoa",
+              "ReplaceWith": "_itoa_s"
+            }
           }
         },
         {
@@ -174,6 +209,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_itow))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_itow_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_itow' with '_itow_s'.",
+              "Find": "_itow",
+              "ReplaceWith": "_itow_s"
+            }
           }
         },
         {
@@ -182,6 +224,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_ui64toa))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_ui64toa_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_ui64toa' with '_ui64toa_s'.",
+              "Find": "_ui64toa",
+              "ReplaceWith": "_ui64toa_s"
+            }
           }
         },
         {
@@ -190,6 +239,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_ui64tow))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_ui64tow_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_ui64tow' with '_ui64tow_s'.",
+              "Find": "_ui64tow",
+              "ReplaceWith": "_ui64tow_s"
+            }
           }
         },
         {
@@ -198,6 +254,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_ultoa))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_ultoa_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_ultoa' with '_ultoa_s'.",
+              "Find": "_ultoa",
+              "ReplaceWith": "_ultoa_s"
+            }
           }
         },
         {
@@ -206,6 +269,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_ultow))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_ultow_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_ultow' with '_ultow_s'.",
+              "Find": "_ultow",
+              "ReplaceWith": "_ultow_s"
+            }
           }
         },
         {
@@ -214,6 +284,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>atof))\\s*\\(",
           "MessageArguments": {
             "alternative": "'strtod'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'atof' with 'strtod'.",
+              "Find": "atof",
+              "ReplaceWith": "strtod"
+            }
           }
         },
         {
@@ -222,6 +299,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>atoi))\\s*\\(",
           "MessageArguments": {
             "alternative": "'strtol'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'atoi' with 'strtol'.",
+              "Find": "atoi",
+              "ReplaceWith": "strtol"
+            }
           }
         },
         {
@@ -230,6 +314,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>atoll))\\s*\\(",
           "MessageArguments": {
             "alternative": "'strtoll'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'atoll' with 'strtoll'.",
+              "Find": "atoll",
+              "ReplaceWith": "strtoll"
+            }
           }
         },
         {
@@ -238,6 +329,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>mbsrtowcs))\\s*\\(",
           "MessageArguments": {
             "alternative": "'mbsrtowcs_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'mbsrtowcs' with 'mbsrtowcs_s'.",
+              "Find": "mbsrtowcs",
+              "ReplaceWith": "mbsrtowcs_s"
+            }
           }
         },
         {
@@ -246,6 +344,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>mbstowcs))\\s*\\(",
           "MessageArguments": {
             "alternative": "'mbstowcs_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'mbstowcs' with 'mbstowcs_s'.",
+              "Find": "mbstowcs",
+              "ReplaceWith": "mbstowcs_s"
+            }
           }
         },
         {
@@ -254,6 +359,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>wcrtomb))\\s*\\(",
           "MessageArguments": {
             "alternative": "'wcrtomb_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'wcrtomb' with 'wcrtomb_s'.",
+              "Find": "wcrtomb",
+              "ReplaceWith": "wcrtomb_s"
+            }
           }
         },
         {
@@ -262,6 +374,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>wcrtombs))\\s*\\(",
           "MessageArguments": {
             "alternative": "'wcrtombs_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'wcrtombs' with 'wcrtombs_s'.",
+              "Find": "wcrtombs",
+              "ReplaceWith": "wcrtombs_s"
+            }
           }
         },
         {
@@ -270,6 +389,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>wcsrtombs))\\s*\\(",
           "MessageArguments": {
             "alternative": "'wcsrtombs_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'wcsrtombs' with 'wcsrtombs_s'.",
+              "Find": "wcsrtombs",
+              "ReplaceWith": "wcsrtombs_s"
+            }
           }
         },
         {
@@ -278,6 +404,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>wctomb))\\s*\\(",
           "MessageArguments": {
             "alternative": "'wctomb_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'wctomb' with 'wctomb_s'.",
+              "Find": "wctomb",
+              "ReplaceWith": "wctomb_s"
+            }
           }
         },
         {
@@ -465,6 +598,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_makepath))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_makepath_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_makepath' with '_makepath_s'.",
+              "Find": "_makepath",
+              "ReplaceWith": "_makepath_s"
+            }
           }
         },
         {
@@ -473,6 +613,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_splitpath))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_splitpath_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_splitpath' with '_splitpath_s'.",
+              "Find": "_splitpath",
+              "ReplaceWith": "_splitpath_s"
+            }
           }
         },
         {
@@ -481,6 +628,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_wmakepath))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_wmakepath_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_wmakepath' with '_wmakepath_s'.",
+              "Find": "_wmakepath",
+              "ReplaceWith": "_wmakepath_s"
+            }
           }
         },
         {
@@ -489,6 +643,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_wsplitpath))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_wsplitpath_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_wsplitpath' with '_wsplitpath_s'.",
+              "Find": "_wsplitpath",
+              "ReplaceWith": "_wsplitpath_s"
+            }
           }
         },
         {
@@ -497,6 +658,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>getwd))\\s*\\(",
           "MessageArguments": {
             "alternative": "'getcwd'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'getwd' with 'getcwd'.",
+              "Find": "getwd",
+              "ReplaceWith": "getcwd"
+            }
           }
         },
         {
@@ -505,6 +673,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>makepath))\\s*\\(",
           "MessageArguments": {
             "alternative": "'makepath_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'makepath' with 'makepath_s'.",
+              "Find": "makepath",
+              "ReplaceWith": "makepath_s"
+            }
           }
         },
         {
@@ -582,6 +757,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_mbccpy))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_mbccpy_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_mbccpy' with '_mbccpy_s'.",
+              "Find": "_mbccpy",
+              "ReplaceWith": "_mbccpy_s"
+            }
           }
         },
         {
@@ -590,6 +772,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_mbscpy))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_mbscpy_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_mbscpy' with '_mbscpy_s'.",
+              "Find": "_mbscpy",
+              "ReplaceWith": "_mbscpy_s"
+            }
           }
         },
         {
@@ -598,6 +787,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_mbsnbcpy))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_mbsnbcpy_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_mbsnbcpy' with '_mbsnbcpy_s'.",
+              "Find": "_mbsnbcpy",
+              "ReplaceWith": "_mbsnbcpy_s"
+            }
           }
         },
         {
@@ -606,6 +802,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_mbsncpy))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_mbsncpy_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_mbsncpy' with '_mbsncpy_s'.",
+              "Find": "_mbsncpy",
+              "ReplaceWith": "_mbsncpy_s"
+            }
           }
         },
         {
@@ -638,6 +841,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>lstrcpyA))\\s*\\(",
           "MessageArguments": {
             "alternative": "'StringCchCopy'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'lstrcpyA' with 'StringCchCopy'.",
+              "Find": "lstrcpyA",
+              "ReplaceWith": "StringCchCopy"
+            }
           }
         },
         {
@@ -646,6 +856,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>lstrcpynA))\\s*\\(",
           "MessageArguments": {
             "alternative": "'StringCchCopy'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'lstrcpynA' with 'StringCchCopy'.",
+              "Find": "lstrcpynA",
+              "ReplaceWith": "StringCchCopy"
+            }
           }
         },
         {
@@ -654,6 +871,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>lstrcpynW))\\s*\\(",
           "MessageArguments": {
             "alternative": "'StringCchCopy'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'lstrcpynW' with 'StringCchCopy'.",
+              "Find": "lstrcpynW",
+              "ReplaceWith": "StringCchCopy"
+            }
           }
         },
         {
@@ -662,6 +886,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>lstrcpyW))\\s*\\(",
           "MessageArguments": {
             "alternative": "'StringCchCopy'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'lstrcpyW' with 'StringCchCopy'.",
+              "Find": "lstrcpyW",
+              "ReplaceWith": "StringCchCopy"
+            }
           }
         },
         {
@@ -899,6 +1130,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_mbscat))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_mbscat_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_mbscat' with '_mbscat_s'.",
+              "Find": "_mbscat",
+              "ReplaceWith": "_mbscat_s"
+            }
           }
         },
         {
@@ -907,6 +1145,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_mbsnbcat))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_mbsnbcat_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_mbsnbcat' with '_mbsnbcat_s'.",
+              "Find": "_mbsnbcat",
+              "ReplaceWith": "_mbsnbcat_s"
+            }
           }
         },
         {
@@ -915,6 +1160,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_mbsncat))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_mbsncat_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_mbsncat' with '_mbsncat_s'.",
+              "Find": "_mbsncat",
+              "ReplaceWith": "_mbsncat_s"
+            }
           }
         },
         {
@@ -939,6 +1191,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>lstrcatA))\\s*\\(",
           "MessageArguments": {
             "alternative": "'StringCchCat'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'lstrcatA' with 'StringCchCat'.",
+              "Find": "lstrcatA",
+              "ReplaceWith": "StringCchCat"
+            }
           }
         },
         {
@@ -947,6 +1206,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>lstrcatW))\\s*\\(",
           "MessageArguments": {
             "alternative": "'StringCchCat'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'lstrcatW' with 'StringCchCat'.",
+              "Find": "lstrcatW",
+              "ReplaceWith": "StringCchCat"
+            }
           }
         },
         {
@@ -955,6 +1221,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>lstrncat))\\s*\\(",
           "MessageArguments": {
             "alternative": "'strcat_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'lstrncat' with 'strcat_s'.",
+              "Find": "lstrncat",
+              "ReplaceWith": "strcat_s"
+            }
           }
         },
         {
@@ -995,6 +1268,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>wcsncat))\\s*\\(",
           "MessageArguments": {
             "alternative": "'wcslcat', 'wcsncat_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'wcsncat' with 'wcsncat_s'.",
+              "Find": "wcsncat",
+              "ReplaceWith": "wcsncat_s"
+            }
           }
         },
         {
@@ -1142,6 +1422,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_mbslen))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_mbsnlen'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_mbslen' with '_mbsnlen'.",
+              "Find": "_mbslen",
+              "ReplaceWith": "_mbsnlen"
+            }
           }
         },
         {
@@ -1150,6 +1437,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_mbstrlen))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_mbstrnlen'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_mbstrlen' with '_mbstrnlen'.",
+              "Find": "_mbstrlen",
+              "ReplaceWith": "_mbstrnlen"
+            }
           }
         },
         {
@@ -1327,6 +1621,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>_mbstok))\\s*\\(",
           "MessageArguments": {
             "alternative": "'_mbstok_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace '_mbstok' with '_mbstok_s'.",
+              "Find": "_mbstok",
+              "ReplaceWith": "_mbstok_s"
+            }
           }
         },
         {
@@ -1335,6 +1636,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>fscanf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'fscanf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'fscanf' with 'fscanf_s'.",
+              "Find": "fscanf",
+              "ReplaceWith": "fscanf_s"
+            }
           }
         },
         {
@@ -1343,6 +1651,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>fwscanf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'fwscanf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'fwscanf' with 'fwscanf_s'.",
+              "Find": "fwscanf",
+              "ReplaceWith": "fwscanf_s"
+            }
           }
         },
         {
@@ -1351,6 +1666,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>scanf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'scanf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'scanf' with 'scanf_s'.",
+              "Find": "scanf",
+              "ReplaceWith": "scanf_s"
+            }
           }
         },
         {
@@ -1359,6 +1681,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>sscanf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'sscanf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'sscanf' with 'sscanf_s'.",
+              "Find": "sscanf",
+              "ReplaceWith": "sscanf_s"
+            }
           }
         },
         {
@@ -1375,6 +1704,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>swscanf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'swscanf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'swscanf' with 'swscanf_s'.",
+              "Find": "swscanf",
+              "ReplaceWith": "swscanf_s"
+            }
           }
         },
         {
@@ -1383,6 +1719,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>vfscanf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'vfscanf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'vfscanf' with 'vfscanf_s'.",
+              "Find": "vfscanf",
+              "ReplaceWith": "vfscanf_s"
+            }
           }
         },
         {
@@ -1391,6 +1734,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>vfwscanf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'vfwscanf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'vfwscanf' with 'vfwscanf_s'.",
+              "Find": "vfwscanf",
+              "ReplaceWith": "vfwscanf_s"
+            }
           }
         },
         {
@@ -1399,6 +1749,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>vscanf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'vscanf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'vscanf' with 'vscanf_s'.",
+              "Find": "vscanf",
+              "ReplaceWith": "vscanf_s"
+            }
           }
         },
         {
@@ -1407,6 +1764,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>vsscanf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'vsscanf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'vsscanf' with 'vsscanf_s'.",
+              "Find": "vsscanf",
+              "ReplaceWith": "vsscanf_s"
+            }
           }
         },
         {
@@ -1415,6 +1779,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>vswscanf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'vswscanf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'vswscanf' with 'vswscanf_s'.",
+              "Find": "vswscanf",
+              "ReplaceWith": "vswscanf_s"
+            }
           }
         },
         {
@@ -1423,6 +1794,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>vwscanf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'vwscanf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'vwscanf' with 'vwscanf_s'.",
+              "Find": "vwscanf",
+              "ReplaceWith": "vwscanf_s"
+            }
           }
         },
         {
@@ -1431,6 +1809,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>wcstok))\\s*\\(",
           "MessageArguments": {
             "alternative": "'wcstok_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'wcstok' with 'wcstok_s'.",
+              "Find": "wcstok",
+              "ReplaceWith": "wcstok_s"
+            }
           }
         },
         {
@@ -1439,6 +1824,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>wscanf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'wscanf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'wscanf' with 'wscanf_s'.",
+              "Find": "wscanf",
+              "ReplaceWith": "wscanf_s"
+            }
           }
         },
         {
@@ -1690,6 +2082,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>fprintf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'fprintf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'fprintf' with 'fprintf_s'.",
+              "Find": "fprintf",
+              "ReplaceWith": "fprintf_s"
+            }
           }
         },
         {
@@ -1698,6 +2097,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>fwprintf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'fwprintf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'fwprintf' with 'fwprintf_s'.",
+              "Find": "fwprintf",
+              "ReplaceWith": "fwprintf_s"
+            }
           }
         },
         {
@@ -1706,6 +2112,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>printf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'printf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'printf' with 'printf_s'.",
+              "Find": "printf",
+              "ReplaceWith": "printf_s"
+            }
           }
         },
         {
@@ -1714,6 +2127,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>snprintf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'snprintf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'snprintf' with 'snprintf_s'.",
+              "Find": "snprintf",
+              "ReplaceWith": "snprintf_s"
+            }
           }
         },
         {
@@ -1738,6 +2158,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>vfprintf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'vfprintf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'vfprintf' with 'vfprintf_s'.",
+              "Find": "vfprintf",
+              "ReplaceWith": "vfprintf_s"
+            }
           }
         },
         {
@@ -1746,6 +2173,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>vprintf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'vprintf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'vprintf' with 'vprintf_s'.",
+              "Find": "vprintf",
+              "ReplaceWith": "vprintf_s"
+            }
           }
         },
         {
@@ -1778,6 +2212,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>vwprintf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'vwprintf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'vwprintf' with 'vwprintf_s'.",
+              "Find": "vwprintf",
+              "ReplaceWith": "vwprintf_s"
+            }
           }
         },
         {
@@ -1794,6 +2235,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>wprintf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'wprintf_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'wprintf' with 'wprintf_s'.",
+              "Find": "wprintf",
+              "ReplaceWith": "wprintf_s"
+            }
           }
         },
         {
@@ -2155,6 +2603,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>asctime))\\s*\\(",
           "MessageArguments": {
             "alternative": "'asctime_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'asctime' with 'asctime_s'.",
+              "Find": "asctime",
+              "ReplaceWith": "asctime_s"
+            }
           }
         },
         {
@@ -2163,6 +2618,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>ctime))\\s*\\(",
           "MessageArguments": {
             "alternative": "'ctime_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'ctime' with 'ctime_s'.",
+              "Find": "ctime",
+              "ReplaceWith": "ctime_s"
+            }
           }
         },
         {
@@ -2171,6 +2633,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>gmtime))\\s*\\(",
           "MessageArguments": {
             "alternative": "'gmtime_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'gmtime' with 'gmtime_s'.",
+              "Find": "gmtime",
+              "ReplaceWith": "gmtime_s"
+            }
           }
         },
         {
@@ -2179,6 +2648,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>localtime))\\s*\\(",
           "MessageArguments": {
             "alternative": "'localtime_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'localtime' with 'localtime_s'.",
+              "Find": "localtime",
+              "ReplaceWith": "localtime_s"
+            }
           }
         },
         {
@@ -2236,6 +2712,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>bsearch))\\s*\\(",
           "MessageArguments": {
             "alternative": "'bsearch_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'bsearch' with 'bsearch_s'.",
+              "Find": "bsearch",
+              "ReplaceWith": "bsearch_s"
+            }
           }
         },
         {
@@ -2263,6 +2746,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>ChangeWindowMessageFilter))\\s*\\(",
           "MessageArguments": {
             "alternative": "'ChangeWindowMessageFilterEx'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'ChangeWindowMessageFilter' with 'ChangeWindowMessageFilterEx'.",
+              "Find": "ChangeWindowMessageFilter",
+              "ReplaceWith": "ChangeWindowMessageFilterEx"
+            }
           }
         },
         {
@@ -2290,6 +2780,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>fopen))\\s*\\(",
           "MessageArguments": {
             "alternative": "'fopen_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'fopen' with 'fopen_s'.",
+              "Find": "fopen",
+              "ReplaceWith": "fopen_s"
+            }
           }
         },
         {
@@ -2298,6 +2795,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>freopen))\\s*\\(",
           "MessageArguments": {
             "alternative": "'freopen_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'freopen' with 'freopen_s'.",
+              "Find": "freopen",
+              "ReplaceWith": "freopen_s"
+            }
           }
         },
         {
@@ -2306,6 +2810,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>mktemp))\\s*\\(",
           "MessageArguments": {
             "alternative": "'mkstemp'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'mktemp' with 'mkstemp'.",
+              "Find": "mktemp",
+              "ReplaceWith": "mkstemp"
+            }
           }
         },
         {
@@ -2314,6 +2825,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>tmpnam))\\s*\\(",
           "MessageArguments": {
             "alternative": "'tmpnam_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'tmpnam' with 'tmpnam_s'.",
+              "Find": "tmpnam",
+              "ReplaceWith": "tmpnam_s"
+            }
           }
         },
         {
@@ -2371,6 +2889,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>getenv))\\s*\\(",
           "MessageArguments": {
             "alternative": "'getenv_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'getenv' with 'getenv_s'.",
+              "Find": "getenv",
+              "ReplaceWith": "getenv_s"
+            }
           }
         },
         {
@@ -2398,6 +2923,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>memcpy))\\s*\\(",
           "MessageArguments": {
             "alternative": "'memcpy_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'memcpy' with 'memcpy_s'.",
+              "Find": "memcpy",
+              "ReplaceWith": "memcpy_s"
+            }
           }
         },
         {
@@ -2406,6 +2938,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>memmove))\\s*\\(",
           "MessageArguments": {
             "alternative": "'memmove_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'memmove' with 'memmove_s'.",
+              "Find": "memmove",
+              "ReplaceWith": "memmove_s"
+            }
           }
         },
         {
@@ -2414,6 +2953,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>wmemcpy))\\s*\\(",
           "MessageArguments": {
             "alternative": "'wmemcpy_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'wmemcpy' with 'wmemcpy_s'.",
+              "Find": "wmemcpy",
+              "ReplaceWith": "wmemcpy_s"
+            }
           }
         },
         {
@@ -2421,7 +2967,14 @@
           "Level": "Warning",
           "ContentsRegex": "\\b(?P<refine>(?P<id>wmemmove))\\s*\\(",
           "MessageArguments": {
-            "alternative": "'wmemcpy_s'"
+            "alternative": "'wmemmove_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'wmemmove' with 'wmemmove_s'.",
+              "Find": "wmemmove",
+              "ReplaceWith": "wmemmove_s"
+            }
           }
         },
         {
@@ -2453,6 +3006,16 @@
             "alternative": "'wmemcpy', 'wmemmove'"
           },
           "MessageId": "Default_Secure"
+        },
+        {
+          "SubId": "wmemmove_s",
+          "Message": "'{0:scanTarget}' contains a call to '{1:refine}', a more secure alternative to one or more potentially insecure APIs: {2:alternative}.",
+          "Kind": "Pass",
+          "ContentsRegex": "\\b(?P<refine>(?P<id>wmemmove_s))\\s*\\(",
+          "MessageArguments": {
+            "alternative": "'wmemmove'"
+          },
+          "MessageId": "Default_Secure"
         }
       ]
     },
@@ -2469,6 +3032,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>qsort))\\s*\\(",
           "MessageArguments": {
             "alternative": "'qsort_s'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'qsort' with 'qsort_s'.",
+              "Find": "qsort",
+              "ReplaceWith": "qsort_s"
+            }
           }
         },
         {
@@ -2496,6 +3066,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>rewind))\\s*\\(",
           "MessageArguments": {
             "alternative": "'fseek'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'rewind' with 'fseek'.",
+              "Find": "rewind",
+              "ReplaceWith": "fseek"
+            }
           }
         },
         {
@@ -2523,6 +3100,13 @@
           "ContentsRegex": "\\b(?P<refine>(?P<id>setbuf))\\s*\\(",
           "MessageArguments": {
             "alternative": "'setvbuf'"
+          },
+          "Fixes": {
+            "replaceInsecureApi": {
+              "Description": "Replace 'setbuf' with 'setvbuf'.",
+              "Find": "setbuf",
+              "ReplaceWith": "setvbuf"
+            }
           }
         },
         {
