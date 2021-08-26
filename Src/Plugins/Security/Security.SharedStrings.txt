@@ -45,8 +45,8 @@
   $SEC101/021.DropboxAppCredentialsId=(?si)dropbox.{0,50}key.{0,10}(?:[^0-9a-z]|^)(?P<id>(?-i)[0-9a-z]{15})(?:[^0-9a-z]|$)
   $SEC101/021.DropboxAppCredentialsSecret=(?si)dropbox.{0,50}secret.{0,10}(?:[^0-9a-z]|^)(?P<secret>(?-i)[0-9a-z]{15})(?:[^0-9a-z]|$)
 
-  $SEC101/026.MailgunApiCredentialsId=(?is)(?:[^0-9a-z]|^)(?P<id>[0-9a-z]+?)\.mailgun\.org(?:[^0-9a-z]|$)
-  $SEC101/026.MailgunApiCredentialsSecret=(?is)(?:[^0-9a-z]|^)(?P<secret>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8})(?:[^0-9a-z]|$)
+  $SEC101/026.MailgunApiCredentialsId=(?si)(?:[^0-9a-z]|^)(?P<id>[0-9a-z]+?)\.mailgun\.org(?:[^0-9a-z]|$)
+  $SEC101/026.MailgunApiCredentialsSecret=(?si)(?:[^0-9a-z]|^)(?P<secret>[0-9a-z]{32}-[0-9a-z]{8}-[0-9a-z]{8})(?:[^0-9a-z]|$)
 
   $SEC101/046.DiscordApiCredentialsId=(?si)discord.{0,50}(?:[^0-9]|^)(?P<id>[0-9]{18})(?:[^0-9]|$)
   $SEC101/046.DiscordApiCredentialsSecret=(?si)discord.{0,50}(?:[^0-9a-z\-_]|^)(?P<secret>[0-9a-z\-_]{32})(?:[^0-9a-z\-_]|$)
@@ -62,7 +62,7 @@
   $SEC101/030.GoogleServiceAccountKeyConsoleFormat="private_key":\s*"-----BEGIN PRIVATE KEY-----\\n(?s)(?P<secret>[^"]+)(?-s)\\n-----END PRIVATE KEY-----\\n(?s).{1,200}(?-s)"client_id"\s*:\s*"(?P<id>[\w.-]+)"
   $SEC101/030.GoogleServiceAccountKeyConsoleRestFormat="name": "projects\/[\w-]+\/serviceAccounts\/[\w@.-]+\/keys\/(?P<secret>[^"]+)",
   $SEC101/031.NuGetApiKey=(?:[^o]|^)(?P<secret>oy2[a-p][0-9a-z]{15}[aq][0-9a-z]{11}[eu][bdfhjlnprtvxz357][a-p][0-9a-z]{11}[aeimquy4])(?:^[0-9a-z]|$)  
-  $SEC101/032.GpgCredentials=(?is)gpg[._-](?:gen_key_input|sign|decrypt_file)\s*\(\s*(?:name_email\s*=\s*["'](?P<id>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?P<secret>[^"']*)["']
+  $SEC101/032.GpgCredentials=(?si)gpg[._-](?:gen_key_input|sign|decrypt_file)\s*\(\s*(?:name_email\s*=\s*["'](?P<id>[^"']*)["'])?.{0,50}passphrase\s*=\s*["'](?P<secret>[^"']*)["']
   $SEC101/034.CredentialObjectConstructor=(?:PSCredential|SqlCredential)\s*\(\s*"(?P<id>[^"]*)"\s*,\s*"(?P<secret>[^"]*)"
   $SEC101/034.CredentialObjectInitializer=(?s)(?:PSCredential|SqlCredential)\s*\(\)\s*{\s*.{0,50}User(?:Name|Id)\s*=\s*"(?P<id>[^"]*)"\s*,.{0,50}Password\s*=\s*"(?P<secret>[^"]*)"  
   $SEC101/039.ShopifyAccessToken=(?:[^s]|^)(?P<secret>(?:shpat|shpca|shppa)_(?i)[0-9a-f]{32})
@@ -78,10 +78,10 @@
   $SEC101/010.SquarePat=(?si)square.{0,50}[^0-9a-z](?P<secret>(?-i)EAAAE[\w\-]{59})(?:[^0-9a-z]|$)
   $SEC101/012.SlackWebhook=(?i)https:\/\/hooks\.slack\.com\/services\/(?P<id>T[0-9a-z_]{8,10})\/(?P<secret>B[0-9a-z_]{8,10}\/[0-9a-z_]{24})
   $SEC101/013/PrivateKeyBlob.CryptographicPrivateKey=(?i)(?:^|[^0-9a-z+\/=])(?P<secret>[0-9a-z+\/=]{412})(?:[^0-9a-z+\/=]|$)
-  $SEC101/013/RsaKeyPair.CryptographicPrivateKey=(?is)<RSAKeyPair>.+?P<D>(?P<secret>.+?)<\/D>.+?P<\/RSAKeyPair>
+  $SEC101/013/RsaKeyPair.CryptographicPrivateKey=(?si)<RSAKeyPair>.+?P<D>(?P<secret>.+?)<\/D>.+?P<\/RSAKeyPair>
   $SEC101/013/PemCer.CryptographicPrivateKey=(?si)-{5}BEGIN CERTIFICATE-{5}\n?(?P<secret>[^:]*?)-{5}END CERTIFICATE-{5}
-  $SEC101/013/Putty.CryptographicPrivateKey=(?is)PuTTY-User-Key-File-2.+?Private-Lines:\s*[0-9]+\s*(?P<secret>.+?)Private-MAC:\s[0-9a-z]+(?:[^0-9a-d]|$)
-  $SEC101/013/Pem.CryptographicPrivateKey=(?si)-{5}BEGIN (?:DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (?:KEY BLOCK|KEY)-{5}.*?(?:VERSION: [^\n]+\n)*\n?(?P<secret>[^:]*?)-{5}END (?:DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (?:KEY BLOCK|KEY)-{5}
+  $SEC101/013/Putty.CryptographicPrivateKey=(?si)PuTTY-User-Key-File-2.+?Private-Lines:\s*[0-9]+\s*(?P<secret>.+?)Private-MAC:\s[0-9a-z]+(?:[^0-9a-d]|$)
+  $SEC101/013/Pem.CryptographicPrivateKey=(?si)-{5}BEGIN (?:DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (?:KEY BLOCK|KEY)-{5}.*?(?:(?:VERSION|Proc-Type|DEK-Info): [^\n]+\n)*\n?(?P<secret>[^:]*?)-{5}END (?:DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (?:KEY BLOCK|KEY)-{5}
   $SEC101/015.AkamaiCredentials=(?si)https:\/\/(?P<host>[\w\-\.]+)\.akamaiapis\.net.{0,150}(?:(?:client_token.{0,10}(?:[^a]|^)(?P<id>akab[\w\-]+).{0,50})|(?:access_token.{0,10}(?:[^\w\-]|^)(?P<resource>akab[\w\-]+).{0,200})|(?:(?:client_secret).{0,10}(?:[^0-9a-z\/\+]|^)(?P<secret>[0-9a-z\/\+]{43}=))){3}
   $SEC101/016.StripeApiKey=(?:[^rs]|^)(?P<secret>(?:r|s)k_(?:live|test)_(?i)[0-9a-z]{24,99})(?:[^0-9a-z]|$)
   $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?P<secret>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})[^0-9a-z]
@@ -91,8 +91,8 @@
   $SEC101/027.MailChimpApiKey=(?:[^0-9a-f]|^)(?P<secret>[0-9a-f]{32}-us[0-9]{12})
   $SEC101/029.AlibabaCloudCredentials=(?:[^L]|^)(?P<id>LTAI(?i)(?:[0-9a-z]{12}|[0-9a-z]{20}))(?:[^0-9a-z]|$)(?s).{0,50}(?-s)(?:[^\w]|^)(?P<secret>[\w]{30})(?:[^\w]|$)
   $SEC101/033.MongoDbCredentials=(?i)mongodb(?:[^:]{0,50})?:\/\/(?P<id>[0-9a-z]+):(?P<secret>[^@\s]{1,200})@(?P<host>[^\/;"<]+)
-  $SEC101/035.CloudantCredentialsPython=(?is)cloudant\s*\(\s*"(?P<id>[\w-]+)"\s*\,\s*"(?P<secret>[\w]{64})"\s*\,\s*.{0,200}url=\s*"https:\/\/(?P<resource>[\w.-]+)\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
-  $SEC101/035.CloudantCredentialsJson=(?is)apiKey"[^"]+"(?P<secret>[\w-]+)".{1,100}[^0-9a-z\.-](?P<id>[0-9a-z\.-]{32,44})\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
+  $SEC101/035.CloudantCredentialsPython=(?si)cloudant\s*\(\s*"(?P<id>[\w-]+)"\s*\,\s*"(?P<secret>[\w]{64})"\s*\,\s*.{0,200}url=\s*"https:\/\/(?P<resource>[\w.-]+)\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
+  $SEC101/035.CloudantCredentialsJson=(?si)apiKey"[^"]+"(?P<secret>[\w-]+)".{1,100}[^0-9a-z\.-](?P<id>[0-9a-z\.-]{32,44})\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsUrl=(?i)https:\/\/(?P<id>[^:]+):(?P<secret>[\w]{64}|[a-z]{24})@[\w-]+\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   
   $SEC101/036.MySqlCredentialsAdoId=(?i)(?:user|user id|uid)\s*=\s*(?P<id>[^;"<'\n]+)(?:[;"<'\n]|$)
@@ -125,9 +125,9 @@
 
   $SEC101/041.RabbitMqCredentials=(?i)amqps?:\/\/(?P<id>[^:]+):(?P<secret>[^@]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
   $SEC101/043.NuGetPackageSourceCredentialsXml=(?i)(?P<host><\s*packageSources\s*>(?s).{0,500}?(?-s)<\\?\/packageSources\s*>)(?s).{0,200}?(?-s)[^\/](?P<secret><\s*packageSourceCredentials\s*>(?s).{0,500}?(?-s)<\\?\/packageSourceCredentials\s*>)
-  $SEC101/044.NpmCredentialsAuth=(?is)registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s)(?:.{0,200})?_auth\s*=\s*(?P<secret>[^\s]+)
-  $SEC101/044.NpmCredentialsUserPassword=(?is)(?:(?:(?:registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(?:username\s*=\s*(?P<id>[^\s]+)(?:$|\s))|(?:_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){3}
-  $SEC101/044.NpmCredentialsPassword=(?is)(?:(?:(?:registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(?:_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){2}
+  $SEC101/044.NpmCredentialsAuth=(?si)registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s)(?:.{0,200})?_auth\s*=\s*(?P<secret>[^\s]+)
+  $SEC101/044.NpmCredentialsUserPassword=(?si)(?:(?:(?:registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(?:username\s*=\s*(?P<id>[^\s]+)(?:$|\s))|(?:_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){3}
+  $SEC101/044.NpmCredentialsPassword=(?si)(?:(?:(?:registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(?:_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){2}
   $SEC101/045.PostmanApiKey=(?:[^P]|^)(?P<secret>PMAK-[0-9a-z]{24}-[0-9a-z]{34})(?:[^0-9a-z]|$)
   $SEC101/047.CratesApiKey=(?i)(?:[^c]|^)(?P<secret>cio[0-9a-z]{32})(?:[^0-9a-z]|$)
   $SEC101/102.AdoPat=(?:[^2-7a-z]|^)(?P<secret>[2-7a-z]{52})(?:[^2-7a-z]|$) 

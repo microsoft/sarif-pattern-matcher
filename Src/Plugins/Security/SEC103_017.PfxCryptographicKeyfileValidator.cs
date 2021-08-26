@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
@@ -26,17 +28,32 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string message = string.Empty;
             Fingerprint fingerprint = default;
-            ResultLevelKind resultLevelKind = default;
-            ValidationState validationState = CertificateHelper.TryLoadCertificate(groups["scanTargetFullPath"].Value,
-                                                                                   ref fingerprint,
-                                                                                   ref message,
-                                                                                   ref resultLevelKind);
+            ValidationState validationState = default;
+            if (File.Exists(groups["scanTargetFullPath"].Value))
+            {
+                validationState = CertificateHelper.TryLoadCertificate(groups["scanTargetFullPath"].Value,
+                                                                       ref fingerprint,
+                                                                       ref message);
+            }
+            else
+            {
+                try
+                {
+                    byte[] bytes = Convert.FromBase64String(content.Value);
+                    validationState = CertificateHelper.TryLoadCertificate(bytes,
+                                                                           ref fingerprint,
+                                                                           ref message);
+                }
+                catch (FormatException)
+                {
+                    return ValidationResult.CreateNoMatch();
+                }
+            }
 
             var validationResult = new ValidationResult
             {
                 Message = message,
                 Fingerprint = fingerprint,
-                ResultLevelKind = resultLevelKind,
                 ValidationState = validationState,
             };
 
