@@ -28,14 +28,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string message = string.Empty;
             Fingerprint fingerprint = default;
-            ResultLevelKind resultLevelKind = default;
             ValidationState validationState = default;
             if (File.Exists(groups["scanTargetFullPath"].Value))
             {
                 validationState = CertificateHelper.TryLoadCertificate(groups["scanTargetFullPath"].Value,
                                                                        ref fingerprint,
-                                                                       ref message,
-                                                                       ref resultLevelKind);
+                                                                       ref message);
             }
             else
             {
@@ -44,8 +42,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     byte[] bytes = Convert.FromBase64String(content.Value);
                     validationState = CertificateHelper.TryLoadCertificate(bytes,
                                                                            ref fingerprint,
-                                                                           ref message,
-                                                                           ref resultLevelKind);
+                                                                           ref message);
                 }
                 catch (FormatException)
                 {
@@ -57,7 +54,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Message = message,
                 Fingerprint = fingerprint,
-                ResultLevelKind = resultLevelKind,
                 ValidationState = validationState,
             };
 
