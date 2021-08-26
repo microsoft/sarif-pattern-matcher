@@ -140,7 +140,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     }
 
                     // Public Network access disabled.
-                    if (postgresException.SqlState == "28000" && postgresException.MessageText.Contains(publicNetworkDisabled))
+                    if (postgresException.SqlState == "28000" && postgresException.MessageText.StartsWith(publicNetworkDisabled))
                     {
                         return ReturnUnknownHost(ref message, host);
                     }
