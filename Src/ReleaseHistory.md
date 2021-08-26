@@ -12,6 +12,9 @@
   [#541](https://github.com/microsoft/sarif-pattern-matcher/pull/541)
 - Reducing unhandled exceptions for the certificate rules.
   [#544](https://github.com/microsoft/sarif-pattern-matcher/pull/544)
+- UER: Added a check for PostgreSql instances that are not reachable from
+  external networks, reducing total unhandled exceptions.
+  [#545](https://github.com/microsoft/sarif-pattern-matcher/pull/545)
 
 ## v1.5.0-alpha-0109-gf687e5e98a
 
