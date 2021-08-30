@@ -113,7 +113,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                                       new StringContent("{\"ok\": true," +
                                                         "\"error\": \"account_inactive\"}",
                                                         Encoding.UTF8,
-                                                        "application/json").As<HttpContent>(),  
+                                                        "application/json").As<HttpContent>(),
                                                         },
                     ExpectedValidationState = ValidationState.Expired,
                     ExpectedMessage = string.Empty
@@ -142,8 +142,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     ExpectedMessage = "An unexpected HTTP response code was received: 'InternalServerError'.",
                 },
             };
-
-            
 
             var sb = new StringBuilder();
             var mockHandler = new HttpMockHelper();

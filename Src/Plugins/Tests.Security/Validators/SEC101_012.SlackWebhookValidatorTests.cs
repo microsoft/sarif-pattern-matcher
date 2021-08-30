@@ -48,7 +48,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string uri = $"https://hooks.slack.com/services/{id}/{secret}";
             string fingerprintText = $"[id={id}][secret={secret}]";
             string TestGuid = Guid.NewGuid().ToString();
-            
+
             var webhookRequest = new HttpRequestMessage(HttpMethod.Post, uri);
             webhookRequest.Content = new StringContent(TestGuid, Encoding.UTF8, "application/json");
 
@@ -98,7 +98,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             var sb = new StringBuilder();
             var mockHandler = new HttpMockHelper();
-           
+
             foreach (HttpMockTestCase testCase in testCases)
             {
                 for (int i = 0; i < testCase.HttpStatusCodes.Count; i++)

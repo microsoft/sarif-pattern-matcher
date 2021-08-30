@@ -53,7 +53,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 if (options.TryGetValue("TestGuid", out string testingGuid))
                 {
                     request.Content = new StringContent(testingGuid, Encoding.UTF8, "application/json");
-                } else
+                }
+                else
                 {
                     request.Content = new StringContent(ScanIdentityGuid, Encoding.UTF8, "application/json");
                 }
