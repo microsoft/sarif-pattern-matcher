@@ -50,7 +50,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             try
             {
                 using var request = new HttpRequestMessage(HttpMethod.Post, uri);
-                request.Content = new StringContent(ScanIdentityGuid, Encoding.UTF8, "application/json");
+                if (options.TryGetValue("TestGuid", out string testingGuid))
+                {
+                    request.Content = new StringContent(testingGuid, Encoding.UTF8, "application/json");
+                } else
+                {
+                    request.Content = new StringContent(ScanIdentityGuid, Encoding.UTF8, "application/json");
+                }
 
                 using HttpResponseMessage response = client
                     .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
