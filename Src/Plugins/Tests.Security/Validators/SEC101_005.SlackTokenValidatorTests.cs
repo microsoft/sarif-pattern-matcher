@@ -41,92 +41,126 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void SlackTokenValidatorMockHttp_Test()
         {
-            var testCases = new[]
+            const string uri = "https://slack.com/api/auth.test";
+            const string token = "xoxb-1234";
+            string fingerprintText = $"[secret={token}]";
+            var dict = new Dictionary<string, string>
+                {
+                    { "token", token },
+                };
+
+            var requestWithToken = new HttpRequestMessage(HttpMethod.Post, uri);
+            requestWithToken.Content = new FormUrlEncodedContent(dict);
+
+
+            var testCases = new HttpMockTestCase[]
             {
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Valid Token",
-                    HttpStatusCode = HttpStatusCode.OK,
+                    HttpStatusCodes = new List<HttpStatusCode>() { HttpStatusCode.OK },
+                    HttpRequestMessages = new List<HttpRequestMessage>() { requestWithToken },
                     // In all cases JSON is formatted in the order receieved from slack.
-                    HttpContent = new StringContent("{\"ok\": true," +
-                                                    "\"url\": \"testteam.slack.com\"," +
-                                                    "\"team\":\"test team\"," +
-                                                    "\"user\": \"testbot\"," +
-                                                    "\"team_id\": \"1234ABCD\"," +
-                                                    "\"user_id\": \"5678EFGH\"," +
-                                                    "\"bot_id\": \"0987ZYXV\"," +
-                                                    "\"is_enterprise_install\": false}",
-                                                    Encoding.UTF8,
-                                                    "application/json").As<HttpContent>(),
+                    HttpContents = new List<HttpContent>() {
+                                      new StringContent("{\"ok\": true," +
+                                                        "\"url\": \"testteam.slack.com\"," +
+                                                        "\"team\":\"test team\"," +
+                                                        "\"user\": \"testbot\"," +
+                                                        "\"team_id\": \"1234ABCD\"," +
+                                                        "\"user_id\": \"5678EFGH\"," +
+                                                        "\"bot_id\": \"0987ZYXV\"," +
+                                                        "\"is_enterprise_install\": false}",
+                                                        Encoding.UTF8,
+                                                        "application/json").As<HttpContent>(),
+                                                        },
                     ExpectedValidationState = ValidationState.Authorized,
                     ExpectedMessage = "Bot token (id: 0987ZYXV) was authenticated to channel 'testteam.slack.com',  team 'test team' (id: 1234ABCD),  user 'testbot' (id: 5678EFGH).  The token is not associated with an enterprise installation."
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Invalid Token",
-                    HttpStatusCode = HttpStatusCode.OK,
-                    HttpContent = new StringContent("{\"ok\": true," +
-                                                    "\"error\": \"invalid_auth\"}",
-                                                    Encoding.UTF8,
-                                                    "application/json").As<HttpContent>(),
+                    HttpStatusCodes = new List<HttpStatusCode>() { HttpStatusCode.OK },
+                    HttpRequestMessages = new List<HttpRequestMessage>() { requestWithToken },
+                    HttpContents = new List<HttpContent>() {
+                                      new StringContent("{\"ok\": true," +
+                                                        "\"error\": \"invalid_auth\"}",
+                                                        Encoding.UTF8,
+                                                        "application/json").As<HttpContent>(),
+                                                        },
                     ExpectedValidationState = ValidationState.Unauthorized,
                     ExpectedMessage = string.Empty
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Revoked Token",
-                    HttpStatusCode = HttpStatusCode.OK,
-                    HttpContent = new StringContent("{\"ok\": true," +
-                                                    "\"error\": \"token_revoked\"}",
-                                                     Encoding.UTF8,
-                                                     "application/json").As<HttpContent>(),
+                    HttpStatusCodes = new List<HttpStatusCode>() { HttpStatusCode.OK },
+                    HttpRequestMessages = new List<HttpRequestMessage>() { requestWithToken },
+                    HttpContents = new List<HttpContent>() {
+                                      new StringContent("{\"ok\": true," +
+                                                        "\"error\": \"token_revoked\"}",
+                                                         Encoding.UTF8,
+                                                         "application/json").As<HttpContent>(),
+                                                          },
                     ExpectedValidationState = ValidationState.Expired,
                     ExpectedMessage = string.Empty
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Inactive Token",
-                    HttpStatusCode = HttpStatusCode.OK,
-                    HttpContent = new StringContent("{\"ok\": true," +
-                                                    "\"error\": \"account_inactive\"}",
-                                                    Encoding.UTF8,
-                                                    "application/json").As<HttpContent>(),
+                    HttpStatusCodes = new List<HttpStatusCode>() { HttpStatusCode.OK },
+                    HttpRequestMessages = new List<HttpRequestMessage>() { requestWithToken },
+                    HttpContents = new List<HttpContent>(){
+                                      new StringContent("{\"ok\": true," +
+                                                        "\"error\": \"account_inactive\"}",
+                                                        Encoding.UTF8,
+                                                        "application/json").As<HttpContent>(),  
+                                                        },
                     ExpectedValidationState = ValidationState.Expired,
                     ExpectedMessage = string.Empty
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Unknown Slack Error",
-                    HttpStatusCode = HttpStatusCode.OK,
-                    HttpContent = new StringContent("{\"ok\": true," +
-                                                    "\"error\": \"unknown_error\"}",
-                                                    Encoding.UTF8,
-                                                    "application/json").As<HttpContent>(),
+                    HttpStatusCodes = new List<HttpStatusCode>() { HttpStatusCode.OK },
+                    HttpRequestMessages = new List<HttpRequestMessage>() { requestWithToken },
+                    HttpContents = new List<HttpContent>() {
+                                      new StringContent("{\"ok\": true," +
+                                                        "\"error\": \"unknown_error\"}",
+                                                        Encoding.UTF8,
+                                                        "application/json").As<HttpContent>(),
+                                                        },
                     ExpectedValidationState = ValidationState.Unknown,
                     ExpectedMessage = "An unexpected error was observed attempting to validate the token: 'unknown_error'"
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Unknown Status code",
-                    HttpStatusCode = HttpStatusCode.InternalServerError,
-                    HttpContent = (HttpContent)null,
+                    HttpStatusCodes = new List<HttpStatusCode>() { HttpStatusCode.InternalServerError },
+                    HttpRequestMessages = new List<HttpRequestMessage>() { requestWithToken },
+                    HttpContents = new List<HttpContent>() { null },
                     ExpectedValidationState = ValidationState.Unknown,
                     ExpectedMessage = "An unexpected HTTP response code was received: 'InternalServerError'.",
                 },
             };
 
-            const string fingerprintText = "[secret=xoxb-1234]";
+            
 
             var sb = new StringBuilder();
+            var mockHandler = new HttpMockHelper();
             var slackTokenValidator = new SlackTokenValidator();
-            foreach (var testCase in testCases)
+            foreach (HttpMockTestCase testCase in testCases)
             {
+                for (int i = 0; i < testCase.HttpStatusCodes.Count; i++)
+                {
+                    mockHandler.Mock(testCase.HttpRequestMessages[i], testCase.HttpStatusCodes[i], testCase.HttpContents[i]);
+                }
+
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
+                using var httpClient = new HttpClient(mockHandler);
                 slackTokenValidator.SetHttpClient(httpClient);
 
                 ValidationState currentState = slackTokenValidator.IsValidDynamic(ref fingerprint,
@@ -142,6 +176,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedMessage}' but found '{message}'.");
                 }
+                mockHandler.Clear();
             }
 
             sb.Length.Should().Be(0, sb.ToString());
