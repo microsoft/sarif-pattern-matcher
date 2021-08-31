@@ -45,13 +45,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string token = "xoxb-1234";
             string fingerprintText = $"[secret={token}]";
             var dict = new Dictionary<string, string>
-                {
+            {
                     { "token", token },
-                };
+            };
 
             var requestWithToken = new HttpRequestMessage(HttpMethod.Post, uri);
             requestWithToken.Content = new FormUrlEncodedContent(dict);
-
 
             var testCases = new HttpMockTestCase[]
             {
@@ -62,14 +61,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     HttpRequestMessages = new List<HttpRequestMessage>() { requestWithToken },
                     // In all cases JSON is formatted in the order receieved from slack.
                     HttpContents = new List<HttpContent>() {
-                                      new StringContent("{\"ok\": true," +
-                                                        "\"url\": \"testteam.slack.com\"," +
-                                                        "\"team\":\"test team\"," +
-                                                        "\"user\": \"testbot\"," +
-                                                        "\"team_id\": \"1234ABCD\"," +
-                                                        "\"user_id\": \"5678EFGH\"," +
-                                                        "\"bot_id\": \"0987ZYXV\"," +
-                                                        "\"is_enterprise_install\": false}",
+                                       new StringContent(@"{""ok"": true,
+                                                        ""url"": ""testteam.slack.com"",
+                                                        ""team"":""test team"",
+                                                        ""user"": ""testbot"",
+                                                        ""team_id"": ""1234ABCD"",
+                                                        ""user_id"": ""5678EFGH"",
+                                                        ""bot_id"": ""0987ZYXV"",
+                                                        ""is_enterprise_install"": false}",
                                                         Encoding.UTF8,
                                                         "application/json").As<HttpContent>(),
                                                         },

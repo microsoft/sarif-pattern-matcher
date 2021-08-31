@@ -19,27 +19,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
     public class SlackWebhookValidatorTests
     {
         [Fact]
-        public void SlackWebhookValidator_Test()
-        {
-            string fingerprintText = "";
-            if (string.IsNullOrEmpty(fingerprintText))
-            {
-                return;
-            }
-
-            string message = null;
-            ResultLevelKind resultLevelKind = default;
-            var fingerprint = new Fingerprint(fingerprintText);
-            var keyValuePairs = new Dictionary<string, string>();
-
-            var slackWebhookValidator = new SlackWebhookValidator();
-            slackWebhookValidator.IsValidDynamic(ref fingerprint,
-                                               ref message,
-                                               keyValuePairs,
-                                               ref resultLevelKind);
-        }
-
-        [Fact]
         public void SlackWebhookValidatorMockHttp_Test()
         {
 
@@ -116,9 +95,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 slackWebhookValidator.SetHttpClient(httpClient);
 
                 ValidationState currentState = slackWebhookValidator.IsValidDynamic(ref fingerprint,
-                                                                                  ref message,
-                                                                                  keyValuePairs,
-                                                                                  ref resultLevelKind);
+                                                                                    ref message,
+                                                                                    keyValuePairs,
+                                                                                    ref resultLevelKind);
                 if (currentState != testCase.ExpectedValidationState)
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedValidationState}' but found '{currentState}'.");
