@@ -11,7 +11,6 @@
       "FileNameAllowRegex": "$BuildDefinitionFiles",
       "MatchExpressions": [
         {
-          "id": "AZC101/240",
           "IntrafileRegexes": [ "$AZC101.BuildDefinitionEntityType", "$AZC101/240.PullRequestTriggertype", "$AZC101/240.ForkedEnabled" ]
         }
       ]
@@ -25,7 +24,6 @@
       "FileNameAllowRegex": "$ServiceConnectionFiles",
       "MatchExpressions": [
         {
-          "id": "AZC102/150",
           "IntrafileRegexes": [ "$AZC102.ServiceConnectionEntityType", "$AZC102/150.AzureClassicType" ]
         }
       ]

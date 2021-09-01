@@ -17,8 +17,8 @@
 
 # Common patterns for file allow and deny lists.
 #
-$BuildDefinitionFiles=(?i)builddefinition\.json$
-$ServiceConnectionFiles=(?i)serviceendpoint\.json$
+$BuildDefinitionFiles=(?i)(^https?:\/\/dev.azure.com).*(\/_apis\/build\/definitions\/)
+$ServiceConnectionFiles=(?i)(^https?:\/\/dev.azure.com).*(\/_apis\/contribution\/HierarchyQuery)
 
 $AZC101.BuildDefinitionEntityType=(?i)(?P<type>"EtlEntity"\s*:\s*"builddefinitions")
 $AZC102.ServiceConnectionEntityType=(?i)(?P<type>"EtlEntity"\s*:\s*"serviceendpoints")
