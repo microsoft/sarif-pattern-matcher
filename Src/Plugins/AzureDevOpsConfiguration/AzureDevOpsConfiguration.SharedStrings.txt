@@ -1,0 +1,28 @@
+﻿#
+# This file contains key values pairs which are used to expand variable references in
+# the JSON-based regex pattern definition files. This is useful both to share common
+# regex patterns across multiple rules but also to avoid the complexities of escaping
+# JSON string literals. The strings below are directly testable in web sites such as 
+# reg101.com.
+#
+# Shared strings can be assembled even within this file as long as any shared pattern
+# in a strings only contains variables which are defined earlier in the file. So, 
+# a pattern like this is ok (but these lines in reverse order are not).
+#
+# $MyExample=[a-z]
+# $MyExpandedExample=($MyExample|[0-9])
+#
+# Blank lines are ignored when parsing, as are lines that begin with a '#' character.
+# Leading spaces are trimmed at parse time, allowing for indentation.
+
+# Common patterns for file allow and deny lists.
+#
+$BuildDefinitionFiles=(?i)builddefinition\.json$
+$ServiceConnectionFiles=(?i)serviceendpoint\.json$
+
+$AZC101.BuildDefinitionEntityType=(?i)(?P<type>"EtlEntity"\s*:\s*"builddefinitions")
+$AZC102.ServiceConnectionEntityType=(?i)(?P<type>"EtlEntity"\s*:\s*"serviceendpoints")
+
+$AZC101/240.PullRequestTriggertype=(?i)(?P<triggertype>"triggerType"\s*:\s*"pullRequest")
+$AZC101/240.ForkedEnabled=(?i)(?P<fork>"forks"\s*:\s*{"enabled"\s*:\s*true\s*,\s*"allowSecrets"\s*:\s*true\s*})
+$AZC102/150.AzureClassicType=(?i)(?P<sctype>"type"\s*:\s*"azure")
