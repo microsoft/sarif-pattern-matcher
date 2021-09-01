@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string fingerprintText = $"[secret={token}]";
             var dict = new Dictionary<string, string>
             {
-                    { "token", token },
+                { "token", token },
             };
 
             var requestWithToken = new HttpRequestMessage(HttpMethod.Post, uri);
