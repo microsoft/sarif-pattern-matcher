@@ -1,6 +1,25 @@
 # Release History
 
+## Definitions
+
+- PRF => performance work
+- FCR => fingerprint change or refactor
+- RRR => rule rename or refactor
+- FPC => regex candidate reduction
+- FNC => regex candidate increase
+- FPS => FP reduction in static analysis
+- FNS => false negative reduction in static analysis
+- FPD => FP reduction in dynamic phase
+- FND => False negative reduction in dynamic phase
+- UER => eliminate unhandled exceptions in rules
+- UEE => eliminate unhandled exceptions in engine
+
 ## Unreleased
+
+- FPC: Improving RabbitMQ regex (removing new lines and spaces) from secret.
+  [#548](https://github.com/microsoft/sarif-pattern-matcher/pull/548)
+
+## v1.5.0-alpha-0117-g136d47026e
 
 - Plugin Improvement: Required properties will throw `KeyNotFoundException` if
   they do not exist.
