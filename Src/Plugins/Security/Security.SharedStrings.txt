@@ -123,7 +123,7 @@
   $SEC101/038.PostgreSqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^,;"'<\s\n]{8,128})(?:[,;"'<\s\n]|$)
   $SEC101/038.PostgreSqlCredentialsAdoResource=(?i)(?:database|db|dbname)\s*=\s*(?P<resource>[^,;"'<\s\n]+)(?:[,;"'<\s\n]|$)
 
-  $SEC101/041.RabbitMqCredentials=(?i)amqps?:\/\/(?P<id>[^:]+):(?P<secret>[^@\s\n]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
+  $SEC101/041.RabbitMqCredentials=(?i)amqps?:\/\/(?P<id>[^:]+):(?P<secret>[^@\s]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
   $SEC101/043.NuGetPackageSourceCredentialsXml=(?i)(?P<host><\s*packageSources\s*>(?s).{0,500}?(?-s)<\\?\/packageSources\s*>)(?s).{0,200}?(?-s)[^\/](?P<secret><\s*packageSourceCredentials\s*>(?s).{0,500}?(?-s)<\\?\/packageSourceCredentials\s*>)
   $SEC101/044.NpmCredentialsAuth=(?si)registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s)(?:.{0,200})?_auth\s*=\s*(?P<secret>[^\s]+)
   $SEC101/044.NpmCredentialsUserPassword=(?si)(?:(?:(?:registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(?:username\s*=\s*(?P<id>[^\s]+)(?:$|\s))|(?:_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){3}

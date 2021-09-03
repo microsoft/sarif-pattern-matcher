@@ -1,5 +1,19 @@
 # Release History
 
+## Definitions
+
+- PRF => performance work
+- FCR => fingerprint change or refactor
+- RRR => rule rename or refactor
+- FPC => regex candidate reduction
+- FNC => regex candidate increase
+- FPS => FP reduction in static analysis
+- FNS => false negative reduction in static analysis
+- FPD => FP reduction in dynamic phase
+- FND => False negative reduction in dynamic phase
+- UER => eliminate unhandled exceptions in rules
+- UEE => eliminate unhandled exceptions in engine
+
 ## Unreleased
 
 - FPC: Improving RabbitMQ regex (removing new lines and spaces) from secret.
