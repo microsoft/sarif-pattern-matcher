@@ -71,6 +71,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         return ReturnUnauthorizedAccess(ref message, asset: id);
                     }
 
+                    case HttpStatusCode.Forbidden:
+                    {
+                        string content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                        if (!string.IsNullOrEmpty(content)
+                            && content.IndexOf("Resource not accessible with Test Account Credentials", StringComparison.OrdinalIgnoreCase) != -1)
+                        {
+                            resultLevelKind = new ResultLevelKind { Level = FailureLevel.Warning };
+                            return ReturnAuthorizedAccess(ref message, asset: id);
+                        }
+
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode, asset: id);
+                    }
+
                     default:
                     {
                         return ReturnUnexpectedResponseCode(ref message, response.StatusCode, asset: id);
