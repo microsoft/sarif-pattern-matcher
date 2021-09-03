@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- FPC: Improving RabbitMQ regex (removing new lines and spaces) from secret.
+  [#548](https://github.com/microsoft/sarif-pattern-matcher/pull/548)
+
+## v1.5.0-alpha-0117-g136d47026e
+
 - Plugin Improvement: Required properties will throw `KeyNotFoundException` if
   they do not exist.
   [#539](https://github.com/microsoft/sarif-pattern-matcher/pull/539)
