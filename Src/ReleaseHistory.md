@@ -22,6 +22,8 @@
   `SEC101/036.MySqlCredential`, `SEC101/037.SqlCredentials`,
   `SEC101/038.PostgreSqlCredentials` won't accept spaces in `id` and `secret`.
   [#550](https://github.com/microsoft/sarif-pattern-matcher/pull/550)
+- UER: Reducing unhandled status code for `SEC101/043.NuGetCredentials`.
+  [#552](https://github.com/microsoft/sarif-pattern-matcher/pull/552)
 
 ## v1.5.0-alpha-0117-g136d47026e
 
