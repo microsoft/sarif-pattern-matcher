@@ -70,7 +70,7 @@
   $SEC101/042.DynatraceToken=(?:[^d]|^)(?P<secret>dt0(?i)[a-z]{1}[0-9]{2}\.[0-9a-z]{24}\.[0-9a-z]{64})
   
 # Legacy analysis model : with dynamic validator
-  $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?P<scheme>http|ftp|https):\/\/(?P<host>[\w_.-]{1,200})(?P<path>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(?:.|\n){0,100}?authorization[,\[:= "']+(?:basic)[\s\r\n]{0,10}(?P<secret>[^'"><;\s]{1,500})
+  $SEC101/001.HttpAuthorizationRequestHeader=(?i)(?P<scheme>http|ftp|https):\/\/(?P<host>[\w_.-]{1,200})(?P<path>[\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?(?:.|\n){0,100}?authorization[,\[:= "']+(?:basic)[\s]{0,10}(?P<secret>[^'"><;\s]{1,500})
   $SEC101/003.GoogleApiKey=(?:[^A]|^)(?P<secret>AIza(?i)[0-9a-z-_]{35})(?:[^0-9a-z-_]|$)
   $SEC101/005.SlackToken=(?:[^x]|^)(?P<secret>xox(?P<type>p|b|a|o|r|s)-(?i)[0-9a-z\-]+)
   $SEC101/006.GitHubPatLegacy=(?si)github.{0,50}[^0-9a-z](?P<secret>[0-9a-z]{40})(?:[^0-9a-z]|$)
@@ -95,35 +95,35 @@
   $SEC101/035.CloudantCredentialsJson=(?si)apiKey"[^"]+"(?P<secret>[\w-]+)".{1,100}[^0-9a-z\.-](?P<id>[0-9a-z\.-]{32,44})\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsUrl=(?i)https:\/\/(?P<id>[^:]+):(?P<secret>[\w]{64}|[a-z]{24})@[\w-]+\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   
-  $SEC101/036.MySqlCredentialsAdoId=(?i)(?:user|user id|uid)\s*=\s*(?P<id>[^;"<'\n]+)(?:[;"<'\n]|$)
-  $SEC101/036.MySqlCredentialsAdoHost=(?i)server\s*=\s*(tcp:)?(?P<host>[^,;"'=|\(\)\]\[><\s\n]+)(?:[,;"'=|\(\)\]\[><\s\n]|$)
+  $SEC101/036.MySqlCredentialsAdoId=(?i)(?:user|user id|uid)\s*=\s*(?P<id>[^;"<'\s]+)(?:[;"<'\s]|$)
+  $SEC101/036.MySqlCredentialsAdoHost=(?i)server\s*=\s*(tcp:)?(?P<host>[^,;"'=|\(\)\]\[><\s]+)(?:[,;"'=|\(\)\]\[><\s]|$)
   $SEC101/036.MySqlCredentialsAdoPort=(?i)port\s*=\s*(?P<port>[0-9]{4,5})(?:[^0-9]|$)
-  $SEC101/036.MySqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^;"<'\n]{8,128})(?:[;"<'\n]|$)
+  $SEC101/036.MySqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^;"<'\s]{8,128})(?:[;"<'\s]|$)
   $SEC101/036.MySqlCredentialsAdoResource=(?i)database\s*=\s*(?P<resource>[^;"]{8,128})(?:[;"]|$)
   
   $SEC101/036.MySqlCredentialsPlainJdbc=(?:jdbc:mysql:\/\/(?P<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?P<url>[^,(?:]+),\s*"(?P<id>[\w@-]{1,200})",\s*"(?P<secret>[^"';<>=]{7,200})"
   
-  $SEC101/037.SqlCredentialsJdbcId=(?i)user\s*=\s*(?P<id>[^@]+?)@[^;"<'\n]+(?:[;"<'\n]|$)
-  $SEC101/037.SqlCredentialsJdbcHost=(?i)jdbc:sqlserver:\/\/(?P<host>[^:;"<'\n]+)(?:[:;"<'\n]|$)
+  $SEC101/037.SqlCredentialsJdbcId=(?i)user\s*=\s*(?P<id>[^@]+?)@[^;"<'\s]+(?:[;"<'\s]|$)
+  $SEC101/037.SqlCredentialsJdbcHost=(?i)jdbc:sqlserver:\/\/(?P<host>[^:;"<'\s]+)(?:[:;"<'\s]|$)
   $SEC101/037.SqlCredentialsJdbcPort=(?i):\s*(?P<port>[0-9]{4,5})(?:[^0-9]|$)
-  $SEC101/037.SqlCredentialsJdbcSecret=(?i)password\s*=\s*(?P<secret>[^;"<'\n]+)(?:[;"<'\n]|$)
-  $SEC101/037.SqlCredentialsJdbcResource=(?i)database\s*=\s*(?P<resource>[^;"<>*%&\/?'\n]+)(?:[;"<>*%&\/?'\n]|$)
+  $SEC101/037.SqlCredentialsJdbcSecret=(?i)password\s*=\s*(?P<secret>[^;"<'\s]+)(?:[;"<'\s]|$)
+  $SEC101/037.SqlCredentialsJdbcResource=(?i)database\s*=\s*(?P<resource>[^;"<>*%&\/?'\s]+)(?:[;"<>*%&\/?'\s]|$)
 
-  $SEC101/037.SqlCredentialsAdoId=(?i)(?:user id|uid)\s*=\s*(?P<id>[^;"<'\n]+)(?:[;"<'\n]|$)
-  $SEC101/037.SqlCredentialsAdoHost=(?i)(?:server|data source)\s*=\s*(tcp:)?(?P<host>[^;,"<'\n]+)(?:[;,"<'\n]|$)
+  $SEC101/037.SqlCredentialsAdoId=(?i)(?:user id|uid)\s*=\s*(?P<id>[^;"<'\s]+)(?:[;"<'\s]|$)
+  $SEC101/037.SqlCredentialsAdoHost=(?i)(?:server|data source)\s*=\s*(tcp:)?(?P<host>[^;,"<'\s]+)(?:[;,"<'\s]|$)
   $SEC101/037.SqlCredentialsAdoPort=(?i),\s*(?P<port>[0-9]{4,5})(?:[^0-9]|$)
-  $SEC101/037.SqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^;"<'\n]+)(?:[;"<'\n]|$)
-  $SEC101/037.SqlCredentialsAdoResource=(?i)(?:initial catalog|database)\s*=\s*(?P<resource>[^;"<>*%&:\/?'\n]+)(?:[;"<>*%&:\/?'\n]|$)
+  $SEC101/037.SqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^;"<'\s]+)(?:[;"<'\s]|$)
+  $SEC101/037.SqlCredentialsAdoResource=(?i)(?:initial catalog|database)\s*=\s*(?P<resource>[^;"<>*%&:\/?'\s]+)(?:[;"<>*%&:\/?'\s]|$)
 
-  $SEC101/037.SqlCredentialsPhp=(?i)sqlsrv:server\s*=\s*(tcp:)?(?P<host>[^,;"<]+)(?:,(?P<port>[0-9]{4,5}))?;\s*Database\s*=\s*(?P<resource>[^;"<>*%&:\/?\n]+)",\s*"(?P<id>[^"]+)",\s*"(?P<secret>[^"]+)"
+  $SEC101/037.SqlCredentialsPhp=(?i)sqlsrv:server\s*=\s*(tcp:)?(?P<host>[^,;"<]+)(?:,(?P<port>[0-9]{4,5}))?;\s*Database\s*=\s*(?P<resource>[^;"<>*%&:\/?\s]+)",\s*"(?P<id>[^"]+)",\s*"(?P<secret>[^"]+)"
   
-  $SEC101/038.PostgreSqlCredentialsAdoId=(?i)(?:username|user|uid|user id)\s*=\s*(?P<id>[^,;"'&\]\[<\s\n]{1,63})(?:[,;"'&\]\[<\s\n]|$)
-  $SEC101/038.PostgreSqlCredentialsAdoHost=(?i)(?:host|server)\s*=\s*(?P<host>[^,;:"'=|\(\)\]\[><\s\n]{3,63})(?:[,;:"'=|\(\)\]\[><\s\n]|$)
+  $SEC101/038.PostgreSqlCredentialsAdoId=(?i)(?:username|user|uid|user id)\s*=\s*(?P<id>[^,;"'&\]\[<\s]{1,63})(?:[,;"'&\]\[<\s]|$)
+  $SEC101/038.PostgreSqlCredentialsAdoHost=(?i)(?:host|server)\s*=\s*(?P<host>[^,;:"'=|\(\)\]\[><\s]{3,63})(?:[,;:"'=|\(\)\]\[><\s]|$)
   $SEC101/038.PostgreSqlCredentialsAdoPort=(?i)port\s*=\s*(?P<port>[0-9]{1,5})(?:[^0-9]|$)
-  $SEC101/038.PostgreSqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^,;"'<\s\n]{8,128})(?:[,;"'<\s\n]|$)
-  $SEC101/038.PostgreSqlCredentialsAdoResource=(?i)(?:database|db|dbname)\s*=\s*(?P<resource>[^,;"'<\s\n]+)(?:[,;"'<\s\n]|$)
+  $SEC101/038.PostgreSqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^,;"'<\s]{8,128})(?:[,;"'<\s]|$)
+  $SEC101/038.PostgreSqlCredentialsAdoResource=(?i)(?:database|db|dbname)\s*=\s*(?P<resource>[^,;"'<\s]+)(?:[,;"'<\s]|$)
 
-  $SEC101/041.RabbitMqCredentials=(?i)amqps?:\/\/(?P<id>[^:]+):(?P<secret>[^@]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
+  $SEC101/041.RabbitMqCredentials=(?i)amqps?:\/\/(?P<id>[^:]+):(?P<secret>[^@\s]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
   $SEC101/043.NuGetPackageSourceCredentialsXml=(?i)(?P<host><\s*packageSources\s*>(?s).{0,500}?(?-s)<\\?\/packageSources\s*>)(?s).{0,200}?(?-s)[^\/](?P<secret><\s*packageSourceCredentials\s*>(?s).{0,500}?(?-s)<\\?\/packageSourceCredentials\s*>)
   $SEC101/044.NpmCredentialsAuth=(?si)registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s)(?:.{0,200})?_auth\s*=\s*(?P<secret>[^\s]+)
   $SEC101/044.NpmCredentialsUserPassword=(?si)(?:(?:(?:registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(?:username\s*=\s*(?P<id>[^\s]+)(?:$|\s))|(?:_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){3}

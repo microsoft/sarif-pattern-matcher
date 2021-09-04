@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 
 using FluentAssertions;
@@ -20,46 +21,62 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void SquarePatValidator_MockHttpTests()
         {
-            var testCases = new[]
+            const string pat = "abcd1234";
+            const string uri = "https://connect.squareup.com/v2/catalog/list";
+            string fingerprintText = $"[secret={pat}]";
+
+            using var requestWithPat = new HttpRequestMessage(HttpMethod.Get, uri);
+            requestWithPat.Headers.Authorization = new AuthenticationHeaderValue("Bearer", pat);
+
+            string unexpectedResponseCodeResponse = string.Empty;
+
+            var testCases = new HttpMockTestCase[]
             {
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing OK StatusCode",
-                    HttpStatusCode = HttpStatusCode.OK,
-                    HttpContent = (HttpContent)null,
+                    HttpStatusCodes = new List<HttpStatusCode>() { HttpStatusCode.OK },
+                    HttpContents = new List<HttpContent>() { null },
                     ExpectedValidationState = ValidationState.Authorized,
+                    HttpRequestMessages = new List<HttpRequestMessage>() { requestWithPat },
                     ExpectedMessage = string.Empty
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Unauthorized StatusCode",
-                    HttpStatusCode = HttpStatusCode.Unauthorized,
-                    HttpContent = (HttpContent)null,
+                    HttpStatusCodes = new List<HttpStatusCode>() { HttpStatusCode.Unauthorized },
+                    HttpContents = new List<HttpContent>() { null },
                     ExpectedValidationState = ValidationState.Unauthorized,
+                    HttpRequestMessages = new List<HttpRequestMessage>() { requestWithPat },
                     ExpectedMessage = string.Empty
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing NotFound StatusCode",
-                    HttpStatusCode = HttpStatusCode.NotFound,
-                    HttpContent = (HttpContent)null,
+                    HttpStatusCodes = new List<HttpStatusCode>() { HttpStatusCode.NotFound },
+                    HttpContents = new List<HttpContent>() { null },
                     ExpectedValidationState = ValidationState.Unknown,
+                    HttpRequestMessages = new List<HttpRequestMessage>() { requestWithPat },
                     ExpectedMessage = "An unexpected HTTP response code was received: 'NotFound'."
                 },
             };
 
-            const string fingerprintText = "[secret=secret]";
-
             var sb = new StringBuilder();
             var squarePatValidator = new SquarePatValidator();
-            foreach (var testCase in testCases)
+            var mockHandler = new HttpMockHelper();
+            foreach (HttpMockTestCase testCase in testCases)
             {
+                for (int i = 0; i < testCase.HttpStatusCodes.Count; i++)
+                {
+                    mockHandler.Mock(testCase.HttpRequestMessages[i], testCase.HttpStatusCodes[i], testCase.HttpContents[i]);
+                }
+
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
+                using var httpClient = new HttpClient(mockHandler);
                 squarePatValidator.SetHttpClient(httpClient);
 
                 ValidationState currentState = squarePatValidator.IsValidDynamic(ref fingerprint,
@@ -75,6 +92,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedMessage}' but found '{message}'.");
                 }
+                mockHandler.Clear();
             }
 
             sb.Length.Should().Be(0, sb.ToString());

@@ -13,3 +13,6 @@ amqp://user:password@host:1234/database4
 # This is invalid and should not be captured
 amqp://user:password@host:1234 /database5
 amqp://user:password@host:1234
+amqp://id:secret @host/resource
+amqp://id:secret
+@host/resource
