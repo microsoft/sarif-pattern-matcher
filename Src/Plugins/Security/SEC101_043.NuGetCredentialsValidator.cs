@@ -128,6 +128,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         return ReturnUnauthorizedAccess(ref message, asset: host, account: id);
                     }
 
+                    case HttpStatusCode.PaymentRequired:
+                    {
+                        return ReturnUnknownAuthorization(ref message, asset: host, account: id);
+                    }
+
                     default:
                     {
                         return ReturnUnexpectedResponseCode(ref message, responseWithCredentials.StatusCode, asset: host, account: id);
@@ -224,9 +229,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
+                using var emptyRequest = new HttpRequestMessage(HttpMethod.Get, uri);
+
                 // Making a request without a key.
                 using HttpResponseMessage responseWithoutSecret = httpClient
-                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
+                    .SendAsync(emptyRequest, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
                     .GetResult();
 
