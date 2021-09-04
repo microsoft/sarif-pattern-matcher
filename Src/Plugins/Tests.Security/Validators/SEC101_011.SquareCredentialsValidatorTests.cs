@@ -41,50 +41,83 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void SquareCredentialsValidator_MockHttpTests()
         {
-            var testCases = new[]
+            string id = "a";
+            string secret = "b";
+            const string codeForRequest = "123";
+            const string uri = "https://connect.squareup.com/oauth2/token";
+            string fingerprintText = $"[id={id}][secret={secret}]";
+
+            var requestParams = new Dictionary<string, string>()
             {
-                new
+                { "client_id", id },
+                { "code", codeForRequest },
+                { "client_secret", secret },
+                { "grant_type", "authorization_code" },
+            };
+
+            using var requestWithCredentials = new HttpRequestMessage(HttpMethod.Post, uri);
+            requestWithCredentials.Content = new FormUrlEncodedContent(requestParams);
+
+            string authorizedResponse = string.Empty;
+            string unauthorizedResponse = string.Empty;
+            string unexpectedResponseCodeResponse = string.Empty;
+
+            var testCases = new HttpMockTestCase[]
+            {
+                new HttpMockTestCase
                 {
                     Title = "Testing unexpected OK StatusCode",
-                    HttpStatusCode = HttpStatusCode.OK,
-                    HttpContent = (HttpContent)null,
-                    ExpectedValidationState = ValidationState.Unknown,
-                    ExpectedMessage = "An unexpected HTTP response code was received: 'OK'."
+                    HttpStatusCodes = new List<HttpStatusCode>() { HttpStatusCode.OK },
+                    HttpContents = new List<HttpContent>() { null },
+                    HttpRequestMessages = new List<HttpRequestMessage>() { requestWithCredentials },
+                    ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref unexpectedResponseCodeResponse, HttpStatusCode.OK),
+                    ExpectedMessage = unexpectedResponseCodeResponse,
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Valid credentials",
-                    HttpStatusCode = HttpStatusCode.Unauthorized,
-                    HttpContent = new StringContent("{\"message\": \"Authorization code not found for app [a]\",\"type\": \"service.not_authorized\"}",
+                    HttpStatusCodes = new List<HttpStatusCode>() { HttpStatusCode.Unauthorized },
+                    HttpContents = new List<HttpContent>() {
+                        new StringContent($"{{\"message\": \"Authorization code not found for app [{id}]\",\"type\": \"service.not_authorized\"}}",
                                                                   Encoding.UTF8,
                                                                   "application/json").As<HttpContent>(),
-                    ExpectedValidationState = ValidationState.Authorized,
-                    ExpectedMessage = "The compromised asset is 'a'."
+                    },
+                    HttpRequestMessages = new List<HttpRequestMessage>() { requestWithCredentials },
+                    ExpectedValidationState =  ValidatorBase.ReturnAuthorizedAccess(ref authorizedResponse, id),
+                    ExpectedMessage = authorizedResponse
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Invalid credentials",
-                    HttpStatusCode = HttpStatusCode.Unauthorized,
-                    HttpContent = new StringContent("{\n\"message\": \"Not Authorized\",\n\"type\": \"service.not_authorized\"\n}",
+                    HttpStatusCodes = new List<HttpStatusCode>() { HttpStatusCode.Unauthorized },
+                    HttpContents = new List<HttpContent>() {
+                        new StringContent("{\n\"message\": \"Not Authorized\",\n\"type\": \"service.not_authorized\"\n}",
                                                     Encoding.UTF8,
                                                     "application/json").As<HttpContent>(),
-                    ExpectedValidationState = ValidationState.Unauthorized,
-                    ExpectedMessage = "The provided secret is not authorized to access 'a'."
+                    },
+                    HttpRequestMessages = new List<HttpRequestMessage>() { requestWithCredentials },
+                    ExpectedValidationState = ValidatorBase.ReturnUnauthorizedAccess(ref unauthorizedResponse, id),
+                    ExpectedMessage = unauthorizedResponse,
                 },
             };
 
-            const string fingerprintText = "[id=a][secret=b]";
 
             var sb = new StringBuilder();
+            var mockHandler = new HttpMockHelper();
             var squareCredentialsValidator = new SquareCredentialsValidator();
-            foreach (var testCase in testCases)
+            foreach (HttpMockTestCase testCase in testCases)
             {
+                for (int i = 0; i < testCase.HttpStatusCodes.Count; i++)
+                {
+                    mockHandler.Mock(testCase.HttpRequestMessages[i], testCase.HttpStatusCodes[i], testCase.HttpContents[i]);
+                }
+
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
+                using var httpClient = new HttpClient(mockHandler);
                 squareCredentialsValidator.SetHttpClient(httpClient);
 
                 ValidationState currentState = squareCredentialsValidator.IsValidDynamic(ref fingerprint,
@@ -100,6 +133,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedMessage}' but found '{message}'.");
                 }
+
+                mockHandler.Clear();
             }
 
             sb.Length.Should().Be(0, sb.ToString());
