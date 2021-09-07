@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -331,6 +332,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             }
 
             return false;
+        }
+
+        private static string DecodeEscapedUnicode(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            // Finds substrings like \\u0022 (double quotes) and replaces them with the ASCII equivalent
+            return Regex.Replace(
+                value,
+                @"\\u(?<unicode>[a-zA-Z0-9]{4})",
+                match => ((char)int.Parse(match.Groups["unicode"].Value, NumberStyles.HexNumber)).ToString());
         }
     }
 }
