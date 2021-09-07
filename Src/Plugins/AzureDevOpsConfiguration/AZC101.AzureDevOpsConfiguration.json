@@ -3,27 +3,33 @@
   "ValidatorsAssemblyName": "AzureDevOpsConfiguration.dll",
   "Definitions": [
     {
-      "Id": "AZC101/240",
-      "Name": "DontMakeSecretsAvailableToForkedBuilds",
-      "Message": "For GitHub public repositories, it is possible that people from outside the organization can create forks and run builds on the forked repo. In such a case, if this setting is wrongly left enabled, outsiders can get access to build pipeline secrets that were meant to be internal.\r\nRecommendation: 1. Navigate to the build pipeline using resource link -->  2. Triggers --> 3. Pull request validation --> 4. Forks --> 5. Uncheck 'Make secrets available to builds of forks'.",
+      "Id": "AZC101",
+      "Name": "BuildDefinitionShouldBeSecure",
       "Level": "Error",
-      "Description": "Do not make secrets available to builds for fork of public repository.",
+      "Description": "Make sure build definitions in AzureDevOps are secure",
       "FileNameAllowRegex": "$BuildDefinitionFiles",
       "MatchExpressions": [
         {
+          "Id": "AZC101/240",
+          "Name": "BuildDefinitionShouldBeSecure/DontMakeSecretsAvailableToForkedBuilds",
+          "Message": "For GitHub public repositories, it is possible that people from outside the organization can create forks and run builds on the forked repo. In such a case, if this setting is wrongly left enabled, outsiders can get access to build pipeline secrets that were meant to be internal.\r\nRecommendation: 1. Navigate to the build pipeline using resource link -->  2. Triggers --> 3. Pull request validation --> 4. Forks --> 5. Uncheck 'Make secrets available to builds of forks'.",
+          "Description": "Do not make secrets available to builds for fork of public repository.",
           "IntrafileRegexes": [ "$AZC101.BuildDefinitionEntityType", "$AZC101/240.PullRequestTriggertype", "$AZC101/240.ForkedEnabled" ]
         }
       ]
     },
     {
-      "Id": "AZC102/150",
-      "Name": "AuthZDontUseClassicConnections",
-      "Message": "You should use Azure resource Manager type service connection as the ARM model provides several security enhancements such as: stronger access control (RBAC), better auditing, ARM-based deployment/governance, access to managed identities, access to key vault for secrets, AAD-based authentication, support for tags and resource groups for easier security management, etc.\r\nRecommendation: Delete the Azure Classic service connection and create a new service connection of type 'Azure resource Manager'(i.e., ARM based) scoped to a resource/resource group in subscription.",
+      "Id": "AZC102",
+      "Name": "ServiceConnectionShouldBeSecure",
       "Level": "Error",
-      "Description": "Do not use classic Azure service connections to access a subscription.",
+      "Description": "Make sure service connections in AzureDevOps are secure",
       "FileNameAllowRegex": "$ServiceConnectionFiles",
       "MatchExpressions": [
         {
+          "Id": "AZC102/150",
+          "Name": "ServiceConnectionShouldBeSecure/AuthZDontUseClassicConnections",
+          "Message": "You should use Azure resource Manager type service connection as the ARM model provides several security enhancements such as: stronger access control (RBAC), better auditing, ARM-based deployment/governance, access to managed identities, access to key vault for secrets, AAD-based authentication, support for tags and resource groups for easier security management, etc.\r\nRecommendation: Delete the Azure Classic service connection and create a new service connection of type 'Azure resource Manager'(i.e., ARM based) scoped to a resource/resource group in subscription.",
+          "Description": "Do not use classic Azure service connections to access a subscription.",
           "IntrafileRegexes": [ "$AZC102.ServiceConnectionEntityType", "$AZC102/150.AzureClassicType" ]
         }
       ]
