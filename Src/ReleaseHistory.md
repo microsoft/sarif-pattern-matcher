@@ -22,8 +22,8 @@
   `SEC101/036.MySqlCredential`, `SEC101/037.SqlCredentials`,
   `SEC101/038.PostgreSqlCredentials` won't accept spaces in `id` and `secret`.
   [#550](https://github.com/microsoft/sarif-pattern-matcher/pull/550)
-- FPC: Improving MongoDB regular expression removing hosts that contain `\s` or
-  `,` characters.
+- FPC: Eliminate whitespace and commas from MongoDB match candidates (and
+  resulting fingerprints).
   [#554](https://github.com/microsoft/sarif-pattern-matcher/pull/554)
 
 ## v1.5.0-alpha-0117-g136d47026e
