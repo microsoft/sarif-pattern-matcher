@@ -52,14 +52,14 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 1,
-                  "startColumn": 494,
-                  "endLine": 1,
-                  "endColumn": 822,
-                  "charOffset": 493,
-                  "charLength": 328,
+                  "startLine": 14,
+                  "startColumn": 2,
+                  "endLine": 21,
+                  "endColumn": 17,
+                  "charOffset": 553,
+                  "charLength": 354,
                   "snippet": {
-                    "text": "\"EtlEntity\":\"serviceendpoints\",\"EtlIngestDate\":\"2021-08-31T17:47:16.4417481Z\",\"EtlDiscoveryDate\":\"2021-08-31T17:47:16.1777943Z\",\"EtlIdentity\":\"kelewis@microsoft.com\",\"EtlRecordSha\":\"231f1d0ccebf1dbb0c20945d70f2b60693e6aa920e08e52eae120c3bfda9b215\",\"id\":\"1294582a-a772-4a6c-9994-c13739bbf94c\",\"name\":\"1ES-Gardener\",\"type\":\"azure\""
+                    "text": "\"EtlEntity\": \"serviceendpoints\",\r\n\t\"EtlIngestDate\": \"2021-08-31T17:47:16.4417481Z\",\r\n\t\"EtlDiscoveryDate\": \"2021-08-31T17:47:16.1777943Z\",\r\n\t\"EtlIdentity\": \"yy@testcompany.com\",\r\n\t\"EtlRecordSha\": \"231f1d0ccebf1dbb0c20945d70f2b60693e6aa412e08e52eae120c3bfda9b724\",\r\n\t\"id\": \"27843de2-2bea-45ab-b677-27ea718b557e\",\r\n\t\"name\": \"test-service\",\r\n\t\"type\": \"azure\""
                   }
                 }
               }
@@ -67,12 +67,12 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=5796244B619F1C8A824E0E109FDA434443B36C5E18E529D3E3A68DB270285EE1]",
-            "ValidationFingerprintHash/v1": "9a850c127c07dbdea1d3328953e3b592d5fe6ce973491acf5025b93fa44c33a0",
+            "ValidationFingerprint/v1": "[secret=E34B3A6FB186364738B59A87873EC3525EC61A1524E2314E11186769F2044AF8]",
+            "ValidationFingerprintHash/v1": "5e24f70a08b729db8a976f9196e4a6566d52d7ec1bdee5ef677e444dd2b54938",
             "AssetFingerprint/v2": "{}",
-            "ValidationFingerprint/v2": "{\"secret\":\"5796244B619F1C8A824E0E109FDA434443B36C5E18E529D3E3A68DB270285EE1\"}"
+            "ValidationFingerprint/v2": "{\"secret\":\"E34B3A6FB186364738B59A87873EC3525EC61A1524E2314E11186769F2044AF8\"}"
           },
-          "rank": 55.63
+          "rank": 53.81
         }
       ],
       "columnKind": "utf16CodeUnits"
