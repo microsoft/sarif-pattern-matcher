@@ -17,12 +17,12 @@
 
 # Common patterns for file allow and deny lists.
 #
-$BuildDefinitionFiles=(?i)(^https?:\/\/dev.azure.com).*(\/_apis\/build\/definitions\/)
-$ServiceConnectionFiles=(?i)(^https?:\/\/dev.azure.com).*(\/_apis\/contribution\/HierarchyQuery)
+$BuildDefinitionFiles=(?i)(^https?:\/\/dev.azure.com).*(\/_apis\/build\/definitions\/)|(azc101\.builddefinition\..*json$)
+$ServiceConnectionFiles=(?i)(^https?:\/\/dev.azure.com).*(\/_apis\/contribution\/HierarchyQuery)|(azc102\.serviceconnection\..*json$)
 
 $AZC101.BuildDefinitionEntityType=(?i)(?P<type>"EtlEntity"\s*:\s*"builddefinitions")
 $AZC102.ServiceConnectionEntityType=(?i)(?P<type>"EtlEntity"\s*:\s*"serviceendpoints")
 
 $AZC101/240.PullRequestTriggertype=(?i)(?P<triggertype>"triggerType"\s*:\s*"pullRequest")
-$AZC101/240.ForkedEnabled=(?i)(?P<fork>"forks"\s*:\s*{"enabled"\s*:\s*true\s*,\s*"allowSecrets"\s*:\s*true\s*})
+$AZC101/240.ForkedEnabled=(?i)(?P<fork>"forks"\s*:\s*{\s*"enabled"\s*:\s*true\s*,\s*"allowSecrets"\s*:\s*true\s*})
 $AZC102/150.AzureClassicType=(?i)(?P<sctype>"type"\s*:\s*"azure")

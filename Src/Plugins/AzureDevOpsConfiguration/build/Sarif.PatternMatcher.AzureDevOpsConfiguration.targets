@@ -4,6 +4,9 @@
     <JsonFiles Include="$(MSBuildThisFileDirectory)..\content\AZC*.json"></JsonFiles>
     <ConfigFile Include="$(MSBuildThisFileDirectory)..\content\AzureDevOpsConfiguration.SharedStrings.txt"></ConfigFile>
   </ItemGroup>
+  <PropertyGroup>
+    <PluginOutputPath>$(MSBuildThisFileDirectory)..\lib\netstandard2.0</PluginOutputPath>
+  </PropertyGroup>
 
   <Target Name="CopyUtilityScriptToProject" BeforeTargets="Build">
     <Message Text="Copying files" />
@@ -22,7 +25,7 @@
       DestinationFolder="$(OutputPath)" />
 
     <Copy
-      SourceFiles="$(MSBuildThisFileDirectory)..\lib\netstandard2.0\AzureDevOpsConfiguration.dll"
+      SourceFiles="$(PluginOutputPath)\AzureDevOpsConfiguration.dll"
       DestinationFolder="$(SolutionDir)\.spam\AzureDevOpsConfiguration\" />
   </Target>
 </Project>
