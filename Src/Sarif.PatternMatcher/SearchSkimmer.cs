@@ -454,24 +454,32 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
+            bool isMalformed = true;
             if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
             {
                 RunMatchExpressionForContentsRegex(binary64DecodedMatch, context, matchExpression);
-                return;
-            }
-
-            Debug.Assert(binary64DecodedMatch == null, "Decoded binary64 should be null");
-
-            if (matchExpression.IntrafileRegexes?.Count > 0 ||
-                matchExpression.SingleLineRegexes?.Count > 0)
-            {
-                RunMatchExpressionForSingleLineAndIntrafileRegexes(context, matchExpression);
-            }
-            else if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
-            {
-                RunMatchExpressionForFileNameRegex(context, matchExpression);
+                isMalformed = false;
             }
             else
+            {
+                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
+                {
+                    RunMatchExpressionForFileNameRegex(context, matchExpression);
+                    isMalformed = false;
+                }
+            }
+
+            if (binary64DecodedMatch == null)
+            {
+                if (matchExpression.IntrafileRegexes?.Count > 0 ||
+                    matchExpression.SingleLineRegexes?.Count > 0)
+                {
+                    RunMatchExpressionForSingleLineAndIntrafileRegexes(context, matchExpression);
+                    isMalformed = false;
+                }
+            }
+
+            if (isMalformed)
             {
                 throw new InvalidOperationException("Malformed expression contains no regexes.");
             }
