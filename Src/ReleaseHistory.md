@@ -18,12 +18,15 @@
 
 - FPC: Improving RabbitMQ regex (removing new lines and spaces) from secret.
   [#548](https://github.com/microsoft/sarif-pattern-matcher/pull/548)
-- FPC: Normalizing regular expressions (`\s\n` got replaced by `\s`). Rules 
+- FPC: Normalizing regular expressions (`\s\n` got replaced by `\s`). Rules
   `SEC101/036.MySqlCredential`, `SEC101/037.SqlCredentials`,
   `SEC101/038.PostgreSqlCredentials` won't accept spaces in `id` and `secret`.
   [#550](https://github.com/microsoft/sarif-pattern-matcher/pull/550)
 - PRF: Single match expression can run multiple regex types.
   [#553](https://github.com/microsoft/sarif-pattern-matcher/pull/553)
+- FPC: Eliminate whitespace and commas from MongoDB match candidates (and
+  resulting fingerprints).
+  [#554](https://github.com/microsoft/sarif-pattern-matcher/pull/554)
 
 ## v1.5.0-alpha-0117-g136d47026e
 
