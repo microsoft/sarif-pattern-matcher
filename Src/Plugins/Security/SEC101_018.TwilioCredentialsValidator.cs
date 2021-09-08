@@ -15,6 +15,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class TwilioCredentialsValidator : DynamicValidatorBase
     {
+        internal const string TestCredentialMessage = "Resource not accessible with Test Account Credentials";
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
@@ -75,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     {
                         string content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                         if (!string.IsNullOrEmpty(content)
-                            && content.IndexOf("Resource not accessible with Test Account Credentials", StringComparison.OrdinalIgnoreCase) != -1)
+                            && content.Contains(TestCredentialMessage))
                         {
                             resultLevelKind = new ResultLevelKind { Level = FailureLevel.Warning };
                             return ReturnAuthorizedAccess(ref message, asset: id);

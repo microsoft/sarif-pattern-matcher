@@ -54,13 +54,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     Title = "Testing Valid Test Credentials (Forbidden StatusCode)",
                     HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.Forbidden },
-                    HttpContents = new List<HttpContent> { new StringContent(@"
-{
+                    HttpContents = new List<HttpContent> { new StringContent($@"
+{{
     ""code"": 20008, 
-    ""message"": ""Resource not accessible with Test Account Credentials"", 
+    ""message"": ""{TwilioCredentialsValidator.TestCredentialMessage}"", 
     ""more_info"": ""https://www.twilio.com/docs/errors/20008"", 
     ""status"": 403
-}
+}}
 ") },
                     ExpectedValidationState = ValidatorBase.ReturnAuthorizedAccess(ref authorizedMessage, asset: id),
                     ExpectedMessage = authorizedMessage
