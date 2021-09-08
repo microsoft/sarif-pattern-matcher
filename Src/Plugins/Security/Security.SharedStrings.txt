@@ -90,7 +90,7 @@
   $SEC101/025.SendGridApiKey=(?:[^S]|^)(?P<secret>SG\.(?i)[0-9a-z\-_]{22}\.(?i)[0-9a-z\-_]{43})(?:[^0-9a-z\-_]|$)
   $SEC101/027.MailChimpApiKey=(?:[^0-9a-f]|^)(?P<secret>[0-9a-f]{32}-us[0-9]{12})
   $SEC101/029.AlibabaCloudCredentials=(?:[^L]|^)(?P<id>LTAI(?i)(?:[0-9a-z]{12}|[0-9a-z]{20}))(?:[^0-9a-z]|$)(?s).{0,50}(?-s)(?:[^\w]|^)(?P<secret>[\w]{30})(?:[^\w]|$)
-  $SEC101/033.MongoDbCredentials=(?i)mongodb(?:[^:]{0,50})?:\/\/(?P<id>[0-9a-z]+):(?P<secret>[^@\s]{1,200})@(?P<host>[^\/;"<]+)
+  $SEC101/033.MongoDbCredentials=(?i)mongodb(?:[^:]{0,50})?:\/\/(?P<id>[0-9a-z]+):(?P<secret>[^@\s]{1,200})@(?P<host>[^\/;"<\s,]+)
   $SEC101/035.CloudantCredentialsPython=(?si)cloudant\s*\(\s*"(?P<id>[\w-]+)"\s*\,\s*"(?P<secret>[\w]{64})"\s*\,\s*.{0,200}url=\s*"https:\/\/(?P<resource>[\w.-]+)\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsJson=(?si)apiKey"[^"]+"(?P<secret>[\w-]+)".{1,100}[^0-9a-z\.-](?P<id>[0-9a-z\.-]{32,44})\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsUrl=(?i)https:\/\/(?P<id>[^:]+):(?P<secret>[\w]{64}|[a-z]{24})@[\w-]+\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
