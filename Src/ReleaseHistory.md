@@ -18,6 +18,10 @@
 
 - FPC: Improving RabbitMQ regex (removing new lines and spaces) from secret.
   [#548](https://github.com/microsoft/sarif-pattern-matcher/pull/548)
+- FND: Improving `SEC101/018.TwilioCredentials` dynamic validation for test
+  credentials.
+  [#549](https://github.com/microsoft/sarif-pattern-matcher/pull/549)
+- FPC: Normalizing regular expressions (`\s\n` got replaced by `\s`). Rules 
 - FPC: Normalizing regular expressions (`\s\n` got replaced by `\s`). Rules
   `SEC101/036.MySqlCredential`, `SEC101/037.SqlCredentials`,
   `SEC101/038.PostgreSqlCredentials` won't accept spaces in `id` and `secret`.
