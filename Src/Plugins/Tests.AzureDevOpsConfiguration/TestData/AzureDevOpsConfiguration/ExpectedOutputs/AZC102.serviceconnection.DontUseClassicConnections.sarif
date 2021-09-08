@@ -1,0 +1,81 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "AZC102/150",
+              "name": "ServiceConnectionShouldBeSecure/AuthZDontUseClassicConnections",
+              "fullDescription": {
+                "text": "Do not use classic Azure service connections to access a subscription."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "You should use Azure resource Manager type service connection as the ARM model provides several security enhancements such as: stronger access control (RBAC), better auditing, ARM-based deployment/governance, access to managed identities, access to key vault for secrets, AAD-based authentication, support for tags and resource groups for easier security management, etc.\r\nRecommendation: Delete the Azure Classic service connection and create a new service connection of type 'Azure resource Manager'(i.e., ARM based) scoped to a resource/resource group in subscription."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "AZC102/150",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "id": "Default"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/AzureDevOpsConfiguration/Inputs/AZC102.serviceconnection.DontUseClassicConnections.json",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 494,
+                  "endLine": 1,
+                  "endColumn": 822,
+                  "charOffset": 493,
+                  "charLength": 328,
+                  "snippet": {
+                    "text": "\"EtlEntity\":\"serviceendpoints\",\"EtlIngestDate\":\"2021-08-31T17:47:16.4417481Z\",\"EtlDiscoveryDate\":\"2021-08-31T17:47:16.1777943Z\",\"EtlIdentity\":\"kelewis@microsoft.com\",\"EtlRecordSha\":\"231f1d0ccebf1dbb0c20945d70f2b60693e6aa920e08e52eae120c3bfda9b215\",\"id\":\"1294582a-a772-4a6c-9994-c13739bbf94c\",\"name\":\"1ES-Gardener\",\"type\":\"azure\""
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=5796244B619F1C8A824E0E109FDA434443B36C5E18E529D3E3A68DB270285EE1]",
+            "ValidationFingerprintHash/v1": "9a850c127c07dbdea1d3328953e3b592d5fe6ce973491acf5025b93fa44c33a0",
+            "AssetFingerprint/v2": "{}",
+            "ValidationFingerprint/v2": "{\"secret\":\"5796244B619F1C8A824E0E109FDA434443B36C5E18E529D3E3A68DB270285EE1\"}"
+          },
+          "rank": 55.63
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}
