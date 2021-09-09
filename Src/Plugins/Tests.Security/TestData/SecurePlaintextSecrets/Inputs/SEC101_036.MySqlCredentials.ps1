@@ -87,5 +87,8 @@ DATABASES['default'].update({
 if url.scheme == 'mysql':
     DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
 
-# This is a malformed and invalid ADO MySQL String. UiD should be in the form of <username>@<database-name>. This should be missed.
+# This is a malformed and invalid ADO MySQL string. UiD should be in the form of <username>@<database-name>. This should be missed.
 Server=some-database-name.mysql.database.azure.com; Port=3306; Database=catalog_db; Uid=username; Pwd=password_12; SslMode=Preferred;
+
+# This is a malformed and invalid ADO MySQL string. Uid contains invalid characters.
+Server=some-database-name.mysql.database.azure.com; Port=3306; Database=catalog_db; Uid=[username]; Pwd=password_12; SslMode=Preferred;
