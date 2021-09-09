@@ -466,7 +466,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     RunMatchExpressionForContentsRegex(binary64DecodedMatch, context, matchExpression);
                 }
-                else
+
+                if (singleIntraRegex)
                 {
                     RunMatchExpressionForSingleLineAndIntrafileRegexes(context, matchExpression);
                 }
