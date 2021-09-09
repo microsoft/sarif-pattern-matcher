@@ -282,9 +282,8 @@ namespace Microsoft.RE2.Managed
                             };
 
                             // Associate submatches with group names or indices.
-                            if (submatchIndex2GroupName.ContainsKey(submatchIndex))
+                            if (submatchIndex2GroupName.TryGetValue(submatchIndex, out string groupName))
                             {
-                                string groupName = submatchIndex2GroupName[submatchIndex];
                                 newSubmatchIndices[groupName] = flexMatch;
                             }
                             else

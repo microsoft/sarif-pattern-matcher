@@ -455,28 +455,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
             bool isMalformed = true;
-            if (!string.IsNullOrEmpty(matchExpression.ContentsRegex))
-            {
-                RunMatchExpressionForContentsRegex(binary64DecodedMatch, context, matchExpression);
-                isMalformed = false;
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
-                {
-                    RunMatchExpressionForFileNameRegex(context, matchExpression);
-                    isMalformed = false;
-                }
-            }
+            bool singleIntraRegex = matchExpression.IntrafileRegexes?.Count > 0 ||
+                matchExpression.SingleLineRegexes?.Count > 0;
+            bool simpleRegex = !string.IsNullOrEmpty(matchExpression.ContentsRegex);
+            bool contentRegex = simpleRegex || singleIntraRegex;
 
-            if (binary64DecodedMatch == null)
+            if (contentRegex)
             {
-                if (matchExpression.IntrafileRegexes?.Count > 0 ||
-                    matchExpression.SingleLineRegexes?.Count > 0)
+                if (simpleRegex)
+                {
+                    RunMatchExpressionForContentsRegex(binary64DecodedMatch, context, matchExpression);
+                }
+                else
                 {
                     RunMatchExpressionForSingleLineAndIntrafileRegexes(context, matchExpression);
-                    isMalformed = false;
                 }
+
+                isMalformed = false;
+            }
+            else if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
+            {
+                // This should only happen when we don't have any content regex (simple, intra, single)
+                // and we are just looking for files with certain patterns.
+                RunMatchExpressionForFileNameRegex(context, matchExpression);
+                isMalformed = false;
             }
 
             if (isMalformed)
