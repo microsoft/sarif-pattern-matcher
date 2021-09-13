@@ -99,7 +99,7 @@
   $SEC101/036.MySqlCredentialsAdoHost=(?i)server\s*=\s*(tcp:)?(?P<host>[^,;"'=|\(\)\]\[><\s]+)(?:[,;"'=|\(\)\]\[><\s]|$)
   $SEC101/036.MySqlCredentialsAdoPort=(?i)port\s*=\s*(?P<port>[0-9]{4,5})(?:[^0-9]|$)
   $SEC101/036.MySqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^;"<'\s]{8,128})(?:[;"<'\s]|$)
-  $SEC101/036.MySqlCredentialsAdoResource=(?i)database\s*=\s*(?P<resource>[^;"]{8,128})(?:[;"]|$)
+  $SEC101/036.MySqlCredentialsAdoResource=(?i)database\s*=\s*(?P<resource>[^,;"'=|&\]\[><\s]{8,128})(?:[,;"'=|&\]\[><\s]|$)
   
   $SEC101/036.MySqlCredentialsPlainJdbc=(?:jdbc:mysql:\/\/(?P<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?P<url>[^,(?:]+),\s*"(?P<id>[\w@-]{1,200})",\s*"(?P<secret>[^"';<>=]{7,200})"
   
@@ -121,7 +121,7 @@
   $SEC101/038.PostgreSqlCredentialsAdoHost=(?i)(?:host|server)\s*=\s*(?P<host>[^,;:"'=|\(\)\]\[><\s]{3,63})(?:[,;:"'=|\(\)\]\[><\s]|$)
   $SEC101/038.PostgreSqlCredentialsAdoPort=(?i)port\s*=\s*(?P<port>[0-9]{1,5})(?:[^0-9]|$)
   $SEC101/038.PostgreSqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^,;"'<\s]{8,128})(?:[,;"'<\s]|$)
-  $SEC101/038.PostgreSqlCredentialsAdoResource=(?i)(?:database|db|dbname)\s*=\s*(?P<resource>[^,;"'<\s]+)(?:[,;"'<\s]|$)
+  $SEC101/038.PostgreSqlCredentialsAdoResource=(?i)(?:database|db|dbname)\s*=\s*(?P<resource>[^,;"'=|&\]\[><\s]+)(?:[,;"'=|&\]\[><\s]|$)
 
   $SEC101/041.RabbitMqCredentials=(?i)amqps?:\/\/(?P<id>[^:"]+):(?P<secret>[^@\s]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
   $SEC101/043.NuGetPackageSourceCredentialsXml=(?i)(?P<host><\s*packageSources\s*>(?s).{0,500}?(?-s)<\\?\/packageSources\s*>)(?s).{0,200}?(?-s)[^\/](?P<secret><\s*packageSourceCredentials\s*>(?s).{0,500}?(?-s)<\\?\/packageSourceCredentials\s*>)
