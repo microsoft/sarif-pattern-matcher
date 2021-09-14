@@ -16,3 +16,4 @@ amqp://user:password@host:1234
 amqp://id:secret @host/resource
 amqp://id:secret
 @host/resource
+amqp://test":test@test/test

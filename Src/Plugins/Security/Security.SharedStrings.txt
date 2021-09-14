@@ -95,11 +95,11 @@
   $SEC101/035.CloudantCredentialsJson=(?si)apiKey"[^"]+"(?P<secret>[\w-]+)".{1,100}[^0-9a-z\.-](?P<id>[0-9a-z\.-]{32,44})\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsUrl=(?i)https:\/\/(?P<id>[^:]+):(?P<secret>[\w]{64}|[a-z]{24})@[\w-]+\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   
-  $SEC101/036.MySqlCredentialsAdoId=(?i)(?:user|user id|uid)\s*=\s*(?P<id>[^;"<'\s]+)(?:[;"<'\s]|$)
+  $SEC101/036.MySqlCredentialsAdoId=(?i)(?:user|user id|uid)\s*=\s*(?P<id>[^,;"'=|&\]\[><\s]+)(?:[,;"'=|&\]\[><\s]|$)
   $SEC101/036.MySqlCredentialsAdoHost=(?i)server\s*=\s*(tcp:)?(?P<host>[^,;"'=|\(\)\]\[><\s]+)(?:[,;"'=|\(\)\]\[><\s]|$)
   $SEC101/036.MySqlCredentialsAdoPort=(?i)port\s*=\s*(?P<port>[0-9]{4,5})(?:[^0-9]|$)
   $SEC101/036.MySqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^;"<'\s]{8,128})(?:[;"<'\s]|$)
-  $SEC101/036.MySqlCredentialsAdoResource=(?i)database\s*=\s*(?P<resource>[^;"]{8,128})(?:[;"]|$)
+  $SEC101/036.MySqlCredentialsAdoResource=(?i)database\s*=\s*(?P<resource>[^,;"'=|&\]\[><\s]{8,128})(?:[,;"'=|&\]\[><\s]|$)
   
   $SEC101/036.MySqlCredentialsPlainJdbc=(?:jdbc:mysql:\/\/(?P<host>[\w.:-]{1,131})?(?s).{1,200}(?-s))?DriverManager\.getConnection\(\s*(?P<url>[^,(?:]+),\s*"(?P<id>[\w@-]{1,200})",\s*"(?P<secret>[^"';<>=]{7,200})"
   
@@ -117,13 +117,13 @@
 
   $SEC101/037.SqlCredentialsPhp=(?i)sqlsrv:server\s*=\s*(tcp:)?(?P<host>[^,;"<]+)(?:,(?P<port>[0-9]{4,5}))?;\s*Database\s*=\s*(?P<resource>[^;"<>*%&:\/?\s]+)",\s*"(?P<id>[^"]+)",\s*"(?P<secret>[^"]+)"
   
-  $SEC101/038.PostgreSqlCredentialsAdoId=(?i)(?:username|user|uid|user id)\s*=\s*(?P<id>[^,;"'&\]\[<\s]{1,63})(?:[,;"'&\]\[<\s]|$)
+  $SEC101/038.PostgreSqlCredentialsAdoId=(?i)(?:username|user|uid|user id)\s*=\s*(?P<id>[^,;"'=|&\]\[><\s]{1,63})(?:[,;"'=|&\]\[><\s]|$)
   $SEC101/038.PostgreSqlCredentialsAdoHost=(?i)(?:host|server)\s*=\s*(?P<host>[^,;:"'=|\(\)\]\[><\s]{3,63})(?:[,;:"'=|\(\)\]\[><\s]|$)
   $SEC101/038.PostgreSqlCredentialsAdoPort=(?i)port\s*=\s*(?P<port>[0-9]{1,5})(?:[^0-9]|$)
   $SEC101/038.PostgreSqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^,;"'<\s]{8,128})(?:[,;"'<\s]|$)
-  $SEC101/038.PostgreSqlCredentialsAdoResource=(?i)(?:database|db|dbname)\s*=\s*(?P<resource>[^,;"'<\s]+)(?:[,;"'<\s]|$)
+  $SEC101/038.PostgreSqlCredentialsAdoResource=(?i)(?:database|db|dbname)\s*=\s*(?P<resource>[^,;"'=|&\]\[><\s]+)(?:[,;"'=|&\]\[><\s]|$)
 
-  $SEC101/041.RabbitMqCredentials=(?i)amqps?:\/\/(?P<id>[^:]+):(?P<secret>[^@\s]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
+  $SEC101/041.RabbitMqCredentials=(?i)amqps?:\/\/(?P<id>[^:"]+):(?P<secret>[^@\s]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
   $SEC101/043.NuGetPackageSourceCredentialsXml=(?i)(?P<host><\s*packageSources\s*>(?s).{0,500}?(?-s)<\\?\/packageSources\s*>)(?s).{0,200}?(?-s)[^\/](?P<secret><\s*packageSourceCredentials\s*>(?s).{0,500}?(?-s)<\\?\/packageSourceCredentials\s*>)
   $SEC101/044.NpmCredentialsAuth=(?si)registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s)(?:.{0,200})?_auth\s*=\s*(?P<secret>[^\s]+)
   $SEC101/044.NpmCredentialsUserPassword=(?si)(?:(?:(?:registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(?:username\s*=\s*(?P<id>[^\s]+)(?:$|\s))|(?:_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){3}
