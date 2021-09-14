@@ -34,7 +34,8 @@
   [#554](https://github.com/microsoft/sarif-pattern-matcher/pull/554)
 - FPC: Improving regular expressions for rules `SEC101/036.MySqlCredentials`,
   `SEC101/038.PostgreSqlCredentials`, and `SEC101/041.RabbitMqCredentials`
-  removing invalid characters from `Id` and `Resource`.
+  removing invalid characters (`,`, `=`, `|`, `&`, `[`, `]`, `>`) from `Id` and
+  `Resource`.
   [#555](https://github.com/microsoft/sarif-pattern-matcher/pull/555)
 
 ## v1.5.0-alpha-0117-g136d47026e
