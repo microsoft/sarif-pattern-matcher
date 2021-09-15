@@ -2,6 +2,7 @@
 
 ## Definitions
 
+- NR => New rule
 - SDK => SDK work
 - PRF => performance work
 - FCR => fingerprint change or refactor
@@ -15,7 +16,7 @@
 - UER => eliminate unhandled exceptions in rules
 - UEE => eliminate unhandled exceptions in engine
 
-## Unreleased
+## *Unreleased*
 
 - FPC: Improving RabbitMQ regex (removing new lines and spaces) from secret.
   [#548](https://github.com/microsoft/sarif-pattern-matcher/pull/548)
@@ -38,7 +39,7 @@
   `Resource`.
   [#555](https://github.com/microsoft/sarif-pattern-matcher/pull/555)
 
-## v1.5.0-alpha-0117-g136d47026e
+## *v1.5.0-alpha-0117-g136d47026e*
 
 - Plugin Improvement: Required properties will throw `KeyNotFoundException` if
   they do not exist.
@@ -53,14 +54,54 @@
 - UER: Added a check for PostgreSql instances that are not reachable from
   external networks, reducing total unhandled exceptions.
   [#545](https://github.com/microsoft/sarif-pattern-matcher/pull/545)
+  
+## *v1.5.0-alpha-0109-gf687e5e98a*
 
-## v1.5.0-alpha-0109-gf687e5e98a
-
+- NR: Adding CratesApiKey rule with dynamic validation.
+  [#531](https://github.com/microsoft/sarif-pattern-matcher/pull/531)
 - Replacing `\b` to the correct border regular expression reducing false
   positives. [#533](https://github.com/microsoft/sarif-pattern-matcher/pull/533)
 - Tool Improvement: Refactoring `ValidatorBase` in `StaticValidatorBase` and
   `DynamicValidatorBase`.
   [#534](https://github.com/microsoft/sarif-pattern-matcher/pull/534)
+
+## *v1.5.0-alpha-0100-g6ee5829558*
+
+- [6ee5829](https://github.com/microsoft/sarif-pattern-matcher/commit/6ee5829) Adding tests for NPM rule (#525)
+- [640f7f6](https://github.com/microsoft/sarif-pattern-matcher/commit/640f7f6) Making HttpClient static again when not using in tests (#526)
+- [4ca1e08](https://github.com/microsoft/sarif-pattern-matcher/commit/4ca1e08) Create Mock Http tests for Slack Tokens (#524)
+- [e33d3ca](https://github.com/microsoft/sarif-pattern-matcher/commit/e33d3ca) Add mock http calls to DiscordValidatorTests (#523)
+- [7b09519](https://github.com/microsoft/sarif-pattern-matcher/commit/7b09519) Enabling multiple threads for testing (#522)
+- [f4bf0fa](https://github.com/microsoft/sarif-pattern-matcher/commit/f4bf0fa) Cleaning httpclient after test (#521)
+- [9466ea6](https://github.com/microsoft/sarif-pattern-matcher/commit/9466ea6) Fixing collection name
+- [358fef0](https://github.com/microsoft/sarif-pattern-matcher/commit/358fef0) Updating MockHelper and CommonAssemblyInfo (#520)
+- [d7da9f5](https://github.com/microsoft/sarif-pattern-matcher/commit/d7da9f5) Crc helpers (#518)
+- [285b41a](https://github.com/microsoft/sarif-pattern-matcher/commit/285b41a) Enabling GitHubAppCredentials dynamic validator (#516)
+- [575a568](https://github.com/microsoft/sarif-pattern-matcher/commit/575a568) Rename CreateHttpClient to CreateOrUseCachedHttpClient (#517)
+- [06ff25f](https://github.com/microsoft/sarif-pattern-matcher/commit/06ff25f) Add Square Credentials Dynamic Validator (#515)
+- [6e9a22f](https://github.com/microsoft/sarif-pattern-matcher/commit/6e9a22f) Nuget refinement (#514)
+- [23dc3fe](https://github.com/microsoft/sarif-pattern-matcher/commit/23dc3fe) Improving exception handling for Crypto rule (#513)
+
+## *v1.5.0-alpha-0086-gfe5f68dd32*
+
+- [fe5f68d](https://github.com/microsoft/sarif-pattern-matcher/commit/fe5f68d) Updating release notes and submodules (#511)
+- [4cab00f](https://github.com/microsoft/sarif-pattern-matcher/commit/4cab00f) Test StripeKey should be warning (#510)
+- [6874534](https://github.com/microsoft/sarif-pattern-matcher/commit/6874534) Fixing wrong resultlevelkind in cache (#509)
+- [b0a590e](https://github.com/microsoft/sarif-pattern-matcher/commit/b0a590e) Adding AzureHosts to SqlCredentials (#508)
+- [d2e8627](https://github.com/microsoft/sarif-pattern-matcher/commit/d2e8627) Removing false-positives from NugetCredential validator (#506)
+- [1ee9698](https://github.com/microsoft/sarif-pattern-matcher/commit/1ee9698) Fix PostgreSQL to properly handle Azure hosts. (#507)
+- [c69ae7a](https://github.com/microsoft/sarif-pattern-matcher/commit/c69ae7a) Fix MySQL to properly handle Azure hosts. (#505)
+- [f161728](https://github.com/microsoft/sarif-pattern-matcher/commit/f161728) ValidationResult should always point to secret region (#504)
+- [3d10479](https://github.com/microsoft/sarif-pattern-matcher/commit/3d10479) Improving docs (#503)
+- [35f2f12](https://github.com/microsoft/sarif-pattern-matcher/commit/35f2f12) Added Validator for Discord API credentials (#501)
+- [bfaf73f](https://github.com/microsoft/sarif-pattern-matcher/commit/bfaf73f) Updating crearting plugin docs (#502)
+- [00d0792](https://github.com/microsoft/sarif-pattern-matcher/commit/00d0792) Move all regexes to same layout (#498)
+- [70093ed](https://github.com/microsoft/sarif-pattern-matcher/commit/70093ed) Adding security policy (#500)
+- [8d0596f](https://github.com/microsoft/sarif-pattern-matcher/commit/8d0596f) SqlCredential - Separating port from host (#499)
+- [43d9847](https://github.com/microsoft/sarif-pattern-matcher/commit/43d9847) HelpUri should be configurable (#497)
+- [7982b7f](https://github.com/microsoft/sarif-pattern-matcher/commit/7982b7f) Improving MySql and PostgreSql validator (#496)
+- [3481bcf](https://github.com/microsoft/sarif-pattern-matcher/commit/3481bcf) Improving postgres regex
+- [c6c3624](https://github.com/microsoft/sarif-pattern-matcher/commit/c6c3624) Fixing ArgumentException during ValidatingVisitor analysis (#495)
 
 ## *v1.5.0-alpha-0068-g5d32a6446f*
 
@@ -82,7 +123,8 @@
 ## *v1.5.0-alpha-0063-g9868382c12*
 
 - [9868382](https://github.com/microsoft/sarif-pattern-matcher/commit/9868382) Fixing AssetFingerprint when used in ValidatingVisitor (#489)
-- [6f00a60](https://github.com/microsoft/sarif-pattern-matcher/commit/6f00a60) Provide alternate JSON fingerprint (#488)- [b9b42ec](https://github.com/microsoft/sarif-pattern-matcher/commit/b9b42ec) Adding deprecated name to sarif (#485)
+- [6f00a60](https://github.com/microsoft/sarif-pattern-matcher/commit/6f00a60) Provide alternate JSON fingerprint (#488)
+- [b9b42ec](https://github.com/microsoft/sarif-pattern-matcher/commit/b9b42ec) Adding deprecated name to sarif (#485)
 - [53013a8](https://github.com/microsoft/sarif-pattern-matcher/commit/53013a8) Preventing new dictionary allocation (#486)
 - [36580c4](https://github.com/microsoft/sarif-pattern-matcher/commit/36580c4) Fixing shared properties (#484)
 
@@ -96,7 +138,8 @@
 
 ## *v1.5.0-alpha-0053-gd852f2a085*
 
-- [d852f2a](https://github.com/microsoft/sarif-pattern-matcher/commit/d852f2a) Fixing analyze database conversion (#478)- [02a61d8](https://github.com/microsoft/sarif-pattern-matcher/commit/02a61d8) Renaming connectionString rules (#477)
+- [d852f2a](https://github.com/microsoft/sarif-pattern-matcher/commit/d852f2a) Fixing analyze database conversion (#478)
+- [02a61d8](https://github.com/microsoft/sarif-pattern-matcher/commit/02a61d8) Renaming connectionString rules (#477)
 
 ## *v1.5.0-alpha-0051-ga2d0d590dc*
 
