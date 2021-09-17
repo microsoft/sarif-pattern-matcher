@@ -35,43 +35,60 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             string fingerprintText = $"[host={host}][id={id}][secret={secret}]";
 
+            var authorizedResponse = new HttpResponseMessage(HttpStatusCode.OK);
+            var notFoundResponse = new HttpResponseMessage(HttpStatusCode.NotFound);
+            var unauthorizedResponse = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+
+            string authorizedMessage = string.Empty, unauthorizedMessage = string.Empty, unexpectedMessage = string.Empty;
+
             var testCases = new HttpMockTestCase[]
             {
                 new HttpMockTestCase
                 {
-                    HttpContents = new List<HttpContent>{ null },
-                    HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.OK },
-                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
-                    ExpectedMessage = string.Empty,
                     Title = "Endpoint does not require credential",
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
+                    HttpResponseMessages = new List<HttpResponseMessage>{ authorizedResponse },
+                    ExpectedMessage = string.Empty,
                     ExpectedValidationState = ValidationState.NoMatch,
                 },
                 new HttpMockTestCase
                 {
-                    HttpContents = new List<HttpContent>{ null, null },
-                    HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.Unauthorized, HttpStatusCode.OK },
-                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
-                    ExpectedMessage = $"The '{id}' account is compromised for '{host}'.",
                     Title = "Credential is valid",
-                    ExpectedValidationState = ValidationState.Authorized,
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
+                    HttpResponseMessages = new List<HttpResponseMessage>
+                    {
+                        unauthorizedResponse,
+                        authorizedResponse
+                    },
+                    ExpectedValidationState = ValidatorBase.ReturnAuthorizedAccess(ref authorizedMessage, asset: host, account: id),
+                    ExpectedMessage = authorizedMessage,
                 },
                 new HttpMockTestCase
                 {
-                    HttpContents = new List<HttpContent>{ null, null },
-                    HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.Unauthorized, HttpStatusCode.Unauthorized },
-                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
-                    ExpectedMessage = $"The provided '{id}' account secret is not authorized to access '{host}'.",
                     Title = "Credential is invalid",
-                    ExpectedValidationState = ValidationState.Unauthorized,
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
+                    HttpResponseMessages = new List<HttpResponseMessage>
+                    {
+                        unauthorizedResponse,
+                        unauthorizedResponse
+                    },
+                    ExpectedValidationState = ValidatorBase.ReturnUnauthorizedAccess(ref unauthorizedMessage, asset: host, account: id),
+                    ExpectedMessage = unauthorizedMessage,
                 },
                 new HttpMockTestCase
                 {
-                    HttpContents = new List<HttpContent>{ null, null },
-                    HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.Unauthorized, HttpStatusCode.NotFound },
-                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
-                    ExpectedMessage = $"An unexpected HTTP response code was received from '{id}' account on '{host}': NotFound.",
                     Title = "Unexpected NotFound StatusCode",
-                    ExpectedValidationState = ValidationState.Unknown,
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
+                    HttpResponseMessages = new List<HttpResponseMessage>
+                    {
+                        unauthorizedResponse,
+                        notFoundResponse
+                    },
+                    ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref unexpectedMessage,
+                                                                                         HttpStatusCode.NotFound,
+                                                                                         asset: host,
+                                                                                         account: id),
+                    ExpectedMessage = unexpectedMessage,
                 },
             };
 
@@ -80,9 +97,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var npmCredentialsValidator = new NpmCredentialsValidator();
             foreach (HttpMockTestCase testCase in testCases)
             {
-                for (int i = 0; i < testCase.HttpStatusCodes.Count; i++)
+                for (int i = 0; i < testCase.HttpRequestMessages.Count; i++)
                 {
-                    mockHandler.Mock(testCase.HttpRequestMessages[i], testCase.HttpStatusCodes[i], testCase.HttpContents[i]);
+                    mockHandler.Mock(testCase.HttpRequestMessages[i], testCase.HttpResponseMessages[i]);
                 }
 
                 string message = string.Empty;

@@ -102,10 +102,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
         public string Title { get; set; }
 
         // Inputs
-        public List<HttpContent> HttpContents { get; set; }
-        public List<HttpStatusCode> HttpStatusCodes { get; set; }
-        public List<HttpRequestMessage> HttpRequestMessages { get; set; }
-        public List<HttpResponseMessage> HttpResponseMessages { get; set; }
+        public IList<HttpContent> HttpContents { get; set; }
+        public IList<HttpStatusCode> HttpStatusCodes { get; set; }
+        public IList<HttpRequestMessage> HttpRequestMessages { get; set; }
+        public IList<HttpResponseMessage> HttpResponseMessages { get; set; }
 
         // Expected Outputs
         public string ExpectedMessage { get; set; }
