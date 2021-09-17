@@ -38,6 +38,8 @@
   removing invalid characters (`,`, `=`, `|`, `&`, `[`, `]`, `>`) from `Id` and
   `Resource`.
   [#555](https://github.com/microsoft/sarif-pattern-matcher/pull/555)
+- SDK: Expanding `HttpMockHelper` to be able to mock `HttpResponseMessage`.
+  [#557](https://github.com/microsoft/sarif-pattern-matcher/pull/557)
 
 ## *v1.5.0-alpha-0117-g136d47026e*
 
