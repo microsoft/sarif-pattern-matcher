@@ -39,10 +39,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var notFoundResponse = new HttpResponseMessage(HttpStatusCode.NotFound);
             var unauthorizedResponse = new HttpResponseMessage(HttpStatusCode.Unauthorized);
 
-            string authorizedMessage = string.Empty, unauthorizedMessage = string.Empty, unexpectedMessage = string.Empty;
+            string authorizedMessage = null, unauthorizedMessage = null, unexpectedMessage = null, exceptionMessage = null;
 
             var testCases = new HttpMockTestCase[]
             {
+                new HttpMockTestCase
+                {
+                    Title = "HttpClient throwing NullReferenceException",
+                    HttpRequestMessages = new List<HttpRequestMessage>{ null },
+                    HttpResponseMessages = new List<HttpResponseMessage>{ null },
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref exceptionMessage,
+                                                                                     new NullReferenceException(),
+                                                                                     asset: host,
+                                                                                     account: id),
+                    ExpectedMessage = exceptionMessage,
+                },
                 new HttpMockTestCase
                 {
                     Title = "Endpoint does not require credential",
