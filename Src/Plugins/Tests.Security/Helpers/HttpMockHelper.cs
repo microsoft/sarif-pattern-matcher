@@ -18,12 +18,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
 {
     public class HttpMockHelper : DelegatingHandler
     {
-        private readonly List<Tuple<HttpRequestMessage, HttpStatusCode, HttpContent>> _fakeResponses =
-            new List<Tuple<HttpRequestMessage, HttpStatusCode, HttpContent>>();
+        private readonly List<Tuple<HttpRequestMessage, HttpResponseMessage>> _fakeResponses =
+            new List<Tuple<HttpRequestMessage, HttpResponseMessage>>();
 
         public void Mock(HttpRequestMessage httpRequestMessage, HttpStatusCode httpStatusCode, HttpContent httpContent)
         {
-            _fakeResponses.Add(new Tuple<HttpRequestMessage, HttpStatusCode, HttpContent>(httpRequestMessage, httpStatusCode, httpContent));
+            _fakeResponses.Add(new Tuple<HttpRequestMessage, HttpResponseMessage>(
+                httpRequestMessage,
+                new HttpResponseMessage(httpStatusCode) { RequestMessage = httpRequestMessage, Content = httpContent }));
+        }
+
+        public void Mock(HttpRequestMessage httpRequestMessage, HttpResponseMessage httpResponseMessage)
+        {
+            _fakeResponses.Add(new Tuple<HttpRequestMessage, HttpResponseMessage>(
+                httpRequestMessage,
+                httpResponseMessage));
         }
 
         public void Clear()
@@ -45,7 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
             return mockMessageHandler.Object;
         }
 
-        public bool CompareHeaders(HttpRequestHeaders headers1, HttpRequestHeaders headers2)
+        public static bool CompareHeaders(HttpRequestHeaders headers1, HttpRequestHeaders headers2)
         {
             foreach (KeyValuePair<string, IEnumerable<string>> header in headers1)
             {
@@ -69,7 +78,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            Tuple<HttpRequestMessage, HttpStatusCode, HttpContent> fakeResponse;
+            Tuple<HttpRequestMessage, HttpResponseMessage> fakeResponse;
 
             if (request.Headers.IsEmptyEnumerable())
             {
@@ -84,12 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
                     && CompareHeaders(request.Headers, fr.Item1.Headers));
             }
 
-            return Task.FromResult(
-                new HttpResponseMessage(fakeResponse.Item2)
-                {
-                    RequestMessage = request,
-                    Content = fakeResponse.Item3
-                });
+            return Task.FromResult(fakeResponse.Item2);
         }
     }
 
@@ -101,6 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
         public List<HttpContent> HttpContents { get; set; }
         public List<HttpStatusCode> HttpStatusCodes { get; set; }
         public List<HttpRequestMessage> HttpRequestMessages { get; set; }
+        public List<HttpResponseMessage> HttpResponseMessages { get; set; }
 
         // Expected Outputs
         public string ExpectedMessage { get; set; }
