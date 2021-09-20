@@ -14,10 +14,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class FacebookAppCredentialsValidator : DynamicValidatorBase
     {
+        internal const string OAuthUri = "https://graph.facebook.com/oauth/access_token?client_id={0}&client_secret={1}&grant_type=client_credentials";
+        internal const string CreatorUri = "https://graph.facebook.com/{0}?access_token={1}&fields=creator_uid";
+        internal const string AccountInformationUri = "https://graph.facebook.com/{0}?access_token={1}";
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetValue("id", out FlexMatch id) ||
-                !groups.TryGetValue("secret", out FlexMatch secret))
+            FlexMatch id = groups["id"];
+            FlexMatch secret = groups["secret"];
+
+            // It is highly likely we do not have a key if we can't
+            // find at least one letter and digit within the pattern.
+            if (!ContainsDigitAndChar(secret.Value))
             {
                 return ValidationResult.CreateNoMatch();
             }
@@ -45,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string secret = fingerprint.Secret;
 
             ValidationState state = RetrieveInformation(
-                $"https://graph.facebook.com/oauth/access_token?client_id={id}&client_secret={secret}&grant_type=client_credentials",
+                string.Format(OAuthUri, id, secret),
                 id,
                 ref message,
                 out AccessTokenObject obj);
@@ -61,7 +69,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private ValidationState CheckInformation(string id, string accessToken, ref string message)
         {
             ValidationState state = RetrieveInformation(
-                $"https://graph.facebook.com/{id}?access_token={accessToken}&fields=creator_uid",
+                string.Format(CreatorUri, id, accessToken),
                 id,
                 ref message,
                 out CreatorObject obj);
@@ -77,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private ValidationState RetrieveAccountInformation(string id, string creatorUid, string accessToken, ref string message)
         {
             ValidationState state = RetrieveInformation(
-                $"https://graph.facebook.com/{creatorUid}?access_token={accessToken}",
+                string.Format(AccountInformationUri, creatorUid, accessToken),
                 id,
                 ref message,
                 out AccountObject obj);
@@ -97,7 +105,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                using HttpResponseMessage response = httpClient.GetAsync(url).GetAwaiter().GetResult();
+                using var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+                using HttpResponseMessage response = httpClient
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+                    .GetAwaiter()
+                    .GetResult();
 
                 switch (response.StatusCode)
                 {
@@ -135,7 +148,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
         }
 
-        private class AccessTokenObject
+        internal class AccessTokenObject
         {
             [JsonProperty("access_token")]
             public string AccessToken { get; set; }
@@ -144,7 +157,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             public string TokenType { get; set; }
         }
 
-        private class CreatorObject
+        internal class CreatorObject
         {
             [JsonProperty("creator_uid")]
             public string CreatorUid { get; set; }
@@ -153,7 +166,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             public string Id { get; set; }
         }
 
-        private class AccountObject
+        internal class AccountObject
         {
             [JsonProperty("name")]
             public string Name { get; set; }
