@@ -314,9 +314,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // We will only attempt to resolve an assembly a single time
             // to avoid re-entrance in cases where our logic below fails
             string assemblyName = args.Name.Split(',')[0];
-            if (this._resolvedNames.ContainsKey(assemblyName))
+            if (this._resolvedNames.TryGetValue(assemblyName, out resolved))
             {
-                return this._resolvedNames[assemblyName];
+                return resolved;
             }
 
             AppDomain currentDomain = AppDomain.CurrentDomain;
@@ -358,7 +358,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // saying that it could not load the file.
                     resolved = Assembly.Load(_fileSystem.FileReadAllBytes(presumedAssemblyPath));
 
-                    this._resolvedNames.Add(assemblyName, resolved);
+                    this._resolvedNames[assemblyName] = resolved;
                 }
                 catch (IOException) { }
                 catch (TypeLoadException) { }
