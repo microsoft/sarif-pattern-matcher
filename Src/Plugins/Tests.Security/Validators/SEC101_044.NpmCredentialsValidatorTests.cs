@@ -17,6 +17,9 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/044.NpmCredentialsValidator
+    /// </summary>
     public class NpmCredentialsValidatorTests
     {
         [Fact]
@@ -38,6 +41,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var authorizedResponse = new HttpResponseMessage(HttpStatusCode.OK);
             var notFoundResponse = new HttpResponseMessage(HttpStatusCode.NotFound);
             var unauthorizedResponse = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            var nonAuthoritativeInformationResponse = new HttpResponseMessage(HttpStatusCode.NonAuthoritativeInformation);
 
             string authorizedMessage = null, unauthorizedMessage = null, unexpectedMessage = null, exceptionMessage = null;
 
@@ -56,9 +60,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Endpoint does not require credential",
+                    Title = "Endpoint does not require credential (OK status code)",
                     HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
                     HttpResponseMessages = new List<HttpResponseMessage>{ authorizedResponse },
+                    ExpectedMessage = string.Empty,
+                    ExpectedValidationState = ValidationState.NoMatch,
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Endpoint does not require credential (NotFound status code)",
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
+                    HttpResponseMessages = new List<HttpResponseMessage>{ notFoundResponse },
+                    ExpectedMessage = string.Empty,
+                    ExpectedValidationState = ValidationState.NoMatch,
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Endpoint does not require credential (NonAuthoritativeInformation status code)",
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
+                    HttpResponseMessages = new List<HttpResponseMessage>{ nonAuthoritativeInformationResponse },
                     ExpectedMessage = string.Empty,
                     ExpectedValidationState = ValidationState.NoMatch,
                 },
