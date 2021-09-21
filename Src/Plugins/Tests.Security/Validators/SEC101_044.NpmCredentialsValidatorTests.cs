@@ -57,7 +57,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     Title = "Endpoint does not require credential (OK status code)",
                     HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
-                    HttpResponseMessages = new List<HttpResponseMessage>{ HttpMockHelper.DefaultOkResponseMessage },
+                    HttpResponseMessages = new List<HttpResponseMessage>{ HttpMockHelper.OKResponse },
                     ExpectedMessage = string.Empty,
                     ExpectedValidationState = ValidationState.NoMatch,
                 },
@@ -65,7 +65,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     Title = "Endpoint does not require credential (NotFound status code)",
                     HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
-                    HttpResponseMessages = new List<HttpResponseMessage>{ HttpMockHelper.DefaultNotFoundResponseMessage },
+                    HttpResponseMessages = new List<HttpResponseMessage>{ HttpMockHelper.NotFoundResponse },
                     ExpectedMessage = string.Empty,
                     ExpectedValidationState = ValidationState.NoMatch,
                 },
@@ -73,7 +73,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     Title = "Endpoint does not require credential (NonAuthoritativeInformation status code)",
                     HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
-                    HttpResponseMessages = new List<HttpResponseMessage>{ HttpMockHelper.DefaultNonAuthoritativeInformationResponseMessage },
+                    HttpResponseMessages = new List<HttpResponseMessage>{ HttpMockHelper.NonAuthoritativeInformationResponse },
                     ExpectedMessage = string.Empty,
                     ExpectedValidationState = ValidationState.NoMatch,
                 },
@@ -83,8 +83,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
                     HttpResponseMessages = new List<HttpResponseMessage>
                     {
-                        HttpMockHelper.DefaultUnauthorizedResponseMessage,
-                        HttpMockHelper.DefaultOkResponseMessage
+                        HttpMockHelper.UnauthorizedResponse,
+                        HttpMockHelper.OKResponse
                     },
                     ExpectedValidationState = ValidatorBase.ReturnAuthorizedAccess(ref authorizedMessage, asset: host, account: id),
                     ExpectedMessage = authorizedMessage,
@@ -95,8 +95,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
                     HttpResponseMessages = new List<HttpResponseMessage>
                     {
-                        HttpMockHelper.DefaultUnauthorizedResponseMessage,
-                        HttpMockHelper.DefaultUnauthorizedResponseMessage,
+                        HttpMockHelper.UnauthorizedResponse,
+                        HttpMockHelper.UnauthorizedResponse,
                     },
                     ExpectedValidationState = ValidatorBase.ReturnUnauthorizedAccess(ref unauthorizedMessage, asset: host, account: id),
                     ExpectedMessage = unauthorizedMessage,
@@ -107,8 +107,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
                     HttpResponseMessages = new List<HttpResponseMessage>
                     {
-                        HttpMockHelper.DefaultUnauthorizedResponseMessage,
-                        HttpMockHelper.DefaultNotFoundResponseMessage
+                        HttpMockHelper.UnauthorizedResponse,
+                        HttpMockHelper.NotFoundResponse
                     },
                     ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref unexpectedMessage,
                                                                                          HttpStatusCode.NotFound,
