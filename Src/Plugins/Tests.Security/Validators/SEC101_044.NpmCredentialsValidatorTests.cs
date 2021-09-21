@@ -17,6 +17,9 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/044.NpmCredentialsValidator
+    /// </summary>
     public class NpmCredentialsValidatorTests
     {
         [Fact]
@@ -35,43 +38,83 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             string fingerprintText = $"[host={host}][id={id}][secret={secret}]";
 
+            string authorizedMessage = null, unauthorizedMessage = null, unexpectedMessage = null, exceptionMessage = null;
+
             var testCases = new HttpMockTestCase[]
             {
                 new HttpMockTestCase
                 {
-                    HttpContents = new List<HttpContent>{ null },
-                    HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.OK },
+                    Title = "HttpClient throwing NullReferenceException",
+                    HttpRequestMessages = new List<HttpRequestMessage>{ null },
+                    HttpResponseMessages = new List<HttpResponseMessage>{ null },
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref exceptionMessage,
+                                                                                     new NullReferenceException(),
+                                                                                     asset: host,
+                                                                                     account: id),
+                    ExpectedMessage = exceptionMessage,
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Endpoint does not require credential (OK status code)",
                     HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
+                    HttpResponseMessages = new List<HttpResponseMessage>{ HttpMockHelper.OKResponse },
                     ExpectedMessage = string.Empty,
-                    Title = "Endpoint does not require credential",
                     ExpectedValidationState = ValidationState.NoMatch,
                 },
                 new HttpMockTestCase
                 {
-                    HttpContents = new List<HttpContent>{ null, null },
-                    HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.Unauthorized, HttpStatusCode.OK },
-                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
-                    ExpectedMessage = $"The '{id}' account is compromised for '{host}'.",
+                    Title = "Endpoint does not require credential (NotFound status code)",
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
+                    HttpResponseMessages = new List<HttpResponseMessage>{ HttpMockHelper.NotFoundResponse },
+                    ExpectedMessage = string.Empty,
+                    ExpectedValidationState = ValidationState.NoMatch,
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Endpoint does not require credential (NonAuthoritativeInformation status code)",
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
+                    HttpResponseMessages = new List<HttpResponseMessage>{ HttpMockHelper.NonAuthoritativeInformationResponse },
+                    ExpectedMessage = string.Empty,
+                    ExpectedValidationState = ValidationState.NoMatch,
+                },
+                new HttpMockTestCase
+                {
                     Title = "Credential is valid",
-                    ExpectedValidationState = ValidationState.Authorized,
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
+                    HttpResponseMessages = new List<HttpResponseMessage>
+                    {
+                        HttpMockHelper.UnauthorizedResponse,
+                        HttpMockHelper.OKResponse
+                    },
+                    ExpectedValidationState = ValidatorBase.ReturnAuthorizedAccess(ref authorizedMessage, asset: host, account: id),
+                    ExpectedMessage = authorizedMessage,
                 },
                 new HttpMockTestCase
                 {
-                    HttpContents = new List<HttpContent>{ null, null },
-                    HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.Unauthorized, HttpStatusCode.Unauthorized },
-                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
-                    ExpectedMessage = $"The provided '{id}' account secret is not authorized to access '{host}'.",
                     Title = "Credential is invalid",
-                    ExpectedValidationState = ValidationState.Unauthorized,
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
+                    HttpResponseMessages = new List<HttpResponseMessage>
+                    {
+                        HttpMockHelper.UnauthorizedResponse,
+                        HttpMockHelper.UnauthorizedResponse,
+                    },
+                    ExpectedValidationState = ValidatorBase.ReturnUnauthorizedAccess(ref unauthorizedMessage, asset: host, account: id),
+                    ExpectedMessage = unauthorizedMessage,
                 },
                 new HttpMockTestCase
                 {
-                    HttpContents = new List<HttpContent>{ null, null },
-                    HttpStatusCodes = new List<HttpStatusCode>{ HttpStatusCode.Unauthorized, HttpStatusCode.NotFound },
-                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
-                    ExpectedMessage = $"An unexpected HTTP response code was received from '{id}' account on '{host}': NotFound.",
                     Title = "Unexpected NotFound StatusCode",
-                    ExpectedValidationState = ValidationState.Unknown,
+                    HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials, requestWithCredentials },
+                    HttpResponseMessages = new List<HttpResponseMessage>
+                    {
+                        HttpMockHelper.UnauthorizedResponse,
+                        HttpMockHelper.NotFoundResponse
+                    },
+                    ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref unexpectedMessage,
+                                                                                         HttpStatusCode.NotFound,
+                                                                                         asset: host,
+                                                                                         account: id),
+                    ExpectedMessage = unexpectedMessage,
                 },
             };
 
@@ -80,9 +123,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var npmCredentialsValidator = new NpmCredentialsValidator();
             foreach (HttpMockTestCase testCase in testCases)
             {
-                for (int i = 0; i < testCase.HttpStatusCodes.Count; i++)
+                for (int i = 0; i < testCase.HttpRequestMessages.Count; i++)
                 {
-                    mockHandler.Mock(testCase.HttpRequestMessages[i], testCase.HttpStatusCodes[i], testCase.HttpContents[i]);
+                    mockHandler.Mock(testCase.HttpRequestMessages[i], testCase.HttpResponseMessages[i]);
                 }
 
                 string message = string.Empty;
