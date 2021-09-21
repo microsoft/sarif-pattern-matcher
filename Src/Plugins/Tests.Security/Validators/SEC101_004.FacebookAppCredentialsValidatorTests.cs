@@ -19,6 +19,9 @@ using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Facebo
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/004.FacebookAppCredentialsValidator
+    /// </summary>
     public class FacebookAppCredentialsValidatorTests
     {
         [Fact]

@@ -14,9 +14,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class FacebookAppCredentialsValidator : DynamicValidatorBase
     {
-        internal const string OAuthUri = "https://graph.facebook.com/oauth/access_token?client_id={0}&client_secret={1}&grant_type=client_credentials";
-        internal const string CreatorUri = "https://graph.facebook.com/{0}?access_token={1}&fields=creator_uid";
         internal const string AccountInformationUri = "https://graph.facebook.com/{0}?access_token={1}";
+        internal const string CreatorUri = "https://graph.facebook.com/{0}?access_token={1}&fields=creator_uid";
+        internal const string OAuthUri = "https://graph.facebook.com/oauth/access_token?client_id={0}&client_secret={1}&grant_type=client_credentials";
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
