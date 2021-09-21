@@ -18,6 +18,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
 {
     public class HttpMockHelper : DelegatingHandler
     {
+        public static HttpResponseMessage DefaultOkResponseMessage =
+            new HttpResponseMessage(HttpStatusCode.OK);
+        public static HttpResponseMessage DefaultNotFoundResponseMessage =
+            new HttpResponseMessage(HttpStatusCode.NotFound);
+        public static HttpResponseMessage DefaultUnauthorizedResponseMessage =
+            new HttpResponseMessage(HttpStatusCode.Unauthorized);
+        public static HttpResponseMessage DefaultNonAuthoritativeInformationResponseMessage =
+            new HttpResponseMessage(HttpStatusCode.NonAuthoritativeInformation);
+
         private readonly List<Tuple<HttpRequestMessage, HttpResponseMessage>> _fakeResponses =
             new List<Tuple<HttpRequestMessage, HttpResponseMessage>>();
 
