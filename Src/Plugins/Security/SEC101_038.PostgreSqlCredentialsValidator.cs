@@ -16,6 +16,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class PostgreSqlCredentialsValidator : DynamicValidatorBase
     {
+        private const string PublicNetworkDisabled = "The public network access on this server is disabled";
+
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
         {
             "localhost",
@@ -29,8 +31,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             "database.azure.com",
             "postgres.database.azure.com",
         };
-
-        private const string publicNetworkDisabled = "The public network access on this server is disabled";
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
@@ -140,7 +140,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     }
 
                     // Public Network access disabled.
-                    if (postgresException.SqlState == "28000" && postgresException.MessageText.StartsWith(publicNetworkDisabled))
+                    if (postgresException.SqlState == "28000" && postgresException.MessageText.StartsWith(PublicNetworkDisabled))
                     {
                         return ReturnUnknownHost(ref message, host);
                     }

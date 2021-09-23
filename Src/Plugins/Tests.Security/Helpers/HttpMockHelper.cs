@@ -22,6 +22,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
             new HttpResponseMessage(HttpStatusCode.OK);
         public static readonly HttpResponseMessage NotFoundResponse =
             new HttpResponseMessage(HttpStatusCode.NotFound);
+        public static readonly HttpResponseMessage BadRequestResponse =
+            new HttpResponseMessage(HttpStatusCode.BadRequest);
         public static readonly HttpResponseMessage UnauthorizedResponse =
             new HttpResponseMessage(HttpStatusCode.Unauthorized);
         public static readonly HttpResponseMessage NonAuthoritativeInformationResponse =
