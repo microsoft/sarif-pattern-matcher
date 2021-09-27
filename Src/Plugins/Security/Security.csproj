@@ -31,10 +31,14 @@
     <PackageReference Include="MySqlConnector" Version="1.2.1" />
     <PackageReference Include="Npgsql" Version="5.0.3" />
     <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
-    <PackageReference Include="SharpCompress" Version="0.29.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
     <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Label="Component Governance fixes">
+    <!-- MongoDB.Driver -->
+    <PackageReference Include="SharpCompress" Version="0.29.0" />
   </ItemGroup>
 
   <ItemGroup>
