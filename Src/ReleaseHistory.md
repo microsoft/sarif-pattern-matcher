@@ -38,6 +38,9 @@
   removing invalid characters (`,`, `=`, `|`, `&`, `[`, `]`, `>`) from `Id` and
   `Resource`.
   [#555](https://github.com/microsoft/sarif-pattern-matcher/pull/555)
+- RRR: Improving `SEC101/025.SendGridApiKeyValidator` dynamic validator,
+  replacing tcp for http calls, retrieving the scope of the key if available.
+  [#562](https://github.com/microsoft/sarif-pattern-matcher/pull/562)
 
 ## *v1.5.0-alpha-0117-g136d47026e*
 
