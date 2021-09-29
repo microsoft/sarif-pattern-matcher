@@ -13,4 +13,8 @@ FacebookTestAppSecret=c9117d87046fc24205e4240e6bc9963a
 }
 
 facebookId 555555555555555
-facebookSecret d9117d87046fc24205e4240e6bc9963a
+facebookSecret c9117d87046fc24205e4240e6bc9963a
+
+## Invalid passowrd (does not have any digit)
+facebookId 555555555555555
+facebookSecret deaddeaddeaddeaddeaddeaddeaddead
