@@ -17,24 +17,10 @@ steps:
     filename: 'BuildAndTest.cmd'
     arguments: '-Configuration Release -EnableCoverage'
 
-- task: PowerShell@2
-  displayName: Run ProcessCodeCoverage.ps1
+- task: PublishTestResults@2
   inputs:
-    targetType: filePath
-    filePath: ./scripts/ProcessCodeCoverage.ps1
-
-- task: PowerShell@2
-  displayName: 'Merging TestResults'
-  inputs:
-    targetType: 'inline'
-    script: |
-      dotnet tool install -g dotnet-reportgenerator-globaltool      
-      reportgenerator -reports:**/*.coverage.xml -targetdir:TestResults -reporttypes:Cobertura -assemblyFilters:"-xunit*;-moq*;-sarif.driver*;-sarif.converters*;-sarif.dll;-test.utilities.sarif.dll;-*webjobs*;-octokit*;-bouncycastle*;-mysqlconnector*;-test*"
-
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'cobertura'
-    summaryFileLocation: 'TestResults/Cobertura.xml'
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
 
 # Enable if you need to debug the tests
 #- task: PublishPipelineArtifact@1

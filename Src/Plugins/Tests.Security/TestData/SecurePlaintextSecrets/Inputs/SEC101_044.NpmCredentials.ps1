@@ -44,3 +44,14 @@ registry=https://registry.npmjs.org
 always-auth=true
 username=user2
 _password=invalid_password1
+
+************************************************************
+************************************************************
+************************************************************
+************************************************************
+
+# invalid password example (password should have a number)
+registry=https://registry.npmjs.org
+always-auth=true
+_password=passwordwithoutnumbers
+username=user3

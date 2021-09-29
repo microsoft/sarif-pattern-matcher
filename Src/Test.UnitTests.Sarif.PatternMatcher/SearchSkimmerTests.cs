@@ -122,10 +122,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             MatchExpression expr = CreateFileDetectingMatchExpression(fileExtension: fileExtension);
             SearchDefinition definition = CreateDefaultSearchDefinition(expr);
 
-            string scanTargetContents = definition.Id;
-
             var logger = new TestLogger();
-
             var context = new AnalyzeContext
             {
                 TargetUri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
@@ -145,10 +142,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var expression = new MatchExpression();
             SearchDefinition definition = CreateDefaultSearchDefinition(expression);
 
-            string scanTargetContents = definition.Id;
-
             var logger = new TestLogger();
-
             var context = new AnalyzeContext
             {
                 TargetUri = new Uri($"file:///c:/{definition.Name}.Fake.asc"),
@@ -398,6 +392,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             sb.Length.Should().Be(0, sb.ToString());
+        }
+
+        [Fact]
+        public void SearchSkimmer_ShouldThrowWhenRuleDoesNotHaveAnyRegularExpression()
+        {
+            string fileExtension = Guid.NewGuid().ToString();
+            SearchDefinition definition = CreateDefaultSearchDefinition(new MatchExpression());
+            definition.FileNameAllowRegex = string.Empty;
+
+            var logger = new TestLogger();
+            var context = new AnalyzeContext
+            {
+                TargetUri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
+                FileContents = definition.Id,
+                Logger = logger
+            };
+
+            SearchSkimmer skimmer = CreateSkimmer(definition);
+            Exception exception = Record.Exception(() => skimmer.Analyze(context));
+            exception.Should().NotBeNull();
+            exception.GetType().Should().Be(typeof(InvalidOperationException));
         }
 
         private AnalyzeContext CreateGuidMatchingSkimmer(
