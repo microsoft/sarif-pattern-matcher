@@ -20,6 +20,9 @@
 $BuildDefinitionFiles=(?i)(^https?:\/\/dev.azure.com).*(\/_apis\/build\/definitions\/)|(azc101\.builddefinition\..*json$)
 $ServiceConnectionFiles=(?i)(^https?:\/\/dev.azure.com).*(\/_apis\/contribution\/HierarchyQuery)|(azc102\.serviceconnection\..*json$)
 
+$AdoOrganzationName=(?i)"_originatingUri"\s*:\s*"https?:\/\/(dev\.azure\.com\/)?(?P<org>.*?)(\/|\.visualstudio\.com)
+$AdoProjectName=(?i)"_projectId"\s*:\s*(?P<project>".*?")
+
 $AZC101.BuildDefinitionEntityType=(?i)(?P<type>"EtlEntity"\s*:\s*"builddefinitions")
 $AZC102.ServiceConnectionEntityType=(?i)(?P<type>"EtlEntity"\s*:\s*"serviceendpoints")
 

@@ -12,13 +12,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AZC102.ServiceConnectionSecurity.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="AZC102.ServiceConnectionSecurity.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="build\Sarif.PatternMatcher.AzureDevOpsConfiguration.targets">
       <PackagePath>build\</PackagePath>
     </Content>
     <Content Include="AzureDevOpsConfiguration.SharedStrings.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="AZC101.AzureDevOpsConfiguration.json">
+    <Content Include="AZC101.BuildDefinitionSecurity.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -30,7 +37,7 @@
   <Target Name="CopyingSpam" AfterTargets="Build">
     <ItemGroup>
       <SecurityFile Include="$(OutputPath)AzureDevOpsConfiguration.dll" />
-      <SpamFiles Include="AZC101.AzureDevOpsConfiguration.json" />
+      <SpamFiles Include="AZC*.json" />
     </ItemGroup>
     <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\AzureDevOpsConfiguration\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(SecurityFile)" DestinationFolder="$(SolutionDir).spam\AzureDevOpsConfiguration\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" ContinueOnError="true" />

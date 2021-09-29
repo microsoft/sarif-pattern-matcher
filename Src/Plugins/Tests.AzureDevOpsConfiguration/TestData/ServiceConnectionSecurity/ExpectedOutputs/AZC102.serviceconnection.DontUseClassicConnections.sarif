@@ -1,0 +1,88 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "AZC102/150",
+              "name": "ServiceConnectionShouldBeSecure/AuthZDontUseClassicConnections",
+              "fullDescription": {
+                "text": "Do not use classic Azure service connections to access a subscription."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "Service connection [Id:{0}]({1}) was found {2}\r\n{3}\r\n{4}"
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "AZC102/150",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "AZC102.serviceconnection.DontUseClassicConnections.json",
+              "",
+              " is Azure Classic service connection.",
+              "You should use Azure resource Manager type service connection as the ARM model provides several security enhancements such as: stronger access control (RBAC), better auditing, ARM-based deployment/governance, access to managed identities, access to key vault for secrets, AAD-based authentication, support for tags and resource groups for easier security management, etc.",
+              "Recommendation: Delete the Azure Classic service connection and create a new service connection of type 'Azure resource Manager'(i.e., ARM based) scoped to a resource/resource group in subscription."
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102.serviceconnection.DontUseClassicConnections.json",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 2,
+                  "endLine": 67,
+                  "endColumn": 37,
+                  "charOffset": 553,
+                  "charLength": 2004,
+                  "snippet": {
+                    "text": "\"EtlEntity\": \"serviceendpoints\",\r\n\t\"EtlIngestDate\": \"2021-08-31T17:47:16.4417481Z\",\r\n\t\"EtlDiscoveryDate\": \"2021-08-31T17:47:16.1777943Z\",\r\n\t\"EtlIdentity\": \"yy@testcompany.com\",\r\n\t\"EtlRecordSha\": \"231f1d0ccebf1dbb0c20945d70f2b60693e6aa412e08e52eae120c3bfda9b724\",\r\n\t\"id\": \"27843de2-2bea-45ab-b677-27ea718b557e\",\r\n\t\"name\": \"test-service\",\r\n\t\"type\": \"azure\",\r\n\t\"url\": \"https://management.azure.com/\",\r\n\t\"createdBy\": {\r\n\t\t\"displayName\": \"Yong Yan\",\r\n\t\t\"url\": \"https://spsprodwcus0.vssps.visualstudio.com/Abc0d6a57-7ea8-4b16-ba2a-86cfb778f6b4/_apis/Identities/fd421bfc-8eee-40f2-bcb0-64e08c5e6115\",\r\n\t\t\"_links\": {\r\n\t\t\t\"avatar\": {\r\n\t\t\t\t\"href\": \"https://testorg.visualstudio.com/_apis/GraphProfile/MemberAvatars/aad.NmVmZ4AENjGtMGViYy03ZWQ1LTk0MzkhZTQ0NMI4MjQ0ZGJl\"\r\n\t\t\t}\r\n\t\t},\r\n\t\t\"id\": \"fd421bfc-8eee-40f2-bcb0-64e08c5e6115\",\r\n\t\t\"uniqueName\": \"yy@testcompany.com\",\r\n\t\t\"imageUrl\": \"https://testorg.visualstudio.com/_apis/GraphProfile/MemberAvatars/aad.NmVmZ4AENjGtMGViYy03ZWQ1LTk0MzkhZTQ0NMI4MjQ0ZGJl\",\r\n\t\t\"descriptor\": \"aad.NmVmZ4AENjGtMGViYy03ZWQ1LTk0MzkhZTQ0NMI4MjQ0ZGJl\"\r\n\t},\r\n\t\"description\": \"\",\r\n\t\"authorization\": {\r\n\t\t\"parameters\": {\r\n\t\t\t\"tenantid\": \"8791732d-6b82-4be1-a353-35dc64da977f\",\r\n\t\t\t\"serviceprincipalid\": \"5c40a626-036e-4606-a08f-a7f2165e2ce0\",\r\n\t\t\t\"authenticationType\": \"spnKey\",\r\n\t\t\t\"scope\": \"/subscriptions/5004ae11-7a14-44c4-8496-7f8ca83668c7/resourcegroups/testproj\"\r\n\t\t},\r\n\t\t\"scheme\": \"ServicePrincipal\"\r\n\t},\r\n\t\"isShared\": false,\r\n\t\"isReady\": true,\r\n\t\"operationStatus\": {\r\n\t\t\"state\": \"Ready\",\r\n\t\t\"statusMessage\": \"\"\r\n\t},\r\n\t\"owner\": \"Library\",\r\n\t\"serviceEndpointProjectReferences\": [\r\n\t\t{\r\n\t\t\t\"projectReference\": {\r\n\t\t\t\t\"id\": \"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\",\r\n\t\t\t\t\"name\": \"TestProject\"\r\n\t\t\t},\r\n\t\t\t\"name\": \"test-service\",\r\n\t\t\t\"description\": \"\"\r\n\t\t}\r\n\t],\r\n\t\"_projectId\": \"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\",\r\n\t\"_projectName\": \"TestProject\",\r\n\t\"_accountName\": \"testorg.visualstudio.com\",\r\n\t\"_sessionId\": \"a77630da-0003-44e5-980c-9eaf8fe6f26a\",\r\n\t\"_originatingUri\": \"https://testorg"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=E34B3A6FB186364738B59A87873EC3525EC61A1524E2314E11186769F2044AF8]",
+            "ValidationFingerprintHash/v1": "5e24f70a08b729db8a976f9196e4a6566d52d7ec1bdee5ef677e444dd2b54938",
+            "AssetFingerprint/v2": "{}",
+            "ValidationFingerprint/v2": "{\"secret\":\"E34B3A6FB186364738B59A87873EC3525EC61A1524E2314E11186769F2044AF8\"}"
+          },
+          "rank": 53.81
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}
