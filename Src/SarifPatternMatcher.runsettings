@@ -20,7 +20,28 @@
                 <ModulePath>.*\Sarif.PatternMatcher.Sdk.dll$</ModulePath>
                 <ModulePath>.*\Sarif.PatternMatcher.Function.dll$</ModulePath>
               </Include>
+              <Exclude>
+                <ModulePath>.*\Tests.Security.dll$</ModulePath>
+                <ModulePath>.*\Tests.SalModernization.dll$</ModulePath>
+                <ModulePath>.*\Test.UnitTests.RE2.Managed.dll$</ModulePath>
+                <ModulePath>.*\Test.UnitTests.Strings.Interop.dll$</ModulePath>
+                <ModulePath>.*\Test.UnitTests.Sarif.PatternMatcher.dll$</ModulePath>
+                <ModulePath>.*\Test.UnitTests.Sarif.PatternMatcher.Cli.dll$</ModulePath>
+                <ModulePath>.*\Test.UnitTests.Sarif.PatternMatcher.Sdk.dll$</ModulePath>
+                <ModulePath>.*\Test.UnitTests.Sarif.PatternMatcher.Function.dll$</ModulePath>
+              </Exclude>
             </ModulePaths>
+
+            <!-- Match attributes on any code element: -->
+            <Attributes>
+              <Exclude>
+                <!-- Don't forget "Attribute" at the end of the name -->
+                <Attribute>^System\.Diagnostics\.DebuggerHiddenAttribute$</Attribute>
+                <Attribute>^System\.Diagnostics\.DebuggerNonUserCodeAttribute$</Attribute>
+                <Attribute>^System\.CodeDom\.Compiler\.GeneratedCodeAttribute$</Attribute>
+                <Attribute>^System\.Diagnostics\.CodeAnalysis\.ExcludeFromCodeCoverageAttribute$</Attribute>
+              </Exclude>
+            </Attributes>
 
              <!-- We recommend you do not change the following values: -->
 
