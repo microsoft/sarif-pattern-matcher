@@ -23,7 +23,7 @@
                   "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
                 },
                 "Default": {
-                  "text": "Service connection [Id:{0}]({1}) was found {2}\r\n{3}\r\n{4}"
+                  "text": "[Service connection Id:{0}]({1}) in organization '{2}' project '{3}' was found {4}\r\n{5}\r\n{6}"
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
@@ -46,6 +46,8 @@
             "arguments": [
               "AZC102.serviceconnection.DontUseClassicConnections.json",
               "",
+              "testorg",
+              "f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f",
               " is Azure Classic service connection.",
               "You should use Azure resource Manager type service connection as the ARM model provides several security enhancements such as: stronger access control (RBAC), better auditing, ARM-based deployment/governance, access to managed identities, access to key vault for secrets, AAD-based authentication, support for tags and resource groups for easier security management, etc.",
               "Recommendation: Delete the Azure Classic service connection and create a new service connection of type 'Azure resource Manager'(i.e., ARM based) scoped to a resource/resource group in subscription."
