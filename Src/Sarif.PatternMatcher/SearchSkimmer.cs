@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -649,13 +650,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         // TODO: we do not have the ability to provide arbitrary match data from
                         // groups to the result construction API, except for the single-line
                         // match case. This could be a good improvement for intrafile analysis.
+                        IDictionary<string, FlexMatch> namedGroups =
+                            groups?[0] ??
+                            mergedGroups.ToDictionary(mg => mg.Key, mg => mg.Value.FirstOrDefault());
+
                         ConstructResultAndLogForContentsRegex(binary64DecodedMatch: null,
                                                               context,
                                                               matchExpression,
                                                               filePath,
                                                               validationResult.RegionFlexMatch,
                                                               reportingDescriptor,
-                                                              groups?[0],
+                                                              namedGroups,
                                                               validationPrefix,
                                                               validationSuffix,
                                                               validationResult);
