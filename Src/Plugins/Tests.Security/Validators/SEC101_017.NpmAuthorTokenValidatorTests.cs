@@ -20,37 +20,37 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void NpmAuthorTokenValidator_MockHttpTests()
         {
-            var testCases = new[]
+            var testCases = new HttpMockTestCase[]
             {
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Unauthorized StatusCode",
-                    HttpStatusCode = HttpStatusCode.Unauthorized,
-                    HttpContent = (HttpContent)null,
+                    HttpStatusCodes = new[] {HttpStatusCode.Unauthorized },
+                    HttpContents = new[] { (HttpContent)null },
                     ExpectedValidationState = ValidationState.Unauthorized,
                     ExpectedMessage = string.Empty
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing NotFound StatusCode",
-                    HttpStatusCode = HttpStatusCode.NotFound,
-                    HttpContent = (HttpContent)null,
+                    HttpStatusCodes = new[] { HttpStatusCode.NotFound },
+                    HttpContents = new[] { (HttpContent)null },
                     ExpectedValidationState = ValidationState.Unknown,
                     ExpectedMessage = "An unexpected HTTP response code was received: 'NotFound'."
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Valid credentials - empty content",
-                    HttpStatusCode = HttpStatusCode.OK,
-                    HttpContent = new StringContent(string.Empty).As<HttpContent>(),
+                    HttpStatusCodes = new[] { HttpStatusCode.OK },
+                    HttpContents = new[] { new StringContent(string.Empty).As<HttpContent>() },
                     ExpectedValidationState = ValidationState.Authorized,
                     ExpectedMessage = string.Empty
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Valid credentials - readonly",
-                    HttpStatusCode = HttpStatusCode.OK,
-                    HttpContent = new StringContent(@"
+                    HttpStatusCodes = new[] { HttpStatusCode.OK },
+                    HttpContents = new[] { new StringContent(@"
 {
     ""objects"": [
         {
@@ -66,15 +66,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
     ""total"": 1,
     ""urls"": {}
 }
-", Encoding.UTF8, "application/json").As<HttpContent>(),
+", Encoding.UTF8, "application/json").As<HttpContent>() },
                     ExpectedValidationState = ValidationState.Authorized,
                     ExpectedMessage = "The token has 'read' permissions."
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Valid credentials - automation",
-                    HttpStatusCode = HttpStatusCode.OK,
-                    HttpContent = new StringContent(@"
+                    HttpStatusCodes = new[] { HttpStatusCode.OK },
+                    HttpContents = new[] { new StringContent(@"
 {
     ""objects"": [
         {
@@ -90,15 +90,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
     ""total"": 1,
     ""urls"": {}
 }
-", Encoding.UTF8, "application/json").As<HttpContent>(),
+", Encoding.UTF8, "application/json").As<HttpContent>() },
                     ExpectedValidationState = ValidationState.Authorized,
                     ExpectedMessage = "The token has 'automation' permissions."
                 },
-                new
+                new HttpMockTestCase
                 {
                     Title = "Testing Valid credentials - publish",
-                    HttpStatusCode = HttpStatusCode.OK,
-                    HttpContent = new StringContent(@"
+                    HttpStatusCodes = new[] { HttpStatusCode.OK },
+                    HttpContents = new[] { new StringContent(@"
 {
     ""objects"": [
         {
@@ -114,7 +114,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
     ""total"": 1,
     ""urls"": {}
 }
-", Encoding.UTF8, "application/json").As<HttpContent>(),
+", Encoding.UTF8, "application/json").As<HttpContent>() },
                     ExpectedValidationState = ValidationState.Authorized,
                     ExpectedMessage = "The token has 'publish' permissions."
                 },
@@ -124,14 +124,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             var sb = new StringBuilder();
             var npmAuthorTokenValidator = new NpmAuthorTokenValidator();
-            foreach (var testCase in testCases)
+            foreach (HttpMockTestCase testCase in testCases)
             {
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
+                using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCodes[0], testCase.HttpContents[0]));
                 npmAuthorTokenValidator.SetHttpClient(httpClient);
 
                 ValidationState currentState = npmAuthorTokenValidator.IsValidDynamic(ref fingerprint,
