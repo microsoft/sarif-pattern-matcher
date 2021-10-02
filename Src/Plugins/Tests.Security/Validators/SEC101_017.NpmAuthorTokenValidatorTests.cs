@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                                 CidrWhitelist = null,
                                 Readonly = true,
                                 Automation = false,
-                                Created = DateTime.Parse("2020-12-23T15:35:05.255Z"), 
+                                Created = DateTime.Parse("2020-12-23T15:35:05.255Z"),
                                 Updated = DateTime.Parse("2020-12-23T15:35:05.255Z"),
                             }
                         },
