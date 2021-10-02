@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
 
 using FluentAssertions;
 
@@ -29,7 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string fingerprintText = "[secret=abc123]";
             var fingerprint = new Fingerprint(fingerprintText);
 
-            var defaultRequest = new HttpRequestMessage(HttpMethod.Get, Uri);
+            var defaultRequest = new HttpRequestMessage(HttpMethod.Get, NpmAuthorTokenValidator.Uri);
             defaultRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", fingerprint.Secret);
 
             var ValidReadOnlyResponse = new HttpResponseMessage(HttpStatusCode.OK)
@@ -37,17 +37,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 Content = new StringContent(JsonConvert.SerializeObject(
                     new TokensRoot
                     {
-                        Tokens = new List<Object>()
+                        Tokens = new List<NpmAuthorTokenValidator.Object>()
                         {
-                            new Object()
+                            new NpmAuthorTokenValidator.Object()
                             {
                                 Token = "abc123",
                                 Key = "some long key",
                                 CidrWhitelist = null,
                                 Readonly = true,
                                 Automation = false,
-                                Created = System.DateTime.Parse("2020-12-23T15:35:05.255Z"), 
-                                Updated = System.DateTime.Parse("2020-12-23T15:35:05.255Z"),
+                                Created = DateTime.Parse("2020-12-23T15:35:05.255Z"), 
+                                Updated = DateTime.Parse("2020-12-23T15:35:05.255Z"),
                             }
                         },
                         Total = 1
@@ -60,17 +60,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 Content = new StringContent(JsonConvert.SerializeObject(
                     new TokensRoot
                     {
-                        Tokens = new List<Object>()
+                        Tokens = new List<NpmAuthorTokenValidator.Object>()
                         {
-                            new Object()
+                            new NpmAuthorTokenValidator.Object()
                             {
                                 Token = "abc123",
                                 Key = "some long key",
                                 CidrWhitelist = null,
                                 Readonly = false,
                                 Automation = true,
-                                Created = System.DateTime.Parse("2020-12-23T15:35:05.255Z"),
-                                Updated = System.DateTime.Parse("2020-12-23T15:35:05.255Z"),
+                                Created = DateTime.Parse("2020-12-23T15:35:05.255Z"),
+                                Updated = DateTime.Parse("2020-12-23T15:35:05.255Z"),
                             }
                         },
                         Total = 1
@@ -83,17 +83,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 Content = new StringContent(JsonConvert.SerializeObject(
                     new TokensRoot
                     {
-                        Tokens = new List<Object>()
+                        Tokens = new List<NpmAuthorTokenValidator.Object>()
                         {
-                            new Object()
+                            new NpmAuthorTokenValidator.Object()
                             {
                                 Token = "abc123",
                                 Key = "some long key",
                                 CidrWhitelist = null,
                                 Readonly = false,
                                 Automation = false,
-                                Created = System.DateTime.Parse("2020-12-23T15:35:05.255Z"),
-                                Updated = System.DateTime.Parse("2020-12-23T15:35:05.255Z"),
+                                Created = DateTime.Parse("2020-12-23T15:35:05.255Z"),
+                                Updated = DateTime.Parse("2020-12-23T15:35:05.255Z"),
                             }
                         },
                         Total = 1
@@ -106,6 +106,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 Content = new StringContent(string.Empty).As<HttpContent>()
             };
 
+            string unhandledMessage = string.Empty;
 
             var testCases = new HttpMockTestCase[]
             {
@@ -157,6 +158,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     ExpectedValidationState = ValidationState.Authorized,
                     ExpectedMessage = "The token has 'publish' permissions."
                 },
+                 new  HttpMockTestCase
+                {
+                    Title = "Null Reference Exception",
+                    HttpRequestMessages = new List<HttpRequestMessage> { null },
+                    HttpResponseMessages = new List<HttpResponseMessage> { null },
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref unhandledMessage, new NullReferenceException()),
+                    ExpectedMessage = unhandledMessage
+                }
             };
 
             var sb = new StringBuilder();
