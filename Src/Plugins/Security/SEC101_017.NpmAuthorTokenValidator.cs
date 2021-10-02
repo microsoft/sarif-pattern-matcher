@@ -16,6 +16,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class NpmAuthorTokenValidator : DynamicValidatorBase
     {
+        internal const string Uri = "https://registry.npmjs.com/-/npm/v1/tokens";
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             FlexMatch secret = groups["secret"];
@@ -39,14 +41,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string secret = fingerprint.Secret;
-
-            const string uri = "https://registry.npmjs.com/-/npm/v1/tokens";
-
             try
             {
                 HttpClient client = CreateOrRetrieveCachedHttpClient();
 
-                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+                using var request = new HttpRequestMessage(HttpMethod.Get, Uri);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
                 using HttpResponseMessage response = client
@@ -111,7 +110,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return ValidationState.Authorized;
         }
 
-        private class Object
+        internal class Object
         {
             [JsonProperty("token")]
             public string Token { get; set; }
@@ -135,7 +134,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             public DateTime Updated { get; set; }
         }
 
-        private class TokensRoot
+        internal class TokensRoot
         {
             [JsonProperty("objects")]
             public List<Object> Tokens { get; set; }
