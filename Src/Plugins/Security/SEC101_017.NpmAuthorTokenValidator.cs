@@ -77,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
         }
 
-        private static ValidationState CheckInformation(string content, string secret, ref string message, ref ResultLevelKind resultLevelKind)
+        internal static ValidationState CheckInformation(string content, string secret, ref string message, ref ResultLevelKind resultLevelKind)
         {
             TokensRoot tokensRoot = JsonConvert.DeserializeObject<TokensRoot>(content);
             if (tokensRoot?.Tokens?.Count > 0)

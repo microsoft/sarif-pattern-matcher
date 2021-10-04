@@ -28,13 +28,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         {
             const string fingerprintText = "[secret=abc123]";
             var fingerprint = new Fingerprint(fingerprintText);
+            string secret = fingerprint.Secret;
 
             var defaultRequest = new HttpRequestMessage(HttpMethod.Get, NpmAuthorTokenValidator.Uri);
-            defaultRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", fingerprint.Secret);
+            defaultRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
-            var ValidReadOnlyResponse = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(
+            string readOnlyResponseJson = JsonConvert.SerializeObject(
                     new TokensRoot
                     {
                         Tokens = new List<NpmAuthorTokenValidator.Object>()
@@ -52,12 +51,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                         },
                         Total = 1
                     }
-                    ))
-            };
+                    );
 
-            var ValidReadAutomationResponse = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(
+            string automationResponseJson = JsonConvert.SerializeObject(
                     new TokensRoot
                     {
                         Tokens = new List<NpmAuthorTokenValidator.Object>()
@@ -75,12 +71,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                         },
                         Total = 1
                     }
-                    ))
-            };
+                    );
 
-            var ValidPublishResponse = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(
+            string publishResponseJson = JsonConvert.SerializeObject(
                     new TokensRoot
                     {
                         Tokens = new List<NpmAuthorTokenValidator.Object>()
@@ -98,15 +91,36 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                         },
                         Total = 1
                     }
-                    ))
+                    );
+
+            var ValidReadOnlyResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(readOnlyResponseJson)
+            };
+
+            var ValidReadAutomationResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(automationResponseJson)
+            };
+
+            var ValidPublishResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(publishResponseJson)
             };
 
             var ValidEmptyContentResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(string.Empty).As<HttpContent>()
+                Content = new StringContent(string.Empty)
             };
 
             string unhandledMessage = string.Empty;
+            string notFoundMessage = string.Empty;
+            string emptyContentReturnMessage = string.Empty;
+            string readonlyContentReturnMessage = string.Empty;
+            string automationContentReturnMessage = string.Empty;
+            string publishContentReturnMessage = string.Empty;
+
+            var resLevel = new ResultLevelKind();
 
             var testCases = new HttpMockTestCase[]
             {
@@ -123,40 +137,40 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Testing NotFound StatusCode",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { HttpMockHelper.NotFoundResponse },
-                    ExpectedValidationState = ValidationState.Unknown,
-                    ExpectedMessage = "An unexpected HTTP response code was received: 'NotFound'."
+                    ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref notFoundMessage, HttpStatusCode.NotFound),
+                    ExpectedMessage = notFoundMessage
                 },
                 new HttpMockTestCase
                 {
                     Title = "Testing Valid credentials - empty content",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { ValidEmptyContentResponse },
-                    ExpectedValidationState = ValidationState.Authorized,
-                    ExpectedMessage = string.Empty
+                    ExpectedValidationState = CheckInformation(string.Empty, secret, ref emptyContentReturnMessage, ref resLevel),
+                    ExpectedMessage = emptyContentReturnMessage
                 },
                 new HttpMockTestCase
                 {
                     Title = "Testing Valid credentials - readonly",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { ValidReadOnlyResponse },
-                    ExpectedValidationState = ValidationState.Authorized,
-                    ExpectedMessage = "The token has 'read' permissions."
+                    ExpectedValidationState = CheckInformation(readOnlyResponseJson, secret, ref readonlyContentReturnMessage, ref resLevel),
+                    ExpectedMessage = readonlyContentReturnMessage
                 },
                 new HttpMockTestCase
                 {
                     Title = "Testing Valid credentials - automation",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { ValidReadAutomationResponse},
-                    ExpectedValidationState = ValidationState.Authorized,
-                    ExpectedMessage = "The token has 'automation' permissions."
+                    ExpectedValidationState = CheckInformation(automationResponseJson, secret, ref automationContentReturnMessage, ref resLevel),
+                    ExpectedMessage = automationContentReturnMessage
                 },
                 new HttpMockTestCase
                 {
                     Title = "Testing Valid credentials - publish",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { ValidPublishResponse },
-                    ExpectedValidationState = ValidationState.Authorized,
-                    ExpectedMessage = "The token has 'publish' permissions."
+                    ExpectedValidationState = CheckInformation(publishResponseJson, secret, ref publishContentReturnMessage, ref resLevel),
+                    ExpectedMessage = publishContentReturnMessage
                 },
                  new  HttpMockTestCase
                 {
