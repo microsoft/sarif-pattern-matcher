@@ -18,6 +18,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         internal const string Uri = "https://registry.npmjs.com/-/npm/v1/tokens";
 
+        internal static ValidationState CheckInformation(string content, string secret, ref string message, ref ResultLevelKind resultLevelKind)
+        {
+            TokensRoot tokensRoot = JsonConvert.DeserializeObject<TokensRoot>(content);
+            if (tokensRoot?.Tokens?.Count > 0)
+            {
+                foreach (Object obj in tokensRoot.Tokens)
+                {
+                    if (!secret.Contains(obj.Token))
+                    {
+                        continue;
+                    }
+
+                    if (obj.Readonly)
+                    {
+                        message = "The token has 'read' permissions.";
+                        resultLevelKind = new ResultLevelKind { Level = FailureLevel.Warning };
+                        return ValidationState.Authorized;
+                    }
+
+                    if (obj.Automation)
+                    {
+                        message = "The token has 'automation' permissions.";
+                        return ValidationState.Authorized;
+                    }
+
+                    message = "The token has 'publish' permissions.";
+                    return ValidationState.Authorized;
+                }
+            }
+
+            return ValidationState.Authorized;
+        }
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             FlexMatch secret = groups["secret"];
@@ -75,39 +108,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ReturnUnhandledException(ref message, e);
             }
-        }
-
-        internal static ValidationState CheckInformation(string content, string secret, ref string message, ref ResultLevelKind resultLevelKind)
-        {
-            TokensRoot tokensRoot = JsonConvert.DeserializeObject<TokensRoot>(content);
-            if (tokensRoot?.Tokens?.Count > 0)
-            {
-                foreach (Object obj in tokensRoot.Tokens)
-                {
-                    if (!secret.Contains(obj.Token))
-                    {
-                        continue;
-                    }
-
-                    if (obj.Readonly)
-                    {
-                        message = "The token has 'read' permissions.";
-                        resultLevelKind = new ResultLevelKind { Level = FailureLevel.Warning };
-                        return ValidationState.Authorized;
-                    }
-
-                    if (obj.Automation)
-                    {
-                        message = "The token has 'automation' permissions.";
-                        return ValidationState.Authorized;
-                    }
-
-                    message = "The token has 'publish' permissions.";
-                    return ValidationState.Authorized;
-                }
-            }
-
-            return ValidationState.Authorized;
         }
 
         internal class Object
