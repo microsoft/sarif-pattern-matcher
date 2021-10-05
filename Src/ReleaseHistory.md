@@ -16,7 +16,7 @@
 - UER => eliminate unhandled exceptions in rules
 - UEE => eliminate unhandled exceptions in engine
 
-## *Unreleased*
+## *v1.5.0*
 
 - FPC: Improving RabbitMQ regex (removing new lines and spaces) from secret.
   [#548](https://github.com/microsoft/sarif-pattern-matcher/pull/548)
