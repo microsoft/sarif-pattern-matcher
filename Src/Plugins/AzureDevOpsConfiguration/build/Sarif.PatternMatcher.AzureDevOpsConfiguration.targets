@@ -5,7 +5,7 @@
     <ConfigFile Include="$(MSBuildThisFileDirectory)..\content\AzureDevOpsConfiguration.SharedStrings.txt"></ConfigFile>
   </ItemGroup>
   <PropertyGroup>
-    <PluginOutputPath>$(MSBuildThisFileDirectory)..\lib\netstandard2.0</PluginOutputPath>
+    <PluginOutputPath>$(MSBuildThisFileDirectory)..\lib\netstandard2.1</PluginOutputPath>
   </PropertyGroup>
 
   <Target Name="CopyUtilityScriptToProject" BeforeTargets="Build">
