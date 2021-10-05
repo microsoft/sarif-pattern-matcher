@@ -16,69 +16,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class NpmAuthorTokenValidator : DynamicValidatorBase
     {
-        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
-        {
-            FlexMatch secret = groups["secret"];
+        internal const string Uri = "https://registry.npmjs.com/-/npm/v1/tokens";
 
-            var validationResult = new ValidationResult
-            {
-                Fingerprint = new Fingerprint
-                {
-                    Secret = secret.Value,
-                    Platform = nameof(AssetPlatform.Npm),
-                },
-                ValidationState = ValidationState.Unknown,
-            };
-
-            return new[] { validationResult };
-        }
-
-        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                                ref string message,
-                                                                IDictionary<string, string> options,
-                                                                ref ResultLevelKind resultLevelKind)
-        {
-            string secret = fingerprint.Secret;
-
-            const string uri = "https://registry.npmjs.com/-/npm/v1/tokens";
-
-            try
-            {
-                HttpClient client = CreateOrRetrieveCachedHttpClient();
-
-                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
-
-                using HttpResponseMessage response = client
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
-
-                switch (response.StatusCode)
-                {
-                    case HttpStatusCode.OK:
-                    {
-                        return CheckInformation(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), secret, ref message, ref resultLevelKind);
-                    }
-
-                    case HttpStatusCode.Unauthorized:
-                    {
-                        return ValidationState.Unauthorized;
-                    }
-
-                    default:
-                    {
-                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                return ReturnUnhandledException(ref message, e);
-            }
-        }
-
-        private static ValidationState CheckInformation(string content, string secret, ref string message, ref ResultLevelKind resultLevelKind)
+        internal static ValidationState CheckInformation(string content, string secret, ref string message, ref ResultLevelKind resultLevelKind)
         {
             TokensRoot tokensRoot = JsonConvert.DeserializeObject<TokensRoot>(content);
             if (tokensRoot?.Tokens?.Count > 0)
@@ -111,7 +51,66 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return ValidationState.Authorized;
         }
 
-        private class Object
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
+        {
+            FlexMatch secret = groups["secret"];
+
+            var validationResult = new ValidationResult
+            {
+                Fingerprint = new Fingerprint
+                {
+                    Secret = secret.Value,
+                    Platform = nameof(AssetPlatform.Npm),
+                },
+                ValidationState = ValidationState.Unknown,
+            };
+
+            return new[] { validationResult };
+        }
+
+        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
+                                                                ref string message,
+                                                                IDictionary<string, string> options,
+                                                                ref ResultLevelKind resultLevelKind)
+        {
+            string secret = fingerprint.Secret;
+            try
+            {
+                HttpClient client = CreateOrRetrieveCachedHttpClient();
+
+                using var request = new HttpRequestMessage(HttpMethod.Get, Uri);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
+
+                using HttpResponseMessage response = client
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+                    .GetAwaiter()
+                    .GetResult();
+
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                    {
+                        return CheckInformation(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), secret, ref message, ref resultLevelKind);
+                    }
+
+                    case HttpStatusCode.Unauthorized:
+                    {
+                        return ValidationState.Unauthorized;
+                    }
+
+                    default:
+                    {
+                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return ReturnUnhandledException(ref message, e);
+            }
+        }
+
+        internal class Object
         {
             [JsonProperty("token")]
             public string Token { get; set; }
@@ -135,7 +134,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             public DateTime Updated { get; set; }
         }
 
-        private class TokensRoot
+        internal class TokensRoot
         {
             [JsonProperty("objects")]
             public List<Object> Tokens { get; set; }
