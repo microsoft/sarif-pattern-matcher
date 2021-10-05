@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.app.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.test.props" />
+
+  <PropertyGroup Label="AssemblyAttributes">
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Tests.Security\EndToEndTests.cs" />
+
+    <ProjectReference Include="..\AzureDevOpsConfiguration\AzureDevOpsConfiguration.csproj" />
+    <ProjectReference Include="..\..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
+    <ProjectReference Include="..\..\sarif-sdk\src\Sarif\Sarif.csproj" />
+    <ProjectReference Include="..\..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
+    <ProjectReference Include="..\..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

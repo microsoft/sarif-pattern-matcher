@@ -1,0 +1,387 @@
+{
+	"EtlEntity": "builddefinitions",
+	"triggers": [
+		{
+			"branchFilters": [],
+			"pathFilters": [],
+			"settingsSourceType": 2,
+			"batchChanges": false,
+			"maxConcurrentBuildsPerBranch": 1,
+			"triggerType": "continuousIntegration"
+		}
+	],
+	"properties": {},
+	"tags": [],
+	"_links": {
+		"self": {
+			"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/Definitions/1?revision=1"
+		},
+		"web": {
+			"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_build/definition?definitionId=1"
+		},
+		"editor": {
+			"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_build/designer?id=1&_a=edit-build-definition"
+		},
+		"badge": {
+			"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/status/1"
+		}
+	},
+	"latestBuild": {
+		"_links": {
+			"self": {
+				"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/Builds/1"
+			},
+			"web": {
+				"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_build/results?buildId=1"
+			},
+			"sourceVersionDisplayUri": {
+				"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/builds/1/sources"
+			},
+			"timeline": {
+				"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/builds/1/Timeline"
+			},
+			"badge": {
+				"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/status/1"
+			}
+		},
+		"properties": {},
+		"tags": [],
+		"validationResults": [],
+		"plans": [
+			{
+				"planId": "88a6ae10-b808-44e8-8dc5-79682a6d2013"
+			}
+		],
+		"triggerInfo": {
+			"ci.sourceBranch": "main",
+			"ci.sourceSha": "109c90cd4d77137ae02051c49619d79ec03118d0",
+			"ci.message": "Set up CI with Azure Pipelines"
+		},
+		"id": 1,
+		"buildNumber": "20210827.1",
+		"status": "completed",
+		"result": "succeeded",
+		"queueTime": "2021-08-27T19:40:23.7274913Z",
+		"startTime": "2021-08-27T19:40:39.3068828Z",
+		"finishTime": "2021-08-27T19:40:50.8798243Z",
+		"url": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/Builds/1",
+		"definition": {
+			"drafts": [],
+			"id": 1,
+			"name": "AdoScannerTest",
+			"url": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/Definitions/1?revision=1",
+			"uri": "vstfs:///Build/Definition/1",
+			"path": "\\",
+			"type": "build",
+			"queueStatus": "enabled",
+			"revision": 1,
+			"project": {
+				"id": "14278b73-62e7-43d8-ba8a-60e73f712d4a",
+				"name": "AdoScannerTest",
+				"url": "https://dev.azure.com/testorg/_apis/projects/14278b73-62e7-43d8-ba8a-60e73f712d4a",
+				"state": "wellFormed",
+				"revision": 11,
+				"visibility": "organization",
+				"lastUpdateTime": "2021-08-27T18:43:46.54Z"
+			}
+		},
+		"buildNumberRevision": 1,
+		"project": {
+			"id": "14278b73-62e7-43d8-ba8a-60e73f712d4a",
+			"name": "AdoScannerTest",
+			"url": "https://dev.azure.com/testorg/_apis/projects/14278b73-62e7-43d8-ba8a-60e73f712d4a",
+			"state": "wellFormed",
+			"revision": 11,
+			"visibility": "organization",
+			"lastUpdateTime": "2021-08-27T18:43:46.54Z"
+		},
+		"uri": "vstfs:///Build/Build/1",
+		"sourceBranch": "refs/heads/main",
+		"sourceVersion": "109c90cd4d77137ae02051c49619d79ec03118d0",
+		"queue": {
+			"id": 8,
+			"name": "Hosted Ubuntu 1604",
+			"pool": {
+				"id": 8,
+				"name": "Hosted Ubuntu 1604",
+				"isHosted": true
+			}
+		},
+		"priority": "normal",
+		"reason": "individualCI",
+		"requestedFor": {
+			"displayName": "Yong Yan",
+			"url": "https://spsprodwus21.vssps.visualstudio.com/A20fd7b07-e499-4fa2-b4c4-022f12f04381/_apis/Identities/9efe8780-49e4-4671-9c1b-8633bbac4fa6",
+			"_links": {
+				"avatar": {
+					"href": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk"
+				}
+			},
+			"id": "9efe8780-49e4-4671-9c1b-8633bbac4fa6",
+			"uniqueName": "yongyan@testcompany.com",
+			"imageUrl": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk",
+			"descriptor": "aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk"
+		},
+		"requestedBy": {
+			"displayName": "Yong Yan",
+			"url": "https://spsprodwus21.vssps.visualstudio.com/A20fd7b07-e499-4fa2-b4c4-022f12f04381/_apis/Identities/9efe8780-49e4-4671-9c1b-8633bbac4fa6",
+			"_links": {
+				"avatar": {
+					"href": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk"
+				}
+			},
+			"id": "9efe8780-49e4-4671-9c1b-8633bbac4fa6",
+			"uniqueName": "yongyan@testcompany.com",
+			"imageUrl": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk",
+			"descriptor": "aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk"
+		},
+		"lastChangedDate": "2021-08-27T19:40:51.383Z",
+		"lastChangedBy": {
+			"displayName": "testcompany.VisualStudio.Services.TFS",
+			"url": "https://spsprodwus21.vssps.visualstudio.com/A20fd7b07-e499-4fa2-b4c4-022f12f04381/_apis/Identities/00000002-0000-8888-8000-000000000000",
+			"_links": {
+				"avatar": {
+					"href": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/s2s.MDAwMDAwMDItMDAwMC04ODg4LTgwMDAtMDAwMDAwMDAwMDAwQDJjODk1OTA4LTA0ZTAtNDk1Mi04OWZkLTU0YjAwNDZkNjI4OA"
+				}
+			},
+			"id": "00000002-0000-8888-8000-000000000000",
+			"uniqueName": "00000002-0000-8888-8000-000000000000@2c895908-04e0-4952-89fd-54b0046d6288",
+			"imageUrl": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/s2s.MDAwMDAwMDItMDAwMC04ODg4LTgwMDAtMDAwMDAwMDAwMDAwQDJjODk1OTA4LTA0ZTAtNDk1Mi04OWZkLTU0YjAwNDZkNjI4OA",
+			"descriptor": "s2s.MDAwMDAwMDItMDAwMC04ODg4LTgwMDAtMDAwMDAwMDAwMDAwQDJjODk1OTA4LTA0ZTAtNDk1Mi04OWZkLTU0YjAwNDZkNjI4OA"
+		},
+		"orchestrationPlan": {
+			"planId": "88a6ae10-b808-44e8-8dc5-79682a6d2013"
+		},
+		"logs": {
+			"id": 0,
+			"type": "Container",
+			"url": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/builds/1/logs"
+		},
+		"repository": {
+			"id": "3ad37014-fdbd-4c8d-b726-682ba3362303",
+			"type": "TfsGit",
+			"name": "AdoScannerTest",
+			"url": "https://dev.azure.com/testorg/AdoScannerTest/_git/AdoScannerTest",
+			"clean": null,
+			"checkoutSubmodules": false
+		},
+		"keepForever": false,
+		"retainedByRelease": false,
+		"triggeredByBuild": null
+	},
+	"latestCompletedBuild": {
+		"_links": {
+			"self": {
+				"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/Builds/1"
+			},
+			"web": {
+				"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_build/results?buildId=1"
+			},
+			"sourceVersionDisplayUri": {
+				"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/builds/1/sources"
+			},
+			"timeline": {
+				"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/builds/1/Timeline"
+			},
+			"badge": {
+				"href": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/status/1"
+			}
+		},
+		"properties": {},
+		"tags": [],
+		"validationResults": [],
+		"plans": [
+			{
+				"planId": "88a6ae10-b808-44e8-8dc5-79682a6d2013"
+			}
+		],
+		"triggerInfo": {
+			"ci.sourceBranch": "main",
+			"ci.sourceSha": "109c90cd4d77137ae02051c49619d79ec03118d0",
+			"ci.message": "Set up CI with Azure Pipelines"
+		},
+		"id": 1,
+		"buildNumber": "20210827.1",
+		"status": "completed",
+		"result": "succeeded",
+		"queueTime": "2021-08-27T19:40:23.7274913Z",
+		"startTime": "2021-08-27T19:40:39.3068828Z",
+		"finishTime": "2021-08-27T19:40:50.8798243Z",
+		"url": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/Builds/1",
+		"definition": {
+			"drafts": [],
+			"id": 1,
+			"name": "AdoScannerTest",
+			"url": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/Definitions/1?revision=1",
+			"uri": "vstfs:///Build/Definition/1",
+			"path": "\\",
+			"type": "build",
+			"queueStatus": "enabled",
+			"revision": 1,
+			"project": {
+				"id": "14278b73-62e7-43d8-ba8a-60e73f712d4a",
+				"name": "AdoScannerTest",
+				"url": "https://dev.azure.com/testorg/_apis/projects/14278b73-62e7-43d8-ba8a-60e73f712d4a",
+				"state": "wellFormed",
+				"revision": 11,
+				"visibility": "organization",
+				"lastUpdateTime": "2021-08-27T18:43:46.54Z"
+			}
+		},
+		"buildNumberRevision": 1,
+		"project": {
+			"id": "14278b73-62e7-43d8-ba8a-60e73f712d4a",
+			"name": "AdoScannerTest",
+			"url": "https://dev.azure.com/testorg/_apis/projects/14278b73-62e7-43d8-ba8a-60e73f712d4a",
+			"state": "wellFormed",
+			"revision": 11,
+			"visibility": "organization",
+			"lastUpdateTime": "2021-08-27T18:43:46.54Z"
+		},
+		"uri": "vstfs:///Build/Build/1",
+		"sourceBranch": "refs/heads/main",
+		"sourceVersion": "109c90cd4d77137ae02051c49619d79ec03118d0",
+		"queue": {
+			"id": 8,
+			"name": "Hosted Ubuntu 1604",
+			"pool": {
+				"id": 8,
+				"name": "Hosted Ubuntu 1604",
+				"isHosted": true
+			}
+		},
+		"priority": "normal",
+		"reason": "individualCI",
+		"requestedFor": {
+			"displayName": "Yong Yan",
+			"url": "https://spsprodwus21.vssps.visualstudio.com/A20fd7b07-e499-4fa2-b4c4-022f12f04381/_apis/Identities/9efe8780-49e4-4671-9c1b-8633bbac4fa6",
+			"_links": {
+				"avatar": {
+					"href": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk"
+				}
+			},
+			"id": "9efe8780-49e4-4671-9c1b-8633bbac4fa6",
+			"uniqueName": "yongyan@testcompany.com",
+			"imageUrl": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk",
+			"descriptor": "aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk"
+		},
+		"requestedBy": {
+			"displayName": "Yong Yan",
+			"url": "https://spsprodwus21.vssps.visualstudio.com/A20fd7b07-e499-4fa2-b4c4-022f12f04381/_apis/Identities/9efe8780-49e4-4671-9c1b-8633bbac4fa6",
+			"_links": {
+				"avatar": {
+					"href": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk"
+				}
+			},
+			"id": "9efe8780-49e4-4671-9c1b-8633bbac4fa6",
+			"uniqueName": "yongyan@testcompany.com",
+			"imageUrl": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk",
+			"descriptor": "aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk"
+		},
+		"lastChangedDate": "2021-08-27T19:40:51.383Z",
+		"lastChangedBy": {
+			"displayName": "testcompany.VisualStudio.Services.TFS",
+			"url": "https://spsprodwus21.vssps.visualstudio.com/A20fd7b07-e499-4fa2-b4c4-022f12f04381/_apis/Identities/00000002-0000-8888-8000-000000000000",
+			"_links": {
+				"avatar": {
+					"href": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/s2s.MDAwMDAwMDItMDAwMC04ODg4LTgwMDAtMDAwMDAwMDAwMDAwQDJjODk1OTA4LTA0ZTAtNDk1Mi04OWZkLTU0YjAwNDZkNjI4OA"
+				}
+			},
+			"id": "00000002-0000-8888-8000-000000000000",
+			"uniqueName": "00000002-0000-8888-8000-000000000000@2c895908-04e0-4952-89fd-54b0046d6288",
+			"imageUrl": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/s2s.MDAwMDAwMDItMDAwMC04ODg4LTgwMDAtMDAwMDAwMDAwMDAwQDJjODk1OTA4LTA0ZTAtNDk1Mi04OWZkLTU0YjAwNDZkNjI4OA",
+			"descriptor": "s2s.MDAwMDAwMDItMDAwMC04ODg4LTgwMDAtMDAwMDAwMDAwMDAwQDJjODk1OTA4LTA0ZTAtNDk1Mi04OWZkLTU0YjAwNDZkNjI4OA"
+		},
+		"orchestrationPlan": {
+			"planId": "88a6ae10-b808-44e8-8dc5-79682a6d2013"
+		},
+		"logs": {
+			"id": 0,
+			"type": "Container",
+			"url": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/builds/1/logs"
+		},
+		"repository": {
+			"id": "3ad37014-fdbd-4c8d-b726-682ba3362303",
+			"type": "TfsGit",
+			"name": "AdoScannerTest",
+			"url": "https://dev.azure.com/testorg/AdoScannerTest/_git/AdoScannerTest",
+			"clean": null,
+			"checkoutSubmodules": false
+		},
+		"keepForever": false,
+		"retainedByRelease": false,
+		"triggeredByBuild": null
+	},
+	"jobAuthorizationScope": "projectCollection",
+	"jobTimeoutInMinutes": 60,
+	"jobCancelTimeoutInMinutes": 5,
+	"process": {
+		"yamlFilename": "azure-pipelines.yml",
+		"type": 2
+	},
+	"repository": {
+		"properties": {
+			"cloneUrl": "https://testorg@dev.azure.com/testorg/AdoScannerTest/_git/AdoScannerTest",
+			"fullName": "AdoScannerTest",
+			"defaultBranch": "refs/heads/main",
+			"isFork": "False",
+			"safeRepository": "3ad37014-fdbd-4c8d-b726-682ba3362303",
+			"reportBuildStatus": "true"
+		},
+		"id": "3ad37014-fdbd-4c8d-b726-682ba3362303",
+		"type": "TfsGit",
+		"name": "AdoScannerTest",
+		"url": "https://dev.azure.com/testorg/AdoScannerTest/_git/AdoScannerTest",
+		"defaultBranch": "refs/heads/main",
+		"clean": null,
+		"checkoutSubmodules": false
+	},
+	"quality": "definition",
+	"authoredBy": {
+		"displayName": "Yong Yan",
+		"url": "https://spsprodwus21.vssps.visualstudio.com/A20fd7b07-e499-4fa2-b4c4-022f12f04381/_apis/Identities/9efe8780-49e4-4671-9c1b-8633bbac4fa6",
+		"_links": {
+			"avatar": {
+				"href": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk"
+			}
+		},
+		"id": "9efe8780-49e4-4671-9c1b-8633bbac4fa6",
+		"uniqueName": "yongyan@testcompany.com",
+		"imageUrl": "https://dev.azure.com/testorg/_apis/GraphProfile/MemberAvatars/aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk",
+		"descriptor": "aad.DDJmHTY0ZWEtYmFzNy3HOG6zLTkzMGYtZjM5MmQzMDM0MDVk"
+	},
+	"drafts": [],
+	"queue": {
+		"_links": {
+			"self": {
+				"href": "https://dev.azure.com/testorg/_apis/build/Queues/8"
+			}
+		},
+		"id": 8,
+		"name": "Hosted Ubuntu 1604",
+		"url": "https://dev.azure.com/testorg/_apis/build/Queues/8",
+		"pool": {
+			"id": 8,
+			"name": "Hosted Ubuntu 1604",
+			"isHosted": true
+		}
+	},
+	"id": 1,
+	"name": "AdoScannerTest",
+	"url": "https://dev.azure.com/testorg/14278b73-62e7-43d8-ba8a-60e73f712d4a/_apis/build/Definitions/1?revision=1",
+	"uri": "vstfs:///Build/Definition/1",
+	"path": "\\",
+	"type": "build",
+	"queueStatus": "enabled",
+	"revision": 1,
+	"createdDate": "2021-08-27T19:40:23.537Z",
+	"project": {
+		"id": "14278b73-62e7-43d8-ba8a-60e73f712d4a",
+		"name": "AdoScannerTest",
+		"url": "https://dev.azure.com/testorg/_apis/projects/14278b73-62e7-43d8-ba8a-60e73f712d4a",
+		"state": "wellFormed",
+		"revision": 11,
+		"visibility": "organization",
+		"lastUpdateTime": "2021-08-27T18:43:46.54Z"
+	}
+}

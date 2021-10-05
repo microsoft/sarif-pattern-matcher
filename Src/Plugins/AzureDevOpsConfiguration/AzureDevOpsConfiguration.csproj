@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.common.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.product.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.plugins.props" />
+
+  <PropertyGroup Label="AssemblyAttributes">
+    <TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration</RootNamespace>
+    <PackageId>Sarif.PatternMatcher.AzureDevOpsConfiguration</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="AZC102.ServiceConnectionSecurity.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="AZC102.ServiceConnectionSecurity.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="build\Sarif.PatternMatcher.AzureDevOpsConfiguration.targets">
+      <PackagePath>build\</PackagePath>
+    </Content>
+    <Content Include="AzureDevOpsConfiguration.SharedStrings.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AZC101.BuildDefinitionSecurity.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
+  </ItemGroup>
+
+  <Target Name="CopyingSpam" AfterTargets="Build">
+    <ItemGroup>
+      <SecurityFile Include="$(OutputPath)AzureDevOpsConfiguration.dll" />
+      <SpamFiles Include="AZC*.json" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\AzureDevOpsConfiguration\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(SecurityFile)" DestinationFolder="$(SolutionDir).spam\AzureDevOpsConfiguration\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" ContinueOnError="true" />
+    <Copy SourceFiles="AzureDevOpsConfiguration.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\AzureDevOpsConfiguration\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+  </Target>
+</Project>

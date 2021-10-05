@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <JsonFiles Include="$(MSBuildThisFileDirectory)..\content\AZC*.json"></JsonFiles>
+    <ConfigFile Include="$(MSBuildThisFileDirectory)..\content\AzureDevOpsConfiguration.SharedStrings.txt"></ConfigFile>
+  </ItemGroup>
+  <PropertyGroup>
+    <PluginOutputPath>$(MSBuildThisFileDirectory)..\lib\netstandard2.1</PluginOutputPath>
+  </PropertyGroup>
+
+  <Target Name="CopyUtilityScriptToProject" BeforeTargets="Build">
+    <Message Text="Copying files" />
+    <Copy
+      SourceFiles="@(JsonFiles)"
+      DestinationFolder="$(SolutionDir)\.spam\AzureDevOpsConfiguration\" />
+    <Copy
+      SourceFiles="@(JsonFiles)"
+      DestinationFolder="$(OutputPath)" />
+
+    <Copy
+      SourceFiles="@(ConfigFile)"
+      DestinationFolder="$(SolutionDir)\.spam\AzureDevOpsConfiguration\" />
+    <Copy
+      SourceFiles="@(ConfigFile)"
+      DestinationFolder="$(OutputPath)" />
+
+    <Copy
+      SourceFiles="$(PluginOutputPath)\AzureDevOpsConfiguration.dll"
+      DestinationFolder="$(SolutionDir)\.spam\AzureDevOpsConfiguration\" />
+  </Target>
+</Project>
