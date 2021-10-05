@@ -16,6 +16,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class MailChimpApiKeyValidator : DynamicValidatorBase
     {
+        internal const string ApiUri = "https://{0}.api.mailchimp.com/3.0/?fields=account_name";
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             FlexMatch secret = groups["secret"];
@@ -45,7 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 HttpClient client = CreateOrRetrieveCachedHttpClient();
                 string[] keys = secret.Split('-');
 
-                using var request = new HttpRequestMessage(HttpMethod.Get, $"https://{keys[1]}.api.mailchimp.com/3.0/?fields=account_name");
+                using var request = new HttpRequestMessage(HttpMethod.Get, string.Format(ApiUri, keys[1]));
                 request.Headers.Authorization = new AuthenticationHeaderValue("Basic", keys[0]);
 
                 using HttpResponseMessage response = client
@@ -80,7 +82,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
         }
 
-        private class Account
+        internal class Account
         {
             [JsonProperty("account_name")]
             public string AccountName { get; set; }

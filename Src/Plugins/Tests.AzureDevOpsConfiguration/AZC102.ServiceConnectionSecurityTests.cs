@@ -6,13 +6,13 @@ using Xunit.Abstractions;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration
 {
-    public class AzureDevOpsConfigurationTests : EndToEndTestsAzureDevOpsConfiguration
+    public class ServiceConnectionSecurityTests : EndToEndTestsAzureDevOpsConfiguration
     {
-        public AzureDevOpsConfigurationTests(ITestOutputHelper outputHelper) : base(outputHelper)
+        public ServiceConnectionSecurityTests(ITestOutputHelper outputHelper) : base(outputHelper)
         {
         }
 
-        protected override string RuleId => "AZC101";
+        protected override string RuleId => "AZC102";
 
         protected override string Framework => "netstandard2.0";
 
