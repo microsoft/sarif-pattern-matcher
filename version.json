@@ -3,6 +3,9 @@
   "version": "1.5.0-alpha.{height}",
   "publicReleaseRefSpec": [
     "^refs/heads/main$",
-    "^refs/heads/v\\d+(?:\\.\\d+)?$"
-  ]
+    "^refs/heads/release/v\\d+\\.\\d+\\.\\d+$"
+  ],
+  "release": {
+    "branchName": "release/v{version}"
+  }
 }
