@@ -14,7 +14,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
 
         protected override string RuleId => "AZC101";
 
-        protected override string Framework => "netstandard2.0";
+        protected override string Framework => "netstandard2.1";
 
         [Fact]
         public void AzureDevOpsConfiguration_EndToEndFunctionalTests()
