@@ -11,8 +11,8 @@
       "MatchExpressions": [
         {
           "Id": "AZC102/150",
-          "Name": "AuthZDontUseClassicConnections",
-          "Message": "[Service connection Id:{0:scanTarget}]({1:targetPath}) in organization '{2:org}' project '{3:project}' was found {4:issueDesc}\r\n{5:description}\r\n{6:recommendation}.",
+          "Name": "DoNotUseClassicConnections",
+          "Message": "[Service connection Id:{0:scanTarget}]({1:targetPath}) in organization '{2:org}' project '{3:project}' was found {4:issueDesc} {5:description} {6:recommendation}.",
           "Description": "Do not use classic Azure service connections to access a subscription.",
           "IntrafileRegexes": [
             "$AZC102.ServiceConnectionEntityType",
@@ -24,6 +24,22 @@
             "issueDesc": " is Azure Classic service connection.",
             "description": "You should use Azure resource Manager type service connection as the ARM model provides several security enhancements such as: stronger access control (RBAC), better auditing, ARM-based deployment/governance, access to managed identities, access to key vault for secrets, AAD-based authentication, support for tags and resource groups for easier security management, etc.",
             "recommendation": "Recommendation: Delete the Azure Classic service connection and create a new service connection of type 'Azure resource Manager'(i.e., ARM based) scoped to a resource/resource group in subscription"
+          }
+        },
+        {
+          "Id": "AZC102/190",
+          "Name": "DoNotGrantAllPipelinesAccess",
+          "Message": "[Service connection Id:{0:scanTarget}]({1:targetPath}) in organization '{2:org}' project '{3:project}' was scanned. {4:validatorMessage}. {5:description} {6:recommendation}.",
+          "Description": "Do not make service connection accessible to all pipelines.",
+          "IntrafileRegexes": [
+            "$AZC102.ServiceConnectionEntityType",
+            "$AZC102.ServiceConnectionId",
+            "$AdoOrganzationName",
+            "$AdoProjectName"
+          ],
+          "MessageArguments": {
+            "description": "To support security of the pipeline operations, connections must not be granted access to all pipelines. This is in keeping with the principle of least privilege because a vulnerability in components used by one pipeline can be leveraged by an attacker to attack other pipelines having access to critical resources.",
+            "recommendation": "1. Navigate to the service connections settings page for your project --> 2. Select your service connection from the list --> 3. Click on three dots --> 4. Click Security --> 5. Under 'Pipeline Permissions', click 'Restrict Permission' to avoid granting access to all pipelines and add only those pipelines that need explicit access on service connection"
           }
         }
       ]
