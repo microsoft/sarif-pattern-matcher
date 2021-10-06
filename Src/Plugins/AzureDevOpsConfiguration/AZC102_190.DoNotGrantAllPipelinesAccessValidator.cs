@@ -18,9 +18,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
 {
     public class DoNotGrantAllPipelinesAccessValidator : DynamicValidatorBase
     {
-        private static readonly string pipelinePermissionAPI = "https://{0}/{1}/_apis/pipelines/pipelinePermissions/endpoint/{2}?api-version=6.1-preview.1";
-        private static readonly string AdoPatFile = "AdoPat.txt";
+        internal const string PipelinePermissionAPI = "https://{0}/{1}/_apis/pipelines/pipelinePermissions/endpoint/{2}?api-version=6.1-preview.1";
+        internal const string NotAuthorizedMessage = "Not able to access required ADO API to check.";
+        private const string AdoPatFile = "AdoPat.txt";
         private static string adoPat = null;
+
+        internal static ValidationState VerifyResponse(string response, ref string message)
+        {
+            PipelinePermission pipelinePermission = JsonConvert.DeserializeObject<PipelinePermission>(response);
+            bool? authorized = pipelinePermission?.AllPipelines?.Authorized;
+            if (authorized != null && authorized.Value == true)
+            {
+                // its shared to all pipelines
+                message = "Was found its accssible to all pipelines.";
+                return ValidationState.Authorized;
+            }
+            else
+            {
+                return ValidationState.NoMatch;
+            }
+        }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
@@ -73,7 +90,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                 // IsValidDynamicHelper will not be called if same fingerprint combinations,
                 // do not need cache for same organization/project/seviceconnectionid combination
                 using HttpResponseMessage response = httpClient.GetAsync(
-                    string.Format(pipelinePermissionAPI, organization, project, serviceConnectionId))
+                    string.Format(PipelinePermissionAPI, organization, project, serviceConnectionId))
                     .GetAwaiter()
                     .GetResult();
 
@@ -89,7 +106,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                     case HttpStatusCode.Unauthorized:
                     case HttpStatusCode.Forbidden:
                     {
-                        message = "Not able to access required ADO API to check.";
+                        message = NotAuthorizedMessage;
                         return ValidationState.Unauthorized;
                     }
 
@@ -105,22 +122,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
             }
         }
 
-        private static ValidationState VerifyResponse(string response, ref string message)
-        {
-            PipelinePermission pipelinePermission = JsonConvert.DeserializeObject<PipelinePermission>(response);
-            bool? authorized = pipelinePermission?.AllPipelines?.Authorized;
-            if (authorized != null && authorized.Value == true)
-            {
-                // its shared to all pipelines
-                message = "Was found its accssible to all pipelines.";
-                return ValidationState.Authorized;
-            }
-            else
-            {
-                return ValidationState.NoMatch;
-            }
-        }
-
         private static string ReadPatFromFile(string fileName)
         {
             // exception will be catched by caller
@@ -129,6 +130,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                 fileName);
 
             return System.IO.File.ReadAllText(path);
+        }
+
+        // used by unit tests
+        internal void SetAdoPat(string pat)
+        {
+            adoPat = pat;
         }
 
         // ignore other properties since we do not use them now.
