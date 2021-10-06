@@ -14,7 +14,7 @@
           "rules": [
             {
               "id": "AZC102/150",
-              "name": "AuthZDontUseClassicConnections",
+              "name": "DoNotUseClassicConnections",
               "fullDescription": {
                 "text": "Do not use classic Azure service connections to access a subscription."
               },
@@ -57,7 +57,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102.serviceconnection.DontUseClassicConnections.json",
+                  "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

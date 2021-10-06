@@ -16,6 +16,7 @@
                 <ModulePath>.*\Strings.Interop.dll$</ModulePath>
                 <ModulePath>.*\SalModernization.dll$</ModulePath>
                 <ModulePath>.*\Sarif.PatternMatcher.dll$</ModulePath>
+                <ModulePath>.*\AzureDevOpsConfiguration.dll$</ModulePath>
                 <ModulePath>.*\Sarif.PatternMatcher.Cli.dll$</ModulePath>
                 <ModulePath>.*\Sarif.PatternMatcher.Sdk.dll$</ModulePath>
                 <ModulePath>.*\Sarif.PatternMatcher.Function.dll$</ModulePath>
@@ -24,6 +25,7 @@
                 <ModulePath>.*\Tests.Security.dll$</ModulePath>
                 <ModulePath>.*\Tests.SalModernization.dll$</ModulePath>
                 <ModulePath>.*\Test.UnitTests.RE2.Managed.dll$</ModulePath>
+                <ModulePath>.*\Tests.AzureDevOpsConfiguration.dll$</ModulePath>
                 <ModulePath>.*\Test.UnitTests.Strings.Interop.dll$</ModulePath>
                 <ModulePath>.*\Test.UnitTests.Sarif.PatternMatcher.dll$</ModulePath>
                 <ModulePath>.*\Test.UnitTests.Sarif.PatternMatcher.Cli.dll$</ModulePath>
@@ -43,7 +45,7 @@
               </Exclude>
             </Attributes>
 
-             <!-- We recommend you do not change the following values: -->
+            <!-- We recommend you do not change the following values: -->
 
             <!-- Set this to True to collect coverage information for functions marked with the "SecuritySafeCritical" attribute. Instead of writing directly into a memory location from such functions, code coverage inserts a probe that redirects to another function, which in turns writes into memory. -->
             <UseVerifiableInstrumentation>True</UseVerifiableInstrumentation>
