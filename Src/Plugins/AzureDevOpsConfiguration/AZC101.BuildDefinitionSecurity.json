@@ -12,7 +12,7 @@
         {
           "Id": "AZC101/240",
           "Name": "DontMakeSecretsAvailableToForkedBuilds",
-          "Message": "[Build Definition Id:{0:scanTarget}]({1:targetPath}) in organization '{2:org}' project '{3:project}' was found {4:issueDesc} {5:description} {6:recommendation}.",
+          "Message": "[Build Definition Id:{0:scanTarget}]({1:scanTargetPath}) in organization '{2:org}' project '{3:project}' was found {4:issueDesc} {5:description} {6:recommendation}.",
           "Description": "Do not make secrets available to builds for fork of public repository.",
           "IntrafileRegexes": [
             "$AZC101.BuildDefinitionEntityType",

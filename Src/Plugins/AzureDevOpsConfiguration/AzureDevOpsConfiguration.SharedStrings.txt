@@ -17,15 +17,15 @@
 
 # Common patterns for file allow and deny lists.
 #
-$BuildDefinitionFiles=(?i)(^https?:\/\/dev.azure.com).*(\/_apis\/build\/definitions\/)|(azc101\.builddefinition\..*json$)
-$ServiceConnectionFiles=(?i)(^https?:\/\/dev.azure.com).*(\/_apis\/contribution\/HierarchyQuery)|(azc102\.serviceconnection\..*json$)
+$BuildDefinitionFiles=(?i)(^https?:\/\/dev\.azure\.com).*(\/_apis\/build\/definitions\/)|(azc101\.builddefinition\..*json$)
+$ServiceConnectionFiles=(?i)(^https?:\/\/dev\.azure\.com).*(\/_settings\/adminservices)|(azc102[_\d]*\.serviceconnection\..*json$)
 
-$AdoOrganzationName=(?i)"_originatingUri"\s*:\s*"https?:\/\/(dev\.azure\.com\/)?(?P<org>.*?)(\/|\.visualstudio\.com)
+$AdoOrganzationName=(?i)"_accountName"\s*:\s*"(?P<org>.*?)"
 $AdoProjectName=(?i)"_projectId"\s*:\s*"(?P<project>.*?)"
 
-$AZC101.BuildDefinitionEntityType=(?i)(?P<type>"EtlEntity"\s*:\s*"builddefinitions")
-$AZC102.ServiceConnectionEntityType=(?i)(?P<type>"EtlEntity"\s*:\s*"serviceendpoints")
+$AZC101.BuildDefinitionEntityType=(?i)(?P<type>"uri"\s*:\s*"vstfs:///Build/Definition/)
+$AZC102.ServiceConnectionEntityType=(?i)(?P<type>"serviceEndpointProjectReferences")
 
 $AZC101/240.PullRequestTriggertype=(?i)(?P<triggertype>"triggerType"\s*:\s*"pullRequest")
-$AZC101/240.ForkedEnabled=(?i)(?P<fork>"forks"\s*:\s*{\s*"enabled"\s*:\s*true\s*,\s*"allowSecrets"\s*:\s*true\s*})
-$AZC102/150.AzureClassicType=(?i)(?P<sctype>"type"\s*:\s*"azure")
+$AZC101/240.ForkedEnabled=(?i)(?P<secret>"forks"\s*:\s*{\s*"enabled"\s*:\s*true\s*,\s*"allowSecrets"\s*:\s*true\s*})
+$AZC102/150.AzureClassicType=(?i)(?P<secret>"type"\s*:\s*"azure")

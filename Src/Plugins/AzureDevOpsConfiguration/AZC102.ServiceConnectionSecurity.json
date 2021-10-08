@@ -12,7 +12,7 @@
         {
           "Id": "AZC102/150",
           "Name": "AuthZDontUseClassicConnections",
-          "Message": "[Service connection Id:{0:scanTarget}]({1:targetPath}) in organization '{2:org}' project '{3:project}' was found {4:issueDesc}\r\n{5:description}\r\n{6:recommendation}.",
+          "Message": "[Service connection Id:{0:scanTarget}]({1:scanTargetPath}) in organization '{2:org}' project '{3:project}' was found {4:issueDesc}\r\n{5:description}\r\n{6:recommendation}.",
           "Description": "Do not use classic Azure service connections to access a subscription.",
           "IntrafileRegexes": [
             "$AZC102.ServiceConnectionEntityType",
