@@ -26,7 +26,7 @@
                   "text": "'{0}' is {1}{2}{3}{4}{5}."
                 }
               },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+              "helpUri": "https://stripe.com/docs/keys"
             },
             {
               "id": "SEC101/019",
@@ -42,7 +42,7 @@
                   "text": "'{0}' is {1}{2}{3}{4}{5}."
                 }
               },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+              "helpUri": "https://www.eventbrite.com/platform/api#/introduction/authentication"
             }
           ]
         }
