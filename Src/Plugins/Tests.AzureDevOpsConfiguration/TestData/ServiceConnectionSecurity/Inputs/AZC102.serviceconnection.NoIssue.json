@@ -17,9 +17,10 @@
 	"EtlIdentity": "yy@testcompany.com",
 	"EtlRecordSha": "231f1d0ccebf1dbb0c20945d70f2b60693e6aa412e08e52eae120c3bfda9b724",
 	"id": "27843de2-2bea-45ab-b677-27ea718b557e",
+	"data": {},
 	"name": "test-service",
-	"type": "azure",
-	"url": "https://management.azure.com/",
+	"type": "PRSS",
+	"url": "https://api.esrp.test.com/api/v2",
 	"createdBy": {
 		"displayName": "Yong Yan",
 		"url": "https://abc.def.visualstudio.com/Abc0d6a57-7ea8-4b16-ba2a-86cfb778f6b4/_apis/Identities/fd421bfc-8eee-40f2-bcb0-64e08c5e6115",
@@ -33,7 +34,7 @@
 		"imageUrl": "https://testorg.visualstudio.com/_apis/GraphProfile/MemberAvatars/aad.NmVmZ4AENjGtMGViYy03ZWQ1LTk0MzkhZTQ0NMI4MjQ0ZGJl",
 		"descriptor": "aad.NmVmZ4AENjGtMGViYy03ZWQ1LTk0MzkhZTQ0NMI4MjQ0ZGJl"
 	},
-	"description": "",
+	"description": "Service connection used for SARIF related builds",
 	"authorization": {
 		"parameters": {
 			"tenantid": "8791732d-6b82-4be1-a353-35dc64da977f",

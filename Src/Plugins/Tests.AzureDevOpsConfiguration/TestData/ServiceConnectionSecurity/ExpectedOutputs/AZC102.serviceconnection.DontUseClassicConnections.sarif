@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "runs": [
     {
-      "tool": {
+      "tool": { 
         "driver": {
           "name": "testhost",
           "organization": "Microsoft Corporation",
