@@ -12,15 +12,17 @@
         {
           "Id": "AZC102/150",
           "Name": "AuthZDontUseClassicConnections",
-          "Message": "[Service connection Id:{0:scanTarget}]({1:scanTargetPath}) in organization '{2:org}' project '{3:project}' was found {4:issueDesc}\r\n{5:description}\r\n{6:recommendation}.",
+          "Message": "[Service connection Id:{0:serviceConnectionId}]({1:adoDomain}/{2:org}/{3:project}/_settings/adminservices?resourceId={0:serviceConnectionId}) in organization '{2:org}' project '{3:project}' was found {4:issueDesc} {5:description} {6:recommendation}.",
           "Description": "Do not use classic Azure service connections to access a subscription.",
           "IntrafileRegexes": [
             "$AZC102.ServiceConnectionEntityType",
+            "$AZC102.ServiceConnectionId",
             "$AZC102/150.AzureClassicType",
             "$AdoOrganzationName",
             "$AdoProjectName"
           ],
           "MessageArguments": {
+            "adoDomain": "https://dev.azure.com",
             "issueDesc": " is Azure Classic service connection.",
             "description": "You should use Azure resource Manager type service connection as the ARM model provides several security enhancements such as: stronger access control (RBAC), better auditing, ARM-based deployment/governance, access to managed identities, access to key vault for secrets, AAD-based authentication, support for tags and resource groups for easier security management, etc.",
             "recommendation": "Recommendation: Delete the Azure Classic service connection and create a new service connection of type 'Azure resource Manager'(i.e., ARM based) scoped to a resource/resource group in subscription"
