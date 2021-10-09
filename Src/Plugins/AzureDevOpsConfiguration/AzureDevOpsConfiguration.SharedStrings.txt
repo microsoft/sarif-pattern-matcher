@@ -25,6 +25,7 @@ $AdoProjectName=(?i)"_projectId"\s*:\s*"(?P<project>.*?)"
 
 $AZC101.BuildDefinitionEntityType=(?i)(?P<type>"uri"\s*:\s*"vstfs:///Build/Definition/)
 $AZC102.ServiceConnectionEntityType=(?i)(?P<type>"serviceEndpointProjectReferences")
+$AZC102.ServiceConnectionId=(?iU)^{[\s\S]*"id"\s*:\s*"(?P<serviceConnectionId>[[0-9A-F]{8}[-]?(?:[0-9A-F]{4}[-]?){3}[0-9A-F]{12})"
 
 $AZC101/240.PullRequestTriggertype=(?i)(?P<triggertype>"triggerType"\s*:\s*"pullRequest")
 $AZC101/240.ForkedEnabled=(?i)(?P<secret>"forks"\s*:\s*{\s*"enabled"\s*:\s*true\s*,\s*"allowSecrets"\s*:\s*true\s*})
