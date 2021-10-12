@@ -7,7 +7,6 @@
       "Name": "ServiceConnectionShouldBeSecure",
       "Level": "Error",
       "Description": "Make sure service connections in AzureDevOps are secure",
-      "FileNameAllowRegex": "$ServiceConnectionFiles",
       "MatchExpressions": [
         {
           "Id": "AZC102/150",
@@ -18,7 +17,7 @@
             "$AZC102.ServiceConnectionEntityType",
             "$AZC102.ServiceConnectionId",
             "$AZC102/150.AzureClassicType",
-            "$AdoOrganzationName",
+            "$AdoOrganizationName",
             "$AdoProjectName"
           ],
           "MessageArguments": {

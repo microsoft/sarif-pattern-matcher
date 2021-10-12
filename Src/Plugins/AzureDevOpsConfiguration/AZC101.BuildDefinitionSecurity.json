@@ -7,7 +7,6 @@
       "Name": "BuildDefinitionShouldBeSecure",
       "Level": "Error",
       "Description": "Make sure build definitions in AzureDevOps are secure",
-      "FileNameAllowRegex": "$BuildDefinitionFiles",
       "MatchExpressions": [
         {
           "Id": "AZC101/240",
@@ -16,9 +15,9 @@
           "Description": "Do not make secrets available to builds for fork of public repository.",
           "IntrafileRegexes": [
             "$AZC101.BuildDefinitionEntityType",
-            "$AZC101/240.PullRequestTriggertype",
+            "$AZC101/240.PullRequestTriggerType",
             "$AZC101/240.ForkedEnabled",
-            "$AdoOrganzationName",
+            "$AdoOrganizationName",
             "$AdoProjectName"
           ],
           "MessageArguments": {
@@ -26,7 +25,8 @@
             "issueDesc": "its build pipeline secrets available for builds of forks.",
             "description": "For GitHub public repositories, it is possible that people from outside the organization can create forks and run builds on the forked repo. In such a case, if this setting is wrongly left enabled, outsiders can get access to build pipeline secrets that were meant to be internal.",
             "recommendation": "Recommendation: 1. Navigate to the build pipeline using resource link -->  2. Triggers --> 3. Pull request validation --> 4. Forks --> 5. Uncheck 'Make secrets available to builds of forks'"
-          }
+          },
+          "HelpUri": "https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#important-security-considerations"
         }
       ]
     }
