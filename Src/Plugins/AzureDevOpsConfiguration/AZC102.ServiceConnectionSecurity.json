@@ -35,7 +35,7 @@
           "IntrafileRegexes": [
             "$AZC102.ServiceConnectionEntityType",
             "$AZC102.ServiceConnectionId",
-            "$AdoOrganzationName",
+            "$AdoOrganizationName",
             "$AdoProjectName"
           ],
           "MessageArguments": {

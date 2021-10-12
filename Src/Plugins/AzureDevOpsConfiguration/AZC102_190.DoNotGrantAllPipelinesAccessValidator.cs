@@ -52,9 +52,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
             {
                 Fingerprint = new Fingerprint
                 {
-                    Host = org.Value.String,
-                    Resource = project.Value.String,
-                    Id = serviceConnectionId.Value.String,
+                    Host = org.Value,
+                    Resource = project.Value,
+                    Id = serviceConnectionId.Value,
                     Platform = nameof(AssetPlatform.AzureDevOps),
                 },
                 ValidationState = ValidationState.Unknown,
@@ -80,17 +80,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                 }
 
                 HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
+                var sendRequest = new HttpRequestMessage(
+                                      HttpMethod.Get,
+                                      string.Format(PipelinePermissionAPI, organization, project, serviceConnectionId));
+
+                sendRequest.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                sendRequest.Headers.Authorization = new AuthenticationHeaderValue("Basic",
                     Convert.ToBase64String(
-                        ASCIIEncoding.ASCII.GetBytes(
+                        Encoding.ASCII.GetBytes(
                             string.Format("{0}:{1}", string.Empty, adoPat))));
 
                 // since DynamicValidatorBase already has a cache for <fingerprint, result>
                 // IsValidDynamicHelper will not be called if same fingerprint combinations,
                 // do not need cache for same organization/project/seviceconnectionid combination
-                using HttpResponseMessage response = httpClient.GetAsync(
-                    string.Format(PipelinePermissionAPI, organization, project, serviceConnectionId))
+                using HttpResponseMessage response = httpClient
+                    .SendAsync(sendRequest)
                     .GetAwaiter()
                     .GetResult();
 
@@ -98,9 +102,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                 {
                     case HttpStatusCode.OK:
                     {
-                        return VerifyResponse(
-                            response.Content.ReadAsStringAsync().GetAwaiter().GetResult(),
-                            ref message);
+                        return VerifyResponse(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(),
+                                              ref message);
                     }
 
                     case HttpStatusCode.Unauthorized:

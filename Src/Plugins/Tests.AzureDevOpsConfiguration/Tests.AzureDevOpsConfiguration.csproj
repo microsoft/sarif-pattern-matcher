@@ -8,14 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Moq" Version="4.15.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\Tests.Security\EndToEndTests.cs" />
+    <Compile Include="..\Tests.Security\Helpers\HttpMockHelper.cs" />
 
     <ProjectReference Include="..\AzureDevOpsConfiguration\AzureDevOpsConfiguration.csproj" />
     <ProjectReference Include="..\..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
     <ProjectReference Include="..\..\sarif-sdk\src\Sarif\Sarif.csproj" />
     <ProjectReference Include="..\..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
     <ProjectReference Include="..\..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
-    <ProjectReference Include="..\Tests.Security\Tests.Security.csproj" />
   </ItemGroup>
 
   <ItemGroup>

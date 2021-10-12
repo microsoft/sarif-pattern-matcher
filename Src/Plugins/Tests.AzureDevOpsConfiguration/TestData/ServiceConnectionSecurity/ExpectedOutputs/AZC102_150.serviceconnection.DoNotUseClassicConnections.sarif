@@ -27,6 +27,22 @@
                 }
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            },
+            {
+              "id": "AZC102/190",
+              "name": "DoNotGrantAllPipelinesAccess",
+              "fullDescription": {
+                "text": "Do not make service connection accessible to all pipelines."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "[Service connection Id:{0}]({1}) in organization '{2}' project '{3}' was scanned. {4}. {5} {6}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             }
           ]
         }
@@ -82,6 +98,51 @@
             "ValidationFingerprint/v2": "{\"secret\":\"\\\"type\\\": \\\"azure\\\"\"}"
           },
           "rank": 46.29
+        },
+        {
+          "ruleId": "AZC102/190",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
+              "",
+              "testorg.visualstudio.com",
+              "f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)",
+              "To support security of the pipeline operations, connections must not be granted access to all pipelines. This is in keeping with the principle of least privilege because a vulnerability in components used by one pipeline can be leveraged by an attacker to attack other pipelines having access to critical resources.",
+              "1. Navigate to the service connections settings page for your project --> 2. Select your service connection from the list --> 3. Click on three dots --> 4. Click Security --> 5. Under 'Pipeline Permissions', click 'Restrict Permission' to avoid granting access to all pipelines and add only those pipelines that need explicit access on service connection"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 9,
+                  "endLine": 65,
+                  "endColumn": 43,
+                  "charOffset": 825,
+                  "charLength": 1636,
+                  "snippet": {
+                    "text": "27843de2-2bea-45ab-b677-27ea718b557e\",\r\n\t\"name\": \"test-service\",\r\n\t\"type\": \"azure\",\r\n\t\"url\": \"https://management.azure.com/\",\r\n\t\"createdBy\": {\r\n\t\t\"displayName\": \"Yong Yan\",\r\n\t\t\"url\": \"https://spsprodwcus0.vssps.visualstudio.com/Abc0d6a57-7ea8-4b16-ba2a-86cfb778f6b4/_apis/Identities/fd421bfc-8eee-40f2-bcb0-64e08c5e6115\",\r\n\t\t\"_links\": {\r\n\t\t\t\"avatar\": {\r\n\t\t\t\t\"href\": \"https://testorg.visualstudio.com/_apis/GraphProfile/MemberAvatars/aad.NmVmZ4AENjGtMGViYy03ZWQ1LTk0MzkhZTQ0NMI4MjQ0ZGJl\"\r\n\t\t\t}\r\n\t\t},\r\n\t\t\"id\": \"fd421bfc-8eee-40f2-bcb0-64e08c5e6115\",\r\n\t\t\"uniqueName\": \"yy@testcompany.com\",\r\n\t\t\"imageUrl\": \"https://testorg.visualstudio.com/_apis/GraphProfile/MemberAvatars/aad.NmVmZ4AENjGtMGViYy03ZWQ1LTk0MzkhZTQ0NMI4MjQ0ZGJl\",\r\n\t\t\"descriptor\": \"aad.NmVmZ4AENjGtMGViYy03ZWQ1LTk0MzkhZTQ0NMI4MjQ0ZGJl\"\r\n\t},\r\n\t\"description\": \"\",\r\n\t\"authorization\": {\r\n\t\t\"parameters\": {\r\n\t\t\t\"tenantid\": \"8791732d-6b82-4be1-a353-35dc64da977f\",\r\n\t\t\t\"serviceprincipalid\": \"5c40a626-036e-4606-a08f-a7f2165e2ce0\",\r\n\t\t\t\"authenticationType\": \"spnKey\",\r\n\t\t\t\"scope\": \"/subscriptions/5004ae11-7a14-44c4-8496-7f8ca83668c7/resourcegroups/testproj\"\r\n\t\t},\r\n\t\t\"scheme\": \"ServicePrincipal\"\r\n\t},\r\n\t\"isShared\": false,\r\n\t\"isReady\": true,\r\n\t\"operationStatus\": {\r\n\t\t\"state\": \"Ready\",\r\n\t\t\"statusMessage\": \"\"\r\n\t},\r\n\t\"owner\": \"Library\",\r\n\t\"serviceEndpointProjectReferences\": [\r\n\t\t{\r\n\t\t\t\"projectReference\": {\r\n\t\t\t\t\"id\": \"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\",\r\n\t\t\t\t\"name\": \"TestProject\"\r\n\t\t\t},\r\n\t\t\t\"name\": \"test-service\",\r\n\t\t\t\"description\": \"\"\r\n\t\t}\r\n\t],\r\n\t\"_projectId\": \"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\",\r\n\t\"_projectName\": \"TestProject\",\r\n\t\"_accountName\": \"testorg.visualstudio.com"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=testorg.visualstudio.com][id=27843de2-2bea-45ab-b677-27ea718b557e][platform=AzureDevOps][resource=f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f]",
+            "ValidationFingerprint/v1": "[host=testorg.visualstudio.com][id=27843de2-2bea-45ab-b677-27ea718b557e][resource=f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f]",
+            "ValidationFingerprintHash/v1": "e4d78c2bd639c80de9a75619e350d6f2f942eefdd202afe01365a0fcda26597e",
+            "AssetFingerprint/v2": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"platform\":\"AzureDevOps\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}"
+          }
         }
       ],
       "columnKind": "utf16CodeUnits"

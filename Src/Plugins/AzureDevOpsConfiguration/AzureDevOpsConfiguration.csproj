@@ -34,7 +34,7 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 

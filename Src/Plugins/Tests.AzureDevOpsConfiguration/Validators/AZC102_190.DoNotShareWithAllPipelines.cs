@@ -27,7 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
     public class DoNotGrantAllPipelinesAccessValidatorTests
     {
         [Fact]
-        public void NpmAuthorTokenValidator_MockHttpTests()
+        public void DoNotGrantAllPipelinesAccessValidator_MockHttpTests()
         {
             var fingerprint = new Fingerprint
             {
@@ -39,11 +39,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
 
             var defaultRequest = new HttpRequestMessage(
                 HttpMethod.Get,
-                string.Format(
-                    DoNotGrantAllPipelinesAccessValidator.PipelinePermissionAPI,
-                    fingerprint.Host,
-                    fingerprint.Resource,
-                    fingerprint.Id));
+                string.Format(PipelinePermissionAPI,
+                              fingerprint.Host,
+                              fingerprint.Resource,
+                              fingerprint.Id));
 
             defaultRequest.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             defaultRequest.Headers.Authorization = new AuthenticationHeaderValue("Basic",
