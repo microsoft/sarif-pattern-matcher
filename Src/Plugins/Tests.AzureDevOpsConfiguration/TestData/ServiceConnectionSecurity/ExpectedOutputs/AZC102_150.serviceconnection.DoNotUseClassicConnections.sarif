@@ -125,12 +125,12 @@
                 "region": {
                   "startLine": 19,
                   "startColumn": 9,
-                  "endLine": 65,
-                  "endColumn": 43,
+                  "endLine": 19,
+                  "endColumn": 45,
                   "charOffset": 825,
-                  "charLength": 1636,
+                  "charLength": 36,
                   "snippet": {
-                    "text": "27843de2-2bea-45ab-b677-27ea718b557e\",\r\n\t\"name\": \"test-service\",\r\n\t\"type\": \"azure\",\r\n\t\"url\": \"https://management.azure.com/\",\r\n\t\"createdBy\": {\r\n\t\t\"displayName\": \"Yong Yan\",\r\n\t\t\"url\": \"https://spsprodwcus0.vssps.visualstudio.com/Abc0d6a57-7ea8-4b16-ba2a-86cfb778f6b4/_apis/Identities/fd421bfc-8eee-40f2-bcb0-64e08c5e6115\",\r\n\t\t\"_links\": {\r\n\t\t\t\"avatar\": {\r\n\t\t\t\t\"href\": \"https://testorg.visualstudio.com/_apis/GraphProfile/MemberAvatars/aad.NmVmZ4AENjGtMGViYy03ZWQ1LTk0MzkhZTQ0NMI4MjQ0ZGJl\"\r\n\t\t\t}\r\n\t\t},\r\n\t\t\"id\": \"fd421bfc-8eee-40f2-bcb0-64e08c5e6115\",\r\n\t\t\"uniqueName\": \"yy@testcompany.com\",\r\n\t\t\"imageUrl\": \"https://testorg.visualstudio.com/_apis/GraphProfile/MemberAvatars/aad.NmVmZ4AENjGtMGViYy03ZWQ1LTk0MzkhZTQ0NMI4MjQ0ZGJl\",\r\n\t\t\"descriptor\": \"aad.NmVmZ4AENjGtMGViYy03ZWQ1LTk0MzkhZTQ0NMI4MjQ0ZGJl\"\r\n\t},\r\n\t\"description\": \"\",\r\n\t\"authorization\": {\r\n\t\t\"parameters\": {\r\n\t\t\t\"tenantid\": \"8791732d-6b82-4be1-a353-35dc64da977f\",\r\n\t\t\t\"serviceprincipalid\": \"5c40a626-036e-4606-a08f-a7f2165e2ce0\",\r\n\t\t\t\"authenticationType\": \"spnKey\",\r\n\t\t\t\"scope\": \"/subscriptions/5004ae11-7a14-44c4-8496-7f8ca83668c7/resourcegroups/testproj\"\r\n\t\t},\r\n\t\t\"scheme\": \"ServicePrincipal\"\r\n\t},\r\n\t\"isShared\": false,\r\n\t\"isReady\": true,\r\n\t\"operationStatus\": {\r\n\t\t\"state\": \"Ready\",\r\n\t\t\"statusMessage\": \"\"\r\n\t},\r\n\t\"owner\": \"Library\",\r\n\t\"serviceEndpointProjectReferences\": [\r\n\t\t{\r\n\t\t\t\"projectReference\": {\r\n\t\t\t\t\"id\": \"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\",\r\n\t\t\t\t\"name\": \"TestProject\"\r\n\t\t\t},\r\n\t\t\t\"name\": \"test-service\",\r\n\t\t\t\"description\": \"\"\r\n\t\t}\r\n\t],\r\n\t\"_projectId\": \"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\",\r\n\t\"_projectName\": \"TestProject\",\r\n\t\"_accountName\": \"testorg.visualstudio.com"
+                    "text": "27843de2-2bea-45ab-b677-27ea718b557e"
                   }
                 }
               }

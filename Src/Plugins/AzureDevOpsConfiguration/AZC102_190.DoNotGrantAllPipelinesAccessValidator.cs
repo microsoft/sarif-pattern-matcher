@@ -48,6 +48,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                 return ValidationResult.CreateNoMatch();
             }
 
+            if (!groups.TryGetValue("secret", out FlexMatch secret))
+            {
+                // use 'serviceConnectionId' match as 'secret' match
+                // to override region/context region points to service connection id location in json
+                groups.Add("secret", serviceConnectionId);
+            }
+
             var validationResult = new ValidationResult
             {
                 Fingerprint = new Fingerprint
