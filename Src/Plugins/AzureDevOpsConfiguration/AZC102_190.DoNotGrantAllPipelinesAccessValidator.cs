@@ -2,13 +2,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
@@ -27,7 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
         {
             PipelinePermission pipelinePermission = JsonConvert.DeserializeObject<PipelinePermission>(response);
             bool? authorized = pipelinePermission?.AllPipelines?.Authorized;
-            if (authorized != null && authorized.Value == true)
+            if (authorized == true)
             {
                 // its shared to all pipelines
                 message = "Was found its accssible to all pipelines.";
@@ -39,20 +40,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
             }
         }
 
+        // used by unit tests
+        internal static void SetAdoPat(string pat)
+        {
+            adoPat = pat;
+        }
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetValue("org", out FlexMatch org) ||
-                !groups.TryGetValue("project", out FlexMatch project) ||
-                !groups.TryGetValue("serviceConnectionId", out FlexMatch serviceConnectionId))
+            if (!groups.TryGetNonEmptyValue("org", out FlexMatch org) ||
+                !groups.TryGetNonEmptyValue("project", out FlexMatch project) ||
+                !groups.TryGetNonEmptyValue("serviceConnectionId", out FlexMatch serviceConnectionId))
             {
                 return ValidationResult.CreateNoMatch();
-            }
-
-            if (!groups.TryGetValue("secret", out FlexMatch secret))
-            {
-                // use 'serviceConnectionId' match as 'secret' match
-                // to override region/context region points to service connection id location in json
-                groups.Add("secret", serviceConnectionId);
             }
 
             var validationResult = new ValidationResult
@@ -64,6 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                     Id = serviceConnectionId.Value,
                     Platform = nameof(AssetPlatform.AzureDevOps),
                 },
+                RegionFlexMatch = serviceConnectionId,
                 ValidationState = ValidationState.Unknown,
             };
             return new[] { validationResult };
@@ -87,12 +88,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                 }
 
                 HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
-                var sendRequest = new HttpRequestMessage(
-                                      HttpMethod.Get,
-                                      string.Format(PipelinePermissionAPI, organization, project, serviceConnectionId));
 
-                sendRequest.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                sendRequest.Headers.Authorization = new AuthenticationHeaderValue("Basic",
+                string apiUri = string.Format(PipelinePermissionAPI, organization, project, serviceConnectionId);
+                using var request = new HttpRequestMessage(HttpMethod.Get, apiUri);
+
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                request.Headers.Authorization = new AuthenticationHeaderValue("Basic",
                     Convert.ToBase64String(
                         Encoding.ASCII.GetBytes(
                             string.Format("{0}:{1}", string.Empty, adoPat))));
@@ -101,7 +102,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                 // IsValidDynamicHelper will not be called if same fingerprint combinations,
                 // do not need cache for same organization/project/seviceconnectionid combination
                 using HttpResponseMessage response = httpClient
-                    .SendAsync(sendRequest)
+                    .SendAsync(request)
                     .GetAwaiter()
                     .GetResult();
 
@@ -135,17 +136,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
         private static string ReadPatFromFile(string fileName)
         {
             // exception will be catched by caller
-            string path = System.IO.Path.Combine(
-                System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location),
+            string path = Path.Combine(
+                Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location),
                 fileName);
 
-            return System.IO.File.ReadAllText(path);
+            return NewMethod(path);
         }
 
-        // used by unit tests
-        internal void SetAdoPat(string pat)
+        private static string NewMethod(string path)
         {
-            adoPat = pat;
+            return File.ReadAllText(path);
         }
 
         // ignore other properties since we do not use them now.

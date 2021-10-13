@@ -165,7 +165,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
 
                 using var httpClient = new HttpClient(mockHandler);
                 pipelineAccessValidator.SetHttpClient(httpClient);
-                pipelineAccessValidator.SetAdoPat(adoPat);
+                SetAdoPat(adoPat);
                 ValidationState currentState = pipelineAccessValidator.IsValidDynamic(ref fingerprint,
                                                                                       ref message,
                                                                                       keyValuePairs,
