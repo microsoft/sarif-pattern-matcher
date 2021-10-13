@@ -12,10 +12,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AdoPat.txt" />
     <None Remove="AZC102.ServiceConnectionSecurity.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="AdoPat.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="AZC102.ServiceConnectionSecurity.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -30,7 +34,12 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  </ItemGroup>
+
   <ItemGroup>
+    <Compile Include="$(SolutionDir)Plugins\Security\Utilities\DictionaryExtensions.cs" />
     <ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
   </ItemGroup>
 
@@ -42,5 +51,6 @@
     <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\AzureDevOpsConfiguration\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(SecurityFile)" DestinationFolder="$(SolutionDir).spam\AzureDevOpsConfiguration\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" ContinueOnError="true" />
     <Copy SourceFiles="AzureDevOpsConfiguration.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\AzureDevOpsConfiguration\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="AdoPat.txt" DestinationFolder="$(SolutionDir).spam\AzureDevOpsConfiguration\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
   </Target>
 </Project>

@@ -1,0 +1,151 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "AZC102/150",
+              "name": "DoNotUseClassicConnections",
+              "fullDescription": {
+                "text": "Do not use classic Azure service connections to access a subscription."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "[Service connection Id:{0}]({1}/{2}/{3}/_settings/adminservices?resourceId={0}) in organization '{2}' project '{3}' was found {4} {5} {6}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            },
+            {
+              "id": "AZC102/190",
+              "name": "DoNotGrantAllPipelinesAccess",
+              "fullDescription": {
+                "text": "Do not make service connection accessible to all pipelines."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "[Service connection Id:{0}]({1}) in organization '{2}' project '{3}' was scanned. {4}. {5} {6}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "AZC102/150",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "27843de2-2bea-45ab-b677-27ea718b557e",
+              "https://dev.azure.com",
+              "testorg.visualstudio.com",
+              "f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f",
+              " is Azure Classic service connection.",
+              "You should use Azure resource Manager type service connection as the ARM model provides several security enhancements such as: stronger access control (RBAC), better auditing, ARM-based deployment/governance, access to managed identities, access to key vault for secrets, AAD-based authentication, support for tags and resource groups for easier security management, etc.",
+              "Recommendation: Delete the Azure Classic service connection and create a new service connection of type 'Azure resource Manager'(i.e., ARM based) scoped to a resource/resource group in subscription"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 2,
+                  "endLine": 21,
+                  "endColumn": 17,
+                  "charOffset": 892,
+                  "charLength": 15,
+                  "snippet": {
+                    "text": "\"type\": \"azure\""
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=\"type\": \"azure\"]",
+            "ValidationFingerprintHash/v1": "21104afac53ac5993c33d2318dff5325302f73856df10eca3e24260619f241e0",
+            "AssetFingerprint/v2": "{}",
+            "ValidationFingerprint/v2": "{\"secret\":\"\\\"type\\\": \\\"azure\\\"\"}"
+          },
+          "rank": 46.29
+        },
+        {
+          "ruleId": "AZC102/190",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
+              "",
+              "testorg.visualstudio.com",
+              "f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)",
+              "To support security of the pipeline operations, connections must not be granted access to all pipelines. This is in keeping with the principle of least privilege because a vulnerability in components used by one pipeline can be leveraged by an attacker to attack other pipelines having access to critical resources.",
+              "1. Navigate to the service connections settings page for your project --> 2. Select your service connection from the list --> 3. Click on three dots --> 4. Click Security --> 5. Under 'Pipeline Permissions', click 'Restrict Permission' to avoid granting access to all pipelines and add only those pipelines that need explicit access on service connection"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 9,
+                  "endLine": 19,
+                  "endColumn": 45,
+                  "charOffset": 825,
+                  "charLength": 36,
+                  "snippet": {
+                    "text": "27843de2-2bea-45ab-b677-27ea718b557e"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=testorg.visualstudio.com][id=27843de2-2bea-45ab-b677-27ea718b557e][platform=AzureDevOps][resource=f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f]",
+            "ValidationFingerprint/v1": "[host=testorg.visualstudio.com][id=27843de2-2bea-45ab-b677-27ea718b557e][resource=f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f]",
+            "ValidationFingerprintHash/v1": "e4d78c2bd639c80de9a75619e350d6f2f942eefdd202afe01365a0fcda26597e",
+            "AssetFingerprint/v2": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"platform\":\"AzureDevOps\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}"
+          }
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}
