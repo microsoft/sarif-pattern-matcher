@@ -20,6 +20,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
     {
         public static readonly HttpResponseMessage OKResponse =
             new HttpResponseMessage(HttpStatusCode.OK);
+        public static readonly HttpResponseMessage AcceptedResponse =
+            new HttpResponseMessage(HttpStatusCode.Accepted);
         public static readonly HttpResponseMessage NotFoundResponse =
             new HttpResponseMessage(HttpStatusCode.NotFound);
         public static readonly HttpResponseMessage ForbiddenResponse =
@@ -28,6 +30,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
             new HttpResponseMessage(HttpStatusCode.BadRequest);
         public static readonly HttpResponseMessage UnauthorizedResponse =
             new HttpResponseMessage(HttpStatusCode.Unauthorized);
+        public static readonly HttpResponseMessage MethodNotAllowedResponse =
+            new HttpResponseMessage(HttpStatusCode.MethodNotAllowed);
         public static readonly HttpResponseMessage InternalServerErrorResponse =
             new HttpResponseMessage(HttpStatusCode.InternalServerError);
         public static readonly HttpResponseMessage NonAuthoritativeInformationResponse =
