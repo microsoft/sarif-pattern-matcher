@@ -32,7 +32,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
-            using var request = MailgunApiCredentialsValidator.GenerateRequestMessage(id, secret, $"{Guid.NewGuid()}");
+            string scanIdentityGuid = $"{Guid.NewGuid()}";
+            using var request = MailgunApiCredentialsValidator.GenerateRequestMessage(id, secret, scanIdentityGuid);
 
             string nullRefResponseMessage = string.Empty;
             string authorizedResponseMessage = string.Empty;
