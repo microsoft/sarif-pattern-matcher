@@ -5,12 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 
 using FluentAssertions;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
@@ -31,11 +29,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
-            string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
 
-            var defaultRequest = new HttpRequestMessage(HttpMethod.Post, DropboxAppCredentialsValidator.Uri);
-            defaultRequest.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
-            defaultRequest.Headers.Add("Dropbox-API-Arg", @"{""resource"": {"".tag"": ""path"",""path"": ""/a.docx""},""format"": ""jpeg"",""size"": ""w64h64"",""mode"": ""strict""}");
+            using var defaultRequest = DropboxAppCredentialsValidator.GenerateRequestMessage(id, secret);
 
             var AppDisabledResponse = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
