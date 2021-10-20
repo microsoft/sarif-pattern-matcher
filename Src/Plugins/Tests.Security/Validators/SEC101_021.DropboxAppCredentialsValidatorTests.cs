@@ -33,7 +33,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string secret = fingerprint.Secret;
             string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
 
-
             var defaultRequest = new HttpRequestMessage(HttpMethod.Post, DropboxAppCredentialsValidator.Uri);
             defaultRequest.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
             defaultRequest.Headers.Add("Dropbox-API-Arg", @"{""resource"": {"".tag"": ""path"",""path"": ""/a.docx""},""format"": ""jpeg"",""size"": ""w64h64"",""mode"": ""strict""}");
@@ -50,7 +49,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             {
                 Content = new StringContent(string.Empty)
             };
-
 
             string nullRefResponseMessage = string.Empty;
             string unexpectedResponseCodeMessage = string.Empty;
