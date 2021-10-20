@@ -60,11 +60,11 @@
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
-                  "startLine": 1,
+                  "startLine": 2,
                   "startColumn": 1,
-                  "endLine": 1,
+                  "endLine": 2,
                   "endColumn": 65,
-                  "charOffset": 0,
+                  "charOffset": 19,
                   "charLength": 64,
                   "snippet": {
                     "text": "PMAK-dead0000dead11113c1e4064-92f00edbc2d214a356c39a3dd537ad1921"
