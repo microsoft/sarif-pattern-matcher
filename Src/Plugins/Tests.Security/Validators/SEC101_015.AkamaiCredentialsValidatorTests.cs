@@ -35,15 +35,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string host = fingerprint.Host;
             string secret = fingerprint.Secret;
             string resource = fingerprint.Resource;
-            string scanIdentityGuid = $"{Guid.NewGuid()}";
             var options = new Dictionary<string, string>();
             options.Add("datetime", DateTime.UtcNow.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture));
+            options.Add("scanIdentityGuid", $"{Guid.NewGuid()}");
 
-            var request = AkamaiCredentialsValidator.GenerateRequestMessage(id, host, secret, resource, scanIdentityGuid, options["datetime"]);
+            DateTime now = DateTime.Parse(options["datetime"]);
+
+            var request = AkamaiCredentialsValidator.GenerateRequestMessage(id, host, secret, resource, options["scanIdentityGuid"], now);
 
             string nullRefResponseMessage = string.Empty;
             string unexpectedResponseMessage = string.Empty;
             string unhandledResponseMessage = string.Empty;
+
+
 
             var testCases = new HttpMockTestCase[]
             {
@@ -84,16 +88,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     mockHandler.Mock(testCase.HttpRequestMessages[i], testCase.HttpResponseMessages[i]);
                 }
 
+
+
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
 
                 using var httpClient = new HttpClient(mockHandler);
                 validator.SetHttpClient(httpClient);
+                ValidationState currentState;
 
-                ValidationState currentState = validator.IsValidDynamic(ref fingerprint,
-                                                                        ref message,
-                                                                        options,
-                                                                        ref resultLevelKind);
+                if (testCase.Title != "Null Ref Exception")
+                {
+                    currentState = validator.IsValidDynamic(ref fingerprint,
+                                                            ref message,
+                                                            options,
+                                                            ref resultLevelKind);
+                }
+                else
+                {
+                    currentState = validator.IsValidDynamic(ref fingerprint,
+                                                            ref message,
+                                                            new Dictionary<string, string>(),
+                                                            ref resultLevelKind);
+                }
+
                 if (currentState != testCase.ExpectedValidationState)
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedValidationState}' but found '{currentState}'.");

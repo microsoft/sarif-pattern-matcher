@@ -20,15 +20,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                   string secret,
                                                                   string resource,
                                                                   string scanIdentityGuid,
-                                                                  string datetime = null)
+                                                                  DateTime datetime)
         {
-            DateTime date = DateTime.UtcNow;
-            if (!string.IsNullOrEmpty(datetime))
-            {
-                DateTime.TryParse(datetime, out date);
-            }
-
-            string timestamp = date.ToUniversalTime().ToString("yyyyMMdd'T'HH:mm:ss+0000");
+            string timestamp = datetime.ToString("yyyyMMdd'T'HH:mm:ss+0000");
             using var request = new HttpRequestMessage(HttpMethod.Get, $"{host}/ccu/v2/queues/default");
             string requestData = GetRequestData(request.Method.ToString(), request.RequestUri);
             string authData = GetAuthDataValue(id, resource, timestamp, scanIdentityGuid);
@@ -82,23 +76,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return string.Format("{0}signature={1}", authData, authSignature);
         }
 
-        internal static byte[] ComputeHash(Stream stream,
-                                           string hashType,
-                                           long? maxBodySize = null)
-        {
-            using (var algorithm = HashAlgorithm.Create(hashType))
-            {
-                if (maxBodySize != null && maxBodySize > 0)
-                {
-                    return algorithm.ComputeHash(ReadExactly(stream, (long)maxBodySize));
-                }
-                else
-                {
-                    return algorithm.ComputeHash(stream);
-                }
-            }
-        }
-
         internal static byte[] ComputeKeyedHash(byte[] data,
                                                 string key,
                                                 string hashType)
@@ -107,25 +84,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 algorithm.Key = Encoding.UTF8.GetBytes(key);
                 return algorithm.ComputeHash(data);
-            }
-        }
-
-        internal static byte[] ReadExactly(Stream stream,
-                                           long maxCount)
-        {
-            using (var result = new MemoryStream())
-            {
-                byte[] buffer = new byte[1024 * 1024];
-                int bytesRead = 0;
-                long leftToRead = maxCount;
-
-                while ((bytesRead = stream.Read(buffer, 0, leftToRead > int.MaxValue ? int.MaxValue : Convert.ToInt32(leftToRead))) != 0)
-                {
-                    leftToRead -= bytesRead;
-                    result.Write(buffer, 0, bytesRead);
-                }
-
-                return result.ToArray();
             }
         }
 
@@ -160,8 +118,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string host = fingerprint.Host;
             string secret = fingerprint.Secret;
             string resource = fingerprint.Resource;
-            string scanIdentityGuid = ScanIdentityGuid;
-            string datetime = options["datetime"];
+            string scanIdentityGuid = string.Empty;
+            string date = string.Empty;
+            DateTime datetime = DateTime.UtcNow;
+
+            if (options.TryGetValue("datetime", out date))
+            {
+                DateTime.TryParse(date, out datetime);
+            }
+
+            if (!options.TryGetValue("scanIdentityGuid", out scanIdentityGuid))
+            {
+                scanIdentityGuid = ScanIdentityGuid;
+            }
+
 
             try
             {
