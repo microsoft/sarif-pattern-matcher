@@ -64,7 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string signature = Convert.ToBase64String(hmacSignature.ComputeHash(Convert.FromBase64String(textToSign)));
 
                 HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Get, $"{host}/ccu/v2/queues/default");
+                using var request = new HttpRequestMessage(HttpMethod.Get, $"{host}/ccu/v2/queues/default");
                 request.Headers.Authorization = new AuthenticationHeaderValue(
                     $"EG1-HMAC-SHA256",
                     $"{header};signature={signature}");
