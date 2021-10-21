@@ -17,6 +17,9 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/043NuGetCredentialsValidator
+    /// </summary
     public class NuGetCredentialsValidatorTests
     {
         private const ValidationState ExpectedValidationState = ValidationState.Unknown;
