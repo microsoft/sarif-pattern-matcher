@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -23,7 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
     /// </summary>
     public class AkamaiCredentialsValidatorTests
     {
-        private const string fingerprintText = "[host=nothere][id=whoami][resource=empty][secret=c3VwZXJzZWNyZXR2YWx1ZQ==]";
+        private const string fingerprintText = "[host=https://nothere][id=whoami][resource=empty][secret=c3VwZXJzZWNyZXR2YWx1ZQ==]";
 
         [Fact]
         public void AkamaiCredentialsValidatorTests_MockHttpTests()
@@ -35,7 +36,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string secret = fingerprint.Secret;
             string resource = fingerprint.Resource;
             string scanIdentityGuid = $"{Guid.NewGuid()}";
-            using var request = AkamaiCredentialsValidator.GenerateRequestMessage(id, host, secret, resource, scanIdentityGuid);
+            var options = new Dictionary<string, string>();
+            options.Add("datetime", DateTime.UtcNow.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture));
+
+            var request = AkamaiCredentialsValidator.GenerateRequestMessage(id, host, secret, resource, scanIdentityGuid, options["datetime"]);
 
             string nullRefResponseMessage = string.Empty;
             string unexpectedResponseMessage = string.Empty;
@@ -82,14 +86,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
-                var keyValuePairs = new Dictionary<string, string>();
 
                 using var httpClient = new HttpClient(mockHandler);
                 validator.SetHttpClient(httpClient);
 
                 ValidationState currentState = validator.IsValidDynamic(ref fingerprint,
                                                                         ref message,
-                                                                        keyValuePairs,
+                                                                        options,
                                                                         ref resultLevelKind);
                 if (currentState != testCase.ExpectedValidationState)
                 {
