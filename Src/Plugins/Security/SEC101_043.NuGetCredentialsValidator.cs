@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class NuGetCredentialsValidator : DynamicValidatorBase
     {
-        private const string RandomGuid = "05C89BF5-9DF2-4F8C-8F93-FF3EF66E643D";
+        internal const string RandomGuid = "05C89BF5-9DF2-4F8C-8F93-FF3EF66E643D";
 
         internal static List<string> ExtractHosts(string hostXmlAsString)
         {
@@ -98,6 +98,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 ValidationState validationState = ValidateWithEmptyAndRandomKey(ref message,
                                                                                 host,
                                                                                 id);
+
+                // An unhandled Exception was thrown in ValidateWithEmptyAndRandomKey.
+                // Continuing on may obscure this error code.
+                if (message.StartsWith("An unexpected exception was caught attempting to validate"))
+                {
+                    return validationState;
+                }
+
                 if (validationState == ValidationState.NoMatch)
                 {
                     return validationState;
@@ -259,7 +267,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e, uri);
+                return ReturnUnhandledException(ref message, e, uri, id);
             }
         }
     }
