@@ -32,7 +32,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return request;
         }
 
-        internal static string GetRequestData(string method, Uri uri)
+        private static string GetRequestData(string method, Uri uri)
         {
             string headers = string.Empty;
             string bodyHash = string.Empty;
@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 bodyHash);
         }
 
-        internal static string GetAuthDataValue(string id,
+        private static string GetAuthDataValue(string id,
                                                 string resource,
                                                 string timestamp,
                                                 string scanIdentityGuid)
@@ -59,7 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 scanIdentityGuid.ToLower());
         }
 
-        internal static string GetAuthorizationHeaderValue(string secret,
+        private static string GetAuthorizationHeaderValue(string secret,
                                                            string timestamp,
                                                            string authData,
                                                            string requestData)
@@ -75,7 +75,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return string.Format("{0}signature={1}", authData, authSignature);
         }
 
-        internal static byte[] ComputeKeyedHash(byte[] data, string key, string hashType)
+        private static byte[] ComputeKeyedHash(byte[] data, string key, string hashType)
         {
             using (var algorithm = HMAC.Create(hashType.ToString()))
             {
