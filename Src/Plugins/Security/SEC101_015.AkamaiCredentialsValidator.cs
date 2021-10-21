@@ -14,15 +14,34 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class AkamaiCredentialsValidator : DynamicValidatorBase
     {
+        internal static HttpRequestMessage GenerateRequestMessage(string id, string host, string secret, string resource, string scanIdentityGuid)
+        {
+            string timestamp = $"{DateTime.UtcNow:yyyyMMddTHH:mm:ss}";
+            string header = $"client_token={id};access_token={resource};timestamp={timestamp}+0000;nonce={scanIdentityGuid}";
+            string textToSign = $"EG1-HMAC-SHA256 {header};";
+
+            // Generating signing key based on timestamp.
+            using var hmac = new HMACSHA256(Convert.FromBase64String(secret));
+            string signingKey = Convert.ToBase64String(hmac.ComputeHash(Convert.FromBase64String(timestamp)));
+
+            // Generating signature based on textToSign and signingKey.
+            using var hmacSignature = new HMACSHA256(Convert.FromBase64String(signingKey));
+            string signature = Convert.ToBase64String(hmacSignature.ComputeHash(Convert.FromBase64String(textToSign)));
+
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"{host}/ccu/v2/queues/default");
+            request.Headers.Authorization = new AuthenticationHeaderValue(
+                $"EG1-HMAC-SHA256",
+                $"{header};signature={signature}");
+
+            return request;
+        }
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
-                !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret) ||
-                !groups.TryGetNonEmptyValue("resource", out FlexMatch resource))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch id = groups["id"];
+            FlexMatch host = groups["host"];
+            FlexMatch resource = groups["resource"];
+            FlexMatch secret = groups["secret"];
 
             var validationResult = new ValidationResult
             {
@@ -48,26 +67,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string host = fingerprint.Host;
             string secret = fingerprint.Secret;
             string resource = fingerprint.Resource;
+            string scanIdentityGuid = ScanIdentityGuid;
 
             try
             {
-                string timestamp = $"{DateTime.UtcNow:yyyyMMddTHH:mm:ss}";
-                string header = $"client_token={id};access_token={resource};timestamp={timestamp}+0000;nonce={ScanIdentityGuid}";
-                string textToSign = $"EG1-HMAC-SHA256 {header};";
-
-                // Generating signing key based on timestamp.
-                using var hmac = new HMACSHA256(Convert.FromBase64String(secret));
-                string signingKey = Convert.ToBase64String(hmac.ComputeHash(Convert.FromBase64String(timestamp)));
-
-                // Generating signature based on textToSign and signingKey.
-                using var hmacSignature = new HMACSHA256(Convert.FromBase64String(signingKey));
-                string signature = Convert.ToBase64String(hmacSignature.ComputeHash(Convert.FromBase64String(textToSign)));
-
                 HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
-                using var request = new HttpRequestMessage(HttpMethod.Get, $"{host}/ccu/v2/queues/default");
-                request.Headers.Authorization = new AuthenticationHeaderValue(
-                    $"EG1-HMAC-SHA256",
-                    $"{header};signature={signature}");
+
+                using var request = GenerateRequestMessage(id, host, secret, resource, scanIdentityGuid);
 
                 using HttpResponseMessage httpResponse = httpClient
                     .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
