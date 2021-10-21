@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                   DateTime datetime)
         {
             string timestamp = datetime.ToString("yyyyMMdd'T'HH:mm:ss+0000");
-            using var request = new HttpRequestMessage(HttpMethod.Get, $"{host}/ccu/v2/queues/default");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{host}/ccu/v2/queues/default");
             string requestData = GetRequestData(request.Method.ToString(), request.RequestUri);
             string authData = GetAuthDataValue(id, resource, timestamp, scanIdentityGuid);
             string authHeader = GetAuthorizationHeaderValue(secret, timestamp, authData, requestData);
@@ -32,8 +32,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return request;
         }
 
-        internal static string GetRequestData(string method,
-                                              Uri uri)
+        internal static string GetRequestData(string method, Uri uri)
         {
             string headers = string.Empty;
             string bodyHash = string.Empty;
@@ -76,9 +75,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return string.Format("{0}signature={1}", authData, authSignature);
         }
 
-        internal static byte[] ComputeKeyedHash(byte[] data,
-                                                string key,
-                                                string hashType)
+        internal static byte[] ComputeKeyedHash(byte[] data, string key, string hashType)
         {
             using (var algorithm = HMAC.Create(hashType.ToString()))
             {
@@ -131,7 +128,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 scanIdentityGuid = ScanIdentityGuid;
             }
-
 
             try
             {

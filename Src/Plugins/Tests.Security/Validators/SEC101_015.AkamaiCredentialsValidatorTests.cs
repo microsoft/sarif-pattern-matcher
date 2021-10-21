@@ -88,8 +88,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     mockHandler.Mock(testCase.HttpRequestMessages[i], testCase.HttpResponseMessages[i]);
                 }
 
-
-
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
 
