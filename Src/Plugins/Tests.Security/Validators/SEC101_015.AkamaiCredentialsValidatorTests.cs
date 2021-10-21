@@ -47,8 +47,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string unexpectedResponseMessage = string.Empty;
             string unhandledResponseMessage = string.Empty;
 
-
-
             var testCases = new HttpMockTestCase[]
             {
                 new HttpMockTestCase
