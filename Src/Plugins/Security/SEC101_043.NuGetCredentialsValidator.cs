@@ -95,16 +95,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             try
             {
-                ValidationState validationState = ValidateWithEmptyAndRandomKey(ref message,
-                                                                                host,
+                ValidationState validationState = ValidateWithEmptyAndRandomKey(host,
                                                                                 id);
-
-                // An unhandled Exception was thrown in ValidateWithEmptyAndRandomKey.
-                // Continuing on may obscure this error code.
-                if (message.StartsWith("An unexpected exception was caught attempting to validate"))
-                {
-                    return validationState;
-                }
 
                 if (validationState == ValidationState.NoMatch)
                 {
@@ -224,51 +216,43 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             return list;
         }
 
-        private ValidationState ValidateWithEmptyAndRandomKey(ref string message,
-                                                              string uri,
+        private ValidationState ValidateWithEmptyAndRandomKey(string uri,
                                                               string id)
         {
             HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
 
-            try
+            // Making a request without a key.
+            using HttpResponseMessage responseWithoutSecret = httpClient
+                .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
+                .GetAwaiter()
+                .GetResult();
+
+            if (responseWithoutSecret.StatusCode == HttpStatusCode.OK ||
+                responseWithoutSecret.StatusCode == HttpStatusCode.NotFound ||
+                responseWithoutSecret.StatusCode == HttpStatusCode.NonAuthoritativeInformation)
             {
-                // Making a request without a key.
-                using HttpResponseMessage responseWithoutSecret = httpClient
-                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
-
-                if (responseWithoutSecret.StatusCode == HttpStatusCode.OK ||
-                    responseWithoutSecret.StatusCode == HttpStatusCode.NotFound ||
-                    responseWithoutSecret.StatusCode == HttpStatusCode.NonAuthoritativeInformation)
-                {
-                    return ValidationState.NoMatch;
-                }
-
-                // Making a request with a random generated guid.
-                byte[] byteArray = Encoding.ASCII.GetBytes($"{id}:{RandomGuid}");
-
-                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
-                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
-
-                using HttpResponseMessage responseDummy = httpClient
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
-
-                if (responseDummy.StatusCode == HttpStatusCode.OK ||
-                    responseDummy.StatusCode == HttpStatusCode.NotFound ||
-                    responseDummy.StatusCode == HttpStatusCode.NonAuthoritativeInformation)
-                {
-                    return ValidationState.NoMatch;
-                }
-
-                return ValidationState.Unknown;
+                return ValidationState.NoMatch;
             }
-            catch (Exception e)
+
+            // Making a request with a random generated guid.
+            byte[] byteArray = Encoding.ASCII.GetBytes($"{id}:{RandomGuid}");
+
+            using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+            using HttpResponseMessage responseDummy = httpClient
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+                .GetAwaiter()
+                .GetResult();
+
+            if (responseDummy.StatusCode == HttpStatusCode.OK ||
+                responseDummy.StatusCode == HttpStatusCode.NotFound ||
+                responseDummy.StatusCode == HttpStatusCode.NonAuthoritativeInformation)
             {
-                return ReturnUnhandledException(ref message, e, uri, id);
+                return ValidationState.NoMatch;
             }
+
+            return ValidationState.Unknown;
         }
     }
 }
