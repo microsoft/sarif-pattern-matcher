@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -47,9 +46,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         private static string GetAuthDataValue(string id,
-                                                string resource,
-                                                string timestamp,
-                                                string scanIdentityGuid)
+                                               string resource,
+                                               string timestamp,
+                                               string scanIdentityGuid)
         {
             return string.Format("{0} client_token={1};access_token={2};timestamp={3};nonce={4};",
                 "EG1-HMAC-SHA256",
@@ -60,9 +59,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         }
 
         private static string GetAuthorizationHeaderValue(string secret,
-                                                           string timestamp,
-                                                           string authData,
-                                                           string requestData)
+                                                          string timestamp,
+                                                          string authData,
+                                                          string requestData)
         {
             string hashType = "HMACSHA256";
 
@@ -88,8 +87,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             FlexMatch id = groups["id"];
             FlexMatch host = groups["host"];
-            FlexMatch resource = groups["resource"];
             FlexMatch secret = groups["secret"];
+            FlexMatch resource = groups["resource"];
 
             var validationResult = new ValidationResult
             {
