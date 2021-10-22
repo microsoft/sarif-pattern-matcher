@@ -13,6 +13,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class PostmanApiKeyValidator : DynamicValidatorBase
     {
+        internal const string Uri = "https://api.getpostman.com/me";
+
+        internal static HttpRequestMessage GenerateRequestMessage(string secret)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, Uri);
+            request.Headers.Add("X-Api-Key", secret);
+            return request;
+        }
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             FlexMatch secret = groups["secret"];
@@ -40,16 +49,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
-            const string uri = "https://api.getpostman.com/me";
-
             string secret = fingerprint.Secret;
 
             HttpClient client = CreateOrRetrieveCachedHttpClient();
 
             try
             {
-                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
-                request.Headers.Add("X-Api-Key", secret);
+                using var request = GenerateRequestMessage(secret);
 
                 using HttpResponseMessage response = client
                     .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
