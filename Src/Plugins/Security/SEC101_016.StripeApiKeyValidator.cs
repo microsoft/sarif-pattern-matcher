@@ -14,6 +14,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class StripeApiKeyValidator : DynamicValidatorBase
     {
+        internal const string Uri = "https://api.stripe.com/v1/customers";
+
         private static readonly HashSet<string> WellKnownKeys = new HashSet<string>
         {
             // This is a well-known secret used as example from stripe website (check examples section). https://stripe.com/payments
@@ -51,15 +53,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string keyKind = secret.Contains("_test_") ? "test" : "live production";
 
-            const string uri = "https://api.stripe.com/v1/customers";
-
             try
             {
                 message = $"The detected secret is a {keyKind} secret.";
 
                 HttpClient client = CreateOrRetrieveCachedHttpClient();
 
-                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+                using var request = new HttpRequestMessage(HttpMethod.Get, Uri);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
                 using HttpResponseMessage response = client
