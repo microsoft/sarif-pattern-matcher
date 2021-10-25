@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var sb = new StringBuilder();
             int expectedLength = 0;
 
-            foreach(string fingerprintText in fingerprintStrings)
+            foreach (string fingerprintText in fingerprintStrings)
             {
                 sb.Append(RunTestsForFingerprint(fingerprintText, ref expectedLength));
             }
