@@ -105,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
-                
+
                 var keyValuePairs = new Dictionary<string, string>();
 
                 using var httpClient = new HttpClient(mockHandler);
