@@ -18,11 +18,11 @@ using Xunit;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
-    /// Testing SEC101/0216.StripeApiKeyValidator
+    /// Testing SEC101/016.StripeApiKeyValidator
     /// </summary
     public class StripeApiKeyValidatorTests
     {
-        private readonly string[] fingerprintTexts = new string[] { "[secret=_production_secret]", "[secret=_test_secret]" };
+        private readonly string[] fingerprintStrings = new string[] { "[secret=_production_secret]", "[secret=_test_secret]" };
 
         [Fact]
         public void StripeApiKeyValidator_MockHttpTests()
@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var sb = new StringBuilder();
             int expectedLength = 0;
 
-            foreach(string fingerprintText in fingerprintTexts)
+            foreach(string fingerprintText in fingerprintStrings)
             {
                 sb.Append(RunTestsForFingerprint(fingerprintText, ref expectedLength));
             }
@@ -39,19 +39,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         }
 
 
-        private string RunTestsForFingerprint(string FingerprintText, ref int expectedLength)
+        private string RunTestsForFingerprint(string fingerprintText, ref int expectedLength)
         {
             var sb = new StringBuilder();
-            var fingerprint = new Fingerprint(FingerprintText);
+            var fingerprint = new Fingerprint(fingerprintText);
             string secret = fingerprint.Secret;
 
-            sb.AppendLine($"Running tests for: {FingerprintText}");
+            sb.AppendLine($"Running tests for: {fingerprintText}");
             expectedLength += sb.Length;
 
             string keyKind = secret.Contains("_test_") ? "test" : "live production";
             string defaultMessage = $"The detected secret is a {keyKind} secret.";
 
-            var request = new HttpRequestMessage(HttpMethod.Get, StripeApiKeyValidator.Uri);
+            var request = new HttpRequestMessage(HttpMethod.Get, StripeApiKeyValidator.StripeUri);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
             string unexpectedResponseMessage = string.Empty;
@@ -61,7 +61,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             {
                 new HttpMockTestCase
                 {
-                    Title = "Testing Authorized (OK Status Code)",
+                    Title = "Returns Authorized (OK Status Code)",
                     HttpRequestMessages = new[] { request },
                     HttpResponseMessages = new[] {HttpMockHelper.OKResponse },
                     ExpectedValidationState = ValidationState.Authorized,
@@ -69,7 +69,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Testing Unauthorized (Unauthorized Status Code)",
+                    Title = "Returns Unauthorized (Unauthorized Status Code)",
                     HttpRequestMessages = new[] { request },
                     HttpResponseMessages = new[] {HttpMockHelper.UnauthorizedResponse },
                     ExpectedValidationState = ValidationState.Unauthorized,
@@ -77,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Testing Unexpected Response Code (InternalServerError Status Code)",
+                    Title = "Returns Unexpected Response Code (InternalServerError Status Code)",
                     HttpRequestMessages = new[] { request },
                     HttpResponseMessages = new[] {HttpMockHelper.InternalServerErrorResponse },
                     ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref unexpectedResponseMessage, HttpStatusCode.InternalServerError),
@@ -85,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Testing Nullref exception",
+                    Title = "Generates Null Reference Exception",
                     HttpRequestMessages = new List<HttpRequestMessage> { null },
                     HttpResponseMessages = new List<HttpResponseMessage> { null },
                     ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref unhandledErrorResponseMessage, new NullReferenceException()),
@@ -93,8 +93,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
             };
 
-            var validator = new StripeApiKeyValidator();
             var mockHandler = new HttpMockHelper();
+            var validator = new StripeApiKeyValidator();
+
             foreach (HttpMockTestCase testCase in testCases)
             {
                 for (int i = 0; i < testCase.HttpRequestMessages.Count; i++)
@@ -111,9 +112,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 validator.SetHttpClient(httpClient);
 
                 ValidationState currentState = validator.IsValidDynamic(ref fingerprint,
-                                                                                 ref message,
-                                                                                 keyValuePairs,
-                                                                                 ref resultLevelKind);
+                                                                        ref message,
+                                                                        keyValuePairs,
+                                                                        ref resultLevelKind);
                 if (currentState != testCase.ExpectedValidationState)
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedValidationState}' but found '{currentState}'.");

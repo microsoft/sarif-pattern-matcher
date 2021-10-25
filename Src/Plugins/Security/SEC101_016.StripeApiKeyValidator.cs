@@ -14,7 +14,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class StripeApiKeyValidator : DynamicValidatorBase
     {
-        internal const string Uri = "https://api.stripe.com/v1/customers";
+        internal const string StripeUri = "https://api.stripe.com/v1/customers";
 
         private static readonly HashSet<string> WellKnownKeys = new HashSet<string>
         {
@@ -59,7 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 HttpClient client = CreateOrRetrieveCachedHttpClient();
 
-                using var request = new HttpRequestMessage(HttpMethod.Get, Uri);
+                using var request = new HttpRequestMessage(HttpMethod.Get, StripeUri);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
                 using HttpResponseMessage response = client
