@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 
 using Xunit;
 
-using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration.DoNotGrantAllPipelinesAccessValidator;
+using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration.DoNotGrantAllPipelinesAccessToServiceConnectionsValidator;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration.Validators
 {
@@ -96,7 +96,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { HttpMockHelper.UnauthorizedResponse },
                     ExpectedValidationState = ValidationState.Unauthorized,
-                    ExpectedMessage = DoNotGrantAllPipelinesAccessValidator.NotAuthorizedMessage
+                    ExpectedMessage = DoNotGrantAllPipelinesAccessToServiceConnectionsValidator.NotAuthorizedMessage
                 },
                 new HttpMockTestCase
                 {
@@ -104,7 +104,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { HttpMockHelper.ForbiddenResponse },
                     ExpectedValidationState = ValidationState.Unauthorized,
-                    ExpectedMessage = DoNotGrantAllPipelinesAccessValidator.NotAuthorizedMessage
+                    ExpectedMessage = DoNotGrantAllPipelinesAccessToServiceConnectionsValidator.NotAuthorizedMessage
                 },
                 new HttpMockTestCase
                 {
@@ -149,7 +149,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
             };
 
             var sb = new StringBuilder();
-            var pipelineAccessValidator = new DoNotGrantAllPipelinesAccessValidator();
+            var pipelineAccessValidator = new DoNotGrantAllPipelinesAccessToServiceConnectionsValidator();
             var mockHandler = new HttpMockHelper();
 
             foreach (HttpMockTestCase testCase in testCases)

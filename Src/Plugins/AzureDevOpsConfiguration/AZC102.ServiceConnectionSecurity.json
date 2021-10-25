@@ -6,42 +6,32 @@
       "Id": "AZC102",
       "Name": "ServiceConnectionShouldBeSecure",
       "Level": "Error",
-      "Description": "Make sure service connections in AzureDevOps are secure",
+      "Description": "Make sure service connections in AzureDevOps are secure.",
       "MatchExpressions": [
         {
           "Id": "AZC102/150",
           "Name": "DoNotUseClassicConnections",
-          "Message": "[Service connection Id:{0:serviceConnectionId}]({1:adoDomain}/{2:org}/{3:project}/_settings/adminservices?resourceId={0:serviceConnectionId}) in organization '{2:org}' project '{3:project}' was found {4:issueDesc} {5:description} {6:recommendation}.",
-          "Description": "Do not use classic Azure service connections to access a subscription.",
+          "Message": "A Classic Azure Service Connection [{0:serviceConnectionName}](https://dev.azure.com/{1:org}/{2:project}/_settings/adminservices?resourceId={3:serviceConnectionId}) was found in the '{1:org}' organization's '{2:project}' project.",
+          "Description": "Do not use classic Azure service connections to access a subscription. Azure Resource Manager (ARM) Service Connections should be used instead, because they provide stronger access control (RBAC), better auditing, ARM-based deployment/governance, access to managed identities, access to key vaults, AAD-based authentication, support for tags, resource groups for easier security management, etc.\r\nRecommendation   : Delete the Azure Classic Service Connection and create a new service connection of type 'Azure Resource Manager' (ARM) scoped to a resource or resource group in your subscription.\r\nTo Delete existing service connection:\r\n1. Navigate to Project --> Project Settings --> Service connections\r\n2. Select your service connection from the list\r\n3. Click on '...' button next to 'Edit' button and select 'Delete' menu from menu list.\r\n\r\nTo create a new service connection:\r\n1. Navigate to Project --> Project Settings --> Service connections\r\n2. Click on 'New service connection' button\r\n3. Select 'Azure Resource Manager' as your service connection type.",
           "IntrafileRegexes": [
             "$AZC102.ServiceConnectionEntityType",
             "$AZC102.ServiceConnectionId",
             "$AZC102/150.AzureClassicType",
             "$AdoOrganizationName",
             "$AdoProjectName"
-          ],
-          "MessageArguments": {
-            "adoDomain": "https://dev.azure.com",
-            "issueDesc": " is Azure Classic service connection.",
-            "description": "You should use Azure resource Manager type service connection as the ARM model provides several security enhancements such as: stronger access control (RBAC), better auditing, ARM-based deployment/governance, access to managed identities, access to key vault for secrets, AAD-based authentication, support for tags and resource groups for easier security management, etc.",
-            "recommendation": "Recommendation: Delete the Azure Classic service connection and create a new service connection of type 'Azure resource Manager'(i.e., ARM based) scoped to a resource/resource group in subscription"
-          }
+          ]
         },
         {
           "Id": "AZC102/190",
-          "Name": "DoNotGrantAllPipelinesAccess",
-          "Message": "[Service connection Id:{0:scanTarget}]({1:targetPath}) in organization '{2:org}' project '{3:project}' was scanned. {4:validatorMessage}. {5:description} {6:recommendation}.",
-          "Description": "Do not make service connection accessible to all pipelines.",
+          "Name": "DoNotGrantAllPipelinesAccessToServiceConnections",
+          "Message": "Service connection [{0:serviceConnectionName}](https://dev.azure.com/{1:org}/{2:project}/_settings/adminservices?resourceId={3:serviceConnectionId}) in the '{1:org}' organization’s '{2:project}' project is accessible to all pipelines. {4:validatorMessage}.",
+          "Description": "Do not make service connections accessible to all pipelines. If a pipeline with access to the service connection uses a vulnerable component, an attacker may leverage this access to attack other pipelines with access to critical resources. Follow the principle of least privilege by only giving access to pipelines that explicitly need it.\r\nRecommendation:\r\n1. Navigate to Project --> Project Settings --> Service Connections\r\n2. Select your service connection from the list\r\n3. Click on the three dots and select ‘Security’\r\n4. Under 'Pipeline Permissions', click 'Restrict Permission' and add only pipelines that need explicit access to the service connection.",
           "IntrafileRegexes": [
             "$AZC102.ServiceConnectionEntityType",
             "$AZC102.ServiceConnectionId",
             "$AdoOrganizationName",
             "$AdoProjectName"
-          ],
-          "MessageArguments": {
-            "description": "To support security of the pipeline operations, connections must not be granted access to all pipelines. This is in keeping with the principle of least privilege because a vulnerability in components used by one pipeline can be leveraged by an attacker to attack other pipelines having access to critical resources.",
-            "recommendation": "1. Navigate to the service connections settings page for your project --> 2. Select your service connection from the list --> 3. Click on three dots --> 4. Click Security --> 5. Under 'Pipeline Permissions', click 'Restrict Permission' to avoid granting access to all pipelines and add only those pipelines that need explicit access on service connection"
-          }
+          ]
         }
       ]
     }

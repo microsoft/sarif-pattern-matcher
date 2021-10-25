@@ -1,0 +1,29 @@
+{
+	"AuthorizedResourceData": {
+		"Metadata": {
+			"FunctionStartDate": "2021-10-04T23:05:43.0852066Z",
+			"SessionId": "1532f8db-5138-4c24-9f39-1568be174f55",
+			"CollectorType": "ProjectCollector",
+			"CollectorIdentity": "",
+			"SliceDate": "2021-10-04T23:00:00",
+			"RecordType": "AzureDevOps.Build.AuthorizedResourcesInstance",
+			"CollectionDate": "2021-10-04T23:05:44.387628Z",
+			"OrganizationName": "testorg",
+			"ProjectId": "a65ac38a-ba1a-4d70-be7b-65998e9c05e4",
+			"OriginatingUrl": "https://dev.azure.com/testorg/a65ac38a-ba1a-4d70-be7b-65998e9c05e4/_apis/build/authorizedresources?api-version=6.0-preview.1",
+			"Identity": "c67f",
+			"LastBatch": true,
+			"RecordSha": "885b5522fd9fda651fe28da6dfbc99246e4b475c054d2b382c9a3db9f82c3e52d847135d3bf15579a2aa281934ab33cab2a8d0908a8039d7faedbbf4254d1192",
+			"WriterSource": "AzureBlob"
+		},
+		"type": "securefile",
+		"id": "ed4acbf1-610a-46ff-bbb9-6431fe394cc1",
+		"authorized": true,
+		"_projectId": "f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f",
+		"_projectName": "TestProject",
+		"_accountName": "testorg.visualstudio.com",
+		"_sessionId": "a77630da-0003-44e5-980c-9eaf8fe6f26a",
+	},
+	"SecureFileData": {
+	}
+}

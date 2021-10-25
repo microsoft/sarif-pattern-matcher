@@ -24,9 +24,18 @@ $AdoOrganizationName=(?i)"_accountName"\s*:\s*"(?P<org>.*?)"
 $AdoProjectName=(?i)"_projectId"\s*:\s*"(?P<project>.*?)"
 
 $AZC101.BuildDefinitionEntityType=(?i)(?P<type>"uri"\s*:\s*"vstfs:///Build/Definition/)
-$AZC102.ServiceConnectionEntityType=(?i)(?P<type>"serviceEndpointProjectReferences")
-$AZC102.ServiceConnectionId=(?iU)^{[\s\S]*"id"\s*:\s*"(?P<serviceConnectionId>[[0-9A-F]{8}[-]?(?:[0-9A-F]{4}[-]?){3}[0-9A-F]{12})"
-
+$AZC101.BuildDefinitionId=(?i)"id"\s*:\s*(?P<buildDefinitionId>.*),\s*"name"\s*:\s*"(?P<buildDefinitionName>.*)",\s*"url"\s*:\s*".*",\s*"uri"\s*:\s*".*",\s*"path"\s*:\s*".*",\s*"type"\s*:\s*"build"
 $AZC101/240.PullRequestTriggerType=(?i)(?P<triggerType>"triggerType"\s*:\s*"pullRequest")
 $AZC101/240.ForkedEnabled=(?i)(?P<secret>"forks"\s*:\s*{\s*"enabled"\s*:\s*true\s*,\s*"allowSecrets"\s*:\s*true\s*})
+
+$AZC102.ServiceConnectionEntityType=(?i)(?P<type>"serviceEndpointProjectReferences")
+$AZC102.ServiceConnectionId=(?iU)^{[\s\S]*"id"\s*:\s*"(?P<serviceConnectionId>[[0-9A-F]{8}[-]?(?:[0-9A-F]{4}[-]?){3}[0-9A-F]{12})"\s*,\s*"name"\s*:\s*"(?P<serviceConnectionName>.*)"
 $AZC102/150.AzureClassicType=(?i)(?P<secret>"type"\s*:\s*"azure")
+
+$AZC103.SecureFileEntityType=(?i)"SecureFileData"\s*:
+$AZC103.SecureFileId=(?iU)"type"\s*:\s*"securefile"\s*,\s*"id"\s*:\s*"(?P<secureFileId>[[0-9A-F]{8}[-]?(?:[0-9A-F]{4}[-]?){3}[0-9A-F]{12})"
+$AZC103/100.Authorized=(?iU)"AuthorizedResourceData"\s*:\s*{\s*[\s\S]*(?P<secret>"authorized"\s*:\s*true)
+
+$AZC104.VariableGroupEntityType=(?i)"VariableGroupData"\s*:
+$AZC104.VariableGroupId=(?iU)"VariableGroupData"\s*:\s*{\s*[\s\S]*"id"\s*:\s*(?P<variableGroupId>\d+)\s*,[\s\S]*"name"\s*:\s*"(?P<variableGroupName>.*)"
+$AZC104/120.Authorized=(?iU)"AuthorizedResourceData"\s*:\s*{\s*[\s\S]*(?P<secret>"authorized"\s*:\s*true)

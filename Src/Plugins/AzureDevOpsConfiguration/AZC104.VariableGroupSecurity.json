@@ -1,0 +1,27 @@
+{
+  "SharedStringsFileName": "AzureDevOpsConfiguration.SharedStrings.txt",
+  "ValidatorsAssemblyName": "AzureDevOpsConfiguration.dll",
+  "Definitions": [
+    {
+      "Id": "AZC104",
+      "Name": "VariableGroupShouldBeSecure",
+      "Level": "Error",
+      "Description": "Make sure variable groups in AzureDevOps are secure.",
+      "MatchExpressions": [
+        {
+          "Id": "AZC104/120",
+          "Name": "DoNotGrantAllPipelinesAccessToVariableGroupsWithSecrets",
+          "Message": "Variable group [{0:variableGroupName}](https://dev.azure.com/{1:org}/{2:project}/_library?itemType=VariableGroups&view=VariableGroupView&variableGroupId={3:secureFileId}) in the '{1:org}' organization’s '{2:project}' project can be accessed by all pipelines.",
+          "Description": "Do not make variable groups with secret variables accessible to all pipelines. If a variable group with unrestricted access contains secrets, they may be exposed to an unauthorized user who could extract or compromise them by creating a new pipeline. Follow the principle of least privilege by only giving access to pipelines that explicitly need it.\r\nRecommendation:\r\n1. Navigate to Project --> Pipelines --> Library --> Variable Groups\r\n2. Select your variable group from the list\r\n3. Under 'Pipeline Permissions', click on 'Restrict Permission' and add only pipelines that need explicit access to the variable group.",
+          "IntrafileRegexes": [
+            "$AZC104.VariableGroupEntityType",
+            "$AZC104.VariableGroupId",
+            "$AZC104/120.Authorized",
+            "$AdoOrganizationName",
+            "$AdoProjectName"
+          ]
+        }
+      ]
+    }
+  ]
+}

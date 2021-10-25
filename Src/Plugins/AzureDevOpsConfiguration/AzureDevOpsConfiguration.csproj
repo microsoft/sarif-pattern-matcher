@@ -14,6 +14,8 @@
   <ItemGroup>
     <None Remove="AdoPat.txt" />
     <None Remove="AZC102.ServiceConnectionSecurity.json" />
+    <None Remove="AZC103.SecureFileSecurity.json" />
+    <None Remove="AZC104.VariableGroupSecurity.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +23,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="AZC102.ServiceConnectionSecurity.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AZC103.SecureFileSecurity.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AZC104.VariableGroupSecurity.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="build\Sarif.PatternMatcher.AzureDevOpsConfiguration.targets">

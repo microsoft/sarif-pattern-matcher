@@ -1,0 +1,27 @@
+{
+  "SharedStringsFileName": "AzureDevOpsConfiguration.SharedStrings.txt",
+  "ValidatorsAssemblyName": "AzureDevOpsConfiguration.dll",
+  "Definitions": [
+    {
+      "Id": "AZC103",
+      "Name": "SecureFileShouldBeSecure",
+      "Level": "Error",
+      "Description": "Make sure secure files in AzureDevOps are secure.",
+      "MatchExpressions": [
+        {
+          "Id": "AZC103/100",
+          "Name": "DoNotGrantAllPipelinesAccessToSecureFiles",
+          "Message": "Secure file [{0:secureFileId}](https://dev.azure.com/{1:org}/{2:project}/_library?itemType=SecureFiles&view=SecureFileView&secureFileId={0:secureFileId}) in the '{1:org}' organization’s '{2:project}' project is accessible to all pipelines.",
+          "Description": "Do not make secure files accessible to all pipelines. This may expose sensitive information to unauthorized users, who could access the secure file by building a pipeline. Follow the principle of least privilege by only giving access to pipelines that explicitly need it.\r\nRecommendation:\r\n1. Navigate to Project --> Pipelines --> Library --> Secure Files\r\n2. Select your secure file from the list\r\nUnder 'Pipeline Permissions', click ‘Restrict Permission’ and add only pipelines that need explicit access to the secure file.",
+          "IntrafileRegexes": [
+            "$AZC103.SecureFileEntityType",
+            "$AZC103.SecureFileId",
+            "$AZC103/100.Authorized",
+            "$AdoOrganizationName",
+            "$AdoProjectName"
+          ]
+        }
+      ]
+    }
+  ]
+}

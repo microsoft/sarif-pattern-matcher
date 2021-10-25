@@ -6,26 +6,21 @@
       "Id": "AZC101",
       "Name": "BuildDefinitionShouldBeSecure",
       "Level": "Error",
-      "Description": "Make sure build definitions in AzureDevOps are secure",
+      "Description": "Make sure build definitions in AzureDevOps are secure.",
       "MatchExpressions": [
         {
           "Id": "AZC101/240",
-          "Name": "DontMakeSecretsAvailableToForkedBuilds",
-          "Message": "[Build Definition Id:{0:scanTarget}]({1:adoDomain}/{2:org}/{3:project}/_build/definitionId={0:scanTarget}) in organization '{2:org}' project '{3:project}' was found {4:issueDesc} {5:description} {6:recommendation}.",
-          "Description": "Do not make secrets available to builds for fork of public repository.",
+          "Name": "DoNotMakeSecretsAvailableToForkedBuilds",
+          "Message": "Pipeline secrets for Build Definition [{0:buildDefinitionName}](https://dev.azure.com/{1:org}/AzureDevOps/_apps/hub/ms.vss-ciworkflow.build-ci-hub?_a=edit-build-definition&id={3:buildDefinitionId}&view=Tab_Triggers) in the '{1:org}' organization's '{2:project}' project are currently exposed to builds for repository forks.",
+          "Description": "Do not make secrets available to builds for fork of public repository. In GitHub public repositories, it is possible for someone outside the organization to create and subsequently run builds on a forked copy. In this scenario, enabling the setting to make secrets available to builds of forks may expose build pipeline secrets that are meant to be to outsiders.\r\nRecommendation:\r\n1. Navigate to the build pipeline using the provided resource link\r\n2. Navigate to Triggers -> Pull request validation -> Forks\r\n3. Uncheck 'Make secrets available to builds of forks'.",
           "IntrafileRegexes": [
             "$AZC101.BuildDefinitionEntityType",
+            "$AZC101.BuildDefinitionId",
             "$AZC101/240.PullRequestTriggerType",
             "$AZC101/240.ForkedEnabled",
             "$AdoOrganizationName",
             "$AdoProjectName"
           ],
-          "MessageArguments": {
-            "adoDomain": "https://dev.azure.com",
-            "issueDesc": "its build pipeline secrets available for builds of forks.",
-            "description": "For GitHub public repositories, it is possible that people from outside the organization can create forks and run builds on the forked repo. In such a case, if this setting is wrongly left enabled, outsiders can get access to build pipeline secrets that were meant to be internal.",
-            "recommendation": "Recommendation: 1. Navigate to the build pipeline using resource link -->  2. Triggers --> 3. Pull request validation --> 4. Forks --> 5. Uncheck 'Make secrets available to builds of forks'"
-          },
           "HelpUri": "https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#important-security-considerations"
         }
       ]
