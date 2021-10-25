@@ -15,13 +15,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class DropboxAppCredentialsValidator : DynamicValidatorBase
     {
+        internal const string Uri = "https://content.dropboxapi.com/2/files/get_thumbnail_v2";
+
+        internal static HttpRequestMessage GenerateRequestMessage(string id, string secret)
+        {
+            string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
+            var request = new HttpRequestMessage(HttpMethod.Post, Uri);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+            request.Headers.Add("Dropbox-API-Arg", @"{""resource"": {"".tag"": ""path"",""path"": ""/a.docx""},""format"": ""jpeg"",""size"": ""w64h64"",""mode"": ""strict""}");
+            return request;
+        }
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch id = groups["id"];
+            FlexMatch secret = groups["secret"];
 
             if (!ContainsDigitAndChar(id.Value) ||
                 !ContainsDigitAndChar(secret.Value))
@@ -48,19 +56,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
-            const string uri = "https://content.dropboxapi.com/2/files/get_thumbnail_v2";
-
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
-            string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
             HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
 
             try
             {
-                using var request = new HttpRequestMessage(HttpMethod.Post, uri);
-                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
-                request.Headers.Add("Dropbox-API-Arg", @"{""resource"": {"".tag"": ""path"",""path"": ""/a.docx""},""format"": ""jpeg"",""size"": ""w64h64"",""mode"": ""strict""}");
-
+                using var request = GenerateRequestMessage(id, secret);
                 using HttpResponseMessage response = httpClient
                     .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
                     .GetAwaiter()
