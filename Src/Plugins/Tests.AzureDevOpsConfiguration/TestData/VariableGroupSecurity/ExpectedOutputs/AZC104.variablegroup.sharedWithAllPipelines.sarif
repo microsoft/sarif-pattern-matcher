@@ -47,7 +47,7 @@
               "My WebSite Config Setting",
               "testorg.visualstudio.com",
               "f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f",
-              ""
+              "1"
             ]
           },
           "locations": [
@@ -72,13 +72,12 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=\"authorized\": true]",
-            "ValidationFingerprintHash/v1": "b6547604f6bc99ddb9f8a70af4f15caa6e6e5b593d983fd545797f9efbcbe2ad",
-            "AssetFingerprint/v2": "{}",
-            "ValidationFingerprint/v2": "{\"secret\":\"\\\"authorized\\\": true\"}"
-          },
-          "rank": 51.63
+            "AssetFingerprint/v1": "[host=testorg.visualstudio.com][id=1][platform=AzureDevOps][resource=f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f]",
+            "ValidationFingerprint/v1": "[host=testorg.visualstudio.com][id=1][resource=f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f]",
+            "ValidationFingerprintHash/v1": "0cabc4bddc2c22de3ab7e5cc2e19a4b457564f3e7a0df33eb1d8f887e9b82541",
+            "AssetFingerprint/v2": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"1\",\"platform\":\"AzureDevOps\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"1\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}"
+          }
         }
       ],
       "columnKind": "utf16CodeUnits"
