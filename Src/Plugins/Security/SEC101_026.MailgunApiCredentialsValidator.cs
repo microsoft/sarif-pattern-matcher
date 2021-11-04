@@ -15,13 +15,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class MailgunApiCredentialsValidator : DynamicValidatorBase
     {
+        internal static HttpRequestMessage GenerateRequestMessage(string id, string secret, string scanIdentityGuid)
+        {
+            string credentials = $"api:{secret}";
+            byte[] bytes = Encoding.UTF8.GetBytes(credentials);
+            credentials = Convert.ToBase64String(bytes);
+
+            var request = new HttpRequestMessage(HttpMethod.Post, $"https://api.mailgun.net/v3/{id}.mailgun.org/messages");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+            request.Content = new MultipartFormDataContent
+            {
+                { new StringContent(scanIdentityGuid), "subject" },
+            };
+            return request;
+        }
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch id = groups["id"];
+            FlexMatch secret = groups["secret"];
 
             var validationResult = new ValidationResult
             {
@@ -49,16 +61,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 HttpClient client = CreateOrRetrieveCachedHttpClient();
 
-                string credentials = $"api:{secret}";
-                byte[] bytes = Encoding.UTF8.GetBytes(credentials);
-                credentials = Convert.ToBase64String(bytes);
-
-                using var request = new HttpRequestMessage(HttpMethod.Post, $"https://api.mailgun.net/v3/{id}.mailgun.org/messages");
-                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
-                request.Content = new MultipartFormDataContent
-                {
-                    { new StringContent(ScanIdentityGuid), "subject" },
-                };
+                using var request = GenerateRequestMessage(id, secret, ScanIdentityGuid);
 
                 using HttpResponseMessage response = client
                     .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)

@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Security.Cryptography;
+using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
@@ -14,15 +14,81 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class AkamaiCredentialsValidator : DynamicValidatorBase
     {
+        internal static HttpRequestMessage GenerateRequestMessage(string id,
+                                                                  string host,
+                                                                  string secret,
+                                                                  string resource,
+                                                                  string scanIdentityGuid,
+                                                                  DateTime datetime)
+        {
+            string timestamp = datetime.ToString("yyyyMMdd'T'HH:mm:ss+0000");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{host}/ccu/v2/queues/default");
+            string requestData = GetRequestData(request.Method.ToString(), request.RequestUri);
+            string authData = GetAuthDataValue(id, resource, timestamp, scanIdentityGuid);
+            string authHeader = GetAuthorizationHeaderValue(secret, timestamp, authData, requestData);
+            request.Headers.Add("Authorization", authHeader);
+
+            return request;
+        }
+
+        private static string GetRequestData(string method, Uri uri)
+        {
+            string headers = string.Empty;
+            string bodyHash = string.Empty;
+
+            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t",
+                method.ToUpper(),
+                uri.Scheme,
+                uri.Host,
+                uri.PathAndQuery,
+                headers,
+                bodyHash);
+        }
+
+        private static string GetAuthDataValue(string id,
+                                               string resource,
+                                               string timestamp,
+                                               string scanIdentityGuid)
+        {
+            return string.Format("{0} client_token={1};access_token={2};timestamp={3};nonce={4};",
+                "EG1-HMAC-SHA256",
+                id,
+                resource,
+                timestamp,
+                scanIdentityGuid.ToLower());
+        }
+
+        private static string GetAuthorizationHeaderValue(string secret,
+                                                          string timestamp,
+                                                          string authData,
+                                                          string requestData)
+        {
+            string hashType = "HMACSHA256";
+
+            byte[] time = Encoding.UTF8.GetBytes(timestamp);
+            string signingKey = Convert.ToBase64String(ComputeKeyedHash(time, secret, hashType));
+
+            byte[] data = Encoding.UTF8.GetBytes(string.Format("{0}{1}", requestData, authData));
+            string authSignature = Convert.ToBase64String(ComputeKeyedHash(data, signingKey, hashType));
+
+            return string.Format("{0}signature={1}", authData, authSignature);
+        }
+
+        private static byte[] ComputeKeyedHash(byte[] data, string key, string hashType)
+        {
+            using (var algorithm = HMAC.Create(hashType.ToString()))
+            {
+                algorithm.Key = Encoding.UTF8.GetBytes(key);
+                return algorithm.ComputeHash(data);
+            }
+        }
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
-                !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret) ||
-                !groups.TryGetNonEmptyValue("resource", out FlexMatch resource))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch id = groups["id"];
+            FlexMatch host = groups["host"];
+            FlexMatch secret = groups["secret"];
+            FlexMatch resource = groups["resource"];
 
             var validationResult = new ValidationResult
             {
@@ -48,26 +114,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string host = fingerprint.Host;
             string secret = fingerprint.Secret;
             string resource = fingerprint.Resource;
+            string scanIdentityGuid = string.Empty;
+            string date = string.Empty;
+            DateTime datetime = DateTime.UtcNow;
+
+            if (options.TryGetValue("datetime", out date))
+            {
+                DateTime.TryParse(date, out datetime);
+            }
+
+            if (!options.TryGetValue("scanIdentityGuid", out scanIdentityGuid))
+            {
+                scanIdentityGuid = ScanIdentityGuid;
+            }
 
             try
             {
-                string timestamp = $"{DateTime.UtcNow:yyyyMMddTHH:mm:ss}";
-                string header = $"client_token={id};access_token={resource};timestamp={timestamp}+0000;nonce={ScanIdentityGuid}";
-                string textToSign = $"EG1-HMAC-SHA256 {header};";
-
-                // Generating signing key based on timestamp.
-                using var hmac = new HMACSHA256(Convert.FromBase64String(secret));
-                string signingKey = Convert.ToBase64String(hmac.ComputeHash(Convert.FromBase64String(timestamp)));
-
-                // Generating signature based on textToSign and signingKey.
-                using var hmacSignature = new HMACSHA256(Convert.FromBase64String(signingKey));
-                string signature = Convert.ToBase64String(hmacSignature.ComputeHash(Convert.FromBase64String(textToSign)));
-
                 HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
-                using var request = new HttpRequestMessage(HttpMethod.Get, $"{host}/ccu/v2/queues/default");
-                request.Headers.Authorization = new AuthenticationHeaderValue(
-                    $"EG1-HMAC-SHA256",
-                    $"{header};signature={signature}");
+
+                using var request = GenerateRequestMessage(id, host, secret, resource, scanIdentityGuid, datetime);
 
                 using HttpResponseMessage httpResponse = httpClient
                     .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
