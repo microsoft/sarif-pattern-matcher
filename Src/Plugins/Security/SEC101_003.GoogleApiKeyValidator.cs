@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 
+using GoogleApi.Entities.Maps.Common;
 using GoogleApi.Entities.Maps.Directions.Request;
 using GoogleApi.Exceptions;
 
@@ -58,8 +59,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             var request = new DirectionsRequest
             {
                 Key = apiKey,
-                Origin = new GoogleApi.Entities.Common.Location("Seattle"),
-                Destination = new GoogleApi.Entities.Common.Location("Portland"),
+                Origin = new LocationEx(new GoogleApi.Entities.Common.Address("Seattle")),
+                Destination = new LocationEx(new GoogleApi.Entities.Common.Address("Portland")),
             };
 
             try
