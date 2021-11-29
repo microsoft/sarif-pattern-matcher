@@ -16,7 +16,12 @@
 - UER => eliminate unhandled exceptions in rules
 - UEE => eliminate unhandled exceptions in engine
 
-## *v1.5.0*
+## *Unreleased*
+
+- NR: Adding SlackWorkflow rule with dynamic validation.
+  [#585](https://github.com/microsoft/sarif-pattern-matcher/pull/585)
+
+## *v1.5.0-g9f639c22c7*
 
 - FPC: Improving RabbitMQ regex (removing new lines and spaces) from secret.
   [#548](https://github.com/microsoft/sarif-pattern-matcher/pull/548)
