@@ -16,6 +16,9 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/020.DropboxAccessTokenValidator
+    /// </summary
     public class DropboxAccessTokenValidatorTests
     {
         [Fact]

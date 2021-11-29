@@ -18,7 +18,7 @@ using Xunit;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
-    /// Testing SEC101/026.AkamaiCredentialsValidatorTests
+    /// Testing SEC101/015.AkamaiCredentialsValidator
     /// </summary>
     public class AkamaiCredentialsValidatorTests
     {
@@ -27,7 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void AkamaiCredentialsValidatorTests_MockHttpTests()
         {
-            Fingerprint fingerprint = new Fingerprint(fingerprintText);
+            var fingerprint = new Fingerprint(fingerprintText);
 
             string id = fingerprint.Id;
             string host = fingerprint.Host;
@@ -37,9 +37,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             options.Add("datetime", DateTime.UtcNow.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture));
             options.Add("scanIdentityGuid", $"{Guid.NewGuid()}");
 
-            DateTime now = DateTime.Parse(options["datetime"]);
+            var now = DateTime.Parse(options["datetime"]);
 
-            var request = AkamaiCredentialsValidator.GenerateRequestMessage(id, host, secret, resource, options["scanIdentityGuid"], now);
+            HttpRequestMessage request = AkamaiCredentialsValidator.GenerateRequestMessage(id, host, secret, resource, options["scanIdentityGuid"], now);
 
             string nullRefResponseMessage = string.Empty;
             string unexpectedResponseMessage = string.Empty;

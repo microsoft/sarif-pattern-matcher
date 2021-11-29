@@ -5,12 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 
 using FluentAssertions;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
@@ -19,7 +17,7 @@ using Xunit;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
-    /// Testing SEC101/026.MailgunApiCredentialsValidatorTests
+    /// Testing SEC101/026.MailgunApiCredentialsValidator
     /// </summary>
     public class MailgunApiCredentialsValidatorTests
     {
@@ -28,12 +26,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void MailgunApiCredentialsValidatorTests_MockHttpTests()
         {
-            Fingerprint fingerprint = new Fingerprint(fingerprintText);
+            var fingerprint = new Fingerprint(fingerprintText);
 
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
             string scanIdentityGuid = $"{Guid.NewGuid()}";
-            using var request = MailgunApiCredentialsValidator.GenerateRequestMessage(id, secret, scanIdentityGuid);
+            using HttpRequestMessage request = MailgunApiCredentialsValidator.GenerateRequestMessage(id, secret, scanIdentityGuid);
 
             string nullRefResponseMessage = string.Empty;
             string authorizedResponseMessage = string.Empty;

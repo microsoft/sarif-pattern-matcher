@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
 
-            using var defaultRequest = DropboxAppCredentialsValidator.GenerateRequestMessage(id, secret);
+            using HttpRequestMessage defaultRequest = DropboxAppCredentialsValidator.GenerateRequestMessage(id, secret);
 
             var AppDisabledResponse = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {

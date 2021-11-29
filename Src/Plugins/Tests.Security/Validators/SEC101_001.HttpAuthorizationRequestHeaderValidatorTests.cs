@@ -10,7 +10,6 @@ using System.Text;
 
 using FluentAssertions;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
@@ -18,6 +17,9 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/001.HttpAuthorizationRequestHeaderValidator
+    /// </summary
     public class HttpAuthorizationRequestHeaderValidatorTests
     {
         private const string TestScheme = "http";

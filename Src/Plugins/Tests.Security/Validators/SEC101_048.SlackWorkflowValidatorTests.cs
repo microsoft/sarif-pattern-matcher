@@ -16,6 +16,9 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/048.SlackWorkflowValidator
+    /// </summary>
     public class SlackWorkflowValidatorTests
     {
         [Fact]

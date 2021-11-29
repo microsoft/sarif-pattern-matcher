@@ -15,10 +15,13 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/047.CratesApiKeyValidator
+    /// </summary>
     public class CratesApiKeyValidatorTests
     {
         [Fact]
-        public void DiscordCredentialsValidator_MockHttpTests()
+        public void CratesApiKeyValidator_MockHttpTests()
         {
             string unknownMessage = null;
             const string fingerprintText = "[secret=b]";
