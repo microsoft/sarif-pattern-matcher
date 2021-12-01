@@ -61,7 +61,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         string content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                         ResultRoot resultRoot = JsonConvert.DeserializeObject<ResultRoot>(content);
 
-                        message = $"The compromised Telegram bot account is '{resultRoot?.Result?.Username}'.";
+                        fingerprint.Id = resultRoot?.Result?.Username;
+                        message = $"The compromised Telegram bot account is '{fingerprint.Id}'.";
                         return ValidationState.Authorized;
                     }
 
