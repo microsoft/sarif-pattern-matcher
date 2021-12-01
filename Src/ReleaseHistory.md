@@ -16,6 +16,12 @@
 - UER => eliminate unhandled exceptions in rules
 - UEE => eliminate unhandled exceptions in engine
 
+## *Unreleased*
+
+- SDK: Exposing `automationId`, `automationGuid`, and `postUri` in the
+  `analyze` command.
+  [#586](https://github.com/microsoft/sarif-pattern-matcher/pull/586)
+
 ## *v1.5.0*
 
 - FPC: Improving RabbitMQ regex (removing new lines and spaces) from secret.
