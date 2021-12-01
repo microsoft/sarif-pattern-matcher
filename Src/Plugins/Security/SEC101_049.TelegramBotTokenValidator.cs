@@ -16,7 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public class TelegramBotTokenValidator : DynamicValidatorBase
     {
         // https://core.telegram.org/bots/api#getme
-        internal const string MeApiUri = "https://api.telegram.org/bot{0:secret}/getMe";
+        internal const string GetMeApi = "https://api.telegram.org/bot{0:secret}/getMe";
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
@@ -41,7 +41,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string secret = fingerprint.Secret;
-            string uri = string.Format(MeApiUri, secret);
+            string uri = string.Format(GetMeApi, secret);
 
             try
             {

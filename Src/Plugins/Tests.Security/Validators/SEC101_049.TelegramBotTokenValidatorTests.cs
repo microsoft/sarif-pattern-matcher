@@ -31,7 +31,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             string unexpectedResponseCodeMessage = null, nullRefResponseMessage = null;
             string secret = fingerprint.Secret;
-            string uri = string.Format(TelegramBotTokenValidator.MeApiUri, secret);
+            string uri = string.Format(TelegramBotTokenValidator.GetMeApi, secret);
 
             var resultRoot = new TelegramBotTokenValidator.ResultRoot
             {
