@@ -20,6 +20,9 @@
 
 - NR: Adding TelegramBotToken rule with dynamic validation.
   [#587](https://github.com/microsoft/sarif-pattern-matcher/pull/587)
+- SDK: Exposing `automationId`, `automationGuid`, and `postUri` in the
+  `analyze` command.
+  [#586](https://github.com/microsoft/sarif-pattern-matcher/pull/586)
 
 ## *v1.5.0*
 
