@@ -10,6 +10,9 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/006.GitHubPatValidator
+    /// </summary
     public class GitHubPatValidatorTests
     {
         [Fact]

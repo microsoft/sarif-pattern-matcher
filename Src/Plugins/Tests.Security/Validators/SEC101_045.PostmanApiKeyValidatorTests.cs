@@ -5,15 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
-
-using Newtonsoft.Json;
 
 using Xunit;
 
@@ -29,9 +26,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void PostmanApiKeyValidator_MockHttpTests()
         {
-            Fingerprint fingerprint = new Fingerprint(fingerprintText);
+            var fingerprint = new Fingerprint(fingerprintText);
             string secret = fingerprint.Secret;
-            var request = PostmanApiKeyValidator.GenerateRequestMessage(secret);
+            HttpRequestMessage request = PostmanApiKeyValidator.GenerateRequestMessage(secret);
 
             string unexpectedResponseMessage = string.Empty;
             string nullRefResponseMessage = string.Empty;

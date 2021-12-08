@@ -10,6 +10,9 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/013.CryptographicPrivateKeyValidator
+    /// </summary
     public class CryptographicPrivateKeyValidatorTests
     {
         // copied from https://github.com/nodejs/node/blob/master/src/node_root_certs.h,

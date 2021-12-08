@@ -14,6 +14,9 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
+    /// <summary>
+    /// Testing SEC101/102.AdoPatValidator
+    /// </summary>
     public class AdoPatValidatorTests
     {
         private struct TestCase

@@ -17,26 +17,22 @@ using Xunit;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
-    /// Testing SEC101/026.MailgunApiCredentialsValidator
+    /// Testing SEC101/048.SlackWorkflowKeyValidator
     /// </summary>
-    public class MailgunApiCredentialsValidatorTests
+    public class SlackWorkflowKeyValidatorTests
     {
-        private const string fingerprintText = "[id=whoami][secret=supersecretvalue]";
-
         [Fact]
-        public void MailgunApiCredentialsValidatorTests_MockHttpTests()
+        public void SlackWorkflowValidator_MockHttpTests()
         {
+            const string fingerprintText = "[id=id][secret=secret]";
             var fingerprint = new Fingerprint(fingerprintText);
 
+            string unexpectedResponseCodeMessage = null, nullRefResponseMessage = null;
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
-            string scanIdentityGuid = $"{Guid.NewGuid()}";
-            using HttpRequestMessage request = MailgunApiCredentialsValidator.GenerateRequestMessage(id, secret, scanIdentityGuid);
+            string uri = string.Format(SlackWorkflowKeyValidator.WorkflowUri, id, secret);
 
-            string nullRefResponseMessage = string.Empty;
-            string authorizedResponseMessage = string.Empty;
-            string unauthorizedResponseMessage = string.Empty;
-            string unexpectedResponseMessage = string.Empty;
+            var request = new HttpRequestMessage(HttpMethod.Post, uri);
 
             var testCases = new HttpMockTestCase[]
             {
@@ -45,51 +41,59 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Null Ref Exception",
                     HttpRequestMessages = new List<HttpRequestMessage>{ null },
                     HttpResponseMessages = new List<HttpResponseMessage>{ null },
-                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException(), asset: id),
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException()),
                     ExpectedMessage = nullRefResponseMessage,
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Bad Request (Authorized response code)",
+                    Title = "Testing Valid Credentials",
                     HttpRequestMessages = new[]{ request },
-                    HttpResponseMessages = new[]{ HttpMockHelper.BadRequestResponse },
-                    ExpectedValidationState = ValidatorBase.ReturnAuthorizedAccess(ref authorizedResponseMessage, asset: id),
-                    ExpectedMessage = authorizedResponseMessage,
+                    HttpResponseMessages = new[]{ HttpMockHelper.OKResponse },
+                    ExpectedValidationState = ValidationState.Authorized,
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Unauthorized (Unauthorized response code)",
+                    Title = "Testing invalid webhook (NotFound StatusCode)",
+                    HttpRequestMessages = new[]{ request },
+                    HttpResponseMessages = new[]{ HttpMockHelper.NotFoundResponse },
+                    ExpectedValidationState = ValidationState.UnknownHost,
+                    ExpectedMessage = "The specified Slack workflow key could not be found."
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Testing Invalid Credentials (Forbidden StatusCode)",
+                    HttpRequestMessages = new[]{ request },
+                    HttpResponseMessages = new[]{ HttpMockHelper.ForbiddenResponse },
+                    ExpectedValidationState = ValidationState.Unauthorized,
+                },
+                new HttpMockTestCase
+                {
+                    Title = "Testing Invalid Credentials (Unauthorized StatusCode)",
                     HttpRequestMessages = new[]{ request },
                     HttpResponseMessages = new[]{ HttpMockHelper.UnauthorizedResponse },
-                    ExpectedValidationState = ValidatorBase.ReturnUnauthorizedAccess(ref unauthorizedResponseMessage, asset: id),
-                    ExpectedMessage = unauthorizedResponseMessage,
+                    ExpectedValidationState = ValidationState.Unauthorized,
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Unexpected (Server error response code)",
+                    Title = "Testing NotFound StatusCode",
                     HttpRequestMessages = new[]{ request },
                     HttpResponseMessages = new[]{ HttpMockHelper.InternalServerErrorResponse },
-                    ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref unexpectedResponseMessage, HttpStatusCode.InternalServerError),
-                    ExpectedMessage = unexpectedResponseMessage,
-                }
+                    ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref unexpectedResponseCodeMessage, HttpStatusCode.InternalServerError),
+                    ExpectedMessage = unexpectedResponseCodeMessage
+                },
             };
 
             var sb = new StringBuilder();
-            var mockHandler = new HttpMockHelper();
-            var validator = new MailgunApiCredentialsValidator();
-
+            var httpMock = new HttpMockHelper();
+            var validator = new SlackWorkflowKeyValidator();
             foreach (HttpMockTestCase testCase in testCases)
             {
-                for (int i = 0; i < testCase.HttpRequestMessages.Count; i++)
-                {
-                    mockHandler.Mock(testCase.HttpRequestMessages[i], testCase.HttpResponseMessages[i]);
-                }
-
-                string message = string.Empty;
+                string message = null;
                 ResultLevelKind resultLevelKind = default;
                 var keyValuePairs = new Dictionary<string, string>();
 
-                using var httpClient = new HttpClient(mockHandler);
+                httpMock.Mock(testCase.HttpRequestMessages[0], testCase.HttpResponseMessages[0]);
+                using var httpClient = new HttpClient(httpMock);
                 validator.SetHttpClient(httpClient);
 
                 ValidationState currentState = validator.IsValidDynamic(ref fingerprint,
@@ -101,12 +105,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedValidationState}' but found '{currentState}'.");
                 }
 
-                if (!message.Equals(testCase.ExpectedMessage))
+                if (message != testCase.ExpectedMessage)
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedMessage}' but found '{message}'.");
                 }
 
-                mockHandler.Clear();
+                httpMock.Clear();
             }
 
             sb.Length.Should().Be(0, sb.ToString());

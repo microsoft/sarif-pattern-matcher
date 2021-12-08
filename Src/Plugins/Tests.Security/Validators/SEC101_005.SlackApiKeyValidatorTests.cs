@@ -15,10 +15,13 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
-    public class SlackTokenValidatorTests
+    /// <summary>
+    /// Testing SEC101/005.SlackApiKeyValidator
+    /// </summary
+    public class SlackApiKeyValidatorTests
     {
         [Fact]
-        public void SlackTokenValidator_Test()
+        public void SlackApiKeyValidator_Test()
         {
             string fingerprintText = "";
             if (string.IsNullOrEmpty(fingerprintText))
@@ -31,15 +34,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
-            var slackTokenValidator = new SlackTokenValidator();
-            slackTokenValidator.IsValidDynamic(ref fingerprint,
+            var SlackApiKey = new SlackApiKeyValidator();
+            SlackApiKey.IsValidDynamic(ref fingerprint,
                                                ref message,
                                                keyValuePairs,
                                                ref resultLevelKind);
         }
 
         [Fact]
-        public void SlackTokenValidatorMockHttp_Test()
+        public void SlackApiKeyValidator_MockHttp_Test()
         {
             const string uri = "https://slack.com/api/auth.test";
             const string token = "xoxb-1234";
@@ -144,7 +147,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             var sb = new StringBuilder();
             var mockHandler = new HttpMockHelper();
-            var slackTokenValidator = new SlackTokenValidator();
+            var SlackApiKey = new SlackApiKeyValidator();
             foreach (HttpMockTestCase testCase in testCases)
             {
                 for (int i = 0; i < testCase.HttpStatusCodes.Count; i++)
@@ -158,9 +161,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var keyValuePairs = new Dictionary<string, string>();
 
                 using var httpClient = new HttpClient(mockHandler);
-                slackTokenValidator.SetHttpClient(httpClient);
+                SlackApiKey.SetHttpClient(httpClient);
 
-                ValidationState currentState = slackTokenValidator.IsValidDynamic(ref fingerprint,
+                ValidationState currentState = SlackApiKey.IsValidDynamic(ref fingerprint,
                                                                                   ref message,
                                                                                   keyValuePairs,
                                                                                   ref resultLevelKind);

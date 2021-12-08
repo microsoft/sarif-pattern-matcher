@@ -15,6 +15,9 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/046.DiscordApiCredentialsValidator
+    /// </summary>
     public class DiscordApiCredentialsValidatorTests
     {
         [Fact]

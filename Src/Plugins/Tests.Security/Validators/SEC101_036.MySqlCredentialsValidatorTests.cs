@@ -9,6 +9,9 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/036.MySqlCredentialsValidator
+    /// </summary
     public class MySqlCredentialsValidatorTests
     {
         [Fact]
