@@ -1,0 +1,89 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC101/049",
+              "name": "DoNotExposePlaintextSecrets/TelegramBotToken",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://core.telegram.org/bots#generating-an-authentication-token"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC101/049",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "123456…",
+              "an apparent ",
+              "",
+              "Telegram bot token",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_049.TelegramBotToken.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 29,
+                  "endLine": 1,
+                  "endColumn": 70,
+                  "charOffset": 28,
+                  "charLength": 41,
+                  "snippet": {
+                    "text": "123456:AAC-DEF1234ghIkl-zyx57W2v1u123ew11"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Telegram]",
+            "ValidationFingerprint/v1": "[secret=123456:AAC-DEF1234ghIkl-zyx57W2v1u123ew11]",
+            "ValidationFingerprintHash/v1": "1283c54bfbe29ccec21207197d084f6d8cf3871750861281529a59f0c044ee96",
+            "AssetFingerprint/v2": "{\"platform\":\"Telegram\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"123456:AAC-DEF1234ghIkl-zyx57W2v1u123ew11\"}"
+          },
+          "rank": 63.9
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}
