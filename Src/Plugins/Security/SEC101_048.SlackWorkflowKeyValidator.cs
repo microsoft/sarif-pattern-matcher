@@ -11,7 +11,7 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class SlackWorkflowValidator : DynamicValidatorBase
+    public class SlackWorkflowKeyValidator : DynamicValidatorBase
     {
         internal const string WorkflowUri = "https://hooks.slack.com/workflows/{0:id}/{1:secret}";
 
@@ -68,7 +68,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                     case HttpStatusCode.NotFound:
                     {
-                        message = "The specified Slack webhook could not be found.";
+                        message = "The specified Slack workflow key could not be found.";
                         return ValidationState.UnknownHost;
                     }
 

@@ -96,7 +96,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         [Fact]
         public async Task Function_HttpAnalyze_WithFileContent_Should_Return_DifferentResponses()
         {
-            const string patTextFile = "SEC101_005.SlackTokens.py";
+            const string patTextFile = "SEC101_005.SlackApiKey.py";
             string content = TestHelper.GetTestResourceContent(patTextFile);
             string[] lines = content.Split(Environment.NewLine);
 

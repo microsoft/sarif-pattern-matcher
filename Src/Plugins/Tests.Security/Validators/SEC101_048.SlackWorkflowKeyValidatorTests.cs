@@ -17,9 +17,9 @@ using Xunit;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
-    /// Testing SEC101/048.SlackWorkflowValidator
+    /// Testing SEC101/048.SlackWorkflowKeyValidator
     /// </summary>
-    public class SlackWorkflowValidatorTests
+    public class SlackWorkflowKeyValidatorTests
     {
         [Fact]
         public void SlackWorkflowValidator_MockHttpTests()
@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string unexpectedResponseCodeMessage = null, nullRefResponseMessage = null;
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
-            string uri = string.Format(SlackWorkflowValidator.WorkflowUri, id, secret);
+            string uri = string.Format(SlackWorkflowKeyValidator.WorkflowUri, id, secret);
 
             var request = new HttpRequestMessage(HttpMethod.Post, uri);
 
@@ -57,7 +57,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     HttpRequestMessages = new[]{ request },
                     HttpResponseMessages = new[]{ HttpMockHelper.NotFoundResponse },
                     ExpectedValidationState = ValidationState.UnknownHost,
-                    ExpectedMessage = "The specified Slack webhook could not be found."
+                    ExpectedMessage = "The specified Slack workflow key could not be found."
                 },
                 new HttpMockTestCase
                 {
@@ -85,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             var sb = new StringBuilder();
             var httpMock = new HttpMockHelper();
-            var validator = new SlackWorkflowValidator();
+            var validator = new SlackWorkflowKeyValidator();
             foreach (HttpMockTestCase testCase in testCases)
             {
                 string message = null;

@@ -13,8 +13,11 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/048",
-              "name": "DoNotExposePlaintextSecrets/SlackWorkflow",
+              "id": "SEC101/005",
+              "name": "DoNotExposePlaintextSecrets/SlackApiKey",
+              "deprecatedNames": [
+                "DoNotExposePlaintextSecrets/SlackToken"
+              ],
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -26,7 +29,7 @@
                   "text": "'{0}' is {1}{2}{3}{4}{5}."
                 }
               },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+              "helpUri": "https://slack.com/help/articles/215770388-Create-and-regenerate-API-tokens"
             }
           ]
         }
@@ -38,16 +41,16 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/048",
+          "ruleId": "SEC101/005",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "012345…",
+              "xoxb-8…",
               "an apparent ",
               "",
-              "Slack workflow",
+              "Slack api key",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -56,31 +59,31 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_048.SlackWorkflow.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_005.SlackApiKey.py",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 1,
-                  "startColumn": 46,
+                  "startColumn": 1,
                   "endLine": 1,
-                  "endColumn": 92,
-                  "charOffset": 45,
-                  "charLength": 46,
+                  "endColumn": 56,
+                  "charOffset": 0,
+                  "charLength": 55,
                   "snippet": {
-                    "text": "0123456789/0123456789/01234567890123456789dead"
+                    "text": "xoxb-83112120353-1016171244646-sGMxuWapBw3w3qdK6OfTjORe"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[id=0123456789][platform=Slack]",
-            "ValidationFingerprint/v1": "[id=0123456789][secret=0123456789/0123456789/01234567890123456789dead]",
-            "ValidationFingerprintHash/v1": "904b560d930b8b7497aefc45f1249618b2afd955d425163beef027b9cc42c096",
-            "AssetFingerprint/v2": "{\"id\":\"0123456789\",\"platform\":\"Slack\"}",
-            "ValidationFingerprint/v2": "{\"id\":\"0123456789\",\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}"
+            "AssetFingerprint/v1": "[platform=Slack]",
+            "ValidationFingerprint/v1": "[secret=xoxb-83112120353-1016171244646-sGMxuWapBw3w3qdK6OfTjORe]",
+            "ValidationFingerprintHash/v1": "2da8823dda2b4951fcf1541ab17f450cda2d3e02e1d8b322d2502623882491d8",
+            "AssetFingerprint/v2": "{\"platform\":\"Slack\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"xoxb-83112120353-1016171244646-sGMxuWapBw3w3qdK6OfTjORe\"}"
           },
-          "rank": 52.82
+          "rank": 65.89
         }
       ],
       "columnKind": "utf16CodeUnits"
