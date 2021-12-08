@@ -151,6 +151,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         Stripe,
 
         /// <summary>
+        /// Telegram platform.
+        /// </summary>
+        Telegram,
+
+        /// <summary>
         /// Twilio platform.
         /// </summary>
         Twilio,

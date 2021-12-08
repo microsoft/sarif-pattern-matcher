@@ -79,7 +79,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
+                using var httpClient = new HttpClient(Helpers.HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
                 discordApiCredentialsValidator.SetHttpClient(httpClient);
 
                 ValidationState currentState = discordApiCredentialsValidator.IsValidDynamic(ref fingerprint,

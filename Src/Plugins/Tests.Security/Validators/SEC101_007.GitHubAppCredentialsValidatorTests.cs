@@ -84,7 +84,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
+                using var httpClient = new HttpClient(Helpers.HttpMockHelper.Mock(testCase.HttpStatusCode, testCase.HttpContent));
                 gitHubAppCredentialsValidator.SetHttpClient(httpClient);
 
                 ValidationState currentState = gitHubAppCredentialsValidator.IsValidDynamic(ref fingerprint,
