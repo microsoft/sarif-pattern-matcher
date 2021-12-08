@@ -65,7 +65,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var fingerprint = new Fingerprint(fingerprintText);
                 var keyValuePairs = new Dictionary<string, string>();
 
-                using var httpClient = new HttpClient(HttpMockHelper.Mock(testCase.HttpStatusCodes[0], null));
+                using var httpClient = new HttpClient(Helpers.HttpMockHelper.Mock(testCase.HttpStatusCodes[0], null));
                 cratesApiKeyValidator.SetHttpClient(httpClient);
 
                 ValidationState currentState = cratesApiKeyValidator.IsValidDynamic(ref fingerprint,
