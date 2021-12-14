@@ -25,7 +25,7 @@
 - SDK: Exposing `automationId`, `automationGuid`, and `postUri` in the
   `analyze` command.
   [#586](https://github.com/microsoft/sarif-pattern-matcher/pull/586)
-- NFD: Adding additional regex for 'SEC101/017.NpmAuthorToken'
+- FNC: Adding additional regex for 'SEC101/017.NpmAuthorToken'
   [#588](https://github.com/microsoft/sarif-pattern-matcher/pull/588)
 
   
