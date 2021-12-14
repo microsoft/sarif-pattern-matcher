@@ -85,6 +85,7 @@
   $SEC101/015.AkamaiCredentials=(?si)https:\/\/(?P<host>[\w\-\.]+)\.akamaiapis\.net.{0,150}(?:(?:client_token.{0,10}(?:[^a]|^)(?P<id>akab[\w\-]+).{0,50})|(?:access_token.{0,10}(?:[^\w\-]|^)(?P<resource>akab[\w\-]+).{0,200})|(?:(?:client_secret).{0,10}(?:[^0-9a-z\/\+]|^)(?P<secret>[0-9a-z\/\+]{43}=))){3}
   $SEC101/016.StripeApiKey=(?:[^rs]|^)(?P<secret>(?:r|s)k_(?:live|test)_(?i)[0-9a-z]{24,99})(?:[^0-9a-z]|$)
   $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?P<secret>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})[^0-9a-z]
+  $SEC101/017.NpmAuthorTokenV2=(?:[^s]|^)(?P<secret>(?:npm)_(?i)[a-zA-Z0-9]{36})
   $SEC101/020.DropboxAccessTokenNoExpiration=(?si)dropbox.{1,50}[^0-9a-z](?P<secret>[0-9a-z_-]{64})(?:[^0-9a-z]|$)
   $SEC101/020.DropboxAccessTokenShortExpiration=(?si)dropbox.{1,50}(?:[^s]|^)(?P<secret>sl\.(?i)[0-9a-z-_]{135,139})(?i)(?:[^0-9a-z]|$)
   $SEC101/025.SendGridApiKey=(?:[^S]|^)(?P<secret>SG\.(?i)[0-9a-z\-_]{22}\.(?i)[0-9a-z\-_]{43})(?:[^0-9a-z\-_]|$)
