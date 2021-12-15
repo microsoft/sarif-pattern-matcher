@@ -47,7 +47,7 @@
               "338a0f…",
               "an apparent ",
               "",
-              "NPM API key",
+              "NPM Author Token",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -92,7 +92,7 @@
               "338a0f…",
               "an apparent ",
               "",
-              "NPM API key",
+              "NPM Author Token",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -137,7 +137,7 @@
               "npm_0d…",
               "an apparent ",
               "",
-              "NPM API key",
+              "NPM Author Token",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -182,7 +182,7 @@
               "npm_0d…",
               "an apparent ",
               "",
-              "NPM API key",
+              "NPM Author Token",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
