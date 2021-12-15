@@ -13,8 +13,8 @@
           "semanticVersion": "15.0.0",
           "rules": [
             {
-              "id": "SEC101/017",
-              "name": "DoNotExposePlaintextSecrets/NpmAuthorToken",
+              "id": "SEC101/050",
+              "name": "DoNotExposePlaintextSecrets/IdentifiableNpmAuthorToken",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -38,16 +38,16 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/017",
+          "ruleId": "SEC101/050",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "338a0f…",
+              "npm_0d…",
               "an apparent ",
               "",
-              "NPM Author Token",
+              "Identifiable NPM Author Token",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -56,18 +56,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmAuthorToken.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.IdentifiableNpmAuthorToken.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 1,
-                  "startColumn": 7,
+                  "startColumn": 1,
                   "endLine": 1,
-                  "endColumn": 43,
-                  "charOffset": 6,
-                  "charLength": 36,
+                  "endColumn": 41,
+                  "charOffset": 0,
+                  "charLength": 40,
                   "snippet": {
-                    "text": "338a0fd3-7378-4ce1-8432-bbfc0f6777ca"
+                    "text": "npm_0dead12Test345DeadTest6789testtest01"
                   }
                 }
               }
@@ -75,24 +75,24 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Npm]",
-            "ValidationFingerprint/v1": "[secret=338a0fd3-7378-4ce1-8432-bbfc0f6777ca]",
-            "ValidationFingerprintHash/v1": "748c862ce66f04dd431cef753972f4901ff7b960faea29c5a0df580abe855ca3",
+            "ValidationFingerprint/v1": "[secret=npm_0dead12Test345DeadTest6789testtest01]",
+            "ValidationFingerprintHash/v1": "d55467f4aadd34b2b1a68a1be316f8e58df6cbb5d16205d651b39aacc5a36561",
             "AssetFingerprint/v2": "{\"platform\":\"Npm\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777ca\"}"
+            "ValidationFingerprint/v2": "{\"secret\":\"npm_0dead12Test345DeadTest6789testtest01\"}"
           },
-          "rank": 52.63
+          "rank": 57.54
         },
         {
-          "ruleId": "SEC101/017",
+          "ruleId": "SEC101/050",
           "ruleIndex": 0,
           "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
-              "338a0f…",
+              "npm_0d…",
               "an apparent ",
               "",
-              "NPM Author Token",
+              "Identifiable NPM Author Token",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -101,18 +101,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmAuthorToken.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.IdentifiableNpmAuthorToken.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 3,
-                  "startColumn": 6,
+                  "startColumn": 2,
                   "endLine": 3,
                   "endColumn": 42,
-                  "charOffset": 52,
-                  "charLength": 36,
+                  "charOffset": 45,
+                  "charLength": 40,
                   "snippet": {
-                    "text": "338a0fd3-7378-4ce1-8432-bbfc0f6777cb"
+                    "text": "npm_0dead12Test345DeadTest6789testtest02"
                   }
                 }
               }
@@ -120,12 +120,12 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Npm]",
-            "ValidationFingerprint/v1": "[secret=338a0fd3-7378-4ce1-8432-bbfc0f6777cb]",
-            "ValidationFingerprintHash/v1": "1336f4b9b15c79836867464c8d6448eaad30eacd48e0f513d9f9f97fe6280cc4",
+            "ValidationFingerprint/v1": "[secret=npm_0dead12Test345DeadTest6789testtest02]",
+            "ValidationFingerprintHash/v1": "cd9e8ef0c3d92d68bffea79c3a90d7f693b660deb5737e9ba2bd3cb71d2de67a",
             "AssetFingerprint/v2": "{\"platform\":\"Npm\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777cb\"}"
+            "ValidationFingerprint/v2": "{\"secret\":\"npm_0dead12Test345DeadTest6789testtest02\"}"
           },
-          "rank": 52.33
+          "rank": 57.54
         }
       ],
       "columnKind": "utf16CodeUnits"
