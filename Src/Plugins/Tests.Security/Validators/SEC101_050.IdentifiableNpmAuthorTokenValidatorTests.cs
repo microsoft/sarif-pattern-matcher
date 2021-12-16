@@ -203,9 +203,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 using var httpClient = new HttpClient(mockHandler);
                 identifiableNpmAuthorTokenValidator.SetHttpClient(httpClient);
                 ValidationState currentState = identifiableNpmAuthorTokenValidator.IsValidDynamic(ref fingerprint,
-                                                                                      ref message,
-                                                                                      keyValuePairs,
-                                                                                      ref resultLevelKind);
+                                                                                                  ref message,
+                                                                                                  keyValuePairs,
+                                                                                                  ref resultLevelKind);
 
                 if (currentState != testCase.ExpectedValidationState)
                 {
