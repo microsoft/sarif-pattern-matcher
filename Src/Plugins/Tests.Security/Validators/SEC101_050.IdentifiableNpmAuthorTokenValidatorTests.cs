@@ -111,7 +111,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 Content = new StringContent(publishResponseJson)
             };
 
-            var ValidEmptyContentResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            var validEmptyContentResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(string.Empty)
             };
@@ -147,7 +147,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     Title = "Testing Valid credentials - empty content",
                     HttpRequestMessages = new[] { defaultRequest },
-                    HttpResponseMessages = new[] { ValidEmptyContentResponse },
+                    HttpResponseMessages = new[] { validEmptyContentResponse },
                     ExpectedValidationState = CheckInformation(string.Empty, secret, ref emptyContentReturnMessage, ref resLevel),
                     ExpectedMessage = emptyContentReturnMessage
                 },
