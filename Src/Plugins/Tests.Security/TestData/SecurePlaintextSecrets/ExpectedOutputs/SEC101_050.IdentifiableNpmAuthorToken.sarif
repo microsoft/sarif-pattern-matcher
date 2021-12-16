@@ -67,7 +67,7 @@
                   "charOffset": 0,
                   "charLength": 40,
                   "snippet": {
-                    "text": "npm_0dead12Test345DeadTest6789testtest01"
+                    "text": "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"
                   }
                 }
               }
@@ -75,57 +75,12 @@
           ],
           "fingerprints": {
             "AssetFingerprint/v1": "[platform=Npm]",
-            "ValidationFingerprint/v1": "[secret=npm_0dead12Test345DeadTest6789testtest01]",
-            "ValidationFingerprintHash/v1": "d55467f4aadd34b2b1a68a1be316f8e58df6cbb5d16205d651b39aacc5a36561",
+            "ValidationFingerprint/v1": "[secret=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]",
+            "ValidationFingerprintHash/v1": "114602da1f4a63fa289c8ae1e2fea58d536eb90ec5ffbf3a2dddbf2b2ef653d9",
             "AssetFingerprint/v2": "{\"platform\":\"Npm\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"npm_0dead12Test345DeadTest6789testtest01\"}"
+            "ValidationFingerprint/v2": "{\"secret\":\"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\"}"
           },
-          "rank": 57.54
-        },
-        {
-          "ruleId": "SEC101/050",
-          "ruleIndex": 0,
-          "level": "note",
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "npm_0d…",
-              "an apparent ",
-              "",
-              "Identifiable NPM Author Token",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.IdentifiableNpmAuthorToken.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 2,
-                  "endLine": 3,
-                  "endColumn": 42,
-                  "charOffset": 45,
-                  "charLength": 40,
-                  "snippet": {
-                    "text": "npm_0dead12Test345DeadTest6789testtest02"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "AssetFingerprint/v1": "[platform=Npm]",
-            "ValidationFingerprint/v1": "[secret=npm_0dead12Test345DeadTest6789testtest02]",
-            "ValidationFingerprintHash/v1": "cd9e8ef0c3d92d68bffea79c3a90d7f693b660deb5737e9ba2bd3cb71d2de67a",
-            "AssetFingerprint/v2": "{\"platform\":\"Npm\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"npm_0dead12Test345DeadTest6789testtest02\"}"
-          },
-          "rank": 57.54
+          "rank": 61.07
         }
       ],
       "columnKind": "utf16CodeUnits"
