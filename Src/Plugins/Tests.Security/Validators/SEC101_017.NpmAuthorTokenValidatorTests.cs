@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 
 using Xunit;
 
-using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.NpmAuthorTokenValidator;
+using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.NpmAuthorTokenHelper;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
@@ -33,15 +33,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             string secret = fingerprint.Secret;
 
-            var defaultRequest = new HttpRequestMessage(HttpMethod.Get, NpmAuthorTokenValidator.Uri);
+            var defaultRequest = new HttpRequestMessage(HttpMethod.Get, NpmAuthorTokenHelper.Uri);
             defaultRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
             string readOnlyResponseJson = JsonConvert.SerializeObject(
                     new TokensRoot
                     {
-                        Tokens = new List<NpmAuthorTokenValidator.Object>()
+                        Tokens = new List<NpmAuthorTokenHelper.Object>()
                         {
-                            new NpmAuthorTokenValidator.Object()
+                            new NpmAuthorTokenHelper.Object()
                             {
                                 Token = "abc123",
                                 Key = "some long key",
@@ -59,9 +59,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string automationResponseJson = JsonConvert.SerializeObject(
                     new TokensRoot
                     {
-                        Tokens = new List<NpmAuthorTokenValidator.Object>()
+                        Tokens = new List<NpmAuthorTokenHelper.Object>()
                         {
-                            new NpmAuthorTokenValidator.Object()
+                            new NpmAuthorTokenHelper.Object()
                             {
                                 Token = "abc123",
                                 Key = "some long key",
@@ -79,9 +79,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string publishResponseJson = JsonConvert.SerializeObject(
                     new TokensRoot
                     {
-                        Tokens = new List<NpmAuthorTokenValidator.Object>()
+                        Tokens = new List<NpmAuthorTokenHelper.Object>()
                         {
-                            new NpmAuthorTokenValidator.Object()
+                            new NpmAuthorTokenHelper.Object()
                             {
                                 Token = "abc123",
                                 Key = "some long key",
@@ -148,7 +148,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Testing Valid credentials - empty content",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { ValidEmptyContentResponse },
-                    ExpectedValidationState = CheckInformation(string.Empty, secret, ref emptyContentReturnMessage, ref resLevel),
+                    ExpectedValidationState = NpmAuthorTokenHelper.CheckInformation(string.Empty, secret, ref emptyContentReturnMessage, ref resLevel),
                     ExpectedMessage = emptyContentReturnMessage
                 },
                 new HttpMockTestCase
@@ -156,7 +156,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Testing Valid credentials - readonly",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { ValidReadOnlyResponse },
-                    ExpectedValidationState = CheckInformation(readOnlyResponseJson, secret, ref readonlyContentReturnMessage, ref resLevel),
+                    ExpectedValidationState = NpmAuthorTokenHelper.CheckInformation(readOnlyResponseJson, secret, ref readonlyContentReturnMessage, ref resLevel),
                     ExpectedMessage = readonlyContentReturnMessage
                 },
                 new HttpMockTestCase
@@ -164,7 +164,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Testing Valid credentials - automation",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { ValidReadAutomationResponse},
-                    ExpectedValidationState = CheckInformation(automationResponseJson, secret, ref automationContentReturnMessage, ref resLevel),
+                    ExpectedValidationState = NpmAuthorTokenHelper.CheckInformation(automationResponseJson, secret, ref automationContentReturnMessage, ref resLevel),
                     ExpectedMessage = automationContentReturnMessage
                 },
                 new HttpMockTestCase
@@ -172,7 +172,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Testing Valid credentials - publish",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { ValidPublishResponse },
-                    ExpectedValidationState = CheckInformation(publishResponseJson, secret, ref publishContentReturnMessage, ref resLevel),
+                    ExpectedValidationState = NpmAuthorTokenHelper.CheckInformation(publishResponseJson, secret, ref publishContentReturnMessage, ref resLevel),
                     ExpectedMessage = publishContentReturnMessage
                 },
                  new  HttpMockTestCase

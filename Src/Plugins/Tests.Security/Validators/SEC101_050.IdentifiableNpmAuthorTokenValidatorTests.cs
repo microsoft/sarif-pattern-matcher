@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 
 using Xunit;
 
-using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.IdentifiableNpmAuthorTokenValidator;
+using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.NpmAuthorTokenHelper;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
@@ -31,15 +31,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             string secret = fingerprint.Secret;
 
-            var defaultRequest = new HttpRequestMessage(HttpMethod.Get, IdentifiableNpmAuthorTokenValidator.Uri);
+            var defaultRequest = new HttpRequestMessage(HttpMethod.Get, NpmAuthorTokenHelper.Uri);
             defaultRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
             string readOnlyResponseJson = JsonConvert.SerializeObject(
                     new TokensRoot
                     {
-                        Tokens = new List<IdentifiableNpmAuthorTokenValidator.Object>()
+                        Tokens = new List<NpmAuthorTokenHelper.Object>()
                         {
-                            new IdentifiableNpmAuthorTokenValidator.Object()
+                            new NpmAuthorTokenHelper.Object()
                             {
                                 Token = "abc123",
                                 Key = "some long key",
@@ -57,9 +57,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string automationResponseJson = JsonConvert.SerializeObject(
                     new TokensRoot
                     {
-                        Tokens = new List<IdentifiableNpmAuthorTokenValidator.Object>()
+                        Tokens = new List<NpmAuthorTokenHelper.Object>()
                         {
-                            new IdentifiableNpmAuthorTokenValidator.Object()
+                            new NpmAuthorTokenHelper.Object()
                             {
                                 Token = "abc123",
                                 Key = "some long key",
@@ -77,9 +77,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string publishResponseJson = JsonConvert.SerializeObject(
                     new TokensRoot
                     {
-                        Tokens = new List<IdentifiableNpmAuthorTokenValidator.Object>()
+                        Tokens = new List<NpmAuthorTokenHelper.Object>()
                         {
-                            new IdentifiableNpmAuthorTokenValidator.Object()
+                            new NpmAuthorTokenHelper.Object()
                             {
                                 Token = "abc123",
                                 Key = "some long key",
