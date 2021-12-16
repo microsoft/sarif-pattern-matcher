@@ -23,7 +23,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     public class IdentifiableNpmAuthorTokenValidatorTests
     {
-
         [Fact]
         public void IdentifiableNpmAuthorTokenValidatorTests_MockHttpTests()
         {
