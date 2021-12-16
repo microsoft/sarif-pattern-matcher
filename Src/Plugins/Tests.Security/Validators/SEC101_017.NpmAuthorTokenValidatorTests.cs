@@ -148,7 +148,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Testing Valid credentials - empty content",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { ValidEmptyContentResponse },
-                    ExpectedValidationState = NpmAuthorTokenHelper.CheckInformation(string.Empty, secret, ref emptyContentReturnMessage, ref resLevel),
+                    ExpectedValidationState = CheckInformation(string.Empty, secret, ref emptyContentReturnMessage, ref resLevel),
                     ExpectedMessage = emptyContentReturnMessage
                 },
                 new HttpMockTestCase
@@ -156,7 +156,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Testing Valid credentials - readonly",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { ValidReadOnlyResponse },
-                    ExpectedValidationState = NpmAuthorTokenHelper.CheckInformation(readOnlyResponseJson, secret, ref readonlyContentReturnMessage, ref resLevel),
+                    ExpectedValidationState = CheckInformation(readOnlyResponseJson, secret, ref readonlyContentReturnMessage, ref resLevel),
                     ExpectedMessage = readonlyContentReturnMessage
                 },
                 new HttpMockTestCase
@@ -164,7 +164,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Testing Valid credentials - automation",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { ValidReadAutomationResponse},
-                    ExpectedValidationState = NpmAuthorTokenHelper.CheckInformation(automationResponseJson, secret, ref automationContentReturnMessage, ref resLevel),
+                    ExpectedValidationState = CheckInformation(automationResponseJson, secret, ref automationContentReturnMessage, ref resLevel),
                     ExpectedMessage = automationContentReturnMessage
                 },
                 new HttpMockTestCase
@@ -172,7 +172,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Testing Valid credentials - publish",
                     HttpRequestMessages = new[] { defaultRequest },
                     HttpResponseMessages = new[] { ValidPublishResponse },
-                    ExpectedValidationState = NpmAuthorTokenHelper.CheckInformation(publishResponseJson, secret, ref publishContentReturnMessage, ref resLevel),
+                    ExpectedValidationState = CheckInformation(publishResponseJson, secret, ref publishContentReturnMessage, ref resLevel),
                     ExpectedMessage = publishContentReturnMessage
                 },
                  new  HttpMockTestCase

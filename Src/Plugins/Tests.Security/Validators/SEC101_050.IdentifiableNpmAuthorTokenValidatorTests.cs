@@ -21,6 +21,9 @@ using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.NpmAut
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
+    /// <summary>
+    /// Testing SEC101/050.IdentifiableNpmAuthorTokenValidator
+    /// </summary>
     public class IdentifiableNpmAuthorTokenValidatorTests
     {
         [Fact]
