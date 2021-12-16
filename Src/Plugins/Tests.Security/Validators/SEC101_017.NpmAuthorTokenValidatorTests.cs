@@ -96,17 +96,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     }
                     );
 
-            var ValidReadOnlyResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            var validReadOnlyResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(readOnlyResponseJson)
             };
 
-            var ValidReadAutomationResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            var validReadAutomationResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(automationResponseJson)
             };
 
-            var ValidPublishResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            var validPublishResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(publishResponseJson)
             };
@@ -155,7 +155,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     Title = "Testing Valid credentials - readonly",
                     HttpRequestMessages = new[] { defaultRequest },
-                    HttpResponseMessages = new[] { ValidReadOnlyResponse },
+                    HttpResponseMessages = new[] { validReadOnlyResponse },
                     ExpectedValidationState = CheckInformation(readOnlyResponseJson, secret, ref readonlyContentReturnMessage, ref resLevel),
                     ExpectedMessage = readonlyContentReturnMessage
                 },
@@ -163,7 +163,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     Title = "Testing Valid credentials - automation",
                     HttpRequestMessages = new[] { defaultRequest },
-                    HttpResponseMessages = new[] { ValidReadAutomationResponse},
+                    HttpResponseMessages = new[] { validReadAutomationResponse},
                     ExpectedValidationState = CheckInformation(automationResponseJson, secret, ref automationContentReturnMessage, ref resLevel),
                     ExpectedMessage = automationContentReturnMessage
                 },
@@ -171,7 +171,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     Title = "Testing Valid credentials - publish",
                     HttpRequestMessages = new[] { defaultRequest },
-                    HttpResponseMessages = new[] { ValidPublishResponse },
+                    HttpResponseMessages = new[] { validPublishResponse },
                     ExpectedValidationState = CheckInformation(publishResponseJson, secret, ref publishContentReturnMessage, ref resLevel),
                     ExpectedMessage = publishContentReturnMessage
                 },
