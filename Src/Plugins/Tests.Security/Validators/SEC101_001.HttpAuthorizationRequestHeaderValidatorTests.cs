@@ -26,25 +26,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         private const string TestKey = "somekey";
         private const string TestHost = "www.host.com";
         private const string TestResource = "/some-path";
-        private const ValidationState ExpectedValidationState = ValidationState.NoMatch;
-
-        [Fact]
-        public void HttpAuthorizationRequestHeaderValidator_Test()
-        {
-            string fingerprintText = string.Format("[host={0}][resource={1}][scheme={2}][secret={3}]", TestHost, TestResource, TestScheme, TestKey);
-
-            string message = null;
-            ResultLevelKind resultLevelKind = default;
-            var fingerprint = new Fingerprint(fingerprintText);
-            var keyValuePairs = new Dictionary<string, string>();
-
-            var httpAuthorizationRequestHeaderValidator = new HttpAuthorizationRequestHeaderValidator();
-            ValidationState actualValidationState = httpAuthorizationRequestHeaderValidator.IsValidDynamic(ref fingerprint,
-                                                                                                           ref message,
-                                                                                                           keyValuePairs,
-                                                                                                           ref resultLevelKind);
-            Assert.Equal(ExpectedValidationState, actualValidationState);
-        }
 
         [Fact]
         public void HttpAuthorizationRequestHeaderValidator_MockHttpTests()
@@ -140,7 +121,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             var sb = new StringBuilder();
             var mockHandler = new HttpMockHelper();
-            var httpAuthorizationRequestHeaderValidator = new HttpAuthorizationRequestHeaderValidator();
+            var validator = new HttpAuthorizationRequestHeaderValidator();
             foreach (HttpMockTestCase testCase in testCases)
             {
                 for (int i = 0; i < testCase.HttpStatusCodes.Count; i++)
@@ -152,12 +133,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 ResultLevelKind resultLevelKind = default;
                 var keyValuePairs = new Dictionary<string, string>() { { "TestGuid", TestGuid } };
                 using var httpClient = new HttpClient(mockHandler);
-                httpAuthorizationRequestHeaderValidator.SetHttpClient(httpClient);
+                validator.SetHttpClient(httpClient);
 
-                ValidationState currentState = httpAuthorizationRequestHeaderValidator.IsValidDynamic(ref fingerprint,
-                                                                                                      ref message,
-                                                                                                      keyValuePairs,
-                                                                                                      ref resultLevelKind);
+                ValidationState currentState = validator.IsValidDynamic(ref fingerprint,
+                                                                        ref message,
+                                                                        keyValuePairs,
+                                                                        ref resultLevelKind);
 
                 if (currentState != testCase.ExpectedValidationState)
                 {
