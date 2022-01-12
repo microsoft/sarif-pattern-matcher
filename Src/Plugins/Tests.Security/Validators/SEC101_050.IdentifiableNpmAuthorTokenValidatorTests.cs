@@ -20,7 +20,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
     public class IdentifiableNpmAuthorTokenValidatorTests
     {
         [Fact]
-        public void IdentifiableNpmAuthorTokenValidatorTests_MockHttpTests()
+        public void IdentifiableNpmAuthorTokenValidator_MockHttpTests()
         {
             HttpMockTestCase[] testCases = NpmAuthorTokenTestCases.CreateTestCases(out Fingerprint fingerprint);
             var sb = new StringBuilder();

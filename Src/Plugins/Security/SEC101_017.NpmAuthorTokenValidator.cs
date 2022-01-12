@@ -1,16 +1,11 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
-
-using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -38,10 +33,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
-            string secret = fingerprint.Secret;
             HttpClient client = CreateOrRetrieveCachedHttpClient();
 
-            return NpmAuthorTokenHelper.ValidateTokens(ref fingerprint, ref message, ref resultLevelKind, client);
+            return NpmAuthorTokenHelper.ValidateTokens(ref fingerprint,
+                                                       ref message,
+                                                       ref resultLevelKind,
+                                                       client);
         }
     }
 }
