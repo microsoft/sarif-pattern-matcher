@@ -22,10 +22,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             FlexMatch secret = groups["secret"];
             FlexMatch checksum = groups["checksum"];
 
+            // Validate checksum to avoid false positives.
             string randomPart = secret.Value.String.Substring(4, 30);
             uint checksumValue = Crc32.Calculate(randomPart);
-
-            // using the default CustomAlphabetEncoder will default to the base 62 encoding required
             var encoder = new CustomAlphabetEncoder();
             string encodedChecksum = encoder.Encode(checksumValue);
 
