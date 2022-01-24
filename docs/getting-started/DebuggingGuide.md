@@ -33,7 +33,7 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
 
 ## Debugging - Easy Mode
 1. Identify an example of a secret to test for an established rule.
-2. Locate the file corresponding to the rule in the `C:\<yourRepoDirectory>\sarif-pattern-matcher\src\sarif-pattern-matcher\Src\Plugins\Tests.Security\TestData\SecurePlaintextSecrets\Inputs\` folder.
+2. Locate the file corresponding to the rule in the `C:\<yourRepoDirectory>\sarif-pattern-matcher\Src\Plugins\Tests.Security\TestData\SecurePlaintextSecrets\Inputs\` folder.
 3. Add your example to this folder.
 4. Set a break point in the corresponding rule validator.
 5. Debug the `SecurePlaintextSecrets_EndToEndFunctionalTests` to hit your breakpoint and continue as usual.
