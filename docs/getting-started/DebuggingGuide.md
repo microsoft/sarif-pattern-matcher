@@ -31,14 +31,7 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
 
 4. Make sure that Sarif.PatternMatcher.Cli is set as the startup project (will appear bold in Visual Studio Solution Explorer menu).
 
-## Debugging - Easy Mode
-1. Identify an example of a secret to test for an established rule.
-2. Locate the file corresponding to the rule in the `C:\<yourRepoDirectory>\sarif-pattern-matcher\Src\Plugins\Tests.Security\TestData\SecurePlaintextSecrets\Inputs\` folder.
-3. Add your example to this folder.
-4. Set a break point in the corresponding rule validator.
-5. Debug the `SecurePlaintextSecrets_EndToEndFunctionalTests` to hit your breakpoint and continue as usual.
-
-## Debugging - Expert Mode
+## Debugging
 1. Identify an example of a secret to test (ie. a false negative or false positive).
 2. [Regex 101](https://regex101.com/) (recommended InPrivate browsing mode) can be used to validate the example matches a rule's regular expression (regex).
 3. Create and save a text file somewhere easily accessible that contains just your example (ie. `D:\someDirectory\example.txt`). Using developer cmd prompt, navigate to the location of the sarif-pattern-matcher executable noted earlier. You will also need the location of the `SEC101.SecurePlaintextSecrets.json` file (`repoRootDirectory\Bld\bin\AnyCPU_Release\Security\netstandard2.1\SEC101.SecurePlaintextSecrets.json`). Note, this file will exist in multiple directories including the debug directory; this is an example that may be used.  Execute this command:
