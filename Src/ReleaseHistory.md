@@ -18,6 +18,8 @@
 
 ## *Unreleased*
 
+- BUG: Resolve `InvalidOperationException` and `IndexOutOfRange` exceptions in `StaticValidatorBase.IsValidStatic` due to unsafe use of HashSet<string> class.
+  [#595](https://github.com/microsoft/sarif-pattern-matcher/pull/585)
 - NR: Adding SlackWorkflow rule with dynamic validation.
   [#585](https://github.com/microsoft/sarif-pattern-matcher/pull/585)
 - NR: Adding TelegramBotToken rule with dynamic validation.
