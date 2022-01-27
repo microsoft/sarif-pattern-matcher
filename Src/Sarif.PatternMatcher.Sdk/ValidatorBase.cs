@@ -52,7 +52,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected ValidatorBase()
         {
-            PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            PerFileFingerprintCache = new ConcurrentDictionary<string, byte>(StringComparer.OrdinalIgnoreCase);
             FingerprintToResultCache = new ConcurrentDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>>();
         }
 
@@ -102,7 +102,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// practice, we will not worry about this scenario: it will be
         /// sufficient that we flag one instance of the unique secret.
         /// </summary>
-        protected ISet<string> PerFileFingerprintCache { get; }
+        protected IDictionary<string, byte> PerFileFingerprintCache { get; }
 
         public static bool ContainsDigitAndChar(string matchedPattern)
         {

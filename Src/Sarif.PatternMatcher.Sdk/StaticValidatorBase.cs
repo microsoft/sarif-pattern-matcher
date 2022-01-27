@@ -23,13 +23,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 string scanTarget = groups["scanTargetFullPath"].Value;
                 string key = $"{scanTarget}#{validationResult.Fingerprint}";
 
-                if (PerFileFingerprintCache.Contains(key))
+                if (PerFileFingerprintCache.ContainsKey(key))
                 {
                     validationResult.ValidationState = ValidationState.NoMatch;
                     continue;
                 }
 
-                PerFileFingerprintCache.Add(key);
+                PerFileFingerprintCache.Add(key, (byte)0);
             }
 
             return validationResults;
