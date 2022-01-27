@@ -101,6 +101,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// actual match that happens to be duplicated in the file. In
         /// practice, we will not worry about this scenario: it will be
         /// sufficient that we flag one instance of the unique secret.
+        ///
+        /// The type of this cache is peculiar. We use a concurrent dictionary
+        /// because .NET does not ship a concurrent HashSet class and we do
+        /// not have time currently to author one. The choice of 'byte' as a
+        /// value type for the dictionary is arbitrary; this data is never
+        /// consumed.
         /// </summary>
         protected IDictionary<string, byte> PerFileFingerprintCache { get; }
 
