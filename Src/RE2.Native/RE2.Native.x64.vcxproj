@@ -25,7 +25,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <TargetName>RE2.Native.x64</TargetName>
     <TargetExt>.dll</TargetExt>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <OutDir>$(SolutionDir)..\Bld\bin\$(Configuration)\x64\</OutDir>
     <IntDir>$(SolutionDir)..\Bld\bin\int\x64\$(Configuration)\</IntDir>
