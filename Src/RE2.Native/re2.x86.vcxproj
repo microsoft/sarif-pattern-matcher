@@ -21,7 +21,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <TargetName>re2.x86</TargetName>
     <TargetExt>.lib</TargetExt>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <OutDir>$(SolutionDir)..\Bld\bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\Bld\bin\int\x86\$(Configuration)\</IntDir>
