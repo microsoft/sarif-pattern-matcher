@@ -15,7 +15,7 @@ The following packages are published from this repository:
 | [Sarif.Pattern.Matcher](https://www.nuget.org/packages/Sarif.PatternMatcher/)| [![Nuget](https://img.shields.io/nuget/vpre/Sarif.PatternMatcher)](https://www.nuget.org/packages/Sarif.PatternMatcher/)|
 | [Sarif.Pattern.Matcher.Cli](https://www.nuget.org/packages/Sarif.PatternMatcher.Cli/)| [![Nuget](https://img.shields.io/nuget/vpre/Sarif.PatternMatcher.Cli)](https://www.nuget.org/packages/Sarif.PatternMatcher.Cli/)|
 | [Sarif.Pattern.Matcher.Sdk](https://www.nuget.org/packages/Sarif.PatternMatcher.Sdk/)| [![Nuget](https://img.shields.io/nuget/vpre/Sarif.PatternMatcher.Sdk)](https://www.nuget.org/packages/Sarif.PatternMatcher.Sdk/)|
-| [Sarif.Pattern.Matcher.Security](https://www.nuget.org/packages/Sarif.PatternMatcher.Security/)| [![Nuget](https://img.shields.io/nuget/vpre/Sarif.PatternMatcher.Security)](https://www.nuget.org/packages/Sarif.PatternMatcher.Security/)|
+| [Sarif.Pattern.Matcher.SecurityValidators](https://www.nuget.org/packages/Sarif.PatternMatcher.SecurityValidators/)| [![Nuget](https://img.shields.io/nuget/vpre/Sarif.PatternMatcher.Security)](https://www.nuget.org/packages/Sarif.PatternMatcher.Security/)|
 | [RE2.Managed](https://www.nuget.org/packages/RE2.Managed/)| [![Nuget](https://img.shields.io/nuget/vpre/RE2.Managed)](https://www.nuget.org/packages/RE2.Managed/)|
 | [Strings.Interop](https://www.nuget.org/packages/Strings.Interop/)| [![Nuget](https://img.shields.io/nuget/vpre/Strings.Interop)](https://www.nuget.org/packages/Strings.Interop/)|
 

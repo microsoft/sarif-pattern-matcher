@@ -8,13 +8,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Plugins\Security\Security.csproj" />
+    <ProjectReference Include="..\Plugins\SecurityValidators\SecurityValidators.csproj" />
     <ProjectReference Include="..\Sarif.PatternMatcher.Function\Sarif.PatternMatcher.Function.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\Plugins\Tests.Security\TestData\SecurePlaintextSecrets\Inputs\SEC101_102.AdoPat.txt" Link="TestData\SEC101_102.AdoPat.txt" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\Plugins\Tests.Security\TestData\SecurePlaintextSecrets\Inputs\SEC101_005.SlackApiKey.py" Link="TestData\SEC101_005.SlackApiKey.py" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\Plugins\Tests.SecurityValidators\TestData\SecurePlaintextSecrets\Inputs\SEC101_102.AdoPat.txt" Link="TestData\SEC101_102.AdoPat.txt" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\Plugins\Tests.SecurityValidators\TestData\SecurePlaintextSecrets\Inputs\SEC101_005.SlackApiKey.py" Link="TestData\SEC101_005.SlackApiKey.py" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   
   <Target Name="CopySecFilesAfterBuild" AfterTargets="AfterBuild">

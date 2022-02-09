@@ -1,0 +1,208 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC102/002",
+              "name": "ReviewPotentiallySensitiveData/SocialSecurityNumber",
+              "fullDescription": {
+                "text": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is an apparent {1}."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC102/002",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "123-45…",
+              "social security number"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SecurityValidators/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 1,
+                  "endLine": 2,
+                  "endColumn": 12,
+                  "charOffset": 30,
+                  "charLength": 11,
+                  "snippet": {
+                    "text": "123-45-6789"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=123-45-6789]",
+            "ValidationFingerprintHash/v1": "e24918902d0a1fcc33cbded1f97ce06a372acb99a255b0a934600e5abcacd6d7",
+            "AssetFingerprint/v2": "{}",
+            "ValidationFingerprint/v2": "{\"secret\":\"123-45-6789\"}"
+          },
+          "rank": 46.82
+        },
+        {
+          "ruleId": "SEC102/002",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "111-45…",
+              "social security number"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SecurityValidators/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1,
+                  "endLine": 5,
+                  "endColumn": 12,
+                  "charOffset": 64,
+                  "charLength": 11,
+                  "snippet": {
+                    "text": "111-45-6789"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=111-45-6789]",
+            "ValidationFingerprintHash/v1": "45b4cec67315682d05693fec840472963e76da5ae6dfe071bee8ae662712e4d6",
+            "AssetFingerprint/v2": "{}",
+            "ValidationFingerprint/v2": "{\"secret\":\"111-45-6789\"}"
+          },
+          "rank": 40.65
+        },
+        {
+          "ruleId": "SEC102/002",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "123-44…",
+              "social security number"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SecurityValidators/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 1,
+                  "endLine": 6,
+                  "endColumn": 12,
+                  "charOffset": 77,
+                  "charLength": 11,
+                  "snippet": {
+                    "text": "123-44-6789"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=123-44-6789]",
+            "ValidationFingerprintHash/v1": "d79d4d3f92125fb103c1619cc4701b61313119b25ff5cc9b0573d2e747a9d46e",
+            "AssetFingerprint/v2": "{}",
+            "ValidationFingerprint/v2": "{\"secret\":\"123-44-6789\"}"
+          },
+          "rank": 44.23
+        },
+        {
+          "ruleId": "SEC102/002",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "123-45…",
+              "social security number"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SecurityValidators/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 1,
+                  "endLine": 7,
+                  "endColumn": 12,
+                  "charOffset": 90,
+                  "charLength": 11,
+                  "snippet": {
+                    "text": "123-45-6666"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "",
+            "ValidationFingerprint/v1": "[secret=123-45-6666]",
+            "ValidationFingerprintHash/v1": "0ff33c39a69c033141f37181b7881af96cd4997738752932f7984613b5212e6e",
+            "AssetFingerprint/v2": "{}",
+            "ValidationFingerprint/v2": "{\"secret\":\"123-45-6666\"}"
+          },
+          "rank": 36.43
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}

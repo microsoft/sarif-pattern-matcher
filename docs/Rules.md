@@ -1,6 +1,6 @@
 # Rules
 
-## Security.dll (1)
+## SecurityValidators.dll (1)
 
 ### SEC101.DoNotExposePlaintextSecrets (43)
 

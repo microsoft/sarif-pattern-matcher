@@ -1,0 +1,87 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.common.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.product.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.plugins.props" />
+
+  <PropertyGroup Label="AssemblyAttributes">
+    <TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.SecurityValidators</RootNamespace>
+    <PackageId>Sarif.PatternMatcher.Security</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="build\Sarif.PatternMatcher.Security.targets">
+      <PackagePath>build\</PackagePath>
+    </Content>
+    <Content Include="SecurityValidators.SharedStrings.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="aliyun-net-sdk-core" Version="1.5.10" />
+    <PackageReference Include="AWSSDK.IdentityManagement" Version="3.5.0.61" />
+    <PackageReference Include="GoogleApi" Version="4.0.4" />
+    <PackageReference Include="Microsoft.Security.Utilities" Version="1.1.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.13.1" />
+    <PackageReference Include="MySqlConnector" Version="1.2.1" />
+    <PackageReference Include="Npgsql" Version="5.0.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
+    <PackageReference Include="System.Text.Json" Version="5.0.1" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Label="Component Governance fixes">
+    <!-- MongoDB.Driver -->
+    <PackageReference Include="SharpCompress" Version="0.29.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\RE2.Managed\RE2.Managed.csproj" />
+    <ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="aliyun-net-sdk-iot">
+      <HintPath>..\..\..\refs\aliyun-net-sdk-Iot.dll</HintPath>
+    </Reference>
+    <Reference Include="Octokit">
+      <HintPath>..\..\..\refs\Octokit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);GetMyPackageFiles</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
+  <Target Name="GetMyPackageFiles">
+    <ItemGroup>
+      <BuildOutputInPackage Include="Octokit.dll">
+        <FinalOutputPath>..\..\..\refs\Octokit.dll</FinalOutputPath>
+      </BuildOutputInPackage>
+      <BuildOutputInPackage Include="aliyun-net-sdk-Iot.dll">
+        <FinalOutputPath>..\..\..\refs\aliyun-net-sdk-Iot.dll</FinalOutputPath>
+      </BuildOutputInPackage>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CopyingSecurityToSpam" AfterTargets="Build">
+
+    <ItemGroup>
+      <SecurityFile Include="$(OutputPath)Security.dll" />
+      <SpamFiles Include="$(MSBuildThisFileDirectory)*.json" />
+      <SdkFile Include="$(OutputPath)Sarif.PatternMatcher.Sdk.dll" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(SdkFile)" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" ContinueOnError="true" />
+    <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(SecurityFile)" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" ContinueOnError="true" />
+    <Copy SourceFiles="SecurityValidators.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+  </Target>
+</Project>

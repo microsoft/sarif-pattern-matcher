@@ -59,9 +59,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Utilities.Sarif", "sar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sarif.Converters", "sarif-sdk\src\Sarif.Converters\Sarif.Converters.csproj", "{8878661F-F229-4DB1-A769-B63294C63826}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Security", "Plugins\Security\Security.csproj", "{94F1D306-AEFF-4AE1-995F-B404A92A3C1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityValidators", "Plugins\SecurityValidators\SecurityValidators.csproj", "{94F1D306-AEFF-4AE1-995F-B404A92A3C1F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Security", "Plugins\Tests.Security\Tests.Security.csproj", "{DAB33D14-20D4-4F1E-B751-E46FE5E2B2E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.SecurityValidators", "Plugins\Tests.SecurityValidators\Tests.SecurityValidators.csproj", "{DAB33D14-20D4-4F1E-B751-E46FE5E2B2E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strings.Interop", "Strings.Interop\Strings.Interop.csproj", "{BE7D33AA-F35E-4FAE-A7BB-4B1B24864777}"
 EndProject

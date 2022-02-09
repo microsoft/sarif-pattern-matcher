@@ -11,7 +11,7 @@
           <CodeCoverage>
             <ModulePaths>
               <Include>
-                <ModulePath>.*\Security.dll$</ModulePath>
+                <ModulePath>.*\SecurityValidators.dll$</ModulePath>
                 <ModulePath>.*\RE2.Managed.dll$</ModulePath>
                 <ModulePath>.*\Strings.Interop.dll$</ModulePath>
                 <ModulePath>.*\SalModernization.dll$</ModulePath>
@@ -22,7 +22,7 @@
                 <ModulePath>.*\Sarif.PatternMatcher.Function.dll$</ModulePath>
               </Include>
               <Exclude>
-                <ModulePath>.*\Tests.Security.dll$</ModulePath>
+                <ModulePath>.*\Tests.SecurityValidators.dll$</ModulePath>
                 <ModulePath>.*\Tests.SalModernization.dll$</ModulePath>
                 <ModulePath>.*\Test.UnitTests.RE2.Managed.dll$</ModulePath>
                 <ModulePath>.*\Tests.AzureDevOpsConfiguration.dll$</ModulePath>

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Tests.Security\EndToEndTests.cs" />
+    <Compile Include="..\Tests.SecurityValidators\EndToEndTests.cs" />
 
     <ProjectReference Include="..\SalModernization\SalModernization.csproj" />
     <ProjectReference Include="..\..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />

@@ -6,9 +6,9 @@ To start using the client tool, you will need:
 ```xml
 <PackageReference Include="Sarif.PatternMatcher" Version="x.y.z" />
 ```
-2. Install [Sarif.PatternMatcher.Security](https://www.nuget.org/packages/Sarif.PatternMatcher.Security/)
+2. Install [Sarif.PatternMatcher.SecurityValidators](https://www.nuget.org/packages/Sarif.PatternMatcher.SecurityValidators/)
 ```xml
-<PackageReference Include="Sarif.PatternMatcher.Security" Version="x.y.z" />
+<PackageReference Include="Sarif.PatternMatcher.SecurityValidators" Version="x.y.z" />
 ```
 
 ## How to execute

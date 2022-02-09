@@ -7,9 +7,9 @@ To start using the client tool, you will need:
 ```bash
 dotnet tool install --global Sarif.PatternMatcher.Cli --version x.y.z
 ```
-2. Download [Sarif.PatternMatcher.Security](https://www.nuget.org/packages/Sarif.PatternMatcher.Security/)
+2. Download [Sarif.PatternMatcher.SecurityValidators](https://www.nuget.org/packages/Sarif.PatternMatcher.SecurityValidators/)
 ```bash
-nuget install Sarif.PatternMatcher.Security -Version x.y.z -OutputDirectory c:\folder-to-install-packages\
+nuget install Sarif.PatternMatcher.SecurityValidators -Version x.y.z -OutputDirectory c:\folder-to-install-packages\
 ```
 
 After completing the steps above, execute in the terminal (cmd/powershell):
@@ -37,7 +37,7 @@ For each verb, you can use `--help` to retrieve the arguments:
 Also, check in the `c:\folder-to-install-packages` if you can see the following structure:
 ```
 c:\folder-to-install-packages
-│───Sarif.PatternMatcher.Security.x.y.z
+│───Sarif.PatternMatcher.SecurityValidators.x.y.z
 │   └───content
 │       └───*.json
 │       └───*.txt

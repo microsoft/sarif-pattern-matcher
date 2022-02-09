@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\Tests.Security\EndToEndTests.cs" />
-    <Compile Include="..\Tests.Security\Helpers\HttpMockHelper.cs" />
+    <Compile Include="..\Tests.SecurityValidators\EndToEndTests.cs" />
+    <Compile Include="..\Tests.SecurityValidators\Helpers\HttpMockHelper.cs" />
 
     <ProjectReference Include="..\AzureDevOpsConfiguration\AzureDevOpsConfiguration.csproj" />
     <ProjectReference Include="..\..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />

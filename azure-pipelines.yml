@@ -45,5 +45,5 @@ steps:
 #- task: PublishPipelineArtifact@1
 #  condition: always()
 #  inputs:
-#    targetPath: bld/bin/AnyCPU_Debug/Tests.Security/netcoreapp3.1/
-#    artifactName: Tests.Security
+#    targetPath: bld/bin/AnyCPU_Debug/Tests.SecurityValidators/netcoreapp3.1/
+#    artifactName: Tests.SecurityValidators

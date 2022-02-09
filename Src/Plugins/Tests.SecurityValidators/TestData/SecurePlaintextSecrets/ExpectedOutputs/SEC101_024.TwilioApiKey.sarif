@@ -1,0 +1,134 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC101/024",
+              "name": "DoNotExposePlaintextSecrets/TwilioApiKey",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://www.twilio.com/docs/usage/api/keys"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC101/024",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SK1111…",
+              "an apparent ",
+              "",
+              "Twilio API Key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SecurityValidators/TestData/SecurePlaintextSecrets/Inputs/SEC101_024.TwilioApiKey.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 35,
+                  "charOffset": 0,
+                  "charLength": 34,
+                  "snippet": {
+                    "text": "SK11111111110123456789012345678901"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Twilio]",
+            "ValidationFingerprint/v1": "[secret=SK11111111110123456789012345678901]",
+            "ValidationFingerprintHash/v1": "4089baba3337080da9ea52d6a99f31959752c1b6c43b8decc9cabf76753872fd",
+            "AssetFingerprint/v2": "{\"platform\":\"Twilio\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"SK11111111110123456789012345678901\"}"
+          },
+          "rank": 43.75
+        },
+        {
+          "ruleId": "SEC101/024",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "SK2222…",
+              "an apparent ",
+              "",
+              "Twilio API Key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SecurityValidators/TestData/SecurePlaintextSecrets/Inputs/SEC101_024.TwilioApiKey.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 2,
+                  "endLine": 3,
+                  "endColumn": 36,
+                  "charOffset": 39,
+                  "charLength": 34,
+                  "snippet": {
+                    "text": "SK22222222220123456789012345678901"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Twilio]",
+            "ValidationFingerprint/v1": "[secret=SK22222222220123456789012345678901]",
+            "ValidationFingerprintHash/v1": "134a06770fee91ed61fa3b52a93f7c5309ebd6b0fdecea550ee3b90cd0f72bf5",
+            "AssetFingerprint/v2": "{\"platform\":\"Twilio\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"SK22222222220123456789012345678901\"}"
+          },
+          "rank": 44.72
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}

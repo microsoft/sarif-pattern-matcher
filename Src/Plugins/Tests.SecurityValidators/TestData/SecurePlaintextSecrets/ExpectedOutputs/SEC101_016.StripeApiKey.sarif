@@ -1,0 +1,134 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC101/016",
+              "name": "DoNotExposePlaintextSecrets/StripeApiKey",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://stripe.com/docs/keys"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC101/016",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "sk_tes…",
+              "an apparent ",
+              "",
+              "Stripe API key",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SecurityValidators/TestData/SecurePlaintextSecrets/Inputs/SEC101_016.StripeApiKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 108,
+                  "charOffset": 0,
+                  "charLength": 107,
+                  "snippet": {
+                    "text": "sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Stripe]",
+            "ValidationFingerprint/v1": "[secret=sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]",
+            "ValidationFingerprintHash/v1": "72b30afe882333ec2c3c051f1922bbbc94ba6f43af19ae71de44f260819dbf35",
+            "AssetFingerprint/v2": "{\"platform\":\"Stripe\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}"
+          },
+          "rank": 38.3
+        },
+        {
+          "ruleId": "SEC101/016",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "sk_liv…",
+              "an apparent ",
+              "",
+              "Stripe API key",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.SecurityValidators/TestData/SecurePlaintextSecrets/Inputs/SEC101_016.StripeApiKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 1,
+                  "endLine": 2,
+                  "endColumn": 108,
+                  "charOffset": 109,
+                  "charLength": 107,
+                  "snippet": {
+                    "text": "sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[platform=Stripe]",
+            "ValidationFingerprint/v1": "[secret=sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]",
+            "ValidationFingerprintHash/v1": "d32d85683e21369010a37c401e0ec45a5ecd09d6f3073c8a84866a9529f556c0",
+            "AssetFingerprint/v2": "{\"platform\":\"Stripe\"}",
+            "ValidationFingerprint/v2": "{\"secret\":\"sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}"
+          },
+          "rank": 38.84
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}

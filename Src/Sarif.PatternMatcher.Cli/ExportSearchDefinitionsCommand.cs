@@ -87,7 +87,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             searchDefinitions = new SearchDefinitions
             {
                 Definitions = new List<SearchDefinition>(),
-                SharedStringsFileName = "Security.SharedStrings.txt",
+                SharedStringsFileName = "SecurityValidators.SharedStrings.txt",
             };
             var mapping = new Dictionary<string, SearchDefinition>();
 
