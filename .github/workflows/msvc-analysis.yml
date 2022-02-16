@@ -32,7 +32,7 @@ jobs:
           submodules: true
 
       - name: Configure CMake
-        run: cmake -B ${{ env.build }}
+        run: cmake -S Src\RE2.Native\re2 -B ${{ env.build }}
 
       # Build is not required unless generated source files are used
       # - name: Build CMake
