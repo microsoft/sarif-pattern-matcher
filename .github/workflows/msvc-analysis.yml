@@ -25,9 +25,11 @@ jobs:
     name: Analyze
     runs-on: windows-latest
 
-    steps:
+    steps:    
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          submodules: true
 
       - name: Configure CMake
         run: cmake -B ${{ env.build }}
