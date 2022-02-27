@@ -14,13 +14,15 @@ name: "CodeQL"
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
   schedule:
-    - cron: '30 23 * * 0'
+    - cron: '0 0 * * 0'
 
 jobs:
   analyze:
     name: Analyze
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     strategy:
       fail-fast: false
@@ -36,6 +38,8 @@ jobs:
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
+      with:
+        languages: csharp
 
     - run: |
         .\BuildAndTest.cmd -NoFormat -NoTest
