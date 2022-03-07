@@ -16,7 +16,7 @@
 - UER => eliminate unhandled exceptions in rules
 - UEE => eliminate unhandled exceptions in engine
 
-## *Unreleased*
+## *v1.8.0*
 
 - BUG: Resolve `InvalidOperationException` and `IndexOutOfRange` exceptions in `StaticValidatorBase.IsValidStatic` due to unsafe use of HashSet<string> class.
   [#595](https://github.com/microsoft/sarif-pattern-matcher/pull/585)
@@ -30,7 +30,6 @@
 - NR: Adding IdentifiableNpmAuthorToken rule with dynamic validation.
   [#588](https://github.com/microsoft/sarif-pattern-matcher/pull/588)
 
-  
 ## *v1.5.0-g9f639c22c7*
 
 - FPC: Improving RabbitMQ regex (removing new lines and spaces) from secret.
