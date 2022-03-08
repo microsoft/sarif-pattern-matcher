@@ -52,6 +52,14 @@
           "executionSuccessful": true
         }
       ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_019.PicaticApiKey.ps1",
+            "uriBaseId": "SRC_ROOT"
+          }
+        }
+      ],
       "results": [
         {
           "ruleId": "SEC101/016",
@@ -73,7 +81,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_019.PicaticApiKey.ps1",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 1,
@@ -118,7 +127,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_019.PicaticApiKey.ps1",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 3,
@@ -163,7 +173,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_019.PicaticApiKey.ps1",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 1,
@@ -208,7 +219,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_019.PicaticApiKey.ps1",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 3,

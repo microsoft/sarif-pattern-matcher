@@ -36,6 +36,14 @@
           "executionSuccessful": true
         }
       ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103_002.ASCIIArmoredFile_fake.asc",
+            "uriBaseId": "SRC_ROOT"
+          }
+        }
+      ],
       "results": [
         {
           "ruleId": "SEC103/002",
@@ -55,7 +63,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103_002.ASCIIArmoredFile_fake.asc",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 }
               }
             }
