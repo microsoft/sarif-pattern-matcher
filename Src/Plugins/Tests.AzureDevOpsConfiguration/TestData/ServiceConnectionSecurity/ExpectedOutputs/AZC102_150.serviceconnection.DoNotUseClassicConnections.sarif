@@ -52,6 +52,14 @@
           "executionSuccessful": true
         }
       ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
+            "uriBaseId": "SRC_ROOT"
+          }
+        }
+      ],
       "results": [
         {
           "ruleId": "AZC102/150",
@@ -74,7 +82,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 21,
@@ -120,7 +129,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 19,

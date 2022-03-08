@@ -68,6 +68,14 @@
           "executionSuccessful": true
         }
       ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
+            "uriBaseId": "SRC_ROOT"
+          }
+        }
+      ],
       "results": [
         {
           "ruleId": "SEC105/001/allocator",
@@ -83,7 +91,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 1,
@@ -116,7 +125,8 @@
                 {
                   "artifactLocation": {
                     "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                    "uriBaseId": "SRC_ROOT"
+                    "uriBaseId": "SRC_ROOT",
+                    "index": 0
                   },
                   "replacements": [
                     {
@@ -152,7 +162,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 1,
@@ -185,7 +196,8 @@
                 {
                   "artifactLocation": {
                     "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                    "uriBaseId": "SRC_ROOT"
+                    "uriBaseId": "SRC_ROOT",
+                    "index": 0
                   },
                   "replacements": [
                     {
@@ -222,7 +234,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 6,
@@ -255,7 +268,8 @@
                 {
                   "artifactLocation": {
                     "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                    "uriBaseId": "SRC_ROOT"
+                    "uriBaseId": "SRC_ROOT",
+                    "index": 0
                   },
                   "replacements": [
                     {
@@ -291,7 +305,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 3,
@@ -330,7 +345,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 2,
@@ -369,7 +385,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 2,
@@ -408,7 +425,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.SalModernization/TestData/UpdateSalToCurrentVersion/Inputs/SEC105_001.AnalysisAssume.cpp",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 3,

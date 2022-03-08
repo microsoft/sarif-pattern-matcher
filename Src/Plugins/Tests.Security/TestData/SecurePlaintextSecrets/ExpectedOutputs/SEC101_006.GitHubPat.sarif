@@ -36,6 +36,14 @@
           "executionSuccessful": true
         }
       ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.ps1",
+            "uriBaseId": "SRC_ROOT"
+          }
+        }
+      ],
       "results": [
         {
           "ruleId": "SEC101/006",
@@ -57,7 +65,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.ps1",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 5,
@@ -102,7 +111,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.ps1",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 10,
@@ -147,7 +157,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.ps1",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 14,
@@ -192,7 +203,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.ps1",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 28,
@@ -237,7 +249,8 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubPat.ps1",
-                  "uriBaseId": "SRC_ROOT"
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
                 },
                 "region": {
                   "startLine": 31,

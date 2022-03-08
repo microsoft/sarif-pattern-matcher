@@ -16,7 +16,7 @@
 - UER => eliminate unhandled exceptions in rules
 - UEE => eliminate unhandled exceptions in engine
 
-## *Unreleased*
+## *v1.8.0*
 
 - BUG: Resolve `InvalidOperationException` and `IndexOutOfRange` exceptions in `StaticValidatorBase.IsValidStatic` due to unsafe use of HashSet<string> class.
   [#595](https://github.com/microsoft/sarif-pattern-matcher/pull/585)
