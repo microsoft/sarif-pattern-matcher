@@ -15,16 +15,16 @@ using Xunit;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
-    /// Testing SEC101/017.NpmAuthorTokenValidator
-    /// </summary
-    public class NpmAuthorTokenValidatorTests
+    /// Testing SEC101/050.IdentifiableNpmAuthorTokenValidator
+    /// </summary>
+    public class IdentifiableNpmAuthorTokenValidatorTests
     {
         [Fact]
-        public void NpmAuthorTokenValidator_MockHttpTests()
+        public void IdentifiableNpmAuthorTokenValidator_MockHttpTests()
         {
             HttpMockTestCase[] testCases = NpmAuthorTokenTestCases.CreateTestCases(out Fingerprint fingerprint);
             var sb = new StringBuilder();
-            var npmAuthorTokenValidator = new NpmAuthorTokenValidator();
+            var identifiableNpmAuthorTokenValidator = new IdentifiableNpmAuthorTokenValidator();
             var mockHandler = new HttpMockHelper();
 
             foreach (HttpMockTestCase testCase in testCases)
@@ -39,11 +39,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var keyValuePairs = new Dictionary<string, string>();
 
                 using var httpClient = new HttpClient(mockHandler);
-                npmAuthorTokenValidator.SetHttpClient(httpClient);
-                ValidationState currentState = npmAuthorTokenValidator.IsValidDynamic(ref fingerprint,
-                                                                                      ref message,
-                                                                                      keyValuePairs,
-                                                                                      ref resultLevelKind);
+                identifiableNpmAuthorTokenValidator.SetHttpClient(httpClient);
+                ValidationState currentState = identifiableNpmAuthorTokenValidator.IsValidDynamic(ref fingerprint,
+                                                                                                  ref message,
+                                                                                                  keyValuePairs,
+                                                                                                  ref resultLevelKind);
 
                 if (currentState != testCase.ExpectedValidationState)
                 {

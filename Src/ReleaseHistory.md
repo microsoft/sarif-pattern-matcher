@@ -18,6 +18,8 @@
 
 ## *Unreleased*
 
+- BUG: Resolve `InvalidOperationException` and `IndexOutOfRange` exceptions in `StaticValidatorBase.IsValidStatic` due to unsafe use of HashSet<string> class.
+  [#595](https://github.com/microsoft/sarif-pattern-matcher/pull/585)
 - NR: Adding SlackWorkflow rule with dynamic validation.
   [#585](https://github.com/microsoft/sarif-pattern-matcher/pull/585)
 - NR: Adding TelegramBotToken rule with dynamic validation.
@@ -25,6 +27,9 @@
 - SDK: Exposing `automationId`, `automationGuid`, and `postUri` in the
   `analyze` command.
   [#586](https://github.com/microsoft/sarif-pattern-matcher/pull/586)
+- NR: Adding IdentifiableNpmAuthorToken rule with dynamic validation.
+  [#588](https://github.com/microsoft/sarif-pattern-matcher/pull/588)
+
   
 ## *v1.5.0-g9f639c22c7*
 

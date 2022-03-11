@@ -52,7 +52,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected ValidatorBase()
         {
-            PerFileFingerprintCache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            PerFileFingerprintCache = new ConcurrentDictionary<string, byte>(StringComparer.OrdinalIgnoreCase);
             FingerprintToResultCache = new ConcurrentDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>>();
         }
 
@@ -101,8 +101,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// actual match that happens to be duplicated in the file. In
         /// practice, we will not worry about this scenario: it will be
         /// sufficient that we flag one instance of the unique secret.
+        ///
+        /// The type of this cache is peculiar. We use a concurrent dictionary
+        /// because .NET does not ship a concurrent HashSet class and we do
+        /// not have time currently to author one. The choice of 'byte' as a
+        /// value type for the dictionary is arbitrary; this data is never
+        /// consumed.
         /// </summary>
-        protected ISet<string> PerFileFingerprintCache { get; }
+        protected IDictionary<string, byte> PerFileFingerprintCache { get; }
 
         public static bool ContainsDigitAndChar(string matchedPattern)
         {
