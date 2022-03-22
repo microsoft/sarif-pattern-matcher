@@ -13,7 +13,7 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ main ]
+    branches: "*"
   pull_request:
     branches: [ main ]
   schedule:
@@ -30,8 +30,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0 
     
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
