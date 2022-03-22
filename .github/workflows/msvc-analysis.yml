@@ -10,7 +10,7 @@ name: Microsoft C++ Code Analysis
 
 on:
   push:
-    branches: [ main ]
+    branches: '*'
   pull_request:
     branches: [ main ]
   schedule:
@@ -52,6 +52,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: ${{ steps.run-analysis.outputs.sarif }}
+          wait-for-processing: true
 
       # Upload SARIF file as an Artifact to download and view
       - name: Upload SARIF as an Artifact
