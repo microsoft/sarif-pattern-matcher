@@ -44,6 +44,16 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
   </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/analyze:log$(SolutionDir).sarif\re2.x86.sarif /analyze:log:format:sarif %(AdditionalOptions)</AdditionalOptions>
+      <ControlFlowGuard>
+      </ControlFlowGuard>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <!-- Compilation Settings and Source Files are all defined here, in a shared props file -->
   <Import Project="RE2.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
