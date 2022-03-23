@@ -59,6 +59,16 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/analyze:log$(SolutionDir).sarif\RE2.Native.x86.sarif /analyze:log:format:sarif %(AdditionalOptions)</AdditionalOptions>
+      <ControlFlowGuard>
+      </ControlFlowGuard>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <!-- Compilation Settings and Source Files are all defined here, in a shared props file -->
   <Import Project="RE2.Native.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
