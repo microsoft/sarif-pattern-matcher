@@ -22,6 +22,12 @@
           "Name": "ReviewPotentiallySensitiveData/SocialSecurityNumber",
           "ContentsRegex": "\\b(?P<refine>(?P<secret>[0-9]{3}-[0-9]{2}-[0-9]{4}))\\b",
           "MessageArguments": { "dataKind": "social security number" }
+        },
+        {
+          "Id": "SEC102/003",
+          "Name": "ReviewPotentiallySensitiveData/Urls",
+          "ContentsRegex": "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",
+          "MessageArguments": { "dataKind": "URL" }
         }
       ]
     }
