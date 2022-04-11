@@ -16,6 +16,10 @@
 - UER => eliminate unhandled exceptions in rules
 - UEE => eliminate unhandled exceptions in engine
 
+## Unreleased
+
+- RE2.Native will compile with the latest Windows SDK 10.0.* installed. [#607](https://github.com/microsoft/sarif-pattern-matcher/pull/607)
+
 ## *v1.8.0*
 
 - BUG: Resolve `InvalidOperationException` and `IndexOutOfRange` exceptions in `StaticValidatorBase.IsValidStatic` due to unsafe use of HashSet<string> class.
