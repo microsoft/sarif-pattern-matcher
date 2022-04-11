@@ -9,13 +9,14 @@ using System.Text;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.SecurePlaintextSecretsValidators;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 using Newtonsoft.Json;
 
 using Xunit;
 
-using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.FacebookAppCredentialsValidator;
+using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.SecurePlaintextSecretsValidators.FacebookAppCredentialsValidator;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
