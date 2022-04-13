@@ -24,22 +24,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             try
             {
                 var actualAddress = new MailAddress(candidateAddress);
-                if (actualAddress.Address == candidateAddress)
+                if (actualAddress.Address != candidateAddress)
                 {
-                    var validationResult = new ValidationResult
-                    {
-                        Fingerprint = new Fingerprint()
-                        {
-                            Id = id.Value,
-                            Host = host.Value,
-                        },
-                        ValidationState = ValidationState.Unknown,
-                    };
-
-                    return new[] { validationResult };
+                    return ValidationResult.CreateNoMatch();
                 }
 
-                return ValidationResult.CreateNoMatch();
+                var validationResult = new ValidationResult
+                {
+                    Fingerprint = new Fingerprint()
+                    {
+                        Id = id.Value,
+                        Host = host.Value,
+                    },
+                    ValidationState = ValidationState.Unknown,
+                };
+
+                return new[] { validationResult };
             }
             catch
             {

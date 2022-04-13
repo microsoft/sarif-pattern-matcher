@@ -1,5 +1,7 @@
 {
   "ValidatorsAssemblyName": "Security.dll",
+  "SharedStringsFileName": "Security.SharedStrings.txt",
+
   "Definitions": [
     {
       "Id": "SEC102",
@@ -25,9 +27,11 @@
         },
         {
           "Id": "SEC102/003",
-          "Name": "ReviewPotentiallySensitiveData/Urls",
-          "ContentsRegex": "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",
-          "MessageArguments": { "dataKind": "URL" }
+          "Name": "ReviewPotentiallySensitiveData/Url",
+          "Level": "Note",
+          "FileNameAllowRegex": "(?i)(\\.txt)$",
+          "ContentsRegex": "$SEC102/003.Url",
+          "Message": "'{0:url}' is an apparent URL."
         }
       ]
     }
