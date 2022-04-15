@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.SecurePlaintextSecretsValidators
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class AdoPatValidator : StaticValidatorBase
     {

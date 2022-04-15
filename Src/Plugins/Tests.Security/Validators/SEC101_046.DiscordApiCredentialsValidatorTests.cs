@@ -8,8 +8,6 @@ using System.Text;
 
 using FluentAssertions;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.SecurePlaintextSecretsValidators;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 using Xunit;

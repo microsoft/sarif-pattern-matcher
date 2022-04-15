@@ -7,9 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.SecurePlaintextSecretsValidators;
-
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using Xunit;

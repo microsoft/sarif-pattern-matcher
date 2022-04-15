@@ -14,7 +14,7 @@ using Aliyun.Acs.Iot.Model.V20170420;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.SecurePlaintextSecretsValidators
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class AlibabaCloudCredentialsValidator : StaticValidatorBase
     {

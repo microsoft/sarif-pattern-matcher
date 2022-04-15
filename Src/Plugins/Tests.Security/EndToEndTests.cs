@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.CodeAnalysis.Sarif.Visitors;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 

@@ -7,7 +7,7 @@ using System.Net.Mail;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.ReviewPotentiallySensitiveDataValidators
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class EmailAddressValidator : StaticValidatorBase
     {

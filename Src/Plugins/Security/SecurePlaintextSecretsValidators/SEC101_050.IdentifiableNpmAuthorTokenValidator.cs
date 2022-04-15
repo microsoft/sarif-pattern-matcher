@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 using Microsoft.Security.Utilities;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.SecurePlaintextSecretsValidators
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class IdentifiableNpmAuthorTokenValidator : DynamicValidatorBase
     {

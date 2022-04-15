@@ -15,7 +15,7 @@ using Microsoft.RE2.Managed;
 
 using Newtonsoft.Json;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration.ServiceConnectionSecurityValidators
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration
 {
     public class DoNotGrantAllPipelinesAccessValidator : DynamicValidatorBase
     {

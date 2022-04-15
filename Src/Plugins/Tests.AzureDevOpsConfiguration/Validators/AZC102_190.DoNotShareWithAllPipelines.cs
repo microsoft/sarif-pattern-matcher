@@ -10,7 +10,6 @@ using System.Text;
 
 using FluentAssertions;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration.ServiceConnectionSecurityValidators;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
@@ -18,7 +17,7 @@ using Newtonsoft.Json;
 
 using Xunit;
 
-using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration.ServiceConnectionSecurityValidators.DoNotGrantAllPipelinesAccessValidator;
+using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration.DoNotGrantAllPipelinesAccessValidator;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration.Validators
 {

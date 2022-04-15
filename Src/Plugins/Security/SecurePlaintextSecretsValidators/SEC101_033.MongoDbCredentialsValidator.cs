@@ -11,7 +11,7 @@ using Microsoft.RE2.Managed;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.SecurePlaintextSecretsValidators
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class MongoDbCredentialsValidator : StaticValidatorBase
     {

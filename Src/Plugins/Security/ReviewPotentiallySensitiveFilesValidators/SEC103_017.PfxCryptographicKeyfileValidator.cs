@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.ReviewPotentiallySensitiveFilesValidators
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class PfxCryptographicKeyfileValidator : StaticValidatorBase
     {

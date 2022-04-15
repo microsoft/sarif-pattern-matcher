@@ -8,12 +8,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers;
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.SecurePlaintextSecretsValidators;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 using Newtonsoft.Json;
 
-using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.SecurePlaintextSecretsValidators.NpmAuthorTokenHelper;
+using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.NpmAuthorTokenHelper;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {

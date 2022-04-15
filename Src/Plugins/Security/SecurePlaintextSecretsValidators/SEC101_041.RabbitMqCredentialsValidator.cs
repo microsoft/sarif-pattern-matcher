@@ -10,7 +10,7 @@ using Microsoft.RE2.Managed;
 
 using RabbitMQ.Client;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.SecurePlaintextSecretsValidators
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class RabbitMqCredentialsValidator : DynamicValidatorBase
     {
