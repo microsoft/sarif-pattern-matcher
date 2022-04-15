@@ -17,6 +17,7 @@
 - UEE => eliminate unhandled exceptions in engine
 
 ## Unreleased
+
 - Bump MongoDB.Driver from 2.13.1 to 2.15.0 and Microsoft.AspNetCore.Http from 2.1.0 to 2.2.0. [#608](https://github.com/microsoft/sarif-pattern-matcher/pull/608)
 
 ## *v1.8.0*
