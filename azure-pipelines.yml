@@ -2,13 +2,13 @@ pr:
 - 'main'
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'windows-2022'
 
 steps:
 - task: BatchScript@1
   displayName: 'Run VsDevCmd.bat'
   inputs:
-    filename: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat'
+    filename: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat'
     modifyEnvironment: true
 
 - task: BatchScript@1
@@ -22,28 +22,4 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
 
-#- task: PowerShell@2
-#  displayName: Run ProcessCodeCoverage.ps1
-#  inputs:
-#    targetType: filePath
-#    filePath: ./scripts/ProcessCodeCoverage.ps1
-
-#- task: PowerShell@2
-#  displayName: 'Merging TestResults'
-#  inputs:
-#    targetType: 'inline'
-#    script: |
-#      dotnet tool install -g dotnet-reportgenerator-globaltool      
-#      reportgenerator -reports:**/*.coverage.xml -targetdir:TestResults -reporttypes:Cobertura
-
-#- task: PublishCodeCoverageResults@1
-#  inputs:
-#    codeCoverageTool: 'cobertura'
-#    summaryFileLocation: 'TestResults/Cobertura.xml'
-
-# Enable if you need to debug the tests
-#- task: PublishPipelineArtifact@1
-#  condition: always()
-#  inputs:
-#    targetPath: bld/bin/AnyCPU_Debug/Tests.Security/netcoreapp3.1/
-#    artifactName: Tests.Security
+- task: ComponentGovernanceComponentDetection@0

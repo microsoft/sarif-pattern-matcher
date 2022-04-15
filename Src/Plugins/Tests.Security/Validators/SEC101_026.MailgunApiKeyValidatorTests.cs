@@ -33,6 +33,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string scanIdentityGuid = $"{Guid.NewGuid()}";
             using HttpRequestMessage request = MailgunApiCredentialsValidator.GenerateRequestMessage(id, secret, scanIdentityGuid);
 
+            // This is a special helper that matches arbitrary content
+            request.Content = HttpMockHelper.AnyContent();
+
             string nullRefResponseMessage = string.Empty;
             string authorizedResponseMessage = string.Empty;
             string unauthorizedResponseMessage = string.Empty;
@@ -42,7 +45,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             {
                 new HttpMockTestCase
                 {
-                    Title = "Null Ref Exception",
+                    Title = "Raise NullReferenceException",
                     HttpRequestMessages = new List<HttpRequestMessage>{ null },
                     HttpResponseMessages = new List<HttpResponseMessage>{ null },
                     ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException(), asset: id),
@@ -50,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Bad Request (Authorized response code)",
+                    Title = "Authorized",
                     HttpRequestMessages = new[]{ request },
                     HttpResponseMessages = new[]{ HttpMockHelper.BadRequestResponse },
                     ExpectedValidationState = ValidatorBase.ReturnAuthorizedAccess(ref authorizedResponseMessage, asset: id),
@@ -58,7 +61,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Unauthorized (Unauthorized response code)",
+                    Title = "Unauthorized",
                     HttpRequestMessages = new[]{ request },
                     HttpResponseMessages = new[]{ HttpMockHelper.UnauthorizedResponse },
                     ExpectedValidationState = ValidatorBase.ReturnUnauthorizedAccess(ref unauthorizedResponseMessage, asset: id),
@@ -66,7 +69,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Unexpected (Server error response code)",
+                    Title = "Unexpected server response status code",
                     HttpRequestMessages = new[]{ request },
                     HttpResponseMessages = new[]{ HttpMockHelper.InternalServerErrorResponse },
                     ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref unexpectedResponseMessage, HttpStatusCode.InternalServerError),
@@ -77,6 +80,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var sb = new StringBuilder();
             var mockHandler = new HttpMockHelper();
             var validator = new MailgunApiCredentialsValidator();
+            validator.ScanIdentityGuid = scanIdentityGuid;
 
             foreach (HttpMockTestCase testCase in testCases)
             {

@@ -37,7 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             {
                 new HttpMockTestCase
                 {
-                    Title = "Null Ref Exception",
+                    Title = "Raise NullReferenceException",
                     HttpRequestMessages = new List<HttpRequestMessage>{ null },
                     HttpResponseMessages = new List<HttpResponseMessage>{ null },
                     ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException()),
@@ -45,7 +45,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Authorized (Ok response code)",
+                    Title = "Authorized",
                     HttpRequestMessages = new[]{ request },
                     HttpResponseMessages = new[]{ HttpMockHelper.OKResponse },
                     ExpectedValidationState = ValidationState.Authorized,
@@ -53,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Unauthorized (Unauthorized response code)",
+                    Title = "Unauthorized",
                     HttpRequestMessages = new[]{ request },
                     HttpResponseMessages = new[]{ HttpMockHelper.UnauthorizedResponse },
                     ExpectedValidationState = ValidationState.Unauthorized,
@@ -61,7 +61,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 },
                 new HttpMockTestCase
                 {
-                    Title = "Unexpected (server error response code)",
+                    Title = "Unexpected server response status code",
                     HttpRequestMessages = new[]{ request },
                     HttpResponseMessages = new[]{ HttpMockHelper.InternalServerErrorResponse },
                     ExpectedValidationState = ValidatorBase.ReturnUnexpectedResponseCode(ref unexpectedResponseMessage, HttpStatusCode.InternalServerError),
