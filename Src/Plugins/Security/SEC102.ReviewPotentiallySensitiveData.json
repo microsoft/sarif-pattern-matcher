@@ -28,8 +28,7 @@
         {
           "Id": "SEC102/003",
           "Name": "ReviewPotentiallySensitiveData/Url",
-          "Level": "Note",
-          "FileNameAllowRegex": "(?i)(\\.txt)$",
+          "FileNameAllowRegex": "(?i)(\\.cs|\\.cpp|\\.ini|\\.js|\\.ps1)$",
           "ContentsRegex": "$SEC102/003.Url",
           "Message": "'{0:url}' is an apparent URL."
         }
