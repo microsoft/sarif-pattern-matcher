@@ -1,0 +1,7 @@
+// These are valid patterns.
+123-45-6789
+
+// These are not.
+111-45-6789
+123-44-6789
+123-45-6666
