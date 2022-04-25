@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
-            string candidateAddress = $"{id}.Value@{host?.Value}";
+            string candidateAddress = $"{id.Value}@{host.Value}";
 
             try
             {
