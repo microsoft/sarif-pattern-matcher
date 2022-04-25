@@ -33,10 +33,13 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
 
 ## Debugging
 1. Identify an example of a secret to test (ie. a false negative or false positive).
+
 2. [Regex 101](https://regex101.com/) (recommended InPrivate browsing mode) can be used to validate the example matches a rule's regular expression (regex).
+
 3. Create and save a text file somewhere easily accessible that contains just your example (ie. `D:\someDirectory\example.txt`). Using developer cmd prompt, navigate to the location of the sarif-pattern-matcher executable noted earlier. You will also need the location of the `SEC101.SecurePlaintextSecrets.json` file (`repoRootDirectory\Bld\bin\AnyCPU_Release\Security\netstandard2.1\SEC101.SecurePlaintextSecrets.json`). Note, this file will exist in multiple directories including the debug directory; this is an example that may be used.  Execute this command:
 
     `spam analyze D:\someDirectory\example.txt --search-definitions D:\sarif-pattern-matcher\Bld\bin\AnyCPU_Release\Security\netstandard2.1\SEC101.SecurePlaintextSecrets.json`
+
 4. Set target to analyze:
 
     - From the Solution Explorer, right click on `Sarif.PatternMatcher.Cli`
