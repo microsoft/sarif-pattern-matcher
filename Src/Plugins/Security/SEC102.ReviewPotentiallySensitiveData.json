@@ -1,7 +1,6 @@
 {
   "ValidatorsAssemblyName": "Security.dll",
   "SharedStringsFileName": "Security.SharedStrings.txt",
-
   "Definitions": [
     {
       "Id": "SEC102",
