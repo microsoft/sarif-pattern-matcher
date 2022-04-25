@@ -74,7 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     case HttpStatusCode.OK:
                     {
-                        return NpmAuthorTokenHelper.CheckInformation(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), secret, ref message, ref resultLevelKind);
+                        return CheckInformation(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), secret, ref message, ref resultLevelKind);
                     }
 
                     case HttpStatusCode.Unauthorized:

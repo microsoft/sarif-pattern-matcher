@@ -1,5 +1,6 @@
 {
   "ValidatorsAssemblyName": "Security.dll",
+  "SharedStringsFileName": "Security.SharedStrings.txt",
   "Definitions": [
     {
       "Id": "SEC102",
@@ -22,6 +23,13 @@
           "Name": "ReviewPotentiallySensitiveData/SocialSecurityNumber",
           "ContentsRegex": "\\b(?P<refine>(?P<secret>[0-9]{3}-[0-9]{2}-[0-9]{4}))\\b",
           "MessageArguments": { "dataKind": "social security number" }
+        },
+        {
+          "Id": "SEC102/003",
+          "Name": "ReviewPotentiallySensitiveData/Url",
+          "FileNameAllowRegex": "(?i)(\\.cs|\\.cpp|\\.ini|\\.js|\\.ps1)$",
+          "ContentsRegex": "$SEC102/003.Url",
+          "Message": "'{0:url}' is an apparent URL."
         }
       ]
     }
