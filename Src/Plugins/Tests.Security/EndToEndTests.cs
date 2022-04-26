@@ -28,22 +28,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected abstract string RuleId { get; }
 
+        protected abstract string Service { get; }
+
         protected abstract string Framework { get; }
 
         protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.TestData.{TypeUnderTest}";
 
-        protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @"Plugins\Tests.Security");
+        protected override string TestBinaryTestDataDirectory => Path.Combine(ProductRootDirectory, "src", "Plugins", TestBinaryName, "TestData");
+
+        protected override string ProductTestDataDirectory => Path.Combine(TestBinaryTestDataDirectory, Service);
 
         protected override IDictionary<string, string> ConstructTestOutputsFromInputResources(IEnumerable<string> inputResourceNames, object parameter)
         {
             var results = new Dictionary<string, string>();
             var dict = new Dictionary<string, Task<string>>();
 
+            const string input = "Inputs.";
+
             foreach (string inputResourceName in inputResourceNames)
             {
-                string secret = inputResourceName.Substring("Inputs.".Length);
+                string name = inputResourceName.Substring(inputResourceName.IndexOf(input) + input.Length);
 
-                dict[secret] = Task.Factory.StartNew(() => ConstructTestOutputFromInputResource(inputResourceName, parameter));
+                dict[name] = Task.Factory.StartNew(() => ConstructTestOutputFromInputResource(inputResourceName, parameter));
             }
 
             Task.WaitAll(dict.Values.ToArray());
@@ -60,6 +66,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string logContents = GetResourceText(inputResourceName);
 
+            const string input = "Inputs.";
+            string fileName = inputResourceName.Substring(inputResourceName.IndexOf(input) + input.Length);
             string productBinaryName = TestBinaryName.Substring("Tests.".Length);
 
             string regexDefinitions = Path.Combine(
@@ -70,7 +78,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string filePath = Path.Combine(
                 ProductTestDataDirectory,
                 @"Inputs\",
-                inputResourceName.Substring("inputs.".Length));
+                fileName);
 
             IFileSystem fileSystem = FileSystem.Instance;
 

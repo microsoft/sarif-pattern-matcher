@@ -16,6 +16,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SalModernization
 
         protected override string Framework => "netstandard2.0";
 
+        protected override string Service => "UpdateSalToCurrentVersion";
+
         [Fact]
         public void UpdateSalToCurrentVersion_EndToEndFunctionalTests()
             => RunAllTests();
