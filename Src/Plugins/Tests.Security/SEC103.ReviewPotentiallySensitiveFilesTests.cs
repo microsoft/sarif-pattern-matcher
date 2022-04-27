@@ -16,7 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override string Framework => "netstandard2.1";
 
-        protected override string Service => "ReviewPotentiallySensitiveFiles";
+        protected override string PluginName => "ReviewPotentiallySensitiveFiles";
 
         [Fact]
         public void ReviewPotentiallySensitiveFiles_EndToEndFunctionalTests()

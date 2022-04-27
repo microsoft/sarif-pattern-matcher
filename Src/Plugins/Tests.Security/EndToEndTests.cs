@@ -28,15 +28,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected abstract string RuleId { get; }
 
-        protected abstract string Service { get; }
-
         protected abstract string Framework { get; }
+
+        protected abstract string PluginName { get; }
 
         protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.TestData.{TypeUnderTest}";
 
         protected override string TestBinaryTestDataDirectory => Path.Combine(ProductRootDirectory, "src", "Plugins", TestBinaryName, "TestData");
 
-        protected override string ProductTestDataDirectory => Path.Combine(TestBinaryTestDataDirectory, Service);
+        protected override string ProductTestDataDirectory => Path.Combine(TestBinaryTestDataDirectory, PluginName);
 
         protected override IDictionary<string, string> ConstructTestOutputsFromInputResources(IEnumerable<string> inputResourceNames, object parameter)
         {
