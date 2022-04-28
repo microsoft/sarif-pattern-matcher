@@ -40,16 +40,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override IDictionary<string, string> ConstructTestOutputsFromInputResources(IEnumerable<string> inputResourceNames, object parameter)
         {
+            var inputFiles = parameter as List<string>;
             var results = new Dictionary<string, string>();
             var dict = new Dictionary<string, Task<string>>();
 
-            const string input = "Inputs.";
-
             foreach (string inputResourceName in inputResourceNames)
             {
-                string name = inputResourceName.Substring(inputResourceName.IndexOf(input) + input.Length);
+                string name = inputFiles.First(i => inputResourceName.EndsWith(i));
 
-                dict[name] = Task.Factory.StartNew(() => ConstructTestOutputFromInputResource(inputResourceName, parameter));
+                dict[name] = Task.Factory.StartNew(() => ConstructTestOutputFromInputResource(inputResourceName, name));
             }
 
             Task.WaitAll(dict.Values.ToArray());
@@ -65,9 +64,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override string ConstructTestOutputFromInputResource(string inputResourceName, object parameter)
         {
             string logContents = GetResourceText(inputResourceName);
-
-            const string input = "Inputs.";
-            string fileName = inputResourceName.Substring(inputResourceName.IndexOf(input) + input.Length);
             string productBinaryName = TestBinaryName.Substring("Tests.".Length);
 
             string regexDefinitions = Path.Combine(
@@ -78,7 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string filePath = Path.Combine(
                 ProductTestDataDirectory,
                 @"Inputs\",
-                fileName);
+                parameter as string);
 
             IFileSystem fileSystem = FileSystem.Instance;
 
@@ -155,7 +151,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Path.GetFileNameWithoutExtension(testFileName) + ".sarif";
             }
 
-            RunTest(inputFiles, expectedOutputResourceMap, enforceNotificationsFree: true);
+            RunTest(inputFiles, expectedOutputResourceMap, enforceNotificationsFree: true, parameter: inputFiles);
         }
     }
 }
