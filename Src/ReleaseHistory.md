@@ -18,7 +18,7 @@
 
 ## Unreleased
 
-- RE2.Native will compile with the latest Windows SDK 10.0.* installed. [#607](https://github.com/microsoft/sarif-pattern-matcher/pull/607)
+- RE2.Native will now compile in all environments with the latest Windows SDK 10.0.* installed. [#607](https://github.com/microsoft/sarif-pattern-matcher/pull/607). Our current release pipelines build NuGet packages with Windows SDK version 10.0.22000.
 
 ## *v1.9.0*
 
