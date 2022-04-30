@@ -20,6 +20,11 @@
 
 - RE2.Native will compile with the latest Windows SDK 10.0.* installed. [#607](https://github.com/microsoft/sarif-pattern-matcher/pull/607)
 
+## *v1.9.0*
+
+- Bump MongoDB.Driver from 2.13.1 to 2.15.0 and Microsoft.AspNetCore.Http from 2.1.0 to 2.2.0. [#608](https://github.com/microsoft/sarif-pattern-matcher/pull/608)
+- NR: Adding Url rule in the plugin `ReviewPotentiallySensitiveData`. [#611](https://github.com/microsoft/sarif-pattern-matcher/pull/611)
+
 ## *v1.8.0*
 
 - BUG: Resolve `InvalidOperationException` and `IndexOutOfRange` exceptions in `StaticValidatorBase.IsValidStatic` due to unsafe use of HashSet<string> class.

@@ -39,7 +39,7 @@
       "artifacts": [
         {
           "location": {
-            "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+            "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber.txt",
             "uriBaseId": "SRC_ROOT"
           }
         }
@@ -60,7 +60,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber.txt",
                   "uriBaseId": "SRC_ROOT",
                   "index": 0
                 },
@@ -102,7 +102,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber.txt",
                   "uriBaseId": "SRC_ROOT",
                   "index": 0
                 },
@@ -144,7 +144,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber.txt",
                   "uriBaseId": "SRC_ROOT",
                   "index": 0
                 },
@@ -186,7 +186,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber_with_social_security_numbers.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_002.SocialSecurityNumber.txt",
                   "uriBaseId": "SRC_ROOT",
                   "index": 0
                 },
