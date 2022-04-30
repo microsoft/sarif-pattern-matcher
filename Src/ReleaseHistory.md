@@ -16,10 +16,11 @@
 - UER => eliminate unhandled exceptions in rules
 - UEE => eliminate unhandled exceptions in engine
 
-## Unreleased
+## *v1.9.0*
 
 - Bump MongoDB.Driver from 2.13.1 to 2.15.0 and Microsoft.AspNetCore.Http from 2.1.0 to 2.2.0. [#608](https://github.com/microsoft/sarif-pattern-matcher/pull/608)
 - Bump Sarif.Sdk from 2.4.13 to [2.4.15](https://github.com/microsoft/sarif-sdk/blob/v2.4.15/src/ReleaseHistory.md) by updating submodule to commit [9f0eed7549736b28d59a2e93f443ba47e3bd978e](https://github.com/microsoft/sarif-sdk/commit/9f0eed7549736b28d59a2e93f443ba47e3bd978e). [#612](https://github.com/microsoft/sarif-pattern-matcher/pull/612)
+- NR: Adding Url rule in the plugin `ReviewPotentiallySensitiveData`. [#611](https://github.com/microsoft/sarif-pattern-matcher/pull/611)
 
 ## *v1.8.0*
 
