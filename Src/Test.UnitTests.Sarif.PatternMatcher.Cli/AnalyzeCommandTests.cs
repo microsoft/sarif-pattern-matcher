@@ -98,7 +98,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
 
             var mockFileSystem = new Mock<IFileSystem>();
-
+            mockFileSystem.Setup(x => x.DirectoryExists(rootDirectory)).Returns(true);
             mockFileSystem.Setup(x => x.DirectoryEnumerateFiles(rootDirectory,
                                                                 scanTargetName,
                                                                 It.IsAny<SearchOption>()))
