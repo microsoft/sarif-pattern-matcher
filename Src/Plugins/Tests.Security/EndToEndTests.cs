@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.CodeAnalysis.Sarif.Visitors;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 
@@ -31,20 +30,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected abstract string Framework { get; }
 
+        protected abstract string PluginName { get; }
+
         protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.TestData.{TypeUnderTest}";
 
-        protected override string ProductDirectory => Path.Combine(base.ProductDirectory, @"Plugins\Tests.Security");
+        protected override string TestBinaryTestDataDirectory => Path.Combine(ProductRootDirectory, "src", "Plugins", TestBinaryName, "TestData");
+
+        protected override string ProductTestDataDirectory => Path.Combine(TestBinaryTestDataDirectory, PluginName);
 
         protected override IDictionary<string, string> ConstructTestOutputsFromInputResources(IEnumerable<string> inputResourceNames, object parameter)
         {
+            var inputFiles = parameter as List<string>;
             var results = new Dictionary<string, string>();
             var dict = new Dictionary<string, Task<string>>();
 
             foreach (string inputResourceName in inputResourceNames)
             {
-                string secret = inputResourceName.Substring("Inputs.".Length);
+                string name = inputFiles.First(i => inputResourceName.EndsWith(i));
 
-                dict[secret] = Task.Factory.StartNew(() => ConstructTestOutputFromInputResource(inputResourceName, parameter));
+                dict[name] = Task.Factory.StartNew(() => ConstructTestOutputFromInputResource(inputResourceName, name));
             }
 
             Task.WaitAll(dict.Values.ToArray());
@@ -60,7 +64,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override string ConstructTestOutputFromInputResource(string inputResourceName, object parameter)
         {
             string logContents = GetResourceText(inputResourceName);
-
             string productBinaryName = TestBinaryName.Substring("Tests.".Length);
 
             string regexDefinitions = Path.Combine(
@@ -71,7 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string filePath = Path.Combine(
                 ProductTestDataDirectory,
                 @"Inputs\",
-                inputResourceName.Substring("inputs.".Length));
+                parameter as string);
 
             IFileSystem fileSystem = FileSystem.Instance;
 
@@ -148,7 +151,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Path.GetFileNameWithoutExtension(testFileName) + ".sarif";
             }
 
-            RunTest(inputFiles, expectedOutputResourceMap, enforceNotificationsFree: true);
+            RunTest(inputFiles, expectedOutputResourceMap, enforceNotificationsFree: true, parameter: inputFiles);
         }
     }
 }

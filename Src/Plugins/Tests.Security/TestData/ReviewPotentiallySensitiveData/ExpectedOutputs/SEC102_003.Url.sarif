@@ -1,0 +1,172 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC102/003",
+              "name": "ReviewPotentiallySensitiveData/Url",
+              "fullDescription": {
+                "text": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is an apparent URL."
+                }
+              },
+              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_003.Url.ps1",
+            "uriBaseId": "SRC_ROOT"
+          }
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC102/003",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "https://msn.com/test"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_003.Url.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 21,
+                  "charOffset": 0,
+                  "charLength": 20,
+                  "snippet": {
+                    "text": "https://msn.com/test"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=msn.com][path=/test]",
+            "ValidationFingerprint/v1": "[host=msn.com][path=/test][port=443]",
+            "ValidationFingerprintHash/v1": "14d50b9e6825ad93a9a957dcd484fa1ffce642125b1b615693fb7d02ced5338c",
+            "AssetFingerprint/v2": "{\"host\":\"msn.com\",\"path\":\"/test\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}"
+          }
+        },
+        {
+          "ruleId": "SEC102/003",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "https://msn.com/test/"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_003.Url.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 1,
+                  "endLine": 2,
+                  "endColumn": 22,
+                  "charOffset": 22,
+                  "charLength": 21,
+                  "snippet": {
+                    "text": "https://msn.com/test/"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=msn.com][path=/test/]",
+            "ValidationFingerprint/v1": "[host=msn.com][path=/test/][port=443]",
+            "ValidationFingerprintHash/v1": "06da657d809a85c1b27e844129ffe0cf3fc123c1a61e9f63246c108b2b90ceb2",
+            "AssetFingerprint/v2": "{\"host\":\"msn.com\",\"path\":\"/test/\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"msn.com\",\"path\":\"/test/\",\"port\":\"443\"}"
+          }
+        },
+        {
+          "ruleId": "SEC102/003",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "https://msn.com/test?foo=bar"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_003.Url.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 1,
+                  "endLine": 3,
+                  "endColumn": 29,
+                  "charOffset": 45,
+                  "charLength": 28,
+                  "snippet": {
+                    "text": "https://msn.com/test?foo=bar"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=msn.com][part=?foo=bar][path=/test]",
+            "ValidationFingerprint/v1": "[host=msn.com][path=/test][port=443]",
+            "ValidationFingerprintHash/v1": "14d50b9e6825ad93a9a957dcd484fa1ffce642125b1b615693fb7d02ced5338c",
+            "AssetFingerprint/v2": "{\"host\":\"msn.com\",\"part\":\"?foo=bar\",\"path\":\"/test\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}"
+          }
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}

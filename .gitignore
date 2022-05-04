@@ -226,3 +226,4 @@ ModelManifest.xml
 
 # SPAM configuration
 .spam/
+.sarif/

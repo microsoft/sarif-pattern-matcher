@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
     <ProjectGuid>{F0D53C69-F483-3ABA-8EB9-E41CF742CAB4}</ProjectGuid>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
     <Platform>x64</Platform>
     <ProjectName>re2.x64</ProjectName>
@@ -42,6 +42,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/analyze:log$(SolutionDir).sarif\re2.x64.sarif /analyze:log:format:sarif %(AdditionalOptions)</AdditionalOptions>
+      <ControlFlowGuard>
+      </ControlFlowGuard>
     </ClCompile>
   </ItemDefinitionGroup>
   <!-- Compilation Settings and Source Files are all defined here, in a shared props file -->

@@ -21,7 +21,7 @@
     <ProjectGuid>{70AC46A2-605B-4E9A-8414-D510A4797424}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>RE2Native</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <TargetName>RE2.Native.x64</TargetName>
     <TargetExt>.dll</TargetExt>
@@ -59,6 +59,16 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/analyze:log$(SolutionDir).sarif\RE2.Native.x64.sarif /analyze:log:format:sarif %(AdditionalOptions)</AdditionalOptions>
+      <ControlFlowGuard>
+      </ControlFlowGuard>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <!-- Compilation Settings and Source Files are all defined here, in a shared props file -->
   <Import Project="RE2.Native.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

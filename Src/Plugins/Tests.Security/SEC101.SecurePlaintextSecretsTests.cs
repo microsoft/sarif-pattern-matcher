@@ -16,6 +16,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override string Framework => "netstandard2.1";
 
+        protected override string PluginName => "SecurePlaintextSecrets";
+
         [Fact]
         public void SecurePlaintextSecrets_EndToEndFunctionalTests()
             => RunAllTests();
