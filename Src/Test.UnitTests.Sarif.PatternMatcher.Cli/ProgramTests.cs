@@ -66,7 +66,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         }
 
         [Fact]
-        public void Program_VerbListMatcheExpected()
+        public void Program_VerbListCountIsExpected()
         {
             GetVerbNames().Count.Should().Be(5);
 
