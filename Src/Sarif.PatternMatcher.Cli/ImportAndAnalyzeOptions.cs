@@ -5,13 +5,13 @@ using CommandLine;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
-    [Verb("import-analyze", HelpText = "Export rules metadata to a markdown file.")]
+    [Verb("import-analyze", HelpText = "Import from and analyze database contents.")]
     internal class ImportAndAnalyzeOptions : AnalyzeOptions
     {
         [Option(
             "host",
             HelpText = "The database host from which we will retrieve data to scan. " +
-                       "Create AppClientId, AppSecrent, and AuthorityId as environment variables.",
+                       "Create AppClientId, AppSecret, and AuthorityId as environment variables.",
             Required = true)]
         public string Host { get; set; }
 
