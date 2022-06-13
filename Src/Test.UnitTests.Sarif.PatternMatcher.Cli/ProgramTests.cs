@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-using Castle.Core.Internal;
-
 using CommandLine;
 
 using FluentAssertions;
@@ -112,7 +110,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             Assembly assembly = typeof(Program).Assembly;
             foreach (Type type in assembly.GetTypes())
             {
-                VerbAttribute verbAttribute = type.GetAttribute<VerbAttribute>();
+                VerbAttribute verbAttribute = type.GetCustomAttribute<VerbAttribute>();
                 if (verbAttribute == null) { continue; }
 
                 verbNames.Add(verbAttribute.Name);

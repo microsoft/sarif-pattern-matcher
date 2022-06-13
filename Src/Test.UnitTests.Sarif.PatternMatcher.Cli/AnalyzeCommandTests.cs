@@ -125,7 +125,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             string tempFileName = Path.GetTempFileName();
             string sarifLogFileName = $"{tempFileName}.sarif";
-            SarifLog sarifLog = null, sarifLogFromResponseFile = null;
+            SarifLog sarifLog = null;
 
             try
             {
