@@ -3,11 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 using CommandLine;
 
 using FluentAssertions;
+
+using Kusto.Cloud.Platform.Utils;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 
@@ -66,16 +69,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         }
 
         [Fact]
-        public void Program_VerbListCountIsExpected()
+        public void Program_VerbListIsExpected()
         {
-            GetVerbNames().Count.Should().Be(5);
+            string[] actual = GetVerbNames().ToArray();
+            Array.Sort(actual);
 
-            // We expect:
-            // 'analyze'
-            // 'analyze-database'
-            // import-analyze'
-            // 'export-rules'
-            // 'export-search-definitions'
+            // Keep these in sorted order.
+            string[] expected = new string[]
+            {
+                "analyze",
+                "analyze-database",
+                "export-rules",
+                "export-search-definitions",
+                "import-analyze",
+            };
+
+            actual.Should().BeEquivalentTo(expected);
         }
 
         private static void TestResponseFile(string[] responseFileContents,
