@@ -99,7 +99,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             int result = Program.Main(args);
 
             result.Should().Be(
-                expectedResult,                               
+                expectedResult,
                 $"response files consisted of '{flattenedResponseFile}'");
         }
 
