@@ -427,22 +427,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             const string id = "[id=id]";
             const string path = "[path=path]";
             var fingerprint = new Fingerprint($"{id}{path}");
-            fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
-            fingerprint.GetValidationFingerprintText().Should().Contain(path);
-            string originalHash = fingerprint.GetValidationFingerprintHashText();
+            fingerprint.GetAssetFingerprint().Should().Be($"{id}{path}");
+            fingerprint.GetValidationFingerprint().Should().Contain(path);
+            string originalHash = fingerprint.GetValidationFingerprintHash();
 
             fingerprint.IgnorePathInFingerprint = true;
-            fingerprint.GetAssetFingerprintText().Should().Be(id);
-            fingerprint.GetValidationFingerprintText().Should().Contain(path);
+            fingerprint.GetAssetFingerprint().Should().Be(id);
+            fingerprint.GetValidationFingerprint().Should().Contain(path);
 
             fingerprint = new Fingerprint
             {
                 Id = "id",
                 Path = "path"
             };
-            fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
-            fingerprint.GetValidationFingerprintText().Should().Contain(path);
-            string firstHash = fingerprint.GetValidationFingerprintHashText();
+            fingerprint.GetAssetFingerprint().Should().Be($"{id}{path}");
+            fingerprint.GetValidationFingerprint().Should().Contain(path);
+            string firstHash = fingerprint.GetValidationFingerprintHash();
             firstHash.Should().Be(originalHash);
 
             fingerprint = new Fingerprint
@@ -451,9 +451,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Path = "path",
                 IgnorePathInFingerprint = true
             };
-            fingerprint.GetAssetFingerprintText().Should().Be(id);
-            fingerprint.GetValidationFingerprintText().Should().Contain(path);
-            string secondHash = fingerprint.GetValidationFingerprintHashText();
+            fingerprint.GetAssetFingerprint().Should().Be(id);
+            fingerprint.GetValidationFingerprint().Should().Contain(path);
+            string secondHash = fingerprint.GetValidationFingerprintHash();
             firstHash.Should().NotBe(secondHash);
 
             fingerprint = new Fingerprint
@@ -462,14 +462,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Path = "path",
                 Secret = "secret"
             };
-            fingerprint.GetAssetFingerprintText().Should().Be($"{id}{path}");
-            fingerprint.GetValidationFingerprintText().Should().Be($"{id}{path}[secret=secret]");
-            string thirdHash = fingerprint.GetValidationFingerprintHashText();
+            fingerprint.GetAssetFingerprint().Should().Be($"{id}{path}");
+            fingerprint.GetValidationFingerprint().Should().Be($"{id}{path}[secret=secret]");
+            string thirdHash = fingerprint.GetValidationFingerprintHash();
 
             fingerprint.IgnorePathInFingerprint = true;
-            fingerprint.GetAssetFingerprintText().Should().Be($"{id}");
-            fingerprint.GetValidationFingerprintText().Should().Be($"{id}{path}[secret=secret]");
-            string forthHash = fingerprint.GetValidationFingerprintHashText();
+            fingerprint.GetAssetFingerprint().Should().Be($"{id}");
+            fingerprint.GetValidationFingerprint().Should().Be($"{id}{path}[secret=secret]");
+            string forthHash = fingerprint.GetValidationFingerprintHash();
             thirdHash.Should().NotBe(forthHash);
         }
 
@@ -480,7 +480,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (FingerprintTestCase testCase in s_workingTestCases)
             {
-                string actualJson = new Fingerprint(testCase.Text).GetComprehensiveFingerprintText(jsonFormat: true);
+                string actualJson = new Fingerprint(testCase.Text).GetComprehensiveFingerprint(jsonFormat: true);
 
                 var newFingerprint = new Fingerprint(actualJson);
 

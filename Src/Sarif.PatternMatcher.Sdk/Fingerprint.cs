@@ -28,7 +28,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public const string ResourceKeyName = "resource";
         public const string ThumbprintKeyName = "thumbprint";
 
-        private const char RightBracketReplacement = '\t';
         private const string HashKey = "7B2FD4B8B55B49428DBFB22C9E61D817";
 
         private const string Base64EncodingSymbolSet =
@@ -83,7 +82,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
             if (validate && fingerprintText.Length > 0 && fingerprintText[0] != '{')
             {
-                string computedFingerprint = this.GetComprehensiveFingerprintText();
+                string computedFingerprint = this.GetComprehensiveFingerprint();
                 if (!computedFingerprint.Equals(fingerprintText))
                 {
                     throw new ArgumentException(
@@ -207,24 +206,47 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return entropy;
         }
 
-        public string GetComprehensiveFingerprintText(bool jsonFormat = false) => ToString(this, denyList: s_emptyDenyList, jsonFormat);
+        public string GetComprehensiveFingerprint(bool jsonFormat = false) => ToString(this, denyList: s_emptyDenyList, jsonFormat);
 
-        public string GetAssetFingerprintText(bool jsonFormat = false)
+        public string GetAssetFingerprint(bool jsonFormat = false)
         {
             return IgnorePathInFingerprint
                 ? ToString(this, denyList: s_pathPortAndSecretOnlyKeys, jsonFormat)
                 : ToString(this, denyList: s_portAndSecretOnlyKeys, jsonFormat);
         }
 
-        public string GetValidationFingerprintText(bool jsonFormat = false) => ToString(this, denyList: s_assetOnlyKeys, jsonFormat);
+        public string GetValidationFingerprint(bool jsonFormat = false) => ToString(this, denyList: s_assetOnlyKeys, jsonFormat);
 
-        public string GetValidationFingerprintHashText(bool jsonFormat = false)
+        public string GetValidationFingerprintHash(bool jsonFormat = false)
         {
             string validationFingerprint = IgnorePathInFingerprint
                 ? ToString(this, denyList: s_assetAndPathOnlyKeys, jsonFormat)
                 : ToString(this, denyList: s_assetOnlyKeys, jsonFormat);
 
             return ComputeHash(validationFingerprint);
+        }
+
+        /// <summary>
+        /// Returns a fingerprint comprised of the minimal information that
+        /// uniquely identifies a credential at a specific point-in-time.
+        /// </summary>
+        /// <returns>The minimal fingerprint that uniquely identifies a credential.</returns>
+        public string GetUniqueSecretFingerprint()
+        {
+            return new Fingerprint()
+            {
+                Secret = this.Secret,
+            }.ToString();
+        }
+
+        /// <summary>
+        /// Returns the hash of the minimal fingerprint that uniquely
+        /// identifies a credential at a specific point-in-time.
+        /// </summary>
+        /// <returns>The minimal fingerprint that uniquely identifies a credential.</returns>
+        public string GetUniqueSecretHash()
+        {
+            return ComputeHash(GetUniqueSecretFingerprint());
         }
 
         /// <summary>
@@ -244,12 +266,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
             symbolSetCount = SecretSymbolSetCount > 0 ? SecretSymbolSetCount : 128;
 
-            if (!string.IsNullOrEmpty(this.Secret))
-            {
-                return ShannonEntropy(this.Secret, symbolSetCount) * 100;
-            }
-
-            return -1.0;
+            return !string.IsNullOrEmpty(this.Secret)
+                ? ShannonEntropy(this.Secret, symbolSetCount) * 100
+                : -1.0;
         }
 
 #pragma warning disable SA1107 // Code should not contain multiple statements on one line

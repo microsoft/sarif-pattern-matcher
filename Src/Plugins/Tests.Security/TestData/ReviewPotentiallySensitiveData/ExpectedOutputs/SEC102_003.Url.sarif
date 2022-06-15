@@ -78,11 +78,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=msn.com][path=/test]",
-            "ValidationFingerprint/v1": "[host=msn.com][path=/test][port=443]",
-            "ValidationFingerprintHash/v1": "14d50b9e6825ad93a9a957dcd484fa1ffce642125b1b615693fb7d02ced5338c",
-            "AssetFingerprint/v2": "{\"host\":\"msn.com\",\"path\":\"/test\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}"
+            "AssetFingerprint/current": "[host=msn.com][path=/test]",
+            "ValidationFingerprint/current": "[host=msn.com][path=/test][port=443]",
+            "UniqueSecretFingerprint/current": "",
+            "UniqueSecretHash256/current": ""
           }
         },
         {
@@ -118,11 +117,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=msn.com][path=/test/]",
-            "ValidationFingerprint/v1": "[host=msn.com][path=/test/][port=443]",
-            "ValidationFingerprintHash/v1": "06da657d809a85c1b27e844129ffe0cf3fc123c1a61e9f63246c108b2b90ceb2",
-            "AssetFingerprint/v2": "{\"host\":\"msn.com\",\"path\":\"/test/\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"msn.com\",\"path\":\"/test/\",\"port\":\"443\"}"
+            "AssetFingerprint/current": "[host=msn.com][path=/test/]",
+            "ValidationFingerprint/current": "[host=msn.com][path=/test/][port=443]",
+            "UniqueSecretFingerprint/current": "",
+            "UniqueSecretHash256/current": ""
           }
         },
         {
@@ -158,11 +156,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=msn.com][part=?foo=bar][path=/test]",
-            "ValidationFingerprint/v1": "[host=msn.com][path=/test][port=443]",
-            "ValidationFingerprintHash/v1": "14d50b9e6825ad93a9a957dcd484fa1ffce642125b1b615693fb7d02ced5338c",
-            "AssetFingerprint/v2": "{\"host\":\"msn.com\",\"part\":\"?foo=bar\",\"path\":\"/test\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}"
+            "AssetFingerprint/current": "[host=msn.com][part=?foo=bar][path=/test]",
+            "ValidationFingerprint/current": "[host=msn.com][path=/test][port=443]",
+            "UniqueSecretFingerprint/current": "",
+            "UniqueSecretHash256/current": ""
           }
         }
       ],
