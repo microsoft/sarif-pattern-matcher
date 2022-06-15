@@ -83,11 +83,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[platform=Square]",
-            "ValidationFingerprint/v1": "[secret=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671]",
-            "ValidationFingerprintHash/v1": "863b377b99b0384e00828a99527c1c21e1f52d76e34b0ec8586bf749e422acc3",
-            "AssetFingerprint/v2": "{\"platform\":\"Square\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671\"}"
+            "AssetFingerprint/current": "[platform=Square]",
+            "ValidationFingerprint/current": "[secret=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671]",
+            "UniqueSecretFingerprint/current": "[secret=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671]",
+            "UniqueSecretHash256/current": "863b377b99b0384e00828a99527c1c21e1f52d76e34b0ec8586bf749e422acc3"
           },
           "rank": 74.86
         },
@@ -129,11 +128,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[platform=Square]",
-            "ValidationFingerprint/v1": "[secret=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672]",
-            "ValidationFingerprintHash/v1": "4d253f2b1ce91d2cf60838b5b92867263b312d816f70d4b5a748e0ca9950850b",
-            "AssetFingerprint/v2": "{\"platform\":\"Square\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672\"}"
+            "AssetFingerprint/current": "[platform=Square]",
+            "ValidationFingerprint/current": "[secret=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672]",
+            "UniqueSecretFingerprint/current": "[secret=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672]",
+            "UniqueSecretHash256/current": "4d253f2b1ce91d2cf60838b5b92867263b312d816f70d4b5a748e0ca9950850b"
           },
           "rank": 74.86
         },
@@ -175,11 +173,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[platform=Square]",
-            "ValidationFingerprint/v1": "[secret=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673]",
-            "ValidationFingerprintHash/v1": "1cd837839c38675c3f4b9eed987a68db8d8df979be4d570da7a226beb6e0d00c",
-            "AssetFingerprint/v2": "{\"platform\":\"Square\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673\"}"
+            "AssetFingerprint/current": "[platform=Square]",
+            "ValidationFingerprint/current": "[secret=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673]",
+            "UniqueSecretFingerprint/current": "[secret=EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673]",
+            "UniqueSecretHash256/current": "1cd837839c38675c3f4b9eed987a68db8d8df979be4d570da7a226beb6e0d00c"
           },
           "rank": 74.86
         }

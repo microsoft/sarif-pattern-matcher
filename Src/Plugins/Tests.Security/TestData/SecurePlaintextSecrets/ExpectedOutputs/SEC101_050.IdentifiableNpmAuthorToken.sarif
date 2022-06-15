@@ -83,11 +83,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[platform=Npm]",
-            "ValidationFingerprint/v1": "[secret=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]",
-            "ValidationFingerprintHash/v1": "114602da1f4a63fa289c8ae1e2fea58d536eb90ec5ffbf3a2dddbf2b2ef653d9",
-            "AssetFingerprint/v2": "{\"platform\":\"Npm\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"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\"}"
+            "AssetFingerprint/current": "[platform=Npm]",
+            "ValidationFingerprint/current": "[secret=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]",
+            "UniqueSecretFingerprint/current": "[secret=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]",
+            "UniqueSecretHash256/current": "114602da1f4a63fa289c8ae1e2fea58d536eb90ec5ffbf3a2dddbf2b2ef653d9"
           },
           "rank": 61.07
         }

@@ -83,11 +83,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[platform=Dynatrace]",
-            "ValidationFingerprint/v1": "[secret=dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123]",
-            "ValidationFingerprintHash/v1": "c03a91fe2e9488302fdffa31e60346c6ba7a08f79aa345c456f963088770f51a",
-            "AssetFingerprint/v2": "{\"platform\":\"Dynatrace\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123\"}"
+            "AssetFingerprint/current": "[platform=Dynatrace]",
+            "ValidationFingerprint/current": "[secret=dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123]",
+            "UniqueSecretFingerprint/current": "[secret=dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123]",
+            "UniqueSecretHash256/current": "c03a91fe2e9488302fdffa31e60346c6ba7a08f79aa345c456f963088770f51a"
           },
           "rank": 49.07
         },
@@ -129,11 +128,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[platform=Dynatrace]",
-            "ValidationFingerprint/v1": "[secret=dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123]",
-            "ValidationFingerprintHash/v1": "06f1446690c1d649571bc2a9f0fa367a857ae4277fc123014bed7051236f752e",
-            "AssetFingerprint/v2": "{\"platform\":\"Dynatrace\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123\"}"
+            "AssetFingerprint/current": "[platform=Dynatrace]",
+            "ValidationFingerprint/current": "[secret=dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123]",
+            "UniqueSecretFingerprint/current": "[secret=dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123]",
+            "UniqueSecretHash256/current": "06f1446690c1d649571bc2a9f0fa367a857ae4277fc123014bed7051236f752e"
           },
           "rank": 49.37
         }

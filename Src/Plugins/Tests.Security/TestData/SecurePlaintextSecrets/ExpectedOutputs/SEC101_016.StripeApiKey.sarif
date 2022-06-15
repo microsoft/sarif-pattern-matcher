@@ -83,11 +83,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[platform=Stripe]",
-            "ValidationFingerprint/v1": "[secret=sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]",
-            "ValidationFingerprintHash/v1": "72b30afe882333ec2c3c051f1922bbbc94ba6f43af19ae71de44f260819dbf35",
-            "AssetFingerprint/v2": "{\"platform\":\"Stripe\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}"
+            "AssetFingerprint/current": "[platform=Stripe]",
+            "ValidationFingerprint/current": "[secret=sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]",
+            "UniqueSecretFingerprint/current": "[secret=sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]",
+            "UniqueSecretHash256/current": "72b30afe882333ec2c3c051f1922bbbc94ba6f43af19ae71de44f260819dbf35"
           },
           "rank": 38.3
         },
@@ -129,11 +128,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[platform=Stripe]",
-            "ValidationFingerprint/v1": "[secret=sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]",
-            "ValidationFingerprintHash/v1": "d32d85683e21369010a37c401e0ec45a5ecd09d6f3073c8a84866a9529f556c0",
-            "AssetFingerprint/v2": "{\"platform\":\"Stripe\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}"
+            "AssetFingerprint/current": "[platform=Stripe]",
+            "ValidationFingerprint/current": "[secret=sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]",
+            "UniqueSecretFingerprint/current": "[secret=sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0]",
+            "UniqueSecretHash256/current": "d32d85683e21369010a37c401e0ec45a5ecd09d6f3073c8a84866a9529f556c0"
           },
           "rank": 38.84
         }
