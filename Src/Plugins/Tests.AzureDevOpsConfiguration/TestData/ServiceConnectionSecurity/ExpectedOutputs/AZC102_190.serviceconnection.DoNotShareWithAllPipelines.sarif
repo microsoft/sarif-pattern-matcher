@@ -84,11 +84,10 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[host=testorg.visualstudio.com][id=27843de2-2bea-45ab-b677-27ea718b557e][platform=AzureDevOps][resource=f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f]",
-            "ValidationFingerprint/v1": "[host=testorg.visualstudio.com][id=27843de2-2bea-45ab-b677-27ea718b557e][resource=f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f]",
-            "ValidationFingerprintHash/v1": "e4d78c2bd639c80de9a75619e350d6f2f942eefdd202afe01365a0fcda26597e",
-            "AssetFingerprint/v2": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"platform\":\"AzureDevOps\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}",
-            "ValidationFingerprint/v2": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}"
+            "AssetFingerprint/current": "[host=testorg.visualstudio.com][id=27843de2-2bea-45ab-b677-27ea718b557e][platform=AzureDevOps][resource=f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f]",
+            "ValidationFingerprint/current": "[host=testorg.visualstudio.com][id=27843de2-2bea-45ab-b677-27ea718b557e][resource=f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f]",
+            "UniqueSecretFingerprint/current": "",
+            "UniqueSecretHash256/current": ""
           }
         }
       ],
