@@ -13,6 +13,8 @@ using Microsoft.RE2.Managed;
 
 using Org.BouncyCastle.Bcpg.OpenPgp;
 
+using Renci.SshNet;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class CryptographicPrivateKeyValidator : StaticValidatorBase
@@ -51,6 +53,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             switch (kindValue)
             {
+                case "SSH":
+                {
+                    try
+                    {
+                        byte[] bytes = Encoding.ASCII.GetBytes(matchedPattern);
+                        using var stream = new MemoryStream(bytes);
+                        var file = new PrivateKeyFile(stream);
+                    }
+                    catch (Exception ex)
+                    {
+                        return ValidationResult.CreateNoMatch();
+                    }
+                    break;
+                }
+
                 case "PrivateKeyBlob":
                 {
                     try
