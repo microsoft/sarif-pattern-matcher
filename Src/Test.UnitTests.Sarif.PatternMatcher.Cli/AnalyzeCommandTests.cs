@@ -89,12 +89,55 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             region.StartColumn.Should().Be(2);
         }
 
+        [Fact]
+        public void AnalyzeCommand_FileSizeInKilobytes()
+        {
+            string definitionsText = GetIntrafileRuleDefinition();
+
+            string fileContents = "unused leading space  \r\n" +
+                                  " secret1              \r\n" +
+                                  " host1                \r\n" +
+                                  " id1                  \r\n" +
+                                  " secret2              \r\n" +
+                                  "unused trailing space \r\n";
+
+            //analyze C:\Users\marymart\Downloads\SPAMTest\ --search - definitions C:\microsoft\sarif - pattern - matcher\Src\Plugins\Security\SEC101.SecurePlaintextSecrets.json--file - size -in-kb 100000 - o C: \Users\marymart\Downloads\spamTestResults.sarif--force--insert "Hashes;RegionSnippets;ContextRegionSnippets;ComprehensiveRegionProperties"
+
+            //SarifLog sarifLogWithLargeFileExcluded = RunAnalyzeCommand(
+            //    definitionsText,
+            //    fileContents,
+            //    maxFileSize: "1",
+            //    shouldAddLargeTarget: true);
+
+            //SarifLog sarifLogWithLargeFile = RunAnalyzeCommand(
+            //    definitionsText,
+            //    fileContents,
+            //    shouldAddLargeTarget: true);
+
+            //SarifLog sarifLogOnlySmallFile = RunAnalyzeCommand(
+            //    definitionsText,
+            //    fileContents,
+            //    shouldAddLargeTarget: false);
+
+            //sarifLogWithLargeFileExcluded.Should().NotBeNull();
+            //sarifLogWithLargeFileExcluded.Runs?[0].Results?.Count.Should().Be(2);
+
+            //sarifLogWithLargeFile.Should().NotBeNull();
+            //sarifLogWithLargeFile.Runs?[0].Results?.Count.Should().Be(2);
+
+            //sarifLogWithLargeFileExcluded.Runs[0].Results[0].Locations.Should()
+            //    .BeEquivalentTo(sarifLogOnlySmallFile.Runs[0].Results[0].Locations);
+
+            //sarifLogWithLargeFileExcluded.Runs[0].Results[1].Locations.Should()
+            //    .BeEquivalentTo(sarifLogOnlySmallFile.Runs[0].Results[1].Locations);
+        }
+
         private SarifLog RunAnalyzeCommand(string definitionsText, string fileContents)
         {
             string sarifOutput;
-            string rootDirectory = @"e:\repros";
-            string scanTargetName = $"test.txt";
-            string scanTargetPath = @$"{rootDirectory}\{scanTargetName}";
+            string rootDirectory = Directory.GetCurrentDirectory();
+            string scanTargetName = $"SmallTarget.txt";
+            string scanTargetPath = Path.Combine(rootDirectory, scanTargetName);
             string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
 
             var mockFileSystem = new Mock<IFileSystem>();
@@ -134,7 +177,76 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     "analyze",
                     scanTargetPath,
                     $"-d", searchDefinitionsPath,
-                    $"-o", sarifLogFileName
+                    $"-o", sarifLogFileName,
+                };
+
+                int result = Program.Main(args);
+                result.Should().Be(0);
+
+                sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
+            }
+            finally
+            {
+                if (File.Exists(tempFileName))
+                {
+                    File.Delete(tempFileName);
+                }
+
+                if (File.Exists(sarifLogFileName))
+                {
+                    File.Delete(sarifLogFileName);
+                }
+            }
+
+            return sarifLog;
+        }
+
+        private SarifLog RunAnalyzeCommandWithFileSizeRestriction( string definitionsText, string fileContents)
+        {
+            string sarifOutput;
+            string rootDirectory = Directory.GetCurrentDirectory();
+            string scanTargetName = $"SmallTarget.txt";
+            string scanTargetPath = Path.Combine(rootDirectory, scanTargetName);
+            string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
+
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.DirectoryExists(rootDirectory)).Returns(true);
+            mockFileSystem.Setup(x => x.DirectoryEnumerateFiles(rootDirectory,
+                                                                scanTargetName,
+                                                                It.IsAny<SearchOption>()))
+                                                                    .Returns(new[] { scanTargetPath });
+
+            // Search definitions location and loading
+            mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
+            mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>()))
+                .Returns<string>((path) =>
+                {
+                    return path == scanTargetPath ?
+                      fileContents :
+                      definitionsText;
+                });
+
+            // Shared strings location and loading
+            mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
+                .Returns<string>((path) => { return GetSharedStrings(); });
+
+            mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
+
+            Program.FileSystem = mockFileSystem.Object;
+
+            string tempFileName = Path.GetTempFileName();
+            string sarifLogFileName = $"{tempFileName}.sarif";
+            SarifLog sarifLog = null;
+
+            try
+            {
+                string[] args = new[]
+                {
+                    "analyze",
+                    scanTargetPath,
+                    $"-d", searchDefinitionsPath,
+                    $"-o", sarifLogFileName,
                 };
 
                 int result = Program.Main(args);

@@ -37,12 +37,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public string FileNameDenyRegex { get; internal set; }
 
         [Option(
-            "file-size-in-kb",
-            HelpText = "The maximum file size (in kilobytes) that will be analyzed.",
-            Default = 1024)]
-        public int FileSizeInKilobytes { get; internal set; }
-
-        [Option(
             "disable-dynamic-validation-caching",
             HelpText = "Disable caching from dynamic validation.")]
         public bool DisableDynamicValidationCaching { get; internal set; }
