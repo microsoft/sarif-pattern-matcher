@@ -215,7 +215,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return sarifLog;
         }
 
-        private SarifLog RunAnalyzeCommandWithFileSizeInKilobytes( string definitionsText, string fileContents, int fileSizeInKilobytes)
+        private SarifLog RunAnalyzeCommandWithFileSizeInKilobytes(string definitionsText, string fileContents, int fileSizeInKilobytes)
         {
             string sarifOutput;
             string rootDirectory = Directory.GetCurrentDirectory();
@@ -239,7 +239,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>()))
                 .Returns<string>((path) =>
                 {
-                    return (path == smallTargetPath || path == largeTargetPath )?
+                    return (path == smallTargetPath || path == largeTargetPath) ?
                       fileContents :
                       definitionsText;
                 });
