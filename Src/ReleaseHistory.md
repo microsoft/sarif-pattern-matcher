@@ -16,6 +16,10 @@
 - UER => eliminate unhandled exceptions in rules
 - UEE => eliminate unhandled exceptions in engine
 
+## Unreleased
+
+- BUG: Resolve unhandled `OutOfMemory` and `NullReferenceException` exceptions when analyzing folders that contain big files even when using --file-size-in-kb. [#621](https://github.com/microsoft/sarif-pattern-matcher/pull/621)
+
 ## *v1.9.1*
 
 - FEATURE: Enable response file parsing provided by driver framework. Arguments (e.g., '@Commands.rsp') prefixed with a '@' character will be evaluated as a file path to a text file that contains commands to be injected on the command-line. 
