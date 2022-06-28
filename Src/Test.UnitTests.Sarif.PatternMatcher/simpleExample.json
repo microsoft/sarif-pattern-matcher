@@ -1,0 +1,967 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "testhost",
+          "organization": "Microsoft Corporation",
+          "product": "Microsoft.TestHost",
+          "fullName": "testhost 15.0.0.0",
+          "version": "15.0.0.0",
+          "semanticVersion": "15.0.0",
+          "rules": [
+            {
+              "id": "SEC101/036",
+              "name": "DoNotExposePlaintextSecrets/MySqlCredentials",
+              "deprecatedNames": [
+                "DoNotExposePlaintextSecrets/MySqlConnectionString"
+              ],
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://aka.ms/1eslivesecrets/remediation#sec101036---mysqlcredentials"
+            },
+            {
+              "id": "SEC101/037",
+              "name": "DoNotExposePlaintextSecrets/SqlCredentials",
+              "deprecatedNames": [
+                "DoNotExposePlaintextSecrets/SqlConnectionString"
+              ],
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://aka.ms/1eslivesecrets/remediation#sec101037---sqlcredentials"
+            },
+            {
+              "id": "SEC101/038",
+              "name": "DoNotExposePlaintextSecrets/PostgreSqlCredentials",
+              "deprecatedNames": [
+                "DoNotExposePlaintextSecrets/PostgreSqlConnectionString"
+              ],
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://aka.ms/1eslivesecrets/remediation#sec101038----postgresqlcredentials"
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+            "uriBaseId": "SRC_ROOT"
+          }
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "SEC101/036",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC MySQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 61,
+                  "startColumn": 74,
+                  "endLine": 61,
+                  "endColumn": 84,
+                  "charOffset": 3708,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "password18"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername18][id=username18][platform=SqlOnPremise][resource=database18]",
+            "ValidationFingerprint/v1": "[host=servername18][id=username18][resource=database18][secret=password18]",
+            "ValidationFingerprintHash/v1": "cbcd24b3e3ee716c43d9005eedba43f9a1da427bf393232e7a3c790e5c81d9d2",
+            "AssetFingerprint/v2": "{\"host\":\"servername18\",\"id\":\"username18\",\"platform\":\"SqlOnPremise\",\"resource\":\"database18\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername18\",\"id\":\"username18\",\"resource\":\"database18\",\"secret\":\"password18\"}"
+          },
+          "rank": 44.6
+        },
+        {
+          "ruleId": "SEC101/036",
+          "ruleIndex": 0,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC MySQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 63,
+                  "startColumn": 58,
+                  "endLine": 63,
+                  "endColumn": 68,
+                  "charOffset": 3797,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "password19"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername19][id=username19][platform=SqlOnPremise][resource=database19]",
+            "ValidationFingerprint/v1": "[host=servername19][id=username19][resource=database19][secret=password19]",
+            "ValidationFingerprintHash/v1": "2a1f66a285ce407a7c23228b40ec2446c7d5c31cea96b2b3a901b46e8bfcecf6",
+            "AssetFingerprint/v2": "{\"host\":\"servername19\",\"id\":\"username19\",\"platform\":\"SqlOnPremise\",\"resource\":\"database19\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername19\",\"id\":\"username19\",\"resource\":\"database19\",\"secret\":\"password19\"}"
+          },
+          "rank": 44.6
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 126,
+                  "endLine": 5,
+                  "endColumn": 135,
+                  "charOffset": 487,
+                  "charLength": 9,
+                  "snippet": {
+                    "text": "password2"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername2.database.windows.net][id=username2][part=servers][platform=Azure][resource=database2]",
+            "ValidationFingerprint/v1": "[host=servername2.database.windows.net][id=username2][port=1433][resource=database2][secret=password2]",
+            "ValidationFingerprintHash/v1": "d8f735ee725f3c05e20b44ba9a8004f07330d1feb965d2ec56ee35f82edb22f6",
+            "AssetFingerprint/v2": "{\"host\":\"servername2.database.windows.net\",\"id\":\"username2\",\"part\":\"servers\",\"platform\":\"Azure\",\"resource\":\"database2\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername2.database.windows.net\",\"id\":\"username2\",\"port\":\"1433\",\"resource\":\"database2\",\"secret\":\"password2\"}"
+          },
+          "rank": 42.11
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 104,
+                  "endLine": 14,
+                  "endColumn": 113,
+                  "charOffset": 970,
+                  "charLength": 9,
+                  "snippet": {
+                    "text": "password4"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername4][id=username4][platform=SqlOnPremise][resource=database4]",
+            "ValidationFingerprint/v1": "[host=servername4][id=username4][resource=database4][secret=password4]",
+            "ValidationFingerprintHash/v1": "7b47611605372ae80ee4a6bbf983dc13e7653080a1badf8b5cee9e055133da36",
+            "AssetFingerprint/v2": "{\"host\":\"servername4\",\"id\":\"username4\",\"platform\":\"SqlOnPremise\",\"resource\":\"database4\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername4\",\"id\":\"username4\",\"resource\":\"database4\",\"secret\":\"password4\"}"
+          },
+          "rank": 42.11
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 36,
+                  "endLine": 17,
+                  "endColumn": 45,
+                  "charOffset": 1109,
+                  "charLength": 9,
+                  "snippet": {
+                    "text": "password5"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=database5][id=username5][platform=SqlOnPremise][resource=database5]",
+            "ValidationFingerprint/v1": "[host=database5][id=username5][resource=database5][secret=password5]",
+            "ValidationFingerprintHash/v1": "332b68e2b4ec9ef7a4fc431331ac815e3eaeb51576db36bd3a2bafe26e86b0f9",
+            "AssetFingerprint/v2": "{\"host\":\"database5\",\"id\":\"username5\",\"platform\":\"SqlOnPremise\",\"resource\":\"database5\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"database5\",\"id\":\"username5\",\"resource\":\"database5\",\"secret\":\"password5\"}"
+          },
+          "rank": 42.11
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 20,
+                  "startColumn": 86,
+                  "endLine": 20,
+                  "endColumn": 95,
+                  "charOffset": 1364,
+                  "charLength": 9,
+                  "snippet": {
+                    "text": "password6"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername6][id=username6][platform=SqlOnPremise][resource=database6]",
+            "ValidationFingerprint/v1": "[host=servername6][id=username6][resource=database6][secret=password6]",
+            "ValidationFingerprintHash/v1": "cd7a46283b6fc0975a51803c5b56c97751e40d63cfed366fb6613d7fdcd4da36",
+            "AssetFingerprint/v2": "{\"host\":\"servername6\",\"id\":\"username6\",\"platform\":\"SqlOnPremise\",\"resource\":\"database6\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername6\",\"id\":\"username6\",\"resource\":\"database6\",\"secret\":\"password6\"}"
+          },
+          "rank": 42.11
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 96,
+                  "endLine": 29,
+                  "endColumn": 106,
+                  "charOffset": 1773,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "password15"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername15][id=username15][platform=SqlOnPremise][resource=database15]",
+            "ValidationFingerprint/v1": "[host=servername15][id=username15][resource=database15][secret=password15]",
+            "ValidationFingerprintHash/v1": "a81c39d355db9dbf19af840efecf89b73cac54db0d64ed550b9ff7919fc9a128",
+            "AssetFingerprint/v2": "{\"host\":\"servername15\",\"id\":\"username15\",\"platform\":\"SqlOnPremise\",\"resource\":\"database15\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername15\",\"id\":\"username15\",\"resource\":\"database15\",\"secret\":\"password15\"}"
+          },
+          "rank": 44.6
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 115,
+                  "endLine": 34,
+                  "endColumn": 124,
+                  "charOffset": 1964,
+                  "charLength": 9,
+                  "snippet": {
+                    "text": "password8"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername8][id=username8][platform=SqlOnPremise][resource=database8]",
+            "ValidationFingerprint/v1": "[host=servername8][id=username8][resource=database8][secret=password8]",
+            "ValidationFingerprintHash/v1": "20ea611671918e8de72ebc58c7287ba275d19997174d5b500d5ae1accbc19b7d",
+            "AssetFingerprint/v2": "{\"host\":\"servername8\",\"id\":\"username8\",\"platform\":\"SqlOnPremise\",\"resource\":\"database8\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername8\",\"id\":\"username8\",\"resource\":\"database8\",\"secret\":\"password8\"}"
+          },
+          "rank": 42.11
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 47,
+                  "endLine": 35,
+                  "endColumn": 56,
+                  "charOffset": 2026,
+                  "charLength": 9,
+                  "snippet": {
+                    "text": "password9"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername9][id=username9][platform=SqlOnPremise][resource=database9]",
+            "ValidationFingerprint/v1": "[host=servername9][id=username9][resource=database9][secret=password9]",
+            "ValidationFingerprintHash/v1": "cc1755d41b99214770461ee24ac9959b6e0c3f2e6c4f6e98fbb1d3c6792f60a0",
+            "AssetFingerprint/v2": "{\"host\":\"servername9\",\"id\":\"username9\",\"platform\":\"SqlOnPremise\",\"resource\":\"database9\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername9\",\"id\":\"username9\",\"resource\":\"database9\",\"secret\":\"password9\"}"
+          },
+          "rank": 42.11
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 36,
+                  "startColumn": 99,
+                  "endLine": 36,
+                  "endColumn": 109,
+                  "charOffset": 2208,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "password10"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername10][id=username10][platform=SqlOnPremise][resource=database10]",
+            "ValidationFingerprint/v1": "[host=servername10][id=username10][resource=database10][secret=password10]",
+            "ValidationFingerprintHash/v1": "6a46351e5ff2fc2cebeb525dc6cb3cb1ef56ec1533dc5d9c7b192bdf99d75e48",
+            "AssetFingerprint/v2": "{\"host\":\"servername10\",\"id\":\"username10\",\"platform\":\"SqlOnPremise\",\"resource\":\"database10\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername10\",\"id\":\"username10\",\"resource\":\"database10\",\"secret\":\"password10\"}"
+          },
+          "rank": 44.6
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 118,
+                  "endLine": 37,
+                  "endColumn": 128,
+                  "charOffset": 2361,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "password17"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername17][id=username17][platform=SqlOnPremise][resource=database17]",
+            "ValidationFingerprint/v1": "[host=servername17][id=username17][resource=database17][secret=password17]",
+            "ValidationFingerprintHash/v1": "4d20fef5fd331b6da2354112a1254c4c495365f14a05af1c2b37df4d25fb3076",
+            "AssetFingerprint/v2": "{\"host\":\"servername17\",\"id\":\"username17\",\"platform\":\"SqlOnPremise\",\"resource\":\"database17\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername17\",\"id\":\"username17\",\"resource\":\"database17\",\"secret\":\"password17\"}"
+          },
+          "rank": 44.6
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 46,
+                  "startColumn": 141,
+                  "endLine": 46,
+                  "endColumn": 151,
+                  "charOffset": 3217,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "password14"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername14][id=username14][platform=SqlOnPremise][resource=database14]",
+            "ValidationFingerprint/v1": "[host=servername14][id=username14][resource=database14][secret=password14]",
+            "ValidationFingerprintHash/v1": "7935b1ebb05aabd4db17fad5e2ab160f7719b2fd429c9643addc17691caea2d5",
+            "AssetFingerprint/v2": "{\"host\":\"servername14\",\"id\":\"username14\",\"platform\":\"SqlOnPremise\",\"resource\":\"database14\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername14\",\"id\":\"username14\",\"resource\":\"database14\",\"secret\":\"password14\"}"
+          },
+          "rank": 44.6
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 51,
+                  "startColumn": 107,
+                  "endLine": 51,
+                  "endColumn": 117,
+                  "charOffset": 3396,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "password16"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername16][id=username16][platform=SqlOnPremise][resource=database16]",
+            "ValidationFingerprint/v1": "[host=servername16][id=username16][resource=database16][secret=password16]",
+            "ValidationFingerprintHash/v1": "65e694cdd0a261d90a4b52ddb602ea260de58bd07a463116aff0982c2393bc68",
+            "AssetFingerprint/v2": "{\"host\":\"servername16\",\"id\":\"username16\",\"platform\":\"SqlOnPremise\",\"resource\":\"database16\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername16\",\"id\":\"username16\",\"resource\":\"database16\",\"secret\":\"password16\"}"
+          },
+          "rank": 44.6
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 61,
+                  "startColumn": 74,
+                  "endLine": 61,
+                  "endColumn": 84,
+                  "charOffset": 3708,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "password18"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername18][id=username18][platform=SqlOnPremise][resource=database18]",
+            "ValidationFingerprint/v1": "[host=servername18][id=username18][resource=database18][secret=password18]",
+            "ValidationFingerprintHash/v1": "cbcd24b3e3ee716c43d9005eedba43f9a1da427bf393232e7a3c790e5c81d9d2",
+            "AssetFingerprint/v2": "{\"host\":\"servername18\",\"id\":\"username18\",\"platform\":\"SqlOnPremise\",\"resource\":\"database18\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername18\",\"id\":\"username18\",\"resource\":\"database18\",\"secret\":\"password18\"}"
+          },
+          "rank": 44.6
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO or ODBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 63,
+                  "startColumn": 58,
+                  "endLine": 63,
+                  "endColumn": 68,
+                  "charOffset": 3797,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "password19"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername19][id=username19][platform=SqlOnPremise][resource=database19]",
+            "ValidationFingerprint/v1": "[host=servername19][id=username19][resource=database19][secret=password19]",
+            "ValidationFingerprintHash/v1": "2a1f66a285ce407a7c23228b40ec2446c7d5c31cea96b2b3a901b46e8bfcecf6",
+            "AssetFingerprint/v2": "{\"host\":\"servername19\",\"id\":\"username19\",\"platform\":\"SqlOnPremise\",\"resource\":\"database19\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername19\",\"id\":\"username19\",\"resource\":\"database19\",\"secret\":\"password19\"}"
+          },
+          "rank": 44.6
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "JDBC SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 118,
+                  "endLine": 2,
+                  "endColumn": 127,
+                  "charOffset": 181,
+                  "charLength": 9,
+                  "snippet": {
+                    "text": "password1"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername1.database.windows.net][id=username1][part=servers][platform=Azure][resource=database1]",
+            "ValidationFingerprint/v1": "[host=servername1.database.windows.net][id=username1][port=1433][resource=database1][secret=password1]",
+            "ValidationFingerprintHash/v1": "4cf0b3bc22c110147e8b0f53436413c067e28f7c4bcef119a18f8f548989c07c",
+            "AssetFingerprint/v2": "{\"host\":\"servername1.database.windows.net\",\"id\":\"username1\",\"part\":\"servers\",\"platform\":\"Azure\",\"resource\":\"database1\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername1.database.windows.net\",\"id\":\"username1\",\"port\":\"1433\",\"resource\":\"database1\",\"secret\":\"password1\"}"
+          },
+          "rank": 42.11
+        },
+        {
+          "ruleId": "SEC101/037",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "PHP SQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 106,
+                  "endLine": 8,
+                  "endColumn": 115,
+                  "charOffset": 729,
+                  "charLength": 9,
+                  "snippet": {
+                    "text": "password3"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername3.database.windows.net][id=username3][part=servers][platform=Azure][resource=database3]",
+            "ValidationFingerprint/v1": "[host=servername3.database.windows.net][id=username3][port=1433][resource=database3][secret=password3]",
+            "ValidationFingerprintHash/v1": "c007b5ea8b6aa9fe22a363f0a3190cf8fde4fbf189cd7a241644e2bdc9fe94d0",
+            "AssetFingerprint/v2": "{\"host\":\"servername3.database.windows.net\",\"id\":\"username3\",\"part\":\"servers\",\"platform\":\"Azure\",\"resource\":\"database3\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername3.database.windows.net\",\"id\":\"username3\",\"port\":\"1433\",\"resource\":\"database3\",\"secret\":\"password3\"}"
+          },
+          "rank": 42.11
+        },
+        {
+          "ruleId": "SEC101/038",
+          "ruleIndex": 2,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 61,
+                  "startColumn": 74,
+                  "endLine": 61,
+                  "endColumn": 84,
+                  "charOffset": 3708,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "password18"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername18][id=username18][platform=SqlOnPremise][resource=database18]",
+            "ValidationFingerprint/v1": "[host=servername18][id=username18][resource=database18][secret=password18]",
+            "ValidationFingerprintHash/v1": "cbcd24b3e3ee716c43d9005eedba43f9a1da427bf393232e7a3c790e5c81d9d2",
+            "AssetFingerprint/v2": "{\"host\":\"servername18\",\"id\":\"username18\",\"platform\":\"SqlOnPremise\",\"resource\":\"database18\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername18\",\"id\":\"username18\",\"resource\":\"database18\",\"secret\":\"password18\"}"
+          },
+          "rank": 44.6
+        },
+        {
+          "ruleId": "SEC101/038",
+          "ruleIndex": 2,
+          "level": "note",
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "passwo…",
+              "an apparent ",
+              "",
+              "ADO PostgreSQL credential",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_037.SqlCredentials.ps1",
+                  "uriBaseId": "SRC_ROOT",
+                  "index": 0
+                },
+                "region": {
+                  "startLine": 63,
+                  "startColumn": 58,
+                  "endLine": 63,
+                  "endColumn": 68,
+                  "charOffset": 3797,
+                  "charLength": 10,
+                  "snippet": {
+                    "text": "password19"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "AssetFingerprint/v1": "[host=servername19][id=username19][platform=SqlOnPremise][resource=database19]",
+            "ValidationFingerprint/v1": "[host=servername19][id=username19][resource=database19][secret=password19]",
+            "ValidationFingerprintHash/v1": "2a1f66a285ce407a7c23228b40ec2446c7d5c31cea96b2b3a901b46e8bfcecf6",
+            "AssetFingerprint/v2": "{\"host\":\"servername19\",\"id\":\"username19\",\"platform\":\"SqlOnPremise\",\"resource\":\"database19\"}",
+            "ValidationFingerprint/v2": "{\"host\":\"servername19\",\"id\":\"username19\",\"resource\":\"database19\",\"secret\":\"password19\"}"
+          },
+          "rank": 44.6
+        }
+      ],
+      "columnKind": "utf16CodeUnits"
+    }
+  ]
+}

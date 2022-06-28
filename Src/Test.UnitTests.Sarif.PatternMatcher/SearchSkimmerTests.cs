@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -413,6 +414,66 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Exception exception = Record.Exception(() => skimmer.Analyze(context));
             exception.Should().NotBeNull();
             exception.GetType().Should().Be(typeof(InvalidOperationException));
+        }
+
+        [Fact]
+        public void SearchSkimmer_ShouldNotEvaluateTooLargeFiles()
+        {
+            MatchExpression expr = CreateGuidDetectingMatchExpression();
+            SearchDefinition definition = CreateDefaultSearchDefinition(expr);
+
+            string rootDirectory = Directory.GetCurrentDirectory();
+            string fileName = "simpleExample.json";
+            string filePath = Path.Combine(rootDirectory, fileName);
+
+            var logger = new TestLogger();
+
+            var context = new AnalyzeContext
+            {
+                TargetUri = new Uri(filePath),
+                Logger = logger,
+                FileSizeInKilobytes = 1
+            };
+
+            SearchSkimmer skimmer = CreateSkimmer(definition);
+            Exception exception = Record.Exception(() => skimmer.Analyze(context));
+            exception.Should().BeNull();
+
+            logger.Results.Should().BeNull();
+        }
+
+        [Fact]
+        public void SearchSkimmer_ShouldLogIOExceptionIfFileNotFound()
+        {
+            MatchExpression expr = CreateGuidDetectingMatchExpression();
+            SearchDefinition definition = CreateDefaultSearchDefinition(expr);
+            IRegex regexEngine = RE2Regex.Instance;
+
+            var searchDefinition = new SearchDefinition
+            {
+                HelpUri = "https://www.microsoft.com",
+                MatchExpressions = new List<MatchExpression>(),
+            };
+
+            var searchSkimmer = new SearchSkimmer(regexEngine, null, null, searchDefinition);
+            var reportingDescriptor = searchSkimmer as ReportingDescriptor;
+
+            var logger = new TestLogger();
+
+            var context = new AnalyzeContext
+            {
+                TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
+                Logger = logger,
+                FileSizeInKilobytes = 1,
+                Rule = reportingDescriptor
+            };
+
+            SearchSkimmer skimmer = CreateSkimmer(definition);
+            Exception exception = Record.Exception(() => skimmer.Analyze(context));
+            exception.Should().BeNull();
+
+            logger.ToolNotification.Exception.Should().NotBeNull();
+            logger.ToolNotification.Exception.Kind.Should().Be(nameof(FileNotFoundException));
         }
 
         private AnalyzeContext CreateGuidMatchingSkimmer(

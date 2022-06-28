@@ -155,6 +155,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 try
                 {
+                    var fileInfo = new FileInfo(filePath);
+                    if (context.FileSizeInKilobytes != -1 && fileInfo.Length / 1024 > context.FileSizeInKilobytes)
+                    {
+                        return;
+                    }
+
                     context.FileContents = _fileSystem.FileReadAllText(filePath);
                 }
                 catch (Exception e)
@@ -181,11 +187,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     throw;
                 }
-            }
-
-            if (context.FileSizeInKilobytes != -1 && context.FileContents.String.Length / 1024 > context.FileSizeInKilobytes)
-            {
-                return;
             }
 
             foreach (MatchExpression matchExpression in _matchExpressions)
