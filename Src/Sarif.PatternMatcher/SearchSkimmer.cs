@@ -187,7 +187,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     throw;
                 }
-
+            }
+            else
+            {
                 if (context.FileSizeInKilobytes != -1 && context.FileContents.String.Length / 1024 > context.FileSizeInKilobytes)
                 {
                     return;
