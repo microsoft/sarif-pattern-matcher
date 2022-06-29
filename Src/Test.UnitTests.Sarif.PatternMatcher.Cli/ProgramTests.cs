@@ -46,7 +46,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             Program.RuntimeException.GetType().Should().Be(typeof(FileNotFoundException));
         }
 
-
         [Fact]
         public void Program_ResponseFileWorks()
         {
