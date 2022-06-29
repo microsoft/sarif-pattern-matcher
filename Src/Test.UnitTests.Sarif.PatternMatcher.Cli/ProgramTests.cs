@@ -28,6 +28,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         {
             string responseFilePath = $"@{Guid.NewGuid()}.rsp";
 
+            // Explicitly clear the file system object, in case an
+            // out-of-order test execution has set it to a mocked object.
+            Program.FileSystem = null;
+
             string[] args = new[] { responseFilePath };
             int result = Program.Main(args);
             result.Should().Be(1);
