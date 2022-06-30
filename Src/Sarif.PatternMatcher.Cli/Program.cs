@@ -18,11 +18,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         [ThreadStatic]
         internal static IFileSystem FileSystem;
 
+        [ThreadStatic]
+        internal static Exception RuntimeException;
+
         internal static int Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            args = EntryPointUtilities.GenerateArguments(args, FileSystem, new EnvironmentVariables());
+            try
+            {
+                args = EntryPointUtilities.GenerateArguments(args, FileSystem ?? new FileSystem(), new EnvironmentVariables());
+            }
+            catch (Exception ex)
+            {
+                RuntimeException = ex;
+                Console.WriteLine(ex.ToString());
+                return CommandBase.FAILURE;
+            }
 
             bool isValidHelpCommand =
                 args.Length > 0 &&

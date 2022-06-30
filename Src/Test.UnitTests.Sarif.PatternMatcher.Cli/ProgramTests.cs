@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -22,6 +23,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
     public class ProgramTests
     {
+        [Fact]
+        public void Program_ResponseFileWorksWithNoExplicitlyAllocatedFileSystem()
+        {
+            string responseFilePath = $"@{Guid.NewGuid()}.rsp";
+
+            // Explicitly clear the file system object, in case an
+            // out-of-order test execution has set it to a mocked object.
+            Program.FileSystem = null;
+
+            string[] args = new[] { responseFilePath };
+            int result = Program.Main(args);
+            result.Should().Be(1);
+
+            // These conditions indicate that the response file argument was
+            // successfully processed by the command-line argument parsers 
+            // and the response file was not found. This closes a very narrow
+            // code path in tests where an uninstantiated FileSystem object
+            // causes a null dereference. All other tests for this area provide
+            // a non-null file system object instance.
+            Program.RuntimeException.Should().NotBeNull();
+            Program.RuntimeException.GetType().Should().Be(typeof(FileNotFoundException));
+        }
+
         [Fact]
         public void Program_ResponseFileWorks()
         {
