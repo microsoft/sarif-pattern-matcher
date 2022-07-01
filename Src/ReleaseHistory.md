@@ -18,11 +18,8 @@
 
 ## Unreleased
 
-- BUG: Resolve unhandled `OutOfMemory` and `NullReferenceException` exceptions when analyzing folders that contain big files even when using --file-size-in-kb. [#621](https://github.com/microsoft/sarif-pattern-matcher/pull/621)
-
-## *v1.9.1*
-
 - FEATURE: Enable response file parsing provided by driver framework. Arguments (e.g., '@Commands.rsp') prefixed with a '@' character will be evaluated as a file path to a text file that contains commands to be injected on the command-line. 
+- BUG: Resolve OutofMemoryException and NullReferenceException' failures resulting from a failure to honor file size scan limits set by--file-size-in-kb` argument. [#621](https://github.com/microsoft/sarif-pattern-matcher/pull/621)
 
 
 ## *v1.9.0*

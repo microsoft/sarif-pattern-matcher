@@ -7,6 +7,8 @@ using System.IO;
 
 using FluentAssertions;
 
+using Microsoft.VisualStudio.Services.Common;
+
 using Moq;
 
 using Newtonsoft.Json;
@@ -19,6 +21,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
     {
         private const string SmallTargetName = "smallTarget.txt";
         private const string LargeTargetName = "largeTarget.txt";
+        //private const string RootDirectory = "e:\repros";
 
         [Fact]
         public void AnalyzeCommand_SingleLineRuleBasic()
@@ -93,9 +96,70 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         }
 
         [Fact]
-        public void AnalyzeCommand_FileSizeInKilobytes()
+        public void AnalyzeCommand_ShouldAnalyzeTargetWithinSizeLimit()
         {
-            string rootDirectory = Directory.GetCurrentDirectory();
+            var random = new Random();
+            int randomMaxFileSize = random.Next(1, int.MaxValue - 1);
+            long randomFileSize = (long)random.Next(1, int.MaxValue - 1);
+
+            var testCases = new[] {
+                new {
+                    fileSize = randomFileSize,
+                    maxFileSize = (int)uint.MinValue + 1,
+                    expectedResult = 2
+                },
+                new {
+                    fileSize = long.MaxValue,
+                    maxFileSize = int.MinValue,
+                    expectedResult = 2
+                },
+                new {
+                    fileSize = long.MaxValue,
+                    maxFileSize = (int)uint.MinValue + 1,
+                    expectedResult = 2
+                },
+                new {
+                    fileSize = long.MaxValue,
+                    maxFileSize = int.MaxValue,
+                    expectedResult = 2
+                },
+                new {
+                    fileSize = (long)ulong.MinValue,
+                    maxFileSize = (int)0,
+                    expectedResult = 4
+                },
+                new {
+                    fileSize = (long)ulong.MinValue,
+                    maxFileSize = randomMaxFileSize,
+                    expectedResult = 4
+                },
+                new {
+                    fileSize = (long)ulong.MinValue,
+                    maxFileSize = int.MaxValue,
+                    expectedResult = 4
+                },
+                new {
+                    fileSize = randomFileSize,
+                    maxFileSize = int.MaxValue,
+                    expectedResult = 4
+                },
+            };
+
+            foreach (var testCase in testCases)
+            {
+                SarifLog logFile = RunAnalyzeCommandWithFileSizeLimits(
+                    maxFileSizeInKilobytes: testCase.maxFileSize,
+                    fileSizeInBytes: testCase.fileSize);
+
+                logFile.Runs.Count.Should().Be(1);
+                logFile.Runs[0].Results.Count.Should().Be(testCase.expectedResult);
+            }
+        }
+
+        [Fact]
+        public void AnalyzeCommand_ShouldProduceResultsForTargetsInFileSizeRange()
+        {
+            string rootDirectory = @"e:\repros";
             string smallTargetPath = Path.Combine(rootDirectory, SmallTargetName);
             string largeTargetPath = Path.Combine(rootDirectory, LargeTargetName);
 
@@ -108,15 +172,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                   " secret2              \r\n" +
                                   "unused trailing space \r\n";
 
-            SarifLog sarifLogWithLargeFileExcluded = RunAnalyzeCommandWithFileSizeInKilobytes(
-                definitionsText,
-                fileContents,
-                fileSizeInKilobytes: 1);
+            SarifLog sarifLogWithLargeFileExcluded = RunAnalyzeCommandWithFileSizeLimits(
+                maxFileSizeInKilobytes: 1024,
+                fileSizeInBytes: long.MaxValue);
 
-            SarifLog sarifLogWithLargeFileIncluded = RunAnalyzeCommandWithFileSizeInKilobytes(
-                definitionsText,
-                fileContents,
-                fileSizeInKilobytes: 1024);
+            SarifLog sarifLogWithLargeFileIncluded = RunAnalyzeCommandWithFileSizeLimits(
+                maxFileSizeInKilobytes: 1024,
+                fileSizeInBytes: 0);
 
             SarifLog sarifLogOnlySmallFile = RunAnalyzeCommand(
                 definitionsText,
@@ -149,7 +211,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         private SarifLog RunAnalyzeCommand(string definitionsText, string fileContents)
         {
             string sarifOutput;
-            string rootDirectory = Directory.GetCurrentDirectory();
+            string rootDirectory = @"e:\repros";
             string scanTargetName = SmallTargetName;
             string scanTargetPath = Path.Combine(rootDirectory, scanTargetName);
             string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
@@ -177,6 +239,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
+
+            mockFileSystem.Setup(x => x.GetFileSize(SmallTargetName)).Returns(fileContents.Length);
 
             Program.FileSystem = mockFileSystem.Object;
 
@@ -215,10 +279,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return sarifLog;
         }
 
-        private SarifLog RunAnalyzeCommandWithFileSizeInKilobytes(string definitionsText, string fileContents, int fileSizeInKilobytes)
+        private SarifLog RunAnalyzeCommandWithFileSizeLimits(
+            int maxFileSizeInKilobytes,
+            long fileSizeInBytes)
         {
+            string definitionsText = GetIntrafileRuleDefinition();
+
+            string fileContents = "unused leading space  \r\n" +
+                                  " secret1              \r\n" +
+                                  " host1                \r\n" +
+                                  " id1                  \r\n" +
+                                  " secret2              \r\n" +
+                                  "unused trailing space \r\n";
             string sarifOutput;
-            string rootDirectory = Directory.GetCurrentDirectory();
+            string rootDirectory = @"e:\repros";
             string smallTargetPath = Path.Combine(rootDirectory, SmallTargetName);
             string largeTargetPath = Path.Combine(rootDirectory, LargeTargetName);
             string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
@@ -251,6 +325,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
 
+            mockFileSystem.Setup(x => x.GetFileSize(smallTargetPath)).Returns(fileContents.Length);
+            mockFileSystem.Setup(x => x.GetFileSize(largeTargetPath)).Returns(fileSizeInBytes);
+
             Program.FileSystem = mockFileSystem.Object;
 
             string tempFileName = Path.GetTempFileName();
@@ -266,7 +343,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     smallTargetPath,
                     $"-d", searchDefinitionsPath,
                     $"-o", sarifLogFileName,
-                    $"--file-size-in-kb", fileSizeInKilobytes.ToString(),
+                    $"--file-size-in-kb", maxFileSizeInKilobytes.ToString(),
                 };
 
                 int result = Program.Main(args);

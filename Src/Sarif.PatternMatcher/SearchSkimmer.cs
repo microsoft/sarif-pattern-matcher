@@ -155,8 +155,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 try
                 {
-                    var fileInfo = new FileInfo(filePath);
-                    if (context.FileSizeInKilobytes != -1 && fileInfo.Length / 1024 > context.FileSizeInKilobytes)
+                    // Ensure that the byte of the file does not exceed the limit set by the
+                    // file-size-in-kilobytes argument (which will be -1 if not set, in which
+                    // case all files should be analyzed no matter their size).
+                    long fileSize = _fileSystem.GetFileSize(filePath);
+                    if (DoesTargetFileExceedSizeLimits(fileSize, context.FileSizeInKilobytes))
                     {
                         return;
                     }
@@ -190,7 +193,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
             else
             {
-                if (context.FileSizeInKilobytes != -1 && context.FileContents.String.Length / 1024 > context.FileSizeInKilobytes)
+                if (DoesTargetFileExceedSizeLimits(context.FileContents.String.Length, context.FileSizeInKilobytes))
                 {
                     return;
                 }
@@ -1309,6 +1312,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return arguments;
+        }
+
+        private bool DoesTargetFileExceedSizeLimits(long fileLength, int maxFileSize)
+        {
+            // Ensure that the byte of the file does not exceed the limit set by the
+            // file-size-in-kilobytes argument (which will be -1 if not set, in which
+            // case all files should be analyzed no matter their size).
+            long fileSize = fileLength / 1024;
+
+            return maxFileSize > -1 && fileSize > maxFileSize;
         }
     }
 }

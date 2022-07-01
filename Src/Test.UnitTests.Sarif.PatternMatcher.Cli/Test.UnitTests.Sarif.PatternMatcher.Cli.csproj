@@ -27,10 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="LargeTarget.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SmallTarget.txt">
+    <None Update=".txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
