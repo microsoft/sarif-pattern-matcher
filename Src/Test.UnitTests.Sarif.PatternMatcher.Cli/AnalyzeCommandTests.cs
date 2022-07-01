@@ -100,22 +100,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         {
             var random = new Random();
             int randomMaxFileSize = random.Next(1, int.MaxValue - 1);
-            long randomFileSize = (long)random.Next(1, int.MaxValue - 1);
+            long randomFileSize = (long)random.Next(2, int.MaxValue - 1);
 
             var testCases = new[] {
                 new {
-                    fileSize = randomFileSize,
-                    maxFileSize = (int)uint.MinValue + 1,
-                    expectedResult = 2
-                },
-                new {
                     fileSize = long.MaxValue,
-                    maxFileSize = int.MinValue,
-                    expectedResult = 2
-                },
-                new {
-                    fileSize = long.MaxValue,
-                    maxFileSize = (int)uint.MinValue + 1,
+                    maxFileSize = 1,
                     expectedResult = 2
                 },
                 new {
@@ -125,7 +115,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 },
                 new {
                     fileSize = (long)ulong.MinValue,
-                    maxFileSize = (int)0,
+                    maxFileSize = 1,
                     expectedResult = 4
                 },
                 new {
