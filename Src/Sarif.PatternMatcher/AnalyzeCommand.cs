@@ -309,9 +309,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
         {
+            if (!options.SearchDefinitionsPaths.Any())
+            {
+                Errors.LogNoPluginsConfigured(context);
+                ThrowExitApplicationException(context, ExitReason.NoRulesLoaded);
+            }
+
             return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
         }
-
 #if DEBUG
 
         private static void ValidateSharedStringsExpansion(SearchDefinitions searchDefinitions)
