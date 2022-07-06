@@ -65,9 +65,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         : CommandBase.FAILURE);
         }
 
-        private static int RunAnalyzeCommand(AnalyzeOptions options)
+        internal static int RunAnalyzeCommand(AnalyzeOptions options)
         {
-            InstantiatedAnalyzeCommand = new AnalyzeCommand();
+            InstantiatedAnalyzeCommand = new AnalyzeCommand(fileSystem: FileSystem);
             return InstantiatedAnalyzeCommand.Run(options);
         }
 
