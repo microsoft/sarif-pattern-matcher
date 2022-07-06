@@ -32,6 +32,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             int result = Program.Main(args);
             result.Should().Be(CommandBase.FAILURE);
 
+            // This validation is sufficient because the null check for an
+            // instantiated analyze command verifies that we failed the 
+            // CommandLine parsing code and error out before attempting
+            // analysis.
             Program.InstantiatedAnalyzeCommand.Should().BeNull();
         }
 
