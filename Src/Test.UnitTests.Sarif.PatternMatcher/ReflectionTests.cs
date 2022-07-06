@@ -11,27 +11,25 @@ using Newtonsoft.Json.Linq;
 
 using Xunit;
 
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ReflectionTests
     {
-        [Fact]
-        public void All101Rules_ShouldHaveValidators()
+        public static void VerifyAllValidatorsExist(string definitionsFileName, Assembly assembly)
         {
             try
             {
-                if (!File.Exists("SEC101.SecurePlaintextSecrets.json"))
+                if (!File.Exists(definitionsFileName))
                 {
                     return;
                 }
 
-                string content = File.ReadAllText("SEC101.SecurePlaintextSecrets.json");
+                string content = File.ReadAllText(definitionsFileName);
 
                 var jObject = (JObject)JToken.Parse(content);
 
                 IEnumerable<string> rules = jObject["Definitions"][0]["MatchExpressions"].Select(x => x["Name"].ToString().Split('/')[1]).Distinct();
 
-                Assembly assembly = typeof(HttpAuthorizationRequestHeaderValidator).Assembly;
                 // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
                 var validators = assembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
 
