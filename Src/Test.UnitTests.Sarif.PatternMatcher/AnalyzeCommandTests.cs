@@ -26,24 +26,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeCommandTests
     {
-        [Fact]
-        public void AnalyzeCommand_DefinitionsArgumentIsRequired()
-        {
-            string specifier = $"{Guid.NewGuid()}.txt";
-
-            AnalyzeOptions options = CreateDefaultAnalyzeOptions();
-
-            options.TargetFileSpecifiers = new[] { specifier };
-
-            var command = new AnalyzeCommand();
-
-            int result = command.Run(options);
-            result.Should().Be(CommandBase.FAILURE);
-
-            // This validation works because if 
-            command.RuntimeErrors.Should().Be(RuntimeConditions.InvalidCommandLineOption);
-        }
-
         private static AnalyzeOptions CreateDefaultAnalyzeOptions()
         {
             var result = new AnalyzeOptions();
@@ -467,7 +449,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var definitions = new SearchDefinitions()
             {
                 Definitions = new List<SearchDefinition>(new[]
-                            {
+                {
                     new SearchDefinition()
                     {
                         Name = "MinimalRule", Id = "Test1002",
