@@ -7,6 +7,8 @@ using System.IO;
 
 using FluentAssertions;
 
+using Microsoft.CodeAnalysis.Sarif.Driver;
+
 using Moq;
 
 using Newtonsoft.Json;
@@ -17,6 +19,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
     public class AnalyzeCommandTests
     {
+        [Fact]
+        public void AnalyzeCommand_DefinitionsArgumentIsRequired()
+        {
+            string[] args = new[]
+            {
+                    "analyze",
+                    Guid.NewGuid().ToString(),
+                    $"-o", Guid.NewGuid().ToString(),
+            };
+
+            int result = Program.Main(args);
+            result.Should().Be(CommandBase.FAILURE);
+
+            Program.InstantiatedAnalyzeCommand.Should().BeNull();
+        }
+
         [Fact]
         public void AnalyzeCommand_SingleLineRuleBasic()
         {
@@ -138,7 +156,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 };
 
                 int result = Program.Main(args);
-                result.Should().Be(0);
+                result.Should().Be(CommandBase.SUCCESS);
 
                 sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
             }
