@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 var optionAttribute = (OptionAttribute)property.GetCustomAttribute(typeof(OptionAttribute));
                 if (optionAttribute == null || optionAttribute.Default == null)
                 { 
-                    continue; 
+                    continue;
                 }
 
                 property.SetValue(result, optionAttribute.Default);
