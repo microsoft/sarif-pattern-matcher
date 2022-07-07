@@ -29,6 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     $"-o", Guid.NewGuid().ToString(),
             };
 
+            Program.ClearUnitTestData();
             int result = Program.Main(args);
             result.Should().Be(CommandBase.FAILURE);
 

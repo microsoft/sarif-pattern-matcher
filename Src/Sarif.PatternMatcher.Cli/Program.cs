@@ -65,6 +65,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         : CommandBase.FAILURE);
         }
 
+        internal static void ClearUnitTestData()
+        {
+            FileSystem = null;
+            RuntimeException = null;
+            InstantiatedAnalyzeCommand = null;
+        }
+
         internal static int RunAnalyzeCommand(AnalyzeOptions options)
         {
             InstantiatedAnalyzeCommand = new AnalyzeCommand(fileSystem: FileSystem);
