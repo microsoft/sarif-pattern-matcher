@@ -19,7 +19,7 @@
 ## Unreleased
 
 - FEATURE: Enable response file parsing provided by driver framework. Arguments (e.g., '@Commands.rsp') prefixed with a '@' character will be evaluated as a file path to a text file that contains commands to be injected on the command-line. 
-- BUG: Resolve OutofMemoryException and NullReferenceException' failures resulting from a failure to honor file size scan limits set by--file-size-in-kb` argument. [#621](https://github.com/microsoft/sarif-pattern-matcher/pull/621)
+- BUG: Resolve `OutofMemoryException` and `NullReferenceException' failures resulting from a failure to honor file size scan limits set by--file-size-in-kb` argument and updated Sarif.Sdk submodule to commit [ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b](https://github.com/microsoft/sarif-sdk/commit/ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b). [#621](https://github.com/microsoft/sarif-pattern-matcher/pull/621)
 
 
 ## *v1.9.0*
