@@ -489,7 +489,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (FingerprintTestCase testCase in s_workingTestCases)
             {
-                string actualJson = new Fingerprint(testCase.Text).GetComprehensiveFingerprint(jsonFormat: true);
+                string actualJson = new Fingerprint(testCase.Text).GetComprehensiveFingerprint();
 
                 var newFingerprint = new Fingerprint(actualJson);
 
