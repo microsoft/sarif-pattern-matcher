@@ -83,10 +83,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[id=T01JYS3KLKU][platform=Slack]",
-            "ValidationFingerprint/current": "[id=T01JYS3KLKU][secret=B0123456789/deedbeefdeaffeeddeadbeef]",
-            "SecretFingerprint/current": "[secret=B0123456789/deedbeefdeaffeeddeadbeef]",
-            "SecretHashSha256/current": "20dd7983afebcf5e9498d2b952587a49144169a5dfff37061f1de3c4e6fa2119"
+            "SecretHashSha256/current": "d693a51796332f66b5c623f099e3a6c65b49581051982e158dd81272d688bfbf",
+            "AssetFingerprint/current": "{\"id\":\"T01JYS3KLKU\",\"platform\":\"Slack\"}",
+            "SecretFingerprint/current": "{\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}",
+            "ValidationFingerprint/current": "{\"id\":\"T01JYS3KLKU\",\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}",
+            "ValidationFingerprintHashSha256/current": "96ae70929ae01b9bb68c2b93ed9648fa14c62207fa214e1bf7eb44c06b53d886"
           },
           "rank": 49.76
         }

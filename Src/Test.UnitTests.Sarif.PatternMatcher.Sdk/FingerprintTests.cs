@@ -424,51 +424,60 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void Fingerprint_PersistPathShouldNotHideDataFromValidationFingerprint()
         {
-            const string id = "[id=id]";
-            const string path = "[path=path]";
-            var fingerprint = new Fingerprint($"{id}{path}");
-            fingerprint.GetAssetFingerprint().Should().Be($"{id}{path}");
-            fingerprint.GetValidationFingerprint().Should().Contain(path);
+            const string idValue = "myId";
+            const string pathValue = "myPath";
+            const string secretValue = "mySecret";
+
+            string idJsonProperty = $"\"id\":\"{idValue}\"";
+            string pathJsonProperty = $"\"path\":\"{pathValue}\"";
+            string secretJsonProperty = $"\"secret\":\"{secretValue}\"";
+
+            string idJson = $"{{{idJsonProperty}}}";
+            string idPathJson = $"{{{idJsonProperty},{pathJsonProperty}}}";
+            string idPathSecretJson = $"{{{idJsonProperty},{pathJsonProperty},{secretJsonProperty}}}";
+            var fingerprint = new Fingerprint(idPathJson);
+            fingerprint.GetAssetFingerprint().Should().Be(idPathJson);
+            fingerprint.GetValidationFingerprint().Should().Contain(pathJsonProperty);
             string originalHash = fingerprint.GetValidationFingerprintHash();
 
             fingerprint.IgnorePathInFingerprint = true;
-            fingerprint.GetAssetFingerprint().Should().Be(id);
-            fingerprint.GetValidationFingerprint().Should().Contain(path);
+            fingerprint.GetAssetFingerprint().Should().Be($"{{{idJsonProperty}}}");
+            fingerprint.GetValidationFingerprint().Should().Contain(pathJsonProperty);
 
             fingerprint = new Fingerprint
             {
-                Id = "id",
-                Path = "path"
+                Id = idValue,
+                Path = pathValue,
             };
-            fingerprint.GetAssetFingerprint().Should().Be($"{id}{path}");
-            fingerprint.GetValidationFingerprint().Should().Contain(path);
+            fingerprint.GetAssetFingerprint().Should().Be(idPathJson);
+            fingerprint.GetValidationFingerprint().Should().Contain(pathJsonProperty);
             string firstHash = fingerprint.GetValidationFingerprintHash();
             firstHash.Should().Be(originalHash);
 
             fingerprint = new Fingerprint
             {
-                Id = "id",
-                Path = "path",
-                IgnorePathInFingerprint = true
+                Id = idValue,
+                Path = pathValue,
+                IgnorePathInFingerprint = true,
             };
-            fingerprint.GetAssetFingerprint().Should().Be(id);
-            fingerprint.GetValidationFingerprint().Should().Contain(path);
+            fingerprint.GetAssetFingerprint().Should().Be(idJson);
+            fingerprint.GetValidationFingerprint().Should().Contain(pathJsonProperty);
             string secondHash = fingerprint.GetValidationFingerprintHash();
             firstHash.Should().NotBe(secondHash);
 
             fingerprint = new Fingerprint
             {
-                Id = "id",
-                Path = "path",
-                Secret = "secret"
+                Id = idValue,
+                Path = pathValue,
+                Secret = secretValue,
             };
-            fingerprint.GetAssetFingerprint().Should().Be($"{id}{path}");
-            fingerprint.GetValidationFingerprint().Should().Be($"{id}{path}[secret=secret]");
+            fingerprint.GetAssetFingerprint().Should().Be(idPathJson);
+            fingerprint.GetValidationFingerprint().Should().Be(idPathSecretJson);
             string thirdHash = fingerprint.GetValidationFingerprintHash();
 
             fingerprint.IgnorePathInFingerprint = true;
-            fingerprint.GetAssetFingerprint().Should().Be($"{id}");
-            fingerprint.GetValidationFingerprint().Should().Be($"{id}{path}[secret=secret]");
+            fingerprint.GetAssetFingerprint().Should().Be(idJson);
+            fingerprint.GetValidationFingerprint().Should().Be(idPathSecretJson);
             string forthHash = fingerprint.GetValidationFingerprintHash();
             thirdHash.Should().NotBe(forthHash);
         }

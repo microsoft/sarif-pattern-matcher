@@ -78,10 +78,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=msn.com][path=/test]",
-            "ValidationFingerprint/current": "[host=msn.com][path=/test][port=443]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"msn.com\",\"path\":\"/test\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}",
+            "ValidationFingerprintHashSha256/current": "d8126b5541b187afaca5b336262a1f0b6c68609534f88cd52ee307a18670f9bc"
           }
         },
         {
@@ -117,10 +118,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=msn.com][path=/test/]",
-            "ValidationFingerprint/current": "[host=msn.com][path=/test/][port=443]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"msn.com\",\"path\":\"/test/\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"msn.com\",\"path\":\"/test/\",\"port\":\"443\"}",
+            "ValidationFingerprintHashSha256/current": "2ad26d109188f9b0527551a1f16fb76bcb340ba519452ff519f70447bc0dd9e3"
           }
         },
         {
@@ -156,10 +158,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=msn.com][part=?foo=bar][path=/test]",
-            "ValidationFingerprint/current": "[host=msn.com][path=/test][port=443]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"msn.com\",\"part\":\"?foo=bar\",\"path\":\"/test\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}",
+            "ValidationFingerprintHashSha256/current": "d8126b5541b187afaca5b336262a1f0b6c68609534f88cd52ee307a18670f9bc"
           }
         }
       ],

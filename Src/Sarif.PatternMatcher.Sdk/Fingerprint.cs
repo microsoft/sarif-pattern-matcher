@@ -208,20 +208,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public string GetComprehensiveFingerprint(bool jsonFormat = false) => ToString(this, denyList: s_emptyDenyList, jsonFormat);
 
-        public string GetAssetFingerprint(bool jsonFormat = false)
+        public string GetAssetFingerprint()
         {
             return IgnorePathInFingerprint
-                ? ToString(this, denyList: s_pathPortAndSecretOnlyKeys, jsonFormat)
-                : ToString(this, denyList: s_portAndSecretOnlyKeys, jsonFormat);
+                ? ToString(this, denyList: s_pathPortAndSecretOnlyKeys, jsonFormat: true)
+                : ToString(this, denyList: s_portAndSecretOnlyKeys, jsonFormat: true);
         }
 
-        public string GetValidationFingerprint(bool jsonFormat = false) => ToString(this, denyList: s_assetOnlyKeys, jsonFormat);
+        public string GetValidationFingerprint() => ToString(this, denyList: s_assetOnlyKeys, jsonFormat: true);
 
-        public string GetValidationFingerprintHash(bool jsonFormat = false)
+        public string GetValidationFingerprintHash()
         {
             string validationFingerprint = IgnorePathInFingerprint
-                ? ToString(this, denyList: s_assetAndPathOnlyKeys, jsonFormat)
-                : ToString(this, denyList: s_assetOnlyKeys, jsonFormat);
+                ? ToString(this, denyList: s_assetAndPathOnlyKeys, jsonFormat: true)
+                : ToString(this, denyList: s_assetOnlyKeys, jsonFormat: true);
 
             return ComputeHash(validationFingerprint);
         }
@@ -231,12 +231,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// uniquely identifies a credential at a specific point-in-time.
         /// </summary>
         /// <returns>The minimal fingerprint that uniquely identifies a credential.</returns>
-        public string GetUniqueSecretFingerprint()
+        public string GetSecretFingerprint()
         {
-            return new Fingerprint()
-            {
-                Secret = this.Secret,
-            }.ToString();
+            return ToString(
+                new Fingerprint() { Secret = this.Secret },
+                s_emptyDenyList,
+                jsonFormat: true);
         }
 
         /// <summary>
@@ -244,9 +244,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// identifies a credential at a specific point-in-time.
         /// </summary>
         /// <returns>The minimal fingerprint that uniquely identifies a credential.</returns>
-        public string GetUniqueSecretHash()
+        public string GetSecretHash()
         {
-            return ComputeHash(GetUniqueSecretFingerprint());
+            return ComputeHash(GetSecretFingerprint());
         }
 
         /// <summary>

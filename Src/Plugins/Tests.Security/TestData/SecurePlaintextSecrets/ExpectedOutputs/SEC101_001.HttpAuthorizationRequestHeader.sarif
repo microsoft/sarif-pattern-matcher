@@ -83,10 +83,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com]",
-            "ValidationFingerprint/current": "[host=example.com][secret=SomeAuthorizationKey1111111]",
-            "SecretFingerprint/current": "[secret=SomeAuthorizationKey1111111]",
-            "SecretHashSha256/current": "ec46f70ef055d91dbd5113152542d285965fadfc86488d5c671b24d85ba2aead"
+            "SecretHashSha256/current": "c3f781a5d88f704b4e56cdda45ceebbaacc92a7ec684b92b15d4ec5a87c3238b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\"}",
+            "SecretFingerprint/current": "{\"secret\":\"SomeAuthorizationKey1111111\"}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"secret\":\"SomeAuthorizationKey1111111\"}",
+            "ValidationFingerprintHashSha256/current": "59b832e19540a4233ab72df4188a37472d13f1383f540f6e7406b5d2fde83519"
           },
           "rank": 51.84
         },
@@ -128,10 +129,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][path=?some=parameters&that=should&appear=inresults]",
-            "ValidationFingerprint/current": "[host=example.com][path=?some=parameters&that=should&appear=inresults][secret=SomeAuthorizationKey2222222]",
-            "SecretFingerprint/current": "[secret=SomeAuthorizationKey2222222]",
-            "SecretHashSha256/current": "c9dc563a62ccd33926019685e684951bd4702e1082c25fca831aea71130b87d6"
+            "SecretHashSha256/current": "4d71b218de6eae08cfa80935a99fe95ab8d672aa68a8adee0303e8b68fa3d0ce",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"path\":\"?some=parameters&that=should&appear=inresults\"}",
+            "SecretFingerprint/current": "{\"secret\":\"SomeAuthorizationKey2222222\"}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"path\":\"?some=parameters&that=should&appear=inresults\",\"secret\":\"SomeAuthorizationKey2222222\"}",
+            "ValidationFingerprintHashSha256/current": "3b6b9b295d26c4b41f668b4cf0e0ec2f0bb1049f9362759967825d032850aef2"
           },
           "rank": 51.84
         },
@@ -173,10 +175,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com]",
-            "ValidationFingerprint/current": "[host=example.com][secret=SomeAuthorizationKey3333333=]",
-            "SecretFingerprint/current": "[secret=SomeAuthorizationKey3333333=]",
-            "SecretHashSha256/current": "a735ea3564792e572825897ce403d9b5507331690746861e7c5d297480d51150"
+            "SecretHashSha256/current": "f7f905953705eb0e8b7df53474d5223093f2c9264603ff7ff28ed02e54caa1e0",
+            "AssetFingerprint/current": "{\"host\":\"example.com\"}",
+            "SecretFingerprint/current": "{\"secret\":\"SomeAuthorizationKey3333333=\"}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"secret\":\"SomeAuthorizationKey3333333=\"}",
+            "ValidationFingerprintHashSha256/current": "ed46e268ebe9e2a6d16f33e2209d82e5f080fe741f954fabc3f461aaa7e9e99b"
           },
           "rank": 53.16
         },
@@ -218,10 +221,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][path=/]",
-            "ValidationFingerprint/current": "[host=example.com][path=/][secret=SomeAuthorizationKey4444444]",
-            "SecretFingerprint/current": "[secret=SomeAuthorizationKey4444444]",
-            "SecretHashSha256/current": "e0bfc117b7db592980c4b6ae437bd9d42829e7ea14e1b92e6add67bb84913f8e"
+            "SecretHashSha256/current": "02e0abd9ab1aefdd3f9c0e0931b1a6bffcaf9e167b5e30b137eb07c9dea7c2a6",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"path\":\"/\"}",
+            "SecretFingerprint/current": "{\"secret\":\"SomeAuthorizationKey4444444\"}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"path\":\"/\",\"secret\":\"SomeAuthorizationKey4444444\"}",
+            "ValidationFingerprintHashSha256/current": "ca6253ea060947c3dd282a0f406a7ffb040aac1e10caba1f585c3375ad33cb35"
           },
           "rank": 51.84
         },
@@ -263,10 +267,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=we.want.that.site.com][path=/16][scheme=http]",
-            "ValidationFingerprint/current": "[host=we.want.that.site.com][path=/16][scheme=http][secret=6666666b29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29uZw==]",
-            "SecretFingerprint/current": "[secret=6666666b29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29uZw==]",
-            "SecretHashSha256/current": "8035a85afeef48877a33fd389a0a7d6b548fe4d52c776f5db68623d1dca3502a"
+            "SecretHashSha256/current": "832ca980b40099252e2b7547fe2aa62555a28f6cea8e24da06871749ac22a7d5",
+            "AssetFingerprint/current": "{\"host\":\"we.want.that.site.com\",\"path\":\"/16\",\"scheme\":\"http\"}",
+            "SecretFingerprint/current": "{\"secret\":\"6666666b29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29uZw==\"}",
+            "ValidationFingerprint/current": "{\"host\":\"we.want.that.site.com\",\"path\":\"/16\",\"scheme\":\"http\",\"secret\":\"6666666b29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29uZw==\"}",
+            "ValidationFingerprintHashSha256/current": "dc7077d82ac904ced11b3a71b03f143da0a12f35653159c7a0b697f0ba56ce9f"
           },
           "rank": 32.62
         }

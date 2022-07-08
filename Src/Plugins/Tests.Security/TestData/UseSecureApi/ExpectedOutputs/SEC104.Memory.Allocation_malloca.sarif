@@ -84,10 +84,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[id=_malloca]",
-            "ValidationFingerprint/current": "[id=_malloca]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"id\":\"_malloca\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"id\":\"_malloca\"}",
+            "ValidationFingerprintHashSha256/current": "755815efe341182e37228ace3d20bae15f8054628a1ba02f52ef14a90cb927d5"
           }
         }
       ],

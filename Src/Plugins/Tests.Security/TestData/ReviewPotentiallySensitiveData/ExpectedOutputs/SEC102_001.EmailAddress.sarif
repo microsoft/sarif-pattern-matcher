@@ -80,10 +80,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=email]",
-            "ValidationFingerprint/current": "[host=example.com][id=email]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"email\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"email\"}",
+            "ValidationFingerprintHashSha256/current": "c89468871d6fac0cf53557da99f0bcc70f909d0e3c4de4057235a16d84813ef7"
           }
         },
         {
@@ -121,10 +122,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=firstname.lastname]",
-            "ValidationFingerprint/current": "[host=example.com][id=firstname.lastname]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"firstname.lastname\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"firstname.lastname\"}",
+            "ValidationFingerprintHashSha256/current": "32d208f841133245d4e25a1f6ed4275496d1667547381bff0a751bf889dbbfdf"
           }
         },
         {
@@ -162,10 +164,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=lastname]",
-            "ValidationFingerprint/current": "[host=example.com][id=lastname]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"lastname\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"lastname\"}",
+            "ValidationFingerprintHashSha256/current": "65239dfdf58556fb32003f6fdbe9ddb0e124364c8af4524aeaa13cef08fdf0ff"
           }
         },
         {
@@ -203,10 +206,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=subdomain.example.com][id=email]",
-            "ValidationFingerprint/current": "[host=subdomain.example.com][id=email]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"subdomain.example.com\",\"id\":\"email\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"subdomain.example.com\",\"id\":\"email\"}",
+            "ValidationFingerprintHashSha256/current": "31cda7b129cc7e398005ff92662f3fd00e6939ae500e8f012530588bb87001db"
           }
         },
         {
@@ -244,10 +248,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=firstname+lastname]",
-            "ValidationFingerprint/current": "[host=example.com][id=firstname+lastname]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"firstname+lastname\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"firstname+lastname\"}",
+            "ValidationFingerprintHashSha256/current": "bdbb658ccc6e830aa9e8346e5631b725e4ba0874400be857f062185663d8509d"
           }
         },
         {
@@ -285,10 +290,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=+lastname]",
-            "ValidationFingerprint/current": "[host=example.com][id=+lastname]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"+lastname\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"+lastname\"}",
+            "ValidationFingerprintHashSha256/current": "49af3ef3629f89daf881de5816bcb926065dfd2e483e701588a6b5db51ec03fe"
           }
         },
         {
@@ -326,10 +332,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=123.123.123.123][id=email]",
-            "ValidationFingerprint/current": "[host=123.123.123.123][id=email]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"123.123.123.123\",\"id\":\"email\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"123.123.123.123\",\"id\":\"email\"}",
+            "ValidationFingerprintHashSha256/current": "455846a8b37c276e1108cd44c715248f9833ad2380eb3d405b4b308081a51f52"
           }
         },
         {
@@ -367,10 +374,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=1234567890]",
-            "ValidationFingerprint/current": "[host=example.com][id=1234567890]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"1234567890\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"1234567890\"}",
+            "ValidationFingerprintHashSha256/current": "6d7fca1822a15eb4122d70a1e90f9a2b5eb01ab80b3bc05bfecf82d84ab3e228"
           }
         },
         {
@@ -408,10 +416,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example-one.com][id=email]",
-            "ValidationFingerprint/current": "[host=example-one.com][id=email]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example-one.com\",\"id\":\"email\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example-one.com\",\"id\":\"email\"}",
+            "ValidationFingerprintHashSha256/current": "21faa456a3dc79f4b64ddd88d15f85a2c1d12cd2e751a1d83443033d0bd3a14c"
           }
         },
         {
@@ -449,10 +458,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.co.jp][id=email]",
-            "ValidationFingerprint/current": "[host=example.co.jp][id=email]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.co.jp\",\"id\":\"email\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.co.jp\",\"id\":\"email\"}",
+            "ValidationFingerprintHashSha256/current": "85f8118c80cfa2b7224ecfec8c0549aae1354ace68d58fec6c5cf1352fdc9176"
           }
         },
         {
@@ -490,10 +500,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=firstname-lastname]",
-            "ValidationFingerprint/current": "[host=example.com][id=firstname-lastname]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"firstname-lastname\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"firstname-lastname\"}",
+            "ValidationFingerprintHashSha256/current": "7b1568b4224a6f6cdf89693824d902ddf2e6e863ffac453a43e494bcd786a5aa"
           }
         },
         {
@@ -531,10 +542,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=-lastname]",
-            "ValidationFingerprint/current": "[host=example.com][id=-lastname]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"-lastname\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"-lastname\"}",
+            "ValidationFingerprintHashSha256/current": "a891490ace1b81c6ffd8437b8f4d8681d1c283834de41c58d70b4079cdad8bf5"
           }
         },
         {
@@ -572,10 +584,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.name][id=email]",
-            "ValidationFingerprint/current": "[host=example.name][id=email]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.name\",\"id\":\"email\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.name\",\"id\":\"email\"}",
+            "ValidationFingerprintHashSha256/current": "395d54b0c8033029eb323d5c1897b118ed67d03484a8ce2ab476357ae342a596"
           }
         },
         {
@@ -613,10 +626,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.museum][id=email]",
-            "ValidationFingerprint/current": "[host=example.museum][id=email]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.museum\",\"id\":\"email\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.museum\",\"id\":\"email\"}",
+            "ValidationFingerprintHashSha256/current": "137a5d0d77669d3243b4c35dc5b8c3b493558076529712c54affe9f7ebf65768"
           }
         },
         {
@@ -654,10 +668,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=addressSurroundedBySpaces]",
-            "ValidationFingerprint/current": "[host=example.com][id=addressSurroundedBySpaces]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressSurroundedBySpaces\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressSurroundedBySpaces\"}",
+            "ValidationFingerprintHashSha256/current": "f26993f8e651f397ddefc8263f542cf00afd2fe2f9ba2c6a6eb32b7243d20915"
           }
         },
         {
@@ -695,10 +710,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=addressSurroundedByTabs]",
-            "ValidationFingerprint/current": "[host=example.com][id=addressSurroundedByTabs]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByTabs\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByTabs\"}",
+            "ValidationFingerprintHashSha256/current": "75590f733af68e77545a07d9b0df15d09606a9654c573b07bd5796c3b4a79274"
           }
         },
         {
@@ -736,10 +752,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=addressSurroundedByPipes]",
-            "ValidationFingerprint/current": "[host=example.com][id=addressSurroundedByPipes]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByPipes\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByPipes\"}",
+            "ValidationFingerprintHashSha256/current": "6b2211bbd453b659b127f7fa10efd54e82da8f0d8900257edd44d9e62f205ce1"
           }
         },
         {
@@ -777,10 +794,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=addressSurroundedByDoubleQuotes]",
-            "ValidationFingerprint/current": "[host=example.com][id=addressSurroundedByDoubleQuotes]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByDoubleQuotes\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressSurroundedByDoubleQuotes\"}",
+            "ValidationFingerprintHashSha256/current": "531f965863e2d7f0e947b81b89e9cb8fd4ce7507ae7dade3e6e7bcb0c6325eca"
           }
         },
         {
@@ -818,10 +836,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=addressSurroundedBySingleQuotes]",
-            "ValidationFingerprint/current": "[host=example.com][id=addressSurroundedBySingleQuotes]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressSurroundedBySingleQuotes\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressSurroundedBySingleQuotes\"}",
+            "ValidationFingerprintHashSha256/current": "652483acbfcd3e9ec3b21ca5e7da7d556f672795ec27b312d0ad2524c77c7be7"
           }
         },
         {
@@ -859,10 +878,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=htmlAddress]",
-            "ValidationFingerprint/current": "[host=example.com][id=htmlAddress]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"htmlAddress\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"htmlAddress\"}",
+            "ValidationFingerprintHashSha256/current": "4c3d02f6c57a1091391d8ad6f8f76a4f7b7b3fb9d4e873a885656b377a4fb8b8"
           }
         },
         {
@@ -900,10 +920,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=addressInTags]",
-            "ValidationFingerprint/current": "[host=example.com][id=addressInTags]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressInTags\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressInTags\"}",
+            "ValidationFingerprintHashSha256/current": "e86ac18b07ec7c95a83b56927cf65ddee97ed92051764ef92fdfe987202cba8d"
           }
         },
         {
@@ -941,10 +962,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=addressPrecededByColon]",
-            "ValidationFingerprint/current": "[host=example.com][id=addressPrecededByColon]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressPrecededByColon\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressPrecededByColon\"}",
+            "ValidationFingerprintHashSha256/current": "3c1ed9e5e1abae5d16957e3ba8e13107ecb86fd00adad658617e1b556f5dfcf2"
           }
         },
         {
@@ -982,10 +1004,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=addressPrecededByColonAndFollowedByPeriod]",
-            "ValidationFingerprint/current": "[host=example.com][id=addressPrecededByColonAndFollowedByPeriod]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressPrecededByColonAndFollowedByPeriod\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"addressPrecededByColonAndFollowedByPeriod\"}",
+            "ValidationFingerprintHashSha256/current": "a78d735afb8b9931ffaa7d22deacb896d10eb44b49f5beafa4e9ba332cfbf71a"
           }
         },
         {
@@ -1023,10 +1046,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=111.222.333.44444][id=email]",
-            "ValidationFingerprint/current": "[host=111.222.333.44444][id=email]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"111.222.333.44444\",\"id\":\"email\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"111.222.333.44444\",\"id\":\"email\"}",
+            "ValidationFingerprintHashSha256/current": "3b9da9ee40202cce44f31fd7a8cbeb5892b9941895240d350b782896375b45ff"
           }
         },
         {
@@ -1064,10 +1088,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=email..email]",
-            "ValidationFingerprint/current": "[host=example.com][id=email..email]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"email..email\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"email..email\"}",
+            "ValidationFingerprintHashSha256/current": "59526f5d4013143b8e2724c10e3b2a177c619fb1bd64b7a40c40e8326b93a212"
           }
         },
         {
@@ -1105,10 +1130,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example..com][id=email]",
-            "ValidationFingerprint/current": "[host=example..com][id=email]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example..com\",\"id\":\"email\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example..com\",\"id\":\"email\"}",
+            "ValidationFingerprintHashSha256/current": "04cc0f22f52f98e3965412c45b134a7cfe3528b536a276c0012682f1e46fefc4"
           }
         },
         {
@@ -1146,10 +1172,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=Abc..123]",
-            "ValidationFingerprint/current": "[host=example.com][id=Abc..123]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"Abc..123\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"Abc..123\"}",
+            "ValidationFingerprintHashSha256/current": "81b17dd4bda1e169ec202de4a7a01761f38ebc84d431293f2f2ca38a7bbc7059"
           }
         },
         {
@@ -1187,10 +1214,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=123]",
-            "ValidationFingerprint/current": "[host=example.com][id=123]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"123\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"123\"}",
+            "ValidationFingerprintHashSha256/current": "ddac3f2247bb1567420305bb01a606b7bdc7989981e4d57e04a9d93cf82d1238"
           }
         },
         {
@@ -1228,10 +1256,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=unusual.com]",
-            "ValidationFingerprint/current": "[host=example.com][id=unusual.com]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"unusual.com\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"unusual.com\"}",
+            "ValidationFingerprintHashSha256/current": "a40e92fe319fcceeb2d4bcb8a5cad3b903c0434da3e7ca16aa282286887ea399"
           }
         },
         {
@@ -1269,10 +1298,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=com]",
-            "ValidationFingerprint/current": "[host=example.com][id=com]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"com\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"com\"}",
+            "ValidationFingerprintHashSha256/current": "1851407f64e63aab8264a8e64d3acfb626540c681ee7a54a45d8272e1f56c242"
           }
         },
         {
@@ -1310,10 +1340,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=strange.example.com][id=unusual]",
-            "ValidationFingerprint/current": "[host=strange.example.com][id=unusual]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"strange.example.com\",\"id\":\"unusual\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"strange.example.com\",\"id\":\"unusual\"}",
+            "ValidationFingerprintHashSha256/current": "d414c6ab8389f79a3bd223133cb7a4f56490ab6f6f47fe61df3bcfcfde3c0236"
           }
         },
         {
@@ -1351,10 +1382,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=example]",
-            "ValidationFingerprint/current": "[host=example.com][id=example]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"example\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"example\"}",
+            "ValidationFingerprintHashSha256/current": "56e6b01ee8a611c3147cd3daee10a5bcd0b864bc77cb344842383f89b1ff46d3"
           }
         },
         {
@@ -1392,10 +1424,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=user]",
-            "ValidationFingerprint/current": "[host=example.com][id=user]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"user\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"user\"}",
+            "ValidationFingerprintHashSha256/current": "205d14de6fcdada6799dee7c6cfa8ec0f10478a42fb63902807bffb993a72740"
           }
         },
         {
@@ -1433,10 +1466,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[host=example.com][id=endOfLineCheck]",
-            "ValidationFingerprint/current": "[host=example.com][id=endOfLineCheck]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"host\":\"example.com\",\"id\":\"endOfLineCheck\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"host\":\"example.com\",\"id\":\"endOfLineCheck\"}",
+            "ValidationFingerprintHashSha256/current": "2d9347c5636c1d1c40c40e32c93729c751823af8b388ba97bbdb514831237a9e"
           }
         }
       ],

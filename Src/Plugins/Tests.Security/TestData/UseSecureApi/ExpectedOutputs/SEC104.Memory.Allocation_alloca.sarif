@@ -82,10 +82,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[id=_alloca]",
-            "ValidationFingerprint/current": "[id=_alloca]",
-            "SecretFingerprint/current": "",
-            "SecretHashSha256/current": ""
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"id\":\"_alloca\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"id\":\"_alloca\"}",
+            "ValidationFingerprintHashSha256/current": "fb4b5bb7c2018946fe51d38bcd1cfe1d283d0957c78f78a94493894dbecb1d3e"
           },
           "fixes": [
             {

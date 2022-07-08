@@ -99,10 +99,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[platform=Stripe]",
-            "ValidationFingerprint/current": "[secret=sk_test_01234567890123456789012345678901]",
-            "SecretFingerprint/current": "[secret=sk_test_01234567890123456789012345678901]",
-            "SecretHashSha256/current": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567"
+            "SecretHashSha256/current": "2897bdfa034fb6d0656497700721f7b44631ce67ac67a62c35f78a585e4633bb",
+            "AssetFingerprint/current": "{\"platform\":\"Stripe\"}",
+            "SecretFingerprint/current": "{\"secret\":\"sk_test_01234567890123456789012345678901\"}",
+            "ValidationFingerprint/current": "{\"secret\":\"sk_test_01234567890123456789012345678901\"}",
+            "ValidationFingerprintHashSha256/current": "2897bdfa034fb6d0656497700721f7b44631ce67ac67a62c35f78a585e4633bb"
           },
           "rank": 54.59
         },
@@ -144,10 +145,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[platform=Stripe]",
-            "ValidationFingerprint/current": "[secret=sk_live_01234567890123456789012345678901]",
-            "SecretFingerprint/current": "[secret=sk_live_01234567890123456789012345678901]",
-            "SecretHashSha256/current": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91"
+            "SecretHashSha256/current": "4931f4421b7b38427b5bd7e5c4d51975286cbf23ee31d51eccf10ec03681841f",
+            "AssetFingerprint/current": "{\"platform\":\"Stripe\"}",
+            "SecretFingerprint/current": "{\"secret\":\"sk_live_01234567890123456789012345678901\"}",
+            "ValidationFingerprint/current": "{\"secret\":\"sk_live_01234567890123456789012345678901\"}",
+            "ValidationFingerprintHashSha256/current": "4931f4421b7b38427b5bd7e5c4d51975286cbf23ee31d51eccf10ec03681841f"
           },
           "rank": 56.01
         },
@@ -189,10 +191,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[platform=Picatic]",
-            "ValidationFingerprint/current": "[secret=sk_test_01234567890123456789012345678901]",
-            "SecretFingerprint/current": "[secret=sk_test_01234567890123456789012345678901]",
-            "SecretHashSha256/current": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567"
+            "SecretHashSha256/current": "2897bdfa034fb6d0656497700721f7b44631ce67ac67a62c35f78a585e4633bb",
+            "AssetFingerprint/current": "{\"platform\":\"Picatic\"}",
+            "SecretFingerprint/current": "{\"secret\":\"sk_test_01234567890123456789012345678901\"}",
+            "ValidationFingerprint/current": "{\"secret\":\"sk_test_01234567890123456789012345678901\"}",
+            "ValidationFingerprintHashSha256/current": "2897bdfa034fb6d0656497700721f7b44631ce67ac67a62c35f78a585e4633bb"
           },
           "rank": 54.59
         },
@@ -234,10 +237,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[platform=Picatic]",
-            "ValidationFingerprint/current": "[secret=sk_live_01234567890123456789012345678901]",
-            "SecretFingerprint/current": "[secret=sk_live_01234567890123456789012345678901]",
-            "SecretHashSha256/current": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91"
+            "SecretHashSha256/current": "4931f4421b7b38427b5bd7e5c4d51975286cbf23ee31d51eccf10ec03681841f",
+            "AssetFingerprint/current": "{\"platform\":\"Picatic\"}",
+            "SecretFingerprint/current": "{\"secret\":\"sk_live_01234567890123456789012345678901\"}",
+            "ValidationFingerprint/current": "{\"secret\":\"sk_live_01234567890123456789012345678901\"}",
+            "ValidationFingerprintHashSha256/current": "4931f4421b7b38427b5bd7e5c4d51975286cbf23ee31d51eccf10ec03681841f"
           },
           "rank": 56.01
         }

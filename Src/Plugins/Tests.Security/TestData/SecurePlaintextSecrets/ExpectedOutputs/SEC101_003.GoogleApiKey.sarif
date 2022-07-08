@@ -83,10 +83,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/current": "[platform=Google]",
-            "ValidationFingerprint/current": "[secret=AIza0deadbeef00deadbeef00deadbeef00dead]",
-            "SecretFingerprint/current": "[secret=AIza0deadbeef00deadbeef00deadbeef00dead]",
-            "SecretHashSha256/current": "8bdc58a544a5b0d75ba5ff5d19e10fb001cb71064c3fccd7907253eb01768f1c"
+            "SecretHashSha256/current": "68fcb0c4aa13dabd119dfe2adaf028d9addfe9f9ca4e4be9bd0b364882f29dc6",
+            "AssetFingerprint/current": "{\"platform\":\"Google\"}",
+            "SecretFingerprint/current": "{\"secret\":\"AIza0deadbeef00deadbeef00deadbeef00dead\"}",
+            "ValidationFingerprint/current": "{\"secret\":\"AIza0deadbeef00deadbeef00deadbeef00dead\"}",
+            "ValidationFingerprintHashSha256/current": "68fcb0c4aa13dabd119dfe2adaf028d9addfe9f9ca4e4be9bd0b364882f29dc6"
           },
           "rank": 39.61
         }
