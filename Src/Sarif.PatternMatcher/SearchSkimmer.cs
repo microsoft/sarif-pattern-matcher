@@ -158,8 +158,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // Ensure that the byte of the file does not exceed the limit set by the
                     // file-size-in-kilobytes argument (which will be -1 if not set, in which
                     // case all files should be analyzed no matter their size).
-                    long fileSize = _fileSystem.GetFileSize(filePath);
-                    if (DoesTargetFileExceedSizeLimits(fileSize, context.FileSizeInKilobytes))
+                    long fileSize = _fileSystem.FileInfoLength(filePath);
+                    if (DoesTargetFileExceedSizeLimits(fileSize, context.MaxFileSizeInKilobytes))
                     {
                         return;
                     }
@@ -193,7 +193,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
             else
             {
-                if (DoesTargetFileExceedSizeLimits(context.FileContents.String.Length, context.FileSizeInKilobytes))
+                if (DoesTargetFileExceedSizeLimits(context.FileContents.String.Length, context.MaxFileSizeInKilobytes))
                 {
                     return;
                 }

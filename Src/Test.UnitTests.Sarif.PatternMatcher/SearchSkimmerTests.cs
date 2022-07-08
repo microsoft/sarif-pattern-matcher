@@ -61,7 +61,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             SearchDefinition definition = CreateDefaultSearchDefinition(expr);
 
             var mockFileSystem = new Mock<IFileSystem>();
-            mockFileSystem.Setup(x => x.GetFileSize(It.IsAny<string>())).Returns(10);
+            mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
 
             string originalMessage = definition.Message;
 
@@ -127,7 +127,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             SearchDefinition definition = CreateDefaultSearchDefinition(expr);
 
             var mockFileSystem = new Mock<IFileSystem>();
-            mockFileSystem.Setup(x => x.GetFileSize(It.IsAny<string>())).Returns(10);
+            mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
 
             var logger = new TestLogger();
             var context = new AnalyzeContext
@@ -150,7 +150,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             SearchDefinition definition = CreateDefaultSearchDefinition(expression);
 
             var mockFileSystem = new Mock<IFileSystem>();
-            mockFileSystem.Setup(x => x.GetFileSize(It.IsAny<string>())).Returns(10);
+            mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
 
             var logger = new TestLogger();
             var context = new AnalyzeContext
@@ -412,7 +412,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             definition.FileNameAllowRegex = string.Empty;
 
             var mockFileSystem = new Mock<IFileSystem>();
-            mockFileSystem.Setup(x => x.GetFileSize(It.IsAny<string>())).Returns(10);
+            mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
 
             var logger = new TestLogger();
             var context = new AnalyzeContext
@@ -475,7 +475,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 var mockFileSystem = new Mock<IFileSystem>();
 
-                mockFileSystem.Setup(x => x.GetFileSize(It.IsAny<string>())).Returns(testCase.fileSize);
+                mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(testCase.fileSize);
 
                 MatchExpression expr = CreateGuidDetectingMatchExpression();
                 SearchDefinition definition = CreateDefaultSearchDefinition(expr);
@@ -488,7 +488,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     TargetUri = new Uri(filePath),
                     Logger = logger,
-                    FileSizeInKilobytes = testCase.maxFileSize
+                    MaxFileSizeInKilobytes = testCase.maxFileSize
                 };
 
                 SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
@@ -521,7 +521,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
                 Logger = logger,
-                FileSizeInKilobytes = 1,
+                MaxFileSizeInKilobytes = 1,
                 Rule = reportingDescriptor
             };
 

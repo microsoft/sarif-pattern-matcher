@@ -230,7 +230,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
 
-            mockFileSystem.Setup(x => x.GetFileSize(SmallTargetName)).Returns(fileContents.Length);
+            mockFileSystem.Setup(x => x.FileInfoLength(SmallTargetName)).Returns(fileContents.Length);
 
             Program.FileSystem = mockFileSystem.Object;
 
@@ -315,8 +315,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
 
-            mockFileSystem.Setup(x => x.GetFileSize(smallTargetPath)).Returns(fileContents.Length);
-            mockFileSystem.Setup(x => x.GetFileSize(largeTargetPath)).Returns(fileSizeInBytes);
+            mockFileSystem.Setup(x => x.FileInfoLength(smallTargetPath)).Returns(fileContents.Length);
+            mockFileSystem.Setup(x => x.FileInfoLength(largeTargetPath)).Returns(fileSizeInBytes);
 
             Program.FileSystem = mockFileSystem.Object;
 

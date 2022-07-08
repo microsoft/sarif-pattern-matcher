@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 
 using CommandLine;
@@ -35,6 +36,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             "deny-regex",
             HelpText = "A regular expression used to suppress scanning for any file or directory path that matches the regex.")]
         public string FileNameDenyRegex { get; internal set; }
+
+        [Option(
+            "file-size-in-kb",
+            HelpText = "The maximum file size (in kilobytes) that will be analyzed.",
+            Default = 1024)]
+        [Obsolete("Use --max-file-size-in-kb instead.")]
+        public int FileSizeInKilobytes { get; internal set; }
 
         [Option(
             "disable-dynamic-validation-caching",

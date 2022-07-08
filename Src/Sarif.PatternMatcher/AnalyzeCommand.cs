@@ -291,6 +291,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy, filePath);
 
+            // Type or member is obsolete.
+#pragma warning disable CS0618
+            if (options.FileSizeInKilobytes != options.MaxFileSizeInKilobytes && options.FileSizeInKilobytes != default)
+            {
+                context.MaxFileSizeInKilobytes = options.FileSizeInKilobytes;
+            }
+#pragma warning restore CS0618
+            else
+            {
+                context.MaxFileSizeInKilobytes = options.MaxFileSizeInKilobytes;
+            }
+
             context.Traces =
                 options.Traces.Any() ?
                     (DefaultTraces)Enum.Parse(typeof(DefaultTraces), string.Join("|", options.Traces)) :
@@ -300,7 +312,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.EnhancedReporting = options.EnhancedReporting;
             context.DynamicValidation = options.DynamicValidation;
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;
-            context.FileSizeInKilobytes = options.FileSizeInKilobytes > 0 ? options.FileSizeInKilobytes : 1024;
+            context.MaxFileSizeInKilobytes = options.FileSizeInKilobytes > 0 ? options.FileSizeInKilobytes : 1024;
             context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
             context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
 
