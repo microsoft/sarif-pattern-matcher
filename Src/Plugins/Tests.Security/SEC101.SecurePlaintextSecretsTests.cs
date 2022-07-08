@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Microsoft.CodeAnalysis.Test.Utilities.Sarif;
+
 using Xunit;
 using Xunit.Abstractions;
 
@@ -21,5 +23,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         [Fact]
         public void SecurePlaintextSecrets_EndToEndFunctionalTests()
             => RunAllTests();
+
+        [Fact]
+        public void AllSecurityRules_ShouldHaveValidators()
+        {
+            ReflectionTests.VerifyAllValidatorsExist("SEC101.SecurePlaintextSecrets.json", typeof(HttpAuthorizationRequestHeaderValidator).Assembly);
+        }
     }
 }

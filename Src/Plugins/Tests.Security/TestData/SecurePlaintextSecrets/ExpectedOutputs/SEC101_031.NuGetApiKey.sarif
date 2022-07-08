@@ -83,11 +83,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[platform=NuGet]",
-            "ValidationFingerprint/v1": "[secret=oy2adeadbeef0deadbeaf00deadbeefedeadbee50deada]",
-            "ValidationFingerprintHash/v1": "bffc0dfed763580a72800bf5c2fc1effa0de2b2ba6dfe7be28b0b23a09a7755a",
-            "AssetFingerprint/v2": "{\"platform\":\"NuGet\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"oy2adeadbeef0deadbeaf00deadbeefedeadbee50deada\"}"
+            "SecretHashSha256/current": "982fd661c4a76d11df2a7e296344f626cac35652cfcf061309768f2847b976c6",
+            "AssetFingerprint/current": "{\"platform\":\"NuGet\"}",
+            "SecretFingerprint/current": "{\"secret\":\"oy2adeadbeef0deadbeaf00deadbeefedeadbee50deada\"}",
+            "ValidationFingerprint/current": "{\"secret\":\"oy2adeadbeef0deadbeaf00deadbeefedeadbee50deada\"}",
+            "ValidationFingerprintHashSha256/current": "bffc0dfed763580a72800bf5c2fc1effa0de2b2ba6dfe7be28b0b23a09a7755a"
           },
           "rank": 39.75
         }

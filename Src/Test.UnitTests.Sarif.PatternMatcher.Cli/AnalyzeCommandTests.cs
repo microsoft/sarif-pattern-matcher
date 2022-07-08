@@ -7,7 +7,7 @@ using System.IO;
 
 using FluentAssertions;
 
-using Microsoft.VisualStudio.Services.Common;
+using Microsoft.CodeAnalysis.Sarif.Driver;
 
 using Moq;
 
@@ -22,6 +22,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         private const string SmallTargetName = "smallTarget.txt";
         private const string LargeTargetName = "largeTarget.txt";
         //private const string RootDirectory = "e:\repros";
+
+        [Fact]
+        public void AnalyzeCommand_DefinitionsArgumentIsRequired()
+        {
+            string[] args = new[]
+            {
+                    "analyze",
+                    Guid.NewGuid().ToString(),
+                    $"-o", Guid.NewGuid().ToString(),
+            };
+
+            Program.ClearUnitTestData();
+            int result = Program.Main(args);
+            result.Should().Be(CommandBase.FAILURE);
+
+            // This validation is sufficient because the null check for an
+            // instantiated analyze command verifies that we failed the 
+            // CommandLine parsing code and error out before attempting
+            // analysis.
+            Program.InstantiatedAnalyzeCommand.Should().BeNull();
+        }
 
         [Fact]
         public void AnalyzeCommand_SingleLineRuleBasic()
@@ -218,23 +239,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             // Search definitions location and loading
             mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
-            //mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>()))
-            //    .Returns<string>((path) =>
-            //    {
-            //        return (path == smallTargetPath || path == largeTargetPath) ?
-            //          fileContents :
-            //          definitionsText;
-            //    });
 
             // Shared strings location and loading
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
                 .Returns<string>((path) => { return GetSharedStrings(); });
-
-            //mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
-            //    .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
-
-            //mockFileSystem.Setup(x => x.FileInfoLength(smallTargetPath)).Returns(fileContents.Length);
-            //mockFileSystem.Setup(x => x.FileInfoLength(largeTargetPath)).Returns(fileSizeInBytes);
 
             Program.FileSystem = mockFileSystem.Object;
 
@@ -254,6 +262,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             int result = Program.Main(args);
             result.Should().Be(1);
+
+            Program.InstantiatedAnalyzeCommand.ExecutionException.Should().NotBeNull();
+            var eax = Program.InstantiatedAnalyzeCommand.ExecutionException as ExitApplicationException<ExitReason>;
+            eax.Should().NotBeNull();
+            eax.ExitReason.Should().Be(ExitReason.InvalidCommandLineOption);
         }
 
         private SarifLog RunAnalyzeCommand(string definitionsText, string fileContents)
@@ -395,7 +408,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 };
 
                 int result = Program.Main(args);
-                result.Should().Be(0);
+                result.Should().Be(CommandBase.SUCCESS);
 
                 sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
             }

@@ -72,10 +72,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 RuleId = "TestRule",
                 Fingerprints = new Dictionary<string, string>
                 {
-                    { SearchSkimmer.AssetFingerprint, original.GetAssetFingerprintText() },
-                    { SearchSkimmer.AssetFingerprintV2, original.GetAssetFingerprintText(jsonFormat: true) },
-                    { SearchSkimmer.ValidationFingerprint, original.GetValidationFingerprintText() },
-                    { SearchSkimmer.ValidationFingerprintV2, original.GetValidationFingerprintText(jsonFormat: true)},
+                    { SearchSkimmer.AssetFingerprintCurrent, original.GetAssetFingerprint() },
+                    { SearchSkimmer.ValidationFingerprintCurrent, original.GetValidationFingerprint() },
+                    { SearchSkimmer.SecretFingerprintCurrent, original.GetSecretFingerprint() },
                 },
                 Message = new Message
                 {
@@ -86,12 +85,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             result = validatingVisitor.VisitResult(result);
 
             // AssetFingerprint should be updated.
-            result.Fingerprints[SearchSkimmer.AssetFingerprint].Should().Be(expected.GetAssetFingerprintText());
-            result.Fingerprints[SearchSkimmer.AssetFingerprintV2].Should().Be(expected.GetAssetFingerprintText(jsonFormat: true));
+            result.Fingerprints[SearchSkimmer.AssetFingerprintCurrent].Should().Be(expected.GetAssetFingerprint());
 
             // ValidationFingerprint should be the same as original.
-            result.Fingerprints[SearchSkimmer.ValidationFingerprint].Should().Be(original.GetValidationFingerprintText());
-            result.Fingerprints[SearchSkimmer.ValidationFingerprintV2].Should().Be(original.GetValidationFingerprintText(jsonFormat: true));
+            result.Fingerprints[SearchSkimmer.ValidationFingerprintCurrent].Should().Be(original.GetValidationFingerprint());
+            result.Fingerprints[SearchSkimmer.SecretFingerprintCurrent].Should().Be(original.GetSecretFingerprint());
         }
 
         private static readonly ValidatingVisitorTestCase[] s_validatingVisitorTestCases = new[]

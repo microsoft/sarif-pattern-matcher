@@ -295,9 +295,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             // Type or member is obsolete.
 #pragma warning disable CS0618
-            if(options.FileSizeInKilobytes != options.MaxFileSizeInKilobytes)
+            if (options.FileSizeInKilobytes != options.MaxFileSizeInKilobytes)
             {
-                if(options.FileSizeInKilobytes != DefaultMaxFileSizeInKilobytes && options.MaxFileSizeInKilobytes != DefaultMaxFileSizeInKilobytes)
+                if (options.FileSizeInKilobytes != DefaultMaxFileSizeInKilobytes && options.MaxFileSizeInKilobytes != DefaultMaxFileSizeInKilobytes)
                 {
                     string message = $"Both `--max-file-size-in-kb {options.MaxFileSizeInKilobytes}` and "
                         + $"`--file-size-in-kb {options.MaxFileSizeInKilobytes}` were used. "
@@ -307,7 +307,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     ThrowExitApplicationException(context: context, ExitReason.InvalidCommandLineOption, innerException);
                 }
-                else if(options.MaxFileSizeInKilobytes != DefaultMaxFileSizeInKilobytes)
+                else if (options.MaxFileSizeInKilobytes != DefaultMaxFileSizeInKilobytes)
                 {
                     context.MaxFileSizeInKilobytes = options.FileSizeInKilobytes;
                 }
@@ -331,8 +331,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.EnhancedReporting = options.EnhancedReporting;
             context.DynamicValidation = options.DynamicValidation;
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;
-            context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
             context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
+            context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
 
             return context;
         }
