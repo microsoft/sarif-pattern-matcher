@@ -21,6 +21,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         [ThreadStatic]
         internal static Exception RuntimeException;
 
+        [ThreadStatic]
+        internal static AnalyzeCommand InstantiatedAnalyzeCommand;
+
         internal static int Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -53,13 +56,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
               .MapResult(
                 (AnalyzeDatabaseOptions options) => new AnalyzeDatabaseCommand().Run(options),
                 (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),
-                (AnalyzeOptions options) => new AnalyzeCommand(FileSystem).Run(options),
+                (AnalyzeOptions options) => RunAnalyzeCommand(options),
                 (ExportRulesMetatadaOptions options) => new ExportRulesMetatadaCommand().Run(options),
                 (ExportSearchDefinitionsOptions options) => new ExportSearchDefinitionsCommand().Run(options),
                 (ValidateOptions options) => new ValidateCommand().Run(options),
                 _ => isValidHelpCommand || isVersionCommand
                         ? CommandBase.SUCCESS
                         : CommandBase.FAILURE);
+        }
+
+        internal static void ClearUnitTestData()
+        {
+            FileSystem = null;
+            RuntimeException = null;
+            InstantiatedAnalyzeCommand = null;
+        }
+
+        internal static int RunAnalyzeCommand(AnalyzeOptions options)
+        {
+            InstantiatedAnalyzeCommand = new AnalyzeCommand(fileSystem: FileSystem);
+            return InstantiatedAnalyzeCommand.Run(options);
         }
 
         private static bool IsValidVerbName(string verb)
