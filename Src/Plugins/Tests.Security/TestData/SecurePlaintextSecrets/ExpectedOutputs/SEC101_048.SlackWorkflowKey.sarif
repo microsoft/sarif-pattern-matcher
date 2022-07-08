@@ -87,7 +87,7 @@
             "AssetFingerprint/current": "{\"id\":\"0123456789\",\"platform\":\"Slack\"}",
             "SecretFingerprint/current": "{\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}",
             "ValidationFingerprint/current": "{\"id\":\"0123456789\",\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}",
-            "ValidationFingerprintHashSha256/current": "1fe834794fe9e9457091993653bf084e8a1015c1cbbe3ecbb43de016c134985d"
+            "ValidationFingerprintHashSha256/current": "904b560d930b8b7497aefc45f1249618b2afd955d425163beef027b9cc42c096"
           },
           "rank": 52.82
         }

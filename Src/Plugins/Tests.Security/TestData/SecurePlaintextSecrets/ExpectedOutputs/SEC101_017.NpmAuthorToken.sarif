@@ -87,7 +87,7 @@
             "AssetFingerprint/current": "{\"platform\":\"Npm\"}",
             "SecretFingerprint/current": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777ca\"}",
             "ValidationFingerprint/current": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777ca\"}",
-            "ValidationFingerprintHashSha256/current": "8353c03c8a8bb6f139a28a0eb0b6aa821c6e2d05607eac41285d834204f87b85"
+            "ValidationFingerprintHashSha256/current": "748c862ce66f04dd431cef753972f4901ff7b960faea29c5a0df580abe855ca3"
           },
           "rank": 52.63
         },
@@ -133,7 +133,7 @@
             "AssetFingerprint/current": "{\"platform\":\"Npm\"}",
             "SecretFingerprint/current": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777cb\"}",
             "ValidationFingerprint/current": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777cb\"}",
-            "ValidationFingerprintHashSha256/current": "2fc4513ceeb418b38ca61fdc8e0d6a9a86b2df83921f05636a8c67e457d74ab6"
+            "ValidationFingerprintHashSha256/current": "1336f4b9b15c79836867464c8d6448eaad30eacd48e0f513d9f9f97fe6280cc4"
           },
           "rank": 52.33
         }

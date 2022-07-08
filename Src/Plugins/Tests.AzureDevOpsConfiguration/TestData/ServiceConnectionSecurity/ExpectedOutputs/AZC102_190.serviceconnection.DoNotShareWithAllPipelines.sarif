@@ -88,7 +88,7 @@
             "AssetFingerprint/current": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"platform\":\"AzureDevOps\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}",
             "SecretFingerprint/current": "{}",
             "ValidationFingerprint/current": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}",
-            "ValidationFingerprintHashSha256/current": "0b0f6fb69f8ee3c2ace4e123865208e155d1616ac977c3dfd9acfd4934afb0be"
+            "ValidationFingerprintHashSha256/current": "e4d78c2bd639c80de9a75619e350d6f2f942eefdd202afe01365a0fcda26597e"
           }
         }
       ],

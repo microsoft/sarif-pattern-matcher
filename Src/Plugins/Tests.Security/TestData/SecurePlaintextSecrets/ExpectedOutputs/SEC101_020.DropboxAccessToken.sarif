@@ -87,7 +87,7 @@
             "AssetFingerprint/current": "{\"platform\":\"Dropbox\"}",
             "SecretFingerprint/current": "{\"secret\":\"3g2u1OFlqngAAAAAAAAAARsJBUfljyXkQImmVaieedYBk9VlSGxEP_N6V84qPoZ4\"}",
             "ValidationFingerprint/current": "{\"secret\":\"3g2u1OFlqngAAAAAAAAAARsJBUfljyXkQImmVaieedYBk9VlSGxEP_N6V84qPoZ4\"}",
-            "ValidationFingerprintHashSha256/current": "a82d89d49250a6b25fbeff9f6b3f75d1d8ba569d8a25c37b2c8815eca67a48c2"
+            "ValidationFingerprintHashSha256/current": "a9601c8a48a47e520853a7c1cc8914755d21dc33d5709ac02055f86806900dd9"
           },
           "rank": 72.61
         },
@@ -133,7 +133,7 @@
             "AssetFingerprint/current": "{\"platform\":\"Dropbox\"}",
             "SecretFingerprint/current": "{\"secret\":\"sl.AtS80GLHpwtH4xnmVKHE_odL4vp3m_3RVO_eH0Swdj3QkyFNBIV0kmb3jdDdzz-EwrZ9HiJO3gIKMCF3ovbf-MG6z5DVEFgfI8jzet2F5tze_bmdCeZJzsDPBKRSV9gxOi3JMS8\"}",
             "ValidationFingerprint/current": "{\"secret\":\"sl.AtS80GLHpwtH4xnmVKHE_odL4vp3m_3RVO_eH0Swdj3QkyFNBIV0kmb3jdDdzz-EwrZ9HiJO3gIKMCF3ovbf-MG6z5DVEFgfI8jzet2F5tze_bmdCeZJzsDPBKRSV9gxOi3JMS8\"}",
-            "ValidationFingerprintHashSha256/current": "3240f5f9f1526cc5153221464f5042f1b434bb648922a14ba683e3482f696b88"
+            "ValidationFingerprintHashSha256/current": "3d5664590399d57ecc016cbcb5e9a2eaaadf762d0365f8e9e9e84f36ba7a860c"
           },
           "rank": 79.21
         }

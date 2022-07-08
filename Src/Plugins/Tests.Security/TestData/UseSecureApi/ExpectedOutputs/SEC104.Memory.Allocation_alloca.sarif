@@ -86,7 +86,7 @@
             "AssetFingerprint/current": "{\"id\":\"_alloca\"}",
             "SecretFingerprint/current": "{}",
             "ValidationFingerprint/current": "{\"id\":\"_alloca\"}",
-            "ValidationFingerprintHashSha256/current": "fb4b5bb7c2018946fe51d38bcd1cfe1d283d0957c78f78a94493894dbecb1d3e"
+            "ValidationFingerprintHashSha256/current": "b7def400029e894d96939eb68b0a7a65a04509f2c20b83ba65fb68be26a56e81"
           },
           "fixes": [
             {

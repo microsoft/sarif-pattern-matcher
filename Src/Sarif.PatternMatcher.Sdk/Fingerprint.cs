@@ -206,7 +206,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return entropy;
         }
 
-        public string GetComprehensiveFingerprint(bool jsonFormat = false) => ToString(this, denyList: s_emptyDenyList, jsonFormat);
+        public string GetComprehensiveFingerprint() => ToString(this, denyList: s_emptyDenyList, jsonFormat: false);
 
         public string GetAssetFingerprint()
         {
@@ -220,8 +220,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public string GetValidationFingerprintHash()
         {
             string validationFingerprint = IgnorePathInFingerprint
-                ? ToString(this, denyList: s_assetAndPathOnlyKeys, jsonFormat: true)
-                : ToString(this, denyList: s_assetOnlyKeys, jsonFormat: true);
+                ? ToString(this, denyList: s_assetAndPathOnlyKeys, jsonFormat: false)
+                : ToString(this, denyList: s_assetOnlyKeys, jsonFormat: false);
 
             return ComputeHash(validationFingerprint);
         }
