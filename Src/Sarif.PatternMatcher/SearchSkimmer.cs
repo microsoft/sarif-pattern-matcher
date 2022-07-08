@@ -616,8 +616,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 string filePath = context.TargetUri.GetFilePath();
-
-                IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
+                string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
+                IEnumerable<ValidationResult> validationResults = _validators.Validate(ruleName,
                                                                                        context,
                                                                                        mergedGroups,
                                                                                        groups,
@@ -716,7 +716,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (_validators != null && matchExpression.IsValidatorEnabled)
                 {
-                    IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
+                    string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
+                    IEnumerable<ValidationResult> validationResults = _validators.Validate(ruleName,
                                                                                            context,
                                                                                            match,
                                                                                            out bool pluginSupportsDynamicValidation);
@@ -865,7 +866,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 groups["scanTargetFullPath"] = new FlexMatch() { Value = filePath };
-                IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Name,
+                string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
+                IEnumerable<ValidationResult> validationResults = _validators.Validate(ruleName,
                                                                                        context,
                                                                                        groups,
                                                                                        out bool pluginSupportsDynamicValidation);

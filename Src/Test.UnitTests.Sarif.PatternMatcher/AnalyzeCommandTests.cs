@@ -5,7 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+
+using CommandLine;
 
 using FluentAssertions;
 
@@ -23,6 +26,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeCommandTests
     {
+        private static AnalyzeOptions CreateDefaultAnalyzeOptions()
+        {
+            var result = new AnalyzeOptions();
+            Type analyzeOptionsType = typeof(AnalyzeOptions);
+
+            foreach (PropertyInfo property in analyzeOptionsType.GetProperties())
+            {
+                var optionAttribute = (OptionAttribute)property.GetCustomAttribute(typeof(OptionAttribute));
+                if (optionAttribute == null || optionAttribute.Default == null)
+                {
+                    continue;
+                }
+
+                property.SetValue(result, optionAttribute.Default);
+            }
+            return result;
+        }
+
         [Fact]
         public void AnalyzeCommand_SimpleAnalysis()
         {
@@ -62,7 +83,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var definitions = new SearchDefinitions()
             {
                 Definitions = new List<SearchDefinition>(new[]
-                            {
+                {
                     new SearchDefinition()
                     {
                         Name = "MinimalRule", Id = "Test1002",
@@ -428,7 +449,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var definitions = new SearchDefinitions()
             {
                 Definitions = new List<SearchDefinition>(new[]
-                            {
+                {
                     new SearchDefinition()
                     {
                         Name = "MinimalRule", Id = "Test1002",
