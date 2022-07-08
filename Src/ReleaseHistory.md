@@ -16,10 +16,10 @@
 - UER => eliminate unhandled exceptions in rules
 - UEE => eliminate unhandled exceptions in engine
 
-## *v1.9.1*
+## Unreleased
 
 - FEATURE: Enable response file parsing provided by driver framework. Arguments (e.g., '@Commands.rsp') prefixed with a '@' character will be evaluated as a file path to a text file that contains commands to be injected on the command-line. 
-
+- RE2.Native will now compile in all environments with the latest Windows SDK 10.0.* installed. [#607](https://github.com/microsoft/sarif-pattern-matcher/pull/607). Our current release pipelines build NuGet packages with Windows SDK version 10.0.22000.
 
 ## *v1.9.0*
 
