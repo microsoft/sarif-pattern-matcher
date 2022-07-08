@@ -19,12 +19,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {
-        public const string AssetFingerprint = "AssetFingerprint/v1";
-        public const string ValidationFingerprint = "ValidationFingerprint/v1";
-        public const string ValidationFingerprintHash = "ValidationFingerprintHash/v1";
 
-        public const string AssetFingerprintV2 = "AssetFingerprint/v2";
-        public const string ValidationFingerprintV2 = "ValidationFingerprint/v2";
+        public const string SecretHashSha256Current = "SecretHashSha256/current";
+        public const string AssetFingerprintCurrent = "AssetFingerprint/current";
+        public const string SecretFingerprintCurrent = "SecretFingerprint/current";
+        public const string ValidationFingerprintCurrent = "ValidationFingerprint/current";
+        public const string ValidationFingerprintHashSha256Current = "ValidationFingerprintHashSha256/current";
 
         public const string DynamicValidationNotEnabled = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
 
@@ -413,9 +413,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             int dynamicValidationMessageIndex = validatorMessage.IndexOf(DynamicValidationNotEnabled, StringComparison.OrdinalIgnoreCase);
 
-            if (dynamicValidationMessageIndex == -1) { return null; }
-
-            return validatorMessage.Substring(dynamicValidationMessageIndex, DynamicValidationNotEnabled.Length);
+            return dynamicValidationMessageIndex != -1
+                ? validatorMessage.Substring(dynamicValidationMessageIndex, DynamicValidationNotEnabled.Length)
+                : null;
         }
 
         internal static Fingerprint CreateFingerprintFromMatch(IDictionary<string, FlexMatch> match)
@@ -1034,7 +1034,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private void ConstructResultAndLogForFileNameRegex(AnalyzeContext context,
+        private static void ConstructResultAndLogForFileNameRegex(AnalyzeContext context,
                                                            MatchExpression matchExpression,
                                                            FailureLevel level,
                                                            ResultKind kind,
@@ -1059,7 +1059,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                           validatorMessage: NormalizeValidatorMessage(validatorMessage),
                                                           messageArguments);
 
-            Result result = this.ConstructResult(context.TargetUri,
+            Result result = ConstructResult(context.TargetUri,
                                                  reportingDescriptor.Id,
                                                  level,
                                                  kind,
@@ -1087,7 +1087,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 fileText: context.FileContents);
         }
 
-        private Result ConstructResult(
+        private static Result ConstructResult(
             Uri targetUri,
             string ruleId,
             FailureLevel level,
@@ -1161,7 +1161,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        private Dictionary<string, string> BuildFingerprints(Fingerprint fingerprint, out double rank)
+        private static Dictionary<string, string> BuildFingerprints(Fingerprint fingerprint, out double rank)
         {
             rank = -1;
 
@@ -1174,28 +1174,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             return new Dictionary<string, string>()
             {
-                { AssetFingerprint, fingerprint.GetAssetFingerprintText() },
-                { ValidationFingerprint, fingerprint.GetValidationFingerprintText() },
-                { ValidationFingerprintHash, fingerprint.GetValidationFingerprintHashText() },
-                { AssetFingerprintV2, fingerprint.GetAssetFingerprintText(jsonFormat: true) },
-                { ValidationFingerprintV2, fingerprint.GetValidationFingerprintText(jsonFormat: true) },
+                { SecretHashSha256Current, fingerprint.GetSecretHash() },
+                { AssetFingerprintCurrent, fingerprint.GetAssetFingerprint() },
+                { SecretFingerprintCurrent, fingerprint.GetSecretFingerprint() },
+                { ValidationFingerprintCurrent, fingerprint.GetValidationFingerprint() },
+                { ValidationFingerprintHashSha256Current, fingerprint.GetValidationFingerprintHash() },
             };
         }
 
-        private FlexString Decode(string value)
+        private static FlexString Decode(string value)
         {
             byte[] bytes = Convert.FromBase64String(value);
             return Encoding.ASCII.GetString(bytes);
         }
 
-        private void ExpandArguments(SimpleFix fix, Dictionary<string, string> argumentNameToValueMap)
+        private static void ExpandArguments(SimpleFix fix, Dictionary<string, string> argumentNameToValueMap)
         {
             fix.Find = ExpandArguments(fix.Find, argumentNameToValueMap);
             fix.ReplaceWith = ExpandArguments(fix.ReplaceWith, argumentNameToValueMap);
             fix.Description = ExpandArguments(fix.Description, argumentNameToValueMap);
         }
 
-        private string ExpandArguments(string text, Dictionary<string, string> argumentNameToValueMap)
+        private static string ExpandArguments(string text, Dictionary<string, string> argumentNameToValueMap)
         {
             foreach (KeyValuePair<string, string> kv in argumentNameToValueMap)
             {
@@ -1205,7 +1205,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return text;
         }
 
-        private void AddFixToResult(FlexMatch flexMatch, SimpleFix simpleFix, Result result, Region region)
+        private static void AddFixToResult(FlexMatch flexMatch, SimpleFix simpleFix, Result result, Region region)
         {
             result.Fixes ??= new List<Fix>();
 
@@ -1237,7 +1237,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             result.Fixes.Add(fix);
         }
 
-        private Dictionary<string, int> GenerateIndicesForNamedArguments(ref string defaultMessageString)
+        private static Dictionary<string, int> GenerateIndicesForNamedArguments(ref string defaultMessageString)
         {
             var namedArgumentsToIndexMap = new Dictionary<string, int>();
 
@@ -1257,7 +1257,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return namedArgumentsToIndexMap;
         }
 
-        private IList<string> GetMessageArguments(IDictionary<string, FlexMatch> groups,
+        private static IList<string> GetMessageArguments(IDictionary<string, FlexMatch> groups,
                                                   Dictionary<string, int> namedArgumentToIndexMap,
                                                   string scanTargetPath,
                                                   string validatorMessage,

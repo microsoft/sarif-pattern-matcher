@@ -79,11 +79,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=123-45-6789]",
-            "ValidationFingerprintHash/v1": "e24918902d0a1fcc33cbded1f97ce06a372acb99a255b0a934600e5abcacd6d7",
-            "AssetFingerprint/v2": "{}",
-            "ValidationFingerprint/v2": "{\"secret\":\"123-45-6789\"}"
+            "SecretHashSha256/current": "11e9207babcd9683ac3ebe611f71d7a364f5beedb77ab6aedda642900b3c3cbf",
+            "AssetFingerprint/current": "{}",
+            "SecretFingerprint/current": "{\"secret\":\"123-45-6789\"}",
+            "ValidationFingerprint/current": "{\"secret\":\"123-45-6789\"}",
+            "ValidationFingerprintHashSha256/current": "e24918902d0a1fcc33cbded1f97ce06a372acb99a255b0a934600e5abcacd6d7"
           },
           "rank": 46.82
         },
@@ -121,11 +121,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=111-45-6789]",
-            "ValidationFingerprintHash/v1": "45b4cec67315682d05693fec840472963e76da5ae6dfe071bee8ae662712e4d6",
-            "AssetFingerprint/v2": "{}",
-            "ValidationFingerprint/v2": "{\"secret\":\"111-45-6789\"}"
+            "SecretHashSha256/current": "dc71acf4f9703ec7325bca06b81c7231124a8a7c7c17a2117c322af2fbe039d8",
+            "AssetFingerprint/current": "{}",
+            "SecretFingerprint/current": "{\"secret\":\"111-45-6789\"}",
+            "ValidationFingerprint/current": "{\"secret\":\"111-45-6789\"}",
+            "ValidationFingerprintHashSha256/current": "45b4cec67315682d05693fec840472963e76da5ae6dfe071bee8ae662712e4d6"
           },
           "rank": 40.65
         },
@@ -163,11 +163,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=123-44-6789]",
-            "ValidationFingerprintHash/v1": "d79d4d3f92125fb103c1619cc4701b61313119b25ff5cc9b0573d2e747a9d46e",
-            "AssetFingerprint/v2": "{}",
-            "ValidationFingerprint/v2": "{\"secret\":\"123-44-6789\"}"
+            "SecretHashSha256/current": "d9238c0e3015301c9fc7f7682440b940001e36e4c42537bcfe09962fefc3ac41",
+            "AssetFingerprint/current": "{}",
+            "SecretFingerprint/current": "{\"secret\":\"123-44-6789\"}",
+            "ValidationFingerprint/current": "{\"secret\":\"123-44-6789\"}",
+            "ValidationFingerprintHashSha256/current": "d79d4d3f92125fb103c1619cc4701b61313119b25ff5cc9b0573d2e747a9d46e"
           },
           "rank": 44.23
         },
@@ -205,11 +205,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "",
-            "ValidationFingerprint/v1": "[secret=123-45-6666]",
-            "ValidationFingerprintHash/v1": "0ff33c39a69c033141f37181b7881af96cd4997738752932f7984613b5212e6e",
-            "AssetFingerprint/v2": "{}",
-            "ValidationFingerprint/v2": "{\"secret\":\"123-45-6666\"}"
+            "SecretHashSha256/current": "0d0cf347e087a202f94d8757274bc513a62a2dbf86d2097466dcf68e6ac92920",
+            "AssetFingerprint/current": "{}",
+            "SecretFingerprint/current": "{\"secret\":\"123-45-6666\"}",
+            "ValidationFingerprint/current": "{\"secret\":\"123-45-6666\"}",
+            "ValidationFingerprintHashSha256/current": "0ff33c39a69c033141f37181b7881af96cd4997738752932f7984613b5212e6e"
           },
           "rank": 36.43
         }

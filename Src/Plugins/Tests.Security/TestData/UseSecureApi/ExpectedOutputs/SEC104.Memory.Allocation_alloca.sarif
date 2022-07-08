@@ -82,11 +82,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[id=_alloca]",
-            "ValidationFingerprint/v1": "[id=_alloca]",
-            "ValidationFingerprintHash/v1": "b7def400029e894d96939eb68b0a7a65a04509f2c20b83ba65fb68be26a56e81",
-            "AssetFingerprint/v2": "{\"id\":\"_alloca\"}",
-            "ValidationFingerprint/v2": "{\"id\":\"_alloca\"}"
+            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/current": "{\"id\":\"_alloca\"}",
+            "SecretFingerprint/current": "{}",
+            "ValidationFingerprint/current": "{\"id\":\"_alloca\"}",
+            "ValidationFingerprintHashSha256/current": "b7def400029e894d96939eb68b0a7a65a04509f2c20b83ba65fb68be26a56e81"
           },
           "fixes": [
             {

@@ -83,11 +83,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[platform=PayPal]",
-            "ValidationFingerprint/v1": "[secret=1111111111012345$01234567890123456789012345678901]",
-            "ValidationFingerprintHash/v1": "46d5c6342d738e19ec1b89df0f6933f408cb6a5d4412e3751af4fb837a5aa186",
-            "AssetFingerprint/v2": "{\"platform\":\"PayPal\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"1111111111012345$01234567890123456789012345678901\"}"
+            "SecretHashSha256/current": "3e023c9f79a4c9337077de4a711c3add6e416cd0716ad6f726ede1f87fb25720",
+            "AssetFingerprint/current": "{\"platform\":\"PayPal\"}",
+            "SecretFingerprint/current": "{\"secret\":\"1111111111012345$01234567890123456789012345678901\"}",
+            "ValidationFingerprint/current": "{\"secret\":\"1111111111012345$01234567890123456789012345678901\"}",
+            "ValidationFingerprintHashSha256/current": "46d5c6342d738e19ec1b89df0f6933f408cb6a5d4412e3751af4fb837a5aa186"
           },
           "rank": 44.87
         },
@@ -129,11 +129,11 @@
             }
           ],
           "fingerprints": {
-            "AssetFingerprint/v1": "[platform=PayPal]",
-            "ValidationFingerprint/v1": "[secret=2222222222012345$01234567890123456789012345678901]",
-            "ValidationFingerprintHash/v1": "e0e406e1513fbcdb3d512f332ed0830cce2a3806104c560c4c460c4c4d1c216f",
-            "AssetFingerprint/v2": "{\"platform\":\"PayPal\"}",
-            "ValidationFingerprint/v2": "{\"secret\":\"2222222222012345$01234567890123456789012345678901\"}"
+            "SecretHashSha256/current": "8d34f9813cfeebf8ae5356fabb6a9e49d9db049742614e8aa4d20f4a4885a242",
+            "AssetFingerprint/current": "{\"platform\":\"PayPal\"}",
+            "SecretFingerprint/current": "{\"secret\":\"2222222222012345$01234567890123456789012345678901\"}",
+            "ValidationFingerprint/current": "{\"secret\":\"2222222222012345$01234567890123456789012345678901\"}",
+            "ValidationFingerprintHashSha256/current": "e0e406e1513fbcdb3d512f332ed0830cce2a3806104c560c4c460c4c4d1c216f"
           },
           "rank": 45.36
         }
