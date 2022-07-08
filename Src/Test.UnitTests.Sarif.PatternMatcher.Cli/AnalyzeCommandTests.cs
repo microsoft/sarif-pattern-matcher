@@ -98,10 +98,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         [Fact]
         public void AnalyzeCommand_ShouldAnalyzeTargetWithinSizeLimit()
         {
-            var random = new Random();
-            int randomMaxFileSize = random.Next(1, int.MaxValue - 1);
-            long randomFileSize = (long)random.Next(2, int.MaxValue - 1);
-
             var testCases = new[] {
                 new {
                     fileSize = long.MaxValue,
@@ -120,7 +116,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 },
                 new {
                     fileSize = (long)ulong.MinValue,
-                    maxFileSize = randomMaxFileSize,
+                    maxFileSize = 2000,
                     expectedResult = 4
                 },
                 new {
@@ -129,7 +125,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     expectedResult = 4
                 },
                 new {
-                    fileSize = randomFileSize,
+                    fileSize = (long)1024,
                     maxFileSize = int.MaxValue,
                     expectedResult = 4
                 },
@@ -196,6 +192,68 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             Assert.True(string.Equals(sarifLogWithLargeFileExcluded.Runs[0].Artifacts[0].Location.Uri, smallTargetPath) &&
                 !string.Equals(sarifLogWithLargeFileExcluded.Runs[0].Artifacts[0].Location.Uri, largeTargetPath));
+        }
+
+        [Fact]
+        public void AnalyzeCommand_ShouldThrowExceptionForConflictingFileSizeOptions()
+        {
+            int maxFileSizeInKilobytes = 1;
+            int fileSizeInKilobytes = 2;
+
+            string rootDirectory = @"e:\repros";
+            string smallTargetPath = Path.Combine(rootDirectory, SmallTargetName);
+            string largeTargetPath = Path.Combine(rootDirectory, LargeTargetName);
+            string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
+
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.DirectoryExists(rootDirectory)).Returns(true);
+            mockFileSystem.Setup(x => x.DirectoryEnumerateFiles(rootDirectory,
+                                                                SmallTargetName,
+                                                                It.IsAny<SearchOption>()))
+                                                                    .Returns(new[] { smallTargetPath });
+            mockFileSystem.Setup(x => x.DirectoryEnumerateFiles(rootDirectory,
+                                                                LargeTargetName,
+                                                                It.IsAny<SearchOption>()))
+                                                                    .Returns(new[] { largeTargetPath });
+
+            // Search definitions location and loading
+            mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
+            //mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>()))
+            //    .Returns<string>((path) =>
+            //    {
+            //        return (path == smallTargetPath || path == largeTargetPath) ?
+            //          fileContents :
+            //          definitionsText;
+            //    });
+
+            // Shared strings location and loading
+            mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
+                .Returns<string>((path) => { return GetSharedStrings(); });
+
+            //mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+            //    .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
+
+            //mockFileSystem.Setup(x => x.FileInfoLength(smallTargetPath)).Returns(fileContents.Length);
+            //mockFileSystem.Setup(x => x.FileInfoLength(largeTargetPath)).Returns(fileSizeInBytes);
+
+            Program.FileSystem = mockFileSystem.Object;
+
+            string tempFileName = Path.GetTempFileName();
+            string sarifLogFileName = $"{tempFileName}.sarif";
+
+            string[] args = new[]
+            {
+                "analyze",
+                largeTargetPath,
+                smallTargetPath,
+                $"-d", searchDefinitionsPath,
+                $"-o", sarifLogFileName,
+                $"--file-size-in-kb", fileSizeInKilobytes.ToString(),
+                $"--max-file-size-in-kb", maxFileSizeInKilobytes.ToString(),
+            };
+
+            int result = Program.Main(args);
+            result.Should().Be(1);
         }
 
         private SarifLog RunAnalyzeCommand(string definitionsText, string fileContents)

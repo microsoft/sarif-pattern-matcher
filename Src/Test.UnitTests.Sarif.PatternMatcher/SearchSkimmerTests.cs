@@ -431,16 +431,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void SearchSkimmer_ShouldNotEvaluateTooLargeFiles()
         {
-            var random = new Random();
-            int randomMaxFileSize = random.Next(1, int.MaxValue - 1);
-            long randomFileSize = (long)random.Next(1, int.MaxValue - 1);
-
             var testCases = new[]
             {
-                new {
-                    fileSize = randomFileSize,
-                    maxFileSize = (int)uint.MinValue + 1,
-                },
                 new {
                     fileSize = long.MaxValue,
                     maxFileSize = int.MinValue,
@@ -459,14 +451,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 },
                 new {
                     fileSize = (long)ulong.MinValue,
-                    maxFileSize = randomMaxFileSize,
-                },
-                new {
-                    fileSize = (long)ulong.MinValue,
-                    maxFileSize = int.MaxValue,
-                },
-                new {
-                    fileSize = randomFileSize,
                     maxFileSize = int.MaxValue,
                 },
             };
@@ -481,6 +465,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 SearchDefinition definition = CreateDefaultSearchDefinition(expr);
 
                 string filePath = $"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}";
+                var uri = new Uri(filePath);
 
                 var logger = new TestLogger();
 
@@ -496,6 +481,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 exception.Should().BeNull();
 
                 logger.Results.Should().BeNull();
+
+                mockFileSystem.Verify(x => x.FileInfoLength(uri.LocalPath), Times.Once());
             }
         }
 
@@ -525,7 +512,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Rule = reportingDescriptor
             };
 
-            SearchSkimmer skimmer = CreateSkimmer(definition);
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>())).Throws(new FileNotFoundException());
+
+            SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
             Exception exception = Record.Exception(() => skimmer.Analyze(context));
             exception.Should().BeNull();
 

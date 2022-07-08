@@ -16,6 +16,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
+        private const int DefaultMaxFileSizeInKilobytes = 1024;
+
         public AnalyzeCommand(IFileSystem fileSystem = null)
             : base(fileSystem)
         {
@@ -293,15 +295,32 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             // Type or member is obsolete.
 #pragma warning disable CS0618
-            if (options.FileSizeInKilobytes != options.MaxFileSizeInKilobytes && options.FileSizeInKilobytes != default)
+            if(options.FileSizeInKilobytes != options.MaxFileSizeInKilobytes)
             {
-                context.MaxFileSizeInKilobytes = options.FileSizeInKilobytes;
+                if(options.FileSizeInKilobytes != DefaultMaxFileSizeInKilobytes && options.MaxFileSizeInKilobytes != DefaultMaxFileSizeInKilobytes)
+                {
+                    string message = $"Both `--max-file-size-in-kb {options.MaxFileSizeInKilobytes}` and "
+                        + $"`--file-size-in-kb {options.MaxFileSizeInKilobytes}` were used. "
+                        + "Please remove the obsolete option `--file-size-in-kb`.";
+
+                    var innerException = new ArgumentException(message);
+
+                    ThrowExitApplicationException(context: context, ExitReason.InvalidCommandLineOption, innerException);
+                }
+                else if(options.MaxFileSizeInKilobytes != DefaultMaxFileSizeInKilobytes)
+                {
+                    context.MaxFileSizeInKilobytes = options.FileSizeInKilobytes;
+                }
+                else
+                {
+                    context.MaxFileSizeInKilobytes = options.MaxFileSizeInKilobytes;
+                }
             }
-#pragma warning restore CS0618
             else
             {
-                context.MaxFileSizeInKilobytes = options.MaxFileSizeInKilobytes;
+                context.MaxFileSizeInKilobytes = DefaultMaxFileSizeInKilobytes;
             }
+#pragma warning restore CS0618
 
             context.Traces =
                 options.Traces.Any() ?
@@ -312,7 +331,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.EnhancedReporting = options.EnhancedReporting;
             context.DynamicValidation = options.DynamicValidation;
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;
-            context.MaxFileSizeInKilobytes = options.FileSizeInKilobytes > 0 ? options.FileSizeInKilobytes : 1024;
             context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
             context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
 
