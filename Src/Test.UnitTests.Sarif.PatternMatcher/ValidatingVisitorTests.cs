@@ -74,7 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     { SearchSkimmer.AssetFingerprintCurrent, original.GetAssetFingerprint() },
                     { SearchSkimmer.ValidationFingerprintCurrent, original.GetValidationFingerprint() },
-                    { SearchSkimmer.UniqueSecretFingerprintCurrent, original.GetUniqueSecretFingerprint() },
+                    { SearchSkimmer.SecretFingerprintCurrent, original.GetUniqueSecretFingerprint() },
                 },
                 Message = new Message
                 {
@@ -89,7 +89,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             // ValidationFingerprint should be the same as original.
             result.Fingerprints[SearchSkimmer.ValidationFingerprintCurrent].Should().Be(original.GetValidationFingerprint());
-            result.Fingerprints[SearchSkimmer.UniqueSecretFingerprintCurrent].Should().Be(original.GetUniqueSecretFingerprint());
+            result.Fingerprints[SearchSkimmer.SecretFingerprintCurrent].Should().Be(original.GetUniqueSecretFingerprint());
         }
 
         private static readonly ValidatingVisitorTestCase[] s_validatingVisitorTestCases = new[]

@@ -19,11 +19,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {
-        public const string UniqueSecretHashCurrent = "UniqueSecretHash256/current";
+        public const string SecretHashSha256 = "SecretHashSha256/current";
 
         public const string AssetFingerprintCurrent = "AssetFingerprint/current";
+        public const string SecretFingerprintCurrent = "SecretFingerprint/current";
         public const string ValidationFingerprintCurrent = "ValidationFingerprint/current";
-        public const string UniqueSecretFingerprintCurrent = "UniqueSecretFingerprint/current";
 
         public const string DynamicValidationNotEnabled = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
 
@@ -1173,10 +1173,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             return new Dictionary<string, string>()
             {
+                { SecretHashSha256, fingerprint.GetUniqueSecretHash() },
                 { AssetFingerprintCurrent, fingerprint.GetAssetFingerprint() },
+                { SecretFingerprintCurrent, fingerprint.GetUniqueSecretFingerprint() },
                 { ValidationFingerprintCurrent, fingerprint.GetValidationFingerprint() },
-                { UniqueSecretFingerprintCurrent, fingerprint.GetUniqueSecretFingerprint() },
-                { UniqueSecretHashCurrent, fingerprint.GetUniqueSecretHash() },
             };
         }
 

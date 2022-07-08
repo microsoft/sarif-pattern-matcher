@@ -344,7 +344,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Result result = ((TestLogger)context.Logger).Results[0];
             result.Fingerprints[SearchSkimmer.AssetFingerprintCurrent].Should().Be("[id=test][platform=GitHub]");
             result.Fingerprints[SearchSkimmer.ValidationFingerprintCurrent].Should().Be("[id=test][secret=secret]");
-            result.Fingerprints[SearchSkimmer.UniqueSecretFingerprintCurrent].Should().Be("[secret=secret]");
+            result.Fingerprints[SearchSkimmer.SecretFingerprintCurrent].Should().Be("[secret=secret]");
         }
 
         [Fact]

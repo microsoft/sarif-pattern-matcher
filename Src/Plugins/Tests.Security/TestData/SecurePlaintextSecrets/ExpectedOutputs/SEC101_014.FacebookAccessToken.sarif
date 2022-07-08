@@ -85,8 +85,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=Facebook]",
             "ValidationFingerprint/current": "[secret=EAACEdEose0cBAtestjunk111111]",
-            "UniqueSecretFingerprint/current": "[secret=EAACEdEose0cBAtestjunk111111]",
-            "UniqueSecretHash256/current": "edfa7f059db84fd0c3a1dbc8011f86849725f19c20f18bfb8e21a2cf690c5752"
+            "SecretFingerprint/current": "[secret=EAACEdEose0cBAtestjunk111111]",
+            "SecretHashSha256/current": "edfa7f059db84fd0c3a1dbc8011f86849725f19c20f18bfb8e21a2cf690c5752"
           },
           "rank": 52.85
         },
@@ -130,8 +130,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=Facebook]",
             "ValidationFingerprint/current": "[secret=EAACEdEose0cBAtestjunk22222222]",
-            "UniqueSecretFingerprint/current": "[secret=EAACEdEose0cBAtestjunk22222222]",
-            "UniqueSecretHash256/current": "f882ac7a29fbe83f340fb4040af4c2a19a2cc156aca6bbb95dc833142571916e"
+            "SecretFingerprint/current": "[secret=EAACEdEose0cBAtestjunk22222222]",
+            "SecretHashSha256/current": "f882ac7a29fbe83f340fb4040af4c2a19a2cc156aca6bbb95dc833142571916e"
           },
           "rank": 51.28
         }

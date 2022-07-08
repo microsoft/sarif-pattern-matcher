@@ -85,8 +85,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=SendGrid]",
             "ValidationFingerprint/current": "[secret=SG.0deadbeef0deadbeef0dea.deadbeef0deadbeef0deadbeef0deadbeef0deadbee]",
-            "UniqueSecretFingerprint/current": "[secret=SG.0deadbeef0deadbeef0dea.deadbeef0deadbeef0deadbeef0deadbeef0deadbee]",
-            "UniqueSecretHash256/current": "39a60e0e3fa2033b1fbb8c8cb81e01b033a0be7cfe5c7bc497a7015f1585b79f"
+            "SecretFingerprint/current": "[secret=SG.0deadbeef0deadbeef0dea.deadbeef0deadbeef0deadbeef0deadbeef0deadbee]",
+            "SecretHashSha256/current": "39a60e0e3fa2033b1fbb8c8cb81e01b033a0be7cfe5c7bc497a7015f1585b79f"
           },
           "rank": 38.09
         }

@@ -73,8 +73,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[thumbprint=391550988FF0B079A0E712728F2EB95D542EF58F]",
             "ValidationFingerprint/current": "[thumbprint=391550988FF0B079A0E712728F2EB95D542EF58F]",
-            "UniqueSecretFingerprint/current": "",
-            "UniqueSecretHash256/current": ""
+            "SecretFingerprint/current": "",
+            "SecretHashSha256/current": ""
           }
         }
       ],

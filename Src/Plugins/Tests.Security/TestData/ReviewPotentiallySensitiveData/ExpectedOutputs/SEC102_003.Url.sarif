@@ -80,8 +80,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[host=msn.com][path=/test]",
             "ValidationFingerprint/current": "[host=msn.com][path=/test][port=443]",
-            "UniqueSecretFingerprint/current": "",
-            "UniqueSecretHash256/current": ""
+            "SecretFingerprint/current": "",
+            "SecretHashSha256/current": ""
           }
         },
         {
@@ -119,8 +119,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[host=msn.com][path=/test/]",
             "ValidationFingerprint/current": "[host=msn.com][path=/test/][port=443]",
-            "UniqueSecretFingerprint/current": "",
-            "UniqueSecretHash256/current": ""
+            "SecretFingerprint/current": "",
+            "SecretHashSha256/current": ""
           }
         },
         {
@@ -158,8 +158,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[host=msn.com][part=?foo=bar][path=/test]",
             "ValidationFingerprint/current": "[host=msn.com][path=/test][port=443]",
-            "UniqueSecretFingerprint/current": "",
-            "UniqueSecretHash256/current": ""
+            "SecretFingerprint/current": "",
+            "SecretHashSha256/current": ""
           }
         }
       ],

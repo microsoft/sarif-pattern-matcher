@@ -85,8 +85,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=NuGet]",
             "ValidationFingerprint/current": "[secret=oy2adeadbeef0deadbeaf00deadbeefedeadbee50deada]",
-            "UniqueSecretFingerprint/current": "[secret=oy2adeadbeef0deadbeaf00deadbeefedeadbee50deada]",
-            "UniqueSecretHash256/current": "bffc0dfed763580a72800bf5c2fc1effa0de2b2ba6dfe7be28b0b23a09a7755a"
+            "SecretFingerprint/current": "[secret=oy2adeadbeef0deadbeaf00deadbeefedeadbee50deada]",
+            "SecretHashSha256/current": "bffc0dfed763580a72800bf5c2fc1effa0de2b2ba6dfe7be28b0b23a09a7755a"
           },
           "rank": 39.75
         }

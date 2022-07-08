@@ -85,8 +85,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=Crates]",
             "ValidationFingerprint/current": "[secret=ciodeaddeaddead123412341234dead1234]",
-            "UniqueSecretFingerprint/current": "[secret=ciodeaddeaddead123412341234dead1234]",
-            "UniqueSecretHash256/current": "9ae3596b73b37748eac0f276b2ce08fa96a6ceebcd3270e5d4ec573df0e27e28"
+            "SecretFingerprint/current": "[secret=ciodeaddeaddead123412341234dead1234]",
+            "SecretHashSha256/current": "9ae3596b73b37748eac0f276b2ce08fa96a6ceebcd3270e5d4ec573df0e27e28"
           },
           "rank": 43.89
         }

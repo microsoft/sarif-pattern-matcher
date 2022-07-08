@@ -85,8 +85,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=AzureDevOps]",
             "ValidationFingerprint/current": "[secret=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]",
-            "UniqueSecretFingerprint/current": "[secret=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]",
-            "UniqueSecretHash256/current": "ac1cfad77095aba4ae1cc93880abfba4f396f4db89f0954a8b8327790f0f0edd"
+            "SecretFingerprint/current": "[secret=h5lxeqkz4zujkyvzg5emkejgelxj4x64tvyzclprekuloawbbz5q]",
+            "SecretHashSha256/current": "ac1cfad77095aba4ae1cc93880abfba4f396f4db89f0954a8b8327790f0f0edd"
           },
           "rank": 62.14
         }

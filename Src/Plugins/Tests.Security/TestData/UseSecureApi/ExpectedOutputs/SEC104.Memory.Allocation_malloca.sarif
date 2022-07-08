@@ -86,8 +86,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[id=_malloca]",
             "ValidationFingerprint/current": "[id=_malloca]",
-            "UniqueSecretFingerprint/current": "",
-            "UniqueSecretHash256/current": ""
+            "SecretFingerprint/current": "",
+            "SecretHashSha256/current": ""
           }
         }
       ],

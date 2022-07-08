@@ -111,8 +111,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "",
             "ValidationFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretHash256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "SecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
+            "SecretHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
           },
           "rank": 54.42,
           "fixes": [
@@ -181,8 +181,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "",
             "ValidationFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretHash256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "SecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
+            "SecretHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
           },
           "rank": 54.42,
           "fixes": [
@@ -252,8 +252,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "",
             "ValidationFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretHash256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "SecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
+            "SecretHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
           },
           "rank": 54.42,
           "fixes": [
@@ -322,8 +322,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "",
             "ValidationFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretHash256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "SecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
+            "SecretHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
           },
           "rank": 54.42
         },
@@ -361,8 +361,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "",
             "ValidationFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretHash256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "SecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
+            "SecretHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
           },
           "rank": 54.42
         },
@@ -400,8 +400,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "",
             "ValidationFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretHash256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "SecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
+            "SecretHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
           },
           "rank": 54.42
         },
@@ -439,8 +439,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "",
             "ValidationFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
-            "UniqueSecretHash256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "SecretFingerprint/current": "[secret=4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9]",
+            "SecretHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
           },
           "rank": 54.42
         }

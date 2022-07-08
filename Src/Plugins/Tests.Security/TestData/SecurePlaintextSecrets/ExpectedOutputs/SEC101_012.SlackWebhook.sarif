@@ -85,8 +85,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[id=T01JYS3KLKU][platform=Slack]",
             "ValidationFingerprint/current": "[id=T01JYS3KLKU][secret=B0123456789/deedbeefdeaffeeddeadbeef]",
-            "UniqueSecretFingerprint/current": "[secret=B0123456789/deedbeefdeaffeeddeadbeef]",
-            "UniqueSecretHash256/current": "20dd7983afebcf5e9498d2b952587a49144169a5dfff37061f1de3c4e6fa2119"
+            "SecretFingerprint/current": "[secret=B0123456789/deedbeefdeaffeeddeadbeef]",
+            "SecretHashSha256/current": "20dd7983afebcf5e9498d2b952587a49144169a5dfff37061f1de3c4e6fa2119"
           },
           "rank": 49.76
         }

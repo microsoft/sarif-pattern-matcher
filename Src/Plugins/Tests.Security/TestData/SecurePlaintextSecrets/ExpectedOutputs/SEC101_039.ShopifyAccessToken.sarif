@@ -85,8 +85,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=Shopify]",
             "ValidationFingerprint/current": "[secret=shpat_11111111110123456789012345678901]",
-            "UniqueSecretFingerprint/current": "[secret=shpat_11111111110123456789012345678901]",
-            "UniqueSecretHash256/current": "44b02244ed103c0dba6bc8e2eccb37772cd24d4db0371fd1b29c671d83b6838f"
+            "SecretFingerprint/current": "[secret=shpat_11111111110123456789012345678901]",
+            "SecretHashSha256/current": "44b02244ed103c0dba6bc8e2eccb37772cd24d4db0371fd1b29c671d83b6838f"
           },
           "rank": 49.08
         },
@@ -130,8 +130,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=Shopify]",
             "ValidationFingerprint/current": "[secret=shpca_22222222220123456789012345678901]",
-            "UniqueSecretFingerprint/current": "[secret=shpca_22222222220123456789012345678901]",
-            "UniqueSecretHash256/current": "9f414c7bd38a02bb5e8d7b0a20da82370b9ef354aff990749be8538780a945ee"
+            "SecretFingerprint/current": "[secret=shpca_22222222220123456789012345678901]",
+            "SecretHashSha256/current": "9f414c7bd38a02bb5e8d7b0a20da82370b9ef354aff990749be8538780a945ee"
           },
           "rank": 49.96
         },
@@ -175,8 +175,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=Shopify]",
             "ValidationFingerprint/current": "[secret=shppa_33333333330123456789012345678901]",
-            "UniqueSecretFingerprint/current": "[secret=shppa_33333333330123456789012345678901]",
-            "UniqueSecretHash256/current": "6928bc4f432e9e9e8b9062bb8053da186c70de097cc4a0e7e8aad26ab0501169"
+            "SecretFingerprint/current": "[secret=shppa_33333333330123456789012345678901]",
+            "SecretHashSha256/current": "6928bc4f432e9e9e8b9062bb8053da186c70de097cc4a0e7e8aad26ab0501169"
           },
           "rank": 49.21
         }

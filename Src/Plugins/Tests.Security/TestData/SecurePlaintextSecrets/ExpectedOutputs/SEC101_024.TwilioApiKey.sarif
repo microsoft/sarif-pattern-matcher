@@ -85,8 +85,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=Twilio]",
             "ValidationFingerprint/current": "[secret=SK11111111110123456789012345678901]",
-            "UniqueSecretFingerprint/current": "[secret=SK11111111110123456789012345678901]",
-            "UniqueSecretHash256/current": "4089baba3337080da9ea52d6a99f31959752c1b6c43b8decc9cabf76753872fd"
+            "SecretFingerprint/current": "[secret=SK11111111110123456789012345678901]",
+            "SecretHashSha256/current": "4089baba3337080da9ea52d6a99f31959752c1b6c43b8decc9cabf76753872fd"
           },
           "rank": 43.75
         },
@@ -130,8 +130,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=Twilio]",
             "ValidationFingerprint/current": "[secret=SK22222222220123456789012345678901]",
-            "UniqueSecretFingerprint/current": "[secret=SK22222222220123456789012345678901]",
-            "UniqueSecretHash256/current": "134a06770fee91ed61fa3b52a93f7c5309ebd6b0fdecea550ee3b90cd0f72bf5"
+            "SecretFingerprint/current": "[secret=SK22222222220123456789012345678901]",
+            "SecretHashSha256/current": "134a06770fee91ed61fa3b52a93f7c5309ebd6b0fdecea550ee3b90cd0f72bf5"
           },
           "rank": 44.72
         }

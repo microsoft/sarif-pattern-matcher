@@ -84,8 +84,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[id=_alloca]",
             "ValidationFingerprint/current": "[id=_alloca]",
-            "UniqueSecretFingerprint/current": "",
-            "UniqueSecretHash256/current": ""
+            "SecretFingerprint/current": "",
+            "SecretHashSha256/current": ""
           },
           "fixes": [
             {

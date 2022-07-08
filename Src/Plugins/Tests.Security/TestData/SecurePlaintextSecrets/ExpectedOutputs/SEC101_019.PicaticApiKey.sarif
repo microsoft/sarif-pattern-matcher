@@ -101,8 +101,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=Stripe]",
             "ValidationFingerprint/current": "[secret=sk_test_01234567890123456789012345678901]",
-            "UniqueSecretFingerprint/current": "[secret=sk_test_01234567890123456789012345678901]",
-            "UniqueSecretHash256/current": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567"
+            "SecretFingerprint/current": "[secret=sk_test_01234567890123456789012345678901]",
+            "SecretHashSha256/current": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567"
           },
           "rank": 54.59
         },
@@ -146,8 +146,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=Stripe]",
             "ValidationFingerprint/current": "[secret=sk_live_01234567890123456789012345678901]",
-            "UniqueSecretFingerprint/current": "[secret=sk_live_01234567890123456789012345678901]",
-            "UniqueSecretHash256/current": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91"
+            "SecretFingerprint/current": "[secret=sk_live_01234567890123456789012345678901]",
+            "SecretHashSha256/current": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91"
           },
           "rank": 56.01
         },
@@ -191,8 +191,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=Picatic]",
             "ValidationFingerprint/current": "[secret=sk_test_01234567890123456789012345678901]",
-            "UniqueSecretFingerprint/current": "[secret=sk_test_01234567890123456789012345678901]",
-            "UniqueSecretHash256/current": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567"
+            "SecretFingerprint/current": "[secret=sk_test_01234567890123456789012345678901]",
+            "SecretHashSha256/current": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567"
           },
           "rank": 54.59
         },
@@ -236,8 +236,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "[platform=Picatic]",
             "ValidationFingerprint/current": "[secret=sk_live_01234567890123456789012345678901]",
-            "UniqueSecretFingerprint/current": "[secret=sk_live_01234567890123456789012345678901]",
-            "UniqueSecretHash256/current": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91"
+            "SecretFingerprint/current": "[secret=sk_live_01234567890123456789012345678901]",
+            "SecretHashSha256/current": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91"
           },
           "rank": 56.01
         }

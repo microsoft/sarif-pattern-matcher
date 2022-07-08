@@ -72,8 +72,8 @@
           "fingerprints": {
             "AssetFingerprint/current": "",
             "ValidationFingerprint/current": "[secret=07939EFF34140F8D8BBCC3DD59F958A72979C806BF02797AC2F8841C37541FAE]",
-            "UniqueSecretFingerprint/current": "[secret=07939EFF34140F8D8BBCC3DD59F958A72979C806BF02797AC2F8841C37541FAE]",
-            "UniqueSecretHash256/current": "09d422748177efd90b0212a3072f3896978fe0404509f8d199a9bd1bb3f4fabb"
+            "SecretFingerprint/current": "[secret=07939EFF34140F8D8BBCC3DD59F958A72979C806BF02797AC2F8841C37541FAE]",
+            "SecretHashSha256/current": "09d422748177efd90b0212a3072f3896978fe0404509f8d199a9bd1bb3f4fabb"
           },
           "rank": 55.25
         }
