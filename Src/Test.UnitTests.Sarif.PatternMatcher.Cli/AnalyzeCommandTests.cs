@@ -21,7 +21,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
     {
         private const string SmallTargetName = "smallTarget.txt";
         private const string LargeTargetName = "largeTarget.txt";
-        //private const string RootDirectory = "e:\repros";
 
         [Fact]
         public void AnalyzeCommand_DefinitionsArgumentIsRequired()
