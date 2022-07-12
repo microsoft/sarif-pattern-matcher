@@ -126,6 +126,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     expectedResult = 2
                 },
                 new {
+                    fileSize = (long)2000,
+                    maxFileSize = 1,
+                    expectedResult = 2
+                },
+                new {
                     fileSize = long.MaxValue,
                     maxFileSize = int.MaxValue,
                     expectedResult = 2
@@ -158,8 +163,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     maxFileSizeInKilobytes: testCase.maxFileSize,
                     fileSizeInBytes: testCase.fileSize);
 
+                SarifLog obsoleteOptionLogFile = RunAnalyzeCommandWithFileSizeLimits(
+                    maxFileSizeInKilobytes: testCase.maxFileSize,
+                    fileSizeInBytes: testCase.fileSize,
+                    shouldUseObsoleteOption: true);
+
                 logFile.Runs.Count.Should().Be(1);
                 logFile.Runs[0].Results.Count.Should().Be(testCase.expectedResult);
+                obsoleteOptionLogFile.Runs.Count.Should().Be(1);
+                obsoleteOptionLogFile.Runs[0].Results.Count.Should().Be(testCase.expectedResult);
             }
         }
 
@@ -342,7 +354,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         private SarifLog RunAnalyzeCommandWithFileSizeLimits(
             int maxFileSizeInKilobytes,
-            long fileSizeInBytes)
+            long fileSizeInBytes,
+            bool shouldUseObsoleteOption = false)
         {
             string definitionsText = GetIntrafileRuleDefinition();
 
@@ -397,15 +410,31 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             try
             {
-                string[] args = new[]
+                string[] args;
+                if (shouldUseObsoleteOption)
                 {
-                    "analyze",
-                    largeTargetPath,
-                    smallTargetPath,
-                    $"-d", searchDefinitionsPath,
-                    $"-o", sarifLogFileName,
-                    $"--file-size-in-kb", maxFileSizeInKilobytes.ToString(),
-                };
+                    args = new[]
+                    {
+                        "analyze",
+                        largeTargetPath,
+                        smallTargetPath,
+                        $"-d", searchDefinitionsPath,
+                        $"-o", sarifLogFileName,
+                        $"--file-size-in-kb", maxFileSizeInKilobytes.ToString(),
+                    };
+                }
+                else
+                {
+                    args = new[]
+                    {
+                        "analyze",
+                        largeTargetPath,
+                        smallTargetPath,
+                        $"-d", searchDefinitionsPath,
+                        $"-o", sarifLogFileName,
+                        $"--max-file-size-in-kb", maxFileSizeInKilobytes.ToString(),
+                        };
+                }
 
                 int result = Program.Main(args);
                 result.Should().Be(CommandBase.SUCCESS);

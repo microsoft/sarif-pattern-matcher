@@ -309,11 +309,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
                 else if (options.MaxFileSizeInKilobytes != DefaultMaxFileSizeInKilobytes)
                 {
-                    context.MaxFileSizeInKilobytes = options.FileSizeInKilobytes;
+                    context.MaxFileSizeInKilobytes = options.MaxFileSizeInKilobytes;
                 }
                 else
                 {
-                    context.MaxFileSizeInKilobytes = options.MaxFileSizeInKilobytes;
+                    context.MaxFileSizeInKilobytes = options.FileSizeInKilobytes;
                 }
             }
             else
