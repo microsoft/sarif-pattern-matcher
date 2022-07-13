@@ -293,35 +293,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy, filePath);
 
-            // Type or member is obsolete.
-#pragma warning disable CS0618
-            if (options.FileSizeInKilobytes != options.MaxFileSizeInKilobytes)
-            {
-                if (options.FileSizeInKilobytes != DefaultMaxFileSizeInKilobytes && options.MaxFileSizeInKilobytes != DefaultMaxFileSizeInKilobytes)
-                {
-                    string message = $"Both `--max-file-size-in-kb {options.MaxFileSizeInKilobytes}` and "
-                        + $"`--file-size-in-kb {options.MaxFileSizeInKilobytes}` were used. "
-                        + "Please remove the obsolete option `--file-size-in-kb`.";
-
-                    var innerException = new ArgumentException(message);
-
-                    ThrowExitApplicationException(context: context, ExitReason.InvalidCommandLineOption, innerException);
-                }
-                else if (options.MaxFileSizeInKilobytes != DefaultMaxFileSizeInKilobytes)
-                {
-                    context.MaxFileSizeInKilobytes = options.MaxFileSizeInKilobytes;
-                }
-                else
-                {
-                    context.MaxFileSizeInKilobytes = options.FileSizeInKilobytes;
-                }
-            }
-            else
-            {
-                context.MaxFileSizeInKilobytes = DefaultMaxFileSizeInKilobytes;
-            }
-#pragma warning restore CS0618
-
             context.Traces =
                 options.Traces.Any() ?
                     (DefaultTraces)Enum.Parse(typeof(DefaultTraces), string.Join("|", options.Traces)) :
@@ -332,6 +303,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.DynamicValidation = options.DynamicValidation;
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;
             context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
+            context.MaxFileSizeInKilobytes = options.MaxFileSizeInKilobytes;
             context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
 
             return context;

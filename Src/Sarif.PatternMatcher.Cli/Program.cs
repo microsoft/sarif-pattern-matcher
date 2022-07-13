@@ -31,6 +31,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             try
             {
                 args = EntryPointUtilities.GenerateArguments(args, FileSystem ?? new FileSystem(), new EnvironmentVariables());
+                args = RewriteArgs(args);
             }
             catch (Exception ex)
             {
@@ -86,6 +87,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 verb == "export-rules" ||
                 verb == "export-search-definitions" ||
                 verb == "import-analyze";
+        }
+
+        private static string[] RewriteArgs(string[] args)
+        {
+            bool hasObsoleteArgument = false;
+            bool hasCurrentFileSizeArg = false;
+
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i] == "--file-size-in-kb")
+                {
+                    hasObsoleteArgument = true;
+                    args[i] = "--max-file-size-in-kb";
+
+                    Console.WriteLine("Please update the command line arguments: `--file-size-in-kb` " +
+                        "should be replaced with `--max-file-size-in-kb`.");
+                }
+                else if (args[i] == "--max-file-size-in-kb")
+                {
+                    hasCurrentFileSizeArg = true;
+                }
+
+                if (hasObsoleteArgument && hasCurrentFileSizeArg)
+                {
+                    string message = $"Both `--max-file-size-in-kb` and `--file-size-in-kb` were used. "
+                        + "Please remove the obsolete option `--file-size-in-kb`.";
+
+                    throw new ArgumentException(message);
+                }
+            }
+
+            return args;
         }
     }
 }

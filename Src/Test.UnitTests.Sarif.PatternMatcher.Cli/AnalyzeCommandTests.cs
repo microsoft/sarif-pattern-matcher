@@ -274,10 +274,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             int result = Program.Main(args);
             result.Should().Be(1);
 
-            Program.InstantiatedAnalyzeCommand.ExecutionException.Should().NotBeNull();
-            var eax = Program.InstantiatedAnalyzeCommand.ExecutionException as ExitApplicationException<ExitReason>;
-            eax.Should().NotBeNull();
-            eax.ExitReason.Should().Be(ExitReason.InvalidCommandLineOption);
+            Program.InstantiatedAnalyzeCommand.Should().NotBeNull();
         }
 
         private SarifLog RunAnalyzeCommand(string definitionsText, string fileContents)
