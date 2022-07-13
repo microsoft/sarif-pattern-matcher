@@ -75,7 +75,7 @@ spam analyze c:\path-to-analyze\ --recurse --deny-regex "\\\.git\\\\" --output c
 - `--force` replace the file if exists.
 - `--level` filter the results using `resultLevel` with `Error` or `Note`.
 - `--kind` filter the results using `resultKind` with `Fail`.
-- `--file-size X` filters out files with size larger that X KB. The default value is 1024 KB.
+- `--max-file-size X` filters out files with size larger that X KB. The default value is 1024 KB.
 - `--dynamic-validation` if a result is found, it will trigger a second step to validate dynamically the result (if the rule implements it).
 - `--threads X` it will create X threads to parallelize the work. The default value is `Environment.ProcessorCount`.
 - `--insert` if supplied, it will add more information to the output SARIF file.

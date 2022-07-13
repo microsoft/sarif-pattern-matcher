@@ -16,8 +16,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
-        private const int DefaultMaxFileSizeInKilobytes = 1024;
-
         public AnalyzeCommand(IFileSystem fileSystem = null)
             : base(fileSystem)
         {
