@@ -7,6 +7,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class TestLogger : IAnalysisLogger
     {
+        public IList<Notification> ToolNotifications { get; set; }
         public ISet<ReportingDescriptor> Rules { get; set; }
         public IList<Result> Results { get; set; }
 
@@ -37,6 +38,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public void LogToolNotification(Notification notification)
         {
+            ToolNotifications ??= new List<Notification>();
+
+            ToolNotifications.Add(notification);
         }
     }
 }

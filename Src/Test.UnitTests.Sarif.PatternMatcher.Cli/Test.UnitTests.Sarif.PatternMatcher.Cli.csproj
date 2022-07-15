@@ -25,4 +25,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Sarif.PatternMatcher.Cli\Sarif.PatternMatcher.Cli.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update=".txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
