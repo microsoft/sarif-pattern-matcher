@@ -16,7 +16,7 @@
 - UER => eliminate unhandled exceptions in rules
 - UEE => eliminate unhandled exceptions in engine
 
-## Unreleased
+## *v1.10.0*
 
 - FEATURE: Enable response file parsing provided by driver framework. Arguments (e.g., '@Commands.rsp') prefixed with a '@' character will be evaluated as a file path to a text file that contains commands to be injected on the command-line. 
 - BREAKING: Change fingerprint naming conventions and add new unique secret fingerprint (and opaque unique fingerprint hash).
