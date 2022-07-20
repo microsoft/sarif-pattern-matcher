@@ -6,7 +6,11 @@
   <PropertyGroup Label="AssemblyAttributes">
     <RootNamespace>Microsoft.Strings.Interop</RootNamespace>
   </PropertyGroup>
-  
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0-preview-20220707-01" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Strings.Interop\Strings.Interop.csproj" />
   </ItemGroup>
