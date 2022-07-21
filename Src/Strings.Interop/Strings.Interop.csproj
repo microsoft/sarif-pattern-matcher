@@ -2,15 +2,10 @@
 
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.lib.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
-
   <PropertyGroup Label="AssemblyAttributes">
     <AssemblyTitle>String8 Library</AssemblyTitle>
     <Description>Specialized types for seamless handling of UTF8 and UTF16 strings.</Description>
     <RootNamespace>Microsoft.Strings.Interop</RootNamespace>
     <Product>Microsoft Strings Interop</Product>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0-preview-20220707-01" />
-  </ItemGroup>
 </Project>
