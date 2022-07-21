@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0-preview-20220707-01" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\Tests.Security\EndToEndTests.cs" />
 
     <ProjectReference Include="..\SalModernization\SalModernization.csproj" />
