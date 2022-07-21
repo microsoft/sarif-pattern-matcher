@@ -96,13 +96,13 @@
                 },
                 "region": {
                   "startLine": 1,
-                  "startColumn": 8,
+                  "startColumn": 9,
                   "endLine": 1,
-                  "endColumn": 21,
-                  "charOffset": 7,
-                  "charLength": 13,
+                  "endColumn": 20,
+                  "charOffset": 8,
+                  "charLength": 11,
                   "snippet": {
-                    "text": " __allocator "
+                    "text": "__allocator"
                   }
                 }
               }
@@ -132,14 +132,14 @@
                     {
                       "deletedRegion": {
                         "startLine": 1,
-                        "startColumn": 8,
+                        "startColumn": 9,
                         "endLine": 1,
-                        "endColumn": 21,
-                        "charOffset": 7,
-                        "charLength": 13
+                        "endColumn": 20,
+                        "charOffset": 8,
+                        "charLength": 11
                       },
                       "insertedContent": {
-                        "text": "  "
+                        "text": ""
                       }
                     }
                   ]
@@ -167,13 +167,13 @@
                 },
                 "region": {
                   "startLine": 1,
-                  "startColumn": 59,
+                  "startColumn": 60,
                   "endLine": 1,
-                  "endColumn": 72,
-                  "charOffset": 58,
-                  "charLength": 13,
+                  "endColumn": 71,
+                  "charOffset": 59,
+                  "charLength": 11,
                   "snippet": {
-                    "text": "(__allocator,"
+                    "text": "__allocator"
                   }
                 }
               }
@@ -203,14 +203,14 @@
                     {
                       "deletedRegion": {
                         "startLine": 1,
-                        "startColumn": 59,
+                        "startColumn": 60,
                         "endLine": 1,
-                        "endColumn": 72,
-                        "charOffset": 58,
-                        "charLength": 13
+                        "endColumn": 71,
+                        "charOffset": 59,
+                        "charLength": 11
                       },
                       "insertedContent": {
-                        "text": "(,"
+                        "text": ""
                       }
                     }
                   ]
@@ -238,14 +238,14 @@
                   "index": 0
                 },
                 "region": {
-                  "startLine": 6,
-                  "startColumn": 2,
+                  "startLine": 7,
+                  "startColumn": 1,
                   "endLine": 7,
-                  "endColumn": 19,
-                  "charOffset": 335,
-                  "charLength": 19,
+                  "endColumn": 18,
+                  "charOffset": 336,
+                  "charLength": 17,
                   "snippet": {
-                    "text": "\n__analysis_assume("
+                    "text": "__analysis_assume"
                   }
                 }
               }
@@ -274,15 +274,15 @@
                   "replacements": [
                     {
                       "deletedRegion": {
-                        "startLine": 6,
-                        "startColumn": 2,
+                        "startLine": 7,
+                        "startColumn": 1,
                         "endLine": 7,
-                        "endColumn": 19,
-                        "charOffset": 335,
-                        "charLength": 19
+                        "endColumn": 18,
+                        "charOffset": 336,
+                        "charLength": 17
                       },
                       "insertedContent": {
-                        "text": "\n_Analysis_assume_("
+                        "text": "_Analysis_assume_"
                       }
                     }
                   ]
@@ -310,13 +310,13 @@
                 },
                 "region": {
                   "startLine": 3,
-                  "startColumn": 91,
+                  "startColumn": 92,
                   "endLine": 3,
-                  "endColumn": 104,
-                  "charOffset": 300,
-                  "charLength": 13,
+                  "endColumn": 103,
+                  "charOffset": 301,
+                  "charLength": 11,
                   "snippet": {
-                    "text": " __maybenull "
+                    "text": "__maybenull"
                   }
                 }
               }
@@ -350,13 +350,13 @@
                 },
                 "region": {
                   "startLine": 2,
-                  "startColumn": 87,
+                  "startColumn": 88,
                   "endLine": 2,
-                  "endColumn": 98,
-                  "charOffset": 182,
-                  "charLength": 11,
+                  "endColumn": 97,
+                  "charOffset": 183,
+                  "charLength": 9,
                   "snippet": {
-                    "text": " __notnull "
+                    "text": "__notnull"
                   }
                 }
               }
@@ -390,13 +390,13 @@
                 },
                 "region": {
                   "startLine": 2,
-                  "startColumn": 97,
+                  "startColumn": 98,
                   "endLine": 2,
-                  "endColumn": 113,
-                  "charOffset": 192,
-                  "charLength": 16,
+                  "endColumn": 112,
+                  "charOffset": 193,
+                  "charLength": 14,
                   "snippet": {
-                    "text": " __post_invalid)"
+                    "text": "__post_invalid"
                   }
                 }
               }
@@ -430,13 +430,13 @@
                 },
                 "region": {
                   "startLine": 3,
-                  "startColumn": 103,
+                  "startColumn": 104,
                   "endLine": 3,
-                  "endColumn": 119,
-                  "charOffset": 312,
-                  "charLength": 16,
+                  "endColumn": 118,
+                  "charOffset": 313,
+                  "charLength": 14,
                   "snippet": {
-                    "text": " __post_invalid)"
+                    "text": "__post_invalid"
                   }
                 }
               }
