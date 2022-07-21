@@ -16,6 +16,9 @@
 - UER => eliminate unhandled exceptions in rules
 - UEE => eliminate unhandled exceptions in engine
 
+## Unreleased
+* Bump Sarif.Sdk from 2.4.15 to [2.4.16]() by updating submodule to commit []()in response to [Advisory: Improper Handling of Exceptional Conditions in Newtonsoft.Json](https://github.com/advisories/GHSA-5crp-9r3c-p9vr). [#627](https://github.com/microsoft/sarif-pattern-matcher/pull/627)
+
 ## *v1.10.0*
 
 - FEATURE: Enable response file parsing provided by driver framework. Arguments (e.g., '@Commands.rsp') prefixed with a '@' character will be evaluated as a file path to a text file that contains commands to be injected on the command-line. 
