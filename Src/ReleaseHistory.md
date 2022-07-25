@@ -20,7 +20,7 @@
 
 - BUG: Resolve `OutofMemoryException` and `NullReferenceException' failures resulting from a failure to honor file size scan limits set by `--file-size-in-kb` argument and updated Sarif.Sdk submodule to commit [ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b](https://github.com/microsoft/sarif-sdk/commit/ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b). [#621](https://github.com/microsoft/sarif-pattern-matcher/pull/621)
 - BUG: Resolve SAL Modernization Plugin capture group showing incorrect region properties in SARIF. [#626](https://github.com/microsoft/sarif-pattern-matcher/pull/626)
-- Bump Sarif.Sdk from 2.4.15 to [2.4.16](https://github.com/microsoft/sarif-sdk/blob/v2.4.16/src/ReleaseHistory.md) by updating submodule to commit [698adb6365a242c6bb75adde56e3bd4be39c21d7](https://github.com/microsoft/sarif-sdk/commit/698adb6365a242c6bb75adde56e3bd4be39c21d7)in response to [Advisory: Improper Handling of Exceptional Conditions in Newtonsoft.Json](https://github.com/advisories/GHSA-5crp-9r3c-p9vr). [#627](https://github.com/microsoft/sarif-pattern-matcher/pull/627)
+- Bump Sarif.Sdk from 2.4.15 to [2.4.16](https://github.com/microsoft/sarif-sdk/blob/v2.4.16/src/ReleaseHistory.md) by updating submodule to commit [698adb6365a242c6bb75adde56e3bd4be39c21d7](https://github.com/microsoft/sarif-sdk/commit/698adb6365a242c6bb75adde56e3bd4be39c21d7) in response to [Advisory: Improper Handling of Exceptional Conditions in Newtonsoft.Json](https://github.com/advisories/GHSA-5crp-9r3c-p9vr). [#627](https://github.com/microsoft/sarif-pattern-matcher/pull/627)
 
 ## *v1.10.0*
 
