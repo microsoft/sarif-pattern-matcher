@@ -8,6 +8,8 @@ Install the latest version of Visual Studio with the minimum initial workloads:
     * .NET desktop development
     * Desktop development with C++
   * Individual components
+    * MSVC v142 - VS 2019 C++ x64/x86 Sprectre-mitigated libs (Latest)
+    * MSVC v143 - VS 2022 C++ x64/x86 Sprectre-mitigated libs (Latest)
     * C++ x64/x86 Spectre-mitigated libs (Latest)
 
 Additional setup guidance can be found in the [Contributing.md](https://github.com/microsoft/sarif-pattern-matcher/blob/main/CONTRIBUTING.md) documentation.
