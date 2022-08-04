@@ -54,7 +54,7 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
     - From the Solution Explorer, right click on `Sarif.PatternMatcher.Cli`
     - Select `Properties` and then navigate to `Debug`
     - [in Visual Studio 2022 only] Click `Open debug launch profiles UI`
-    - Enter the following into the command-line arguments field: `analyze d:\testFiles\SpamArguments.rsp`
+    - Enter the following into the command-line arguments field: `analyze @d:\testFiles\SpamArguments.rsp`
 
 6. Open the rule file associated with the pattern, e.g., the file associated with the test pattern at `.\src\Plugins\Security\SecurePlaintextSecretsValidators\SEC101_006.GitHubPatValidator.cs`. Set a breakpoint in the `IsValidStaticHelper` override to verify whether the pattern is detect for the first, strictly static detection phase.
 
