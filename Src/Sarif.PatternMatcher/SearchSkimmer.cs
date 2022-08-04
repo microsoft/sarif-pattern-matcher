@@ -691,6 +691,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;
 
+            // INTERESTING BREAKPPOINT: debug static analysis match failures.
+            // Set a conditional breakpoint on 'matchExpression.Name' to filter by specific rules.
+            // Set a conditional breakpoint on 'searchText' to filter on specific target text patterns.
             if (!_engine.Matches(matchExpression.ContentsRegex,
                                  searchText,
                                  out List<Dictionary<string, FlexMatch>> matches,
