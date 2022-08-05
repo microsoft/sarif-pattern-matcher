@@ -1,5 +1,7 @@
-# From Zero to Bug Fix Hero
-These steps assume you are an authorized contributor to this repository. If you are not already an authorized contributor, please fork the repo first and complete all steps off of your fork.
+# Sarif Pattern Matcher Debugging Guide
+This document will take an engineer through enlistment in the SARIF pattern matcher repository through successfully setting a breakpoint in code.
+
+*NOTE*: These steps assume you are an authorized contributor to this repository. If you are not already an authorized contributor, please fork the repo and complete all steps off that fork.
 
 ## Visual Studio
 Install the latest version of Visual Studio with the minimum initial workloads:
@@ -40,11 +42,17 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
 
 ~~~
     --search-definitions "..\..\Security\netstandard2.1\SEC101.SecurePlaintextSecrets.json" 
-    --output d:\src\spam8\src\.sarif\out.sarif
+    --output d:\src\sarif-pattern-matcher\src\.sarif\out.sarif
     --force --pretty-print
     d:\testFiles\repro.txt 
     --level Error;Warning;Note
     --dynamic-validation
+~~~
+
+*NOTE*: For explanations on the arguments in this command-line, navigate to the `spam.exe` build directory and run the following command:
+
+~~~
+spam.exe help analyze
 ~~~
 
 4. Open the SLN file at `.\src\SarifPatternMatcher.sln`.
@@ -61,3 +69,4 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
 7. Set a breakpoint in the `IsValidDynamicHelper` override. If the static analysis phase finds a valid secret candidate, this helper should be called next (if the `--dynamic-analysis` argument is present on the command-line) in order to detect whether the secret is 'live' (and therefore exploitable). 
 
 8. Start debugging by hitting `F5` or choosing `Start Debugging` from the Visual Studio `Debug` menu.
+
