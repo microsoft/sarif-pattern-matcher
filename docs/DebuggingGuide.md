@@ -10,7 +10,7 @@ Install the latest version of Visual Studio with the minimum initial workloads:
     * .NET desktop development
     * Desktop development with C++
   * Individual components
-    * C++ x64/x86 Spectre-mitigated libs (Latest)
+    * C++ x64/x86 Spectre-mitigated libs (Latest and VS2019 MSVC V142)
 
 Additional setup guidance can be found in the [Contributing.md](https://github.com/microsoft/sarif-pattern-matcher/blob/main/CONTRIBUTING.md) documentation.
 
@@ -18,9 +18,10 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
 1. From a developer cmd prompt execute one of the the following commands, depending on whether you work from a forked enlistment or not:
 
     `git clone https://github.com/microsoft/sarif-pattern-matcher`
+
     `git clone https://github.com/YOURGITHUBACCOUNT/sarif-pattern-matcher`
 
-2. Run BuildAndTest.exe from the root of the enlistment. This will properly load all submodules and validate some machine configuration/settings. Complete any recommended installs/upgrades (e.g., to install a newer sdk):
+2. Run BuildAndTest.exe from the root of the enlistment. This will properly load all submodules and validate some machine configuration/settings. Complete any recommended installs/upgrades (e.g., to install a newer sdk via VS installer individual components):
 
     `D:\src\sarif-pattern-matcher> BuildAndTest.cmd`
 
@@ -29,7 +30,7 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
     `git checkout -b informative-branch-name`
 
 ## Debugging
-0. Install the [VS SARIF viewer](https://marketplace.visualstudio.com/items?itemName=WDGIS.MicrosoftSarifViewer).
+0. Install the VS SARIF viewer for [VS 2019](https://marketplace.visualstudio.com/items?itemName=WDGIS.MicrosoftSarifViewer) or [VS 2022](https://marketplace.visualstudio.com/items?itemName=WDGIS.MicrosoftSarifViewer2022).
 
 1. Identify an example of a secret to test (ie. a false negative or false positive). If you need a testable pattern just to explore the code base you can use the following (which is not an actual credential):
 ~~~
@@ -59,6 +60,8 @@ spam.exe help analyze
 
 5. Configure the client tool to invoke the response file you created:
 
+    - From the Solution Explorer, right click on `Sarif.PatternMatcher.Cli`
+    - Select `Set as startup project`
     - From the Solution Explorer, right click on `Sarif.PatternMatcher.Cli`
     - Select `Properties` and then navigate to `Debug`
     - [in Visual Studio 2022 only] Click `Open debug launch profiles UI`
