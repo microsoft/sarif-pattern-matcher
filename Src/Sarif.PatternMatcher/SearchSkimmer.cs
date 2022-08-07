@@ -155,6 +155,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 try
                 {
+                    // Ensure that the byte of the file does not exceed the limit set by the
+                    // file-size-in-kilobytes argument (which will be -1 if not set, in which
+                    // case all files should be analyzed no matter their size).
+                    long fileSize = _fileSystem.FileInfoLength(filePath);
+                    if (DoesTargetFileExceedSizeLimits(fileSize, context.MaxFileSizeInKilobytes))
+                    {
+                        return;
+                    }
+
                     context.FileContents = _fileSystem.FileReadAllText(filePath);
                 }
                 catch (Exception e)
@@ -182,10 +191,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     throw;
                 }
             }
-
-            if (context.FileSizeInKilobytes != -1 && context.FileContents.String.Length / 1024 > context.FileSizeInKilobytes)
+            else
             {
-                return;
+                if (DoesTargetFileExceedSizeLimits(context.FileContents.String.Length, context.MaxFileSizeInKilobytes))
+                {
+                    return;
+                }
             }
 
             foreach (MatchExpression matchExpression in _matchExpressions)
@@ -680,6 +691,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;
 
+            // INTERESTING BREAKPPOINT: debug static analysis match failures.
+            // Set a conditional breakpoint on 'matchExpression.Name' to filter by specific rules.
+            // Set a conditional breakpoint on 'searchText' to filter on specific target text patterns.
             if (!_engine.Matches(matchExpression.ContentsRegex,
                                  searchText,
                                  out List<Dictionary<string, FlexMatch>> matches,
@@ -1303,6 +1317,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return arguments;
+        }
+
+        private bool DoesTargetFileExceedSizeLimits(long fileLength, int maxFileSize)
+        {
+            // Ensure that the byte of the file does not exceed the limit set by the
+            // file-size-in-kilobytes argument (which will be -1 if not set, in which
+            // case all files should be analyzed no matter their size).
+            long fileSize = fileLength / 1024;
+
+            return maxFileSize > -1 && fileSize > maxFileSize;
         }
     }
 }

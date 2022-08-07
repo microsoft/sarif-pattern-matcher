@@ -45,11 +45,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string GlobalFileDenyRegex { get; set; }
 
-        /// <summary>
-        /// Gets or sets the maximum file size (in kilobytes) that will be analyzed.
-        /// If not set, it will analyze all sizes.
-        /// </summary>
-        public int FileSizeInKilobytes { get; set; } = -1;
+        public int MaxFileSizeInKilobytes { get; set; }
 
         public bool DisableDynamicValidationCaching { get; set; }
 

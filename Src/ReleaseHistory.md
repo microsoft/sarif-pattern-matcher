@@ -1,22 +1,12 @@
 # Release History
 
-## Definitions
+## *2.0.0-dev*
 
-- NR => New rule
-- SDK => SDK work
-- PRF => performance work
-- FCR => fingerprint change or refactor
-- RRR => rule rename or refactor
-- FPC => regex candidate reduction
-- FNC => regex candidate increase
-- FPS => FP reduction in static analysis
-- FNS => false negative reduction in static analysis
-- FPD => FP reduction in dynamic phase
-- FND => False negative reduction in dynamic phase
-- UER => eliminate unhandled exceptions in rules
-- UEE => eliminate unhandled exceptions in engine
+- Update `sarif-sdk` submodule to commit [24c773bf194100d11c896ce67581832428304a35](https://github.com/microsoft/sarif-sdk/tree/24c773bf194100d11c896ce67581832428304a35), which corresponds to the NuGet `Sarif.Sdk` 3.0.0-beta1 package release.
+- BUG: Resolve `OutofMemoryException` and `NullReferenceException' failures resulting from a failure to honor file size scan limits set by `--file-size-in-kb` argument and updated Sarif.Sdk submodule to commit [ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b](https://github.com/microsoft/sarif-sdk/commit/ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b). [#621](https://github.com/microsoft/sarif-pattern-matcher/pull/621)
+- BUG: Resolve SAL Modernization Plugin capture group showing incorrect region properties in SARIF. [#626](https://github.com/microsoft/sarif-pattern-matcher/pull/626)
 
-## Unreleased
+## *v1.10.0*
 
 - FEATURE: Enable response file parsing provided by driver framework. Arguments (e.g., '@Commands.rsp') prefixed with a '@' character will be evaluated as a file path to a text file that contains commands to be injected on the command-line. 
 - BREAKING: Change fingerprint naming conventions and add new unique secret fingerprint (and opaque unique fingerprint hash).

@@ -105,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     TargetUri = new Uri(filePath, UriKind.Absolute),
                     FileContents = logContents,
                     Logger = logger,
-                    FileSizeInKilobytes = 1024,
+                    MaxFileSizeInKilobytes = 1024,
                 };
 
                 using (context)
