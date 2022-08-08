@@ -21,7 +21,7 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
 
     `git clone https://github.com/YOURGITHUBACCOUNT/sarif-pattern-matcher`
 
-2. Run BuildAndTest.exe from the root of the enlistment. This will properly load all submodules and validate some machine configuration/settings. Complete any recommended installs/upgrades (e.g., to install a newer sdk via VS installer individual components):
+2. Run BuildAndTest.cmd from the root of the enlistment. This will properly load all submodules and validate some machine configuration/settings. Complete any recommended installs/upgrades (e.g., to install a newer sdk via VS installer individual components):
 
     `D:\src\sarif-pattern-matcher> BuildAndTest.cmd`
 
@@ -30,7 +30,13 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
     `git checkout -b informative-branch-name`
 
 ## Debugging
-0. Install the VS SARIF viewer for [VS 2019](https://marketplace.visualstudio.com/items?itemName=WDGIS.MicrosoftSarifViewer) or [VS 2022](https://marketplace.visualstudio.com/items?itemName=WDGIS.MicrosoftSarifViewer2022).
+0. Install the VS SARIF viewer for [VS 2022](https://marketplace.visualstudio.com/items?itemName=WDGIS.MicrosoftSarifViewer2022).
+   
+   Select `Debug` from the `Solution Configurations` menu:
+
+   ![Solution Configurations: Debug](DebugBuild.png)
+   
+   Then run `Build Solution` from the `Build` menu.
 
 1. Identify an example of a secret to test (ie. a false negative or false positive). If you need a testable pattern just to explore the code base you can use the following (which is not an actual credential):
 ~~~
