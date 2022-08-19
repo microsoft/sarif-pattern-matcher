@@ -17,7 +17,7 @@ using Microsoft.Strings.Interop;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
-    public class SearchSkimmer : Skimmer<AnalyzeContext>
+    public class SearchSkimmer : Skimmer<>
     {
 
         public const string SecretHashSha256Current = "SecretHashSha256/current";
@@ -1324,9 +1324,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // Ensure that the byte of the file does not exceed the limit set by the
             // file-size-in-kilobytes argument (which will be 0 if not set, in which
             // case all files should be analyzed no matter their size).
-            double fileSize = (double)fileLength / 1024;
+            long fileSize = fileLength / 1024;
 
-            return maxFileSize > 0 && fileSize > maxFileSize;
+            return maxFileSize > -1 && fileSize > maxFileSize;
         }
     }
 }
