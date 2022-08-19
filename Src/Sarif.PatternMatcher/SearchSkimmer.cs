@@ -17,7 +17,7 @@ using Microsoft.Strings.Interop;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
-    public class SearchSkimmer : Skimmer<>
+    public class SearchSkimmer : Skimmer<AnalyzeContext>
     {
 
         public const string SecretHashSha256Current = "SecretHashSha256/current";
