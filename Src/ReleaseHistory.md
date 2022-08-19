@@ -1,5 +1,8 @@
 # Release History
 
+## *Unreleased*
+- BUG: Fix false negative when `SearchSkimmer` is invoked directly and `MaxFileSizeInKilobytes` is not set. [#637](https://github.com/microsoft/sarif-pattern-matcher/pull/637)
+
 ## *2.0.0-dev*
 
 - Update `sarif-sdk` submodule to commit [24c773bf194100d11c896ce67581832428304a35](https://github.com/microsoft/sarif-sdk/tree/24c773bf194100d11c896ce67581832428304a35), which corresponds to the NuGet `Sarif.Sdk` 3.0.0-beta1 package release.
