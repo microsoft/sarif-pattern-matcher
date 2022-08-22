@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq.Expressions;
 using System.Text;
 
 using FluentAssertions;
@@ -12,7 +11,6 @@ using FluentAssertions;
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 using Moq;
 
