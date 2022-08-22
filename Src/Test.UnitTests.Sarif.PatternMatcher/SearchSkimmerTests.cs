@@ -499,7 +499,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             int[] testCases = new int[]
             {
                 (int)uint.MinValue + 1,
-                int.MaxValue,
+                10000,
+                100000,
+                1000000,
+                1024 * 10000 - 1,
                 int.MaxValue,
             };
 
