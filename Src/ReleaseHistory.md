@@ -6,6 +6,7 @@
 - BUG: Resolve `OutofMemoryException` and `NullReferenceException' failures resulting from a failure to honor file size scan limits set by `--file-size-in-kb` argument and updated Sarif.Sdk submodule to commit [ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b](https://github.com/microsoft/sarif-sdk/commit/ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b). [#621](https://github.com/microsoft/sarif-pattern-matcher/pull/621)
 - BUG: Resolve SAL Modernization Plugin capture group showing incorrect region properties in SARIF. [#626](https://github.com/microsoft/sarif-pattern-matcher/pull/626)
 - SDK: Sarif.PatternMatcher projects will start using a fixed version of `RE2.Managed` and `Strings.Interop`. [#638](https://github.com/microsoft/sarif-pattern-matcher/pull/638)
+- Bump Microsoft.Security.Utilities from 1.1.0 to 1.3.0. [#642](https://github.com/microsoft/sarif-pattern-matcher/pull/642)
 
 ## *v1.10.0*
 
