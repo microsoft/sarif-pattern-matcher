@@ -45,7 +45,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string GlobalFileDenyRegex { get; set; }
 
-        public int MaxFileSizeInKilobytes { get; set; } = -1;
+        public int MaxFileSizeInKilobytes { get; set; } = 1024 * 10000;
 
         public bool DisableDynamicValidationCaching { get; set; }
 

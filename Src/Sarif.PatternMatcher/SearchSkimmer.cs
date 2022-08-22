@@ -1322,8 +1322,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private bool DoesTargetFileExceedSizeLimits(long fileLength, int maxFileSize)
         {
             // Ensure that the byte of the file does not exceed the limit set by the
-            // file-size-in-kilobytes argument (which will be 0 if not set, in which
-            // case all files should be analyzed no matter their size).
+            // file-size-in-kilobytes command line argument, which defaults to ~10MB.
             long fileSize = fileLength / 1024;
 
             return maxFileSize > -1 && fileSize > maxFileSize;
