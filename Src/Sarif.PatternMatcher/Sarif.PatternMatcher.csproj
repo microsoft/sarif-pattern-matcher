@@ -11,14 +11,17 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+
+    <PackageReference Include="RE2.Managed" Version="1.10.0" Condition="'$(Configuration)'=='Release'" />
+    <PackageReference Include="Strings.Interop" Version="1.10.0" Condition="'$(Configuration)'=='Release'" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RE2.Managed\RE2.Managed.csproj" />
+    <ProjectReference Include="..\RE2.Managed\RE2.Managed.csproj" Condition="'$(Configuration)'=='Debug'" />
     <ProjectReference Include="..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
     <ProjectReference Include="..\sarif-sdk\src\Sarif\Sarif.csproj" />
     <ProjectReference Include="..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
-    <ProjectReference Include="..\Strings.Interop\Strings.Interop.csproj" />
+    <ProjectReference Include="..\Strings.Interop\Strings.Interop.csproj" Condition="'$(Configuration)'=='Debug'" />
   </ItemGroup>
 
   <ItemGroup>
