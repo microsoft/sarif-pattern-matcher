@@ -20,6 +20,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmerTests
     {
+        private const int DefaultMaxFileSizeInKilobytes = 10000;
+
         private static MatchExpression CreateGuidDetectingMatchExpression(
             string denyFileExtension = null,
             string allowFileExtension = null)
@@ -443,7 +445,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 },
                 new {
                     fileSize = (long)50000000,
-                    maxFileSize = (int)10000,
+                    maxFileSize = DefaultMaxFileSizeInKilobytes,
                 },
             };
 
@@ -493,6 +495,58 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
+        public void SearchSkimmer_SearchSkimmer_ShouldNotEvaluateFilesExceedingDefaultLimit()
+        {
+            // Length of files to be returned by the mocked file system. Will be divided by 1024 to convert to KB.
+            int[] testCases = new int[]
+            {
+                int.MaxValue,
+                1024 * (DefaultMaxFileSizeInKilobytes + 1)
+            };
+
+            foreach (int testCase in testCases)
+            {
+                var mockFileSystem = new Mock<IFileSystem>();
+
+                mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(testCase);
+
+                mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>())).Returns(Guid.NewGuid().ToString());
+
+                MatchExpression expr = CreateGuidDetectingMatchExpression();
+                SearchDefinition definition = CreateDefaultSearchDefinition(expr);
+
+                string filePath = $"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}";
+                var uri = new Uri(filePath);
+
+                var logger = new TestLogger();
+
+                var sb = new StringBuilder();
+
+                for (int i = 0; i < 100; i++)
+                {
+                    sb.Append($"{Guid.NewGuid()};");
+                }
+
+                // `MaxFileSizeInKilobytes` is not set; the default value defined in `AnalyzeContext.cs` will be used.
+                // `FileContents` is not set, so file size will be determined by checking the size of the target file,
+                // via `_fileSystem.FileInfoLength()`.
+                // Set breakpoints in `DoesTargetFileExceedSizeLimits()` in the `SearchSkimmer` class and both
+                // references to observe the the origins and comparisons of these values.
+                var context = new AnalyzeContext
+                {
+                    TargetUri = new Uri(filePath),
+                    Logger = logger
+                };
+
+                SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+                Exception exception = Record.Exception(() => skimmer.Analyze(context));
+                exception.Should().BeNull();
+
+                logger.Results.Should().BeNull();
+            }
+        }
+
+        [Fact]
         public void SearchSkimmer_ShouldEvaluateFilesUnderLimit()
         {
             // `MaxFileSizeInKilobytes` values to test.
@@ -502,7 +556,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 10000,
                 100000,
                 1000000,
-                1024 * 10000 - 1,
+                1024 * (DefaultMaxFileSizeInKilobytes - 1),
                 int.MaxValue,
             };
 
@@ -553,10 +607,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 0,
                 1,
-                10000,
+                DefaultMaxFileSizeInKilobytes,
                 100000,
                 1000000,
-                1024 * 10000 - 1,
+                1024 * (DefaultMaxFileSizeInKilobytes - 1),
             };
 
             foreach (int testCase in testCases)
