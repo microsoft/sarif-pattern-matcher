@@ -1,7 +1,7 @@
 # Release History
 
 ## *Unreleased*
-- BUG: Fix false negative when `SearchSkimmer` is invoked directly and `MaxFileSizeInKilobytes` is not set. [#637](https://github.com/microsoft/sarif-pattern-matcher/pull/637)
+- BUG: Fix false negative when `SearchSkimmer` is invoked directly and `MaxFileSizeInKilobytes` is not set. This will now default to approximately 10MB. [#637](https://github.com/microsoft/sarif-pattern-matcher/pull/637)
 
 ## *2.0.0-dev*
 
