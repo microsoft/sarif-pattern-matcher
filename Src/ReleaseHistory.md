@@ -7,6 +7,7 @@
 - BUG: Resolve SAL Modernization Plugin capture group showing incorrect region properties in SARIF. [#626](https://github.com/microsoft/sarif-pattern-matcher/pull/626)
 - SDK: Sarif.PatternMatcher projects will start using a fixed version of `RE2.Managed` and `Strings.Interop`. [#638](https://github.com/microsoft/sarif-pattern-matcher/pull/638)
 - Bump Microsoft.Security.Utilities from 1.1.0 to 1.3.0. [#642](https://github.com/microsoft/sarif-pattern-matcher/pull/642)
+- BUG: Fix false negative when `SearchSkimmer` is invoked directly and `MaxFileSizeInKilobytes` is not set. This will now default to approximately 10MB. [#637](https://github.com/microsoft/sarif-pattern-matcher/pull/637)
 
 ## *v1.10.0*
 
