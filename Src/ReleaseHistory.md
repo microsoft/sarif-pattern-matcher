@@ -8,7 +8,7 @@
 - SDK: Sarif.PatternMatcher projects will start using a fixed version of `RE2.Managed` and `Strings.Interop`. [#638](https://github.com/microsoft/sarif-pattern-matcher/pull/638)
 - Bump Microsoft.Security.Utilities from 1.1.0 to 1.3.0. [#642](https://github.com/microsoft/sarif-pattern-matcher/pull/642)
 - BUG: Fix false negative when `SearchSkimmer` is invoked directly and `MaxFileSizeInKilobytes` is not set. This will now default to approximately 10MB. [#637](https://github.com/microsoft/sarif-pattern-matcher/pull/637)
-- Dependency alignment of `Newtonsoft.Json` to 12.0.3. [#644](https://github.com/microsoft/sarif-pattern-matcher/pull/644)
+- BUG: Loosen `Newtonsoft.Json` minimum version requirement to 12.0.3 for `Sarif.PatternMatcher` project. [#644](https://github.com/microsoft/sarif-pattern-matcher/pull/644)
 
 ## *v1.10.0*
 
