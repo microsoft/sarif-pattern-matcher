@@ -281,31 +281,84 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         [Fact]
         public void AnalyzeCommand_ShouldOverwriteJsonFailureLevelWithDynamicValidation()
         {
+            var testCases = new[] {
+                new {
+                    jsonLevel = FailureLevel.Note,
+                    dynamicValidationEnabled = false,
+                    expectedNoValidation = FailureLevel.Note,
+                    expectedStaticOnly = FailureLevel.Note,
+                    expectedStaticDynamic = FailureLevel.Warning
+                },
+                new {
+                    jsonLevel = FailureLevel.Warning,
+                    dynamicValidationEnabled = false,
+                    expectedNoValidation = FailureLevel.Warning,
+                    expectedStaticOnly = FailureLevel.Warning,
+                    expectedStaticDynamic = FailureLevel.Warning
+                },
+                new {
+                    jsonLevel = FailureLevel.Error,
+                    dynamicValidationEnabled = false,
+                    expectedNoValidation = FailureLevel.Error,
+                    expectedStaticOnly = FailureLevel.Error,
+                    expectedStaticDynamic = FailureLevel.Warning
+                },
+                new {
+                    jsonLevel = FailureLevel.Note,
+                    dynamicValidationEnabled = true,
+                    expectedNoValidation = FailureLevel.Note,
+                    expectedStaticOnly = FailureLevel.Note,
+                    expectedStaticDynamic = FailureLevel.Error
+                },
+                new {
+                    jsonLevel = FailureLevel.Warning,
+                    dynamicValidationEnabled = true,
+                    expectedNoValidation = FailureLevel.Warning,
+                    expectedStaticOnly = FailureLevel.Warning,
+                    expectedStaticDynamic = FailureLevel.Error
+                },
+                new {
+                    jsonLevel = FailureLevel.Error,
+                    dynamicValidationEnabled = true,
+                    expectedNoValidation = FailureLevel.Error,
+                    expectedStaticOnly = FailureLevel.Error,
+                    expectedStaticDynamic = FailureLevel.Error
+                },
+
+            };
 
             string definitionsText; 
 
-            string fileContents = "abcdefghijklmn \r\n" +
-                                  "ABCDEFGHIKLMN \r\n" +
-                                  "1234567891011 \r\n";
-
-            bool dynamicValidationEnabled = false;
-            do
+            string fileContents = "nostaticvalid \r\n" +
+                                  "staticvalidonly \r\n" +
+                                  "staticdynamic \r\n";
+            
+            foreach (var testCase in testCases)
             {
-                // First run with dynamic validation off.
-                definitionsText = GetSingleLineRuleDefinitionFailureLevel(FailureLevel.Note);
-                SarifLog sarifLog = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, dynamicValidationEnabled); //Should catch on 3 rules
-                sarifLog.Should().NotBeNull(); //do some analysis???
+                // Make an enum of rule validator type instead of int of number of validators
+                definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel, 0);
+                SarifLog logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, testCase.dynamicValidationEnabled);
+                logFile.Should().NotBeNull();
+                //TODO Analyze failure level
+                //sarif fail level == testCase.expectedNoValidation
 
-                definitionsText = GetSingleLineRuleDefinitionFailureLevel(FailureLevel.Warning);
-                sarifLog = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, dynamicValidationEnabled); //Should catch on 3 rules
-                sarifLog.Should().NotBeNull(); //do some analysis
+                definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel, 1);
+                logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, testCase.dynamicValidationEnabled);
+                logFile.Should().NotBeNull();
+                //TODO Analyze failure level
+                //sarif fail level == testCase.expectedStaticOnly
 
-                definitionsText = GetSingleLineRuleDefinitionFailureLevel(FailureLevel.Error);
-                sarifLog = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, dynamicValidationEnabled); //Should catch on 3 rules
-                sarifLog.Should().NotBeNull(); //do some analysis
+                definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel, 2);
+                logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, testCase.dynamicValidationEnabled);
+                logFile.Should().NotBeNull();
+                //TODO Analyze failure level
+                //sarif fail level == testCase.expectedStaticDynamic
 
-                dynamicValidationEnabled = !dynamicValidationEnabled;
-            } while (dynamicValidationEnabled == true);
+                //logFile.Runs.Count.Should().Be(1);
+                //logFile.Runs[0].Results.Count.Should().Be(testCase.expectedResult);
+                //obsoleteOptionLogFile.Runs.Count.Should().Be(1);
+                //obsoleteOptionLogFile.Runs[0].Results.Count.Should().Be(testCase.expectedResult);
+            }
 
             //sarifLog.Runs?[0].Results?.Count.Should().Be(6); //3 rules should each catch twice = 6 catches total
 
@@ -640,7 +693,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return JsonConvert.SerializeObject(definitions);
         }
 
-        private static string GetSingleLineRuleDefinitionFailureLevel(FailureLevel level)
+        //create enum instead of bool
+        private static string GetSingleLineRuleDefinitionFailureLevel(FailureLevel level, int numofValidators)
         {
             string assemblyName = typeof(AnalyzeCommandTests).Assembly.Location;
             assemblyName = Path.GetFileName(assemblyName);
@@ -657,30 +711,37 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         Level = level,
                         Message = "A problem occurred in '{0:scanTarget}'.",
                         Description = "Failure Level Testing Rules",
-                        MatchExpressions = new List<MatchExpression>(new[]
-                        {
-                            new MatchExpression()
-                            {
-                                Id = "TEST001",
-                                Name ="NoValidation",
-                                ContentsRegex = "[A-Z]{12}",
-                            },
-                            new MatchExpression()
-                            {
-                                Id = "TEST002",
-                                Name ="StaticValidationOnly",
-                                ContentsRegex = "[a-z]{12}",
-                            },
-                            new MatchExpression()
-                            {
-                                Id = "TEST003",
-                                Name ="StaticDynamicValidation",
-                                ContentsRegex = "[A-Za-z0-9]{12}",
-                            }
-                        })
+                        MatchExpressions = new List<MatchExpression>()
                     }
                 })
             };
+            if(numofValidators == 0)
+            {
+                definitions.Definitions[0].MatchExpressions.Add(new MatchExpression()
+                {
+                    Id = "TEST001",
+                    Name = "NoValidation",
+                    ContentsRegex = "nostaticvalid",
+                });
+            }
+            if (numofValidators == 1)
+            {
+                definitions.Definitions[0].MatchExpressions.Add(new MatchExpression()
+                {
+                    Id = "TEST002",
+                    Name = "StaticValidationOnly",
+                    ContentsRegex = "staticvalidonly",
+                });
+            }
+            if (numofValidators == 2)
+            {
+                definitions.Definitions[0].MatchExpressions.Add(new MatchExpression()
+                {
+                   Id = "TEST003",
+                   Name ="StaticDynamicValidation",
+                   ContentsRegex = "staticdynamic",     
+                });
+            }
 
             return JsonConvert.SerializeObject(definitions);
         }
