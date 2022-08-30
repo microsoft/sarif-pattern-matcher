@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using FluentAssertions;
 
@@ -277,6 +278,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             Program.InstantiatedAnalyzeCommand.Should().NotBeNull();
         }
 
+        [Fact]
+        public void AnalyzeCommand_ShouldOverwriteJsonFailureLevelWithDynamicValidation()
+        {
+
+            string definitionsText; 
+
+            string fileContents = "abcdefghijklmn \r\n" +
+                                  "ABCDEFGHIKLMN \r\n" +
+                                  "1234567891011 \r\n";
+
+            bool dynamicValidationEnabled = false;
+            do
+            {
+                // First run with dynamic validation off.
+                definitionsText = GetSingleLineRuleDefinitionFailureLevel(FailureLevel.Note);
+                SarifLog sarifLog = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, dynamicValidationEnabled); //Should catch on 3 rules
+                sarifLog.Should().NotBeNull(); //do some analysis???
+
+                definitionsText = GetSingleLineRuleDefinitionFailureLevel(FailureLevel.Warning);
+                sarifLog = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, dynamicValidationEnabled); //Should catch on 3 rules
+                sarifLog.Should().NotBeNull(); //do some analysis
+
+                definitionsText = GetSingleLineRuleDefinitionFailureLevel(FailureLevel.Error);
+                sarifLog = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, dynamicValidationEnabled); //Should catch on 3 rules
+                sarifLog.Should().NotBeNull(); //do some analysis
+
+                dynamicValidationEnabled = !dynamicValidationEnabled;
+            } while (dynamicValidationEnabled == true);
+
+            //sarifLog.Runs?[0].Results?.Count.Should().Be(6); //3 rules should each catch twice = 6 catches total
+
+            //sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
+        }
         private SarifLog RunAnalyzeCommand(string definitionsText, string fileContents)
         {
             string sarifOutput;
@@ -453,6 +487,82 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return sarifLog;
         }
 
+        private SarifLog RunAnalyzeCommandWithDynamicValidation(string definitionsText, string fileContents,
+            bool runDynamicValidation)
+        {
+            string sarifOutput;
+            string rootDirectory = @"e:\repros";
+            string scanTargetName = SmallTargetName;
+            string scanTargetPath = Path.Combine(rootDirectory, scanTargetName);
+            string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
+
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.DirectoryExists(rootDirectory)).Returns(true);
+            mockFileSystem.Setup(x => x.DirectoryEnumerateFiles(rootDirectory,
+                                                                scanTargetName,
+                                                                It.IsAny<SearchOption>()))
+                                                                    .Returns(new[] { scanTargetPath });
+
+            // Search definitions location and loading
+            mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
+            mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>()))
+                .Returns<string>((path) =>
+                {
+                    return path == scanTargetPath ?
+                      fileContents :
+                      definitionsText;
+                });
+
+            // Shared strings location and loading
+            mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
+                .Returns<string>((path) => { return GetSharedStrings(); });
+
+            mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
+
+            mockFileSystem.Setup(x => x.FileInfoLength(SmallTargetName)).Returns(fileContents.Length);
+
+            Program.FileSystem = mockFileSystem.Object;
+
+            string tempFileName = Path.GetTempFileName();
+            string sarifLogFileName = $"{tempFileName}.sarif";
+            SarifLog sarifLog = null;
+
+            try
+            {
+                string[] args = new[]
+                {
+                    "analyze",
+                    scanTargetPath,
+                    $"-d", searchDefinitionsPath,
+                    $"-o", sarifLogFileName,
+                };
+
+                if (runDynamicValidation)
+                {
+                    args.Append("--dynamic-validation");
+                }
+
+                int result = Program.Main(args);
+                result.Should().Be(0);
+
+                sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
+            }
+            finally
+            {
+                if (File.Exists(tempFileName))
+                {
+                    File.Delete(tempFileName);
+                }
+
+                if (File.Exists(sarifLogFileName))
+                {
+                    File.Delete(sarifLogFileName);
+                }
+            }
+
+            return sarifLog;
+        }
         private string[] GetSharedStrings()
         {
             string stringsLocation = this.GetType().Assembly.Location;
@@ -521,6 +631,51 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                             new MatchExpression()
                             {
                                 SingleLineRegexes = GetMultipartRuleRegexes(),
+                            }
+                        })
+                    }
+                })
+            };
+
+            return JsonConvert.SerializeObject(definitions);
+        }
+
+        private static string GetSingleLineRuleDefinitionFailureLevel(FailureLevel level)
+        {
+            string assemblyName = typeof(AnalyzeCommandTests).Assembly.Location;
+            assemblyName = Path.GetFileName(assemblyName);
+            var definitions = new SearchDefinitions()
+            {
+                ValidatorsAssemblyName = assemblyName,
+                SharedStringsFileName = "SharedStrings.txt",
+
+                Definitions = new List<SearchDefinition>(new[]
+                {
+                    new SearchDefinition()
+                    {
+                        Name = "FailureLevelTest", Id = "FLTest101",
+                        Level = level,
+                        Message = "A problem occurred in '{0:scanTarget}'.",
+                        Description = "Failure Level Testing Rules",
+                        MatchExpressions = new List<MatchExpression>(new[]
+                        {
+                            new MatchExpression()
+                            {
+                                Id = "TEST001",
+                                Name ="NoValidation",
+                                ContentsRegex = "[A-Z]{12}",
+                            },
+                            new MatchExpression()
+                            {
+                                Id = "TEST002",
+                                Name ="StaticValidationOnly",
+                                ContentsRegex = "[a-z]{12}",
+                            },
+                            new MatchExpression()
+                            {
+                                Id = "TEST003",
+                                Name ="StaticDynamicValidation",
+                                ContentsRegex = "[A-Za-z0-9]{12}",
                             }
                         })
                     }
