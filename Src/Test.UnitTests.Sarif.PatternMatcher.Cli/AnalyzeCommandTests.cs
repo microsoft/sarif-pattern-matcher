@@ -573,6 +573,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             string tempFileName = Path.GetTempFileName();
             string sarifLogFileName = $"{tempFileName}.sarif";
             SarifLog sarifLog = null;
+            string levels = "Error,Warning,Note";
 
             string levels = "Error;Warning;Note";
 
@@ -584,7 +585,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     scanTargetPath,
                     $"-d", searchDefinitionsPath,
                     $"-o", sarifLogFileName,
-                    $"--level", levels,
+                    "--level", levels,
                 };
 
                 if (runDynamicValidation)
@@ -707,37 +708,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         Level = level,
                         Message = "A problem occurred in '{0:scanTarget}'.",
                         Description = "Failure Level Testing Rules",
-                        MatchExpressions = new List<MatchExpression>()
+                        MatchExpressions = new List<MatchExpression>(new[]
+                        {
+                            new MatchExpression()
+                            {
+                                Id = "TEST001",
+                                Name ="NoValidation",
+                                ContentsRegex = "[A-Z]{12}",
+                            },
+                            new MatchExpression()
+                            {
+                                Id = "TEST002",
+                                Name ="StaticValidationOnly",
+                                ContentsRegex = "[a-z]{12}",
+                            },
+                            new MatchExpression()
+                            {
+                                Id = "TEST003",
+                                Name ="StaticPlusDynamic",
+                                ContentsRegex = "[A-Za-z0-9]{12}",
+                            }
+                        })
                     }
                 })
             };
-            if(numofValidators == 0)
-            {
-                definitions.Definitions[0].MatchExpressions.Add(new MatchExpression()
-                {
-                    Id = "TEST001",
-                    Name = "NoValidation",
-                    ContentsRegex = "nostaticvalid",
-                });
-            }
-            if (numofValidators == 1)
-            {
-                definitions.Definitions[0].MatchExpressions.Add(new MatchExpression()
-                {
-                    Id = "TEST002",
-                    Name = "StaticValidationOnly",
-                    ContentsRegex = "staticvalidonly",
-                });
-            }
-            if (numofValidators == 2)
-            {
-                definitions.Definitions[0].MatchExpressions.Add(new MatchExpression()
-                {
-                   Id = "TEST003",
-                   Name ="StaticDynamicValidation",
-                   ContentsRegex = "staticdynamic",     
-                });
-            }
 
             return JsonConvert.SerializeObject(definitions);
         }
