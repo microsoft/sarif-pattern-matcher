@@ -9,6 +9,7 @@ using System.Linq;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.VisualStudio.Services.WebPlatform;
 
 using Moq;
 
@@ -339,25 +340,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel, 0);
                 SarifLog logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, testCase.dynamicValidationEnabled);
                 logFile.Should().NotBeNull();
-                //TODO Analyze failure level
-                //sarif fail level == testCase.expectedNoValidation
+                logFile.Runs[0].Results[0].Level.Should().Be(testCase.expectedNoValidation);
 
                 definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel, 1);
                 logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, testCase.dynamicValidationEnabled);
                 logFile.Should().NotBeNull();
-                //TODO Analyze failure level
-                //sarif fail level == testCase.expectedStaticOnly
+                logFile.Runs[0].Results[0].Level.Should().Be(testCase.expectedStaticOnly);
 
                 definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel, 2);
                 logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, testCase.dynamicValidationEnabled);
                 logFile.Should().NotBeNull();
-                //TODO Analyze failure level
-                //sarif fail level == testCase.expectedStaticDynamic
-
-                //logFile.Runs.Count.Should().Be(1);
-                //logFile.Runs[0].Results.Count.Should().Be(testCase.expectedResult);
-                //obsoleteOptionLogFile.Runs.Count.Should().Be(1);
-                //obsoleteOptionLogFile.Runs[0].Results.Count.Should().Be(testCase.expectedResult);
+                logFile.Runs[0].Results[0].Level.Should().Be(testCase.expectedStaticDynamic);
             }
 
             //sarifLog.Runs?[0].Results?.Count.Should().Be(6); //3 rules should each catch twice = 6 catches total
@@ -581,6 +574,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             string sarifLogFileName = $"{tempFileName}.sarif";
             SarifLog sarifLog = null;
 
+            string levels = "Error;Warning;Note";
+
             try
             {
                 string[] args = new[]
@@ -589,6 +584,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     scanTargetPath,
                     $"-d", searchDefinitionsPath,
                     $"-o", sarifLogFileName,
+                    $"--level", levels,
                 };
 
                 if (runDynamicValidation)
