@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 using FluentAssertions;
 
@@ -330,24 +331,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             string definitionsText; 
 
-            string fileContents = "nostaticvalid \r\n" +
-                                  "staticvalidonly \r\n" +
-                                  "staticdynamic \r\n";
+            string fileContents = "NoValidation \r\n" +
+                                  "StaticOnly \r\n" +
+                                  "StaticPlusDynamic \r\n";
             
             foreach (var testCase in testCases)
             {
                 // Make an enum of rule validator type instead of int of number of validators
-                definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel, 0);
+                definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel);
                 SarifLog logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, testCase.dynamicValidationEnabled);
                 logFile.Should().NotBeNull();
                 logFile.Runs[0].Results[0].Level.Should().Be(testCase.expectedNoValidation);
 
-                definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel, 1);
+                definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel);
                 logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, testCase.dynamicValidationEnabled);
                 logFile.Should().NotBeNull();
                 logFile.Runs[0].Results[0].Level.Should().Be(testCase.expectedStaticOnly);
 
-                definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel, 2);
+                definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel);
                 logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, testCase.dynamicValidationEnabled);
                 logFile.Should().NotBeNull();
                 logFile.Runs[0].Results[0].Level.Should().Be(testCase.expectedStaticDynamic);
@@ -541,6 +542,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             string scanTargetName = SmallTargetName;
             string scanTargetPath = Path.Combine(rootDirectory, scanTargetName);
             string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string dllLocation = Path.Combine(currentDirectory, "Test.UnitTests.Sarif.PatternMatcher.Cli.dll");
 
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.DirectoryExists(rootDirectory)).Returns(true);
@@ -567,6 +570,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
 
             mockFileSystem.Setup(x => x.FileInfoLength(SmallTargetName)).Returns(fileContents.Length);
+            mockFileSystem.Setup(x => x.FileExists(@$"c:\Test.UnitTests.Sarif.PatternMatcher.Cli.dll")).Returns(true);
+            mockFileSystem.Setup(x => x.AssemblyLoadFrom(It.IsAny<string>())).Returns(Assembly.LoadFrom(dllLocation));
 
             Program.FileSystem = mockFileSystem.Object;
 
@@ -584,6 +589,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     $"-d", searchDefinitionsPath,
                     $"-o", sarifLogFileName,
                     "--level", levels,
+                    "--rich-return-code",
                 };
 
                 if (runDynamicValidation)
@@ -689,7 +695,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         }
 
         //create enum instead of bool
-        private static string GetSingleLineRuleDefinitionFailureLevel(FailureLevel level, int numofValidators)
+        private static string GetSingleLineRuleDefinitionFailureLevel(FailureLevel level)
         {
             string assemblyName = typeof(AnalyzeCommandTests).Assembly.Location;
             assemblyName = Path.GetFileName(assemblyName);
@@ -702,7 +708,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 {
                     new SearchDefinition()
                     {
-                        Name = "FailureLevelTest", Id = "FLTest101",
+                        Name = "FailureLevelTest", Id = "TEST001",
                         Level = level,
                         Message = "A problem occurred in '{0:scanTarget}'.",
                         Description = "Failure Level Testing Rules",
@@ -710,21 +716,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         {
                             new MatchExpression()
                             {
-                                Id = "TEST001",
+                                Id = "TEST001/001",
                                 Name ="NoValidation",
-                                ContentsRegex = "[A-Z]{12}",
+                                ContentsRegex = "NoValidation",
                             },
                             new MatchExpression()
                             {
-                                Id = "TEST002",
-                                Name ="StaticValidationOnly",
-                                ContentsRegex = "[a-z]{12}",
+                                Id = "TEST001/002",
+                                Name ="StaticOnly",
+                                ContentsRegex = "StaticOnly",
                             },
                             new MatchExpression()
                             {
-                                Id = "TEST003",
+                                Id = "TEST001/003",
                                 Name ="StaticPlusDynamic",
-                                ContentsRegex = "[A-Za-z0-9]{12}",
+                                ContentsRegex = "StaticPlusDynamic",
                             }
                         })
                     }

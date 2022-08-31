@@ -12,7 +12,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli.TestValidators
     {
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            string secret = groups["secret"].Value;
+            string secret = groups["0"].Value;
 
             var validationResult = new ValidationResult
             {
