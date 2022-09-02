@@ -90,11 +90,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 var mockFileSystem = new Mock<IFileSystem>();
 
                 mockFileSystem
-                    .Setup(x => x.FileReadAllText(expectedProbingPath)).Returns("{}")
-                    .Callback((string path) => { consultedPath = path; });
+                    .Setup(x => x.FileExists(expectedProbingPath)).Returns(true);
 
                 mockFileSystem
-                    .Setup(x => x.FileExists(expectedProbingPath)).Returns(true);
+                    .Setup(x => x.FileReadAllText(expectedProbingPath)).Returns("{}")
+                    .Callback((string path) => { consultedPath = path; });
 
                 // Acquire skimmers for searchers
                 ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
@@ -144,6 +144,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var testLogger = new TestLogger();
 
             var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
             // Acquire skimmers for searchers
@@ -211,6 +212,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var testLogger = new TestLogger();
 
             var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
             // Acquire skimmers for searchers
@@ -445,6 +447,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var testLogger = new TestLogger();
 
             var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
             // Acquire skimmers for searchers
@@ -519,6 +522,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var testLogger = new TestLogger();
 
             var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
             // Acquire skimmers for searchers
@@ -580,6 +584,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var testLogger = new TestLogger();
 
             var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
             // Acquire skimmers for searchers
