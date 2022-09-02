@@ -111,7 +111,7 @@
         {
           "ruleId": "AZC102/190",
           "ruleIndex": 1,
-          "level": "note",
+          "level": "error",
           "message": {
             "id": "Default",
             "arguments": [
