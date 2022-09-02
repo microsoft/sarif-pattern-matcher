@@ -6,11 +6,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 using FluentAssertions;
 
+using Kusto.Data;
+
 using Microsoft.CodeAnalysis.Sarif.Driver;
-using Microsoft.VisualStudio.Services.WebPlatform;
+using Microsoft.VisualStudio.TestPlatform.CoreUtilities.Extensions;
 
 using Moq;
 
@@ -280,9 +283,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             Program.InstantiatedAnalyzeCommand.Should().NotBeNull();
         }
 
+
         [Fact]
         public void AnalyzeCommand_ShouldOverwriteJsonFailureLevelWithDynamicValidation()
         {
+            var sb = new StringBuilder();
+
             var testCases = new[] {
                 new {
                     jsonLevel = FailureLevel.Note,
@@ -328,36 +334,48 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 },
 
             };
-
-            string definitionsText; 
-
-            string fileContents = "NoValidation \r\n" +
-                                  "StaticOnly \r\n" +
-                                  "StaticPlusDynamic \r\n";
             
             foreach (var testCase in testCases)
             {
-                // Make an enum of rule validator type instead of int of number of validators
-                definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel);
-                SarifLog logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, testCase.dynamicValidationEnabled);
-                logFile.Should().NotBeNull();
-                logFile.Runs[0].Results[0].Level.Should().Be(testCase.expectedNoValidation);
+                string definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel);
+                string testScenarioName = "NoValidation";
+                SarifLog logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText,
+                                                                          testScenarioName,
+                                                                          testCase.dynamicValidationEnabled);
 
-                definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel);
-                logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, testCase.dynamicValidationEnabled);
-                logFile.Should().NotBeNull();
-                logFile.Runs[0].Results[0].Level.Should().Be(testCase.expectedStaticOnly);
+                ValidateFailureLevelByValidationType(expectedFailureLevel: testCase.expectedNoValidation,
+                                                     sarifLog: logFile,
+                                                     validationScenario: testScenarioName,
+                                                     isDynamicAnalysis: testCase.dynamicValidationEnabled,
+                                                     ref sb);
 
-                definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel);
-                logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText, fileContents, testCase.dynamicValidationEnabled);
-                logFile.Should().NotBeNull();
-                logFile.Runs[0].Results[0].Level.Should().Be(testCase.expectedStaticDynamic);
+                testScenarioName = "StaticOnly";
+                logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText,
+                                                                          testScenarioName,
+                                                                          testCase.dynamicValidationEnabled);
+
+                ValidateFailureLevelByValidationType(expectedFailureLevel: testCase.expectedNoValidation,
+                                                     sarifLog: logFile,
+                                                     validationScenario: testScenarioName,
+                                                     isDynamicAnalysis: testCase.dynamicValidationEnabled,
+                                                     ref sb);
+
+                testScenarioName = "StaticPlusDynamic";
+                logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText,
+                                                                          testScenarioName,
+                                                                          testCase.dynamicValidationEnabled);
+
+                ValidateFailureLevelByValidationType(expectedFailureLevel: testCase.expectedNoValidation,
+                                                     sarifLog: logFile,
+                                                     validationScenario: testScenarioName,
+                                                     isDynamicAnalysis: testCase.dynamicValidationEnabled,
+                                                     ref sb);
             }
 
-            //sarifLog.Runs?[0].Results?.Count.Should().Be(6); //3 rules should each catch twice = 6 catches total
-
-            //sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
+            string result = sb.ToString();
+            result.Length.Should().Be(0, because: result);
         }
+
         private SarifLog RunAnalyzeCommand(string definitionsText, string fileContents)
         {
             string sarifOutput;
@@ -617,6 +635,41 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             return sarifLog;
         }
+
+        private void ValidateFailureLevelByValidationType(
+            FailureLevel expectedFailureLevel,
+            SarifLog sarifLog,
+            string validationScenario,
+            bool isDynamicAnalysis,
+            ref StringBuilder stringBuilder)
+        {
+            string testScenarioMode = isDynamicAnalysis ?
+                    "with dynamic validation enabled" :
+                    "without dynamic validation enabled";
+
+            if (sarifLog == null)
+            {
+                string message = $"SARIF result should not be null for `{validationScenario}` test scenario {testScenarioMode}.";
+                StringBuilderFormatAndAppendNewLine(message, ref stringBuilder);
+            }
+            else if (sarifLog.Runs[0]?.Results[0]?.Level != expectedFailureLevel)
+            {
+                string message = $"Expected `FailureLevel` to be `{expectedFailureLevel}` but found " +
+                    $"{sarifLog.Runs[0]?.Results[0]?.Level} for `{validationScenario}` test scenario {testScenarioMode}.";
+
+                StringBuilderFormatAndAppendNewLine(message, ref stringBuilder);
+            }
+        }
+
+        private void StringBuilderFormatAndAppendNewLine(string data, ref StringBuilder stringBuilder)
+        {
+            if (stringBuilder.Length == 0)
+            {
+                stringBuilder.AppendLine("asserted condition(s) failed:");
+            }
+            stringBuilder.AppendLine(data);
+        }
+
         private string[] GetSharedStrings()
         {
             string stringsLocation = this.GetType().Assembly.Location;
