@@ -364,7 +364,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 case ValidationState.Unknown:
                 {
-                    level = FailureLevel.Note;
                     validationSuffix = string.Empty;
 
                     validationPrefix = "an apparent ";
