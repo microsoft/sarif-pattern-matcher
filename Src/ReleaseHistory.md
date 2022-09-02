@@ -2,6 +2,7 @@
 
 ## *2.0.0-dev*
 
+- Update search definitions probing logic to look for file alongside the client tool.
 - Update `sarif-sdk` submodule to commit [24c773bf194100d11c896ce67581832428304a35](https://github.com/microsoft/sarif-sdk/tree/24c773bf194100d11c896ce67581832428304a35), which corresponds to the NuGet `Sarif.Sdk` 3.0.0-beta1 package release.
 - BUG: Resolve `OutofMemoryException` and `NullReferenceException' failures resulting from a failure to honor file size scan limits set by `--file-size-in-kb` argument and updated Sarif.Sdk submodule to commit [ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b](https://github.com/microsoft/sarif-sdk/commit/ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b). [#621](https://github.com/microsoft/sarif-pattern-matcher/pull/621)
 - BUG: Resolve SAL Modernization Plugin capture group showing incorrect region properties in SARIF. [#626](https://github.com/microsoft/sarif-pattern-matcher/pull/626)

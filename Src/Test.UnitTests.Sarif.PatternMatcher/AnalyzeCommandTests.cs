@@ -77,6 +77,40 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
+        public void AnalyzeCommand_SkimmersCreationProbesExecutionDirectoryForDefinitions()
+        {
+            string filePath = $"{Guid.NewGuid()}.txt";
+            string fullFilePath = Path.Combine(Path.GetTempPath(), filePath);
+
+            foreach (string searchDefinitionsPath in new[] { filePath, fullFilePath })
+            {
+                string consultedPath = null;
+                string expectedProbingPath = Path.Combine(Environment.CurrentDirectory, filePath);
+
+                var mockFileSystem = new Mock<IFileSystem>();
+
+                mockFileSystem
+                    .Setup(x => x.FileReadAllText(expectedProbingPath)).Returns("{}")
+                    .Callback((string path) => { consultedPath = path; });
+
+                mockFileSystem
+                    .Setup(x => x.FileExists(expectedProbingPath)).Returns(true);
+
+                // Acquire skimmers for searchers
+                ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
+                    mockFileSystem.Object,
+                    new string[] { searchDefinitionsPath },
+                    RE2Regex.Instance);
+
+                string requestedFileName = Path.GetFileName(consultedPath);
+                string requestedDirectory = Path.GetDirectoryName(consultedPath);
+
+                requestedFileName.Should().Be(Path.GetFileName(filePath));
+                requestedDirectory.Should().Be(Environment.CurrentDirectory);
+            }
+        }
+
+        [Fact]
         public void AnalyzeCommand_WithMessageId()
         {
             const string messageId = "NewId";
