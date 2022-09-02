@@ -331,10 +331,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     expectedNoValidation = FailureLevel.Error,
                     expectedStaticOnly = FailureLevel.Error,
                     expectedStaticDynamic = FailureLevel.Error
-                },
-
+                }
             };
-            
+
             foreach (var testCase in testCases)
             {
                 string definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel);
