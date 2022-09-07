@@ -20,8 +20,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     /// </summary>
     public class PatternInvariantTests
     {
-        public static void VerifyAllValidatorsExist(string definitionsFileName, Assembly assembly)
+        public static void VerifyAllValidatorsExist(string definitionsFileName, string pluginName)
         {
+            string pluginDirectory = Path.GetDirectoryName(definitionsFileName);
+            var assembly = Assembly.LoadFrom(Path.Combine(pluginDirectory, pluginName));
             string content = File.ReadAllText(definitionsFileName);
 
             var jObject = (JObject)JToken.Parse(content);
@@ -42,7 +44,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             // Assert.Empty doesn't allow custom messages, so use Assert.True
-            Assert.True(rulesWithoutValidators.Count == 0, "Unable to find validators for these rules: " + string.Join(',', rulesWithoutValidators));
+            Assert.True(rulesWithoutValidators.Count == 0,
+                        "Unable to find validators for these rules: " +
+                        $"{Environment.NewLine}  " +
+                        string.Join($",{Environment.NewLine}  ", rulesWithoutValidators));
         }
 
         public static void VerifyAllSharedStringsExist(string definitionsFilePath, string sharedStringsFilePath)
