@@ -27,7 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         [Fact]
         public void AllSecurityRules_ShouldHaveValidators()
         {
-            ReflectionTests.VerifyAllValidatorsExist("SEC101.SecurePlaintextSecrets.json", typeof(HttpAuthorizationRequestHeaderValidator).Assembly);
+            PatternInvariantTests.VerifyAllValidatorsExist("SEC101.SecurePlaintextSecrets.json", typeof(HttpAuthorizationRequestHeaderValidator).Assembly);
         }
     }
 }

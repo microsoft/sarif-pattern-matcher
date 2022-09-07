@@ -7,23 +7,25 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
+using FluentAssertions;
+
 using Newtonsoft.Json.Linq;
 
 using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
-    public class ReflectionTests
+    /// <summary>
+    /// These tests enforce certain invariants around the scan rules, e.g., that we can
+    /// associate every rule in a definitions JSON with its corresponding rule definitions
+    /// in its shared strings file, that the rule ships a code-based validator, etc.
+    /// </summary>
+    public class PatternInvariantTests
     {
         public static void VerifyAllValidatorsExist(string definitionsFileName, Assembly assembly)
         {
             try
             {
-                if (!File.Exists(definitionsFileName))
-                {
-                    return;
-                }
-
                 string content = File.ReadAllText(definitionsFileName);
 
                 var jObject = (JObject)JToken.Parse(content);
@@ -58,46 +60,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public static void VerifyAllSharedStringsExist(string definitionsFilePath, string sharedStringsFilePath)
         {
-            try
+            string content = File.ReadAllText(definitionsFilePath);
+
+            var jObject = (JObject)JToken.Parse(content);
+
+            IEnumerable<string> rules = jObject["Definitions"][0]["MatchExpressions"].Select(x => x["ContentsRegex"].ToString()).Distinct();
+
+            var rulesWithoutSharedStrings = new List<string>();
+            string sharedStringsContents;
+            using (var sr = new StreamReader(sharedStringsFilePath))
             {
-                if (!File.Exists(definitionsFilePath) || !File.Exists(sharedStringsFilePath))
-                {
-                    return;
-                    // Should we Assert.True(false) here?
-                }
-
-                string content = File.ReadAllText(definitionsFilePath);
-
-                var jObject = (JObject)JToken.Parse(content);
-
-                IEnumerable<string> rules = jObject["Definitions"][0]["MatchExpressions"].Select(x => x["ContentsRegex"].ToString()).Distinct();
-
-                var rulesWithoutSharedStrings = new List<string>();
-                string sharedStringsContents;
-                using (var sr = new StreamReader(sharedStringsFilePath))
-                {
-                    sharedStringsContents = sr.ReadToEnd();
-                }
-
-                foreach (string rule in rules)
-                {
-                    if (!sharedStringsContents.Contains(rule))
-                    {
-                        rulesWithoutSharedStrings.Add(rule);
-                    }
-                }
-
-                // Assert.Empty doesn't allow custom messages, so use Assert.True
-                Assert.True(rulesWithoutSharedStrings.Count == 0, "Unable to find shared strings for these rules: " + string.Join(',', rulesWithoutSharedStrings));
+                sharedStringsContents = sr.ReadToEnd();
             }
-            catch (IOException ioe)
+
+            foreach (string rule in rules)
             {
-                Assert.True(false, "Failed to read the rules file.  Exception was: " + ioe.Message);
+                if (!sharedStringsContents.Contains(rule))
+                {
+                    rulesWithoutSharedStrings.Add(rule);
+                }
             }
-            catch (NullReferenceException)
-            {
-                Assert.True(false, "Unexpected JSON structure in rules file");
-            }
+
+            // Assert.Empty doesn't allow custom messages, so use Assert.True
+            Assert.True(rulesWithoutSharedStrings.Count == 0, "Unable to find shared strings for these rules: " + string.Join(',', rulesWithoutSharedStrings));
         }
 
         public static void VerifyAllTestsExist(Assembly validatorsAssembly, Assembly testsAssembly)
