@@ -50,12 +50,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 : int.MaxValue;
         }
 
-        protected ValidatorBase()
-        {
-            PerFileFingerprintCache = new ConcurrentDictionary<string, byte>(StringComparer.OrdinalIgnoreCase);
-            FingerprintToResultCache = new ConcurrentDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>>();
-        }
-
         public virtual string ScanIdentityGuid
         {
             get
@@ -92,7 +86,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         protected IDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>> FingerprintToResultCache { get; }
 
         /// <summary>
-        /// Gets a cache of file + fingerprint combinations that have been
+        /// Gets or sets a cache of file + fingerprint combinations that have been
         /// observed previously. Our scanner will only detect and validate
         /// a unique fingerprint once per file. Many regexes will produce
         /// multiple matches that resolve to the same unique credential in
@@ -108,7 +102,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// value type for the dictionary is arbitrary; this data is never
         /// consumed.
         /// </summary>
-        protected IDictionary<string, byte> PerFileFingerprintCache { get; }
+        protected IDictionary<string, byte> PerFileFingerprintCache { get; set; }
 
         public static bool ContainsDigitAndChar(string matchedPattern)
         {

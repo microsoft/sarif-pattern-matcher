@@ -24,30 +24,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(
             IFileSystem fileSystem,
             IEnumerable<string> searchDefinitionsPaths,
+            FileRegionsCache fileRegionsCache = null,
             IRegex engine = null)
         {
             engine ??= RE2Regex.Instance;
 
             var validators = new ValidatorsCache();
-            FileRegionsCache fileRegionsCache = FileRegionsCache.Instance;
+            fileRegionsCache ??= FileRegionsCache.Instance;
 
             var skimmers = new HashSet<Skimmer<AnalyzeContext>>();
 
             foreach (string inputSearchDefinitionsPath in searchDefinitionsPaths)
             {
-                string searchDefinitionsPath = inputSearchDefinitionsPath;
+                string searchDefinitionsPath = Path.GetFullPath(inputSearchDefinitionsPath);
 
                 if (!fileSystem.FileExists(searchDefinitionsPath))
                 {
-                    string coreToolDirectory = typeof(AnalyzeContext).Assembly.Location;
-                    coreToolDirectory = Path.GetDirectoryName(coreToolDirectory);
-                    searchDefinitionsPath = Path.GetFileName(searchDefinitionsPath);
-                    searchDefinitionsPath = Path.Combine(coreToolDirectory, searchDefinitionsPath);
-
-                    if (!fileSystem.FileExists(searchDefinitionsPath))
-                    {
-                        throw new ArgumentException($"Could not locate specified definitions path: '{inputSearchDefinitionsPath}'");
-                    }
+                    throw new ArgumentException($"Could not locate specified definitions path: '{searchDefinitionsPath}'");
                 }
 
                 string searchDefinitionsText =
@@ -323,7 +316,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
         {
-            return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
+            return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths, context.FileRegionsCache);
         }
 
 #if DEBUG

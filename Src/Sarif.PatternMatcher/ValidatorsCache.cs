@@ -192,6 +192,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return new[] { validationResult };
             }
 
+            staticValidator.DisablePerFileFingerprintCache(context.DisablePerFileFingerprintCache);
             IEnumerable<ValidationResult> validationResults = staticValidator.IsValidStatic(groups);
 
             if (staticValidator is DynamicValidatorBase dynamicValidator)

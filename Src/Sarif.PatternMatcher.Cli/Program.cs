@@ -49,17 +49,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             return Parser.Default.ParseArguments<
                 AnalyzeOptions,
-                AnalyzeDatabaseOptions,
+/*                AnalyzeDatabaseOptions,*/
                 ExportRulesMetatadaOptions,
                 ExportSearchDefinitionsOptions,
                 ImportAndAnalyzeOptions,
+                StressOptions,
                 ValidateOptions>(args)
               .MapResult(
-                (AnalyzeDatabaseOptions options) => new AnalyzeDatabaseCommand().Run(options),
-                (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),
                 (AnalyzeOptions options) => RunAnalyzeCommand(options),
+/*                (AnalyzeDatabaseOptions options) => new AnalyzeDatabaseCommand().Run(options),*/
                 (ExportRulesMetatadaOptions options) => new ExportRulesMetatadaCommand().Run(options),
                 (ExportSearchDefinitionsOptions options) => new ExportSearchDefinitionsCommand().Run(options),
+                (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),
+                (StressOptions options) => new StressCommand().Run(options),
                 (ValidateOptions options) => new ValidateCommand().Run(options),
                 _ => isValidHelpCommand || isVersionCommand
                         ? CommandBase.SUCCESS

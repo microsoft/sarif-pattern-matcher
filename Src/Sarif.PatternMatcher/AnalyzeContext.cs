@@ -2,7 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 
+using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.Strings.Interop;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
@@ -54,6 +56,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public bool Retry { get; set; }
 
         public long MaxMemoryInKilobytes { get; set; } = -1;
+
+        public FileRegionsCache FileRegionsCache { get; set; }
+
+        public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
+
+        public bool DisablePerFileFingerprintCache { get; set; }
 
         public void Dispose()
         {

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 using Microsoft.RE2.Managed;
@@ -23,16 +25,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 string scanTarget = groups["scanTargetFullPath"].Value;
                 string key = $"{scanTarget}#{validationResult.Fingerprint}";
 
-                if (PerFileFingerprintCache.ContainsKey(key))
+                if (PerFileFingerprintCache != null)
                 {
-                    validationResult.ValidationState = ValidationState.NoMatch;
-                    continue;
-                }
+                    if (PerFileFingerprintCache.ContainsKey(key))
+                    {
+                        validationResult.ValidationState = ValidationState.NoMatch;
+                        continue;
+                    }
 
-                PerFileFingerprintCache.Add(key, (byte)0);
+                    PerFileFingerprintCache.Add(key, (byte)0);
+                }
             }
 
             return validationResults;
+        }
+
+        public void DisablePerFileFingerprintCache(bool disablePerFileFingerprintCache)
+        {
+            PerFileFingerprintCache = disablePerFileFingerprintCache
+                ? null
+                : new ConcurrentDictionary<string, byte>();
         }
 
         /// <summary>
