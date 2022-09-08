@@ -133,10 +133,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private string GetPluginDirectory()
         {
-            return Path.Combine(ThisAssembly.Location,
-                                @"..\..\..",
-                                PluginName,
-                                Framework);
+            string result = Path.Combine(ThisAssembly.Location,
+                                         @"..\..\..",
+                                         PluginName,
+                                         Framework);
+
+            return Path.GetFullPath(result);
         }
 
         protected void RunAllTests()
