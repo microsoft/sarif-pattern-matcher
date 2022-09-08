@@ -27,9 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         [Fact]
         public void SecurePlaintextSecrets_VerifyAllValidatorsExist()
         {
-            PatternInvariantTests.VerifyAllValidatorsExist(
-                DefinitionsPath,
-                PluginName);
+            PatternInvariantTests.VerifyAllValidatorsExist(DefinitionsPath);
         }
     }
 }
