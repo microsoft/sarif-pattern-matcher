@@ -18,16 +18,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override string Framework => "netstandard2.1";
 
-        protected override string PluginName => "SecurePlaintextSecrets";
+        protected override string TypeUnderTest => "SecurePlaintextSecrets";
 
         [Fact]
         public void SecurePlaintextSecrets_EndToEndFunctionalTests()
             => RunAllTests();
 
         [Fact]
-        public void AllSecurityRules_ShouldHaveValidators()
+        public void SecurePlaintextSecrets_VerifyAllValidatorsExist()
         {
-            ReflectionTests.VerifyAllValidatorsExist("SEC101.SecurePlaintextSecrets.json", typeof(HttpAuthorizationRequestHeaderValidator).Assembly);
+            PatternInvariantTests.VerifyAllValidatorsExist(
+                DefinitionsPath,
+                PluginName);
         }
     }
 }

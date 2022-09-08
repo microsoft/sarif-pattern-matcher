@@ -16,7 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
 
         protected override string Framework => "netstandard2.1";
 
-        protected override string PluginName => "ServiceConnectionSecurity";
+        protected override string TypeUnderTest => "ServiceConnectionSecurity";
 
         [Fact]
         public void AzureDevOpsConfiguration_EndToEndFunctionalTests()

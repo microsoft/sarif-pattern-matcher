@@ -16,7 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override string Framework => "netstandard2.1";
 
-        protected override string PluginName => "UseSecureApi";
+        protected override string TypeUnderTest => "UseSecureApi";
 
         [Fact]
         public void UseSecureApi_EndToEndFunctionalTests()
