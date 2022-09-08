@@ -20,10 +20,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     /// </summary>
     public class PatternInvariantTests
     {
-        public static void VerifyAllValidatorsExist(string definitionsFileName, string pluginName)
+        public static void VerifyAllValidatorsExist(string definitionsFileName)
         {
             string pluginDirectory = Path.GetDirectoryName(definitionsFileName);
-            var assembly = Assembly.LoadFrom(Path.Combine(pluginDirectory, pluginName));
+            string validatorsName = new DirectoryInfo(pluginDirectory).Parent.Name;
+            var assembly = Assembly.LoadFrom(Path.Combine(pluginDirectory, $"{validatorsName}.dll"));
             string content = File.ReadAllText(definitionsFileName);
 
             var jObject = (JObject)JToken.Parse(content);
@@ -74,7 +75,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             // Assert.Empty doesn't allow custom messages, so use Assert.True
-            Assert.True(rulesWithoutSharedStrings.Count == 0, "Unable to find shared strings for these rules: " + string.Join(',', rulesWithoutSharedStrings));
+            Assert.True(rulesWithoutSharedStrings.Count == 0,
+                        "Unable to find shared strings for these rules: " +
+                        $"{Environment.NewLine}  " +
+                        string.Join($",{Environment.NewLine}  ", rulesWithoutSharedStrings));
         }
 
         public static void VerifyAllTestsExist(Assembly validatorsAssembly, Assembly testsAssembly)
@@ -96,7 +100,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
             }
             // Assert.Empty doesn't allow custom messages, so use Assert.True
-            Assert.True(rulesWithoutTests.Count == 0, "Unable to find tests for these rule validators: " + string.Join(',', rulesWithoutTests));
+            Assert.True(rulesWithoutTests.Count == 0,
+                        "Unable to find tests for these rules: " +
+                        $"{Environment.NewLine}  " +
+                        string.Join($",{Environment.NewLine}  ", rulesWithoutTests));
         }
     }
 }
