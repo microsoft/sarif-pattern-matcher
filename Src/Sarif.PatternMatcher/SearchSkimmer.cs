@@ -19,7 +19,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {
-
         public const string SecretHashSha256Current = "SecretHashSha256/current";
         public const string AssetFingerprintCurrent = "AssetFingerprint/current";
         public const string SecretFingerprintCurrent = "SecretFingerprint/current";
@@ -156,8 +155,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 try
                 {
                     // Ensure that the byte of the file does not exceed the limit set by the
-                    // file-size-in-kilobytes argument (which will be -1 if not set, in which
-                    // case all files should be analyzed no matter their size).
+                    // file-size-in-kilobytes argument.
                     long fileSize = _fileSystem.FileInfoLength(filePath);
                     if (DoesTargetFileExceedSizeLimits(fileSize, context.MaxFileSizeInKilobytes))
                     {
@@ -462,6 +460,277 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     flexMatches.Add(keyValue.Value);
                 }
             }
+        }
+
+        private static void ConstructResultAndLogForFileNameRegex(AnalyzeContext context,
+                                                           MatchExpression matchExpression,
+                                                           FailureLevel level,
+                                                           ResultKind kind,
+                                                           ReportingDescriptor reportingDescriptor,
+                                                           Fingerprint fingerprint,
+                                                           string validatorMessage,
+                                                           string validationPrefix,
+                                                           string validationSuffix,
+                                                           string filePath)
+        {
+            Dictionary<string, string> messageArguments =
+                            matchExpression.MessageArguments != null ?
+                                new Dictionary<string, string>(matchExpression.MessageArguments) :
+                                new Dictionary<string, string>();
+
+            messageArguments["validationPrefix"] = validationPrefix;
+            messageArguments["validationSuffix"] = validationSuffix;
+
+            IList<string> arguments = GetMessageArguments(groups: null,
+                                                          matchExpression.ArgumentNameToIndexMap,
+                                                          filePath,
+                                                          validatorMessage: NormalizeValidatorMessage(validatorMessage),
+                                                          messageArguments);
+
+            Result result = ConstructResult(context.TargetUri,
+                                                 reportingDescriptor.Id,
+                                                 level,
+                                                 kind,
+                                                 region: null,
+                                                 flexMatch: null,
+                                                 fingerprint,
+                                                 matchExpression,
+                                                 arguments);
+
+            context.Logger.Log(reportingDescriptor, result);
+        }
+
+        private static Result ConstructResult(
+            Uri targetUri,
+            string ruleId,
+            FailureLevel level,
+            ResultKind kind,
+            Region region,
+            FlexMatch flexMatch,
+            Fingerprint fingerprint,
+            MatchExpression matchExpression,
+            IList<string> arguments)
+        {
+            var location = new Location()
+            {
+                PhysicalLocation = new PhysicalLocation
+                {
+                    ArtifactLocation = new ArtifactLocation
+                    {
+                        Uri = targetUri,
+                    },
+                    Region = region,
+                },
+            };
+
+            Dictionary<string, string> fingerprints = BuildFingerprints(fingerprint, out double rank);
+
+            if (!string.IsNullOrEmpty(matchExpression.SubId))
+            {
+                ruleId = $"{ruleId}/{matchExpression.SubId}";
+            }
+
+            // We'll limit rank precision to two decimal places. Because this value
+            // is actually converted from a nomalized range of 0.0 to 1.0, to the
+            // SARIF 0.0 to 100.0 equivalent, this is effectively four decimal places
+            // of precision as far as the normalized Shannon entrop is concerned.
+            rank = Math.Round(rank, 2, MidpointRounding.AwayFromZero);
+
+            var result = new Result()
+            {
+                RuleId = ruleId,
+                Level = level,
+                Kind = kind,
+                Message = new Message()
+                {
+                    Id = matchExpression.MessageId,
+                    Arguments = arguments,
+                },
+                Rank = rank,
+                Locations = new List<Location>(new[] { location }),
+                Fingerprints = fingerprints,
+            };
+
+            if (matchExpression.Fixes?.Count > 0)
+            {
+                // Build arguments that may be required for fix text.
+                var argumentNameToValueMap = new Dictionary<string, string>();
+
+                foreach (KeyValuePair<string, int> kv in matchExpression.ArgumentNameToIndexMap)
+                {
+                    argumentNameToValueMap["{" + kv.Key + "}"] = arguments[kv.Value];
+                }
+
+                // This will create one fixRegion that will be re-used for all matchExpression.Fixes
+                Region fixRegion = result.Locations[0].PhysicalLocation.Region.DeepClone();
+                fixRegion.Snippet = null;
+                foreach (SimpleFix fix in matchExpression.Fixes.Values)
+                {
+                    ExpandArguments(fix, argumentNameToValueMap);
+                    AddFixToResult(flexMatch, fix, result, fixRegion);
+                }
+            }
+
+            return result;
+        }
+
+        private static Dictionary<string, string> BuildFingerprints(Fingerprint fingerprint, out double rank)
+        {
+            rank = -1;
+
+            if (fingerprint == default)
+            {
+                return null;
+            }
+
+            rank = fingerprint.GetRank();
+
+            return new Dictionary<string, string>()
+            {
+                { SecretHashSha256Current, fingerprint.GetSecretHash() },
+                { AssetFingerprintCurrent, fingerprint.GetAssetFingerprint() },
+                { SecretFingerprintCurrent, fingerprint.GetSecretFingerprint() },
+                { ValidationFingerprintCurrent, fingerprint.GetValidationFingerprint() },
+                { ValidationFingerprintHashSha256Current, fingerprint.GetValidationFingerprintHash() },
+            };
+        }
+
+        private static FlexString Decode(string value)
+        {
+            byte[] bytes = Convert.FromBase64String(value);
+            return Encoding.ASCII.GetString(bytes);
+        }
+
+        private static void ExpandArguments(SimpleFix fix, Dictionary<string, string> argumentNameToValueMap)
+        {
+            fix.Find = ExpandArguments(fix.Find, argumentNameToValueMap);
+            fix.ReplaceWith = ExpandArguments(fix.ReplaceWith, argumentNameToValueMap);
+            fix.Description = ExpandArguments(fix.Description, argumentNameToValueMap);
+        }
+
+        private static string ExpandArguments(string text, Dictionary<string, string> argumentNameToValueMap)
+        {
+            foreach (KeyValuePair<string, string> kv in argumentNameToValueMap)
+            {
+                text = text.Replace(kv.Key, kv.Value);
+            }
+
+            return text;
+        }
+
+        private static void AddFixToResult(FlexMatch flexMatch, SimpleFix simpleFix, Result result, Region region)
+        {
+            result.Fixes ??= new List<Fix>();
+
+            string replacementText = flexMatch.Value.String.Replace(simpleFix.Find, simpleFix.ReplaceWith);
+
+            var fix = new Fix()
+            {
+                Description = new Message() { Text = simpleFix.Description },
+                ArtifactChanges = new List<ArtifactChange>(new[]
+                {
+                    new ArtifactChange()
+                    {
+                        ArtifactLocation = result.Locations[0].PhysicalLocation.ArtifactLocation,
+                        Replacements = new List<Replacement>(new[]
+                        {
+                            new Replacement()
+                            {
+                                DeletedRegion = region,
+                                InsertedContent = new ArtifactContent()
+                                {
+                                    Text = replacementText,
+                                },
+                            },
+                        }),
+                    },
+                }),
+            };
+
+            result.Fixes.Add(fix);
+        }
+
+        private static Dictionary<string, int> GenerateIndicesForNamedArguments(ref string defaultMessageString)
+        {
+            var namedArgumentsToIndexMap = new Dictionary<string, int>();
+
+            foreach (Match match in namedArgumentsRegex.Matches(defaultMessageString))
+            {
+                string name = match.Groups["name"].Value;
+                string index = match.Groups["index"].Value;
+
+                namedArgumentsToIndexMap[name] = int.Parse(index);
+
+                string find = $"{{{index}:{name}}}";
+                string replace = $"{{{index}}}";
+
+                defaultMessageString = defaultMessageString.Replace(find, replace);
+            }
+
+            return namedArgumentsToIndexMap;
+        }
+
+        private static IList<string> GetMessageArguments(IDictionary<string, FlexMatch> groups,
+                                                  Dictionary<string, int> namedArgumentToIndexMap,
+                                                  string scanTargetPath,
+                                                  string validatorMessage,
+                                                  Dictionary<string, string> additionalArguments)
+        {
+            int argsCount = namedArgumentToIndexMap.Count;
+
+            var arguments = new List<string>(new string[argsCount]);
+
+            foreach (KeyValuePair<string, int> kv in namedArgumentToIndexMap)
+            {
+                string value = string.Empty;
+
+                if (kv.Key == "scanTarget")
+                {
+                    value = Path.GetFileName(scanTargetPath);
+                }
+                else if (kv.Key == nameof(scanTargetPath))
+                {
+                    value = scanTargetPath;
+                }
+                else if (kv.Key == "validatorMessage")
+                {
+                    value = validatorMessage ?? string.Empty;
+                }
+                else if (groups != null && groups.TryGetValue(kv.Key, out FlexMatch groupValue))
+                {
+                    value = groupValue.Value;
+                }
+
+                arguments[kv.Value] = value;
+            }
+
+            if (additionalArguments != null)
+            {
+                foreach (KeyValuePair<string, string> kv in additionalArguments)
+                {
+                    if (namedArgumentToIndexMap.TryGetValue(kv.Key, out int index))
+                    {
+                        arguments[index] = kv.Value;
+                    }
+                }
+            }
+
+            return arguments;
+        }
+
+        private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch)
+        {
+            var region = new Region
+            {
+                CharOffset = regionFlexMatch.Index,
+                CharLength = regionFlexMatch.Length,
+            };
+
+            return _fileRegionsCache.PopulateTextRegionProperties(
+                region,
+                context.TargetUri,
+                populateSnippet: true,
+                fileText: context.FileContents);
         }
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
@@ -1048,282 +1317,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private static void ConstructResultAndLogForFileNameRegex(AnalyzeContext context,
-                                                           MatchExpression matchExpression,
-                                                           FailureLevel level,
-                                                           ResultKind kind,
-                                                           ReportingDescriptor reportingDescriptor,
-                                                           Fingerprint fingerprint,
-                                                           string validatorMessage,
-                                                           string validationPrefix,
-                                                           string validationSuffix,
-                                                           string filePath)
-        {
-            Dictionary<string, string> messageArguments =
-                            matchExpression.MessageArguments != null ?
-                                new Dictionary<string, string>(matchExpression.MessageArguments) :
-                                new Dictionary<string, string>();
-
-            messageArguments["validationPrefix"] = validationPrefix;
-            messageArguments["validationSuffix"] = validationSuffix;
-
-            IList<string> arguments = GetMessageArguments(groups: null,
-                                                          matchExpression.ArgumentNameToIndexMap,
-                                                          filePath,
-                                                          validatorMessage: NormalizeValidatorMessage(validatorMessage),
-                                                          messageArguments);
-
-            Result result = ConstructResult(context.TargetUri,
-                                                 reportingDescriptor.Id,
-                                                 level,
-                                                 kind,
-                                                 region: null,
-                                                 flexMatch: null,
-                                                 fingerprint,
-                                                 matchExpression,
-                                                 arguments);
-
-            context.Logger.Log(reportingDescriptor, result);
-        }
-
-        private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch)
-        {
-            var region = new Region
-            {
-                CharOffset = regionFlexMatch.Index,
-                CharLength = regionFlexMatch.Length,
-            };
-
-            return _fileRegionsCache.PopulateTextRegionProperties(
-                region,
-                context.TargetUri,
-                populateSnippet: true,
-                fileText: context.FileContents);
-        }
-
-        private static Result ConstructResult(
-            Uri targetUri,
-            string ruleId,
-            FailureLevel level,
-            ResultKind kind,
-            Region region,
-            FlexMatch flexMatch,
-            Fingerprint fingerprint,
-            MatchExpression matchExpression,
-            IList<string> arguments)
-        {
-            var location = new Location()
-            {
-                PhysicalLocation = new PhysicalLocation
-                {
-                    ArtifactLocation = new ArtifactLocation
-                    {
-                        Uri = targetUri,
-                    },
-                    Region = region,
-                },
-            };
-
-            Dictionary<string, string> fingerprints = BuildFingerprints(fingerprint, out double rank);
-
-            if (!string.IsNullOrEmpty(matchExpression.SubId))
-            {
-                ruleId = $"{ruleId}/{matchExpression.SubId}";
-            }
-
-            // We'll limit rank precision to two decimal places. Because this value
-            // is actually converted from a nomalized range of 0.0 to 1.0, to the
-            // SARIF 0.0 to 100.0 equivalent, this is effectively four decimal places
-            // of precision as far as the normalized Shannon entrop is concerned.
-            rank = Math.Round(rank, 2, MidpointRounding.AwayFromZero);
-
-            var result = new Result()
-            {
-                RuleId = ruleId,
-                Level = level,
-                Kind = kind,
-                Message = new Message()
-                {
-                    Id = matchExpression.MessageId,
-                    Arguments = arguments,
-                },
-                Rank = rank,
-                Locations = new List<Location>(new[] { location }),
-                Fingerprints = fingerprints,
-            };
-
-            if (matchExpression.Fixes?.Count > 0)
-            {
-                // Build arguments that may be required for fix text.
-                var argumentNameToValueMap = new Dictionary<string, string>();
-
-                foreach (KeyValuePair<string, int> kv in matchExpression.ArgumentNameToIndexMap)
-                {
-                    argumentNameToValueMap["{" + kv.Key + "}"] = arguments[kv.Value];
-                }
-
-                // This will create one fixRegion that will be re-used for all matchExpression.Fixes
-                Region fixRegion = result.Locations[0].PhysicalLocation.Region.DeepClone();
-                fixRegion.Snippet = null;
-                foreach (SimpleFix fix in matchExpression.Fixes.Values)
-                {
-                    ExpandArguments(fix, argumentNameToValueMap);
-                    AddFixToResult(flexMatch, fix, result, fixRegion);
-                }
-            }
-
-            return result;
-        }
-
-        private static Dictionary<string, string> BuildFingerprints(Fingerprint fingerprint, out double rank)
-        {
-            rank = -1;
-
-            if (fingerprint == default)
-            {
-                return null;
-            }
-
-            rank = fingerprint.GetRank();
-
-            return new Dictionary<string, string>()
-            {
-                { SecretHashSha256Current, fingerprint.GetSecretHash() },
-                { AssetFingerprintCurrent, fingerprint.GetAssetFingerprint() },
-                { SecretFingerprintCurrent, fingerprint.GetSecretFingerprint() },
-                { ValidationFingerprintCurrent, fingerprint.GetValidationFingerprint() },
-                { ValidationFingerprintHashSha256Current, fingerprint.GetValidationFingerprintHash() },
-            };
-        }
-
-        private static FlexString Decode(string value)
-        {
-            byte[] bytes = Convert.FromBase64String(value);
-            return Encoding.ASCII.GetString(bytes);
-        }
-
-        private static void ExpandArguments(SimpleFix fix, Dictionary<string, string> argumentNameToValueMap)
-        {
-            fix.Find = ExpandArguments(fix.Find, argumentNameToValueMap);
-            fix.ReplaceWith = ExpandArguments(fix.ReplaceWith, argumentNameToValueMap);
-            fix.Description = ExpandArguments(fix.Description, argumentNameToValueMap);
-        }
-
-        private static string ExpandArguments(string text, Dictionary<string, string> argumentNameToValueMap)
-        {
-            foreach (KeyValuePair<string, string> kv in argumentNameToValueMap)
-            {
-                text = text.Replace(kv.Key, kv.Value);
-            }
-
-            return text;
-        }
-
-        private static void AddFixToResult(FlexMatch flexMatch, SimpleFix simpleFix, Result result, Region region)
-        {
-            result.Fixes ??= new List<Fix>();
-
-            string replacementText = flexMatch.Value.String.Replace(simpleFix.Find, simpleFix.ReplaceWith);
-
-            var fix = new Fix()
-            {
-                Description = new Message() { Text = simpleFix.Description },
-                ArtifactChanges = new List<ArtifactChange>(new[]
-                {
-                    new ArtifactChange()
-                    {
-                        ArtifactLocation = result.Locations[0].PhysicalLocation.ArtifactLocation,
-                        Replacements = new List<Replacement>(new[]
-                        {
-                            new Replacement()
-                            {
-                                DeletedRegion = region,
-                                InsertedContent = new ArtifactContent()
-                                {
-                                    Text = replacementText,
-                                },
-                            },
-                        }),
-                    },
-                }),
-            };
-
-            result.Fixes.Add(fix);
-        }
-
-        private static Dictionary<string, int> GenerateIndicesForNamedArguments(ref string defaultMessageString)
-        {
-            var namedArgumentsToIndexMap = new Dictionary<string, int>();
-
-            foreach (Match match in namedArgumentsRegex.Matches(defaultMessageString))
-            {
-                string name = match.Groups["name"].Value;
-                string index = match.Groups["index"].Value;
-
-                namedArgumentsToIndexMap[name] = int.Parse(index);
-
-                string find = $"{{{index}:{name}}}";
-                string replace = $"{{{index}}}";
-
-                defaultMessageString = defaultMessageString.Replace(find, replace);
-            }
-
-            return namedArgumentsToIndexMap;
-        }
-
-        private static IList<string> GetMessageArguments(IDictionary<string, FlexMatch> groups,
-                                                  Dictionary<string, int> namedArgumentToIndexMap,
-                                                  string scanTargetPath,
-                                                  string validatorMessage,
-                                                  Dictionary<string, string> additionalArguments)
-        {
-            int argsCount = namedArgumentToIndexMap.Count;
-
-            var arguments = new List<string>(new string[argsCount]);
-
-            foreach (KeyValuePair<string, int> kv in namedArgumentToIndexMap)
-            {
-                string value = string.Empty;
-
-                if (kv.Key == "scanTarget")
-                {
-                    value = Path.GetFileName(scanTargetPath);
-                }
-                else if (kv.Key == nameof(scanTargetPath))
-                {
-                    value = scanTargetPath;
-                }
-                else if (kv.Key == "validatorMessage")
-                {
-                    value = validatorMessage ?? string.Empty;
-                }
-                else if (groups != null && groups.TryGetValue(kv.Key, out FlexMatch groupValue))
-                {
-                    value = groupValue.Value;
-                }
-
-                arguments[kv.Value] = value;
-            }
-
-            if (additionalArguments != null)
-            {
-                foreach (KeyValuePair<string, string> kv in additionalArguments)
-                {
-                    if (namedArgumentToIndexMap.TryGetValue(kv.Key, out int index))
-                    {
-                        arguments[index] = kv.Value;
-                    }
-                }
-            }
-
-            return arguments;
-        }
-
         private bool DoesTargetFileExceedSizeLimits(long fileLength, int maxFileSize)
         {
             // Ensure that the byte of the file does not exceed the limit set by the
-            // file-size-in-kilobytes argument (which will be -1 if not set, in which
-            // case all files should be analyzed no matter their size).
+            // file-size-in-kilobytes command line argument, which defaults to ~10MB.
             long fileSize = fileLength / 1024;
 
             return maxFileSize > -1 && fileSize > maxFileSize;
