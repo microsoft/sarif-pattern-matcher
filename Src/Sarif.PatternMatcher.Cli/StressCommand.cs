@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
@@ -74,6 +75,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             scanContext.SourceContext.ResourceName = "TestFile.cs";
 
+            // Make sure that file content is unique to flush out
+            // contents-specific caching issues (for line indexes).
+            resourceContent += Guid.NewGuid().ToString();
+
             for (int i = 0; i < 10000000; i++)
             {
                 skimmers ??= AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, s_configurationFiles);
@@ -82,8 +87,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 {
                     TargetUri = new Uri(scanContext.SourceContext.ResourceName, UriKind.RelativeOrAbsolute),
                     FileContents = resourceContent,
+                    PerFileFingerprintCache = new ConcurrentDictionary<string, byte>(),
                     Logger = logger,
-                    DisablePerFileFingerprintCache = true,
                 };
 
                 using (context)

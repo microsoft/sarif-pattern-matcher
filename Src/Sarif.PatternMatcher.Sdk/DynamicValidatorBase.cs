@@ -16,6 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             resultLevelKind = default;
 
             if (shouldUseDynamicCache &&
+                FingerprintToResultCache != null &&
                 FingerprintToResultCache.TryGetValue(fingerprint, out Tuple<ValidationState, ResultLevelKind, string> result))
             {
                 message = result.Item3;
@@ -28,8 +29,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                                                                    options,
                                                                    ref resultLevelKind);
 
-            FingerprintToResultCache[fingerprint] =
-                new Tuple<ValidationState, ResultLevelKind, string>(validationState, resultLevelKind, message);
+            if (FingerprintToResultCache != null)
+            {
+                FingerprintToResultCache[fingerprint] =
+                    new Tuple<ValidationState, ResultLevelKind, string>(validationState, resultLevelKind, message);
+            }
 
             return validationState;
         }

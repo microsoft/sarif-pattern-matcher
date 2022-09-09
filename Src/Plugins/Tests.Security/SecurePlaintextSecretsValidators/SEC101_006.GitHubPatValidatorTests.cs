@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
@@ -28,7 +29,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             groups.Add("scanTargetFullPath", new FlexMatch() { Value = "GitHitPatTest" });
 
             var gitHubPatValidator = new GitHubPatValidator();
-            IEnumerable<ValidationResult> validationResults = gitHubPatValidator.IsValidStatic(groups);
+            var perFileFingerprintCache = new ConcurrentDictionary<string, byte>();
+            IEnumerable<ValidationResult> validationResults = gitHubPatValidator.IsValidStatic(groups, perFileFingerprintCache);
             foreach (ValidationResult validationResult in validationResults)
             {
                 Assert.Equal(matchedPattern, validationResult.Fingerprint.Secret);

@@ -11,7 +11,37 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public abstract class StaticValidatorBase : ValidatorBase
     {
-        public IEnumerable<ValidationResult> IsValidStatic(IDictionary<string, FlexMatch> groups)
+        /// <summary>
+        /// Examines the groups output by a positive regex match and
+        /// optionally performs additional validated to determine
+        /// whether the match is valid.
+        /// </summary>
+        /// <param name="groups">
+        /// The named groups resulting from a positive regex match. This
+        /// data also transports a certain number of injected well-known
+        /// named values (such as the file name of the scan target).
+        /// </param>
+        /// <param name="perFileFingerprintCache">
+        /// A cache of file + fingerprint combinations that have been
+        /// observed previously. Our scanner will only detect and validate
+        /// a unique fingerprint once per file. Many regexes will produce
+        /// multiple matches that resolve to the same unique credential in
+        /// a file (one of the perils of multiline regex matching). It is
+        /// possible that this cache may drop the location of a second
+        /// actual match that happens to be duplicated in the file. In
+        /// practice, we will not worry about this scenario: it will be
+        /// sufficient that we flag one instance of the unique secret.
+        ///
+        /// The type of this cache is peculiar. We use a concurrent dictionary
+        /// because .NET does not ship a concurrent HashSet class and we do
+        /// not have time currently to author one. The choice of 'byte' as a
+        /// value type for the dictionary is arbitrary; this data is never
+        /// consumed.
+        /// </param>
+        /// <returns> One or ValidationResults indicating zero or more valid findings.
+        /// </returns>
+        public IEnumerable<ValidationResult> IsValidStatic(IDictionary<string, FlexMatch> groups,
+                                                           ConcurrentDictionary<string, byte> perFileFingerprintCache)
         {
             IEnumerable<ValidationResult> validationResults = IsValidStaticHelper(groups);
 
@@ -25,26 +55,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 string scanTarget = groups["scanTargetFullPath"].Value;
                 string key = $"{scanTarget}#{validationResult.Fingerprint}";
 
-                if (PerFileFingerprintCache != null)
+                if (!perFileFingerprintCache.TryAdd(key, (byte)0))
                 {
-                    if (PerFileFingerprintCache.ContainsKey(key))
-                    {
-                        validationResult.ValidationState = ValidationState.NoMatch;
-                        continue;
-                    }
-
-                    PerFileFingerprintCache.Add(key, (byte)0);
+                    validationResult.ValidationState = ValidationState.NoMatch;
                 }
             }
 
             return validationResults;
-        }
-
-        public void DisablePerFileFingerprintCache(bool disablePerFileFingerprintCache)
-        {
-            PerFileFingerprintCache = disablePerFileFingerprintCache
-                ? null
-                : new ConcurrentDictionary<string, byte>();
         }
 
         /// <summary>
