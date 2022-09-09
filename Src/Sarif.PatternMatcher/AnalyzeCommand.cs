@@ -28,7 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             engine ??= RE2Regex.Instance;
 
-            var validators = new ValidatorsCache(fileSystem: fileSystem);
+            var validators = new ValidatorsCache(fileSystem);
             FileRegionsCache fileRegionsCache = FileRegionsCache.Instance;
 
             var skimmers = new HashSet<Skimmer<AnalyzeContext>>();
