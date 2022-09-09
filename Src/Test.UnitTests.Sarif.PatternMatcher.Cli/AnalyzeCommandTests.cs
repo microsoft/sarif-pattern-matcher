@@ -10,10 +10,7 @@ using System.Text;
 
 using FluentAssertions;
 
-using Kusto.Data;
-
 using Microsoft.CodeAnalysis.Sarif.Driver;
-using Microsoft.VisualStudio.TestPlatform.CoreUtilities.Extensions;
 
 using Moq;
 
