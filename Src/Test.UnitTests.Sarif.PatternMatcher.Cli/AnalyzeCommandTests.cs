@@ -285,7 +285,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
 
         [Fact]
-        public void AnalyzeCommand_ShouldOverwriteJsonFailureLevelWithDynamicValidation()
+        public void AnalyzeCommand_FailureLevelShouldBeDefaultUnlessDynamicallyValidated()
         {
             var sb = new StringBuilder();
 
@@ -350,8 +350,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                 testScenarioName = "StaticOnly";
                 logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText,
-                                                                          testScenarioName,
-                                                                          testCase.dynamicValidationEnabled);
+                                                                 testScenarioName,
+                                                                 testCase.dynamicValidationEnabled);
 
                 ValidateFailureLevelByValidationType(expectedFailureLevel: testCase.expectedNoValidation,
                                                      sarifLog: logFile,
@@ -361,8 +361,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                 testScenarioName = "StaticPlusDynamic";
                 logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText,
-                                                                          testScenarioName,
-                                                                          testCase.dynamicValidationEnabled);
+                                                                 testScenarioName,
+                                                                 testCase.dynamicValidationEnabled);
 
                 ValidateFailureLevelByValidationType(expectedFailureLevel: testCase.expectedNoValidation,
                                                      sarifLog: logFile,
