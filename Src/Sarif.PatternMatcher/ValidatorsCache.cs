@@ -265,9 +265,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             foreach (string validatorPath in validatorPaths)
             {
                 Assembly assembly = null;
-                bool fileExists = _fileSystem.FileExists(validatorPath);
 
-                if (fileExists)
+                if (_fileSystem.FileExists(validatorPath))
                 {
                     try
                     {
