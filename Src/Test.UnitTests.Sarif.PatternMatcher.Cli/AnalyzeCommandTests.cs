@@ -743,7 +743,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return JsonConvert.SerializeObject(definitions);
         }
 
-        //create enum instead of bool
         private static string GetSingleLineRuleDefinitionFailureLevel(FailureLevel level)
         {
             string assemblyName = typeof(AnalyzeCommandTests).Assembly.Location;
