@@ -30,13 +30,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected abstract string Framework { get; }
 
-        protected abstract string PluginName { get; }
+        protected string PluginDirectory => GetPluginDirectory();
+
+        protected string PluginName => TestBinaryName.Substring("Tests.".Length);
+
+        protected string DefinitionsPath => Path.Combine(PluginDirectory, $"{RuleId}.{TypeUnderTest}.json");
 
         protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.TestData.{TypeUnderTest}";
 
         protected override string TestBinaryTestDataDirectory => Path.Combine(ProductRootDirectory, "src", "Plugins", TestBinaryName, "TestData");
 
-        protected override string ProductTestDataDirectory => Path.Combine(TestBinaryTestDataDirectory, PluginName);
+        protected override string ProductTestDataDirectory => Path.Combine(TestBinaryTestDataDirectory, TypeUnderTest);
 
         protected override IDictionary<string, string> ConstructTestOutputsFromInputResources(IEnumerable<string> inputResourceNames, object parameter)
         {
@@ -64,12 +68,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override string ConstructTestOutputFromInputResource(string inputResourceName, object parameter)
         {
             string logContents = GetResourceText(inputResourceName);
-            string productBinaryName = TestBinaryName.Substring("Tests.".Length);
-
-            string regexDefinitions = Path.Combine(
-                Path.GetDirectoryName(typeof(RebaseUriVisitor).Assembly.Location),
-                @"..\..\",
-                @$"{productBinaryName}\{Framework}\{RuleId}.{TypeUnderTest}.json");
 
             string filePath = Path.Combine(
                 ProductTestDataDirectory,
@@ -83,7 +81,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
             // extension name changes from .json to .dll).
             ISet<Skimmer<AnalyzeContext>> skimmers =
-                AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, new string[] { regexDefinitions });
+                AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, new string[] { DefinitionsPath });
 
             var sb = new StringBuilder();
 
@@ -131,6 +129,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             sarifLog.Runs[0].OriginalUriBaseIds = null;
 
             return JsonConvert.SerializeObject(sarifLog, Formatting.Indented);
+        }
+
+        private string GetPluginDirectory()
+        {
+            string result = Path.Combine(ThisAssembly.Location,
+                                         @"..\..\..",
+                                         PluginName,
+                                         Framework);
+
+            return Path.GetFullPath(result);
         }
 
         protected void RunAllTests()

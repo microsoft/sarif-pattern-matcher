@@ -33,9 +33,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var skimmers = new HashSet<Skimmer<AnalyzeContext>>();
 
-            // TODO exception handling for bad search definitions files
-            foreach (string searchDefinitionsPath in searchDefinitionsPaths)
+            foreach (string inputSearchDefinitionsPath in searchDefinitionsPaths)
             {
+                string searchDefinitionsPath = inputSearchDefinitionsPath;
+
+                if (!fileSystem.FileExists(searchDefinitionsPath))
+                {
+                    string coreToolDirectory = typeof(AnalyzeContext).Assembly.Location;
+                    coreToolDirectory = Path.GetDirectoryName(coreToolDirectory);
+                    searchDefinitionsPath = Path.GetFileName(searchDefinitionsPath);
+                    searchDefinitionsPath = Path.Combine(coreToolDirectory, searchDefinitionsPath);
+
+                    if (!fileSystem.FileExists(searchDefinitionsPath))
+                    {
+                        throw new ArgumentException($"Could not locate specified definitions path: '{inputSearchDefinitionsPath}'");
+                    }
+                }
+
                 string searchDefinitionsText =
                     fileSystem.FileReadAllText(searchDefinitionsPath);
 
