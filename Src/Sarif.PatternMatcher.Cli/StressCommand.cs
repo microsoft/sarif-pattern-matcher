@@ -87,7 +87,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 {
                     TargetUri = new Uri(scanContext.SourceContext.ResourceName, UriKind.RelativeOrAbsolute),
                     FileContents = resourceContent,
-                    PerFileFingerprintCache = new ConcurrentDictionary<string, byte>(),
                     Logger = logger,
                 };
 

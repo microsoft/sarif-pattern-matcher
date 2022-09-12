@@ -34,7 +34,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 MaxDegreeOfParallelism = Environment.ProcessorCount * 2,
             };
 
-            var perFileFingerprintHash = new ConcurrentDictionary<string, byte>();
+            var perFileFingerprintHash = new HashSet<string>();
 
             Parallel.For(0, 1, (_) =>
             {

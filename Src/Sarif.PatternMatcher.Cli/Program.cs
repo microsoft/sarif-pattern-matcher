@@ -49,7 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             return Parser.Default.ParseArguments<
                 AnalyzeOptions,
-/*                AnalyzeDatabaseOptions,*/
+                AnalyzeDatabaseOptions,
                 ExportRulesMetatadaOptions,
                 ExportSearchDefinitionsOptions,
                 ImportAndAnalyzeOptions,
@@ -57,7 +57,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 ValidateOptions>(args)
               .MapResult(
                 (AnalyzeOptions options) => RunAnalyzeCommand(options),
-/*                (AnalyzeDatabaseOptions options) => new AnalyzeDatabaseCommand().Run(options),*/
+                (AnalyzeDatabaseOptions options) => new AnalyzeDatabaseCommand().Run(options),
                 (ExportRulesMetatadaOptions options) => new ExportRulesMetatadaCommand().Run(options),
                 (ExportSearchDefinitionsOptions options) => new ExportSearchDefinitionsCommand().Run(options),
                 (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),
@@ -88,7 +88,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 verb == "analyze-database" ||
                 verb == "export-rules" ||
                 verb == "export-search-definitions" ||
-                verb == "import-analyze";
+                verb == "import-analyze" ||
+                verb == "stress";
         }
 
         private static string[] RewriteArgs(string[] args)

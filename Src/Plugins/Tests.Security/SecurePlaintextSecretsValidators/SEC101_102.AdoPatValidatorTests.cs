@@ -51,7 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     { "secret", new FlexMatch { Value = testCase.Secret } }
                 };
 
-                var perFileFingerprintCache = new ConcurrentDictionary<string, byte>();
+                var perFileFingerprintCache = new HashSet<string>();
                 IEnumerable<ValidationResult> validationResults = adoPatValidator.IsValidStatic(groups, perFileFingerprintCache);
 
                 string title = testCase.Title;

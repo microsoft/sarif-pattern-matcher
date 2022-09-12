@@ -32,7 +32,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             };
 
             var cryptographicPrivateKeyValidator = new CryptographicPrivateKeyValidator();
-            var perFileFingerprintCache = new ConcurrentDictionary<string, byte>();
+            var perFileFingerprintCache = new HashSet<string>();
             IEnumerable<ValidationResult> validationResults = cryptographicPrivateKeyValidator.IsValidStatic(keyValuePairs, perFileFingerprintCache);
             foreach (ValidationResult validationResult in validationResults)
             {

@@ -18,6 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // The actual applicability of a file for a specific
             // search definition is governed by its name/extension.
             IsValidAnalysisTarget = true;
+            ObservedFingerprintCache = new HashSet<string>();
         }
 
         public Exception TargetLoadException { get; set; }
@@ -62,10 +63,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
 
-        public ConcurrentDictionary<string, byte> PerFileFingerprintCache { get; set; }
+        /// <summary>
+        /// Gets a hashset that stores observed fingerprints in the
+        /// current scan target. This data is used to prevent firing
+        /// multiple instances of he same logically unique apparent
+        /// credential.
+        /// </summary>
+        public HashSet<string> ObservedFingerprintCache { get; private set; }
 
         public void Dispose()
         {
+            ObservedFingerprintCache?.Clear();
+            ObservedFingerprintCache = null;
         }
     }
 }

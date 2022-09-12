@@ -29,7 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             groups.Add("scanTargetFullPath", new FlexMatch() { Value = "GitHitPatTest" });
 
             var gitHubPatValidator = new GitHubPatValidator();
-            var perFileFingerprintCache = new ConcurrentDictionary<string, byte>();
+            var perFileFingerprintCache = new HashSet<string>();
             IEnumerable<ValidationResult> validationResults = gitHubPatValidator.IsValidStatic(groups, perFileFingerprintCache);
             foreach (ValidationResult validationResult in validationResults)
             {

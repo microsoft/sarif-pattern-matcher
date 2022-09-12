@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.RE2.Managed;
 
@@ -41,7 +42,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// <returns> One or ValidationResults indicating zero or more valid findings.
         /// </returns>
         public IEnumerable<ValidationResult> IsValidStatic(IDictionary<string, FlexMatch> groups,
-                                                           ConcurrentDictionary<string, byte> perFileFingerprintCache)
+                                                           ISet<string> perFileFingerprintCache)
         {
             IEnumerable<ValidationResult> validationResults = IsValidStaticHelper(groups);
 
@@ -52,13 +53,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     continue;
                 }
 
-                string scanTarget = groups["scanTargetFullPath"].Value;
-                string key = $"{scanTarget}#{validationResult.Fingerprint}";
+                string fingerprintText = $"{validationResult.Fingerprint.ToString()}";
 
-                if (!perFileFingerprintCache.TryAdd(key, (byte)0))
+                if (perFileFingerprintCache.Contains(fingerprintText))
                 {
                     validationResult.ValidationState = ValidationState.NoMatch;
                 }
+
+                perFileFingerprintCache.Add(fingerprintText);
             }
 
             return validationResults;
