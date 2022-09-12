@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -191,6 +192,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 return new[] { validationResult };
             }
+
+            // This code will fault in a per-file fingerprint cache if one isn't provided.
+            // This has the effect of comprehensively ensuring our behavior to only fire
+            // a single logically unique result per-file is enforced. If we wanted to
+            // allow firing duplicative results, we could eliminate this statement and
+            // require upstream callers to provide it (or dispense w/the deduplication).
+            context.PerFileFingerprintCache ??= new ConcurrentDictionary<string, byte>();
 
             IEnumerable<ValidationResult> validationResults = staticValidator.IsValidStatic(groups, context.PerFileFingerprintCache);
 

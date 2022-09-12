@@ -2,7 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -45,6 +47,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override IDictionary<string, string> ConstructTestOutputsFromInputResources(IEnumerable<string> inputResourceNames, object parameter)
         {
             var inputFiles = parameter as List<string>;
+            var results = new Dictionary<string, string>();
+
+            results = Debugger.IsAttached
+                ? SingleThreadedConstructTestOutputs(inputResourceNames, inputFiles)
+                : MultiThreadedConstructTestOutputs(inputResourceNames, inputFiles);
+
+            return results;
+        }
+
+        private Dictionary<string, string> SingleThreadedConstructTestOutputs(IEnumerable<string> inputResourceNames, List<string> inputFiles)
+        {
+            var results = new Dictionary<string, string>();
+
+            foreach (string inputResourceName in inputResourceNames)
+            {
+                string name = inputFiles.First(i => inputResourceName.EndsWith(i));
+                results[name] = ConstructTestOutputFromInputResource(inputResourceName, name);
+            }
+
+            return results;
+        }
+
+        private Dictionary<string, string> MultiThreadedConstructTestOutputs(IEnumerable<string> inputResourceNames, List<string> inputFiles)
+        {
             var results = new Dictionary<string, string>();
             var dict = new Dictionary<string, Task<string>>();
 
@@ -102,7 +128,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     TargetUri = new Uri(filePath, UriKind.Absolute),
                     FileContents = logContents,
-                    Logger = logger
+                    Logger = logger,
+                    PerFileFingerprintCache = new ConcurrentDictionary<string, byte>(),
                 };
 
                 using (context)

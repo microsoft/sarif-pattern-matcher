@@ -52,7 +52,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected ValidatorBase()
         {
-            PerFileFingerprintCache = new ConcurrentDictionary<string, byte>(StringComparer.OrdinalIgnoreCase);
             FingerprintToResultCache = new ConcurrentDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>>();
         }
 
@@ -90,8 +89,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// message.
         /// </summary>
         protected IDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>> FingerprintToResultCache { get; }
-
-        protected IDictionary<string, byte> PerFileFingerprintCache { get; }
 
         public static bool ContainsDigitAndChar(string matchedPattern)
         {
