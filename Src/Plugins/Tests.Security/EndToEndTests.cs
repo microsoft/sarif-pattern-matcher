@@ -180,7 +180,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 string testFileName = Path.GetFileName(testFile);
 
                 if (testFileName.EndsWith("Sec101_036.mysqlcredentials.ps1", StringComparison.OrdinalIgnoreCase) ||
-                    testFileName.EndsWith("Sec101_037.sqlcredentials.pd1", StringComparison.OrdinalIgnoreCase))
+                    testFileName.EndsWith("Sec101_037.sqlcredentials.ps1", StringComparison.OrdinalIgnoreCase))
                 {
                     // TODO: re-enable these tests after further debugging of validation
                     // fingerprint collisions across all the SQL rule types.
