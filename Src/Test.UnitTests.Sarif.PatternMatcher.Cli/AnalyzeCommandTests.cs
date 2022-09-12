@@ -288,83 +288,84 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             var testCases = new[] {
                 new {
-                    jsonLevel = FailureLevel.Note,
-                    dynamicValidationEnabled = false,
-                    expectedNoValidation = FailureLevel.Note,
-                    expectedStaticOnly = FailureLevel.Note,
-                    expectedStaticDynamic = FailureLevel.Warning
+                    failureLevelConfiguredInDefinitionsJson = FailureLevel.Note,
+                    dynamicValidationEnabledOnCommandLine = false,
+                    expectedFailureLevelIfNoValidatorsExist = FailureLevel.Note,
+                    expectedFailureLevelIfOnlyStaticValidatorExists = FailureLevel.Note,
+                    expectedFailureLevelIfStaticAndDynamicValidatorExists = FailureLevel.Warning
                 },
                 new {
-                    jsonLevel = FailureLevel.Warning,
-                    dynamicValidationEnabled = false,
-                    expectedNoValidation = FailureLevel.Warning,
-                    expectedStaticOnly = FailureLevel.Warning,
-                    expectedStaticDynamic = FailureLevel.Warning
+                    failureLevelConfiguredInDefinitionsJson = FailureLevel.Warning,
+                    dynamicValidationEnabledOnCommandLine = false,
+                    expectedFailureLevelIfNoValidatorsExist = FailureLevel.Warning,
+                    expectedFailureLevelIfOnlyStaticValidatorExists = FailureLevel.Warning,
+                    expectedFailureLevelIfStaticAndDynamicValidatorExists = FailureLevel.Warning
                 },
                 new {
-                    jsonLevel = FailureLevel.Error,
-                    dynamicValidationEnabled = false,
-                    expectedNoValidation = FailureLevel.Error,
-                    expectedStaticOnly = FailureLevel.Error,
-                    expectedStaticDynamic = FailureLevel.Warning
+                    failureLevelConfiguredInDefinitionsJson = FailureLevel.Error,
+                    dynamicValidationEnabledOnCommandLine = false,
+                    expectedFailureLevelIfNoValidatorsExist = FailureLevel.Error,
+                    expectedFailureLevelIfOnlyStaticValidatorExists = FailureLevel.Error,
+                    expectedFailureLevelIfStaticAndDynamicValidatorExists = FailureLevel.Warning
                 },
                 new {
-                    jsonLevel = FailureLevel.Note,
-                    dynamicValidationEnabled = true,
-                    expectedNoValidation = FailureLevel.Note,
-                    expectedStaticOnly = FailureLevel.Note,
-                    expectedStaticDynamic = FailureLevel.Error
+                    failureLevelConfiguredInDefinitionsJson = FailureLevel.Note,
+                    dynamicValidationEnabledOnCommandLine = true,
+                    expectedFailureLevelIfNoValidatorsExist = FailureLevel.Note,
+                    expectedFailureLevelIfOnlyStaticValidatorExists = FailureLevel.Note,
+                    expectedFailureLevelIfStaticAndDynamicValidatorExists = FailureLevel.Error
                 },
                 new {
-                    jsonLevel = FailureLevel.Warning,
-                    dynamicValidationEnabled = true,
-                    expectedNoValidation = FailureLevel.Warning,
-                    expectedStaticOnly = FailureLevel.Warning,
-                    expectedStaticDynamic = FailureLevel.Error
+                    failureLevelConfiguredInDefinitionsJson = FailureLevel.Warning,
+                    dynamicValidationEnabledOnCommandLine = true,
+                    expectedFailureLevelIfNoValidatorsExist = FailureLevel.Warning,
+                    expectedFailureLevelIfOnlyStaticValidatorExists = FailureLevel.Warning,
+                    expectedFailureLevelIfStaticAndDynamicValidatorExists = FailureLevel.Error
                 },
                 new {
-                    jsonLevel = FailureLevel.Error,
-                    dynamicValidationEnabled = true,
-                    expectedNoValidation = FailureLevel.Error,
-                    expectedStaticOnly = FailureLevel.Error,
-                    expectedStaticDynamic = FailureLevel.Error
+                    failureLevelConfiguredInDefinitionsJson = FailureLevel.Error,
+                    dynamicValidationEnabledOnCommandLine = true,
+                    expectedFailureLevelIfNoValidatorsExist = FailureLevel.Error,
+                    expectedFailureLevelIfOnlyStaticValidatorExists = FailureLevel.Error,
+                    expectedFailureLevelIfStaticAndDynamicValidatorExists = FailureLevel.Error
                 }
             };
 
             foreach (var testCase in testCases)
             {
-                string definitionsText = GetSingleLineRuleDefinitionFailureLevel(testCase.jsonLevel);
+                string definitionsText =
+                    GetSingleLineRuleDefinitionFailureLevel(testCase.failureLevelConfiguredInDefinitionsJson);
                 string testScenarioName = "NoValidation";
-                SarifLog logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText,
+                SarifLog sarifLog = RunAnalyzeCommandWithDynamicValidation(definitionsText,
                                                                           testScenarioName,
-                                                                          testCase.dynamicValidationEnabled);
+                                                                          testCase.dynamicValidationEnabledOnCommandLine);
 
-                ValidateFailureLevelByValidationType(expectedFailureLevel: testCase.expectedNoValidation,
-                                                     sarifLog: logFile,
-                                                     validationScenario: testScenarioName,
-                                                     isDynamicAnalysis: testCase.dynamicValidationEnabled,
+                ValidateFailureLevelByValidationType(testCase.expectedFailureLevelIfNoValidatorsExist,
+                                                     sarifLog,
+                                                     testScenarioName,
+                                                     testCase.dynamicValidationEnabledOnCommandLine,
                                                      ref sb);
 
                 testScenarioName = "StaticOnly";
-                logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText,
+                sarifLog = RunAnalyzeCommandWithDynamicValidation(definitionsText,
                                                                  testScenarioName,
-                                                                 testCase.dynamicValidationEnabled);
+                                                                 testCase.dynamicValidationEnabledOnCommandLine);
 
-                ValidateFailureLevelByValidationType(expectedFailureLevel: testCase.expectedStaticOnly,
-                                                     sarifLog: logFile,
-                                                     validationScenario: testScenarioName,
-                                                     isDynamicAnalysis: testCase.dynamicValidationEnabled,
+                ValidateFailureLevelByValidationType(testCase.expectedFailureLevelIfOnlyStaticValidatorExists,
+                                                     sarifLog,
+                                                     testScenarioName,
+                                                     testCase.dynamicValidationEnabledOnCommandLine,
                                                      ref sb);
 
                 testScenarioName = "StaticPlusDynamic";
-                logFile = RunAnalyzeCommandWithDynamicValidation(definitionsText,
+                sarifLog = RunAnalyzeCommandWithDynamicValidation(definitionsText,
                                                                  testScenarioName,
-                                                                 testCase.dynamicValidationEnabled);
+                                                                 testCase.dynamicValidationEnabledOnCommandLine);
 
-                ValidateFailureLevelByValidationType(expectedFailureLevel: testCase.expectedStaticDynamic,
-                                                     sarifLog: logFile,
-                                                     validationScenario: testScenarioName,
-                                                     isDynamicAnalysis: testCase.dynamicValidationEnabled,
+                ValidateFailureLevelByValidationType(testCase.expectedFailureLevelIfStaticAndDynamicValidatorExists,
+                                                     sarifLog,
+                                                     testScenarioName,
+                                                     testCase.dynamicValidationEnabledOnCommandLine,
                                                      ref sb);
             }
 
