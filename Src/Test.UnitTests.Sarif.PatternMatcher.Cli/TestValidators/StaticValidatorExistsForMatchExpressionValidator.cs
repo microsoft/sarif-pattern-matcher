@@ -8,7 +8,7 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli.TestValidators
 {
-    internal class StaticOnlyValidator : StaticValidatorBase
+    internal class StaticValidatorExistsForMatchExpressionValidator : StaticValidatorBase
     {
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {

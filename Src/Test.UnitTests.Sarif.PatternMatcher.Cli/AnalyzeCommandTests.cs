@@ -335,38 +335,45 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             {
                 string definitionsText =
                     GetSingleLineRuleDefinitionFailureLevel(testCase.failureLevelConfiguredInDefinitionsJson);
-                string testScenarioName = "NoValidation";
-                SarifLog sarifLog = RunAnalyzeCommandWithDynamicValidation(definitionsText,
-                                                                          testScenarioName,
-                                                                          testCase.dynamicValidationEnabledOnCommandLine);
 
-                ValidateFailureLevelByValidationType(testCase.expectedFailureLevelIfNoValidatorsExist,
-                                                     sarifLog,
-                                                     testScenarioName,
-                                                     testCase.dynamicValidationEnabledOnCommandLine,
-                                                     ref sb);
+                string testScenarioName = "NoValidatorsExistForMatchExpression";
+                SarifLog sarifLog = RunAnalyzeCommandWithDynamicValidation(
+                    definitionsText,
+                    testScenarioName,
+                    testCase.dynamicValidationEnabledOnCommandLine);
 
-                testScenarioName = "StaticOnly";
-                sarifLog = RunAnalyzeCommandWithDynamicValidation(definitionsText,
-                                                                 testScenarioName,
-                                                                 testCase.dynamicValidationEnabledOnCommandLine);
+                sb = CompareActualAndExpectedFailureLevel(
+                    testCase.expectedFailureLevelIfNoValidatorsExist,
+                    sarifLog,
+                    testScenarioName,
+                    testCase.dynamicValidationEnabledOnCommandLine,
+                    sb);
 
-                ValidateFailureLevelByValidationType(testCase.expectedFailureLevelIfOnlyStaticValidatorExists,
-                                                     sarifLog,
-                                                     testScenarioName,
-                                                     testCase.dynamicValidationEnabledOnCommandLine,
-                                                     ref sb);
+                testScenarioName = "StaticValidatorExistsForMatchExpression";
+                sarifLog = RunAnalyzeCommandWithDynamicValidation(
+                    definitionsText,
+                    testScenarioName,
+                    testCase.dynamicValidationEnabledOnCommandLine);
 
-                testScenarioName = "StaticPlusDynamic";
-                sarifLog = RunAnalyzeCommandWithDynamicValidation(definitionsText,
-                                                                 testScenarioName,
-                                                                 testCase.dynamicValidationEnabledOnCommandLine);
+                sb = CompareActualAndExpectedFailureLevel(
+                    testCase.expectedFailureLevelIfOnlyStaticValidatorExists,
+                    sarifLog,
+                    testScenarioName,
+                    testCase.dynamicValidationEnabledOnCommandLine,
+                    sb);
 
-                ValidateFailureLevelByValidationType(testCase.expectedFailureLevelIfStaticAndDynamicValidatorExists,
-                                                     sarifLog,
-                                                     testScenarioName,
-                                                     testCase.dynamicValidationEnabledOnCommandLine,
-                                                     ref sb);
+                testScenarioName = "StaticAndDynamicValidatorsExistForMatchExpression";
+                sarifLog = RunAnalyzeCommandWithDynamicValidation(
+                    definitionsText,
+                    testScenarioName,
+                    testCase.dynamicValidationEnabledOnCommandLine);
+
+                sb = CompareActualAndExpectedFailureLevel(
+                    testCase.expectedFailureLevelIfStaticAndDynamicValidatorExists,
+                    sarifLog,
+                    testScenarioName,
+                    testCase.dynamicValidationEnabledOnCommandLine,
+                    sb);
             }
 
             string result = sb.ToString();
@@ -597,6 +604,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             SarifLog sarifLog = null;
             string levels = "Error;Warning;Note";
 
+            // Arguments to run static analysis only.
             string[] staticArgs = new[]
                 {
                     "analyze",
@@ -607,6 +615,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     "--rich-return-code"
                 };
 
+            // Arguments to run static and dynamic analysis.
             string[] dynamicArgs = new[]
                 {
                     "analyze",
@@ -643,13 +652,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return sarifLog;
         }
 
-        private void ValidateFailureLevelByValidationType(
+        private StringBuilder CompareActualAndExpectedFailureLevel(
             FailureLevel expectedFailureLevel,
             SarifLog sarifLog,
             string validationScenario,
             bool isDynamicAnalysis,
-            ref StringBuilder stringBuilder)
+            StringBuilder stringBuilder)
         {
+            if(stringBuilder == null) { stringBuilder = new StringBuilder(); }
+
             string testScenarioMode = isDynamicAnalysis ?
                     "with dynamic validation enabled" :
                     "without dynamic validation enabled";
@@ -657,24 +668,31 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             if (sarifLog == null)
             {
                 string message = $"SARIF result should not be null for `{validationScenario}` test scenario {testScenarioMode}.";
-                StringBuilderFormatAndAppendNewLine(message, ref stringBuilder);
+                stringBuilder = StringBuilderFormatAndAppendNewLine(message, stringBuilder);
             }
             else if (sarifLog.Runs[0]?.Results[0]?.Level != expectedFailureLevel)
             {
                 string message = $"Expected `FailureLevel` to be `{expectedFailureLevel}` but found " +
                     $"{sarifLog.Runs[0]?.Results[0]?.Level} for `{validationScenario}` test scenario {testScenarioMode}.";
 
-                StringBuilderFormatAndAppendNewLine(message, ref stringBuilder);
+                stringBuilder = StringBuilderFormatAndAppendNewLine(message, stringBuilder);
             }
+
+            return stringBuilder;
+
         }
 
-        private void StringBuilderFormatAndAppendNewLine(string data, ref StringBuilder stringBuilder)
+        private StringBuilder StringBuilderFormatAndAppendNewLine(string data, StringBuilder stringBuilder)
         {
+            if (stringBuilder == null) { stringBuilder = new StringBuilder(); }
+
             if (stringBuilder.Length == 0)
             {
                 stringBuilder.AppendLine("asserted condition(s) failed:");
             }
             stringBuilder.AppendLine(data);
+
+            return stringBuilder;
         }
 
         private string[] GetSharedStrings()
@@ -776,20 +794,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                             new MatchExpression()
                             {
                                 Id = "TEST001/001",
-                                Name ="NoValidation",
-                                ContentsRegex = "NoValidation",
+                                Name ="NoValidatorsExistForMatchExpression",
+                                ContentsRegex = "NoValidatorsExistForMatchExpression",
                             },
                             new MatchExpression()
                             {
                                 Id = "TEST001/002",
-                                Name ="StaticOnly",
-                                ContentsRegex = "StaticOnly",
+                                Name ="StaticValidatorExistsForMatchExpression",
+                                ContentsRegex = "StaticValidatorExistsForMatchExpression",
                             },
                             new MatchExpression()
                             {
                                 Id = "TEST001/003",
-                                Name ="StaticPlusDynamic",
-                                ContentsRegex = "StaticPlusDynamic",
+                                Name ="StaticAndDynamicValidatorsExistForMatchExpression",
+                                ContentsRegex = "StaticAndDynamicValidatorsExistForMatchExpression",
                             }
                         })
                     }
