@@ -350,7 +350,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                                                  testScenarioName,
                                                                  testCase.dynamicValidationEnabled);
 
-                ValidateFailureLevelByValidationType(expectedFailureLevel: testCase.expectedNoValidation,
+                ValidateFailureLevelByValidationType(expectedFailureLevel: testCase.expectedStaticOnly,
                                                      sarifLog: logFile,
                                                      validationScenario: testScenarioName,
                                                      isDynamicAnalysis: testCase.dynamicValidationEnabled,
@@ -361,7 +361,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                                                  testScenarioName,
                                                                  testCase.dynamicValidationEnabled);
 
-                ValidateFailureLevelByValidationType(expectedFailureLevel: testCase.expectedNoValidation,
+                ValidateFailureLevelByValidationType(expectedFailureLevel: testCase.expectedStaticDynamic,
                                                      sarifLog: logFile,
                                                      validationScenario: testScenarioName,
                                                      isDynamicAnalysis: testCase.dynamicValidationEnabled,
@@ -548,7 +548,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return sarifLog;
         }
 
-        private SarifLog RunAnalyzeCommandWithDynamicValidation(string definitionsText, string fileContents,
+        private SarifLog RunAnalyzeCommandWithDynamicValidation(
+            string definitionsText,
+            string fileContents,
             bool runDynamicValidation)
         {
             string sarifOutput;
@@ -594,9 +596,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             SarifLog sarifLog = null;
             string levels = "Error;Warning;Note";
 
-            try
-            {
-                string[] args = new[]
+            string[] staticArgs = new[]
+                {
+                    "analyze",
+                    scanTargetPath,
+                    $"-d", searchDefinitionsPath,
+                    $"-o", sarifLogFileName,
+                    "--level", levels,
+                    "--rich-return-code"
+                };
+
+            string[] dynamicArgs = new[]
                 {
                     "analyze",
                     scanTargetPath,
@@ -604,12 +614,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     $"-o", sarifLogFileName,
                     "--level", levels,
                     "--rich-return-code",
+                    "--dynamic-validation"
                 };
 
-                if (runDynamicValidation)
-                {
-                    args.Append("--dynamic-validation");
-                }
+            try
+            {
+                string[] args = runDynamicValidation ? dynamicArgs : staticArgs;
 
                 int result = Program.Main(args);
                 result.Should().Be(0);

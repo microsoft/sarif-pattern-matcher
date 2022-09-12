@@ -48,7 +48,6 @@
         {
           "ruleId": "AZC102/190",
           "ruleIndex": 0,
-          "level": "error",
           "message": {
             "id": "Default",
             "arguments": [
