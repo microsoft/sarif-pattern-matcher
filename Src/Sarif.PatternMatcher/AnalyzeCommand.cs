@@ -319,11 +319,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths, context.FileRegionsCache);
         }
 
-        protected override void AnalyzeTarget(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers, ISet<string> disabledSkimmers)
-        {
-            base.AnalyzeTarget(context, skimmers, disabledSkimmers);
-        }
-
 #if DEBUG
 
         private static void ValidateSharedStringsExpansion(SearchDefinitions searchDefinitions)

@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var perFileFingerprintHash = new HashSet<string>();
 
-            Parallel.For(0, 1, (_) =>
+            Parallel.For(0, 100, (_) =>
             {
                 Interlocked.Increment(ref id);
 
@@ -48,7 +48,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         { "0", new FlexMatch { Value = Guid.NewGuid().ToString() } }
                     };
 
-                    for (int i = 0; i < 1; i++)
+                    for (int i = 0; i < 100; i++)
                     {
                         groups[i.ToString()] =
                             new FlexMatch

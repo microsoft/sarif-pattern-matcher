@@ -49,6 +49,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             var inputFiles = parameter as List<string>;
             var results = new Dictionary<string, string>();
 
+            // INTERESTING BREAKPOINT: unexpected differences in an end-to-end test
+            // scan. In practice, debugging the end-to-end tests when multithreaded
+            // is difficult. The common scenario is to debug one or a few files and
+            // it is hard to step through a discrete repro w/ many other threads
+            // traveling the same breakpoints. With this change, we will be
+            // single-threaded if the debugger is attached. This introduces two
+            // complications, first, the time-to-execute is greatly increased.
+            // Second, runtime execution will not literally match test execution
+            // outside of the debugger. There are some theoretical problems (such
+            // as bugs in test utilization of shared resources) that could result.
+            //
             results = Debugger.IsAttached
                 ? SingleThreadedConstructTestOutputs(inputResourceNames, inputFiles)
                 : MultiThreadedConstructTestOutputs(inputResourceNames, inputFiles);

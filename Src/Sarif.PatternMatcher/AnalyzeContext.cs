@@ -66,7 +66,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// <summary>
         /// Gets a hashset that stores observed fingerprints in the
         /// current scan target. This data is used to prevent firing
-        /// multiple instances of he same logically unique apparent
+        /// multiple instances of the same logically unique apparent
         /// credential.
         /// </summary>
         public HashSet<string> ObservedFingerprintCache { get; private set; }
