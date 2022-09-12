@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
@@ -31,7 +32,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             };
 
             var cryptographicPrivateKeyValidator = new CryptographicPrivateKeyValidator();
-            IEnumerable<ValidationResult> validationResults = cryptographicPrivateKeyValidator.IsValidStatic(keyValuePairs);
+            var perFileFingerprintCache = new HashSet<string>();
+            IEnumerable<ValidationResult> validationResults = cryptographicPrivateKeyValidator.IsValidStatic(keyValuePairs, perFileFingerprintCache);
             foreach (ValidationResult validationResult in validationResults)
             {
                 Assert.Equal(ExpectedValidationState, validationResult.ValidationState);

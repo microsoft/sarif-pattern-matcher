@@ -2,7 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 
+using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.Strings.Interop;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
@@ -15,6 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // The actual applicability of a file for a specific
             // search definition is governed by its name/extension.
             IsValidAnalysisTarget = true;
+            ObservedFingerprintCache = new HashSet<string>();
         }
 
         public Exception TargetLoadException { get; set; }
@@ -55,8 +59,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public long MaxMemoryInKilobytes { get; set; } = -1;
 
+        public FileRegionsCache FileRegionsCache { get; set; }
+
+        public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
+
+        /// <summary>
+        /// Gets a hashset that stores observed fingerprints in the
+        /// current scan target. This data is used to prevent firing
+        /// multiple instances of the same logically unique apparent
+        /// credential.
+        /// </summary>
+        public HashSet<string> ObservedFingerprintCache { get; private set; }
+
         public void Dispose()
         {
+            ObservedFingerprintCache?.Clear();
+            ObservedFingerprintCache = null;
         }
     }
 }

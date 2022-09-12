@@ -52,7 +52,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         protected ValidatorBase()
         {
-            PerFileFingerprintCache = new ConcurrentDictionary<string, byte>(StringComparer.OrdinalIgnoreCase);
             FingerprintToResultCache = new ConcurrentDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>>();
         }
 
@@ -90,25 +89,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// message.
         /// </summary>
         protected IDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>> FingerprintToResultCache { get; }
-
-        /// <summary>
-        /// Gets a cache of file + fingerprint combinations that have been
-        /// observed previously. Our scanner will only detect and validate
-        /// a unique fingerprint once per file. Many regexes will produce
-        /// multiple matches that resolve to the same unique credential in
-        /// a file (one of the perils of multiline regex matching). It is
-        /// possible that this cache may drop the location of a second
-        /// actual match that happens to be duplicated in the file. In
-        /// practice, we will not worry about this scenario: it will be
-        /// sufficient that we flag one instance of the unique secret.
-        ///
-        /// The type of this cache is peculiar. We use a concurrent dictionary
-        /// because .NET does not ship a concurrent HashSet class and we do
-        /// not have time currently to author one. The choice of 'byte' as a
-        /// value type for the dictionary is arbitrary; this data is never
-        /// consumed.
-        /// </summary>
-        protected IDictionary<string, byte> PerFileFingerprintCache { get; }
 
         public static bool ContainsDigitAndChar(string matchedPattern)
         {

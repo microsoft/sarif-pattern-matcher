@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
@@ -33,6 +34,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 MaxDegreeOfParallelism = Environment.ProcessorCount * 2,
             };
 
+            var perFileFingerprintHash = new HashSet<string>();
+
             Parallel.For(0, 100, (_) =>
             {
                 Interlocked.Increment(ref id);
@@ -40,10 +43,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 for (int iterations = 0; iterations < 100; iterations++)
                 {
                     var groups = new Dictionary<string, FlexMatch>
-                {
-                    { "scanTargetFullPath", new FlexMatch { Value = Guid.NewGuid().ToString()} },
-                    { "0", new FlexMatch { Value = Guid.NewGuid().ToString() } }
-                };
+                    {
+                        { "scanTargetFullPath", new FlexMatch { Value = Guid.NewGuid().ToString()} },
+                        { "0", new FlexMatch { Value = Guid.NewGuid().ToString() } }
+                    };
 
                     for (int i = 0; i < 100; i++)
                     {
@@ -53,7 +56,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 Value = Guid.NewGuid().ToString()
                             };
                     }
-                    testStaticValidator.IsValidStatic(groups);
+                    testStaticValidator.IsValidStatic(groups, perFileFingerprintHash);
                 }
             });
         }
