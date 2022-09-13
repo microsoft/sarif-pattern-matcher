@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.CodeAnalysis.Sarif.Visitors;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 
@@ -38,7 +39,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly Uri _helpUri;
         private readonly IRegex _engine;
         private readonly IFileSystem _fileSystem;
-        private readonly FileRegionsCache _fileRegionsCache;
         private readonly ValidatorsCache _validators;
         private readonly IList<string> _deprecatedNames;
         private readonly IList<MatchExpression> _matchExpressions;
@@ -47,7 +47,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public SearchSkimmer(IRegex engine,
                              ValidatorsCache validators,
-                             FileRegionsCache fileRegionsCache,
                              SearchDefinition definition,
                              IFileSystem fileSystem = null)
         {
@@ -55,7 +54,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             _id = definition.Id;
             _name = definition.Name;
             _validators = validators;
-            _fileRegionsCache = fileRegionsCache;
             _fileSystem = fileSystem ?? FileSystem.Instance;
             _helpUri = new Uri(definition.HelpUri ?? DefaultHelpUri);
             _fullDescription = new MultiformatMessageString { Text = definition.Description };
@@ -726,11 +724,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 CharLength = regionFlexMatch.Length,
             };
 
-            return _fileRegionsCache.PopulateTextRegionProperties(
-                region,
-                context.TargetUri,
-                populateSnippet: true,
-                fileText: context.FileContents);
+            region = context.FileRegionsCache.PopulateTextRegionProperties(
+                        region,
+                        context.TargetUri,
+                        populateSnippet: true,
+                        fileText: context.FileContents);
+
+            return region;
         }
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
@@ -1114,6 +1114,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                             validationResult.Fingerprint,
                                             matchExpression,
                                             arguments);
+
+            if ((context.DataToInsert & OptionallyEmittedData.ContextRegionSnippets) == OptionallyEmittedData.ContextRegionSnippets)
+            {
+                Region contextRegion = context.FileRegionsCache.ConstructMultilineContextSnippet(region, context.TargetUri);
+                result.Locations[0].PhysicalLocation.ContextRegion = contextRegion;
+            }
 
             // This skimmer instance mutates its reporting descriptor state,
             // for example, the sub-id may change for every match

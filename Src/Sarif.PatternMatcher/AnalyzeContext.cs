@@ -19,6 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // search definition is governed by its name/extension.
             IsValidAnalysisTarget = true;
             ObservedFingerprintCache = new HashSet<string>();
+            FileRegionsCache = new FileRegionsCache();
         }
 
         public Exception TargetLoadException { get; set; }
@@ -71,8 +72,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public HashSet<string> ObservedFingerprintCache { get; private set; }
 
+        /// <summary>
+        /// Gets or sets flags that specify how region data should be
+        /// constructed (for example if comprehensive regions properties
+        /// should be computed).
+        /// </summary>
+        public OptionallyEmittedData DataToInsert { get; set; }
+
         public void Dispose()
         {
+            FileRegionsCache?.ClearCache();
+            FileRegionsCache = null;
+
             ObservedFingerprintCache?.Clear();
             ObservedFingerprintCache = null;
         }

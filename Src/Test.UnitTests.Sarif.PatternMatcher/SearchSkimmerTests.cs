@@ -82,7 +82,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
                 FileContents = base64Encoded,
-                Logger = logger
+                Logger = logger,
+                FileRegionsCache = new FileRegionsCache()
             };
 
             SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
@@ -379,7 +380,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     MatchExpressions = new List<MatchExpression>(),
                 };
 
-                var searchSkimmer = new SearchSkimmer(regexEngine, null, null, searchDefinition);
+                var searchSkimmer = new SearchSkimmer(regexEngine, validators: null, searchDefinition);
                 var reportingDescriptor = searchSkimmer as ReportingDescriptor;
 
                 if (reportingDescriptor.HelpUri != searchSkimmer.HelpUri)
@@ -668,7 +669,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 MatchExpressions = new List<MatchExpression>(),
             };
 
-            var searchSkimmer = new SearchSkimmer(regexEngine, null, null, searchDefinition);
+            var searchSkimmer = new SearchSkimmer(regexEngine, validators: null, searchDefinition);
             var reportingDescriptor = searchSkimmer as ReportingDescriptor;
 
             var logger = new TestLogger();
@@ -713,7 +714,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}.{scanTargetExtension}"),
                 FileContents = definition.Id,
-                Logger = logger
+                Logger = logger,
+                FileRegionsCache = new FileRegionsCache(),
             };
 
             var mockFileSystem = new Mock<IFileSystem>();
@@ -731,7 +733,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             SearchDefinition definition,
             IRegex engine = null,
             ValidatorsCache validators = null,
-            FileRegionsCache fileRegionsCache = null,
             IFileSystem fileSystem = null)
         {
             var definitions = new SearchDefinitions
@@ -744,7 +745,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return new SearchSkimmer(
                 engine: engine ?? RE2Regex.Instance,
                 validators: validators,
-                fileRegionsCache: fileRegionsCache ?? new FileRegionsCache(),
                 definition: definitions.Definitions[0],
                 fileSystem: fileSystem);
         }

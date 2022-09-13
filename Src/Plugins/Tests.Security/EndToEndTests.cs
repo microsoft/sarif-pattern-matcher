@@ -140,6 +140,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     TargetUri = new Uri(filePath, UriKind.Absolute),
                     FileContents = logContents,
                     Logger = logger,
+                    FileRegionsCache = new FileRegionsCache(),
                 };
 
                 using (context)
