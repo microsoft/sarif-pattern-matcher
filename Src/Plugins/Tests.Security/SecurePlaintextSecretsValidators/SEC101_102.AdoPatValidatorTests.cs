@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,7 +51,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     { "secret", new FlexMatch { Value = testCase.Secret } }
                 };
 
-                IEnumerable<ValidationResult> validationResults = adoPatValidator.IsValidStatic(groups);
+                var perFileFingerprintCache = new HashSet<string>();
+                IEnumerable<ValidationResult> validationResults = adoPatValidator.IsValidStatic(groups, perFileFingerprintCache);
 
                 string title = testCase.Title;
 

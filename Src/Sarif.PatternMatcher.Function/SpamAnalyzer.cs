@@ -38,14 +38,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
             var sb = new StringBuilder();
 
-            // We should clear every time to prevent colision.
-            FileRegionsCache.Instance.ClearCache();
+            OptionallyEmittedData dataToInsert = OptionallyEmittedData.Hashes |
+                                                 OptionallyEmittedData.RegionSnippets |
+                                                 OptionallyEmittedData.ContextRegionSnippets |
+                                                 OptionallyEmittedData.ComprehensiveRegionProperties;
 
             using (var outputTextWriter = new StringWriter(sb))
             using (var logger = new SarifLogger(
                 outputTextWriter,
                 LogFilePersistenceOptions.PrettyPrint,
-                dataToInsert: OptionallyEmittedData.Hashes | OptionallyEmittedData.RegionSnippets | OptionallyEmittedData.ContextRegionSnippets | OptionallyEmittedData.ComprehensiveRegionProperties,
+                dataToInsert,
                 levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
                 kinds: new List<ResultKind> { ResultKind.Fail }))
             {
@@ -56,6 +58,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
                 var context = new AnalyzeContext
                 {
+                    DataToInsert = dataToInsert,
                     TargetUri = new Uri(filePath, UriKind.RelativeOrAbsolute),
                     FileContents = text,
                     Logger = logger,

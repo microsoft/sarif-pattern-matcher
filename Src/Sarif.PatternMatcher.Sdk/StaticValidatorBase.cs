@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.RE2.Managed;
 
@@ -9,7 +12,31 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public abstract class StaticValidatorBase : ValidatorBase
     {
-        public IEnumerable<ValidationResult> IsValidStatic(IDictionary<string, FlexMatch> groups)
+        /// <summary>
+        /// Examines the groups output by a positive regex match and
+        /// optionally performs additional validation to determine
+        /// whether the match is valid.
+        /// </summary>
+        /// <param name="groups">
+        /// The named groups resulting from a positive regex match. This
+        /// data also transports a certain number of injected well-known
+        /// named values (such as the file name of the scan target).
+        /// </param>
+        /// <param name="perFileFingerprintCache">
+        /// A cache of file + fingerprint combinations that have been
+        /// observed previously. Our scanner will only detect and validate
+        /// a unique fingerprint once per file. Many regexes will produce
+        /// multiple matches that resolve to the same unique credential in
+        /// a file (one of the perils of multiline regex matching). It is
+        /// possible that this cache may drop the location of a second
+        /// actual match that happens to be duplicated in the file. In
+        /// practice, we will not worry about this scenario: it will be
+        /// sufficient that we flag one instance of the unique secret.
+        /// </param>
+        /// <returns> One or ValidationResults indicating zero or more valid findings.
+        /// </returns>
+        public IEnumerable<ValidationResult> IsValidStatic(IDictionary<string, FlexMatch> groups,
+                                                           ISet<string> perFileFingerprintCache)
         {
             IEnumerable<ValidationResult> validationResults = IsValidStaticHelper(groups);
 
@@ -20,16 +47,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     continue;
                 }
 
-                string scanTarget = groups["scanTargetFullPath"].Value;
-                string key = $"{scanTarget}#{validationResult.Fingerprint}";
+                string fingerprintText = $"{validationResult.Fingerprint.ToString()}";
 
-                if (PerFileFingerprintCache.ContainsKey(key))
+                if (perFileFingerprintCache.Contains(fingerprintText))
                 {
                     validationResult.ValidationState = ValidationState.NoMatch;
-                    continue;
                 }
 
-                PerFileFingerprintCache.Add(key, (byte)0);
+                perFileFingerprintCache.Add(fingerprintText);
             }
 
             return validationResults;

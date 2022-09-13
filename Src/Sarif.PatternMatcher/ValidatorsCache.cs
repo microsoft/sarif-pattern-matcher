@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -192,7 +193,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return new[] { validationResult };
             }
 
-            IEnumerable<ValidationResult> validationResults = staticValidator.IsValidStatic(groups);
+            IEnumerable<ValidationResult> validationResults = staticValidator.IsValidStatic(groups, context.ObservedFingerprintCache);
 
             if (staticValidator is DynamicValidatorBase dynamicValidator)
             {

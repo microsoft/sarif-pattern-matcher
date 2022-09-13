@@ -137,8 +137,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
             if (!ignoreRegionContent)
             {
-                results[0].Locations[0].PhysicalLocation.ContextRegion.Snippet.Text.Should().Contain(text);
                 results[0].Locations[0].PhysicalLocation.Region.Snippet.Text.Should().Contain(text);
+
+                results[0].Locations[0].PhysicalLocation.ContextRegion.Should().NotBeNull();
+                results[0].Locations[0].PhysicalLocation.ContextRegion.Snippet.Text.Should().Contain(text);
             }
         }
     }

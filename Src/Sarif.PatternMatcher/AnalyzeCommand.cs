@@ -35,19 +35,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (string inputSearchDefinitionsPath in searchDefinitionsPaths)
             {
-                string searchDefinitionsPath = inputSearchDefinitionsPath;
+                string searchDefinitionsPath = Path.GetFullPath(inputSearchDefinitionsPath);
 
                 if (!fileSystem.FileExists(searchDefinitionsPath))
                 {
-                    string coreToolDirectory = typeof(AnalyzeContext).Assembly.Location;
-                    coreToolDirectory = Path.GetDirectoryName(coreToolDirectory);
-                    searchDefinitionsPath = Path.GetFileName(searchDefinitionsPath);
-                    searchDefinitionsPath = Path.Combine(coreToolDirectory, searchDefinitionsPath);
-
-                    if (!fileSystem.FileExists(searchDefinitionsPath))
-                    {
-                        throw new ArgumentException($"Could not locate specified definitions path: '{inputSearchDefinitionsPath}'");
-                    }
+                    throw new ArgumentException($"Could not locate specified definitions path: '{searchDefinitionsPath}'");
                 }
 
                 string searchDefinitionsText =
@@ -105,7 +97,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     skimmers.Add(
                         new SearchSkimmer(engine: engine,
                                           validators: validators,
-                                          fileRegionsCache: fileRegionsCache,
                                           definition,
                                           fileSystem));
 
