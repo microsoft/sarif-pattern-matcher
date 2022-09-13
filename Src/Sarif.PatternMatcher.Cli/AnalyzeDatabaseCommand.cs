@@ -122,7 +122,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                 Logger = logger,
                                 FileContents = contentData,
                                 DynamicValidation = dynamicValidation,
-                                TargetUri = new Uri(contentName, UriKind.RelativeOrAbsolute)
+                                TargetUri = new Uri(contentName, UriKind.RelativeOrAbsolute),
                             };
 
                             using (context)

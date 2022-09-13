@@ -128,7 +128,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
                 FileContents = fileContents,
                 Logger = testLogger,
-                FileRegionsCache = new FileRegionsCache(),
             };
 
             IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
@@ -197,7 +196,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
                 FileContents = fileContents,
                 Logger = testLogger,
-                FileRegionsCache = new FileRegionsCache(),
             };
 
             IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
@@ -433,7 +431,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
                 FileContents = fileContents,
                 Logger = testLogger,
-                FileRegionsCache = new FileRegionsCache(),
             };
 
             IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
@@ -510,7 +507,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
                 FileContents = fileContents,
                 Logger = testLogger,
-                FileRegionsCache = new FileRegionsCache(),
             };
 
             IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
@@ -573,7 +569,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 TargetUri = new Uri(scanTargetFileName, UriKind.Relative),
                 FileContents = fileContents,
                 Logger = testLogger,
-                FileRegionsCache = new FileRegionsCache(),
             };
 
             IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);

@@ -39,8 +39,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             var sb = new StringBuilder();
 
             OptionallyEmittedData dataToInsert = OptionallyEmittedData.Hashes |
-                                                 OptionallyEmittedData.RegionSnippets | 
-                                                 OptionallyEmittedData.ContextRegionSnippets | 
+                                                 OptionallyEmittedData.RegionSnippets |
+                                                 OptionallyEmittedData.ContextRegionSnippets |
                                                  OptionallyEmittedData.ComprehensiveRegionProperties;
 
             using (var outputTextWriter = new StringWriter(sb))
