@@ -88,7 +88,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     TargetUri = new Uri(scanContext.SourceContext.ResourceName, UriKind.RelativeOrAbsolute),
                     FileContents = resourceContent,
                     Logger = logger,
-                    FileRegionsCache = new FileRegionsCache(),
                 };
 
                 using (context)
