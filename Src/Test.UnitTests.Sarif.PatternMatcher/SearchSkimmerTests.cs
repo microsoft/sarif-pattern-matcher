@@ -83,7 +83,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
                 FileContents = base64Encoded,
                 Logger = logger,
-                FileRegionsCache = new FileRegionsCache()
             };
 
             SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
