@@ -24,7 +24,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(
             IFileSystem fileSystem,
             IEnumerable<string> searchDefinitionsPaths,
-            FileRegionsCache fileRegionsCache = null,
             IRegex engine = null)
         {
             engine ??= RE2Regex.Instance;
@@ -314,7 +313,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
         {
-            return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths, context.FileRegionsCache);
+            return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
         }
 
 #if DEBUG
