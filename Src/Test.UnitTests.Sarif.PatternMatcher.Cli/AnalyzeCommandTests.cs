@@ -659,7 +659,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             bool isDynamicAnalysis,
             StringBuilder stringBuilder)
         {
-            if(stringBuilder == null) { stringBuilder = new StringBuilder(); }
+            if (stringBuilder == null) { stringBuilder = new StringBuilder(); }
 
             string testScenarioMode = isDynamicAnalysis ?
                     "with dynamic validation enabled" :
