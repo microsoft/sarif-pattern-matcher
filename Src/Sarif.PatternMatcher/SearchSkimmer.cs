@@ -362,7 +362,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 case ValidationState.Unknown:
                 {
-                    level = FailureLevel.Note;
                     validationSuffix = string.Empty;
 
                     validationPrefix = "an apparent ";
@@ -374,6 +373,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             // passed this result to a validator that could have performed
                             // this work.
                             validatorMessage += " " + DynamicValidationNotEnabled;
+                            level = FailureLevel.Warning;
                         }
                     }
                     else if (pluginSupportsDynamicValidation)

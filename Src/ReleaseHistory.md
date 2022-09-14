@@ -1,5 +1,8 @@
 # Release History
 
+## Unreleased
+- BREAKING: Fix bug resulting in static validators returning `FailureLevel.Note` despite configured `FailureLevel`. [#645](https://github.com/microsoft/sarif-pattern-matcher/pull/645)
+
 ## *2.0.0-dev*
 - Update `sarif-sdk` submodule to commit [24c773bf194100d11c896ce67581832428304a35](https://github.com/microsoft/sarif-sdk/commit/24c773bf194100d11c896ce67581832428304a35), which applies `FileRegionsCache` fixes (from an unreleased version of the SDK).
 - Update search definitions probing logic to look for file alongside the client tool.

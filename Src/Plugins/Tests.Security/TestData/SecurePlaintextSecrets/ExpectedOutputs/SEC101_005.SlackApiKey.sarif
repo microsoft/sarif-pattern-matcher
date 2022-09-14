@@ -51,7 +51,6 @@
         {
           "ruleId": "SEC101/005",
           "ruleIndex": 0,
-          "level": "note",
           "message": {
             "id": "Default",
             "arguments": [
