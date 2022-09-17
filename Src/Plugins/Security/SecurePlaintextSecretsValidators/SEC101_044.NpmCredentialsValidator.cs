@@ -32,23 +32,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             groups.TryGetNonEmptyValue("id", out FlexMatch id);
 
             string decodedId;
-            string decodedString;
+            string decodedPassword;
 
             try
             {
                 byte[] data = Convert.FromBase64String(secret.Value);
-                decodedString = Encoding.UTF8.GetString(data);
+                decodedPassword = Encoding.UTF8.GetString(data);
 
-                if (decodedString.Contains(':'))
+                if (decodedPassword.Contains(':'))
                 {
-                    string[] parts = decodedString.Split(':');
+                    string[] parts = decodedPassword.Split(':');
                     decodedId = parts[0];
-                    decodedString = parts[1];
+                    decodedPassword = parts[1];
                 }
                 else
                 {
                     decodedId = id?.Value;
-                    decodedString = secret.Value;
+                    decodedPassword = secret.Value;
                 }
             }
             catch (FormatException)
@@ -62,7 +62,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     Id = decodedId,
                     Host = host.Value,
-                    Secret = decodedString,
+                    Secret = decodedPassword,
                     Platform = nameof(AssetPlatform.Npm),
                 },
                 ValidationState = ValidationState.Unknown,
