@@ -787,6 +787,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 string contentsRegex = matchExpression.IntrafileRegexes[i];
 
+                Debug.Assert(!contentsRegex.StartsWith("$"), $"Unexpanded regex variable: {contentsRegex}");
+
                 if (!_engine.Matches(contentsRegex, searchText, out List<Dictionary<string, FlexMatch>> matches))
                 {
                     if (matchExpression.IntrafileRegexMetadata[i] == RegexMetadata.Optional)

@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     continue;
                 }
 
-                string fingerprintText = $"{validationResult.Fingerprint.ToString()}";
+                string fingerprintText = $"{validationResult.Fingerprint}";
 
                 if (perFileFingerprintCache.Contains(fingerprintText))
                 {

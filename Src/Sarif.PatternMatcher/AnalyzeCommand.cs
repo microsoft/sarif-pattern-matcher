@@ -37,6 +37,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 string searchDefinitionsPath = Path.GetFullPath(inputSearchDefinitionsPath);
 
+                // INTERESTING BREAKPOINT: debugging definitions JSON load/other failures.
+                // Set conditional breakpoint on 'searchDefinitionsPath' to narrow focus.
+
                 if (!fileSystem.FileExists(searchDefinitionsPath))
                 {
                     throw new ArgumentException($"Could not locate specified definitions path: '{searchDefinitionsPath}'");

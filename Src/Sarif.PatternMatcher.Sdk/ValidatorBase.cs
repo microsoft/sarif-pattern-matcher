@@ -90,6 +90,34 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// </summary>
         protected IDictionary<Fingerprint, Tuple<ValidationState, ResultLevelKind, string>> FingerprintToResultCache { get; }
 
+        public static bool IsBase64EncodingOfPrintableCharacters(string secret)
+        {
+            byte[] secretBytes = null;
+
+            try
+            {
+                secretBytes = Convert.FromBase64String(secret);
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+
+            foreach (byte secretByte in secretBytes)
+            {
+                // https://www.asciihex.com/ascii-printable-characters
+
+                int byteValue = Convert.ToInt32(secretByte);
+
+                if (byteValue < 32 || byteValue > 126)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public static bool ContainsDigitAndChar(string matchedPattern)
         {
             bool oneDigit = false, oneLetter = false;
