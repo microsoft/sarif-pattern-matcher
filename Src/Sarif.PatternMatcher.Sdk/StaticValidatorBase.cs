@@ -70,5 +70,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         ///
         /// <returns>Return an enumerable ValidationResult collection.</returns>
         protected abstract IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups);
+
+        /// <summary>
+        /// Evaluates secret to determine whether is a false positive or if it perhaps
+        /// is a true positive but one that belongs to another security model.
+        /// </summary>
+        /// <param name="secret">Text for a secret to be evaluated for accuracy and associated with current security model.</param>
+        /// <returns>'True' if the secret should be excluded from current analysis, otheriwise 'false'.</returns>
+        protected virtual bool IsFalsePositiveOrBelongsToOtherSecurityModel(string secret)
+        {
+            return false;
+        }
     }
 }
