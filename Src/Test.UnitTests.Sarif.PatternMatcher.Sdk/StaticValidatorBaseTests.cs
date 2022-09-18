@@ -34,11 +34,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 MaxDegreeOfParallelism = Environment.ProcessorCount * 2,
             };
 
-            var perFileFingerprintHash = new HashSet<string>();
-
             Parallel.For(0, 100, (_) =>
             {
                 Interlocked.Increment(ref id);
+
+                // This is a thread-affinitized piece of data.
+                var perFileFingerprintHash = new HashSet<string>();
 
                 for (int iterations = 0; iterations < 100; iterations++)
                 {
@@ -56,6 +57,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 Value = Guid.NewGuid().ToString()
                             };
                     }
+
                     testStaticValidator.IsValidStatic(groups, perFileFingerprintHash);
                 }
             });
