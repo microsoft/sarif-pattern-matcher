@@ -56,8 +56,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string content = File.ReadAllText(definitionsFilePath);
 
             var jObject = (JObject)JToken.Parse(content);
-
-            IEnumerable<string> rules = jObject["Definitions"][0]["MatchExpressions"].Select(x => x["ContentsRegex"].ToString()).Distinct();
+            
+            var rules = new HashSet<string>(jObject["Definitions"][0]["MatchExpressions"].Select(x => x["ContentsRegex"]?.ToString()).Distinct());
 
             var rulesWithoutSharedStrings = new List<string>();
             string sharedStringsContents;
@@ -68,7 +68,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (string rule in rules)
             {
-                if (!sharedStringsContents.Contains(rule))
+                if (rule != null && !sharedStringsContents.Contains(rule))
                 {
                     rulesWithoutSharedStrings.Add(rule);
                 }
