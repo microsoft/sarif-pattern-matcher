@@ -10,7 +10,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
-
 using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
@@ -125,6 +124,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 "These filenames do not match any rule definitions names" +
                 $"{Environment.NewLine}  " +
                 string.Join($",{Environment.NewLine}  ", invalidFilenames));
+
         }
 
         public static void VerifyAllSharedStringsExist(string definitionsFilePath, string sharedStringsFilePath)
@@ -237,7 +237,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         "Found no reference to these regular expression definitions in JSON: " +
                         $"{Environment.NewLine}  " +
                         string.Join($",{Environment.NewLine}  ", sharedStringsWithoutRules));
-        }
+
         public static void VerifyAllTestsExist(Assembly validatorsAssembly, Assembly testsAssembly)
         {
             // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
