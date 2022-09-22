@@ -125,6 +125,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         return ReturnAuthorizedAccess(ref message, host, account: id);
                     }
 
+                    case HttpStatusCode.Forbidden:
                     case HttpStatusCode.Unauthorized:
                     {
                         return ReturnUnauthorizedAccess(ref message, host, account: id);
