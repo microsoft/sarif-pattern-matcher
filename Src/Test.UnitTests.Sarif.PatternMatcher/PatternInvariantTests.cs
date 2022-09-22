@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
+
 using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
@@ -238,6 +239,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         string.Join($",{Environment.NewLine}  ", sharedStringsWithoutRules));
 
         }
+
         public static void VerifyAllTestsExist(Assembly validatorsAssembly, Assembly testsAssembly)
         {
             // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
