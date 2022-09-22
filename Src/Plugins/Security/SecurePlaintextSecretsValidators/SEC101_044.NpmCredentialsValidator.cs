@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -30,28 +29,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
 
             groups.TryGetNonEmptyValue("id", out FlexMatch id);
-
-            string decodedId;
-            string decodedPassword;
+            string user = id?.Value, password = secret.Value;
 
             try
             {
                 byte[] data = Convert.FromBase64String(secret.Value);
-                decodedPassword = Encoding.UTF8.GetString(data);
+                string decodedUserAndPassword = Encoding.UTF8.GetString(data);
 
-                if (decodedPassword.Contains(':'))
+                string[] tokens = decodedUserAndPassword.Split(':');
+
+                if (tokens.Length > 2)
                 {
-                    string[] parts = decodedPassword.Split(':');
-                    decodedId = parts[0];
-                    decodedPassword = parts[1];
+                    return ValidationResult.CreateNoMatch();
+                }
+                else if (tokens.Length == 2)
+                {
+                    user = tokens[0];
+                    password = tokens[1];
                 }
                 else
                 {
-                    decodedId = id?.Value;
-                    decodedPassword = secret.Value;
+                    user = id?.Value;
+                    password = tokens[0];
                 }
             }
             catch (FormatException)
+            {
+                // In this code path, we have not received a secret that
+                // is a base64-encoded string. And so, we expect the secret
+                // is a clear-text password and that we have an 'id' match
+                // that tells us the user name.
+            }
+
+            if (string.IsNullOrEmpty(user))
             {
                 return ValidationResult.CreateNoMatch();
             }
@@ -60,9 +70,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 Fingerprint = new Fingerprint
                 {
-                    Id = decodedId,
+                    Id = user,
                     Host = host.Value,
-                    Secret = decodedPassword,
+                    Secret = password,
                     Platform = nameof(AssetPlatform.Npm),
                 },
                 ValidationState = ValidationState.Unknown,

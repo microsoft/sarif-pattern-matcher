@@ -79,6 +79,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     }
                 }
 
+                // INTERESTING BREAKPOINT: debugging failure to expand/process shared strings.
+                // Set conditional breakpoint on 'searchDefinitionsPath' to narrow focus.
                 Dictionary<string, string> sharedStrings = null;
                 if (!string.IsNullOrEmpty(definitions.SharedStringsFileName))
                 {

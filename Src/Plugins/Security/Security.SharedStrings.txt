@@ -125,9 +125,12 @@
 
   $SEC101/041.RabbitMqCredentials=(?i)amqps?:\/\/(?P<id>[^:"]+):(?P<secret>[^@\s]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
   $SEC101/043.NuGetPackageSourceCredentialsXml=(?i)(?P<host><\s*packageSources\s*>(?s).{0,500}?(?-s)<\\?\/packageSources\s*>)(?s).{0,200}?(?-s)[^\/](?P<secret><\s*packageSourceCredentials\s*>(?s).{0,500}?(?-s)<\\?\/packageSourceCredentials\s*>)
-  $SEC101/044.NpmCredentialsAuth=(?si)registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s)(?:.{0,200})?_auth\s*=\s*(?P<secret>[^\s]+)
-  $SEC101/044.NpmCredentialsUserPassword=(?si)(?:(?:(?:registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(?:username\s*=\s*(?P<id>[^\s]+)(?:$|\s))|(?:_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){3}
-  $SEC101/044.NpmCredentialsPassword=(?si)(?:(?:(?:registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:$|\s))|(?:_password\s*=\s*(?P<secret>[^\s]+)(?:$|\s)))(?:.{0,200})?){2}
+   
+  $SEC101/044.NpmCredentialsRegistry=(?i)(?i)registry\s*=\s*https:\/\/(?P<host>[^\s]+)(?:\s|$)  
+  $SEC101/044.NpmCredentialsAuth=(?i)_auth(Token)?\s*=\s*(?P<secret>[0-9A-Za-z\/+]+[=]{0,2})(?:[^0-9A-Za-z\/+]|$)
+  $SEC101/044.NpmCredentialsUser=(?i)(email|user(name)?)\s*=\s*(?P<id>[^\s]+)(?:\s|$)
+  $SEC101/044.NpmCredentialsPassword=(?i)password\s*=\s*(?P<secret>[^\s]+)(?:\s|$)
+  
   $SEC101/045.PostmanApiKey=(?:[^P]|^)(?P<secret>PMAK-[0-9a-z]{24}-[0-9a-z]{34})(?:[^0-9a-z]|$)
   $SEC101/047.CratesApiKey=(?i)(?:[^c]|^)(?P<secret>cio[0-9a-z]{32})(?:[^0-9a-z]|$)
   $SEC101/048.SlackWorkflowKey=(?i)https:\/\/hooks\.slack\.com\/workflows\/(?P<id>[0-9a-z]{9,})\/(?P<secret>[0-9a-z]{9,}\/[0-9]+?\/[0-9a-z]{24})

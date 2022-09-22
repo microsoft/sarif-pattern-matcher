@@ -140,7 +140,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string sharedStringsContents = File.ReadAllText(sharedStringsFilePath);
             foreach (string rule in regexSet)
             {
-                if (!sharedStringsContents.Contains(rule))
+                if (rule != null && !sharedStringsContents.Contains(rule))
                 {
                     rulesWithoutSharedStrings.Add(rule);
                 }
