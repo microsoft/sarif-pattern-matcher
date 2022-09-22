@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+
 using Newtonsoft.Json;
 
 using Xunit;
@@ -38,6 +39,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     rules.Add(matchExpression.Name.Split('/')[1]);
                 }
             }
+
             // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
             var validators = assembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
 
@@ -90,7 +92,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var invalidFilenames = new List<string>();
             int rulePrefixLength = "SEC101_XXX.".Length;
             string fileEnding = "Validator.cs";
-            
+
             FileInfo[] ruleFiles = validatorsDirectoryInfo.GetFiles();
 
             // Run through 2 times, first Validators then Tests files
@@ -120,10 +122,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
             
             Assert.True(invalidFilenames.Count == 0,
-                       "These filenames do not match any rule definitions names" +
-                       $"{Environment.NewLine}  " +
-                       string.Join($",{Environment.NewLine}  ", invalidFilenames));
-
+                "These filenames do not match any rule definitions names" +
+                $"{Environment.NewLine}  " +
+                string.Join($",{Environment.NewLine}  ", invalidFilenames));
         }
 
         public static void VerifyAllSharedStringsExist(string definitionsFilePath, string sharedStringsFilePath)
@@ -237,8 +238,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         $"{Environment.NewLine}  " +
                         string.Join($",{Environment.NewLine}  ", sharedStringsWithoutRules));
         }
-        
-
         public static void VerifyAllTestsExist(Assembly validatorsAssembly, Assembly testsAssembly)
         {
             // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
