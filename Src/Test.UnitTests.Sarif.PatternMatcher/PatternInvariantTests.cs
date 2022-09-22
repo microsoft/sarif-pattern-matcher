@@ -10,7 +10,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
-
 using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
@@ -120,11 +119,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 ruleFiles = testsDirectoryInfo.GetFiles();
                 fileEnding = "ValidatorTests.cs";
             }
-            
+
             Assert.True(invalidFilenames.Count == 0,
                 "These filenames do not match any rule definitions names" +
                 $"{Environment.NewLine}  " +
                 string.Join($",{Environment.NewLine}  ", invalidFilenames));
+
         }
 
         public static void VerifyAllSharedStringsExist(string definitionsFilePath, string sharedStringsFilePath)
@@ -231,12 +231,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     sharedStringsWithoutRules.Add(line);
                 }
             }
-
             // Assert.Empty doesn't allow custom messages, so use Assert.True
             Assert.True(sharedStringsWithoutRules.Count == 0,
                         "Found no reference to these regular expression definitions in JSON: " +
                         $"{Environment.NewLine}  " +
                         string.Join($",{Environment.NewLine}  ", sharedStringsWithoutRules));
+
         }
         public static void VerifyAllTestsExist(Assembly validatorsAssembly, Assembly testsAssembly)
         {
@@ -264,3 +264,4 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
     }
 }
+
