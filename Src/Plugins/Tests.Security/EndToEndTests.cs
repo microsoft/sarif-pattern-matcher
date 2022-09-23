@@ -24,6 +24,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public abstract class EndToEndTests : FileDiffingUnitTests
     {
+        private static ConcurrentDictionary<string, ISet<Skimmer<AnalyzeContext>>> s_definitionsPathToSkimmersMap;
+
+        public static ISet<Skimmer<AnalyzeContext>> CreateOrRetrievedCachedSkimmer(IFileSystem fileSystem, string regexDefinitionsPath)
+        {
+            // Load all rules from JSON. This also automatically loads any validations file that
+            // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
+            // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
+            // extension name changes from .json to .dll).
+
+
+            s_definitionsPathToSkimmersMap ??= new ConcurrentDictionary<string, ISet<Skimmer<AnalyzeContext>>>();
+
+            if (!s_definitionsPathToSkimmersMap.TryGetValue(regexDefinitionsPath, out ISet<Skimmer<AnalyzeContext>> skimmers))
+            {
+                skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, new string[] { regexDefinitionsPath });
+                s_definitionsPathToSkimmersMap.TryAdd(regexDefinitionsPath, skimmers);
+            }
+
+            return skimmers;
+        }
+
         protected EndToEndTests(ITestOutputHelper outputHelper) : base(outputHelper)
         {
         }
@@ -118,7 +139,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
             // extension name changes from .json to .dll).
             ISet<Skimmer<AnalyzeContext>> skimmers =
-                AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, new string[] { DefinitionsPath });
+                CreateOrRetrievedCachedSkimmer(fileSystem, DefinitionsPath);
 
             var sb = new StringBuilder();
 
