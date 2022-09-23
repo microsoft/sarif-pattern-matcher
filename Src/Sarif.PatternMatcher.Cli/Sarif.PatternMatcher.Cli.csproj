@@ -5,8 +5,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <ToolCommandName>spam</ToolCommandName>
-    <AssemblyName>spam</AssemblyName>
+    <ToolCommandName>Sarif.PatternMatcher.Cli</ToolCommandName>
+    <AssemblyName>Sarif.PatternMatcher.Cli</AssemblyName>
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Cli</RootNamespace>
     <PackAsTool>true</PackAsTool>
   </PropertyGroup>
