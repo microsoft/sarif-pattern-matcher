@@ -12,12 +12,12 @@ using Xunit;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
-    /// Testing SEC101/006.GitHubPatValidator
+    /// Testing SEC101/006.GitHubLegacyPatValidator
     /// </summary
-    public class GitHubPatValidatorTests
+    public class GitHubLegacyPatValidatorTests
     {
         [Fact]
-        public void GitHubPatValidator_TestStatic()
+        public void GitHubLegacyPatValidator_TestStatic()
         {
             ValidationState expectedValidationState = ValidationState.Unknown;
 
@@ -28,9 +28,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             groups.Add("checksum", new FlexMatch() { Value = "checksum" });
             groups.Add("scanTargetFullPath", new FlexMatch() { Value = "GitHitPatTest" });
 
-            var gitHubPatValidator = new GitHubPatValidator();
+            var GitHubLegacyPatValidator = new GitHubLegacyPatValidator();
             var perFileFingerprintCache = new HashSet<string>();
-            IEnumerable<ValidationResult> validationResults = gitHubPatValidator.IsValidStatic(groups, perFileFingerprintCache);
+            IEnumerable<ValidationResult> validationResults = GitHubLegacyPatValidator.IsValidStatic(groups, perFileFingerprintCache);
             foreach (ValidationResult validationResult in validationResults)
             {
                 Assert.Equal(matchedPattern, validationResult.Fingerprint.Secret);
@@ -40,7 +40,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         }
 
         [Fact]
-        public void GitHubPatValidator_TestDynamic()
+        public void GitHubLegacyPatValidator_TestDynamic()
         {
             ValidationState expectedValidationState = ValidationState.Unauthorized;
 
@@ -51,8 +51,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var options = new Dictionary<string, string>();
 
-            var gitHubPatValidator = new GitHubPatValidator();
-            ValidationState actualValidationState = gitHubPatValidator.IsValidDynamic(ref fingerprint,
+            var GitHubLegacyPatValidator = new GitHubLegacyPatValidator();
+            ValidationState actualValidationState = GitHubLegacyPatValidator.IsValidDynamic(ref fingerprint,
                                                                                       ref message,
                                                                                       options,
                                                                                       ref resultLevelKind);
