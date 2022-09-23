@@ -24,7 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public abstract class EndToEndTests : FileDiffingUnitTests
     {
-        private static IDictionary<string, ISet<Skimmer<AnalyzeContext>>> s_definitionsPathToSkimmersMap;
+        private static ConcurrentDictionary<string, ISet<Skimmer<AnalyzeContext>>> s_definitionsPathToSkimmersMap;
 
         public static ISet<Skimmer<AnalyzeContext>> CreateOrRetrievedCachedSkimmer(IFileSystem fileSystem, string regexDefinitionsPath)
         {
@@ -139,7 +139,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
             // extension name changes from .json to .dll).
             ISet<Skimmer<AnalyzeContext>> skimmers =
-                CreateOrRetrievedCachedSkimmer(fileSystem, DefinitionsPath );
+                CreateOrRetrievedCachedSkimmer(fileSystem, DefinitionsPath);
 
             var sb = new StringBuilder();
 
