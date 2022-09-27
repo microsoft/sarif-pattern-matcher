@@ -69,7 +69,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public static void VerifyAllJsonRulesExist(string definitionsFilePath, string sharedStringsFilePath)
         {
-            // This function verifies that for each shared string variable definition, there is a rule in the JSON that uses it
             string definitionsFileContents = File.ReadAllText(definitionsFilePath);
             string sharedStringsContents = File.ReadAllText(sharedStringsFilePath);
 
@@ -118,7 +117,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     string ruleName = matchExpression.Name.Split('/')[1];
                     string ruleID = matchExpression.Id.Replace('/', '_');
 
-                    // This will assume all rule IDs are proper. Seperate test will flag if otherwise.
+                    // This will assume all rule IDs are correct (i.e. no duplicates, no erroneous shared IDs).
+                    // Seperate test will flag if otherwise.
                     if (!nameIdDictionary.ContainsKey(ruleName))
                     {
                         nameIdDictionary.Add(ruleName, ruleID);
