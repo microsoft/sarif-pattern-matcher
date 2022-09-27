@@ -91,6 +91,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     sharedStringsWithoutRules.Add(line);
                 }
             }
+
             // Assert.Empty doesn't allow custom messages, so use Assert.True
             Assert.True(sharedStringsWithoutRules.Count == 0,
                         "Found no reference to these regular expression definitions in JSON: " +
@@ -115,28 +116,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
                 {
                     string ruleName = matchExpression.Name.Split('/')[1];
+                    string ruleID = matchExpression.Id.Replace('/', '_');
 
                     // This will assume all rule IDs are proper. Seperate test will flag if otherwise.
                     if (!nameIdDictionary.ContainsKey(ruleName))
                     {
-                        nameIdDictionary.Add(ruleName, matchExpression.Id.Replace('/', '_'));
+                        nameIdDictionary.Add(ruleName, ruleID);
                     }
                 }
             }
 
-            // Load up all Validator files in plugin directory
+            // Load up all Validator files in plugin directory.
             var definitionsDirectory = new DirectoryInfo(definitionsFilePath);
             string definitionsParentDirectory = definitionsDirectory.Parent.FullName;
             string validatorsDirectory = Path.Combine(definitionsParentDirectory, validatorsFolderName);
             var validatorsDirectoryInfo = new DirectoryInfo(validatorsDirectory);
 
-            // load up all Test files in Test.plugin directory
+            // Load up all Test files in Test.plugin directory.
             definitionsParentDirectory = definitionsDirectory.Parent.Parent.FullName;
             string testPluginName = "Tests." + definitionsDirectory.Parent.Name;
             string testsDirectory = Path.Combine(definitionsParentDirectory, testPluginName, validatorsFolderName);
             var testsDirectoryInfo = new DirectoryInfo(testsDirectory);
 
-            // Some useful tools for searching/reading the filenames
+            // Some useful tools for searching/reading the filenames.
             var rg = new Regex(@"SEC101_[0-9]{3}");
             var sb = new StringBuilder();
             int rulePrefixLength = "SEC101_XXX.".Length;
@@ -144,7 +146,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             FileInfo[] ruleFiles = validatorsDirectoryInfo.GetFiles();
 
-            // Run through 2 times, first Validators then Tests files
+            // Run through 2 times, first Validators then Tests files.
             for (int i = 0; i < 2; i++)
             {
                 foreach (FileInfo file in ruleFiles)
@@ -158,7 +160,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     sb.Remove(0, rulePrefixLength);
                     sb.Replace(fileEnding, "");
 
-                    // Check to see if the filename corresponds to a rule, and that the ID is the same
+                    // Check to see if the filename corresponds to a rule, and that the ID is the same.
                     if (!nameIdDictionary.ContainsKey(sb.ToString()) || !file.Name.StartsWith(nameIdDictionary[sb.ToString()]))
                     {
                         invalidFilenames.Add(file.Name);
@@ -166,7 +168,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     sb.Clear();
                 }
 
-                // Update what we are looking for on next run
+                // Update what we are looking for on next run.
                 ruleFiles = testsDirectoryInfo.GetFiles();
                 fileEnding = "ValidatorTests.cs";
             }
@@ -187,34 +189,62 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // Read the json file content to get the rule names.
             string content = File.ReadAllText(definitionsFilePath);
             SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
+
             var nameIdDictionary = new Dictionary<string, string>();
-            var invalidRuleIDList = new List<string>();
+            var idNameDictionary = new Dictionary<string, string>();
+            var conflictingRuleIDList = new List<string>();
+            var sharedRuleIDList = new List<string>();
 
             foreach (SearchDefinition searchDefinition in sdObject.Definitions)
             {
                 foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
                 {
                     string ruleName = matchExpression.Name.Split('/')[1];
-
+                    string ruleID = matchExpression.Id.Replace('/', '_');
+                    
                     if (!nameIdDictionary.ContainsKey(ruleName))
                     {
-                        nameIdDictionary.Add(ruleName, matchExpression.Id.Replace('/', '_'));
-
+                        nameIdDictionary.Add(ruleName, ruleID);
                     }
                     else
                     {
-                        if (!nameIdDictionary[ruleName].Equals(matchExpression.Id.Replace('/', '_')))
+                        if (!nameIdDictionary[ruleName].Equals(ruleID))
                         {
-                            invalidRuleIDList.Add(ruleName);
+                            conflictingRuleIDList.Add(ruleName);
+                        }
+                    }
+
+                    if (!idNameDictionary.ContainsKey(ruleID))
+                    {
+                        idNameDictionary.Add(ruleID, ruleName);
+                    }
+                    else
+                    {
+                        if (!idNameDictionary[ruleID].Equals(ruleName))
+                        {
+                            sharedRuleIDList.Add(ruleID);
                         }
                     }
                 }
             }
 
-            Assert.True(invalidRuleIDList.Count == 0,
-               "These rules have multiple conflicting rule IDs issued for them" +
-               $"{Environment.NewLine}  " +
-               string.Join($",{Environment.NewLine}  ", invalidRuleIDList));
+            var outputmsg = new StringBuilder();
+            if(conflictingRuleIDList.Count > 0)
+            {
+                outputmsg.Append("These rules have multiple conflicting rule IDs issued for them" +
+                    $"{Environment.NewLine}  " +
+                    string.Join($",{Environment.NewLine}  ", conflictingRuleIDList.Distinct()) +
+                    $"{Environment.NewLine}");
+            }
+            if(sharedRuleIDList.Count > 0)
+            {
+                outputmsg.Append("These rule IDs have multiple conflicting rules issued for them" +
+                    $"{Environment.NewLine}  " +
+                    string.Join($",{Environment.NewLine}  ", sharedRuleIDList.Distinct()));
+            }
+
+
+            Assert.True(conflictingRuleIDList.Count == 0 && sharedRuleIDList.Count == 0, outputmsg.ToString());
         }
        
         /// <summary>
@@ -223,26 +253,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public static void VerifyAllSharedStringsExist(string definitionsFilePath, string sharedStringsFilePath)
         {
             string content = File.ReadAllText(definitionsFilePath);
-
             SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
 
             HashSet<string> regexSet = GetRegexSetFromSearchDefinitions(sdObject);
 
-            var rulesWithoutSharedStrings = new List<string>();
+            var regexesWithoutSharedStrings = new List<string>();
             string sharedStringsContents = File.ReadAllText(sharedStringsFilePath);
-            foreach (string rule in regexSet)
+
+            foreach (string regex in regexSet)
             {
-                if (rule != null && !sharedStringsContents.Contains(rule))
+                if (regex != null && !sharedStringsContents.Contains(regex))
                 {
-                    rulesWithoutSharedStrings.Add(rule);
+                    regexesWithoutSharedStrings.Add(regex);
                 }
             }
 
             // Assert.Empty doesn't allow custom messages, so use Assert.True
-            Assert.True(rulesWithoutSharedStrings.Count == 0,
+            Assert.True(regexesWithoutSharedStrings.Count == 0,
                         "Unable to find shared strings for these regular expression variables: " +
                         $"{Environment.NewLine}  " +
-                        string.Join($",{Environment.NewLine}  ", rulesWithoutSharedStrings));
+                        string.Join($",{Environment.NewLine}  ", regexesWithoutSharedStrings));
         }
 
         /// <summary>
@@ -251,21 +281,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public static void VerifyAllTestsExist(Assembly validatorsAssembly, Assembly testsAssembly)
         {
-            // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
+            // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name.
             var validators = validatorsAssembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
             var tests = testsAssembly.GetTypes().Where(x => x.Name.EndsWith("ValidatorTests")).Select(x => x.Name).ToHashSet();
 
-            var rulesWithoutTests = new List<string>();
+            var validatorsWithoutTests = new List<string>();
             var testsWithoutValidators = new List<string>();
 
             foreach (string validator in validators)
             {
                 if (!tests.TryGetValue(validator + "Tests", out string _))
                 {
-                    // Skip Template Validators
+                    // Skip Template Validators.
                     if (validator.Contains("Template")) { continue; }
 
-                    rulesWithoutTests.Add(validator);
+                    validatorsWithoutTests.Add(validator);
                 }
             }
 
@@ -273,8 +303,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 if (!validators.TryGetValue(test.Replace("Tests", ""), out string _))
                 {
-                    // Skip Template Validators
+                    // Skip Template Validators.
                     if (test.Contains("Template")) { continue; }
+
+                    // Skip SecurePlaintextSecretsPushProtectionTests file.
                     if (test.Contains("SecurePlaintextSecrets")) { continue; }
 
                     testsWithoutValidators.Add(test);
@@ -282,11 +314,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             var outputmsg = new StringBuilder();
-            if (rulesWithoutTests.Count > 0)
+            if (validatorsWithoutTests.Count > 0)
             {
                 outputmsg.Append("Unable to find tests for these validators: " +
                         $"{Environment.NewLine}  " +
-                        string.Join($",{Environment.NewLine}  ", rulesWithoutTests) +
+                        string.Join($",{Environment.NewLine}  ", validatorsWithoutTests) +
                         $"{Environment.NewLine}");
             }
             if (testsWithoutValidators.Count > 0)
@@ -297,7 +329,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             // Assert.Empty doesn't allow custom messages, so use Assert.True
-            Assert.True((rulesWithoutTests.Count == 0 && testsWithoutValidators.Count == 0), outputmsg.ToString());
+            Assert.True((validatorsWithoutTests.Count == 0 && testsWithoutValidators.Count == 0), outputmsg.ToString());
         }
 
         /// <summary>
