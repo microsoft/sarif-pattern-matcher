@@ -22,25 +22,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     /// </summary>
     public class PatternInvariantTests
     {
+        /// <summary>
+        /// This function ensures that if a rule is in the JSON, it has a validator in the assembly.
+        /// </summary>
         public static void VerifyAllValidatorsExist(string definitionsFilePath)
         {
             string pluginDirectory = Path.GetDirectoryName(definitionsFilePath);
             string validatorsName = new DirectoryInfo(pluginDirectory).Parent.Name;
             var assembly = Assembly.LoadFrom(Path.Combine(pluginDirectory, $"{validatorsName}.dll"));
 
-                //Read the json file content to get the rule names
+            // Read the json file content to get the rule names.
             string content = File.ReadAllText(definitionsFilePath);
-                SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
+            SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
             var rules = new HashSet<string>();
-                foreach (SearchDefinition searchDefinition in sdObject.Definitions)
+            foreach (SearchDefinition searchDefinition in sdObject.Definitions)
+            {
+                foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
                 {
-                    foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
-                    {
-                        rules.Add(matchExpression.Name.Split('/')[1]);
-                    }
+                    rules.Add(matchExpression.Name.Split('/')[1]);
                 }
+            }
 
-            // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
+            // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name.
             var validators = assembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
 
             var rulesWithoutValidators = new List<string>();
@@ -52,7 +55,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     rulesWithoutValidators.Add(rule);
                 }
             }
-            
+
             // Assert.Empty doesn't allow custom messages, so use Assert.True
             Assert.True(rulesWithoutValidators.Count == 0,
                         "Unable to find validators for these rules: " +
@@ -60,6 +63,45 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         string.Join($",{Environment.NewLine}  ", rulesWithoutValidators));
         }
 
+        /// <summary>
+        /// This function ensures that for each shared strings variable definition, 
+        /// there is a corresponding regex call to it in the JSON.
+        /// </summary>
+        public static void VerifyAllJsonRulesExist(string definitionsFilePath, string sharedStringsFilePath)
+        {
+            // This function verifies that for each shared string variable definition, there is a rule in the JSON that uses it
+            string definitionsFileContents = File.ReadAllText(definitionsFilePath);
+            string sharedStringsContents = File.ReadAllText(sharedStringsFilePath);
+
+            string line;
+            var reader = new StringReader(sharedStringsContents);
+
+            var sharedStringsWithoutRules = new List<string>();
+            while ((line = reader.ReadLine()) != null)
+            {
+                line = line.Trim();
+                if (!line.StartsWith('$'))
+                {
+                    continue;
+                }
+
+                line = line.Split('=')[0];
+                if (!definitionsFileContents.Contains(line))
+                {
+                    sharedStringsWithoutRules.Add(line);
+                }
+            }
+            // Assert.Empty doesn't allow custom messages, so use Assert.True
+            Assert.True(sharedStringsWithoutRules.Count == 0,
+                        "Found no reference to these regular expression definitions in JSON: " +
+                        $"{Environment.NewLine}  " +
+                        string.Join($",{Environment.NewLine}  ", sharedStringsWithoutRules));
+
+        }
+
+        /// <summary>
+        /// This function ensures that for each SEC101_... filename, there is a corresponding rule name and ID match in the JSON.
+        /// </summary>
         public static void VerifyAllRuleFilenamesMatchDefinitions(string definitionsFilePath, string validatorsFolderName)
         {
             //Read the json file content to get the rule names
@@ -67,8 +109,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
             var nameIdDictionary = new Dictionary<string, string>();
             var invalidFilenames = new List<string>();
-            var sbRuleIDs = new StringBuilder();
-
 
             foreach (SearchDefinition searchDefinition in sdObject.Definitions)
             {
@@ -76,17 +116,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     string ruleName = matchExpression.Name.Split('/')[1];
 
+                    // This will assume all rule IDs are proper. Seperate test will flag if otherwise.
                     if (!nameIdDictionary.ContainsKey(ruleName))
                     {
                         nameIdDictionary.Add(ruleName, matchExpression.Id.Replace('/', '_'));
-
-                    }
-                    else
-                    {
-                        if (!nameIdDictionary[ruleName].Equals(matchExpression.Id.Replace('/', '_')))
-                        {
-                            sbRuleIDs.Append($"  {ruleName}{Environment.NewLine}");
-                        }
                     }
                 }
             }
@@ -125,7 +158,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     sb.Remove(0, rulePrefixLength);
                     sb.Replace(fileEnding, "");
 
-                    // Check to see if the filename correspons to a rule, and that the ID is the same
+                    // Check to see if the filename corresponds to a rule, and that the ID is the same
                     if (!nameIdDictionary.ContainsKey(sb.ToString()) || !file.Name.StartsWith(nameIdDictionary[sb.ToString()]))
                     {
                         invalidFilenames.Add(file.Name);
@@ -138,21 +171,55 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 fileEnding = "ValidatorTests.cs";
             }
 
-            if(sbRuleIDs.Length > 0) 
-            { 
-                sbRuleIDs.Insert(0, $"Multiple rule IDs issued for: {Environment.NewLine}"); 
-            }
-            
             Assert.True(invalidFilenames.Count == 0,
                 "These filenames do not match any rule definitions names" +
                 $"{Environment.NewLine}  " +
                 string.Join($",{Environment.NewLine}  ", invalidFilenames) +
-                Environment.NewLine +
-                sbRuleIDs.ToString());
-            Assert.True(sbRuleIDs.Length == 0, sbRuleIDs.ToString());
-
+                Environment.NewLine);
         }
 
+        /// <summary>
+        /// This function ensures that for each rule in the JSON, it has only one Rule ID issued to it. 
+        /// As long as there is a 1:1 correspondence between rule name and rule ID, this will pass.
+        /// </summary>
+        public static void VerifyAllJsonRulesHaveOnlyOneRuleID(string definitionsFilePath)
+        {
+            // Read the json file content to get the rule names.
+            string content = File.ReadAllText(definitionsFilePath);
+            SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
+            var nameIdDictionary = new Dictionary<string, string>();
+            var invalidRuleIDList = new List<string>();
+
+            foreach (SearchDefinition searchDefinition in sdObject.Definitions)
+            {
+                foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
+                {
+                    string ruleName = matchExpression.Name.Split('/')[1];
+
+                    if (!nameIdDictionary.ContainsKey(ruleName))
+                    {
+                        nameIdDictionary.Add(ruleName, matchExpression.Id.Replace('/', '_'));
+
+                    }
+                    else
+                    {
+                        if (!nameIdDictionary[ruleName].Equals(matchExpression.Id.Replace('/', '_')))
+                        {
+                            invalidRuleIDList.Add(ruleName);
+                        }
+                    }
+                }
+            }
+
+            Assert.True(invalidRuleIDList.Count == 0,
+               "These rules have multiple conflicting rule IDs issued for them" +
+               $"{Environment.NewLine}  " +
+               string.Join($",{Environment.NewLine}  ", invalidRuleIDList));
+        }
+       
+        /// <summary>
+        /// This function ensures that for each regex in the JSON, there is a corresponding definition in the shared strings.
+        /// </summary>
         public static void VerifyAllSharedStringsExist(string definitionsFilePath, string sharedStringsFilePath)
         {
             string content = File.ReadAllText(definitionsFilePath);
@@ -178,6 +245,64 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         string.Join($",{Environment.NewLine}  ", rulesWithoutSharedStrings));
         }
 
+        /// <summary>
+        /// This function ensures that for each validator in the validator assembly, 
+        /// there is a corresponding test in the test assembly, and vice versa.
+        /// </summary>
+        public static void VerifyAllTestsExist(Assembly validatorsAssembly, Assembly testsAssembly)
+        {
+            // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
+            var validators = validatorsAssembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
+            var tests = testsAssembly.GetTypes().Where(x => x.Name.EndsWith("ValidatorTests")).Select(x => x.Name).ToHashSet();
+
+            var rulesWithoutTests = new List<string>();
+            var testsWithoutValidators = new List<string>();
+
+            foreach (string validator in validators)
+            {
+                if (!tests.TryGetValue(validator + "Tests", out string _))
+                {
+                    // Skip Template Validators
+                    if (validator.Contains("Template")) { continue; }
+
+                    rulesWithoutTests.Add(validator);
+                }
+            }
+
+            foreach (string test in tests)
+            {
+                if (!validators.TryGetValue(test.Replace("Tests", ""), out string _))
+                {
+                    // Skip Template Validators
+                    if (test.Contains("Template")) { continue; }
+                    if (test.Contains("SecurePlaintextSecrets")) { continue; }
+
+                    testsWithoutValidators.Add(test);
+                }
+            }
+
+            var outputmsg = new StringBuilder();
+            if (rulesWithoutTests.Count > 0)
+            {
+                outputmsg.Append("Unable to find tests for these validators: " +
+                        $"{Environment.NewLine}  " +
+                        string.Join($",{Environment.NewLine}  ", rulesWithoutTests) +
+                        $"{Environment.NewLine}");
+            }
+            if (testsWithoutValidators.Count > 0)
+            {
+                outputmsg.Append("Unable to find validators for these tests: " +
+                        $"{Environment.NewLine}  " +
+                        string.Join($",{Environment.NewLine}  ", testsWithoutValidators));
+            }
+
+            // Assert.Empty doesn't allow custom messages, so use Assert.True
+            Assert.True((rulesWithoutTests.Count == 0 && testsWithoutValidators.Count == 0), outputmsg.ToString());
+        }
+
+        /// <summary>
+        /// This function returns a HashSet containing all the different types of regex from a SearchDefinitions object.
+        /// </summary>
         public static HashSet<string> GetRegexSetFromSearchDefinitions(SearchDefinitions sdObject)
         {
             var regexSet = new HashSet<string>();
@@ -231,89 +356,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
             }
             return regexSet;
-        }
-
-        public static void VerifyAllJsonRulesExist(string definitionsFilePath, string sharedStringsFilePath)
-        {
-            // This function verifies that for each shared string variable definition, there is a rule in the JSON that uses it
-            string definitionsFileContents = File.ReadAllText(definitionsFilePath);
-            string sharedStringsContents = File.ReadAllText(sharedStringsFilePath);
-
-            string line;
-            var reader = new StringReader(sharedStringsContents);
-
-            var sharedStringsWithoutRules = new List<string>();
-            while ((line = reader.ReadLine()) != null)
-            {
-                line = line.Trim();
-                if (!line.StartsWith('$'))
-                {
-                    continue;
-                }
-
-                line = line.Split('=')[0];
-                if (!definitionsFileContents.Contains(line))
-                {
-                    sharedStringsWithoutRules.Add(line);
-                }
-            }
-            // Assert.Empty doesn't allow custom messages, so use Assert.True
-            Assert.True(sharedStringsWithoutRules.Count == 0,
-                        "Found no reference to these regular expression definitions in JSON: " +
-                        $"{Environment.NewLine}  " +
-                        string.Join($",{Environment.NewLine}  ", sharedStringsWithoutRules));
-
-        }
-
-        public static void VerifyAllTestsExist(Assembly validatorsAssembly, Assembly testsAssembly)
-        {
-            // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
-            var validators = validatorsAssembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
-            var tests = testsAssembly.GetTypes().Where(x => x.Name.EndsWith("ValidatorTests")).Select(x => x.Name).ToHashSet();
-
-            var rulesWithoutTests = new List<string>();
-            var testsWithoutValidators = new List<string>();
-
-            foreach (string validator in validators)
-            {
-                if (!tests.TryGetValue(validator + "Tests", out string _))
-                {
-                    // Skip Template Validators
-                    if (validator.Contains("Template")) { continue; }
-
-                    rulesWithoutTests.Add(validator);
-                }
-            }
-
-            foreach (string test in tests)
-            {
-                if (!validators.TryGetValue(test.Replace("Tests", ""), out string _))
-                {
-                    // Skip Template Validators
-                    if (test.Contains("Template")) { continue; }
-                    if (test.Contains("SecurePlaintextSecrets")) { continue; }
-
-                    testsWithoutValidators.Add(test);
-                }
-            }
-
-            var outputmsg = new StringBuilder();
-            if(rulesWithoutTests.Count > 0)
-            {
-                outputmsg.Append("Unable to find tests for these validators: " +
-                        $"{Environment.NewLine}  " +
-                        string.Join($",{Environment.NewLine}  ", rulesWithoutTests) +
-                        $"{Environment.NewLine}");
-            }
-            if(testsWithoutValidators.Count > 0)
-            {
-                outputmsg.Append("Unable to find validators for these tests: " +
-                        $"{Environment.NewLine}  " +
-                        string.Join($",{Environment.NewLine}  ", testsWithoutValidators));
-            }
-
-            // Assert.Empty doesn't allow custom messages, so use Assert.True
-            Assert.True((rulesWithoutTests.Count == 0 && testsWithoutValidators.Count == 0), outputmsg.ToString());
         }
     }
 }
