@@ -107,7 +107,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             //Read the json file content to get the rule names
             string content = File.ReadAllText(definitionsFilePath);
             SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
-            var nameIdDictionary = new Dictionary<string, string>();
+            var ruleNameToIdMap = new Dictionary<string, string>();
             var invalidFilenames = new List<string>();
 
             foreach (SearchDefinition searchDefinition in sdObject.Definitions)
@@ -115,13 +115,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
                 {
                     string ruleName = matchExpression.Name.Split('/')[1];
+
+                    // Replacing '/' with '_' here enables calling filename.StartsWith() directly on this string.
                     string ruleID = matchExpression.Id.Replace('/', '_');
 
                     // This will assume all rule IDs are correct (i.e. no duplicates, no erroneous shared IDs).
                     // VerifyAllJsonRulesHaveOnlyOneRuleID will flag if otherwise.
-                    if (!nameIdDictionary.ContainsKey(ruleName))
+                    if (!ruleNameToIdMap.ContainsKey(ruleName))
                     {
-                        nameIdDictionary.Add(ruleName, ruleID);
+                        ruleNameToIdMap.Add(ruleName, ruleID);
                     }
                 }
             }
@@ -161,7 +163,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     sb.Replace(fileEnding, "");
 
                     // Check to see if the filename corresponds to a rule, and that the ID is the same.
-                    if (!nameIdDictionary.ContainsKey(sb.ToString()) || !file.Name.StartsWith(nameIdDictionary[sb.ToString()]))
+                    if (!ruleNameToIdMap.ContainsKey(sb.ToString()) || !file.Name.StartsWith(ruleNameToIdMap[sb.ToString()]))
                     {
                         invalidFilenames.Add(file.Name);
                     }
@@ -190,8 +192,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string content = File.ReadAllText(definitionsFilePath);
             SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
 
-            var nameIdDictionary = new Dictionary<string, string>();
-            var idNameDictionary = new Dictionary<string, string>();
+            var ruleNameToIdMap = new Dictionary<string, string>();
+            var idToRuleNameMap = new Dictionary<string, string>();
             var conflictingRuleIDList = new List<string>();
             var sharedRuleIDList = new List<string>();
 
@@ -200,27 +202,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
                 {
                     string ruleName = matchExpression.Name.Split('/')[1];
-                    string ruleID = matchExpression.Id.Replace('/', '_');
+                    string ruleID = matchExpression.Id;
 
-                    if (!nameIdDictionary.ContainsKey(ruleName))
+                    if (!ruleNameToIdMap.ContainsKey(ruleName))
                     {
-                        nameIdDictionary.Add(ruleName, ruleID);
+                        ruleNameToIdMap.Add(ruleName, ruleID);
                     }
                     else
                     {
-                        if (!nameIdDictionary[ruleName].Equals(ruleID))
+                        if (!ruleNameToIdMap[ruleName].Equals(ruleID))
                         {
                             conflictingRuleIDList.Add(ruleName);
                         }
                     }
 
-                    if (!idNameDictionary.ContainsKey(ruleID))
+                    if (!idToRuleNameMap.ContainsKey(ruleID))
                     {
-                        idNameDictionary.Add(ruleID, ruleName);
+                        idToRuleNameMap.Add(ruleID, ruleName);
                     }
                     else
                     {
-                        if (!idNameDictionary[ruleID].Equals(ruleName))
+                        if (!idToRuleNameMap[ruleID].Equals(ruleName))
                         {
                             sharedRuleIDList.Add(ruleID);
                         }
