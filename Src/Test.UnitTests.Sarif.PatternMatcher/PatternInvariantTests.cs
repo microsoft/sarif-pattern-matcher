@@ -28,17 +28,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string validatorsName = new DirectoryInfo(pluginDirectory).Parent.Name;
             var assembly = Assembly.LoadFrom(Path.Combine(pluginDirectory, $"{validatorsName}.dll"));
 
-            //Read the json file content to get the rule names
+                //Read the json file content to get the rule names
             string content = File.ReadAllText(definitionsFilePath);
-            SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
+                SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
             var rules = new HashSet<string>();
-            foreach (SearchDefinition searchDefinition in sdObject.Definitions)
-            {
-                foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
+                foreach (SearchDefinition searchDefinition in sdObject.Definitions)
                 {
-                    rules.Add(matchExpression.Name.Split('/')[1]);
+                    foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
+                    {
+                        rules.Add(matchExpression.Name.Split('/')[1]);
+                    }
                 }
-            }
 
             // Not all validators are subclasses of ValidatorBase, so for the time being, we'll have to identify them by name
             var validators = assembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
@@ -52,7 +52,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     rulesWithoutValidators.Add(rule);
                 }
             }
-
+            
             // Assert.Empty doesn't allow custom messages, so use Assert.True
             Assert.True(rulesWithoutValidators.Count == 0,
                         "Unable to find validators for these rules: " +
@@ -60,36 +60,52 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         string.Join($",{Environment.NewLine}  ", rulesWithoutValidators));
         }
 
-        public static void VerifyAllRuleFilenamesMatchDefinitions(string definitionsFilePath)
+        public static void VerifyAllRuleFilenamesMatchDefinitions(string definitionsFilePath, string validatorsFolderName)
         {
             //Read the json file content to get the rule names
             string content = File.ReadAllText(definitionsFilePath);
             SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
-            var regexSet = new HashSet<string>();
+            var nameIdDictionary = new Dictionary<string, string>();
+            var invalidFilenames = new List<string>();
+            var sbRuleIDs = new StringBuilder();
+
+
             foreach (SearchDefinition searchDefinition in sdObject.Definitions)
             {
                 foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
                 {
-                    regexSet.Add(matchExpression.Name.Split('/')[1]);
+                    string ruleName = matchExpression.Name.Split('/')[1];
+
+                    if (!nameIdDictionary.ContainsKey(ruleName))
+                    {
+                        nameIdDictionary.Add(ruleName, matchExpression.Id.Replace('/', '_'));
+
+                    }
+                    else
+                    {
+                        if (!nameIdDictionary[ruleName].Equals(matchExpression.Id.Replace('/', '_')))
+                        {
+                            sbRuleIDs.Append($"  {ruleName}{Environment.NewLine}");
+                        }
+                    }
                 }
             }
 
             // Load up all Validator files in plugin directory
             var definitionsDirectory = new DirectoryInfo(definitionsFilePath);
             string definitionsParentDirectory = definitionsDirectory.Parent.FullName;
-            string validatorsDirectory = Path.Combine(definitionsParentDirectory, "SecurePlaintextSecretsValidators");
+            string validatorsDirectory = Path.Combine(definitionsParentDirectory, validatorsFolderName);
             var validatorsDirectoryInfo = new DirectoryInfo(validatorsDirectory);
 
             // load up all Test files in Test.plugin directory
             definitionsParentDirectory = definitionsDirectory.Parent.Parent.FullName;
             string testPluginName = "Tests." + definitionsDirectory.Parent.Name;
-            string testsDirectory = Path.Combine(definitionsParentDirectory, testPluginName, "SecurePlaintextSecretsValidators");
+            string testsDirectory = Path.Combine(definitionsParentDirectory, testPluginName, validatorsFolderName);
             var testsDirectoryInfo = new DirectoryInfo(testsDirectory);
 
             // Some useful tools for searching/reading the filenames
             var rg = new Regex(@"SEC101_[0-9]{3}");
             var sb = new StringBuilder();
-            var invalidFilenames = new List<string>();
             int rulePrefixLength = "SEC101_XXX.".Length;
             string fileEnding = "Validator.cs";
 
@@ -109,7 +125,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     sb.Remove(0, rulePrefixLength);
                     sb.Replace(fileEnding, "");
 
-                    if (!regexSet.Contains(sb.ToString()))
+                    // Check to see if the filename correspons to a rule, and that the ID is the same
+                    if (!nameIdDictionary.ContainsKey(sb.ToString()) || !file.Name.StartsWith(nameIdDictionary[sb.ToString()]))
                     {
                         invalidFilenames.Add(file.Name);
                     }
@@ -121,10 +138,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 fileEnding = "ValidatorTests.cs";
             }
 
+            if(sbRuleIDs.Length > 0) 
+            { 
+                sbRuleIDs.Insert(0, $"Multiple rule IDs issued for: {Environment.NewLine}"); 
+            }
+            
             Assert.True(invalidFilenames.Count == 0,
                 "These filenames do not match any rule definitions names" +
                 $"{Environment.NewLine}  " +
-                string.Join($",{Environment.NewLine}  ", invalidFilenames));
+                string.Join($",{Environment.NewLine}  ", invalidFilenames) +
+                Environment.NewLine +
+                sbRuleIDs.ToString());
+            Assert.True(sbRuleIDs.Length == 0, sbRuleIDs.ToString());
 
         }
 
@@ -247,6 +272,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var tests = testsAssembly.GetTypes().Where(x => x.Name.EndsWith("ValidatorTests")).Select(x => x.Name).ToHashSet();
 
             var rulesWithoutTests = new List<string>();
+            var testsWithoutValidators = new List<string>();
 
             foreach (string validator in validators)
             {
@@ -258,11 +284,36 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     rulesWithoutTests.Add(validator);
                 }
             }
-            // Assert.Empty doesn't allow custom messages, so use Assert.True
-            Assert.True(rulesWithoutTests.Count == 0,
-                        "Unable to find tests for these rules: " +
+
+            foreach (string test in tests)
+            {
+                if (!validators.TryGetValue(test.Replace("Tests", ""), out string _))
+                {
+                    // Skip Template Validators
+                    if (test.Contains("Template")) { continue; }
+                    if (test.Contains("SecurePlaintextSecrets")) { continue; }
+
+                    testsWithoutValidators.Add(test);
+                }
+            }
+
+            var outputmsg = new StringBuilder();
+            if(rulesWithoutTests.Count > 0)
+            {
+                outputmsg.Append("Unable to find tests for these validators: " +
                         $"{Environment.NewLine}  " +
-                        string.Join($",{Environment.NewLine}  ", rulesWithoutTests));
+                        string.Join($",{Environment.NewLine}  ", rulesWithoutTests) +
+                        $"{Environment.NewLine}");
+            }
+            if(testsWithoutValidators.Count > 0)
+            {
+                outputmsg.Append("Unable to find validators for these tests: " +
+                        $"{Environment.NewLine}  " +
+                        string.Join($",{Environment.NewLine}  ", testsWithoutValidators));
+            }
+
+            // Assert.Empty doesn't allow custom messages, so use Assert.True
+            Assert.True((rulesWithoutTests.Count == 0 && testsWithoutValidators.Count == 0), outputmsg.ToString());
         }
     }
 }
