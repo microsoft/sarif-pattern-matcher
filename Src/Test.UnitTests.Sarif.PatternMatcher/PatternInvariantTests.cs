@@ -201,7 +201,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     string ruleName = matchExpression.Name.Split('/')[1];
                     string ruleID = matchExpression.Id.Replace('/', '_');
-                    
+
                     if (!nameIdDictionary.ContainsKey(ruleName))
                     {
                         nameIdDictionary.Add(ruleName, ruleID);
@@ -229,14 +229,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             var outputmsg = new StringBuilder();
-            if(conflictingRuleIDList.Count > 0)
+            if (conflictingRuleIDList.Count > 0)
             {
                 outputmsg.Append("These rules have multiple conflicting rule IDs issued for them" +
                     $"{Environment.NewLine}  " +
                     string.Join($",{Environment.NewLine}  ", conflictingRuleIDList.Distinct()) +
                     $"{Environment.NewLine}");
             }
-            if(sharedRuleIDList.Count > 0)
+
+            if (sharedRuleIDList.Count > 0)
             {
                 outputmsg.Append("These rule IDs have multiple conflicting rules issued for them" +
                     $"{Environment.NewLine}  " +
@@ -246,7 +247,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             Assert.True(conflictingRuleIDList.Count == 0 && sharedRuleIDList.Count == 0, outputmsg.ToString());
         }
-       
+
         /// <summary>
         /// This function ensures that for each regex in the JSON, there is a corresponding definition in the shared strings.
         /// </summary>
