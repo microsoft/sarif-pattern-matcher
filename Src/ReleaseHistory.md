@@ -3,7 +3,8 @@
 ## Unreleased
 - BREAKING: Fix bug resulting in static validators returning `FailureLevel.Note` despite configured `FailureLevel`. [#645](https://github.com/microsoft/sarif-pattern-matcher/pull/645)
 - Update `sarif-sdk` submodule to commit [af69a1892954eb920c2a7e7b28e23effe35903c3](https://github.com/microsoft/sarif-sdk/commit/aaf69a1892954eb920c2a7e7b28e23effe35903c3), simply to keep current.
-- Update `spam` executable and dotnet library name to Sarif.PatternMatcher.Cli.
+- Update `spam` executable and dotnet library name to Sarif.PatternMatcher.Cli. 
+- Update `Microsoft.Security.Utilities` to [v1.4.0](https://github.com/microsoft/security-utilities/releases/tag/v1.4.0). [#662](https://github.com/microsoft/sarif-pattern-matcher/pull/662)
 
 ## *2.0.0-dev*
 - Update `sarif-sdk` submodule to commit [24c773bf194100d11c896ce67581832428304a35](https://github.com/microsoft/sarif-sdk/commit/24c773bf194100d11c896ce67581832428304a35), which applies `FileRegionsCache` fixes (from an unreleased version of the SDK).
