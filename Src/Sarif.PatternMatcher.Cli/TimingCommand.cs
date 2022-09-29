@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Multitool;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+
+using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
@@ -32,6 +35,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, options.SearchDefinitionsPaths);
 
+            Console.WriteLine($"Number of regexes: {GetNumberOfRegexes(options.SearchDefinitionsPaths)}");
+            var totalRunTimer = new Stopwatch();
+            totalRunTimer.Start();
             foreach (string filePath in filesToSearch)
             {
                 Console.WriteLine($"Scanning file: {filesScanned} of {filesToSearch.Count}");
@@ -39,14 +45,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 filesScanned++;
             }
 
-            ExportSizeAndExecutionTime();
+            totalRunTimer.Stop();
+            ExportSizeAndExecutionTime(totalRunTimer.Elapsed);
+
+            Console.WriteLine($"Timing Tests Finished. Total Runtime: {totalRunTimer.Elapsed}");
             return SUCCESS;
         }
 
-        public void ExportSizeAndExecutionTime()
+        public void ExportSizeAndExecutionTime(TimeSpan totalRunTime)
         {
             // output Tuple list to csv in 3 columns
-            var sb = new StringBuilder($"Filename, File Size in KB, Runtime in ms{Environment.NewLine}");
+            var sb = new StringBuilder($"Filename, File Size in KB, Runtime in ms, Total RunTime: {totalRunTime}{Environment.NewLine}");
 
             foreach (Tuple<string, long, long> runData in fileDataTupleList)
             {
@@ -98,8 +107,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 // Run analyze
                 using (context)
                 {
-                    //AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers: new HashSet<string>());
-
                     // Implement 60 second timeout
                     Task analyzeCommandTask = Task.Factory.StartNew(() => AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers: new HashSet<string>()));
                     analyzeCommandTask.Wait(milliSecondTimeout);
@@ -119,6 +126,71 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             timer.Stop();
             fileDataTupleList.Add(Tuple.Create(filePath.Replace(',', ';'), fileSystem.FileInfoLength(filePath) / 1024, timer.ElapsedMilliseconds));
+        }
+
+        private int GetNumberOfRegexes(IEnumerable<string> searchDefinitionsPaths)
+        {
+            int numberOfRegexes = 0;
+
+            foreach (string definitionsFilePath in searchDefinitionsPaths)
+            {
+
+                string content = File.ReadAllText(definitionsFilePath);
+                SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
+
+                foreach (SearchDefinition searchDefinition in sdObject.Definitions)
+                {
+                    // Add all types of regexes in Definitons or MatchExpressions to hashset
+                    if (!string.IsNullOrWhiteSpace(searchDefinition.FileNameAllowRegex))
+                    {
+                        numberOfRegexes++;
+                    }
+                    if (!string.IsNullOrWhiteSpace(searchDefinition.FileNameDenyRegex))
+                    {
+                        numberOfRegexes++;
+                    }
+
+                    foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
+                    {
+                        if (!string.IsNullOrWhiteSpace(matchExpression.FileNameAllowRegex))
+                        {
+                            numberOfRegexes++;
+                        }
+                        if (!string.IsNullOrWhiteSpace(matchExpression.FileNameDenyRegex))
+                        {
+                            numberOfRegexes++;
+                        }
+                        if (!string.IsNullOrWhiteSpace(matchExpression.ContentsRegex))
+                        {
+                            numberOfRegexes++;
+                        }
+                        if (matchExpression.IntrafileRegexes != null)
+                        {
+                            foreach (string intrafileregex in matchExpression.IntrafileRegexes)
+                            {
+                                if (!string.IsNullOrWhiteSpace(intrafileregex))
+                                {
+                                    numberOfRegexes++;
+                                }
+                            }
+
+                        }
+                        if (matchExpression.SingleLineRegexes != null)
+                        {
+                            foreach (string singleLineRegex in matchExpression.SingleLineRegexes)
+                            {
+                                if (!string.IsNullOrWhiteSpace(singleLineRegex))
+                                {
+                                    numberOfRegexes++;
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            return numberOfRegexes;
         }
     }
 }
