@@ -9,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Multitool;
@@ -71,6 +73,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         {
             string resourceContent = fileSystem.FileReadAllText(filePath);
             long fileSizeInBytes = fileSystem.FileInfoLength(filePath);
+            int milliSecondTimeout = 60000;
 
             var timer = new Stopwatch();
             timer.Start();
@@ -92,12 +95,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
 
                 logger.AnalysisStarted();
-
                 // Run analyze
                 using (context)
                 {
-                    AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers: new HashSet<string>());
+                    //AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers: new HashSet<string>());
+
+                    // Implement 60 second timeout
+                    Task analyzeCommandTask = Task.Factory.StartNew(() => AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers: new HashSet<string>()));
+                    analyzeCommandTask.Wait(milliSecondTimeout);
+
+                    if (!analyzeCommandTask.IsCompleted)
+                    {
+                        Console.WriteLine("File Timed Out after 60 seconds. Moving onto next file.");
+                        timer.Stop();
+                        fileDataTupleList.Add(Tuple.Create(filePath.Replace(',', ';'), fileSystem.FileInfoLength(filePath) / 1024, (long)milliSecondTimeout));
+                        return;
+                    }
                 }
+
+                long numViolation = logger.ViolationsSeen;
                 logger.AnalysisStopped(RuntimeConditions.None);
             }
 
