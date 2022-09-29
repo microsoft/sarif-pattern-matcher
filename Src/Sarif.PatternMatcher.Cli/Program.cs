@@ -54,6 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 ExportSearchDefinitionsOptions,
                 ImportAndAnalyzeOptions,
                 StressOptions,
+                TimingOptions,
                 ValidateOptions>(args)
               .MapResult(
                 (AnalyzeOptions options) => RunAnalyzeCommand(options),
@@ -62,6 +63,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 (ExportSearchDefinitionsOptions options) => new ExportSearchDefinitionsCommand().Run(options),
                 (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),
                 (StressOptions options) => new StressCommand().Run(options),
+                (TimingOptions options) => new TimingCommand().Run(options),
                 (ValidateOptions options) => new ValidateCommand().Run(options),
                 _ => isValidHelpCommand || isVersionCommand
                         ? CommandBase.SUCCESS
