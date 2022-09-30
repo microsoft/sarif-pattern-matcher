@@ -67,9 +67,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// This function ensures that for each shared strings variable definition, 
         /// there is a corresponding regex call to it in the JSON.
         /// </summary>
-        public static void VerifyAllJsonRulesExist(string definitionsFilePath, string sharedStringsFilePath)
+        public static void VerifyAllJsonRulesExist(string definitionsFilePath)
         {
             string definitionsFileContents = File.ReadAllText(definitionsFilePath);
+            SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(definitionsFileContents);
+            
+            // Load shared strings from file in JSON
+            string sharedStringsFileName = sdObject.SharedStringsFileName;
+            var definitionsFilePathInfo = new DirectoryInfo(definitionsFilePath);
+            string sharedStringsFilePath = Path.Combine(definitionsFilePathInfo.Parent.FullName, sharedStringsFileName);
             string sharedStringsContents = File.ReadAllText(sharedStringsFilePath);
 
             string line;
@@ -102,43 +108,57 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// <summary>
         /// This function ensures that for each SEC101_... filename, there is a corresponding rule name and ID match in the JSON.
         /// </summary>
-        public static void VerifyAllRuleFilenamesMatchDefinitions(string definitionsFilePath, string validatorsFolderName)
+        public static void VerifyAllRuleFilenamesMatchDefinitions(string definitionsFileDirectory)
         {
-            //Read the json file content to get the rule names
-            string content = File.ReadAllText(definitionsFilePath);
-            SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
+            // Get all json files from the folder passed with correct security division
+            string validatorsFolderName = "SecurePlaintextSecretsValidators";
+            string securityDivision = "SEC101";
+            var jsonFiles = Directory.GetFiles(definitionsFileDirectory, "*.json").Where(file => file.Contains(securityDivision)).ToList();
+            
             var ruleNameToIdMap = new Dictionary<string, string>();
             var invalidFilenames = new List<string>();
-
-            foreach (SearchDefinition searchDefinition in sdObject.Definitions)
+            
+            foreach (string jsonFile in jsonFiles)
             {
-                foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
+                //Read the json file content to get the rule names
+                string content = File.ReadAllText(jsonFile);
+                SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
+
+                foreach (SearchDefinition searchDefinition in sdObject.Definitions)
                 {
-                    string ruleName = matchExpression.Name.Split('/')[1];
-
-                    // Replacing '/' with '_' here enables calling filename.StartsWith() directly on this string.
-                    string ruleID = matchExpression.Id.Replace('/', '_');
-
-                    // This will assume all rule IDs are correct (i.e. no duplicates, no erroneous shared IDs).
-                    // VerifyAllJsonRulesHaveOnlyOneRuleID will flag if otherwise.
-                    if (!ruleNameToIdMap.ContainsKey(ruleName))
+                    foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
                     {
-                        ruleNameToIdMap.Add(ruleName, ruleID);
+                        string ruleName = matchExpression.Name.Split('/')[1];
+
+                        // Replacing '/' with '_' here enables calling filename.StartsWith() directly on this string.
+                        string ruleID = matchExpression.Id.Replace('/', '_');
+
+                        // This will assume all rule IDs are correct (i.e. no duplicates, no erroneous shared IDs).
+                        // VerifyAllJsonRulesHaveOnlyOneRuleID will flag if otherwise.
+                        if (!ruleNameToIdMap.ContainsKey(ruleName))
+                        {
+                            ruleNameToIdMap.Add(ruleName, ruleID);
+                        }
                     }
                 }
             }
 
             // Load up all Validator files in plugin directory.
-            var definitionsDirectory = new DirectoryInfo(definitionsFilePath);
-            string definitionsParentDirectory = definitionsDirectory.Parent.FullName;
-            string validatorsDirectory = Path.Combine(definitionsParentDirectory, validatorsFolderName);
+            var definitionsDirectory = new DirectoryInfo(definitionsFileDirectory);
+            string definitionsParentDirectory = definitionsFileDirectory;
+            string validatorsDirectory = Path.Combine(definitionsFileDirectory, validatorsFolderName);
             var validatorsDirectoryInfo = new DirectoryInfo(validatorsDirectory);
 
             // Load up all Test files in Test.plugin directory.
-            definitionsParentDirectory = definitionsDirectory.Parent.Parent.FullName;
-            string testPluginName = "Tests." + definitionsDirectory.Parent.Name;
+            definitionsParentDirectory = definitionsDirectory.Parent.FullName;
+            string testPluginName = "Tests." + definitionsDirectory.Name;
             string testsDirectory = Path.Combine(definitionsParentDirectory, testPluginName, validatorsFolderName);
             var testsDirectoryInfo = new DirectoryInfo(testsDirectory);
+
+            Assert.True(validatorsDirectoryInfo.Exists && testsDirectoryInfo.Exists,
+                "The validator or test directory does not exist." +
+                $"{Environment.NewLine}  Validator directory: {validatorsDirectory}" +
+                $"{Environment.NewLine}  Test directory: {testsDirectory}");
 
             // Some useful tools for searching/reading the filenames.
             var rg = new Regex(@"SEC101_[0-9]{3}");
@@ -253,10 +273,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// <summary>
         /// This function ensures that for each regex in the JSON, there is a corresponding definition in the shared strings.
         /// </summary>
-        public static void VerifyAllSharedStringsExist(string definitionsFilePath, string sharedStringsFilePath)
+        public static void VerifyAllSharedStringsExist(string definitionsFilePath)
         {
             string content = File.ReadAllText(definitionsFilePath);
             SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
+
+            // Load shared strings from file in JSON
+            string sharedStringsFileName = sdObject.SharedStringsFileName;
+            var definitionsFilePathInfo = new DirectoryInfo(definitionsFilePath);
+            string sharedStringsFilePath = Path.Combine(definitionsFilePathInfo.Parent.FullName, sharedStringsFileName);
 
             HashSet<string> regexSet = GetRegexSetFromSearchDefinitions(sdObject);
 
