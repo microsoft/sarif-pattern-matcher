@@ -14,8 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RE2.Managed\RE2.Managed.csproj" />
     <ProjectReference Include="..\sarif-sdk\src\Sarif\Sarif.csproj" />
-    
-    <PackageReference Include="RE2.Managed" Version="1.10.0" />
   </ItemGroup>
 </Project>
