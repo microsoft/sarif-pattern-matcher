@@ -1,4 +1,5 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -233,10 +234,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     foreach (FlexMatch flexMatch in _engine.Matches(context.FileContents, base64DecodingRegexText))
                     {
                         // This will run the match expression against the decoded content.
-                        RunMatchExpression(
-                            binary64DecodedMatch: flexMatch,
-                            context,
-                            matchExpression);
+                        RunMatchExpression(binary64DecodedMatch: flexMatch,
+                                           context,
+                                           matchExpression);
                     }
                 }
 
@@ -794,11 +794,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         ? context.MaxMemoryInKilobytes
                         : 1024 * context.MaxMemoryInKilobytes;
 
-                if (!((RE2Regex)_engine).Matches(contentsRegex,
+                if (!Matches(contentsRegex,
                                                  searchText,
                                                  out List<Dictionary<string, FlexMatch>> matches,
-                                                 ref context.Utf8ToUtf16ByteIndices,
-                                                 maxMemoryInKB))
+                                                 context))
                 {
                     if (matchExpression.IntrafileRegexMetadata[i] == RegexMetadata.Optional)
                     {
@@ -846,11 +845,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     ? context.MaxMemoryInKilobytes
                     : 1024 * context.MaxMemoryInKilobytes;
 
-            if (!((RE2Regex)_engine).Matches(matchExpression.ContentsRegex,
-                                 searchText,
-                                 out List<Dictionary<string, FlexMatch>> singleLineMatches,
-                                 ref context.Utf8ToUtf16ByteIndices,
-                                 maxMemoryInKB))
+            if (Matches(lineRegex,
+                                             searchText,
+                                             out List<Dictionary<string, FlexMatch>> singleLineMatches,
+                                             context))
             {
                 return;
             }
@@ -871,8 +869,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     string regex = matchExpression.SingleLineRegexes[i];
 
-                    if (!((RE2Regex)_engine).Matches(matchExpression.ContentsRegex,
-                                                     searchText,
+                    if (!((RE2Regex)_engine).Matches(regex,
+                                                     lineText,
                                                      out List<Dictionary<string, FlexMatch>> intralineMatches,
                                                      ref context.Utf8ToUtf16ByteIndices,
                                                      maxMemoryInKB))
@@ -992,11 +990,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // INTERESTING BREAKPPOINT: debug static analysis match failures.
             // Set a conditional breakpoint on 'matchExpression.Name' to filter by specific rules.
             // Set a conditional breakpoint on 'searchText' to filter on specific target text patterns.
-            if (!((RE2Regex)_engine).Matches(matchExpression.ContentsRegex,
-                                 searchText,
-                                 out List<Dictionary<string, FlexMatch>> matches,
-                                 ref context.Utf8ToUtf16ByteIndices,
-                                 maxMemoryInKB))
+
+
+            if (!Matches(matchExpression.ContentsRegex,
+                         searchText,
+                         out List<Dictionary<string, FlexMatch>> matches,
+                         context))
             {
                 return;
             }
@@ -1094,6 +1093,35 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                           result);
                 }
             }
+        }
+
+        private bool Matches(string contentsRegex,
+                             string searchText,
+                             out List<Dictionary<string, FlexMatch>> matches,
+                             AnalyzeContext context)
+        {
+            matches = null;
+            RE2Regex re2regex = _engine as RE2Regex;
+
+
+            long maxMemoryInKB =
+                context.MaxMemoryInKilobytes == -1
+                    ? context.MaxMemoryInKilobytes
+                    : 1024 * context.MaxMemoryInKilobytes;
+
+            if (re2regex != null)
+            {
+                return ((RE2Regex)_engine).Matches(contentsRegex,
+                                                   searchText,
+                                                   out matches,
+                                                   ref context.Utf8ToUtf16ByteIndices,
+                                                   maxMemoryInKB);
+            }
+
+            return _engine.Matches(contentsRegex,
+                                   searchText,
+                                   out matches,
+                                   maxMemoryInKB);
         }
 
         private void ConstructResultAndLogForContentsRegex(FlexMatch binary64DecodedMatch,
