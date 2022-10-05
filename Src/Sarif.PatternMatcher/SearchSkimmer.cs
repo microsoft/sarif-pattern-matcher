@@ -789,15 +789,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 Debug.Assert(!contentsRegex.StartsWith("$"), $"Unexpanded regex variable: {contentsRegex}");
 
-                long maxMemoryInKB =
-                    context.MaxMemoryInKilobytes == -1
-                        ? context.MaxMemoryInKilobytes
-                        : 1024 * context.MaxMemoryInKilobytes;
-
                 if (!Matches(contentsRegex,
-                                                 searchText,
-                                                 out List<Dictionary<string, FlexMatch>> matches,
-                                                 context))
+                             searchText,
+                             out List<Dictionary<string, FlexMatch>> matches,
+                             context))
                 {
                     if (matchExpression.IntrafileRegexMetadata[i] == RegexMetadata.Optional)
                     {
@@ -840,15 +835,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // end of lines as well as the beginning or end of the search text.
             string lineRegex = $"(?m)^.*{firstRegex}.*";
 
-            long maxMemoryInKB =
-                context.MaxMemoryInKilobytes == -1
-                    ? context.MaxMemoryInKilobytes
-                    : 1024 * context.MaxMemoryInKilobytes;
-
             if (Matches(lineRegex,
-                                             searchText,
-                                             out List<Dictionary<string, FlexMatch>> singleLineMatches,
-                                             context))
+                        searchText,
+                        out List<Dictionary<string, FlexMatch>> singleLineMatches,
+                        context))
             {
                 return;
             }
@@ -869,11 +859,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     string regex = matchExpression.SingleLineRegexes[i];
 
-                    if (!((RE2Regex)_engine).Matches(regex,
-                                                     lineText,
-                                                     out List<Dictionary<string, FlexMatch>> intralineMatches,
-                                                     ref context.Utf8ToUtf16ByteIndices,
-                                                     maxMemoryInKB))
+                    if (!Matches(regex,
+                                 lineText,
+                                 out List<Dictionary<string, FlexMatch>> intralineMatches,
+                                 context))
                     {
                         continue;
                     }
@@ -990,8 +979,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // INTERESTING BREAKPPOINT: debug static analysis match failures.
             // Set a conditional breakpoint on 'matchExpression.Name' to filter by specific rules.
             // Set a conditional breakpoint on 'searchText' to filter on specific target text patterns.
-
-
             if (!Matches(matchExpression.ContentsRegex,
                          searchText,
                          out List<Dictionary<string, FlexMatch>> matches,
@@ -1100,9 +1087,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                              out List<Dictionary<string, FlexMatch>> matches,
                              AnalyzeContext context)
         {
-            matches = null;
-            RE2Regex re2regex = _engine as RE2Regex;
-
+            var re2regex = _engine as RE2Regex;
 
             long maxMemoryInKB =
                 context.MaxMemoryInKilobytes == -1
@@ -1111,11 +1096,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (re2regex != null)
             {
-                return ((RE2Regex)_engine).Matches(contentsRegex,
-                                                   searchText,
-                                                   out matches,
-                                                   ref context.Utf8ToUtf16ByteIndices,
-                                                   maxMemoryInKB);
+                return re2regex.Matches(contentsRegex,
+                                        searchText,
+                                        out matches,
+                                        ref context.Utf8ToUtf16ByteIndices,
+                                        maxMemoryInKB);
             }
 
             return _engine.Matches(contentsRegex,

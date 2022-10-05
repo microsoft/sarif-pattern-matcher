@@ -124,7 +124,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 for (int i = 0; i < iterations; i++)
                 {
                     legacyMatchesCount = 0;
-                    foreach (FlexMatch match in RE2Regex.Instance.Matches(resourceContent, regex, RegexDefaults.DefaultOptionsCaseSensitive))
+                   foreach (FlexMatch match in RE2Regex.Instance.Matches(resourceContent, regex, RegexDefaults.DefaultOptionsCaseSensitive))
                     {
                         legacyMatchesCount++;
                     }
