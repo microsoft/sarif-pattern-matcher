@@ -191,7 +191,20 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes)
+        public static unsafe bool Matches(string pattern,
+                                          string text,
+                                          out List<Dictionary<string, FlexMatch>> matches,
+                                          long maxMemoryInBytes)
+        {
+            int[] indexMap = null;
+            return Matches(pattern, text, out matches, ref indexMap, maxMemoryInBytes);
+        }
+
+        public static unsafe bool Matches(string pattern,
+                                          string text,
+                                          out List<Dictionary<string, FlexMatch>> matches,
+                                          ref int[] indexMap,
+                                          long maxMemoryInBytes)
         {
             ParsedRegexCache cache = null;
             try
@@ -209,7 +222,7 @@ namespace Microsoft.RE2.Managed
 
                 byte[] buffer = null;
                 var expression8 = String8.Convert(text, ref buffer);
-                int[] indexMap = GetMapOfUtf8ToUtf16ByteIndices(buffer);
+                indexMap ??= GetMapOfUtf8ToUtf16ByteIndices(buffer);
 
                 fixed (byte* textUtf8BytesPtr = expression8.Array)
                 {

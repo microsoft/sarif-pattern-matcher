@@ -47,9 +47,19 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = 256L * 1024L * 1024L)
+        public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = -1)
         {
-            return Regex2.Matches(pattern, text, out matches, maxMemoryInBytes);
+            int[] indexMap = null;
+            return Regex2.Matches(pattern, text, out matches, ref indexMap, maxMemoryInBytes);
+        }
+
+        public bool Matches(string pattern,
+                            string text,
+                            out List<Dictionary<string, FlexMatch>> matches,
+                            ref int[] indexMap,
+                            long maxMemoryInBytes = 256L * 1024L * 1024L)
+        {
+            return Regex2.Matches(pattern, text, out matches, ref indexMap, maxMemoryInBytes);
         }
 
         private FlexMatch ToFlex(Match2 match, FlexString input, ref int lastUtf8Index, ref int lastUtf16Index)

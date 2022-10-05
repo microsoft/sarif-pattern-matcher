@@ -783,13 +783,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var mergedGroups = new Dictionary<string, ISet<FlexMatch>>();
 
+            int[] indexMap = null;
+
             for (int i = 0; i < matchExpression.IntrafileRegexes?.Count; i++)
             {
                 string contentsRegex = matchExpression.IntrafileRegexes[i];
 
                 Debug.Assert(!contentsRegex.StartsWith("$"), $"Unexpanded regex variable: {contentsRegex}");
 
-                if (!_engine.Matches(contentsRegex, searchText, out List<Dictionary<string, FlexMatch>> matches))
+                if (!_engine.Matches((FlexString)searchText, contentsRegex).Any())
+                {
+                    // This code path is the most lightweight check in RE2. If it's not productive,
+                    // we'll short-circuit immediately and return. If we *do* see at least one
+                    // result, we'll actually repeat the analysis in order to populate the named
+                    // groups data).
+                    return;
+                }
+
+                if (!((RE2Regex)_engine).Matches(contentsRegex,
+                                               searchText,
+                                               out List<Dictionary<string, FlexMatch>> matches,
+                                               ref indexMap))
                 {
                     if (matchExpression.IntrafileRegexMetadata[i] == RegexMetadata.Optional)
                     {

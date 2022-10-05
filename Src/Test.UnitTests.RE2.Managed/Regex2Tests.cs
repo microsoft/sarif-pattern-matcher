@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,6 +23,39 @@ namespace Microsoft.RE2.Managed
         {
             // Ensure Test harness is running x64
             Regex2.NativeLibraryFolderPath = @"runtimes\win-x64\native";
+        }
+
+        [Fact]
+        public void Re2TimingTest()
+        {
+            string filePath = "d:\\repros\\SarifSdk.v2.sarif";
+
+            FlexString resourceContent = File.ReadAllText(filePath);
+
+            var regexList = new List<string> { "a", "abc", "hulonhulonhulon", "(?:^|[^0-9A-Za-z_])(ghp_[\\w]{36})(?:[^0-9A-Za-z_]|$)", "(?P<secret>a)", "(?P<secret>abc)", "(?P<secret>hulonhulonhulon)", "(?:^|[^0-9A-Za-z_])(?P<secret>ghp_[\\w]{36})(?:[^0-9A-Za-z_]|$)" };
+
+            var sb = new StringBuilder();
+
+            int[] indexMap = null;
+            foreach (string regex in regexList)
+            {
+                // Current Match
+                var currentRegexSW = Stopwatch.StartNew();
+                // call from line 969 of SearchSkimmers.cs
+                bool currentMatches = ((RE2Regex)RE2Regex.Instance).Matches(regex, resourceContent, out List<Dictionary<string, FlexMatch>> matches, ref indexMap, -1);
+                currentRegexSW.Stop();
+
+                // Legacy Match
+                var legacyRegexSW = Stopwatch.StartNew();
+
+                // call from line 642 of PatternMatcher.cs
+                IEnumerable<FlexMatch> legacyMatches = RE2Regex.Instance.Matches(resourceContent, regex, RegexDefaults.DefaultOptionsCaseSensitive);
+                legacyRegexSW.Stop();
+                sb.AppendLine($"For regex: \"{regex}\", Legacy: {legacyRegexSW.ElapsedMilliseconds}ms, matches: {legacyMatches.Count()} \tCurrent: {currentRegexSW.ElapsedMilliseconds}ms, matches: {matches.Count}");
+            }
+
+            // Force assertation failure to see test results.
+            Assert.True(false, sb.ToString());
         }
 
         [Fact]
