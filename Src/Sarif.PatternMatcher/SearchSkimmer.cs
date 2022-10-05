@@ -794,11 +794,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         ? context.MaxMemoryInKilobytes
                         : 1024 * context.MaxMemoryInKilobytes;
 
-                if (!((RE2Regex)_engine).Matches(matchExpression.ContentsRegex,
-                                     searchText,
-                                     out List<Dictionary<string, FlexMatch>> matches,
-                                     ref context.Utf8ToUtf16ByteIndices,
-                                     maxMemoryInKB))
+                if (!((RE2Regex)_engine).Matches(contentsRegex,
+                                                 searchText,
+                                                 out List<Dictionary<string, FlexMatch>> matches,
+                                                 ref context.Utf8ToUtf16ByteIndices,
+                                                 maxMemoryInKB))
                 {
                     if (matchExpression.IntrafileRegexMetadata[i] == RegexMetadata.Optional)
                     {
@@ -984,6 +984,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;
 
+            long maxMemoryInKB =
+                context.MaxMemoryInKilobytes == -1
+                    ? context.MaxMemoryInKilobytes
+                    : 1024 * context.MaxMemoryInKilobytes;
+
             // INTERESTING BREAKPPOINT: debug static analysis match failures.
             // Set a conditional breakpoint on 'matchExpression.Name' to filter by specific rules.
             // Set a conditional breakpoint on 'searchText' to filter on specific target text patterns.
@@ -991,7 +996,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                  searchText,
                                  out List<Dictionary<string, FlexMatch>> matches,
                                  ref context.Utf8ToUtf16ByteIndices,
-                                 context.MaxMemoryInKilobytes == -1 ? context.MaxMemoryInKilobytes : 1024 * context.MaxMemoryInKilobytes))
+                                 maxMemoryInKB))
             {
                 return;
             }

@@ -431,6 +431,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 };
 
                 int result = Program.Main(args);
+                Program.InstantiatedAnalyzeCommand.RuntimeErrors.Should().Be(0);
                 result.Should().Be(0);
 
                 sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
@@ -536,6 +537,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 }
 
                 int result = Program.Main(args);
+                Program.InstantiatedAnalyzeCommand.RuntimeErrors.Should().Be(0);
                 result.Should().Be(CommandBase.SUCCESS);
 
                 sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
