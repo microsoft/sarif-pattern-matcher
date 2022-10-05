@@ -238,7 +238,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 sb.AppendLine($"{runData.Item1}, {runData.Item2}, {runData.Item3}");
             }
 
-            File.WriteAllText("C:\\Users\\hulonjenkins\\OneDrive - Microsoft\\Documents\\HulonDesk\\FileSizeToRuntimeData.csv", sb.ToString());
+            File.WriteAllText("C:\\Users\\hulonjenkins\\OneDrive - Microsoft\\Documents\\HulonDesk\\RegexTiming\\OvernightNewRegexTimingData.csv", sb.ToString());
         }
 
         private void TimeScanFileWithSkimmers(string filePath, ISet<Skimmer<AnalyzeContext>> skimmers)
