@@ -24,11 +24,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             Default = 1
             )]
         public int Iterations { get; set; }
+
+        [Option(
+            'd',
+            "search-definitions",
+            Separator = ';',
+            Required = true,
+            HelpText = "A path to a file containing one or more search definitions to drive analysis.")]
+        public IEnumerable<string> SearchDefinitionsPaths { get; set; }
     }
 
     public enum StressScenario
     {
         Statelessness = 0,
         RE2Timing,
+        FileSizeVsTime,
     }
 }
