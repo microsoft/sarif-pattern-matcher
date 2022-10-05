@@ -835,7 +835,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // end of lines as well as the beginning or end of the search text.
             string lineRegex = $"(?m)^.*{firstRegex}.*";
 
-            if (Matches(lineRegex,
+            if (!Matches(lineRegex,
                         searchText,
                         out List<Dictionary<string, FlexMatch>> singleLineMatches,
                         context))
