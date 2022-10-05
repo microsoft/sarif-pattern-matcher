@@ -79,6 +79,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public OptionallyEmittedData DataToInsert { get; set; }
 
+        /// <summary>
+        /// An array of integers that comprise a map of UTF8 to UTF16 byte
+        /// indices. This data is required to rationalize match segments
+        /// when analyzing .NET strings in RE2 (which processes UTF8).
+        /// </summary>
+        public int[] Utf8ToUtf16ByteIndices;
+
         public void Dispose()
         {
             FileRegionsCache?.ClearCache();

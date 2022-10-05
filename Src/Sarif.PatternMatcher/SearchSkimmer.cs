@@ -783,27 +783,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var mergedGroups = new Dictionary<string, ISet<FlexMatch>>();
 
-            int[] indexMap = null;
-
             for (int i = 0; i < matchExpression.IntrafileRegexes?.Count; i++)
             {
                 string contentsRegex = matchExpression.IntrafileRegexes[i];
 
                 Debug.Assert(!contentsRegex.StartsWith("$"), $"Unexpanded regex variable: {contentsRegex}");
 
-                if (!_engine.Matches((FlexString)searchText, contentsRegex).Any())
-                {
-                    // This code path is the most lightweight check in RE2. If it's not productive,
-                    // we'll short-circuit immediately and return. If we *do* see at least one
-                    // result, we'll actually repeat the analysis in order to populate the named
-                    // groups data).
-                    return;
-                }
+                long maxMemoryInKB =
+                    context.MaxMemoryInKilobytes == -1
+                        ? context.MaxMemoryInKilobytes
+                        : 1024 * context.MaxMemoryInKilobytes;
 
-                if (!((RE2Regex)_engine).Matches(contentsRegex,
-                                               searchText,
-                                               out List<Dictionary<string, FlexMatch>> matches,
-                                               ref indexMap))
+                if (!((RE2Regex)_engine).Matches(matchExpression.ContentsRegex,
+                                     searchText,
+                                     out List<Dictionary<string, FlexMatch>> matches,
+                                     ref context.Utf8ToUtf16ByteIndices,
+                                     maxMemoryInKB))
                 {
                     if (matchExpression.IntrafileRegexMetadata[i] == RegexMetadata.Optional)
                     {
@@ -846,7 +841,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // end of lines as well as the beginning or end of the search text.
             string lineRegex = $"(?m)^.*{firstRegex}.*";
 
-            if (!_engine.Matches(lineRegex, searchText, out List<Dictionary<string, FlexMatch>> singleLineMatches))
+            long maxMemoryInKB =
+                context.MaxMemoryInKilobytes == -1
+                    ? context.MaxMemoryInKilobytes
+                    : 1024 * context.MaxMemoryInKilobytes;
+
+            if (!((RE2Regex)_engine).Matches(matchExpression.ContentsRegex,
+                                 searchText,
+                                 out List<Dictionary<string, FlexMatch>> singleLineMatches,
+                                 ref context.Utf8ToUtf16ByteIndices,
+                                 maxMemoryInKB))
             {
                 return;
             }
@@ -867,7 +871,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     string regex = matchExpression.SingleLineRegexes[i];
 
-                    if (!_engine.Matches(regex, lineText, out List<Dictionary<string, FlexMatch>> intralineMatches))
+                    if (!((RE2Regex)_engine).Matches(matchExpression.ContentsRegex,
+                                                     searchText,
+                                                     out List<Dictionary<string, FlexMatch>> intralineMatches,
+                                                     ref context.Utf8ToUtf16ByteIndices,
+                                                     maxMemoryInKB))
                     {
                         continue;
                     }
@@ -979,9 +987,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // INTERESTING BREAKPPOINT: debug static analysis match failures.
             // Set a conditional breakpoint on 'matchExpression.Name' to filter by specific rules.
             // Set a conditional breakpoint on 'searchText' to filter on specific target text patterns.
-            if (!_engine.Matches(matchExpression.ContentsRegex,
+            if (!((RE2Regex)_engine).Matches(matchExpression.ContentsRegex,
                                  searchText,
                                  out List<Dictionary<string, FlexMatch>> matches,
+                                 ref context.Utf8ToUtf16ByteIndices,
                                  context.MaxMemoryInKilobytes == -1 ? context.MaxMemoryInKilobytes : 1024 * context.MaxMemoryInKilobytes))
             {
                 return;
