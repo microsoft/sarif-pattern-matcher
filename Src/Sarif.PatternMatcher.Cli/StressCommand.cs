@@ -10,6 +10,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 
+using Kusto.Cloud.Platform.Utils;
+
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Multitool;
 using Microsoft.Extensions.Logging;
@@ -100,6 +102,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             int iterations = options.Iterations;
 
             int[] indexMap = null;
+            String8 expression8 = String8.Empty;
+            byte[] buffer = null;
             foreach (string regex in regexList)
             {
                 // Current Match
@@ -109,7 +113,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 int matchesCount = 0;
                 for (int i = 0; i < iterations; i++)
                 {
-                    ((RE2Regex)RE2Regex.Instance).Matches(regex, resourceContent, out List<Dictionary<string, FlexMatch>> matches, ref indexMap, -1);
+                    ((RE2Regex)RE2Regex.Instance).Matches(regex, resourceContent, out List<Dictionary<string, FlexMatch>> matches, ref indexMap, ref expression8, ref buffer, -1);
                     matchesCount = matches.Count;
                 }
 
@@ -124,7 +128,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 for (int i = 0; i < iterations; i++)
                 {
                     legacyMatchesCount = 0;
-                   foreach (FlexMatch match in RE2Regex.Instance.Matches(resourceContent, regex, RegexDefaults.DefaultOptionsCaseSensitive))
+                    foreach (FlexMatch match in RE2Regex.Instance.Matches(resourceContent, regex, RegexDefaults.DefaultOptionsCaseSensitive))
                     {
                         legacyMatchesCount++;
                     }

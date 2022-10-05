@@ -86,6 +86,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public int[] Utf8ToUtf16ByteIndices;
 
+        public String8 Expression8;
+
+        public byte[] Buffer;
+
         public void Dispose()
         {
             FileRegionsCache?.ClearCache();

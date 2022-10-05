@@ -1100,6 +1100,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                         searchText,
                                         out matches,
                                         ref context.Utf8ToUtf16ByteIndices,
+                                        ref context.Expression8,
+                                        ref context.Buffer,
                                         maxMemoryInKB);
             }
 

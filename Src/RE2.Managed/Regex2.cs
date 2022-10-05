@@ -197,13 +197,17 @@ namespace Microsoft.RE2.Managed
                                           long maxMemoryInBytes)
         {
             int[] indexMap = null;
-            return Matches(pattern, text, out matches, ref indexMap, maxMemoryInBytes);
+            String8 expression8 = String8.Empty;
+            byte[] buffer = null;
+            return Matches(pattern, text, out matches, ref indexMap, ref expression8, ref buffer, maxMemoryInBytes);
         }
 
         public static unsafe bool Matches(string pattern,
                                           string text,
                                           out List<Dictionary<string, FlexMatch>> matches,
                                           ref int[] indexMap,
+                                          ref String8 expression8,
+                                          ref byte[] buffer,
                                           long maxMemoryInBytes)
         {
             ParsedRegexCache cache = null;
@@ -220,8 +224,11 @@ namespace Microsoft.RE2.Managed
                 // Get or Cache the Regex on the native side and retrieve an index to it
                 int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None, maxMemoryInBytes);
 
-                byte[] buffer = null;
-                var expression8 = String8.Convert(text, ref buffer);
+                //byte[] buffer = null;
+                //var expression8 = String8.Convert(text, ref buffer);
+
+                if (expression8.IsEmpty) { expression8 = String8.Convert(text, ref buffer); }
+
                 indexMap ??= GetMapOfUtf8ToUtf16ByteIndices(buffer);
 
                 fixed (byte* textUtf8BytesPtr = expression8.Array)

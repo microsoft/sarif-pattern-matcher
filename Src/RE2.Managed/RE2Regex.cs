@@ -50,16 +50,20 @@ namespace Microsoft.RE2.Managed
         public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = -1)
         {
             int[] indexMap = null;
-            return Regex2.Matches(pattern, text, out matches, ref indexMap, maxMemoryInBytes);
+            String8 expression8 = String8.Empty;
+            byte[] buffer = null;
+            return Regex2.Matches(pattern, text, out matches, ref indexMap, ref expression8, ref buffer, maxMemoryInBytes);
         }
 
         public bool Matches(string pattern,
                             string text,
                             out List<Dictionary<string, FlexMatch>> matches,
                             ref int[] indexMap,
+                            ref String8 expression8,
+                            ref byte[] buffer,
                             long maxMemoryInBytes = 256L * 1024L * 1024L)
         {
-            return Regex2.Matches(pattern, text, out matches, ref indexMap, maxMemoryInBytes);
+            return Regex2.Matches(pattern, text, out matches, ref indexMap, ref expression8, ref buffer, maxMemoryInBytes);
         }
 
         private FlexMatch ToFlex(Match2 match, FlexString input, ref int lastUtf8Index, ref int lastUtf16Index)
