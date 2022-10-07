@@ -1099,9 +1099,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return re2regex.Matches(contentsRegex,
                                         searchText,
                                         out matches,
-                                        ref context.Utf8ToUtf16ByteIndices,
-                                        ref context.Expression8,
-                                        ref context.Buffer,
+                                        ref context.TextToByteArrayMap,
                                         maxMemoryInKB);
             }
 

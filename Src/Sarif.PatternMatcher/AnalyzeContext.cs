@@ -20,6 +20,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IsValidAnalysisTarget = true;
             ObservedFingerprintCache = new HashSet<string>();
             FileRegionsCache = new FileRegionsCache();
+            TextToByteArrayMap = new Dictionary<String8, Tuple<byte[], int[]>>();
         }
 
         public Exception TargetLoadException { get; set; }
@@ -84,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// indices. This data is required to rationalize match segments
         /// when analyzing .NET strings in RE2 (which processes UTF8).
         /// </summary>
-        public int[] Utf8ToUtf16ByteIndices;
+        public Dictionary<String8, Tuple<byte[], int[]>> TextToByteArrayMap;
 
         public String8 Expression8;
 

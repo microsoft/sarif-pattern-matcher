@@ -113,9 +113,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             int iterations = options.Iterations;
 
-            int[] indexMap = null;
             String8 expression8 = String8.Empty;
-            byte[] buffer = null;
+            var textToIdMap = new Dictionary<String8, Tuple<byte[], int[]>>();
             foreach (string regex in regexList)
             {
                 // Current Match
@@ -125,7 +124,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 int matchesCount = 0;
                 for (int i = 0; i < iterations; i++)
                 {
-                    ((RE2Regex)RE2Regex.Instance).Matches(regex, resourceContent, out List<Dictionary<string, FlexMatch>> matches, ref indexMap, ref expression8, ref buffer, -1);
+                    ((RE2Regex)RE2Regex.Instance).Matches(regex, resourceContent, out List<Dictionary<string, FlexMatch>> matches, ref textToIdMap, -1);
                     matchesCount = matches.Count;
                 }
 
@@ -269,20 +268,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
 
                 logger.AnalysisStarted();
+
                 // Run analyze
                 using (context)
                 {
-                    // Implement 60 second timeout
-                    Task analyzeCommandTask = Task.Factory.StartNew(() => AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers: new HashSet<string>()));
-                    analyzeCommandTask.Wait(milliSecondTimeout);
 
-                    if (!analyzeCommandTask.IsCompleted)
-                    {
-                        Console.WriteLine("File Timed Out after 60 seconds. Moving onto next file.");
-                        timer.Stop();
-                        fileDataTupleList.Add(Tuple.Create(filePath.Replace(',', ';'), fileSystem.FileInfoLength(filePath) / 1024, (long)milliSecondTimeout));
-                        return;
-                    }
+                    AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers: new HashSet<string>());
                 }
 
                 long numViolation = logger.ViolationsSeen;

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -196,18 +197,14 @@ namespace Microsoft.RE2.Managed
                                           out List<Dictionary<string, FlexMatch>> matches,
                                           long maxMemoryInBytes)
         {
-            int[] indexMap = null;
-            String8 expression8 = String8.Empty;
-            byte[] buffer = null;
-            return Matches(pattern, text, out matches, ref indexMap, ref expression8, ref buffer, maxMemoryInBytes);
+            var textToIdMap = new Dictionary<String8, Tuple<byte[], int[]>>();
+            return Matches(pattern, text, out matches, ref textToIdMap, maxMemoryInBytes);
         }
 
         public static unsafe bool Matches(string pattern,
                                           string text,
                                           out List<Dictionary<string, FlexMatch>> matches,
-                                          ref int[] indexMap,
-                                          ref String8 expression8,
-                                          ref byte[] buffer,
+                                          ref Dictionary<String8, Tuple<byte[], int[]>> textToIdMap,
                                           long maxMemoryInBytes)
         {
             ParsedRegexCache cache = null;
@@ -224,12 +221,26 @@ namespace Microsoft.RE2.Managed
                 // Get or Cache the Regex on the native side and retrieve an index to it
                 int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None, maxMemoryInBytes);
 
-                //byte[] buffer = null;
-                //var expression8 = String8.Convert(text, ref buffer);
+                String8 expression8 = String8.Empty;
+                byte[] buffer = null;
+                int[] indexMap = null;
 
-                if (expression8.IsEmpty) { expression8 = String8.Convert(text, ref buffer); }
+                foreach (KeyValuePair<String8, Tuple<byte[], int[]>> entry in textToIdMap)
+                {
+                    if (entry.Key.Length == text.Length && entry.Key.Equals(text))
+                    {
+                        expression8 = entry.Key;
+                        buffer = entry.Value.Item1;
+                        indexMap = entry.Value.Item2;
+                        break;
+                    }
+                }
 
-                indexMap ??= GetMapOfUtf8ToUtf16ByteIndices(buffer);
+                if (expression8.IsEmpty)
+                {
+                    expression8 = String8.Convert(text, ref buffer);
+                    textToIdMap.Add(expression8, new Tuple<byte[], int[]>(buffer, indexMap));
+                }
 
                 fixed (byte* textUtf8BytesPtr = expression8.Array)
                 {
@@ -286,6 +297,7 @@ namespace Microsoft.RE2.Managed
                             }
                             else
                             {
+                                indexMap ??= GetMapOfUtf8ToUtf16ByteIndices(buffer);
                                 // This is a regular match.
                                 submatchString = Encoding.UTF8.GetString(buffer, submatchUtf8BytesStartIndex, submatchUtf8BytesLength);
                                 submatchUtf16BytesStartIndex = indexMap[submatchUtf8BytesStartIndex];
