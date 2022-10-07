@@ -213,7 +213,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             }
 
             totalRunTimer.Stop();
-            ExportSizeAndExecutionTime(totalRunTimer.Elapsed);
+            ExportSizeAndExecutionTime(totalRunTimer.Elapsed, options.CSVFilePath);
 
             Console.WriteLine($"Timing Tests Finished. Total Runtime: {totalRunTimer.Elapsed}");
         }
@@ -229,7 +229,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return filesToSearch;
         }
 
-        private void ExportSizeAndExecutionTime(TimeSpan totalRunTime)
+        private void ExportSizeAndExecutionTime(TimeSpan totalRunTime, string outputFilePath)
         {
             // output Tuple list to csv in 3 columns
             var sb = new StringBuilder($"Filename, File Size in KB, Runtime in ms, Total RunTime: {totalRunTime}{Environment.NewLine}");
@@ -239,7 +239,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 sb.AppendLine($"{runData.Item1}, {runData.Item2}, {runData.Item3}");
             }
 
-            File.WriteAllText("C:\\Users\\hulonjenkins\\OneDrive - Microsoft\\Documents\\HulonDesk\\RegexTiming\\NewRegexTimingDataTemp.csv", sb.ToString());
+            File.WriteAllText(outputFilePath, sb.ToString());
         }
 
         private void TimeScanFileWithSkimmers(string filePath, ISet<Skimmer<AnalyzeContext>> skimmers)

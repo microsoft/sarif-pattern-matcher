@@ -32,6 +32,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             Required = true,
             HelpText = "A path to a file containing one or more search definitions to drive analysis.")]
         public IEnumerable<string> SearchDefinitionsPaths { get; set; }
+
+        [Option(
+            "csv",
+            HelpText = "A path to create a csv file for outputs.")]
+
+        public string CSVFilePath { get; set; }
     }
 
     public enum StressScenario
