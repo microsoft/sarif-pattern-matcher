@@ -87,9 +87,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public Dictionary<String8, Tuple<byte[], int[]>> TextToByteArrayMap;
 
-        public String8 Expression8;
-
-        public byte[] Buffer;
 
         public void Dispose()
         {
@@ -98,6 +95,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             ObservedFingerprintCache?.Clear();
             ObservedFingerprintCache = null;
+
+            TextToByteArrayMap?.Clear();
+            TextToByteArrayMap = null;
         }
     }
 }
