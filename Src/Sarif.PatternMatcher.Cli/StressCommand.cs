@@ -91,6 +91,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                 case StressScenario.FileSizeVsTime:
                 {
+                    // For simplicity, I added the timing tests to stress command
+                    // It runs with a folder passed in as the file.
                     RunFileSizeVsTime(options);
                     break;
                 }
@@ -201,7 +203,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, options.SearchDefinitionsPaths);
 
-            //Console.WriteLine($"Number of regexes: {GetNumberOfRegexes(options.SearchDefinitionsPaths)}");
             var totalRunTimer = new Stopwatch();
             totalRunTimer.Start();
             foreach (string filePath in filesToSearch)
@@ -238,7 +239,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 sb.AppendLine($"{runData.Item1}, {runData.Item2}, {runData.Item3}");
             }
 
-            File.WriteAllText("C:\\Users\\hulonjenkins\\OneDrive - Microsoft\\Documents\\HulonDesk\\RegexTiming\\OvernightNewRegexTimingData.csv", sb.ToString());
+            File.WriteAllText("C:\\Users\\hulonjenkins\\OneDrive - Microsoft\\Documents\\HulonDesk\\RegexTiming\\NewRegexTimingDataTemp.csv", sb.ToString());
         }
 
         private void TimeScanFileWithSkimmers(string filePath, ISet<Skimmer<AnalyzeContext>> skimmers)
