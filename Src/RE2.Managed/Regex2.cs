@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -204,7 +203,7 @@ namespace Microsoft.RE2.Managed
         public static unsafe bool Matches(string pattern,
                                           string text,
                                           out List<Dictionary<string, FlexMatch>> matches,
-                                          ref Dictionary<string, Tuple<String8, byte[], int[]>> textToIdMap,
+                                          ref Dictionary<string, Tuple<String8, byte[], int[]>> textToRE2DataMap,
                                           long maxMemoryInBytes)
         {
             ParsedRegexCache cache = null;
@@ -221,18 +220,15 @@ namespace Microsoft.RE2.Managed
                 // Get or Cache the Regex on the native side and retrieve an index to it
                 int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None, maxMemoryInBytes);
 
-                // Cache the indexMap and the buffer for a given String8. If the text is the same,
-                // load the buffer and the indexMap to avoid expensive recomputation.
-                // The old way of caching the String8 was failing tests because some files were scanned for
-                // base64 secrets after the initial scan, but the buffer wasn't being updated in that case.
-                // Now everything is grouped and loaded together to reduce unneccessary work while scanning accurately.
+                // Cache the expression8, indexMap and the buffer for a given file text. If the text is the same,
+                // load from cache to avoid expensive recomputation which was harming performance.
                 String8 expression8 = String8.Empty;
                 byte[] buffer = null;
                 int[] indexMap = null;
                 bool saveToDictionary = false;
                 bool updateIndexMap = false;
 
-                foreach (KeyValuePair<string, Tuple<String8, byte[], int[]>> entry in textToIdMap)
+                foreach (KeyValuePair<string, Tuple<String8, byte[], int[]>> entry in textToRE2DataMap)
                 {
                     if (entry.Key.Length == text.Length && entry.Key == text)
                     {
@@ -347,11 +343,11 @@ namespace Microsoft.RE2.Managed
 
                 if (saveToDictionary)
                 {
-                    textToIdMap.Add(text, new Tuple<String8, byte[], int[]>(expression8, buffer, indexMap));
+                    textToRE2DataMap.Add(text, new Tuple<String8, byte[], int[]>(expression8, buffer, indexMap));
                 }
                 else if (updateIndexMap)
                 {
-                    textToIdMap[text] = new Tuple<String8, byte[], int[]>(expression8, buffer, indexMap);
+                    textToRE2DataMap[text] = new Tuple<String8, byte[], int[]>(expression8, buffer, indexMap);
                 }
 
                 return matches.Count > 0;

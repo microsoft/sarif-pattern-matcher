@@ -2,21 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
-using System.Threading.Tasks;
-
-using Kusto.Cloud.Platform.Utils;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
-using Microsoft.CodeAnalysis.Sarif.Multitool;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 
