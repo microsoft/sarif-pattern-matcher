@@ -2,21 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
-using System.Threading.Tasks;
-
-using Kusto.Cloud.Platform.Utils;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
-using Microsoft.CodeAnalysis.Sarif.Multitool;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 
@@ -114,7 +106,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             int iterations = options.Iterations;
 
             String8 expression8 = String8.Empty;
-            var textToIdMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
+            var textToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
             foreach (string regex in regexList)
             {
                 // Current Match
@@ -124,7 +116,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 int matchesCount = 0;
                 for (int i = 0; i < iterations; i++)
                 {
-                    ((RE2Regex)RE2Regex.Instance).Matches(regex, resourceContent, out List<Dictionary<string, FlexMatch>> matches, ref textToIdMap, -1);
+                    ((RE2Regex)RE2Regex.Instance).Matches(regex, resourceContent, out List<Dictionary<string, FlexMatch>> matches, ref textToRE2DataMap, -1);
                     matchesCount = matches.Count;
                 }
 

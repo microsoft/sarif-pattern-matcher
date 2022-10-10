@@ -49,17 +49,17 @@ namespace Microsoft.RE2.Managed
 
         public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = -1)
         {
-            var textToIdMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
-            return Regex2.Matches(pattern, text, out matches, ref textToIdMap, maxMemoryInBytes);
+            var textToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
+            return Regex2.Matches(pattern, text, out matches, ref textToRE2DataMap, maxMemoryInBytes);
         }
 
         public bool Matches(string pattern,
                             string text,
                             out List<Dictionary<string, FlexMatch>> matches,
-                            ref Dictionary<string, Tuple<String8, byte[], int[]>> textToIdMap,
+                            ref Dictionary<string, Tuple<String8, byte[], int[]>> textToRE2DataMap,
                             long maxMemoryInBytes = 256L * 1024L * 1024L)
         {
-            return Regex2.Matches(pattern, text, out matches, ref textToIdMap, maxMemoryInBytes);
+            return Regex2.Matches(pattern, text, out matches, ref textToRE2DataMap, maxMemoryInBytes);
         }
 
         private FlexMatch ToFlex(Match2 match, FlexString input, ref int lastUtf8Index, ref int lastUtf16Index)
