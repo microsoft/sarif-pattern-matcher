@@ -114,7 +114,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             int iterations = options.Iterations;
 
             String8 expression8 = String8.Empty;
-            var textToIdMap = new Dictionary<String8, Tuple<byte[], int[]>>();
+            var textToIdMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
             foreach (string regex in regexList)
             {
                 // Current Match

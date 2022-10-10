@@ -197,14 +197,14 @@ namespace Microsoft.RE2.Managed
                                           out List<Dictionary<string, FlexMatch>> matches,
                                           long maxMemoryInBytes)
         {
-            var textToIdMap = new Dictionary<String8, Tuple<byte[], int[]>>();
+            var textToIdMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
             return Matches(pattern, text, out matches, ref textToIdMap, maxMemoryInBytes);
         }
 
         public static unsafe bool Matches(string pattern,
                                           string text,
                                           out List<Dictionary<string, FlexMatch>> matches,
-                                          ref Dictionary<String8, Tuple<byte[], int[]>> textToIdMap,
+                                          ref Dictionary<string, Tuple<String8, byte[], int[]>> textToIdMap,
                                           long maxMemoryInBytes)
         {
             ParsedRegexCache cache = null;
@@ -221,25 +221,32 @@ namespace Microsoft.RE2.Managed
                 // Get or Cache the Regex on the native side and retrieve an index to it
                 int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None, maxMemoryInBytes);
 
+                // Cache the indexMap and the buffer for a given String8. If the text is the same,
+                // load the buffer and the indexMap to avoid expensive recomputation.
+                // The old way of caching the String8 was failing tests because some files were scanned for
+                // base64 secrets after the initial scan, but the buffer wasn't being updated in that case.
+                // Now everything is grouped and loaded together to reduce unneccessary work while scanning accurately.
                 String8 expression8 = String8.Empty;
                 byte[] buffer = null;
                 int[] indexMap = null;
+                bool saveToDictionary = false;
+                bool updateIndexMap = false;
 
-                foreach (KeyValuePair<String8, Tuple<byte[], int[]>> entry in textToIdMap)
+                foreach (KeyValuePair<string, Tuple<String8, byte[], int[]>> entry in textToIdMap)
                 {
-                    if (entry.Key.Length == text.Length && entry.Key.Equals(text))
+                    if (entry.Key.Length == text.Length && entry.Key == text)
                     {
-                        expression8 = entry.Key;
-                        buffer = entry.Value.Item1;
-                        indexMap = entry.Value.Item2;
+                        expression8 = entry.Value.Item1;
+                        buffer = entry.Value.Item2;
+                        indexMap = entry.Value.Item3;
                         break;
                     }
                 }
 
                 if (expression8.IsEmpty)
                 {
+                    saveToDictionary = true;
                     expression8 = String8.Convert(text, ref buffer);
-                    textToIdMap.Add(expression8, new Tuple<byte[], int[]>(buffer, indexMap));
                 }
 
                 fixed (byte* textUtf8BytesPtr = expression8.Array)
@@ -297,7 +304,16 @@ namespace Microsoft.RE2.Managed
                             }
                             else
                             {
-                                indexMap ??= GetMapOfUtf8ToUtf16ByteIndices(buffer);
+                                // GetMapOfUtf8ToUtf16ByteIndices is an expensive call and now is only called
+                                // when absolutely neccessary.
+                                // Was previously called everytime, regardless of if there was a match or not.
+
+                                if (indexMap == null)
+                                {
+                                    indexMap ??= GetMapOfUtf8ToUtf16ByteIndices(buffer);
+                                    updateIndexMap = true;
+                                }
+
                                 // This is a regular match.
                                 submatchString = Encoding.UTF8.GetString(buffer, submatchUtf8BytesStartIndex, submatchUtf8BytesLength);
                                 submatchUtf16BytesStartIndex = indexMap[submatchUtf8BytesStartIndex];
@@ -327,6 +343,15 @@ namespace Microsoft.RE2.Managed
 
                     // Free C++ resources.
                     NativeMethods.MatchesCaptureGroupsDispose(output);
+                }
+
+                if (saveToDictionary)
+                {
+                    textToIdMap.Add(text, new Tuple<String8, byte[], int[]>(expression8, buffer, indexMap));
+                }
+                else if (updateIndexMap)
+                {
+                    textToIdMap[text] = new Tuple<String8, byte[], int[]>(expression8, buffer, indexMap);
                 }
 
                 return matches.Count > 0;

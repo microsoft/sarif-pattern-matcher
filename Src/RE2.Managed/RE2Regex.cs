@@ -49,14 +49,14 @@ namespace Microsoft.RE2.Managed
 
         public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = -1)
         {
-            var textToIdMap = new Dictionary<String8, Tuple<byte[], int[]>>();
+            var textToIdMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
             return Regex2.Matches(pattern, text, out matches, ref textToIdMap, maxMemoryInBytes);
         }
 
         public bool Matches(string pattern,
                             string text,
                             out List<Dictionary<string, FlexMatch>> matches,
-                            ref Dictionary<String8, Tuple<byte[], int[]>> textToIdMap,
+                            ref Dictionary<string, Tuple<String8, byte[], int[]>> textToIdMap,
                             long maxMemoryInBytes = 256L * 1024L * 1024L)
         {
             return Regex2.Matches(pattern, text, out matches, ref textToIdMap, maxMemoryInBytes);
