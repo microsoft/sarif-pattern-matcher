@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.PushProtection.SecurePlaintextSecretsValidators;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
@@ -199,8 +198,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // An 'ExtensibleStaticValidatorBase' is a rule that extends DynamicValidatorBase
             // strictly so that other rules can use it as a base type and add dynamic
             // validation.
-            if (staticValidator is DynamicValidatorBase dynamicValidator
-                && !(staticValidator is ExtensibleStaticValidatorBase))
+            if (staticValidator is DynamicValidatorBase dynamicValidator &&
+                dynamicValidator.DynamicAnalysisImplemented)
             {
                 pluginCanPerformDynamicAnalysis = true;
 

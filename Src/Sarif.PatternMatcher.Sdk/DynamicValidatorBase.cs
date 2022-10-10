@@ -8,6 +8,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public abstract class DynamicValidatorBase : StaticValidatorBase
     {
+        public virtual bool DynamicAnalysisImplemented => true;
+
         public ValidationState IsValidDynamic(ref Fingerprint fingerprint,
                                               ref string message,
                                               IDictionary<string, string> options,
