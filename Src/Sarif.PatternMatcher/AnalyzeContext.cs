@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
@@ -20,6 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IsValidAnalysisTarget = true;
             ObservedFingerprintCache = new HashSet<string>();
             FileRegionsCache = new FileRegionsCache();
+            TextToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
         }
 
         public Exception TargetLoadException { get; set; }
@@ -79,6 +79,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public OptionallyEmittedData DataToInsert { get; set; }
 
+        /// <summary>
+        /// Gets or sets a dictionary linking file text with
+        /// A String8 that is used to in RE2 searching
+        /// An array of bytes that comprise a buffer used in String8 conversion
+        /// An array of integers that comprise a map of UTF8 to UTF16 byte
+        /// indices. This data is required to rationalize match segments
+        /// when analyzing .NET strings in RE2 (which processes UTF8).
+        /// </summary>
+        public Dictionary<string, Tuple<String8, byte[], int[]>> TextToRE2DataMap;
+
+
         public void Dispose()
         {
             FileRegionsCache?.ClearCache();
@@ -86,6 +97,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             ObservedFingerprintCache?.Clear();
             ObservedFingerprintCache = null;
+
+            TextToRE2DataMap?.Clear();
+            TextToRE2DataMap = null;
         }
     }
 }
