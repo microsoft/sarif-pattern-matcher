@@ -130,6 +130,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
 
         // Expected Outputs
         public string ExpectedMessage { get; set; }
+        public Fingerprint ExpectedFingerprint { get; set; }
         public ValidationState ExpectedValidationState { get; set; }
     }
 }
