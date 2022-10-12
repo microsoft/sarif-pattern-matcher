@@ -191,7 +191,20 @@ namespace Microsoft.RE2.Managed
             }
         }
 
-        public static unsafe bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes)
+        public static unsafe bool Matches(string pattern,
+                                          string text,
+                                          out List<Dictionary<string, FlexMatch>> matches,
+                                          long maxMemoryInBytes)
+        {
+            var textToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
+            return Matches(pattern, text, out matches, ref textToRE2DataMap, maxMemoryInBytes);
+        }
+
+        public static unsafe bool Matches(string pattern,
+                                          string text,
+                                          out List<Dictionary<string, FlexMatch>> matches,
+                                          ref Dictionary<string, Tuple<String8, byte[], int[]>> textToRE2DataMap,
+                                          long maxMemoryInBytes)
         {
             ParsedRegexCache cache = null;
             try
@@ -207,9 +220,30 @@ namespace Microsoft.RE2.Managed
                 // Get or Cache the Regex on the native side and retrieve an index to it
                 int expressionIndex = BuildRegex(cache, pattern, RegexOptions.None, maxMemoryInBytes);
 
+                // Cache the expression8, indexMap and the buffer for a given file text. If the text is the same,
+                // load from cache to avoid expensive recomputation which was harming performance.
+                String8 expression8 = String8.Empty;
                 byte[] buffer = null;
-                var expression8 = String8.Convert(text, ref buffer);
-                int[] indexMap = GetMapOfUtf8ToUtf16ByteIndices(buffer);
+                int[] indexMap = null;
+                bool saveToDictionary = false;
+                bool updateIndexMap = false;
+
+                foreach (KeyValuePair<string, Tuple<String8, byte[], int[]>> entry in textToRE2DataMap)
+                {
+                    if (entry.Key.Length == text.Length && entry.Key == text)
+                    {
+                        expression8 = entry.Value.Item1;
+                        buffer = entry.Value.Item2;
+                        indexMap = entry.Value.Item3;
+                        break;
+                    }
+                }
+
+                if (expression8.IsEmpty)
+                {
+                    saveToDictionary = true;
+                    expression8 = String8.Convert(text, ref buffer);
+                }
 
                 fixed (byte* textUtf8BytesPtr = expression8.Array)
                 {
@@ -266,6 +300,16 @@ namespace Microsoft.RE2.Managed
                             }
                             else
                             {
+                                // GetMapOfUtf8ToUtf16ByteIndices is an expensive call and now is only called
+                                // when absolutely neccessary.
+                                // Was previously called everytime, regardless of if there was a match or not.
+
+                                if (indexMap == null)
+                                {
+                                    indexMap ??= GetMapOfUtf8ToUtf16ByteIndices(buffer);
+                                    updateIndexMap = true;
+                                }
+
                                 // This is a regular match.
                                 submatchString = Encoding.UTF8.GetString(buffer, submatchUtf8BytesStartIndex, submatchUtf8BytesLength);
                                 submatchUtf16BytesStartIndex = indexMap[submatchUtf8BytesStartIndex];
@@ -295,6 +339,15 @@ namespace Microsoft.RE2.Managed
 
                     // Free C++ resources.
                     NativeMethods.MatchesCaptureGroupsDispose(output);
+                }
+
+                if (saveToDictionary)
+                {
+                    textToRE2DataMap.Add(text, new Tuple<String8, byte[], int[]>(expression8, buffer, indexMap));
+                }
+                else if (updateIndexMap)
+                {
+                    textToRE2DataMap[text] = new Tuple<String8, byte[], int[]>(expression8, buffer, indexMap);
                 }
 
                 return matches.Count > 0;

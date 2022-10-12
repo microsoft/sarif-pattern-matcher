@@ -195,7 +195,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             IEnumerable<ValidationResult> validationResults = staticValidator.IsValidStatic(groups, context.ObservedFingerprintCache);
 
-            if (staticValidator is DynamicValidatorBase dynamicValidator)
+            // An 'ExtensibleStaticValidatorBase' is a rule that extends DynamicValidatorBase
+            // strictly so that other rules can use it as a base type and add dynamic
+            // validation.
+            if (staticValidator is DynamicValidatorBase dynamicValidator &&
+                dynamicValidator.DynamicAnalysisImplemented)
             {
                 pluginCanPerformDynamicAnalysis = true;
 
