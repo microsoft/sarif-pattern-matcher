@@ -71,7 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             string definitionsFileContents = File.ReadAllText(definitionsFilePath);
             SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(definitionsFileContents);
-            
+
             // Load shared strings from file in JSON
             string sharedStringsFileName = sdObject.SharedStringsFileName;
             var definitionsFilePathInfo = new DirectoryInfo(definitionsFilePath);
@@ -114,10 +114,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string validatorsFolderName = "SecurePlaintextSecretsValidators";
             string securityDivision = "SEC101";
             var jsonFiles = Directory.GetFiles(definitionsFileDirectory, "*.json").Where(file => file.Contains(securityDivision)).ToList();
-            
+
             var ruleNameToIdMap = new Dictionary<string, string>();
             var invalidFilenames = new List<string>();
-            
+
             foreach (string jsonFile in jsonFiles)
             {
                 //Read the json file content to get the rule names
