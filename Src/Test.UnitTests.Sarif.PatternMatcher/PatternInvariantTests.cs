@@ -69,8 +69,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public static void VerifyAllJsonRulesExist(string definitionsFilePath)
         {
+
             string definitionsFileContents = File.ReadAllText(definitionsFilePath);
             SearchDefinitions sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(definitionsFileContents);
+
+            // Grab securityRuleId from JsonFile
+            string securityRuleId = sdObject.Definitions[0].Id;
 
             // Load shared strings from file in JSON
             string sharedStringsFileName = sdObject.SharedStringsFileName;
@@ -85,7 +89,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             while ((line = reader.ReadLine()) != null)
             {
                 line = line.Trim();
-                if (!line.StartsWith('$'))
+                if (!line.StartsWith('$') || !line.Contains(securityRuleId))
                 {
                     continue;
                 }
@@ -108,12 +112,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// <summary>
         /// This function ensures that for each SEC101_... filename, there is a corresponding rule name and ID match in the JSON.
         /// </summary>
-        public static void VerifyAllRuleFilenamesMatchDefinitions(string definitionsFileDirectory)
+        public static void VerifyAllRuleFilenamesMatchDefinitions(string definitionsFileDirectory, string securityRuleId)
         {
             // Get all json files from the folder passed with correct security division
             string validatorsFolderName = "SecurePlaintextSecretsValidators";
-            string securityDivision = "SEC101";
-            var jsonFiles = Directory.GetFiles(definitionsFileDirectory, "*.json").Where(file => file.Contains(securityDivision)).ToList();
+            var jsonFiles = Directory.GetFiles(definitionsFileDirectory, "*.json").Where(file => file.Contains(securityRuleId)).ToList();
 
             var ruleNameToIdMap = new Dictionary<string, string>();
             var invalidFilenames = new List<string>();
@@ -161,7 +164,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 $"{Environment.NewLine}  Test directory: {testsDirectory}");
 
             // Some useful tools for searching/reading the filenames.
-            var rg = new Regex(@"SEC101_[0-9]{3}");
+            var rg = new Regex($@"{securityRuleId}_[0-9]{{3}}");
             var sb = new StringBuilder();
             int rulePrefixLength = "SEC101_XXX.".Length;
             string fileEnding = "Validator.cs";
@@ -360,10 +363,41 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Assert.True((validatorsWithoutTests.Count == 0 && testsWithoutValidators.Count == 0), outputmsg.ToString());
         }
 
+        public static void VerifyAllRuleNamesAndVariablesHavePreferredNames(string definitionsFileDirectory, 
+                                                                    string secureSecretsRuleId,
+                                                                    Assembly validatorsAssembly,
+                                                                    Assembly testsAssembly)
+        {
+            var validators = validatorsAssembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
+            var tests = testsAssembly.GetTypes().Where(x => x.Name.EndsWith("ValidatorTests")).Select(x => x.Name).ToHashSet();
+
+            var verboseToPreferredTupleList = new List<Tuple<string, string>>()
+            {
+                new Tuple<string, string>("PersonalAccessToken", "Pat"),
+                new Tuple<string, string>("AzureDevOps", "Ado")
+            };
+
+            GetAllRuleNamesAndRegexesFromSearchDefinitionFiles(definitionsFileDirectory, secureSecretsRuleId, out HashSet<string> ruleNames, out HashSet<string> ruleRegexes);
+
+            var collectionsToVerboseScanList = new List<HashSet<string>>() { ruleNames, ruleRegexes, validators, tests };
+
+            var sb = new StringBuilder();
+            foreach (Tuple<string, string> verboseToPreferredTuple in verboseToPreferredTupleList)
+            {
+                foreach (HashSet<string> collection in collectionsToVerboseScanList)
+                {
+                    CheckForVerboseTerms(verboseToPreferredTuple,
+                                         collection,
+                                         ref sb);
+                }
+            }
+
+            Assert.True(sb.Length == 0, sb.ToString());
+        }
         /// <summary>
         /// This function returns a HashSet containing all the different types of regex from a SearchDefinitions object.
         /// </summary>
-        public static HashSet<string> GetRegexSetFromSearchDefinitions(SearchDefinitions sdObject)
+        private static HashSet<string> GetRegexSetFromSearchDefinitions(SearchDefinitions sdObject)
         {
             var regexSet = new HashSet<string>();
             foreach (SearchDefinition searchDefinition in sdObject.Definitions)
@@ -417,5 +451,48 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
             return regexSet;
         }
+
+        private static void GetAllRuleNamesAndRegexesFromSearchDefinitionFiles(string definitionsFileDirectory,
+                                                                              string secureSecretsRuleId,
+                                                                              out HashSet<string> ruleNames,
+                                                                              out HashSet<string> ruleRegexes)
+        {
+            // Load up all ruleNames from all relevant json files in definitionsFileDirectory
+            var jsonFilesList = Directory.GetFiles(definitionsFileDirectory, "*.json").Where(file => file.Contains(secureSecretsRuleId)).ToList();
+
+            string content;
+            SearchDefinitions sdObject;
+
+            ruleNames = new HashSet<string>();
+            ruleRegexes = new HashSet<string>();
+
+            foreach (string jsonFile in jsonFilesList)
+            {
+                //Read the json file content to get the rule names and regexes
+                content = File.ReadAllText(jsonFile);
+                sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
+
+                ruleRegexes.UnionWith(GetRegexSetFromSearchDefinitions(sdObject));
+
+                foreach (SearchDefinition searchDefinition in sdObject.Definitions)
+                {
+                    foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
+                    {
+                        ruleNames.Add(matchExpression.Name);
+                    }
+                }
+            }
+        }
+        private static void CheckForVerboseTerms(Tuple<string, string> verboseToPreferredTuple, HashSet<string> listOfVerboseStrings, ref StringBuilder sb)
+        {
+            foreach (string verboseString in listOfVerboseStrings)
+            {
+                if (verboseString.Contains(verboseToPreferredTuple.Item1, StringComparison.OrdinalIgnoreCase))
+                {
+                    sb.AppendLine($"'{verboseString}' contains term '{verboseToPreferredTuple.Item1}' where '{verboseToPreferredTuple.Item2}' is preferred.");
+                }
+            }
+        }
+
     }
 }
