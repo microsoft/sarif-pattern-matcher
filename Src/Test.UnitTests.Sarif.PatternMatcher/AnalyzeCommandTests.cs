@@ -13,6 +13,7 @@ using CommandLine;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.Writers;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 
@@ -447,7 +448,57 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private static void AnalyzeCommand(IRegex engine)
+        [Fact]
+        public void AnalyzeCommand_SarifLogger_RegionSnippetValidation()
+        {
+            SarifLog sarifLog;
+
+            using (var ms = new MemoryStream())
+            {
+                using (var writer = new StreamWriter(ms, Encoding.UTF8, 1024, leaveOpen: true))
+                {
+                    var logger = new SarifLogger(
+                        writer,
+                        LogFilePersistenceOptions.None,
+                        dataToInsert: OptionallyEmittedData.RegionSnippets | OptionallyEmittedData.ContextRegionSnippets | OptionallyEmittedData.ComprehensiveRegionProperties,
+                        dataToRemove: OptionallyEmittedData.None,
+                        levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
+                        kinds: new List<ResultKind> { ResultKind.Fail },
+                        closeWriterOnDispose: false);
+
+                    var disabledSkimmers = new HashSet<string>();
+
+                    var context = new AnalyzeContext
+                    {
+                        TargetUri = new Uri($"/notreeindex/{Guid.NewGuid()}.test", UriKind.Relative),
+                        FileContents = "foo",
+                        Logger = logger,
+                    };
+
+                    ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmers(RE2Regex.Instance);
+                    IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
+
+                    logger.AnalysisStarted();
+                    using (context)
+                    {
+                        PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
+                    }
+                    logger.AnalysisStopped(RuntimeConditions.None);
+                    logger.Dispose();
+                    writer.Flush();
+                }
+                ms.Position = 0;
+                sarifLog = SarifLog.Load(ms);
+            }
+
+            sarifLog.Runs[0].Results.Should().HaveCount(1);
+            Result result = sarifLog.Runs[0].Results[0];
+            PhysicalLocation physicalLocation = result.Locations[0].PhysicalLocation;
+            physicalLocation.Region.Should().NotBeNull();
+            physicalLocation.ContextRegion.Should().NotBeNull();
+        }
+
+        private static ISet<Skimmer<AnalyzeContext>> CreateSkimmers(IRegex engine)
         {
             var definitions = new SearchDefinitions()
             {
@@ -481,22 +532,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             };
 
             string definitionsText = JsonConvert.SerializeObject(definitions);
-
             string searchDefinitionsPath = Path.GetFullPath(Guid.NewGuid().ToString());
-
-            var disabledSkimmers = new HashSet<string>();
-            var testLogger = new TestLogger();
 
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
             // Acquire skimmers for searchers
-            ISet<Skimmer<AnalyzeContext>> skimmers =
-                PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
+            return PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
                     mockFileSystem.Object,
                     new string[] { searchDefinitionsPath },
                     engine);
+        }
+
+        private static void AnalyzeCommand(IRegex engine)
+        {
+            var testLogger = new TestLogger();
+            var disabledSkimmers = new HashSet<string>();
+            ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmers(engine);
 
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
@@ -525,40 +578,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private static void AnalyzeFileCommand(IRegex engine)
         {
-            var definitions = new SearchDefinitions()
-            {
-                Definitions = new List<SearchDefinition>(new[]
-                {
-                    new SearchDefinition()
-                    {
-                        Name = "MinimalRule", Id = "Test1002",
-                        Level = FailureLevel.Error, FileNameAllowRegex = "(?i)\\.test$",
-                        Message = "A problem occurred in '{0:scanTarget}'.",
-                        MatchExpressions = new List<MatchExpression>(new[]
-                        {
-                            new MatchExpression()
-                        })
-                    }
-                })
-            };
-
-            string definitionsText = JsonConvert.SerializeObject(definitions);
-
-            string searchDefinitionsPath = Path.GetFullPath(Guid.NewGuid().ToString());
-
             var disabledSkimmers = new HashSet<string>();
             var testLogger = new TestLogger();
 
-            var mockFileSystem = new Mock<IFileSystem>();
-            mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
-            mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
-
-            // Acquire skimmers for searchers
-            ISet<Skimmer<AnalyzeContext>> skimmers =
-                PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
-                    mockFileSystem.Object,
-                    new string[] { searchDefinitionsPath },
-                    engine);
+            ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmers(engine);
 
             string scanTargetFileName = Path.Combine(Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
@@ -576,7 +599,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
 
             testLogger.Results.Should().NotBeNull();
-            testLogger.Results.Count.Should().Be(1);
+            testLogger.Results.Count.Should().Be(2);
 
             foreach (Result result in testLogger.Results)
             {
