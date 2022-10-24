@@ -473,6 +473,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         TargetUri = new Uri($"/notreeindex/{Guid.NewGuid()}.test", UriKind.Relative),
                         FileContents = "foo",
                         Logger = logger,
+                        FileRegionsCache = FileRegionsCache.Instance,
                     };
 
                     ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmers(RE2Regex.Instance);
