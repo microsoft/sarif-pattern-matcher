@@ -60,7 +60,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     HttpContents = new List<HttpContent>() { null },
                     ExpectedValidationState = ValidationState.Unknown,
                     HttpRequestMessages = new List<HttpRequestMessage>() { requestWithPat },
-                    ExpectedMessage = "An unexpected HTTP response code was received: 'NotFound'."
+                    ExpectedMessage = "An unexpected HTTP response code was received: 'NotFound'"
                 },
             };
 
