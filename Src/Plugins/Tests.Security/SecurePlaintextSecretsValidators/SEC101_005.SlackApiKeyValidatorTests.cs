@@ -141,7 +141,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     HttpRequestMessages = new List<HttpRequestMessage>() { requestWithToken },
                     HttpContents = new List<HttpContent>() { null },
                     ExpectedValidationState = ValidationState.Unknown,
-                    ExpectedMessage = "An unexpected HTTP response code was received: 'InternalServerError'.",
+                    ExpectedMessage = "An unexpected HTTP response code was received: 'InternalServerError'",
                 },
             };
 

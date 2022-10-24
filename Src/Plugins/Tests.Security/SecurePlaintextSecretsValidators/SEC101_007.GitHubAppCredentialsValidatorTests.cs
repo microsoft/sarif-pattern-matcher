@@ -63,7 +63,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                         Encoding.UTF8,
                         "application/json").As<HttpContent>(),
                     ExpectedValidationState = ValidationState.Unknown,
-                    ExpectedMessage = "An unexpected HTTP response code was received from 'Iv1.01234567testtest': 'OK'."
+                    ExpectedMessage = "An unexpected HTTP response code was received from 'Iv1.01234567testtest': 'OK'"
                 },
                 new
                 {
@@ -71,7 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     HttpStatusCode = HttpStatusCode.BadRequest,
                     HttpContent = (HttpContent)null,
                     ExpectedValidationState = ValidationState.Unknown,
-                    ExpectedMessage = "An unexpected HTTP response code was received from 'Iv1.01234567testtest': 'BadRequest'."
+                    ExpectedMessage = "An unexpected HTTP response code was received from 'Iv1.01234567testtest': 'BadRequest'"
                 },
             };
 

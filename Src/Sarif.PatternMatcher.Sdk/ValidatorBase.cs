@@ -139,15 +139,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             if (string.IsNullOrEmpty(asset))
             {
-                message = $"An unexpected HTTP response code was received: '{status}'.";
+                message = $"An unexpected HTTP response code was received: '{status}'";
             }
             else if (string.IsNullOrEmpty(account))
             {
-                message = $"An unexpected HTTP response code was received from '{asset}': '{status}'.";
+                message = $"An unexpected HTTP response code was received from '{asset}': '{status}'";
             }
             else
             {
-                message = $"An unexpected HTTP response code was received from '{account}' account on '{asset}': {status}.";
+                message = $"An unexpected HTTP response code was received from '{account}' account on '{asset}': {status}";
             }
 
             return ValidationState.Unknown;
@@ -187,7 +187,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public static ValidationState ReturnUnknownHost(ref string message, string host)
         {
-            message = $"'{host}' is unknown.";
+            message = $"'{host}' is unknown";
             return ValidationState.UnknownHost;
         }
 
@@ -199,7 +199,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             assetIdentifier += assetIdentifier != null ? " " : string.Empty;
             message = (account == null) ?
                 $"The provided secret is not authorized to access {assetIdentifier}'{asset}'." :
-                $"The provided '{account}' account secret is not authorized to access {assetIdentifier}'{asset}'.";
+                $"The provided '{account}' account secret is not authorized to access {assetIdentifier}'{asset}'";
 
             return ValidationState.Unauthorized;
         }
@@ -210,7 +210,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             message = (account == null) ?
                 $"The compromised asset is '{asset}'." :
-                $"The '{account}' account is compromised for '{asset}'.";
+                $"The '{account}' account is compromised for '{asset}'";
 
             return ValidationState.Authorized;
         }
@@ -221,7 +221,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         {
             message = (account == null) ?
                 $"The potentially compromised asset is '{asset}'." :
-                $"The '{account}' account is potentially compromised for '{asset}'.";
+                $"The '{account}' account is potentially compromised for '{asset}'";
 
             return ValidationState.Unknown;
         }
