@@ -14,7 +14,7 @@
           "rules": [
             {
               "id": "SEC101/006",
-              "name": "DoNotExposePlaintextSecrets/GitHubPat",
+              "name": "DoNotExposePlaintextSecrets/GitHubLegacyPat",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
