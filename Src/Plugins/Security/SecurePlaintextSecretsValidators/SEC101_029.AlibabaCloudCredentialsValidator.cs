@@ -1,15 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
-
-using Aliyun.Acs.Core;
-using Aliyun.Acs.Core.Exceptions;
-using Aliyun.Acs.Core.Profile;
-
-using Aliyun.Acs.Iot.Model.V20170420;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
