@@ -722,25 +722,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 CharLength = regionFlexMatch.Length,
             };
 
-            if (context.FileRegionsCache != null)
-            {
-                region = context.FileRegionsCache.PopulateTextRegionProperties(region,
-                                                                               context.TargetUri,
-                                                                               populateSnippet: true,
-                                                                               fileText: context.FileContents);
-            }
-            else
-            {
-                lock (FileRegionsCache.Instance)
-                {
-                    region = FileRegionsCache.Instance.PopulateTextRegionProperties(region,
-                                                                                    context.TargetUri,
-                                                                                    populateSnippet: true,
-                                                                                    fileText: context.FileContents);
-                }
-            }
+            region = PopulateTextRegionProperties(context, region);
 
             return region;
+        }
+
+        private static Region PopulateTextRegionProperties(AnalyzeContext context, Region region)
+        {
+            if (context.FileRegionsCache != null)
+            {
+                return context.FileRegionsCache.PopulateTextRegionProperties(region,
+                                                                             context.TargetUri,
+                                                                             populateSnippet: true,
+                                                                             fileText: context.FileContents);
+            }
+
+            lock (FileRegionsCache.Instance)
+            {
+                return FileRegionsCache.Instance.PopulateTextRegionProperties(region,
+                                                                                context.TargetUri,
+                                                                                populateSnippet: true,
+                                                                                fileText: context.FileContents);
+            }
         }
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
@@ -1169,8 +1172,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                             arguments);
 
             if ((context.DataToInsert & OptionallyEmittedData.ContextRegionSnippets) == OptionallyEmittedData.ContextRegionSnippets)
-            {
-                Region contextRegion = context.FileRegionsCache.ConstructMultilineContextSnippet(region, context.TargetUri);
+            {               
+                Region contextRegion = ConstructMultilineContextSnippet(context, region);
                 result.Locations[0].PhysicalLocation.ContextRegion = contextRegion;
             }
 
@@ -1179,6 +1182,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // expression. We will therefore generate a snapshot of
             // current ReportingDescriptor state when logging.
             context.Logger.Log(reportingDescriptor, result);
+        }
+
+        private static Region ConstructMultilineContextSnippet(AnalyzeContext context, Region region)
+        {
+            if (context.FileRegionsCache != null)
+            {
+                return context.FileRegionsCache.ConstructMultilineContextSnippet(region, context.TargetUri);
+            }
+
+            lock (FileRegionsCache.Instance)
+            {
+                return FileRegionsCache.Instance.ConstructMultilineContextSnippet(region, context.TargetUri);
+            }
         }
 
         private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression)
