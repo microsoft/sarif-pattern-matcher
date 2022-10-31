@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 using FluentAssertions;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 
@@ -70,10 +72,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         [Fact]
         public async Task Function_HttpAnalyze_WithoutFileContent_Should_Return_BadRequest()
         {
-            IActionResult result = await HttpAnalyzeFunction.Analyze(
-                request: TestHelper.HttpRequestSetup(new Dictionary<string, StringValues> { { FunctionConstants.FileNamePropertyName, "ExtensionMethods.cs" } }),
-                log: logger,
-                context: TestHelper.ContextSetup());
+            ExecutionContext context = TestHelper.ContextSetup();
+            HttpRequest request = TestHelper.HttpRequestSetup(new Dictionary<string, StringValues> { { FunctionConstants.FileNamePropertyName, "ExtensionMethods.cs" } });
+            IActionResult result = await HttpAnalyzeFunction.Analyze(request, logger, context);
 
             var resultObject = (BadRequestResult)result;
             resultObject.Should().NotBeNull();
@@ -83,10 +84,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         [Fact]
         public async Task Function_HttpAnalyze_WithEmptyFileName_Should_Return_OK()
         {
-            IActionResult result = await HttpAnalyzeFunction.Analyze(
-                request: TestHelper.MockAnalyzeFunctionRequest(string.Empty, TestHelper.SampleCode),
-                log: logger,
-                context: TestHelper.ContextSetup());
+            ExecutionContext context = TestHelper.ContextSetup();
+            HttpRequest request = TestHelper.MockAnalyzeFunctionRequest(string.Empty, TestHelper.SampleCode);
+            IActionResult result = await HttpAnalyzeFunction.Analyze(request, logger, context);
 
             var resultObject = (OkObjectResult)result;
             resultObject.Should().NotBeNull();
@@ -100,10 +100,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             string content = TestHelper.GetTestResourceContent(patTextFile);
             string[] lines = content.Split(Environment.NewLine);
 
-            IActionResult result = await HttpAnalyzeFunction.Analyze(
-                request: TestHelper.MockAnalyzeFunctionRequest(patTextFile, lines[0]),
-                log: logger,
-                context: TestHelper.ContextSetup());
+            ExecutionContext context = TestHelper.ContextSetup();
+            HttpRequest request = TestHelper.MockAnalyzeFunctionRequest(patTextFile, lines[0]);
+            IActionResult result = await HttpAnalyzeFunction.Analyze(request, logger, context);
+
             ValidateResult(lines[0], result, runCount: 1, resultCount: 1, FailureLevel.Note);
 
             result = await HttpAnalyzeFunction.Analyze(
