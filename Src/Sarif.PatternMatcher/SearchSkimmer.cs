@@ -1172,7 +1172,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                             arguments);
 
             if ((context.DataToInsert & OptionallyEmittedData.ContextRegionSnippets) == OptionallyEmittedData.ContextRegionSnippets)
-            {               
+            {
                 Region contextRegion = ConstructMultilineContextSnippet(context, region);
                 result.Locations[0].PhysicalLocation.ContextRegion = contextRegion;
             }
