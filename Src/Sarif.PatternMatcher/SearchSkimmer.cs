@@ -722,9 +722,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 CharLength = regionFlexMatch.Length,
             };
 
-            region = PopulateTextRegionProperties(context, region);
-
-            return region;
+            return PopulateTextRegionProperties(context, region);
         }
 
         private static Region PopulateTextRegionProperties(AnalyzeContext context, Region region)
@@ -740,9 +738,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             lock (FileRegionsCache.Instance)
             {
                 return FileRegionsCache.Instance.PopulateTextRegionProperties(region,
-                                                                                context.TargetUri,
-                                                                                populateSnippet: true,
-                                                                                fileText: context.FileContents);
+                                                                              context.TargetUri,
+                                                                              populateSnippet: true,
+                                                                              fileText: context.FileContents);
             }
         }
 

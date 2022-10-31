@@ -458,10 +458,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                          LogFilePersistenceOptions.None,
                                          dataToInsert: OptionallyEmittedData.RegionSnippets | OptionallyEmittedData.ContextRegionSnippets | OptionallyEmittedData.ComprehensiveRegionProperties,
                                          dataToRemove: OptionallyEmittedData.None,
-                                         closeWriterOnDispose: false,
-                        levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
-                        kinds: new List<ResultKind> { ResultKind.Fail }
-                                         );
+                                         closeWriterOnDispose: false);
 
             using var context = new AnalyzeContext
             {
@@ -481,6 +478,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             logger.Dispose();
             writer.Flush();
             ms.Position = 0;
+
+            FileRegionsCache.Instance._cache.Count.Should().Be(0, "global file regions cache should not be utilized.");
 
             var sarifLog = SarifLog.Load(ms);
 
