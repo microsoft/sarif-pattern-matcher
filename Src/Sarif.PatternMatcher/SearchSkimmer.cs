@@ -724,21 +724,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (context.FileRegionsCache != null)
             {
-                region = context.FileRegionsCache.PopulateTextRegionProperties(
-                            region,
-                            context.TargetUri,
-                            populateSnippet: true,
-                            fileText: context.FileContents);
+                region = context.FileRegionsCache.PopulateTextRegionProperties(region,
+                                                                               context.TargetUri,
+                                                                               populateSnippet: true,
+                                                                               fileText: context.FileContents);
             }
             else
             {
                 lock (FileRegionsCache.Instance)
                 {
-                    region = context.FileRegionsCache.PopulateTextRegionProperties(
-                                region,
-                                context.TargetUri,
-                                populateSnippet: true,
-                                fileText: context.FileContents);
+                    region = FileRegionsCache.Instance.PopulateTextRegionProperties(region,
+                                                                                    context.TargetUri,
+                                                                                    populateSnippet: true,
+                                                                                    fileText: context.FileContents);
                 }
             }
 

@@ -458,7 +458,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                          LogFilePersistenceOptions.None,
                                          dataToInsert: OptionallyEmittedData.RegionSnippets | OptionallyEmittedData.ContextRegionSnippets | OptionallyEmittedData.ComprehensiveRegionProperties,
                                          dataToRemove: OptionallyEmittedData.None,
-                                         closeWriterOnDispose: false);
+                                         closeWriterOnDispose: false,
+                        levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
+                        kinds: new List<ResultKind> { ResultKind.Fail }
+                                         );
 
             using var context = new AnalyzeContext
             {
