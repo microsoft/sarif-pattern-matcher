@@ -451,49 +451,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void AnalyzeCommand_SarifLogger_RegionSnippetValidation()
         {
-            SarifLog sarifLog;
+            using var ms = new MemoryStream();
+            using var writer = new StreamWriter(ms, Encoding.UTF8, 1024, leaveOpen: true);
 
-            using (var ms = new MemoryStream())
+            var logger = new SarifLogger(writer,
+                                         LogFilePersistenceOptions.None,
+                                         dataToInsert: OptionallyEmittedData.RegionSnippets | OptionallyEmittedData.ContextRegionSnippets | OptionallyEmittedData.ComprehensiveRegionProperties,
+                                         dataToRemove: OptionallyEmittedData.None,
+                                         closeWriterOnDispose: false);
+
+            using var context = new AnalyzeContext
             {
-                using (var writer = new StreamWriter(ms, Encoding.UTF8, 1024, leaveOpen: true))
-                {
-                    var logger = new SarifLogger(
-                        writer,
-                        LogFilePersistenceOptions.None,
-                        dataToInsert: OptionallyEmittedData.RegionSnippets | OptionallyEmittedData.ContextRegionSnippets | OptionallyEmittedData.ComprehensiveRegionProperties,
-                        dataToRemove: OptionallyEmittedData.None,
-                        levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
-                        kinds: new List<ResultKind> { ResultKind.Fail },
-                        closeWriterOnDispose: false);
+                TargetUri = new Uri($"/notreeindex/{Guid.NewGuid()}.test", UriKind.Relative),
+                FileContents = "foo",
+                Logger = logger,
+            };
 
-                    var disabledSkimmers = new HashSet<string>();
+            var disabledSkimmers = new HashSet<string>();
+            ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmers(RE2Regex.Instance);
+            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
 
-                    var context = new AnalyzeContext
-                    {
-                        TargetUri = new Uri($"/notreeindex/{Guid.NewGuid()}.test", UriKind.Relative),
-                        FileContents = "foo",
-                        Logger = logger,
-                        FileRegionsCache = FileRegionsCache.Instance,
-                    };
+            logger.AnalysisStarted();
+            PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
+            logger.AnalysisStopped(RuntimeConditions.None);
 
-                    ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmers(RE2Regex.Instance);
-                    IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
+            logger.Dispose();
+            writer.Flush();
+            ms.Position = 0;
 
-                    logger.AnalysisStarted();
-                    using (context)
-                    {
-                        PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
-                    }
-                    logger.AnalysisStopped(RuntimeConditions.None);
-                    logger.Dispose();
-                    writer.Flush();
-                }
-                ms.Position = 0;
-                sarifLog = SarifLog.Load(ms);
-            }
+            var sarifLog = SarifLog.Load(ms);
 
             sarifLog.Runs[0].Results.Should().HaveCount(1);
             Result result = sarifLog.Runs[0].Results[0];
+
             PhysicalLocation physicalLocation = result.Locations[0].PhysicalLocation;
             physicalLocation.Region.Should().NotBeNull();
             physicalLocation.ContextRegion.Should().NotBeNull();

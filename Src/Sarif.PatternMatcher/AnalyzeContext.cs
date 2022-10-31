@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // search definition is governed by its name/extension.
             IsValidAnalysisTarget = true;
             ObservedFingerprintCache = new HashSet<string>();
-            FileRegionsCache = new FileRegionsCache();
+            FileRegionsCache = null;
             TextToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
         }
 

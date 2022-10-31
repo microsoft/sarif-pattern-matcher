@@ -722,11 +722,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 CharLength = regionFlexMatch.Length,
             };
 
-            region = context.FileRegionsCache.PopulateTextRegionProperties(
-                        region,
-                        context.TargetUri,
-                        populateSnippet: true,
-                        fileText: context.FileContents);
+            if (context.FileRegionsCache != null)
+            {
+                region = context.FileRegionsCache.PopulateTextRegionProperties(
+                            region,
+                            context.TargetUri,
+                            populateSnippet: true,
+                            fileText: context.FileContents);
+            }
+            else
+            {
+                lock (FileRegionsCache.Instance)
+                {
+                    region = context.FileRegionsCache.PopulateTextRegionProperties(
+                                region,
+                                context.TargetUri,
+                                populateSnippet: true,
+                                fileText: context.FileContents);
+                }
+            }
 
             return region;
         }
