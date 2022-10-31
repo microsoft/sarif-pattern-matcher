@@ -66,7 +66,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Testing Unknown Status code",
                     HttpStatusCode = HttpStatusCode.NotFound,
                     ExpectedValidationState = ValidationState.Unknown,
-                    ExpectedMessage = "An unexpected HTTP response code was received: 'NotFound'.",
+                    ExpectedMessage = "An unexpected HTTP response code was received: 'NotFound'",
                     HttpContent = (HttpContent)null,
                 },
             };

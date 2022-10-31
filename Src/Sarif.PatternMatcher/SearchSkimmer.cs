@@ -12,7 +12,6 @@ using System.Text.RegularExpressions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
-using Microsoft.CodeAnalysis.Sarif.Visitors;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 

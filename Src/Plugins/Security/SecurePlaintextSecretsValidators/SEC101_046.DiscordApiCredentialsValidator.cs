@@ -11,8 +11,6 @@ using System.Text;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
-using Newtonsoft.Json;
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class DiscordApiCredentialsValidator : DynamicValidatorBase
