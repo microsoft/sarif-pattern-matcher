@@ -307,8 +307,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     DefaultTraces.None;
 
             context.Retry = options.Retry;
+            context.RedactSecrets = options.RedactSecrets;
             context.EnhancedReporting = options.EnhancedReporting;
             context.DynamicValidation = options.DynamicValidation;
+            context.DataToInsert = options.DataToInsert.ToFlags();
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;
             context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
             context.MaxFileSizeInKilobytes = options.MaxFileSizeInKilobytes;

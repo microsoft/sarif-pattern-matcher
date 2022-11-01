@@ -239,10 +239,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
 
                 // This runs the match expression against the entire, unencoded file.
-                RunMatchExpression(
-                    binary64DecodedMatch: null,
-                    context,
-                    matchExpression);
+                RunMatchExpression(binary64DecodedMatch: null,
+                                   context,
+                                   matchExpression);
             }
         }
 
@@ -483,29 +482,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                           validatorMessage: NormalizeValidatorMessage(validatorMessage),
                                                           messageArguments);
 
-            Result result = ConstructResult(context.TargetUri,
-                                                 reportingDescriptor.Id,
-                                                 level,
-                                                 kind,
-                                                 region: null,
-                                                 flexMatch: null,
-                                                 fingerprint,
-                                                 matchExpression,
-                                                 arguments);
+            Result result = ConstructResult(context,
+                                            reportingDescriptor.Id,
+                                            level,
+                                            kind,
+                                            region: null,
+                                            flexMatch: null,
+                                            fingerprint,
+                                            matchExpression,
+                                            arguments);
 
             context.Logger.Log(reportingDescriptor, result);
         }
 
-        private static Result ConstructResult(
-            Uri targetUri,
-            string ruleId,
-            FailureLevel level,
-            ResultKind kind,
-            Region region,
-            FlexMatch flexMatch,
-            Fingerprint fingerprint,
-            MatchExpression matchExpression,
-            IList<string> arguments)
+        private static Result ConstructResult(AnalyzeContext context,
+                                              string ruleId,
+                                              FailureLevel level,
+                                              ResultKind kind,
+                                              Region region,
+                                              FlexMatch flexMatch,
+                                              Fingerprint fingerprint,
+                                              MatchExpression matchExpression,
+                                              IList<string> arguments)
         {
             var location = new Location()
             {
@@ -513,13 +511,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     ArtifactLocation = new ArtifactLocation
                     {
-                        Uri = targetUri,
+                        Uri = context.TargetUri,
                     },
                     Region = region,
                 },
             };
 
-            Dictionary<string, string> fingerprints = BuildFingerprints(fingerprint, out double rank);
+            Dictionary<string, string> fingerprints = BuildFingerprints(context.RedactSecrets, fingerprint, out double rank);
 
             if (!string.IsNullOrEmpty(matchExpression.SubId))
             {
@@ -570,7 +568,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        private static Dictionary<string, string> BuildFingerprints(Fingerprint fingerprint, out double rank)
+        private static Dictionary<string, string> BuildFingerprints(bool redactSecrets, Fingerprint fingerprint, out double rank)
         {
             rank = -1;
 
@@ -581,14 +579,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             rank = fingerprint.GetRank();
 
-            return new Dictionary<string, string>()
+            // Add all fingerprints with no sensitive information by default.
+            var fingerprints = new Dictionary<string, string>()
             {
                 { SecretHashSha256Current, fingerprint.GetSecretHash() },
                 { AssetFingerprintCurrent, fingerprint.GetAssetFingerprint() },
-                { SecretFingerprintCurrent, fingerprint.GetSecretFingerprint() },
-                { ValidationFingerprintCurrent, fingerprint.GetValidationFingerprint() },
                 { ValidationFingerprintHashSha256Current, fingerprint.GetValidationFingerprintHash() },
             };
+
+            // Add fingerprints that expose sensitive data in plaintext
+            // only if they are conditionally requested.
+            if (!redactSecrets)
+            {
+                fingerprints[SecretFingerprintCurrent] = fingerprint.GetSecretFingerprint();
+                fingerprints[ValidationFingerprintCurrent] = fingerprint.GetValidationFingerprint();
+            }
+
+            return fingerprints;
         }
 
         private static FlexString Decode(string value)
@@ -714,7 +721,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return arguments;
         }
 
-        private Region ConstructRegion(AnalyzeContext context, FlexMatch regionFlexMatch)
+        private Region ConstructRegionForSecret(AnalyzeContext context, FlexMatch regionFlexMatch)
         {
             var region = new Region
             {
@@ -1079,6 +1086,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         Message = validatorMessage,
                         ResultLevelKind = new ResultLevelKind { Kind = kind, Level = level },
                     };
+
                     ConstructResultAndLogForContentsRegex(binary64DecodedMatch,
                                                           context,
                                                           matchExpression,
@@ -1138,8 +1146,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                         flexMatch ??
                                         validationResult.RegionFlexMatch;
 
-            Region region = ConstructRegion(context,
-                                            regionFlexMatch);
+            Region region = ConstructRegionForSecret(context, regionFlexMatch);
+
+            if (context.RedactSecrets)
+            {
+                RedactSecretFromSnippet(region, validationResult.Fingerprint.Secret);
+            }
 
             Dictionary<string, string> messageArguments = matchExpression.MessageArguments != null ?
                 new Dictionary<string, string>(matchExpression.MessageArguments) :
@@ -1159,7 +1171,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                           validatorMessage: NormalizeValidatorMessage(validationResult.Message),
                                                           messageArguments);
 
-            Result result = ConstructResult(context.TargetUri,
+            Result result = ConstructResult(context,
                                             reportingDescriptor.Id,
                                             validationResult.ResultLevelKind.Level,
                                             validationResult.ResultLevelKind.Kind,
@@ -1172,6 +1184,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if ((context.DataToInsert & OptionallyEmittedData.ContextRegionSnippets) == OptionallyEmittedData.ContextRegionSnippets)
             {
                 Region contextRegion = ConstructMultilineContextSnippet(context, region);
+
+                if (context.RedactSecrets)
+                {
+                    RedactSecretFromSnippet(contextRegion, validationResult.Fingerprint.Secret);
+                }
+
                 result.Locations[0].PhysicalLocation.ContextRegion = contextRegion;
             }
 
@@ -1180,6 +1198,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // expression. We will therefore generate a snapshot of
             // current ReportingDescriptor state when logging.
             context.Logger.Log(reportingDescriptor, result);
+        }
+
+        internal static void RedactSecretFromSnippet(Region region, string secret)
+        {
+            string anonymizedSecret = secret.Anonymize();
+            region.Snippet.Text = region.Snippet.Text.Replace(secret, anonymizedSecret);
         }
 
         private static Region ConstructMultilineContextSnippet(AnalyzeContext context, Region region)
