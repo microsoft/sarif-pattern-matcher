@@ -51,7 +51,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "EAAAEB…",
+              "…i81671",
               "an apparent ",
               "",
               "Square personal access token",
@@ -84,9 +84,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "931662a875dca101f008e07a65f87d0c381518aaab6ef14074bc312ee91a6580",
             "AssetFingerprint/current": "{\"platform\":\"Square\"}",
+            "ValidationFingerprintHashSha256/current": "863b377b99b0384e00828a99527c1c21e1f52d76e34b0ec8586bf749e422acc3",
             "SecretFingerprint/current": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671\"}",
-            "ValidationFingerprintHashSha256/current": "863b377b99b0384e00828a99527c1c21e1f52d76e34b0ec8586bf749e422acc3"
+            "ValidationFingerprint/current": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671\"}"
           },
           "rank": 74.86
         },
@@ -96,7 +96,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "EAAAEB…",
+              "…i81672",
               "an apparent ",
               "",
               "Square personal access token",
@@ -129,9 +129,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "ac0d8f24abc48da21f6bcb3fb5d4d751e1f056cf6a104a6c0ce6bff24323b17e",
             "AssetFingerprint/current": "{\"platform\":\"Square\"}",
+            "ValidationFingerprintHashSha256/current": "4d253f2b1ce91d2cf60838b5b92867263b312d816f70d4b5a748e0ca9950850b",
             "SecretFingerprint/current": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672\"}",
-            "ValidationFingerprintHashSha256/current": "4d253f2b1ce91d2cf60838b5b92867263b312d816f70d4b5a748e0ca9950850b"
+            "ValidationFingerprint/current": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672\"}"
           },
           "rank": 74.86
         },
@@ -141,7 +141,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "EAAAEB…",
+              "…i81673",
               "an apparent ",
               "",
               "Square personal access token",
@@ -174,9 +174,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "84f3a80bb3dd531a344b5b6fe7788e558e8116d09869a1f474ceeece42676b4b",
             "AssetFingerprint/current": "{\"platform\":\"Square\"}",
+            "ValidationFingerprintHashSha256/current": "1cd837839c38675c3f4b9eed987a68db8d8df979be4d570da7a226beb6e0d00c",
             "SecretFingerprint/current": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673\"}",
-            "ValidationFingerprintHashSha256/current": "1cd837839c38675c3f4b9eed987a68db8d8df979be4d570da7a226beb6e0d00c"
+            "ValidationFingerprint/current": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673\"}"
           },
           "rank": 74.86
         }

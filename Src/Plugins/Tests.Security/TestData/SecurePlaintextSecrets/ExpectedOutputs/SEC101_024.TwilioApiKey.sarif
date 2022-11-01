@@ -51,7 +51,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SK1111…",
+              "…678901",
               "an apparent ",
               "",
               "Twilio API Key",
@@ -84,9 +84,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "668cc519a5b691ebab08acad42e25a02029257112dfc81af907524662b76146f",
             "AssetFingerprint/current": "{\"platform\":\"Twilio\"}",
+            "ValidationFingerprintHashSha256/current": "4089baba3337080da9ea52d6a99f31959752c1b6c43b8decc9cabf76753872fd",
             "SecretFingerprint/current": "{\"secret\":\"SK11111111110123456789012345678901\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"SK11111111110123456789012345678901\"}",
-            "ValidationFingerprintHashSha256/current": "4089baba3337080da9ea52d6a99f31959752c1b6c43b8decc9cabf76753872fd"
+            "ValidationFingerprint/current": "{\"secret\":\"SK11111111110123456789012345678901\"}"
           },
           "rank": 43.75
         },
@@ -96,7 +96,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "SK2222…",
+              "…678901",
               "an apparent ",
               "",
               "Twilio API Key",
@@ -129,9 +129,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "a67283325f277a5597aa5f70e5568a176d9d085e5151ef4907259c39ad147d31",
             "AssetFingerprint/current": "{\"platform\":\"Twilio\"}",
+            "ValidationFingerprintHashSha256/current": "134a06770fee91ed61fa3b52a93f7c5309ebd6b0fdecea550ee3b90cd0f72bf5",
             "SecretFingerprint/current": "{\"secret\":\"SK22222222220123456789012345678901\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"SK22222222220123456789012345678901\"}",
-            "ValidationFingerprintHashSha256/current": "134a06770fee91ed61fa3b52a93f7c5309ebd6b0fdecea550ee3b90cd0f72bf5"
+            "ValidationFingerprint/current": "{\"secret\":\"SK22222222220123456789012345678901\"}"
           },
           "rank": 44.72
         }
