@@ -423,7 +423,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var sb = new StringBuilder();
             var writer = new StringWriter(sb);
 
-            var logger = new SarifLogger(writer,                                        
+            var logger = new SarifLogger(writer,
                                          LogFilePersistenceOptions.None,
                                          OptionallyEmittedData.All,
                                          closeWriterOnDispose: true);
@@ -455,7 +455,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             sarifLog.Runs[0].Results.Count.Should().Be(3);
 
             var fingerprint = new Fingerprint()
-            { 
+            {
                 Secret = secretText
             };
 
