@@ -13,6 +13,7 @@ using CommandLine;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
@@ -378,6 +379,115 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
+        public void AnalyzeCommand_RedactSensitiveData()
+        {
+            string secretText = nameof(secretText);
+
+            var definitions = new SearchDefinitions()
+            {
+                Definitions = new List<SearchDefinition>(new[]
+                {
+                    new SearchDefinition()
+                    {
+                        Name = "SecretDetector", Id = "Test1009",
+                        Level = FailureLevel.Error,
+                        FileNameAllowRegex = "(?i)\\.test$",
+                        Message = "Found sensitive data '{0:truncatedSecret}' in '{1:scanTarget}'.",
+                        MatchExpressions = new List<MatchExpression>(new[]
+                        {
+                            new MatchExpression()
+                            {
+                                ContentsRegex = $"(?P<secret>{secretText})bar",
+                            }
+                        })
+                    }
+                })
+            };
+
+            string definitionsText = JsonConvert.SerializeObject(definitions);
+            string searchDefinitionsPath = Path.GetFullPath(Guid.NewGuid().ToString());
+
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
+            mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
+
+            // Acquire skimmers for searchers.
+            ISet<Skimmer<AnalyzeContext>> skimmers =
+                PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(mockFileSystem.Object,
+                                                                                 new string[] { searchDefinitionsPath },
+                                                                                 RE2Regex.Instance);
+
+            string scanTargetFileName = $"C:\\{Guid.NewGuid()}.test";
+            FlexString fileContents = $"{secretText}bar1{Environment.NewLine} {secretText}bar2 {Environment.NewLine}3{secretText}bar";
+
+            var sb = new StringBuilder();
+            var writer = new StringWriter(sb);
+
+            var logger = new SarifLogger(writer,
+                                         LogFilePersistenceOptions.None,
+                                         OptionallyEmittedData.All,
+                                         closeWriterOnDispose: true);
+
+
+            using var context = new AnalyzeContext()
+            {
+                Logger = logger,
+                RedactSecrets = true,
+                FileContents = fileContents,
+                DataToInsert = OptionallyEmittedData.All,
+                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+            };
+
+            var disabledSkimmers = new HashSet<string>();
+
+            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
+            logger.AnalysisStarted();
+            PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
+            logger.AnalysisStopped(RuntimeConditions.None);
+            logger.Dispose();
+
+            // Test file contents:
+            // foobar1\r\n foobar2 \r\n3foobar
+            string sarifLogText = sb.ToString();
+            SarifLog sarifLog = JsonConvert.DeserializeObject<SarifLog>(sarifLogText);
+            sarifLog.Runs.Should().NotBeNullOrEmpty();
+            sarifLog.Runs[0].Results.Should().NotBeNullOrEmpty();
+            sarifLog.Runs[0].Results.Count.Should().Be(3);
+
+            var fingerprint = new Fingerprint()
+            {
+                Secret = secretText
+            };
+
+            var redactedFingerprint = new Fingerprint()
+            {
+                Secret = secretText.Anonymize()
+            };
+
+            foreach (Result result in sarifLog.Runs[0].Results)
+            {
+                IDictionary<string, string> fingerprints = result.Fingerprints;
+
+                // Make sure that redacted data hasn't snuck into the hash.
+                fingerprints[SearchSkimmer.SecretHashSha256Current]
+                    .Should().NotBe(redactedFingerprint.GetSecretHash());
+
+                fingerprints[SearchSkimmer.ValidationFingerprintHashSha256Current]
+                    .Should().NotBe(redactedFingerprint.GetValidationFingerprintHash());
+
+                // Make sure that our hashes are constructed from the UNREDACTED data.
+                fingerprints[SearchSkimmer.SecretHashSha256Current]
+                    .Should().Be(fingerprint.GetSecretHash());
+
+                fingerprints[SearchSkimmer.ValidationFingerprintHashSha256Current]
+                    .Should().Be(fingerprint.GetValidationFingerprintHash());
+            }
+
+
+            sarifLogText.IndexOf($"{secretText}").Should().Be(-1, $"there should be no plaintext occurrence of '{secretText}'");
+        }
+
+        [Fact]
         public void AnalyzeCommand_WithDeprecatedName()
         {
             const string messageId = "NewId";
@@ -407,7 +517,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             };
 
             string definitionsText = JsonConvert.SerializeObject(definitions);
-
             string searchDefinitionsPath = Path.GetFullPath(Guid.NewGuid().ToString());
 
             var disabledSkimmers = new HashSet<string>();
@@ -454,20 +563,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             using var ms = new MemoryStream();
             using var writer = new StreamWriter(ms, Encoding.UTF8, 1024, leaveOpen: true);
 
+            OptionallyEmittedData dataToInsert = OptionallyEmittedData.RegionSnippets | OptionallyEmittedData.ContextRegionSnippets | OptionallyEmittedData.ComprehensiveRegionProperties;
+
             var logger = new SarifLogger(writer,
                                          LogFilePersistenceOptions.None,
-                                         dataToInsert: OptionallyEmittedData.RegionSnippets | OptionallyEmittedData.ContextRegionSnippets | OptionallyEmittedData.ComprehensiveRegionProperties,
-                                         dataToRemove: OptionallyEmittedData.None,
-                                         closeWriterOnDispose: false,
-                        levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
-                        kinds: new List<ResultKind> { ResultKind.Fail }
-                                         );
+                                         dataToInsert,
+                                         closeWriterOnDispose: false);
 
             using var context = new AnalyzeContext
             {
                 TargetUri = new Uri($"/notreeindex/{Guid.NewGuid()}.test", UriKind.Relative),
                 FileContents = "foo",
                 Logger = logger,
+                DataToInsert = dataToInsert,
+                FileRegionsCache = new FileRegionsCache(),
             };
 
             var disabledSkimmers = new HashSet<string>();
@@ -475,6 +584,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
 
             logger.AnalysisStarted();
+            FileRegionsCache.Instance.ClearCache();
             PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
             logger.AnalysisStopped(RuntimeConditions.None);
 

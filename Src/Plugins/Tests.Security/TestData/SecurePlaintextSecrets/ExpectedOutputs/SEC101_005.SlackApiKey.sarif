@@ -54,7 +54,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "xoxb-8…",
+              "…fTjORe",
               "an apparent ",
               "",
               "Slack api key",
@@ -87,9 +87,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "c8ed2d82b21aeb7e4a34341fabdb45c23d23b5b2f104b9df43f2afbeba5622ff",
             "AssetFingerprint/current": "{\"platform\":\"Slack\"}",
+            "ValidationFingerprintHashSha256/current": "2da8823dda2b4951fcf1541ab17f450cda2d3e02e1d8b322d2502623882491d8",
             "SecretFingerprint/current": "{\"secret\":\"xoxb-83112120353-1016171244646-sGMxuWapBw3w3qdK6OfTjORe\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"xoxb-83112120353-1016171244646-sGMxuWapBw3w3qdK6OfTjORe\"}",
-            "ValidationFingerprintHashSha256/current": "2da8823dda2b4951fcf1541ab17f450cda2d3e02e1d8b322d2502623882491d8"
+            "ValidationFingerprint/current": "{\"secret\":\"xoxb-83112120353-1016171244646-sGMxuWapBw3w3qdK6OfTjORe\"}"
           },
           "rank": 65.89
         }

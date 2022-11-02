@@ -27,21 +27,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public bool DynamicValidation { get; internal set; }
 
         [Option(
-            'm',
-            "multiline",
-            HelpText = "Enable multiline regular expression search.")]
-        public bool Multiline { get; internal set; }
-
-        [Option(
             "deny-regex",
             HelpText = "A regular expression used to suppress scanning for any file or directory path that matches the regex.")]
         public string FileNameDenyRegex { get; internal set; }
-
-        [Option(
-            "file-size-in-kb",
-            HelpText = "The maximum file size (in kilobytes) that will be analyzed.",
-            Default = 1024)]
-        public int FileSizeInKilobytes { get; internal set; }
 
         [Option(
             "disable-dynamic-validation-caching",
@@ -63,5 +51,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             HelpText = "The maximum memory (in kilobytes) that can be used for RE2.",
             Default = -1)]
         public long MaxMemoryInKilobytes { get; internal set; }
+
+        [Option(
+            "redact-secrets",
+            HelpText = "Redact sensitive credential components from log files.")]
+        public bool RedactSecrets { get; internal set; }
     }
 }
