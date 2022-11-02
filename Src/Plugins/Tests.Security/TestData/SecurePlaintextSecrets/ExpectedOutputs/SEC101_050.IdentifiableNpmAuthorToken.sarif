@@ -51,7 +51,7 @@
           "message": {
             "id": "Default",
             "arguments": [
-              "npm_0d…",
+              "…399Wq7",
               "an apparent ",
               "",
               "Identifiable NPM Author Token",
@@ -84,9 +84,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "35a3c91aac24face8a1fae7aafb504b1f141ff5c92181687905b4f08ca0ed1ed",
             "AssetFingerprint/current": "{\"platform\":\"Npm\"}",
+            "ValidationFingerprintHashSha256/current": "114602da1f4a63fa289c8ae1e2fea58d536eb90ec5ffbf3a2dddbf2b2ef653d9",
             "SecretFingerprint/current": "{\"secret\":\"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\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"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\"}",
-            "ValidationFingerprintHashSha256/current": "114602da1f4a63fa289c8ae1e2fea58d536eb90ec5ffbf3a2dddbf2b2ef653d9"
+            "ValidationFingerprint/current": "{\"secret\":\"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\"}"
           },
           "rank": 61.07
         }
