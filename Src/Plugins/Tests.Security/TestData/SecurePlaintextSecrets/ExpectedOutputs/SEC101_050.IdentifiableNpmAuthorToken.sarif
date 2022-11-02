@@ -14,7 +14,7 @@
           "rules": [
             {
               "id": "SEC101/050",
-              "name": "DoNotExposePlaintextSecrets/IdentifiableNpmAuthorToken",
+              "name": "DoNotExposePlaintextSecrets/NpmAuthorIdentifiableToken",
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -39,7 +39,7 @@
       "artifacts": [
         {
           "location": {
-            "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.IdentifiableNpmAuthorToken.ps1",
+            "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.NpmAuthorIdentifiableToken.ps1",
             "uriBaseId": "SRC_ROOT"
           }
         }
@@ -63,7 +63,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.IdentifiableNpmAuthorToken.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.NpmAuthorIdentifiableToken.ps1",
                   "uriBaseId": "SRC_ROOT",
                   "index": 0
                 },

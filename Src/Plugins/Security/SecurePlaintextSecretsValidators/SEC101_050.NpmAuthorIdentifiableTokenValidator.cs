@@ -10,7 +10,7 @@ using Microsoft.Security.Utilities;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class IdentifiableNpmAuthorTokenValidator : DynamicValidatorBase
+    public class NpmAuthorIdentifiableTokenValidator : DynamicValidatorBase
     {
         private readonly CustomAlphabetEncoder encoder = new CustomAlphabetEncoder();
 

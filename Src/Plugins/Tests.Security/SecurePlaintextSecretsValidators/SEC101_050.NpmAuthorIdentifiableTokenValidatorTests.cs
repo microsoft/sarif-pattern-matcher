@@ -15,16 +15,16 @@ using Xunit;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
-    /// Testing SEC101/050.IdentifiableNpmAuthorTokenValidator
+    /// Testing SEC101/050.NpmAuthorIdentifiableTokenValidator
     /// </summary>
-    public class IdentifiableNpmAuthorTokenValidatorTests
+    public class NpmAuthorIdentifiableTokenValidatorTests
     {
         [Fact]
-        public void IdentifiableNpmAuthorTokenValidator_MockHttpTests()
+        public void NpmAuthorIdentifiableTokenValidator_MockHttpTests()
         {
             HttpMockTestCase[] testCases = NpmAuthorTokenTestCases.CreateTestCases(out Fingerprint fingerprint);
             var sb = new StringBuilder();
-            var identifiableNpmAuthorTokenValidator = new IdentifiableNpmAuthorTokenValidator();
+            var npmAuthorIdentifiableTokenValidator = new NpmAuthorIdentifiableTokenValidator();
             var mockHandler = new HttpMockHelper();
 
             foreach (HttpMockTestCase testCase in testCases)
@@ -39,8 +39,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var keyValuePairs = new Dictionary<string, string>();
 
                 using var httpClient = new HttpClient(mockHandler);
-                identifiableNpmAuthorTokenValidator.SetHttpClient(httpClient);
-                ValidationState currentState = identifiableNpmAuthorTokenValidator.IsValidDynamic(ref fingerprint,
+                npmAuthorIdentifiableTokenValidator.SetHttpClient(httpClient);
+                ValidationState currentState = npmAuthorIdentifiableTokenValidator.IsValidDynamic(ref fingerprint,
                                                                                                   ref message,
                                                                                                   keyValuePairs,
                                                                                                   ref resultLevelKind);
