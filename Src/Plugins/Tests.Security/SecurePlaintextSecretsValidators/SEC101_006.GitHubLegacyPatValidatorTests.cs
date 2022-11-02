@@ -13,7 +13,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
     /// <summary>
     /// Testing SEC101/006.GitHubLegacyPatValidator
     /// </summary
-    public class GitHubLegacyyPatValidatorTests
+    public class GitHubLegacyPatValidatorTests
     {
         [Fact]
         public void GitHubLegacyPatValidator_TestStatic()
