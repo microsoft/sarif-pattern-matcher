@@ -54,7 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         [Option(
             "redact-secrets",
-            HelpText = "Redact sensitive information from log files.")]
+            HelpText = "Redact sensitive credential components from log files.")]
         public bool RedactSecrets { get; internal set; }
     }
 }

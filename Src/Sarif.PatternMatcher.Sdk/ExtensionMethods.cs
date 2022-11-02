@@ -22,8 +22,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
             // "\u2026" == "…"
             return (charsElided ? "\u2026" : string.Empty) +
-                    truncatedText.Substring(truncatedText.Length - lengthExclusiveOfEllipsis) +
-                    (charsElided ? suffix : string.Empty);
+                   truncatedText.Substring(truncatedText.Length - lengthExclusiveOfEllipsis) +
+                   (charsElided ? suffix : string.Empty);
         }
 
         public static char RedactionChar => '?';

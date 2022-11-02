@@ -1,6 +1,9 @@
 # Release History
 
 ## Unreleased
+- BREAKING: Remove non-functional `multiline` argument from command-line. This argument should simply be removed from all command-lines.
+- BREAKING: Remove `file-size-in-kb` argument. Its use should be replaced by `max-file-size-in-kb`, a more descriptive name we pick up from the SARIF driver framework.
+
 - BREAKING: Fix bug resulting in static validators returning `FailureLevel.Note` despite configured `FailureLevel`. [#645](https://github.com/microsoft/sarif-pattern-matcher/pull/645)
 - Update `sarif-sdk` submodule to commit [7ddf923a4652a333f3356e9db4c5742b78a22c96](https://github.com/microsoft/sarif-sdk/commit/7ddf923a4652a333f3356e9db4c5742b78a22c96), which includes threading fixes in driver framework and fixes to ensure snipet population.
 - Update `spam` executable and dotnet library name to Sarif.PatternMatcher.Cli. 
