@@ -1,4 +1,4 @@
-# ************ Below caught in $SEC101/006.GitHubPat
+# ************ Below caught in $SEC101/006.GitHubLegacyPat
 
 # Xml style
 <GithubToken>
@@ -7,7 +7,7 @@
 
 # AppSettings style
 <appSettings>
-  <add key="GitHubPat" value="dead885a8624460a855540c6592698d2f1812843" />
+  <add key="GitHubLegacyPat" value="dead885a8624460a855540c6592698d2f1812843" />
 </appSettings>
 
 # Code style

@@ -2,7 +2,7 @@
 
 ## Security.dll (1)
 
-### SEC101.DoNotExposePlaintextSecrets (43)
+### SEC101.DoNotExposePlaintextSecrets (51)
 
 ID | Name | Validation
 ---| --- | ---
@@ -11,7 +11,7 @@ SEC101/002 | DoNotExposePlaintextSecrets/GoogleOAuthCredentials | -
 SEC101/003 | DoNotExposePlaintextSecrets/GoogleApiKey | Y
 SEC101/004 | DoNotExposePlaintextSecrets/FacebookAppCredentials | Y
 SEC101/005 | DoNotExposePlaintextSecrets/SlackToken | Y
-SEC101/006 | DoNotExposePlaintextSecrets/GitHubPat | Y
+SEC101/006 | DoNotExposePlaintextSecrets/GitHubLegacyPat | Y
 SEC101/007 | DoNotExposePlaintextSecrets/GitHubAppCredentials | Y
 SEC101/008 | DoNotExposePlaintextSecrets/AwsCredentials | Y
 SEC101/009 | DoNotExposePlaintextSecrets/LinkedInCredentials | -
@@ -34,18 +34,26 @@ SEC101/025 | DoNotExposePlaintextSecrets/SendGridApiKey | Y
 SEC101/026 | DoNotExposePlaintextSecrets/MailgunApiKey | Y
 SEC101/027 | DoNotExposePlaintextSecrets/MailChimpApiKey | Y
 SEC101/028 | DoNotExposePlaintextSecrets/PlaintextPassword | -
+SEC101/029 | DoNotExposePlaintextSecrets/AlibabaCloudCredentials | -
+SEC101/030 | DoNotExposePlaintextSecrets/GoogleServiceAccountKey | -
 SEC101/031 | DoNotExposePlaintextSecrets/NuGetApiKey | -
+SEC101/032 | DoNotExposePlaintextSecrets/GpgCredentials | -
+SEC101/033 | DoNotExposePlaintextSecrets/MongoDbCredentials | -
+SEC101/034 | DoNotExposePlaintextSecrets/CredentialObject | -
+SEC101/035 | DoNotExposePlaintextSecrets/CloudantCredentials | Y
+SEC101/036 | DoNotExposePlaintextSecrets/MySqlCredentials | Y
+SEC101/037 | DoNotExposePlaintextSecrets/SqlCredentials | Y
+SEC101/038 | DoNotExposePlaintextSecrets/PostgreSqlCredentials | Y
+SEC101/039 | DoNotExposePlaintextSecrets/ShopifyAccessToken | -
+SEC101/040 | DoNotExposePlaintextSecrets/ShopifySharedSecret | -
 SEC101/041 | DoNotExposePlaintextSecrets/RabbitMqConnectionString | Y
 SEC101/042 | DoNotExposePlaintextSecrets/DynatraceToken | -
-SEC101/043 | DoNotExposePlaintextSecrets/ShopifySharedSecret | -
-SEC101/044 | DoNotExposePlaintextSecrets/ShopifyAccessToken | -
-SEC101/045 | DoNotExposePlaintextSecrets/PostgreSqlConnectionString | Y
-SEC101/046 | DoNotExposePlaintextSecrets/SqlConnectionString | Y
-SEC101/047 | DoNotExposePlaintextSecrets/MySqlConnectionString | Y
-SEC101/048 | DoNotExposePlaintextSecrets/CloudantConnectionString | Y
-SEC101/049 | DoNotExposePlaintextSecrets/CredentialObject | -
-SEC101/050 | DoNotExposePlaintextSecrets/MongoDbConnectionString | -
-SEC101/051 | DoNotExposePlaintextSecrets/GpgCredential | -
-SEC101/053 | DoNotExposePlaintextSecrets/GoogleServiceAccountKey | -
-SEC101/054 | DoNotExposePlaintextSecrets/AlibabaAccessKey | -
+SEC101/043 | DoNotExposePlaintextSecrets/NuGetCredentials | Y
+SEC101/044 | DoNotExposePlaintextSecrets/NpmCredentials | Y
+SEC101/045 | DoNotExposePlaintextSecrets/PostmanApiKey | Y
+SEC101/046 | DoNotExposePlaintextSecrets/DiscordApiCredentials | Y
+SEC101/047 | DoNotExposePlaintextSecrets/CratesApiKey | Y
+SEC101/048 | DoNotExposePlaintextSecrets/SlackWorkflowKey | Y
+SEC101/049 | DoNotExposePlaintextSecrets/TelegramBotToken | Y
+SEC101/050 | DoNotExposePlaintextSecrets/IdentifiableNpmAuthorToken | Y
 SEC101/102 | DoNotExposePlaintextSecrets/AdoPat | -
