@@ -84,7 +84,7 @@
   $SEC101/013/Pem.CryptographicPrivateKey=(?si)-{5}BEGIN (?:DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (?:KEY BLOCK|KEY)-{5}.*?(?:(?:VERSION|Proc-Type|DEK-Info): [^\n]+\n)*\n?(?P<secret>[^:]*?)-{5}END (?:DSA|EC|OPENSSH|PGP|RSA|SSH2 ENCRYPTED)?\s*PRIVATE (?:KEY BLOCK|KEY)-{5}
   $SEC101/015.AkamaiCredentials=(?si)https:\/\/(?P<host>[\w\-\.]+)\.akamaiapis\.net.{0,150}(?:(?:client_token.{0,10}(?:[^a]|^)(?P<id>akab[\w\-]+).{0,50})|(?:access_token.{0,10}(?:[^\w\-]|^)(?P<resource>akab[\w\-]+).{0,200})|(?:(?:client_secret).{0,10}(?:[^0-9a-z\/\+]|^)(?P<secret>[0-9a-z\/\+]{43}=))){3}
   $SEC101/016.StripeApiKey=(?:[^rs]|^)(?P<secret>(?:r|s)k_(?:live|test)_(?i)[0-9a-z]{24,99})(?:[^0-9a-z]|$)
-  $SEC101/017.NpmAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?P<secret>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})[^0-9a-z]
+  $SEC101/017.NpmLegacyAuthorToken=(?i)npm.{0,100}[^0-9a-z](?-i)(?P<secret>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})[^0-9a-z]
   $SEC101/020.DropboxAccessTokenNoExpiration=(?si)dropbox.{1,50}[^0-9a-z](?P<secret>[0-9a-z_-]{64})(?:[^0-9a-z]|$)
   $SEC101/020.DropboxAccessTokenShortExpiration=(?si)dropbox.{1,50}(?:[^s]|^)(?P<secret>sl\.(?i)[0-9a-z-_]{135,139})(?i)(?:[^0-9a-z]|$)
   $SEC101/025.SendGridApiKey=(?:[^S]|^)(?P<secret>SG\.(?i)[0-9a-z\-_]{22}\.(?i)[0-9a-z\-_]{43})(?:[^0-9a-z\-_]|$)
@@ -135,7 +135,7 @@
   $SEC101/047.CratesApiKey=(?i)(?:[^c]|^)(?P<secret>cio[0-9a-z]{32})(?:[^0-9a-z]|$)
   $SEC101/048.SlackWorkflowKey=(?i)https:\/\/hooks\.slack\.com\/workflows\/(?P<id>[0-9a-z]{9,})\/(?P<secret>[0-9a-z]{9,}\/[0-9]+?\/[0-9a-z]{24})
   $SEC101/049.TelegramBotToken=bot(?P<secret>[0-9]{6,12}:AA(?i)[0-9a-z\-_]{32,33})(?:[^0-9a-z\-_]|$)
-  $SEC101/050.NpmAuthorIdentifiableToken=(?:[^n]|^)(?P<secret>npm_(?i)[0-9a-z]{30}(?P<checksum>[\w]{6}))(?:[^0-9a-z]|$)
+  $SEC101/050.NpmIdentifiableAuthorToken=(?:[^n]|^)(?P<secret>npm_(?i)[0-9a-z]{30}(?P<checksum>[\w]{6}))(?:[^0-9a-z]|$)
   $SEC101/102.AdoPat=(?:[^2-7a-z]|^)(?P<secret>[2-7a-z]{52})(?:[^2-7a-z]|$) 
 
   $SEC102/003.Url=(?P<url>http[s]?:\/\/(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)

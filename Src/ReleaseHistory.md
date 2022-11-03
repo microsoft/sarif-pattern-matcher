@@ -3,12 +3,12 @@
 ## Unreleased
 - BREAKING: Remove non-functional `multiline` argument from command-line. This argument should simply be removed from all command-lines.
 - BREAKING: Remove `file-size-in-kb` argument. Its use should be replaced by `max-file-size-in-kb`, a more descriptive name we pick up from the SARIF driver framework.
-
 - BREAKING: Fix bug resulting in static validators returning `FailureLevel.Note` despite configured `FailureLevel`. [#645](https://github.com/microsoft/sarif-pattern-matcher/pull/645)
 - Update `sarif-sdk` submodule to commit [7ddf923a4652a333f3356e9db4c5742b78a22c96](https://github.com/microsoft/sarif-sdk/commit/7ddf923a4652a333f3356e9db4c5742b78a22c96), which includes threading fixes in driver framework and fixes to ensure snipet population.
 - Update `spam` executable and dotnet library name to Sarif.PatternMatcher.Cli. 
 - Update `Microsoft.Security.Utilities` to [v1.4.0](https://github.com/microsoft/security-utilities/releases/tag/v1.4.0). [#662](https://github.com/microsoft/sarif-pattern-matcher/pull/662)
-- Rename `SEC101/050.IdentifiableNpmAuthorToken` to `SEC101/050.NpmAuthorIdentifiableToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
+- Rename `SEC101/050.IdentifiableNpmLegacyAuthorToken` to `SEC101/050.NpmIdentifiableAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
+- Rename `SEC101/017.NpmAuthorToken` to `SEC101/017.NpmAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
 
 ## *2.0.0-dev*
 - Update `sarif-sdk` submodule to commit [24c773bf194100d11c896ce67581832428304a35](https://github.com/microsoft/sarif-sdk/commit/24c773bf194100d11c896ce67581832428304a35), which applies `FileRegionsCache` fixes (from an unreleased version of the SDK).
@@ -43,7 +43,7 @@
 - SDK: Exposing `automationId`, `automationGuid`, and `postUri` in the
   `analyze` command.
   [#586](https://github.com/microsoft/sarif-pattern-matcher/pull/586)
-- NR: Adding IdentifiableNpmAuthorToken rule with dynamic validation.
+- NR: Adding IdentifiableNpmLegacyAuthorToken rule with dynamic validation.
   [#588](https://github.com/microsoft/sarif-pattern-matcher/pull/588)
 
   

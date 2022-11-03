@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    internal class NpmAuthorTokenHelper
+    internal class NpmLegacyAuthorTokenHelper
     {
         internal const string Uri = "https://registry.npmjs.com/-/npm/v1/tokens";
 
