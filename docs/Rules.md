@@ -22,7 +22,7 @@ SEC101/013 | DoNotExposePlaintextSecrets/CryptographicPrivateKey | -
 SEC101/014 | DoNotExposePlaintextSecrets/FacebookAccessToken | -
 SEC101/015 | DoNotExposePlaintextSecrets/AkamaiCredentials | Y
 SEC101/016 | DoNotExposePlaintextSecrets/StripeApiKey | Y
-SEC101/017 | DoNotExposePlaintextSecrets/NpmAuthorToken | Y
+SEC101/017 | DoNotExposePlaintextSecrets/NpmLegacyAuthorToken | Y
 SEC101/018 | DoNotExposePlaintextSecrets/TwilioCredentials | Y
 SEC101/019 | DoNotExposePlaintextSecrets/PicaticApiKey | -
 SEC101/020 | DoNotExposePlaintextSecrets/DropboxAccessToken | Y

@@ -15,16 +15,16 @@ using Xunit;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
-    /// Testing SEC101/050.IdentifiableNpmAuthorTokenValidator
-    /// </summary>
-    public class IdentifiableNpmAuthorTokenValidatorTests
+    /// Testing SEC101/017.NpmLegacyAuthorTokenValidator
+    /// </summary
+    public class NpmLegacyAuthorTokenValidatorTests
     {
         [Fact]
-        public void IdentifiableNpmAuthorTokenValidator_MockHttpTests()
+        public void NpmLegacyAuthorTokenValidator_MockHttpTests()
         {
-            HttpMockTestCase[] testCases = NpmAuthorTokenTestCases.CreateTestCases(out Fingerprint fingerprint);
+            HttpMockTestCase[] testCases = NpmLegacyAuthorTokenTestCases.CreateTestCases(out Fingerprint fingerprint);
             var sb = new StringBuilder();
-            var identifiableNpmAuthorTokenValidator = new IdentifiableNpmAuthorTokenValidator();
+            var NpmLegacyAuthorTokenValidator = new NpmLegacyAuthorTokenValidator();
             var mockHandler = new HttpMockHelper();
 
             foreach (HttpMockTestCase testCase in testCases)
@@ -39,11 +39,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 var keyValuePairs = new Dictionary<string, string>();
 
                 using var httpClient = new HttpClient(mockHandler);
-                identifiableNpmAuthorTokenValidator.SetHttpClient(httpClient);
-                ValidationState currentState = identifiableNpmAuthorTokenValidator.IsValidDynamic(ref fingerprint,
-                                                                                                  ref message,
-                                                                                                  keyValuePairs,
-                                                                                                  ref resultLevelKind);
+                NpmLegacyAuthorTokenValidator.SetHttpClient(httpClient);
+                ValidationState currentState = NpmLegacyAuthorTokenValidator.IsValidDynamic(ref fingerprint,
+                                                                                      ref message,
+                                                                                      keyValuePairs,
+                                                                                      ref resultLevelKind);
 
                 if (currentState != testCase.ExpectedValidationState)
                 {

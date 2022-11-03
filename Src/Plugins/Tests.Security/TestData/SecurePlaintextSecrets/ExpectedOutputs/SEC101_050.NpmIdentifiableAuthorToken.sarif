@@ -14,7 +14,10 @@
           "rules": [
             {
               "id": "SEC101/050",
-              "name": "DoNotExposePlaintextSecrets/IdentifiableNpmAuthorToken",
+              "name": "DoNotExposePlaintextSecrets/NpmIdentifiableAuthorToken",
+              "deprecatedNames": [
+                "DoNotExposePlaintextSecrets/IdentifiableNpmLegacyAuthorToken"
+              ],
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -39,7 +42,7 @@
       "artifacts": [
         {
           "location": {
-            "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.IdentifiableNpmAuthorToken.ps1",
+            "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.NpmIdentifiableAuthorToken.ps1",
             "uriBaseId": "SRC_ROOT"
           }
         }
@@ -54,7 +57,7 @@
               "…399Wq7",
               "an apparent ",
               "",
-              "Identifiable NPM Author Token",
+              "NPM identifiable author token",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -63,7 +66,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.IdentifiableNpmAuthorToken.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.NpmIdentifiableAuthorToken.ps1",
                   "uriBaseId": "SRC_ROOT",
                   "index": 0
                 },

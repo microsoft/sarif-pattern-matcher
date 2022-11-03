@@ -14,7 +14,10 @@
           "rules": [
             {
               "id": "SEC101/017",
-              "name": "DoNotExposePlaintextSecrets/NpmAuthorToken",
+              "name": "DoNotExposePlaintextSecrets/NpmLegacyAuthorToken",
+              "deprecatedNames": [
+                "DoNotExposePlaintextSecrets/NpmAuthorToken"
+              ],
               "fullDescription": {
                 "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
               },
@@ -39,7 +42,7 @@
       "artifacts": [
         {
           "location": {
-            "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmAuthorToken.ps1",
+            "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmLegacyAuthorToken.ps1",
             "uriBaseId": "SRC_ROOT"
           }
         }
@@ -54,7 +57,7 @@
               "…6777ca",
               "an apparent ",
               "",
-              "NPM Author Token",
+              "NPM legacy author token",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -63,7 +66,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmAuthorToken.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmLegacyAuthorToken.ps1",
                   "uriBaseId": "SRC_ROOT",
                   "index": 0
                 },
@@ -99,7 +102,7 @@
               "…6777cb",
               "an apparent ",
               "",
-              "NPM Author Token",
+              "NPM legacy author token",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -108,7 +111,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmAuthorToken.ps1",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmLegacyAuthorToken.ps1",
                   "uriBaseId": "SRC_ROOT",
                   "index": 0
                 },
