@@ -28,6 +28,11 @@ jobs:
       fail-fast: false
 
     steps:
+    - name: configure Pagefile
+      uses: al-cheb/configure-pagefile-action@v1.2
+      with:
+        maximum-size: 10GB
+
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
