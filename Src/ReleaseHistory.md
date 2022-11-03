@@ -8,6 +8,7 @@
 - Update `sarif-sdk` submodule to commit [7ddf923a4652a333f3356e9db4c5742b78a22c96](https://github.com/microsoft/sarif-sdk/commit/7ddf923a4652a333f3356e9db4c5742b78a22c96), which includes threading fixes in driver framework and fixes to ensure snipet population.
 - Update `spam` executable and dotnet library name to Sarif.PatternMatcher.Cli. 
 - Update `Microsoft.Security.Utilities` to [v1.4.0](https://github.com/microsoft/security-utilities/releases/tag/v1.4.0). [#662](https://github.com/microsoft/sarif-pattern-matcher/pull/662)
+- Rename `SEC101/006.GitHubPat` to `SEC101/006.GitHubLegacyPat` [#678](https://github.com/microsoft/sarif-pattern-matcher/pull/678)
 
 ## *2.0.0-dev*
 - Update `sarif-sdk` submodule to commit [24c773bf194100d11c896ce67581832428304a35](https://github.com/microsoft/sarif-sdk/commit/24c773bf194100d11c896ce67581832428304a35), which applies `FileRegionsCache` fixes (from an unreleased version of the SDK).
