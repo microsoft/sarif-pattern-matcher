@@ -31,7 +31,7 @@ jobs:
     - name: configure Pagefile
       uses: al-cheb/configure-pagefile-action@v1.2
       with:
-        maximum-size: 10GB
+        maximum-size: 4GB
 
     - name: Checkout repository
       uses: actions/checkout@v2
