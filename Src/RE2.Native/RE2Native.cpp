@@ -72,6 +72,8 @@ extern "C" __declspec(dllexport) int BuildRegex(String8 regex, int regexOptions,
 		options->set_max_mem(maxMemoryInBytes);
 	}
 
+	options->set_log_errors(false);
+
 	// Parse and construct an RE2 instance for the regular expression
 	re2::RE2* expression = new re2::RE2(expressionSp, *options);
 
