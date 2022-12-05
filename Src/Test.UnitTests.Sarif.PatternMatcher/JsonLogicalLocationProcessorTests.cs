@@ -57,7 +57,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Test.Processors
 
             // Root object
             ResolveJsonLogicalPath(SampleJsonContent, "stringValue", "stuff[5].nested['space in name'][0]");
-
         }
 
         private void ResolveJsonLogicalPath(string fileContent, string valueToFind, string expectedJsonPath)
