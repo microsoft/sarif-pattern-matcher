@@ -92,7 +92,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private bool CurrentTokenIsAfter(JsonTextReader reader, Region region)
         {
-            return 
+            return
                 reader.LineNumber > region.StartLine ||
                 (reader.LineNumber == region.StartLine && reader.LinePosition > region.StartColumn);
         }
