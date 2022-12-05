@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.6.json",
   "version": "2.1.0",
   "runs": [
     {
@@ -111,9 +111,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
             "AssetFingerprint/current": "{}",
+            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
             "SecretFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42,
           "fixes": [
@@ -182,9 +182,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
             "AssetFingerprint/current": "{}",
+            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
             "SecretFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42,
           "fixes": [
@@ -254,9 +254,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
             "AssetFingerprint/current": "{}",
+            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
             "SecretFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42,
           "fixes": [
@@ -325,9 +325,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
             "AssetFingerprint/current": "{}",
+            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
             "SecretFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42
         },
@@ -365,9 +365,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
             "AssetFingerprint/current": "{}",
+            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
             "SecretFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42
         },
@@ -405,9 +405,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
             "AssetFingerprint/current": "{}",
+            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
             "SecretFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42
         },
@@ -445,9 +445,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
             "AssetFingerprint/current": "{}",
+            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
             "SecretFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprintHashSha256/current": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b"
+            "ValidationFingerprint/current": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42
         }

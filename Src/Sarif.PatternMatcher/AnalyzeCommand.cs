@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.Writers;
 using Microsoft.RE2.Managed;
 
 using Newtonsoft.Json;
@@ -324,8 +325,43 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
         }
 
-#if DEBUG
+        protected override AnalyzeContext DetermineApplicabilityAndAnalyze(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers, ISet<string> disabledSkimmers)
+        {
+            context = base.DetermineApplicabilityAndAnalyze(context, skimmers, disabledSkimmers);
 
+            if (context.TargetUri.ToString().EndsWith(".json"))
+            {
+                var jsonLogicalLocationProcessor = new JsonLogicalLocationProcessor();
+
+                var sarifLog = new SarifLog()
+                {
+                    Runs = new[]
+                    {
+                        new Run()
+                        {
+                            Results = new List<Result>(),
+                        },
+                    },
+                };
+
+                var aggregatedResults = new List<Result>();
+                ICollection<IList<Result>> resultLists = ((CachingLogger)context.Logger).Results.Values;
+
+                foreach (IList<Result> resultList in resultLists)
+                {
+                    foreach (Result result in resultList)
+                    {
+                        aggregatedResults.Add(result);
+                    }
+                }
+
+                jsonLogicalLocationProcessor.Process(aggregatedResults, context.FileContents);
+            }
+
+            return context;
+        }
+
+#if DEBUG
         private static void ValidateSharedStringsExpansion(SearchDefinitions searchDefinitions)
         {
             foreach (SearchDefinition definition in searchDefinitions.Definitions)

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.6.json",
   "version": "2.1.0",
   "runs": [
     {
@@ -86,9 +86,9 @@
           "fingerprints": {
             "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
             "AssetFingerprint/current": "{\"id\":\"_malloca\"}",
+            "ValidationFingerprintHashSha256/current": "582290aa80b7a22d4aa98aa1227346b61831fcdc156e2a570bc6ad5b8763ccf2",
             "SecretFingerprint/current": "{}",
-            "ValidationFingerprint/current": "{\"id\":\"_malloca\"}",
-            "ValidationFingerprintHashSha256/current": "582290aa80b7a22d4aa98aa1227346b61831fcdc156e2a570bc6ad5b8763ccf2"
+            "ValidationFingerprint/current": "{\"id\":\"_malloca\"}"
           }
         }
       ],
