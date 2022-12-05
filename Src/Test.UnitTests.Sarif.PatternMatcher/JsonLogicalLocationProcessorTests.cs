@@ -79,7 +79,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Test.Processors
             // TODO: Our JSON logical path processor currently depends on line locations.
             //       We should update the logical to permit operation against char lengths.
             var fileRegionsCache = new FileRegionsCache();
-            result.Locations[0].PhysicalLocation.Region = 
+            result.Locations[0].PhysicalLocation.Region =
                 fileRegionsCache.PopulateTextRegionProperties(region, new Uri("file://unused.txt"), true, fileContent);
 
             // Run the processor to identify the Json path
