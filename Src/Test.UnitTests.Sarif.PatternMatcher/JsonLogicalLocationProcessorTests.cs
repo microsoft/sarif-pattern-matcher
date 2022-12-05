@@ -56,7 +56,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Test.Processors
             ResolveJsonLogicalPath(SampleJsonContent, "stuff", "stuff");
 
             // Root object
-            ResolveJsonLogicalPath(SampleJsonContent, "stringValue", "stuff");
+            ResolveJsonLogicalPath(SampleJsonContent, "stringValue", "stuff[5].nested['space in name'][0]");
 
         }
 
