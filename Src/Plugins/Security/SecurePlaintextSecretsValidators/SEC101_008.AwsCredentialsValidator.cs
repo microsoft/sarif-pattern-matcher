@@ -12,6 +12,17 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
+    public class AwsCredentialsIntrafileRegex0Validator : StaticValidatorBase
+    {
+        protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
+        {
+            string secret = groups["secret"].Value;
+            return secret.IsBase64EncodedString()
+                ? ValidationResult.CreateNoMatch()
+                : ValidationResult.ContinueProcessing();
+        }
+    }
+
     public class AwsCredentialsValidator : DynamicValidatorBase
     {
         internal static IRegex RegexEngine;
@@ -29,18 +40,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            string id = groups["id"].Value;
+            string secret = groups["secret"].Value;
 
             var validationResult = new ValidationResult
             {
                 Fingerprint = new Fingerprint
                 {
-                    Id = id.Value,
-                    Secret = secret.Value,
+                    Id = id,
+                    Secret = secret,
                     Platform = nameof(AssetPlatform.Aws),
                 },
                 ValidationState = ValidationState.Unknown,

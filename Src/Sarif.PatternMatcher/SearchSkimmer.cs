@@ -820,6 +820,37 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     return;
                 }
 
+                if (_validators != null)
+                {
+                    string validatorName = $"{matchExpression.Name.Split('/')[1]}IntrafileRegex{i}Validator";
+                    if (_validators.RuleNameToValidationMethods.TryGetValue(validatorName, out StaticValidatorBase staticValidator))
+                    {
+                        for (int j = 0; j < matches.Count; i++)
+                        {
+                            int currentIndex = matches.Count - i - 1;
+
+                            // Retrieve matches in reverse order so we can delete them from the list.
+                            Dictionary<string, FlexMatch> match = matches[currentIndex];
+
+                            ValidationResult validationResult = staticValidator.IsValidStatic(match, null).First();
+                            if (validationResult.ValidationState == ValidationState.NoMatch)
+                            {
+                                matches.RemoveAt(currentIndex);
+                            }
+                        }
+
+                        if (matches.Count == 0)
+                        {
+                            if (matchExpression.IntrafileRegexMetadata[i] == RegexMetadata.Optional)
+                            {
+                                continue;
+                            }
+
+                            return;
+                        }
+                    }
+                }
+
                 MergeDictionary(matches, mergedGroups);
             }
 

@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(SolutionDir)Plugins\Security\Utilities\DictionaryExtensions.cs" />
+    <Compile Include="$(SolutionDir)Plugins\Security\SecurityExtensions.cs" />
     <ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
   </ItemGroup>
 

@@ -32,5 +32,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 },
             };
         }
+
+        public static IEnumerable<ValidationResult> ContinueProcessing()
+        {
+            return new[]
+            {
+                new ValidationResult
+                {
+                    ValidationState = ValidationState.Unknown,
+                },
+            };
+        }
     }
 }
