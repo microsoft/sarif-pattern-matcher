@@ -82,11 +82,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/current": "d693a51796332f66b5c623f099e3a6c65b49581051982e158dd81272d688bfbf",
-            "AssetFingerprint/current": "{\"id\":\"T01JYS3KLKU\",\"platform\":\"Slack\"}",
-            "ValidationFingerprintHashSha256/current": "7287fd0b7057f4726d34ec2b6881a537ae271ac5152b31b6e127140d2b34009f",
-            "SecretFingerprint/current": "{\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}",
-            "ValidationFingerprint/current": "{\"id\":\"T01JYS3KLKU\",\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}"
+            "SecretHashSha256/v0": "d693a51796332f66b5c623f099e3a6c65b49581051982e158dd81272d688bfbf",
+            "AssetFingerprint/v0": "{\"id\":\"T01JYS3KLKU\",\"platform\":\"Slack\"}",
+            "ValidationFingerprintHashSha256/v0": "7287fd0b7057f4726d34ec2b6881a537ae271ac5152b31b6e127140d2b34009f",
+            "SecretFingerprint/v0": "{\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}",
+            "ValidationFingerprint/v0": "{\"id\":\"T01JYS3KLKU\",\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}"
           },
           "rank": 49.76
         }
