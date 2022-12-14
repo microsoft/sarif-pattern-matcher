@@ -11,7 +11,7 @@ On all platforms, the minimum requirements are:
 
 ### Windows
 
-* Visual Studio 2019 or 2022(recommended), any edition
+* Visual Studio 2022, any edition
 * In the Visual Studio Installer, install the following:
   * Workloads
     * .NET desktop development
