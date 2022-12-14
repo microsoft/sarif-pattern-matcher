@@ -7,11 +7,11 @@ You can contribute to this project from a Windows, macOS or Linux machine.
 On all platforms, the minimum requirements are:
 
 * Git client and command line tools.
-* .NET Core 3.1+
+* .NET Core 3.1+ and .NET 6.0
 
 ### Windows
 
-* Visual Studio 2019, any edition
+* Visual Studio 2019 or 2022(recommended), any edition
 * In the Visual Studio Installer, install the following:
   * Workloads
     * .NET desktop development
