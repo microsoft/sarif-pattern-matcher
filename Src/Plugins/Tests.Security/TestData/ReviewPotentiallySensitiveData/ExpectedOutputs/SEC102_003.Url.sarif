@@ -78,11 +78,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
-            "AssetFingerprint/current": "{\"host\":\"msn.com\",\"path\":\"/test\"}",
-            "ValidationFingerprintHashSha256/current": "14d50b9e6825ad93a9a957dcd484fa1ffce642125b1b615693fb7d02ced5338c",
-            "SecretFingerprint/current": "{}",
-            "ValidationFingerprint/current": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}"
+            "SecretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test\"}",
+            "ValidationFingerprintHashSha256/v0": "14d50b9e6825ad93a9a957dcd484fa1ffce642125b1b615693fb7d02ced5338c",
+            "SecretFingerprint/v0": "{}",
+            "ValidationFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}"
           }
         },
         {
@@ -118,11 +118,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
-            "AssetFingerprint/current": "{\"host\":\"msn.com\",\"path\":\"/test/\"}",
-            "ValidationFingerprintHashSha256/current": "06da657d809a85c1b27e844129ffe0cf3fc123c1a61e9f63246c108b2b90ceb2",
-            "SecretFingerprint/current": "{}",
-            "ValidationFingerprint/current": "{\"host\":\"msn.com\",\"path\":\"/test/\",\"port\":\"443\"}"
+            "SecretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test/\"}",
+            "ValidationFingerprintHashSha256/v0": "06da657d809a85c1b27e844129ffe0cf3fc123c1a61e9f63246c108b2b90ceb2",
+            "SecretFingerprint/v0": "{}",
+            "ValidationFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test/\",\"port\":\"443\"}"
           }
         },
         {
@@ -158,11 +158,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
-            "AssetFingerprint/current": "{\"host\":\"msn.com\",\"part\":\"?foo=bar\",\"path\":\"/test\"}",
-            "ValidationFingerprintHashSha256/current": "14d50b9e6825ad93a9a957dcd484fa1ffce642125b1b615693fb7d02ced5338c",
-            "SecretFingerprint/current": "{}",
-            "ValidationFingerprint/current": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}"
+            "SecretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/v0": "{\"host\":\"msn.com\",\"part\":\"?foo=bar\",\"path\":\"/test\"}",
+            "ValidationFingerprintHashSha256/v0": "14d50b9e6825ad93a9a957dcd484fa1ffce642125b1b615693fb7d02ced5338c",
+            "SecretFingerprint/v0": "{}",
+            "ValidationFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}"
           }
         }
       ],

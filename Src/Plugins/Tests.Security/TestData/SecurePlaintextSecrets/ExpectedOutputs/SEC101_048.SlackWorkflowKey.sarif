@@ -82,11 +82,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/current": "98312e0f2d594fd4e3d71b7be906d302fcf64291f04ad62970864114a9076688",
-            "AssetFingerprint/current": "{\"id\":\"0123456789\",\"platform\":\"Slack\"}",
-            "ValidationFingerprintHashSha256/current": "904b560d930b8b7497aefc45f1249618b2afd955d425163beef027b9cc42c096",
-            "SecretFingerprint/current": "{\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}",
-            "ValidationFingerprint/current": "{\"id\":\"0123456789\",\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}"
+            "SecretHashSha256/v0": "98312e0f2d594fd4e3d71b7be906d302fcf64291f04ad62970864114a9076688",
+            "AssetFingerprint/v0": "{\"id\":\"0123456789\",\"platform\":\"Slack\"}",
+            "ValidationFingerprintHashSha256/v0": "904b560d930b8b7497aefc45f1249618b2afd955d425163beef027b9cc42c096",
+            "SecretFingerprint/v0": "{\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}",
+            "ValidationFingerprint/v0": "{\"id\":\"0123456789\",\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}"
           },
           "rank": 52.82
         }
