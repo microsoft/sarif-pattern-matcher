@@ -1,6 +1,7 @@
 # Release History
 
 ## Unreleased
+- BREAKING: Properly introduce fingerprint versioned hierarchical strings (according to the [SARIF spec](https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html#_Toc34317441)) by updating `/current` component to `/v0`. 
 - BREAKING: Remove non-functional `multiline` argument from command-line. This argument should simply be removed from all command-lines.
 - BREAKING: Remove `file-size-in-kb` argument. Its use should be replaced by `max-file-size-in-kb`, a more descriptive name we pick up from the SARIF driver framework.
 - BREAKING: Fix bug resulting in static validators returning `FailureLevel.Note` despite configured `FailureLevel`. [#645](https://github.com/microsoft/sarif-pattern-matcher/pull/645)

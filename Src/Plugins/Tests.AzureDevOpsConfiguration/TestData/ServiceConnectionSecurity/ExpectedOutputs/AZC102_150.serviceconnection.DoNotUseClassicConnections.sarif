@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/current": "9e80eb212bd8b9b20f2e605a55c75b129ab2902bd892b8def87e0fb6fd859ab8",
-            "AssetFingerprint/current": "{}",
-            "ValidationFingerprintHashSha256/current": "21104afac53ac5993c33d2318dff5325302f73856df10eca3e24260619f241e0",
-            "SecretFingerprint/current": "{\"secret\":\"\\\"type\\\": \\\"azure\\\"\"}",
-            "ValidationFingerprint/current": "{\"secret\":\"\\\"type\\\": \\\"azure\\\"\"}"
+            "SecretHashSha256/v0": "9e80eb212bd8b9b20f2e605a55c75b129ab2902bd892b8def87e0fb6fd859ab8",
+            "AssetFingerprint/v0": "{}",
+            "ValidationFingerprintHashSha256/v0": "21104afac53ac5993c33d2318dff5325302f73856df10eca3e24260619f241e0",
+            "SecretFingerprint/v0": "{\"secret\":\"\\\"type\\\": \\\"azure\\\"\"}",
+            "ValidationFingerprint/v0": "{\"secret\":\"\\\"type\\\": \\\"azure\\\"\"}"
           },
           "rank": 46.29
         },
@@ -146,11 +146,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/current": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
-            "AssetFingerprint/current": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"platform\":\"AzureDevOps\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}",
-            "ValidationFingerprintHashSha256/current": "e4d78c2bd639c80de9a75619e350d6f2f942eefdd202afe01365a0fcda26597e",
-            "SecretFingerprint/current": "{}",
-            "ValidationFingerprint/current": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}"
+            "SecretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "AssetFingerprint/v0": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"platform\":\"AzureDevOps\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}",
+            "ValidationFingerprintHashSha256/v0": "e4d78c2bd639c80de9a75619e350d6f2f942eefdd202afe01365a0fcda26597e",
+            "SecretFingerprint/v0": "{}",
+            "ValidationFingerprint/v0": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}"
           }
         }
       ],
