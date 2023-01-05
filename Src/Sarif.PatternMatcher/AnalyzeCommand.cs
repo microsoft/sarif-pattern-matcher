@@ -345,7 +345,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 };
 
                 var aggregatedResults = new List<Result>();
-                ICollection<IList<Result>> resultLists = ((CachingLogger)context.Logger).Results.Values;
+                ICollection<IList<Result>> resultLists = ((CachingLogger)context.Logger).Results?.Values ?? new List<IList<Result>>();
 
                 foreach (IList<Result> resultList in resultLists)
                 {

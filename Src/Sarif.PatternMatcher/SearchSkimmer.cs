@@ -19,11 +19,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {
-        public const string SecretHashSha256Current = "SecretHashSha256/current";
-        public const string AssetFingerprintCurrent = "AssetFingerprint/current";
-        public const string SecretFingerprintCurrent = "SecretFingerprint/current";
-        public const string ValidationFingerprintCurrent = "ValidationFingerprint/current";
-        public const string ValidationFingerprintHashSha256Current = "ValidationFingerprintHashSha256/current";
+        public const string SecretHashSha256Current = "SecretHashSha256/v0";
+        public const string AssetFingerprintCurrent = "AssetFingerprint/v0";
+        public const string SecretFingerprintCurrent = "SecretFingerprint/v0";
+        public const string ValidationFingerprintCurrent = "ValidationFingerprint/v0";
+        public const string ValidationFingerprintHashSha256Current = "ValidationFingerprintHashSha256/v0";
 
         public const string DynamicValidationNotEnabled = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
 
