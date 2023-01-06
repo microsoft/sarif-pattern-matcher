@@ -47,6 +47,83 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
+        public void AnalyzeCommand_Traces()
+        {
+            SearchDefinitions definitions = GetDefinitionsFileForMinimalRule();
+            ISet<Skimmer<AnalyzeContext>> skimmers = GetMockedSkimmers(definitions);
+
+            FlexString fileContents = "bar foo foo";
+            var testLogger = new TestLogger();
+
+            var context = new AnalyzeContext()
+            {
+                TargetUri = GenerateRandomTargetUri(),
+                FileContents = fileContents,
+                Logger = testLogger,
+            };
+
+            var disabledSkimmers = new HashSet<string>();
+
+            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
+            PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
+
+            testLogger.Results.Should().NotBeNull();
+            testLogger.Results.Count.Should().Be(2);
+
+            foreach (Result result in testLogger.Results)
+            {
+                result.Level.Should().Be(FailureLevel.Error);
+            }
+        }
+
+        private Uri GenerateRandomTargetUri()
+        {
+            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
+            return new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute);
+        }
+
+        private ISet<Skimmer<AnalyzeContext>> GetMockedSkimmers(SearchDefinitions definitions)
+        {
+            string definitionsText = JsonConvert.SerializeObject(definitions);
+
+            string searchDefinitionsPath = Path.GetFullPath(Guid.NewGuid().ToString());
+
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
+            mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
+
+            // Acquire skimmers for searchers
+            return PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
+                mockFileSystem.Object,
+                new string[] { searchDefinitionsPath },
+                RE2Regex.Instance);
+        }
+
+        private SearchDefinitions GetDefinitionsFileForMinimalRule()
+        {
+            return new SearchDefinitions()
+            {
+                Definitions = new List<SearchDefinition>(new[]
+                {
+                    new SearchDefinition()
+                    {
+                        Name = "MinimalRule", Id = "Test1002",
+                        Level = FailureLevel.Error, FileNameAllowRegex = "(?i)\\.test$",
+                        Message = "A problem occurred in '{0:scanTarget}'.",
+                        MatchExpressions = new List<MatchExpression>(new[]
+                        {
+                            new MatchExpression()
+                            {
+                                ContentsRegex = "foo",
+                                Message = "Custom message."
+                            }
+                        })
+                    }
+                })
+            };
+        }
+
+        [Fact]
         public void AnalyzeCommand_SimpleAnalysis()
         {
             var regexList = new List<IRegex>

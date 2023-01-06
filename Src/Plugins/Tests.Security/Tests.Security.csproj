@@ -29,4 +29,8 @@
     <ProjectReference Include="..\..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
     <ProjectReference Include="..\..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="xunit" Version="2.4.2" />
+  </ItemGroup>
 </Project>
