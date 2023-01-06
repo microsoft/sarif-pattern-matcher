@@ -329,7 +329,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             context = base.DetermineApplicabilityAndAnalyze(context, skimmers, disabledSkimmers);
 
-            if (context.TargetUri.ToString().EndsWith(".json"))
+            ICollection<IList<Result>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
+
+            if (resultLists != null && context.TargetUri.ToString().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
             {
                 var jsonLogicalLocationProcessor = new JsonLogicalLocationProcessor();
 
@@ -345,8 +347,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 };
 
                 var aggregatedResults = new List<Result>();
-                ICollection<IList<Result>> resultLists = ((CachingLogger)context.Logger).Results?.Values ?? new List<IList<Result>>();
-
                 foreach (IList<Result> resultList in resultLists)
                 {
                     foreach (Result result in resultList)
@@ -355,7 +355,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     }
                 }
 
-                jsonLogicalLocationProcessor.Process(aggregatedResults, context.FileContents);
+                if (aggregatedResults.Count > 0)
+                {
+                    jsonLogicalLocationProcessor.Process(aggregatedResults, context.FileContents);
+                }
             }
 
             return context;
