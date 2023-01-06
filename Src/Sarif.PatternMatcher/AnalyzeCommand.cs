@@ -331,7 +331,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             ICollection<IList<Result>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
 
-            if (resultLists != null && context.TargetUri.ToString().EndsWith(".json"))
+            if (resultLists != null && context.TargetUri.ToString().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
             {
                 var jsonLogicalLocationProcessor = new JsonLogicalLocationProcessor();
 
