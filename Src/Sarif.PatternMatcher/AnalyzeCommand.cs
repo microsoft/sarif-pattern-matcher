@@ -355,7 +355,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     }
                 }
 
-                jsonLogicalLocationProcessor.Process(aggregatedResults, context.FileContents);
+                if (aggregatedResults.Count > 0)
+                {
+                    jsonLogicalLocationProcessor.Process(aggregatedResults, context.FileContents);
+                }
             }
 
             return context;
