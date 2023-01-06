@@ -304,7 +304,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             context.Traces =
                 options.Traces.Any() ?
-                    (DefaultTraces)Enum.Parse(typeof(DefaultTraces), string.Join("|", options.Traces)) :
+                    (DefaultTraces)Enum.Parse(typeof(DefaultTraces), string.Join(",", options.Traces)) :
                     DefaultTraces.None;
 
             context.Retry = options.Retry;

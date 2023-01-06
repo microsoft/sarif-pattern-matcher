@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Resources;
@@ -759,6 +760,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             bool simpleRegex = !string.IsNullOrEmpty(matchExpression.ContentsRegex);
             bool contentRegex = simpleRegex || singleIntraRegex;
 
+            Stopwatch stopwatch = context.Traces.HasFlag(DefaultTraces.RuleScanTime)
+                ? Stopwatch.StartNew()
+                : null;
+
             if (contentRegex)
             {
                 if (simpleRegex)
@@ -784,6 +789,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (isMalformed)
             {
                 throw new InvalidOperationException("Malformed expression contains no regexes.");
+            }
+
+            if (stopwatch != null)
+            {
+                string file = context.TargetUri.LocalPath;
+                string directory = Path.GetDirectoryName(file);
+                file = Path.GetFileName(file);
+                string timing = $"'{file}' : elapsed {stopwatch.Elapsed} : '{matchExpression.Name}' : at '{directory}'";
+
+                context.Logger.LogToolNotification(
+                    new Notification
+                    {
+                        Level = FailureLevel.Warning,
+                        Message = new Message
+                        {
+                            Text = timing,
+                        },
+                    });
             }
         }
 
