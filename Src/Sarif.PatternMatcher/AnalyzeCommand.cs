@@ -333,19 +333,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (resultLists != null && context.TargetUri.ToString().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
             {
-                var jsonLogicalLocationProcessor = new JsonLogicalLocationProcessor();
-
-                var sarifLog = new SarifLog()
-                {
-                    Runs = new[]
-                    {
-                        new Run()
-                        {
-                            Results = new List<Result>(),
-                        },
-                    },
-                };
-
                 var aggregatedResults = new List<Result>();
                 foreach (IList<Result> resultList in resultLists)
                 {
@@ -357,6 +344,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (aggregatedResults.Count > 0)
                 {
+                    var jsonLogicalLocationProcessor = new JsonLogicalLocationProcessor();
                     jsonLogicalLocationProcessor.Process(aggregatedResults, context.FileContents);
                 }
             }
