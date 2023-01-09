@@ -58,7 +58,7 @@
   $SEC101/022.PayPalBraintreeAccessToken=access_token\$production\$(?P<secret>[0-9a-z]{16}\$[0-9a-f]{32})
   $SEC101/023.AmazonMwsAuthToken=(?:[^a]|^)(?P<secret>amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:[^0-9a-f]|$)
   $SEC101/024.TwilioApiKey=(?:[^S]|^)(?P<secret>SK(?i)[0-9a-f]{32})(?:[^0-9a-f]|$)
-  $SEC101/028.PlaintextPassword=(?i)ConvertTo-SecureString\s*(?:-[S]tring)?\s*["'](?P<secret>[^"')(?:]*)["']
+  $SEC101/028.PlaintextPassword=(?i)ConvertTo-SecureString\s*(?:-[S]tring)?\s*["']*(?P<secret>[^"')(?:]*)["']*
   $SEC101/030.GoogleServiceAccountKeyConsoleFormat="private_key":\s*"-----BEGIN PRIVATE KEY-----\\n(?s)(?P<secret>[^"]+)(?-s)\\n-----END PRIVATE KEY-----\\n(?s).{1,200}(?-s)"client_id"\s*:\s*"(?P<id>[\w.-]+)"
   $SEC101/030.GoogleServiceAccountKeyConsoleRestFormat="name": "projects\/[\w-]+\/serviceAccounts\/[\w@.-]+\/keys\/(?P<secret>[^"]+)",
   $SEC101/031.NuGetApiKey=(?:[^0-9a-z]|^)(?P<secret>oy2[a-p][0-9a-z]{15}[aq][0-9a-z]{11}[eu][bdfhjlnprtvxz357][a-p][0-9a-z]{11}[aeimquy4])(?:[^0-9a-z]|$)  
