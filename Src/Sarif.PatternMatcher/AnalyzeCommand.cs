@@ -300,6 +300,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             PropertiesDictionary policy = null,
             string filePath = null)
         {
+            AnalyzeContextBase.MaxFileSizeInKilobytesDefaultValue = 10 * 1024;
             AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy, filePath);
 
             context.Traces =
@@ -314,7 +315,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.DataToInsert = options.DataToInsert.ToFlags();
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;
             context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
-            context.MaxFileSizeInKilobytes = options.MaxFileSizeInKilobytes;
             context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
 
             return context;
