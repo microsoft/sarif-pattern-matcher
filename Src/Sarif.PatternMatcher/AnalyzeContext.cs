@@ -52,7 +52,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string GlobalFileDenyRegex { get; set; }
 
-        public int MaxFileSizeInKilobytes { get; set; } = 10000;
+        public long MaxFileSizeInKilobytes { get; set; } = 10000;
 
         public bool DisableDynamicValidationCaching { get; set; }
 

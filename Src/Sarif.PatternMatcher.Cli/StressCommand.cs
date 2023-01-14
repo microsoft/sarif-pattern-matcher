@@ -49,7 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         public void LogConfigurationNotification(Notification notification) { }
 
-        public void LogToolNotification(Notification notification)
+        public void LogToolNotification(Notification notification, ReportingDescriptor _)
         {
             if (notification.Level == FailureLevel.Error)
             {

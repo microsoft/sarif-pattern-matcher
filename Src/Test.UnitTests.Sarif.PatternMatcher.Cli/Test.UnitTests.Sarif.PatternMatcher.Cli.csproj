@@ -31,4 +31,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="xunit" Version="2.4.2" />
+  </ItemGroup>
 </Project>
