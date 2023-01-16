@@ -16,11 +16,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // Any file is a candidate for regex-driven search.
             // The actual applicability of a file for a specific
             // search definition is governed by its name/extension.
-            IsValidAnalysisTarget = true;
-            ObservedFingerprintCache = new HashSet<string>();
             FileRegionsCache = null;
+            IsValidAnalysisTarget = true;
+            FileSystem = new FileSystem();
+            ObservedFingerprintCache = new HashSet<string>();
             TextToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
         }
+
+        public IFileSystem FileSystem { get; internal set; }
+
+        public int TimeoutInMilliseconds { get; internal set; }
+
+        public IArtifactProvider ScanTargetProvider { get; set; }
 
         public bool RedactSecrets { get; set; }
 

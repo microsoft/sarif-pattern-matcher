@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Writers;
@@ -15,11 +19,51 @@ using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
+    public class AnalyzeFromContext : AnalyzeCommand
+    {
+        private readonly AnalyzeContext context;
+
+        public AnalyzeFromContext(AnalyzeContext context, IFileSystem fileSystem = null)
+            : base(fileSystem)
+        {
+            this.context = context;
+        }
+
+        internal void Analyze()
+        {
+            AnalyzeTargets(context, context.Skimmers, new HashSet<string>());
+        }
+    }
+
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
         public AnalyzeCommand(IFileSystem fileSystem = null)
             : base(fileSystem)
         {
+        }
+
+        public static int Analyze(string[] args = null,
+                                  AnalyzeOptions options = null,
+                                  AnalyzeContext context = null,
+                                  IFileSystem fileSystem = null)
+        {
+
+            if (context != null)
+            {
+                var waitTask = Task.Delay(context.TimeoutInMilliseconds);
+                Task<int> analyzeTask = Task.Factory.StartNew(() =>
+                {
+                    new AnalyzeFromContext(context).Analyze();
+                    return SUCCESS;
+                });
+
+                analyzeTask.Wait();
+                return analyzeTask.IsFaulted ? FAILURE : SUCCESS;
+            }
+
+            options ??= ConvertCommandlineArgumentsToAnalysisOptions(args);
+            var analyzeCommand = new AnalyzeCommand(fileSystem);
+            return analyzeCommand.Run(options);
         }
 
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(
@@ -130,6 +174,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return skimmers;
+        }
+
+        private static AnalyzeOptions ConvertCommandlineArgumentsToAnalysisOptions(string[] args)
+        {
+            return Parser.Default.ParseArguments<AnalyzeOptions>(args).Value;
         }
 
         internal static SearchDefinitions PushInheritedData(SearchDefinitions definitions, Dictionary<string, string> sharedStrings)

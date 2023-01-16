@@ -116,6 +116,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sarif.WorkItems", "sarif-sd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.UnitTests.Sarif", "sarif-sdk\src\Test.UnitTests.Sarif\Test.UnitTests.Sarif.csproj", "{784845AC-F9D1-407A-A895-332BD4A9568C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.UnitTests.Sarif.Driver", "sarif-sdk\src\Test.UnitTests.Sarif.Driver\Test.UnitTests.Sarif.Driver.csproj", "{1EF32A35-C454-48F8-A556-A1C99B58F308}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -450,6 +452,18 @@ Global
 		{784845AC-F9D1-407A-A895-332BD4A9568C}.Release|x64.Build.0 = Release|Any CPU
 		{784845AC-F9D1-407A-A895-332BD4A9568C}.Release|x86.ActiveCfg = Release|Any CPU
 		{784845AC-F9D1-407A-A895-332BD4A9568C}.Release|x86.Build.0 = Release|Any CPU
+		{1EF32A35-C454-48F8-A556-A1C99B58F308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EF32A35-C454-48F8-A556-A1C99B58F308}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EF32A35-C454-48F8-A556-A1C99B58F308}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1EF32A35-C454-48F8-A556-A1C99B58F308}.Debug|x64.Build.0 = Debug|Any CPU
+		{1EF32A35-C454-48F8-A556-A1C99B58F308}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1EF32A35-C454-48F8-A556-A1C99B58F308}.Debug|x86.Build.0 = Debug|Any CPU
+		{1EF32A35-C454-48F8-A556-A1C99B58F308}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EF32A35-C454-48F8-A556-A1C99B58F308}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EF32A35-C454-48F8-A556-A1C99B58F308}.Release|x64.ActiveCfg = Release|Any CPU
+		{1EF32A35-C454-48F8-A556-A1C99B58F308}.Release|x64.Build.0 = Release|Any CPU
+		{1EF32A35-C454-48F8-A556-A1C99B58F308}.Release|x86.ActiveCfg = Release|Any CPU
+		{1EF32A35-C454-48F8-A556-A1C99B58F308}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -474,6 +488,7 @@ Global
 		{8B9BAFB0-9C2D-4FE1-9B19-006F8EC7A336} = {FE1283FC-C039-47E4-86AC-45487A0870CF}
 		{F18FA0BF-166C-4E81-9498-816E73B3B6C7} = {FE1283FC-C039-47E4-86AC-45487A0870CF}
 		{784845AC-F9D1-407A-A895-332BD4A9568C} = {FE1283FC-C039-47E4-86AC-45487A0870CF}
+		{1EF32A35-C454-48F8-A556-A1C99B58F308} = {FE1283FC-C039-47E4-86AC-45487A0870CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31BD334C-6711-44FF-B3E4-FAAC3A5D2F3A}

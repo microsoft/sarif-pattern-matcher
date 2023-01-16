@@ -47,6 +47,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
+        public void AnalyzeCommand_AnalyzeFromContextApiExample()
+        {
+            var logger = new TestLogger();
+            var skimmers = new List<Skimmer<AnalyzeContext>>();
+            skimmers.Add(new SpamTestRule());
+
+            AnalyzeCommand.Analyze(context: new AnalyzeContext
+            {
+                Logger = logger,
+                Skimmers = skimmers,
+                TimeoutInMilliseconds = 1000,
+                TargetUri = new Uri("c:\\FireOneWarning.txt"),
+                FileContents = "Fire two results for: error error."
+            });
+
+            logger.Results.Count.Should().Be(3);
+        }
+
+        [Fact]
         public void AnalyzeCommand_SimpleAnalysis()
         {
             var regexList = new List<IRegex>
@@ -58,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (IRegex regex in regexList)
             {
-                AnalyzeCommand(regex);
+                RunAnalyzeCommand(regex);
             }
         }
 
@@ -649,26 +668,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     engine);
         }
 
-        private static void AnalyzeCommand(IRegex engine)
+        private static void RunAnalyzeCommand(IRegex engine)
         {
             var testLogger = new TestLogger();
-            var disabledSkimmers = new HashSet<string>();
             ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmers(engine);
 
-            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
-            FlexString fixedFileContents = "bar bar bar";
+            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
 
-            var context = new AnalyzeContext()
+            AnalyzeCommand.Analyze(context: new AnalyzeContext
             {
-                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
-                FileContents = fileContents,
                 Logger = testLogger,
-            };
-
-            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
-
-            PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
+                Skimmers = skimmers,
+                FileContents = fileContents,
+                TimeoutInMilliseconds = 1000,
+                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+            });
 
             testLogger.Results.Should().NotBeNull();
             testLogger.Results.Count.Should().Be(2);
