@@ -13,6 +13,7 @@
 - Rename `SEC101/050.IdentifiableNpmLegacyAuthorToken` to `SEC101/050.NpmIdentifiableAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
 - Rename `SEC101/017.NpmAuthorToken` to `SEC101/017.NpmAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
 - Rename `SEC101/006.GitHubPat` to `SEC101/006.GitHubLegacyPat` [#678](https://github.com/microsoft/sarif-pattern-matcher/pull/678)
+- Disable `SEC101/029.AlibabaCloudCredentials` [#700](https://github.com/microsoft/sarif-pattern-matcher/pull/700)
 
 ## *2.0.0-dev*
 
