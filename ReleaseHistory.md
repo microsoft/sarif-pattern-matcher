@@ -1,7 +1,7 @@
 # Release History
 
 ## Unreleased
-- Update SARIF SDK submodule from [31f49b2 to 235394](https://github.com/microsoft/sarif-sdk/compare/31f49b2..235394). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/7805847d075b0991da6917cc934fb0924015402d/src/ReleaseHistory.md).
+- Update SARIF SDK submodule from [31f49b2 to 235394a](https://github.com/microsoft/sarif-sdk/compare/31f49b2..235394a). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/7805847d075b0991da6917cc934fb0924015402d/src/ReleaseHistory.md).
 - Update SEC101/028.PlaintextPassword regular expression to include scenarios where a variable name is used instead of string (added `*` after `["']`).
 - BREAKING: Properly introduce fingerprint versioned hierarchical strings (according to the [SARIF spec](https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html#_Toc34317441)) by updating `/current` component to `/v0`. 
 - BREAKING: Remove non-functional `multiline` argument from command-line. This argument should simply be removed from all command-lines.
@@ -14,8 +14,9 @@
 - Rename `SEC101/017.NpmAuthorToken` to `SEC101/017.NpmAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
 - Rename `SEC101/006.GitHubPat` to `SEC101/006.GitHubLegacyPat` [#678](https://github.com/microsoft/sarif-pattern-matcher/pull/678)
 - Disable `SEC101/029.AlibabaCloudCredentials` which throws ScanErrors with message: 
-	"ValidationError:Could not load file or assembly 'AlibabaCloud.OpenApiClient, Version=0.1.4.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. A strongly-named assembly is required. (Exception from HRESULT: 0x80131044)" 
-	These exceptions are caused by incompatibilities between Alibaba code and .Net core 3.1 and 6.0. Will restore rule when dependencies are updated. [#700](https://github.com/microsoft/sarif-pattern-matcher/pull/700)
+	>ValidationError:Could not load file or assembly 'AlibabaCloud.OpenApiClient, Version=0.1.4.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. A strongly-named assembly is required. (Exception from HRESULT: 0x80131044)
+	
+  These exceptions are caused by incompatibilities between Alibaba code and .Net core 3.1 and 6.0. Will restore rule when dependencies are updated. [#700](https://github.com/microsoft/sarif-pattern-matcher/pull/700)
 
 ## *2.0.0-dev*
 
