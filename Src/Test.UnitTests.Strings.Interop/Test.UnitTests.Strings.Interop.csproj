@@ -11,4 +11,8 @@
     <ProjectReference Include="..\Strings.Interop\Strings.Interop.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="xunit" Version="2.4.2" />
+  </ItemGroup>
+
 </Project>
