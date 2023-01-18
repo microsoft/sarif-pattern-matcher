@@ -13,7 +13,9 @@
 - Rename `SEC101/050.IdentifiableNpmLegacyAuthorToken` to `SEC101/050.NpmIdentifiableAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
 - Rename `SEC101/017.NpmAuthorToken` to `SEC101/017.NpmAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
 - Rename `SEC101/006.GitHubPat` to `SEC101/006.GitHubLegacyPat` [#678](https://github.com/microsoft/sarif-pattern-matcher/pull/678)
-- Disable `SEC101/029.AlibabaCloudCredentials` [#700](https://github.com/microsoft/sarif-pattern-matcher/pull/700)
+- Disable `SEC101/029.AlibabaCloudCredentials` which throws ScanErrors with message: 
+	"ValidationError:Could not load file or assembly 'AlibabaCloud.OpenApiClient, Version=0.1.4.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. A strongly-named assembly is required. (Exception from HRESULT: 0x80131044)" 
+	These exceptions are caused by incompatibilities between Alibaba code and .Net core 3.1 and 6.0. Will restore rule when dependencies are updated. [#700](https://github.com/microsoft/sarif-pattern-matcher/pull/700)
 
 ## *2.0.0-dev*
 
