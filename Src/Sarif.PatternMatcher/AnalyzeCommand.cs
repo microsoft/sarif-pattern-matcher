@@ -29,9 +29,41 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             this.context = context;
         }
 
-        internal void Analyze()
+        internal RuntimeConditions Analyze()
         {
-            AnalyzeTargets(context, context.Skimmers, new HashSet<string>());
+            try
+            {
+                var options = new AnalyzeOptions
+                {
+                    Threads = this.context.Threads,
+                };
+
+                AnalyzeTargets(options, this.context, this.context.Skimmers);
+            }
+            catch (ExitApplicationException<ExitReason> _)
+            {
+                // These exceptions have already been logged
+                return context.RuntimeErrors;
+            }
+            catch (Exception ex)
+            {
+                ex = ex.InnerException ?? ex;
+
+                if (!(ex is ExitApplicationException<ExitReason>))
+                {
+                    // These exceptions escaped our net and must be logged here
+                    Errors.LogUnhandledEngineException(context, ex);
+                }
+
+                ExecutionException = ex;
+                return context.RuntimeErrors;
+            }
+            finally
+            {
+                context.Logger.AnalysisStopped(RuntimeErrors);
+            }
+
+            return context.RuntimeErrors;
         }
     }
 
@@ -42,23 +74,41 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
         }
 
+        public static int AnalyzeFromContext(AnalyzeContext context = null,
+                                             IFileSystem fileSystem = null)
+        {
+            return Analyze(args: null, options: null, context, fileSystem);
+        }
+
         public static int Analyze(string[] args = null,
                                   AnalyzeOptions options = null,
                                   AnalyzeContext context = null,
                                   IFileSystem fileSystem = null)
         {
-
             if (context != null)
             {
-                var waitTask = Task.Delay(context.TimeoutInMilliseconds);
                 Task<int> analyzeTask = Task.Factory.StartNew(() =>
                 {
                     new AnalyzeFromContext(context).Analyze();
                     return SUCCESS;
-                });
+                }, context.CancellationToken);
 
-                analyzeTask.Wait();
-                return analyzeTask.IsFaulted ? FAILURE : SUCCESS;
+                int msDelay = context.TimeoutInMilliseconds;
+                if (Task.WhenAny(analyzeTask, Task.Delay(msDelay)).GetAwaiter().GetResult() == analyzeTask)
+                {
+                    bool succeeded = (context.RuntimeErrors & ~RuntimeConditions.Nonfatal) == RuntimeConditions.None;
+
+                    Debug.Assert(
+                        !(analyzeTask.IsFaulted && succeeded),
+                        "Task faulted without setting a fatal runtime condition flag.");
+
+                    // TBD rich return code.
+
+                    return succeeded ? SUCCESS : FAILURE;
+                }
+
+                context.RuntimeErrors |= RuntimeConditions.AnalysisTimedOut;
+                return FAILURE;
             }
 
             options ??= ConvertCommandlineArgumentsToAnalysisOptions(args);
@@ -347,24 +397,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IAnalysisLogger logger,
             RuntimeConditions runtimeErrors,
             PropertiesDictionary policy = null,
-            string filePath = null)
+            Uri targetUri = null)
         {
-            AnalyzeContextBase.MaxFileSizeInKilobytesDefaultValue = 10 * 1024;
-            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy, filePath);
+            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy, targetUri);
 
-            context.Traces =
-                options.Traces.Any() ?
-                    (DefaultTraces)Enum.Parse(typeof(DefaultTraces), string.Join("|", options.Traces)) :
-                    DefaultTraces.None;
+            if (options != null)
+            {
+                context.Traces =
+                    options.Traces.Any() == true ?
+                        new StringSet(options.Traces) :
+                        new StringSet();
 
-            context.Retry = options.Retry;
-            context.RedactSecrets = options.RedactSecrets;
-            context.EnhancedReporting = options.EnhancedReporting;
-            context.DynamicValidation = options.DynamicValidation;
-            context.DataToInsert = options.DataToInsert.ToFlags();
-            context.GlobalFileDenyRegex = options.FileNameDenyRegex;
-            context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
-            context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
+                context.DataToInsert = options.DataToInsert.ToFlags();
+
+                context.Retry = options.Retry;
+                context.RedactSecrets = options.RedactSecrets;
+                context.EnhancedReporting = options.EnhancedReporting;
+                context.DynamicValidation = options.DynamicValidation;
+                context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
+                context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
+            }
 
             return context;
         }

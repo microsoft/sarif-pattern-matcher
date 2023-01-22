@@ -147,6 +147,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 filePath = context.TargetUri.LocalPath;
             }
 
+            if (context.CurrentScanTarget != null)
+            {
+                context.FileContents = context.CurrentScanTarget.Contents;
+            }
+
             if (context.FileContents == null)
             {
                 try
@@ -188,7 +193,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
             else
             {
-                if (DoesTargetFileExceedSizeLimits(context.FileContents.String.Length, context.MaxFileSizeInKilobytes))
+                if (DoesTargetFileExceedSizeLimits(context.CurrentScanTarget.Contents.Length, context.MaxFileSizeInKilobytes))
                 {
                     return;
                 }
@@ -1060,6 +1065,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                 ref validationSuffix,
                                                                 ref validatorMessage,
                                                                 pluginSupportsDynamicValidation);
+
                             validationResult.Message = validatorMessage;
                             validationResult.ResultLevelKind = new ResultLevelKind { Kind = kind, Level = level };
                             ConstructResultAndLogForContentsRegex(binary64DecodedMatch,

@@ -4,11 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 using CommandLine;
+
+using CsvHelper;
 
 using FluentAssertions;
 
@@ -47,22 +52,249 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
-        public void AnalyzeCommand_AnalyzeFromContextApiExample()
+        public void AnalyzeCommand_AnalyzeFromContextNoRulesProvided()
         {
-            var logger = new TestLogger();
-            var skimmers = new List<Skimmer<AnalyzeContext>>();
-            skimmers.Add(new SpamTestRule());
+            var emptySkimmers = new List<Skimmer<AnalyzeContext>>();
 
-            AnalyzeCommand.Analyze(context: new AnalyzeContext
+            foreach (List<Skimmer<AnalyzeContext>> skimmers in new[] { null, emptySkimmers })
+            {
+                var context = new AnalyzeContext
+                {
+                    Logger = new TestMessageLogger(),
+                    Skimmers = skimmers,
+                };
+
+                AnalyzeCommand.AnalyzeFromContext(context);
+                context.RuntimeErrors.Should().Be(RuntimeConditions.NoRulesLoaded);
+            }
+        }
+
+        [Fact]
+        public void AnalyzeCommand_AnalyzeFromContext_CancelledExternally()
+        {
+            var logger = new TestMessageLogger();
+            using ZipArchive archiveToAnalyze = CreateTestZipArchive();
+            var skimmers = new List<Skimmer<AnalyzeContext>> { new SpamTestRule() };
+
+            var ct = new CancellationTokenSource();
+            ct.CancelAfter(TimeSpan.FromMilliseconds(10));
+
+            var context = new AnalyzeContext
             {
                 Logger = logger,
                 Skimmers = skimmers,
-                TimeoutInMilliseconds = 1000,
-                TargetUri = new Uri("c:\\FireOneWarning.txt"),
-                FileContents = "Fire two results for: error error."
-            });
+                CancellationToken = ct.Token,
+                ScanTargetsProvider = new ZipArchiveArtifactProvider(CreateTestZipArchive()),
+            };
 
-            logger.Results.Count.Should().Be(3);
+            // The rule will pause for 500 ms giving us time to cancel;
+            context.Policy.SetProperty(TestRule.DelayInMilliseconds, 100);
+            
+            int result = AnalyzeCommand.AnalyzeFromContext(context);
+
+            logger.ToolNotifications?.Should().BeNull();
+            context.RuntimeErrors.Should().Be(RuntimeConditions.AnalysisCanceled);
+            result.Should().Be(CommandBase.FAILURE);
+        }
+
+        [Fact]
+        public void AnalyzeCommand_AnalyzeFromContext_TimesOut()
+        {
+            var logger = new TestMessageLogger();
+            using ZipArchive archiveToAnalyze = CreateTestZipArchive();
+            var skimmers = new List<Skimmer<AnalyzeContext>> { new SpamTestRule() };
+
+            var context = new AnalyzeContext
+            {
+                Logger = logger,
+                Skimmers = skimmers,
+                ScanTargetsProvider = new ZipArchiveArtifactProvider(CreateTestZipArchive()),
+                TimeoutInMilliseconds = 5,
+            };
+
+            // The rule will pause for 100 ms, provoking our 5 ms timeout;
+            context.Policy.SetProperty(TestRule.DelayInMilliseconds, 100);
+
+            int result = AnalyzeCommand.AnalyzeFromContext(context);
+            context.RuntimeErrors.Should().Be(RuntimeConditions.AnalysisTimedOut);
+            result.Should().Be(CommandBase.FAILURE);
+        }
+
+        [Fact]
+        public void AnalyzeCommand_AnalyzeFromContext_RetrievedFromZippedContent()
+        {
+            var badlyBehavedRule = new BadlyBehavedRule();
+
+            // Initialize a logger to receive callbacks for all results, notifications, etc.
+            var logger = new TestMessageLogger();
+
+            // Initialize and manage a set of skimmers to apply to every scan targets.
+            var skimmers = new List<Skimmer<AnalyzeContext>>
+            {
+                new SpamTestRule(),
+                badlyBehavedRule,
+            };
+
+            // Retrieve the zip archive with all scan targets.
+            using ZipArchive archiveToAnalyze = CreateTestZipArchive();
+
+            /* We will use a special zip archive enumerator below. But here's
+             * how you could create a provider manually using a generic pattern.
+             *
+                var enumeratedArtifacts = new List<EnumeratedArtifact>();
+
+                foreach (ZipArchiveEntry entry in archiveToAnalyze.Entries)
+                {
+                    enumeratedArtifacts.Add(new EnumeratedArtifact
+                    {
+                        Uri = new Uri(entry.FullName, UriKind.RelativeOrAbsolute),
+                        Stream = entry.Open()
+                    });
+                }
+                var unusedArtifactsProvider = new ArtifactProvider(enumeratedArtifacts);
+            *
+            */
+
+            // Initialize an 'analyze command context' object that holds all config.
+            var context = new AnalyzeContext
+            {
+                // Logger, rules and scan targets.
+                Logger = logger,
+                Skimmers = skimmers,
+                ScanTargetsProvider = new ZipArchiveArtifactProvider(archiveToAnalyze),
+
+                // Execution configuration.
+                Threads = 2,
+                TimeoutInMilliseconds = 1000,
+                CancellationToken = default,
+
+                // Optional configuration for enriching output.
+                DataToInsert = OptionallyEmittedData.Hashes | OptionallyEmittedData.Guids,
+                Traces = new StringSet(new[] { nameof(DefaultTraces.ScanTime) })
+            };
+
+            // OPTIONAL: Turn off a badly behaved rule. You could
+            //           also simply omit it from the skimmers set.
+            PerLanguageOption<RuleEnabledState> ruleEnabledProperty =
+                DefaultDriverOptions.CreateRuleSpecificOption(badlyBehavedRule, DefaultDriverOptions.RuleEnabled);
+
+            context.Policy.SetProperty(ruleEnabledProperty, RuleEnabledState.Disabled);
+
+            // Perform the analysis. 
+            int result = CommandBase.FAILURE;
+            try
+            {
+                result = AnalyzeCommand.AnalyzeFromContext(context);
+            }
+            catch (Exception)
+            {
+                // This code path should never get hit. It indicates a catastrophic condition
+                // in the scanner. We could log this and generate telemetry for creating 
+                // a service incident here.
+                false.Should().BeTrue();
+            }
+
+            // We have enabled a single tool (trace) notification which publishes scan time.
+            logger.ToolNotifications.Should().NotBeNull();
+            logger.ToolNotifications.Count.Should().Be(1);
+            logger.ToolNotifications[0].Descriptor.Id.Should().Be("TRC101.ScanTime");
+            
+            // Config notifications relate specifically to how you've configured analysis.
+            // The scanner will emit a notification for every disabled check.
+            logger.ConfigurationNotifications.Should().NotBeNull();
+            logger.ConfigurationNotifications.Count.Should().Be(1);
+            logger.ConfigurationNotifications[0].Descriptor.Id.Should().Be("WRN999.RuleExplicitlyDisabled");
+
+            // Rule disablement is also reflected as a bit in our return value.
+            context.RuntimeErrors.Should().Be(RuntimeConditions.RuleWasExplicitlyDisabled);
+            result.Should().Be(CommandBase.SUCCESS);
+
+            /* Here's how it looks for an entirely clean run.
+             * 
+             *      context.RuntimeErrors.Should().Be(CommandBase.SUCCESS);
+             *      
+             */
+
+            int expectedResultsCount = DEFAULT_TARGETS_COUNT + (DEFAULT_FOO_COUNT * ALL_TARGETS_COUNT);
+            logger.Results.Count.Should().Be(expectedResultsCount);
+        }
+
+        // We create one each of scan targets named in a way to produce an error,
+        // a warning, and a note. The default configuration enables errors/warnings only.
+        private const int NOTE_TARGETS = 1;
+        private const int WARN_TARGETS = 1;
+        private const int ERROR_TARGETS = 1;
+        private const int DEFAULT_TARGETS_COUNT = ERROR_TARGETS + WARN_TARGETS;
+        private const int ALL_TARGETS_COUNT = ERROR_TARGETS + WARN_TARGETS + NOTE_TARGETS;
+        
+        // A default # of 'foo' tokens in each scan target, each of which will generate an error.
+        private const int DEFAULT_FOO_COUNT = 2;
+
+        private static ZipArchive CreateTestZipArchive(int fooInstancesPerTarget = DEFAULT_FOO_COUNT)
+        {
+            const string FOO = " foo ";
+
+            var fooString = new StringBuilder();
+            for (int i = 0; i < fooInstancesPerTarget; i++)
+            {
+                fooString.Append(FOO);
+            }
+            
+            var stream = new MemoryStream();
+            using (var populateArchive = new ZipArchive(stream, ZipArchiveMode.Update, leaveOpen: true))
+            {
+                ZipArchiveEntry entry = populateArchive.CreateEntry("error.txt");
+                using var errorWriter = new StreamWriter(entry.Open());
+                errorWriter.WriteLine($"Generates an error and an error for each of : {fooString}");
+
+                ZipArchiveEntry warningEntry = populateArchive.CreateEntry("warning.txt");
+                using var warningWriter = new StreamWriter(warningEntry.Open());
+                warningWriter.WriteLine($"Generates a warning and an error for each of : {fooString}");
+
+                ZipArchiveEntry noteEntry = populateArchive.CreateEntry("note.txt");
+                using var noteWriter = new StreamWriter(noteEntry.Open());
+                noteWriter.WriteLine($"Generates a note and an error for each of : {fooString}");
+            }
+
+            stream.Position = 0;
+            return new ZipArchive(stream, ZipArchiveMode.Read); ;
+        }
+
+        [Fact]
+        public void AnalyzeCommand_AnalyzeFromContext_EnumeratedArtifact()
+        {
+            var logger = new TestMessageLogger();
+            var skimmers = new List<Skimmer<AnalyzeContext>>
+            {
+                new SpamTestRule()
+            };
+
+            const string FOO = " foo ";
+            string[] fooInstances = { FOO, FOO, FOO };
+            string fooString = string.Join(' ', fooInstances);
+
+            var artifacts = new EnumeratedArtifact[]
+            {
+                new EnumeratedArtifact()
+                {
+                    Uri = new Uri("c:\\FireOneWarning.txt", UriKind.Absolute),
+                    Contents = $"Will fire a single warning due to the file name. " +
+                           $"Will fire two errors due to this content: {fooString}.",
+                }
+            };
+
+            var artifactProvider = new ArtifactProvider(artifacts);
+
+            var context = new AnalyzeContext
+            {
+                Logger = logger,
+                Skimmers = skimmers,
+                ScanTargetsProvider = artifactProvider,
+            };
+
+            AnalyzeCommand.AnalyzeFromContext(context);
+            context.RuntimeErrors.Should().Be(AnalyzeCommand.SUCCESS);              
+            logger.Results.Count.Should().Be(artifacts.Length + fooInstances.Length);
         }
 
         [Fact]

@@ -3,13 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
+using Microsoft.CodeAnalysis.Sarif.Baseline;
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.Strings.Interop;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
-    public class AnalyzeContext : IAnalysisContext
+    public class AnalyzeContext : AnalyzeContextBase
     {
         public AnalyzeContext()
         {
@@ -19,47 +21,41 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FileRegionsCache = null;
             IsValidAnalysisTarget = true;
             FileSystem = new FileSystem();
+            Policy = new PropertiesDictionary();
             ObservedFingerprintCache = new HashSet<string>();
             TextToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
         }
 
-        public IFileSystem FileSystem { get; internal set; }
-
-        public int TimeoutInMilliseconds { get; internal set; }
-
-        public IArtifactProvider ScanTargetProvider { get; set; }
-
         public bool RedactSecrets { get; set; }
 
-        public Exception TargetLoadException { get; set; }
+        public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
 
-        public bool IsValidAnalysisTarget { get; set; }
+        public IFileSystem FileSystem { get; internal set; }
 
-        public IAnalysisLogger Logger { get; set; }
+        private FlexString fileContents;
 
-        public ReportingDescriptor Rule { get; set; }
+        // TODO delete this entirely.
+        public FlexString FileContents
+        {
+            get => this.fileContents ?? this.CurrentScanTarget?.Contents;
+            set => this.fileContents = value;
+        }
 
-        public PropertiesDictionary Policy { get; set; }
+        public override bool AnalysisComplete { get; set; }
 
-        public string MimeType { get; set; }
+        public bool DynamicValidation
+        {
+            get => this.Policy.GetProperty(DynamicValidationProperty);
+            set => this.Policy.SetProperty(DynamicValidationProperty, value);
+        }
 
-        public HashData Hashes { get; set; }
-
-        public RuntimeConditions RuntimeErrors { get; set; }
-
-        public Uri TargetUri { get; set; }
-
-        public FlexString FileContents { get; set; }
-
-        public bool AnalysisComplete { get; set; }
-
-        public DefaultTraces Traces { get; set; }
-
-        public bool DynamicValidation { get; set; }
+        public long MaxMemoryInKilobytes
+        {
+            get => this.Policy.GetProperty(MaxMemoryInKilobytesProperty);
+            set => this.Policy.SetProperty(MaxMemoryInKilobytesProperty, value >= 0 ? value : MaxFileSizeInKilobytesProperty.DefaultValue());
+        }
 
         public string GlobalFileDenyRegex { get; set; }
-
-        public long MaxFileSizeInKilobytes { get; set; } = 10000;
 
         public bool DisableDynamicValidationCaching { get; set; }
 
@@ -67,11 +63,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public bool Retry { get; set; }
 
-        public long MaxMemoryInKilobytes { get; set; } = -1;
-
         public FileRegionsCache FileRegionsCache { get; set; }
-
-        public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
 
         /// <summary>
         /// Gets a hashset that stores observed fingerprints in the
@@ -80,13 +72,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// credential.
         /// </summary>
         public HashSet<string> ObservedFingerprintCache { get; private set; }
-
-        /// <summary>
-        /// Gets or sets flags that specify how region data should be
-        /// constructed (for example if comprehensive regions properties
-        /// should be computed).
-        /// </summary>
-        public OptionallyEmittedData DataToInsert { get; set; }
 
         /// <summary>
         /// Gets or sets a dictionary linking file text with
@@ -98,8 +83,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public Dictionary<string, Tuple<String8, byte[], int[]>> TextToRE2DataMap;
 
-
-        public void Dispose()
+        public override void Dispose()
         {
             FileRegionsCache?.ClearCache();
             FileRegionsCache = null;
@@ -110,5 +94,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             TextToRE2DataMap?.Clear();
             TextToRE2DataMap = null;
         }
+
+        public static PerLanguageOption<bool> DynamicValidationProperty =>
+            new PerLanguageOption<bool>(
+                "CoreSettings", nameof(DynamicValidation), defaultValue: () => false,
+                "Specifies whether to invoke rule dynamic validation, when available.");
+
+        public static PerLanguageOption<long> MaxMemoryInKilobytesProperty =>
+            new PerLanguageOption<long>(
+                "CoreSettings", nameof(MaxMemoryInKilobytes), defaultValue: () => 5096,
+                "An upper bound on the size of the RE2 DFA cache. When the cache size exceeds this " +
+                "limit RE2 will fallback to an alternate (much less performant) search mechanism. " +
+                "Negative values will be discarded in favor of the default of 5096 KB.");
+
     }
 }

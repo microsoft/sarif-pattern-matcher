@@ -20,8 +20,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmerTests
     {
-        private const int DefaultMaxFileSizeInKilobytes = 10000;
-
         private static MatchExpression CreateGuidDetectingMatchExpression(
             string denyFileExtension = null,
             string allowFileExtension = null)
@@ -431,21 +429,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
-        public void SearchSkimmer_ShouldNotEvaluateTooLargeFiles()
+        public void SearchSkimmer_ShouldNotEvaluateFilesThatExceedSizeLimit()
         {
             var testCases = new[]
             {
                 new {
                     fileSize = long.MaxValue,
-                    maxFileSize = (int)uint.MinValue + 1,
+                    maxFileSize = (long)uint.MinValue + 1,
                 },
                 new {
                     fileSize = long.MaxValue,
-                    maxFileSize = int.MaxValue,
+                    maxFileSize = (long)int.MaxValue,
                 },
                 new {
                     fileSize = (long)50000000,
-                    maxFileSize = DefaultMaxFileSizeInKilobytes,
+                    maxFileSize = (long)AnalyzeContextBase.MaxFileSizeInKilobytesProperty.DefaultValue(),
                 },
             };
 
@@ -501,7 +499,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             int[] testCases = new int[]
             {
                 int.MaxValue,
-                1024 * (DefaultMaxFileSizeInKilobytes + 1)
+                1024 * ((int)AnalyzeContextBase.MaxFileSizeInKilobytesProperty.DefaultValue() + 1)
             };
 
             foreach (int testCase in testCases)
@@ -556,7 +554,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 10000,
                 100000,
                 1000000,
-                1024 * (DefaultMaxFileSizeInKilobytes - 1),
+                1024 * ((int)AnalyzeContextBase.MaxFileSizeInKilobytesProperty.DefaultValue() - 1),
                 int.MaxValue,
             };
 
@@ -607,10 +605,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 0,
                 1,
-                DefaultMaxFileSizeInKilobytes,
+                (int)AnalyzeContextBase.MaxFileSizeInKilobytesProperty.DefaultValue(),
                 100000,
                 1000000,
-                1024 * (DefaultMaxFileSizeInKilobytes - 1),
+                1024 * ((int)AnalyzeContextBase.MaxFileSizeInKilobytesProperty.DefaultValue() - 1),
             };
 
             foreach (int testCase in testCases)
@@ -644,13 +642,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 var context = new AnalyzeContext
                 {
                     TargetUri = new Uri(filePath),
-                    Logger = logger
+                    Logger = logger,
                 };
 
                 SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
-                Exception exception = Record.Exception(() => skimmer.Analyze(context));
-                exception.Should().BeNull();
-
+                Record.Exception(() => skimmer.Analyze(context)).Should().BeNull();
                 logger.Results.Should().NotBeNullOrEmpty();
             }
         }
