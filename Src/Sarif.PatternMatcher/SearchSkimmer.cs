@@ -37,7 +37,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
         private readonly Uri _helpUri;
         private readonly IRegex _engine;
-        private readonly IFileSystem _fileSystem;
         private readonly ValidatorsCache _validators;
         private readonly IList<string> _deprecatedNames;
         private readonly IList<MatchExpression> _matchExpressions;
@@ -46,14 +45,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public SearchSkimmer(IRegex engine,
                              ValidatorsCache validators,
-                             SearchDefinition definition,
-                             IFileSystem fileSystem = null)
+                             SearchDefinition definition)
         {
             _engine = engine;
             _id = definition.Id;
             _name = definition.Name;
             _validators = validators;
-            _fileSystem = fileSystem ?? FileSystem.Instance;
             _helpUri = new Uri(definition.HelpUri ?? DefaultHelpUri);
             _fullDescription = new MultiformatMessageString { Text = definition.Description };
 
@@ -108,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override AnalysisApplicability CanAnalyze(AnalyzeContext context, out string reasonIfNotApplicable)
         {
-            string filePath = context.TargetUri.GetFilePath();
+            string filePath = context.CurrentTarget.Uri.GetFilePath();
             reasonIfNotApplicable = null;
 
             if (!string.IsNullOrWhiteSpace(context.GlobalFileDenyRegex) &&
@@ -140,63 +137,63 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override void Analyze(AnalyzeContext context)
         {
-            string filePath = context.TargetUri.OriginalString;
+            string filePath = context.CurrentTarget.Uri.OriginalString;
 
             if (filePath.StartsWith("file://"))
             {
-                filePath = context.TargetUri.LocalPath;
+                filePath = context.CurrentTarget.Uri.LocalPath;
             }
 
-            if (context.CurrentScanTarget != null)
+            try
             {
-                context.FileContents = context.CurrentScanTarget.Contents;
-            }
+                if (context.CurrentTarget != null)
+                {
+                    context.FileContents = context.CurrentTarget.Contents;
+                }
 
-            if (context.FileContents == null)
-            {
-                try
+                if (context.FileContents.String == null)
                 {
                     // Ensure that the byte of the file does not exceed the limit set by the
                     // file-size-in-kilobytes argument.
-                    long fileSize = _fileSystem.FileInfoLength(filePath);
+                    long fileSize = context.FileSystem.FileInfoLength(filePath);
                     if (DoesTargetFileExceedSizeLimits(fileSize, context.MaxFileSizeInKilobytes))
                     {
                         return;
                     }
 
-                    context.FileContents = _fileSystem.FileReadAllText(filePath);
+                    context.FileContents = context.FileSystem.FileReadAllText(filePath);
                 }
-                catch (Exception e)
+                else
                 {
-                    if (e is IOException || e is UnauthorizedAccessException)
+                    if (DoesTargetFileExceedSizeLimits(context.CurrentTarget.Contents.Length, context.MaxFileSizeInKilobytes))
                     {
-                        // We should log and return here because we want the rule to continue to run. i.e., the issue is likely
-                        // in permissions with the scan target, not a general problem with the rule. In other cases, we 'throw',
-                        // which will result in the rule getting disabled.
-                        context.Logger.LogToolNotification(
-                            Errors.CreateNotification(
-                                context.TargetUri,
-                                "ERR998.ExceptionInAnalyze",
-                                context.Rule.Id,
-                                FailureLevel.Error,
-                                e,
-                                persistExceptionStack: true,
-                                messageFormat: null,
-                                e.GetType().Name,
-                                context.TargetUri.GetFileName(),
-                                context.Rule.Name));
                         return;
                     }
-
-                    throw;
                 }
             }
-            else
+            catch (Exception e)
             {
-                if (DoesTargetFileExceedSizeLimits(context.CurrentScanTarget.Contents.Length, context.MaxFileSizeInKilobytes))
+                if (e is IOException || e is UnauthorizedAccessException)
                 {
+                    // We should log and return here because we want the rule to continue to run. i.e., the issue is likely
+                    // in permissions with the scan target, not a general problem with the rule. In other cases, we 'throw',
+                    // which will result in the rule getting disabled.
+                    context.Logger.LogToolNotification(
+                        Errors.CreateNotification(
+                            context.CurrentTarget.Uri,
+                            "ERR998.ExceptionInAnalyze",
+                            context.Rule.Id,
+                            FailureLevel.Error,
+                            e,
+                            persistExceptionStack: true,
+                            messageFormat: null,
+                            e.GetType().Name,
+                            context.CurrentTarget.Uri.GetFileName(),
+                            context.Rule.Name));
                     return;
                 }
+
+                throw;
             }
 
             foreach (MatchExpression matchExpression in _matchExpressions)
@@ -279,7 +276,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     {
                         // An illegal state was returned running check '{0}' against '{1}' ({2}).
                         context.Logger.LogToolNotification(
-                            Errors.CreateNotification(context.TargetUri,
+                            Errors.CreateNotification(context.CurrentTarget.Uri,
                                                       "ERR998.ValidatorReturnedIllegalValidationState",
                                                       context.Rule.Id,
                                                       FailureLevel.Error,
@@ -287,7 +284,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                       persistExceptionStack: false,
                                                       messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
                                                       context.Rule.Id,
-                                                      context.TargetUri.GetFileName(),
+                                                      context.CurrentTarget.Uri.GetFileName(),
                                                       validatorMessage));
                     }
 
@@ -516,7 +513,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     ArtifactLocation = new ArtifactLocation
                     {
-                        Uri = context.TargetUri,
+                        Uri = context.CurrentTarget.Uri,
                     },
                     Region = region,
                 },
@@ -742,7 +739,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (context.FileRegionsCache != null)
             {
                 return context.FileRegionsCache.PopulateTextRegionProperties(region,
-                                                                             context.TargetUri,
+                                                                             context.CurrentTarget.Uri,
                                                                              populateSnippet: true,
                                                                              fileText: context.FileContents);
             }
@@ -750,7 +747,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             lock (FileRegionsCache.Instance)
             {
                 return FileRegionsCache.Instance.PopulateTextRegionProperties(region,
-                                                                              context.TargetUri,
+                                                                              context.CurrentTarget.Uri,
                                                                               populateSnippet: true,
                                                                               fileText: context.FileContents);
             }
@@ -929,7 +926,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
-                string filePath = context.TargetUri.GetFilePath();
+                string filePath = context.CurrentTarget.Uri.GetFilePath();
                 string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
                 IEnumerable<ValidationResult> validationResults = _validators.Validate(ruleName,
                                                                                        context,
@@ -989,7 +986,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             ResultKind kind = matchExpression.Kind;
             FailureLevel level = matchExpression.Level;
-            string filePath = context.TargetUri.GetFilePath();
+            string filePath = context.CurrentTarget.Uri.GetFilePath();
             string searchText = binary64DecodedMatch != null
                                                    ? Decode(binary64DecodedMatch.Value)
                                                    : context.FileContents;
@@ -1216,12 +1213,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             if (context.FileRegionsCache != null)
             {
-                return context.FileRegionsCache.ConstructMultilineContextSnippet(region, context.TargetUri);
+                return context.FileRegionsCache.ConstructMultilineContextSnippet(region, context.CurrentTarget.Uri);
             }
 
             lock (FileRegionsCache.Instance)
             {
-                return FileRegionsCache.Instance.ConstructMultilineContextSnippet(region, context.TargetUri);
+                return FileRegionsCache.Instance.ConstructMultilineContextSnippet(region, context.CurrentTarget.Uri);
             }
         }
 
@@ -1246,9 +1243,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Fingerprint fingerprint = default;
             string validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
-            string filePath = context.TargetUri.IsAbsoluteUri
-                ? context.TargetUri.LocalPath
-                : context.TargetUri.OriginalString;
+            string filePath = context.CurrentTarget.Uri.IsAbsoluteUri
+                ? context.CurrentTarget.Uri.LocalPath
+                : context.CurrentTarget.Uri.OriginalString;
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 groups["scanTargetFullPath"] = new FlexMatch() { Value = filePath };
@@ -1281,7 +1278,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 // An illegal state was returned running check '{0}' against '{1}' ({2}).
                                 context.Logger.LogToolNotification(
                                     Errors.CreateNotification(
-                                        context.TargetUri,
+                                        context.CurrentTarget.Uri,
                                         "ERR998.ValidatorReturnedIllegalValidationState",
                                         context.Rule.Id,
                                         FailureLevel.Error,
@@ -1289,7 +1286,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                         persistExceptionStack: false,
                                         messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
                                         context.Rule.Id,
-                                        context.TargetUri.GetFileName(),
+                                        context.CurrentTarget.Uri.GetFileName(),
                                         validatorMessage));
 
                                 level = FailureLevel.Error;

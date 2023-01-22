@@ -61,6 +61,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             SarifLog sarifLog = RunAnalyzeCommand(definitionsText, fileContents);
             sarifLog.Should().NotBeNull();
+
+            sarifLog.Runs?[0].Invocations[0].ToolExecutionNotifications.Should().BeNull();
             sarifLog.Runs?[0].Results?.Count.Should().Be(6);
 
             for (int i = 0; i < sarifLog.Runs[0].Results.Count; i++)
@@ -424,8 +426,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             mockFileSystem.Setup(x => x.FileInfoLength(SmallTargetName)).Returns(fileContents.Length);
 
-            Program.FileSystem = mockFileSystem.Object;
-
             string tempFileName = Path.GetTempFileName();
             string sarifLogFileName = $"{tempFileName}.sarif";
             SarifLog sarifLog = null;
@@ -439,6 +439,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     $"-d", searchDefinitionsPath,
                     $"-o", sarifLogFileName,
                 };
+
+                Program.FileSystem = mockFileSystem.Object;
 
                 int result = Program.Main(args);
                 Program.InstantiatedAnalyzeCommand.RuntimeErrors.Should().Be(0);
@@ -547,10 +549,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 }
 
                 int result = Program.Main(args);
+                sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
+                sarifLog.Runs[0].Invocations?[0].ToolExecutionNotifications.Should().BeNull();
+
                 Program.InstantiatedAnalyzeCommand.RuntimeErrors.Should().Be(runtimeConditions);
                 result.Should().Be(CommandBase.SUCCESS);
-
-                sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
             }
             finally
             {
@@ -682,7 +685,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 string message = $"SARIF result should not be null for `{validationScenario}` test scenario {testScenarioMode}.";
                 stringBuilder = StringBuilderFormatAndAppendNewLine(message, stringBuilder);
             }
-            else if (sarifLog.Runs[0]?.Results[0]?.Level != expectedFailureLevel)
+            else if (sarifLog.Runs[0].Results?.Count > 0 == false)
+            {
+                string message = $"No results observed for `{validationScenario}` test scenario {testScenarioMode}.";
+                stringBuilder = StringBuilderFormatAndAppendNewLine(message, stringBuilder);
+            }
+            else if (sarifLog.Runs[0].Results[0].Level != expectedFailureLevel)
             {
                 string message = $"Expected `FailureLevel` to be `{expectedFailureLevel}` but found " +
                     $"{sarifLog.Runs[0]?.Results[0]?.Level} for `{validationScenario}` test scenario {testScenarioMode}.";

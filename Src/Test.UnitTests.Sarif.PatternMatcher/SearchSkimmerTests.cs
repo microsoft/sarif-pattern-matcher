@@ -11,6 +11,7 @@ using FluentAssertions;
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 using Moq;
 
@@ -76,14 +77,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var logger = new TestLogger();
 
+            var target = new EnumeratedArtifact
+            {
+                Uri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
+                Contents = base64Encoded,
+            };
+
             var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
-                FileContents = base64Encoded,
+                CurrentTarget = target,
+                FileSystem = mockFileSystem.Object,
                 Logger = logger,
             };
 
-            SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            SearchSkimmer skimmer = CreateSkimmer(definition);
             skimmer.Analyze(context);
 
             // Analyzing base64-encoded values with MatchLengthToDecode > 0 succeeds
@@ -96,16 +103,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             definition.MatchExpressions[0].MatchLengthToDecode = 0;
 
             logger.Results.Clear();
-            skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            skimmer = CreateSkimmer(definition);
             skimmer.Analyze(context);
 
             logger.Results.Count.Should().Be(0);
 
             // Analyzing plaintext values with MatchLengthToDecode > 0 succeeds
-            context.FileContents = scanTargetContents;
+            context.CurrentTarget.Contents = scanTargetContents;
 
             logger.Results.Clear();
-            skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            skimmer = CreateSkimmer(definition);
             skimmer.Analyze(context);
 
             // But we should see a change in encoding information in message. Note
@@ -128,15 +135,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
 
+            var target = new EnumeratedArtifact
+            {
+                Uri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
+                Contents = definition.Id,
+            };
+
             var logger = new TestLogger();
             var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
-                FileContents = definition.Id,
+                CurrentTarget = target,
+                FileSystem = mockFileSystem.Object,
                 Logger = logger
             };
 
-            SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            SearchSkimmer skimmer = CreateSkimmer(definition);
             skimmer.Analyze(context);
 
             ValidateResultsAgainstDefinition(logger.Results, definition, skimmer);
@@ -152,14 +165,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
 
             var logger = new TestLogger();
+
+            var target = new EnumeratedArtifact
+            {
+                Uri = new Uri($"file:///c:/{definition.Name}.Fake.asc"),
+                Contents = $"{definition.Id}",
+            };
+
             var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.Fake.asc"),
-                FileContents = $"{ definition.Id}",
+                CurrentTarget = target,
+                FileSystem = mockFileSystem.Object,
                 Logger = logger
             };
 
-            SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            SearchSkimmer skimmer = CreateSkimmer(definition);
             skimmer.Analyze(context);
 
             logger.Results.Should().BeNull();
@@ -414,15 +434,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
 
+            var target = new EnumeratedArtifact
+            {
+                Uri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
+                Contents = definition.Id,
+            };
+
             var logger = new TestLogger();
             var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
-                FileContents = definition.Id,
-                Logger = logger
+                Logger = logger,
+                CurrentTarget = target,
+                FileSystem = mockFileSystem.Object,
             };
 
-            SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            SearchSkimmer skimmer = CreateSkimmer(definition);
             Exception exception = Record.Exception(() => skimmer.Analyze(context));
             exception.Should().NotBeNull();
             exception.GetType().Should().Be(typeof(InvalidOperationException));
@@ -449,11 +475,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (var testCase in testCases)
             {
+                var sb = new StringBuilder();
+                for (int i = 0; i < 100; i++)
+                {
+                    sb.Append($"{Guid.NewGuid()};");
+                }
+
                 var mockFileSystem = new Mock<IFileSystem>();
-
                 mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(testCase.fileSize);
-
-                mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>())).Returns(Guid.NewGuid().ToString());
+                mockFileSystem.SetupSequence(x => x.FileReadAllText(It.IsAny<string>()))
+                    .Returns((string)null)
+                    .Returns(sb.ToString());
 
                 MatchExpression expr = CreateGuidDetectingMatchExpression();
                 SearchDefinition definition = CreateDefaultSearchDefinition(expr);
@@ -463,12 +495,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 var logger = new TestLogger();
 
-                var sb = new StringBuilder();
-
-                for (int i = 0; i < 100; i++)
+                var target = new EnumeratedArtifact
                 {
-                    sb.Append($"{Guid.NewGuid()};");
-                }
+                    Uri = new Uri(filePath),
+                    FileSystem = mockFileSystem.Object,
+                };
 
                 // `MaxFileSizeInKilobytes` is set, overriding the default value used by the `AnalyzeContext`.
                 // `FileContents` is not set, so file size will be determined by checking the size of the target file,
@@ -477,12 +508,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // references to observe the the origins and comparisons of these values.
                 var context = new AnalyzeContext
                 {
-                    TargetUri = new Uri(filePath),
                     Logger = logger,
+                    CurrentTarget = target,
+                    FileSystem = mockFileSystem.Object,
                     MaxFileSizeInKilobytes = testCase.maxFileSize
                 };
 
-                SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+                SearchSkimmer skimmer = CreateSkimmer(definition);
                 Exception exception = Record.Exception(() => skimmer.Analyze(context));
                 exception.Should().BeNull();
 
@@ -504,26 +536,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (int testCase in testCases)
             {
+                // We mock here to avoid need to actually create large test files in memory.
                 var mockFileSystem = new Mock<IFileSystem>();
-
                 mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(testCase);
 
-                mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>())).Returns(Guid.NewGuid().ToString());
+                // This mock operation is required to ensure that the enumerated artifact contents
+                // return null, in which case the scanner will fall back to checking file size on disk.
+                mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>())).Returns((string)null);
 
                 MatchExpression expr = CreateGuidDetectingMatchExpression();
                 SearchDefinition definition = CreateDefaultSearchDefinition(expr);
+                SearchSkimmer skimmer = CreateSkimmer(definition);
 
                 string filePath = $"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}";
                 var uri = new Uri(filePath);
-
-                var logger = new TestLogger();
-
-                var sb = new StringBuilder();
-
-                for (int i = 0; i < 100; i++)
+                var target = new EnumeratedArtifact
                 {
-                    sb.Append($"{Guid.NewGuid()};");
-                }
+                    Uri = new Uri(filePath),
+                    FileSystem = mockFileSystem.Object,
+                };
+                
+                var logger = new TestLogger();                
 
                 // `MaxFileSizeInKilobytes` is not set; the default value defined in `AnalyzeContext.cs` will be used.
                 // `FileContents` is not set, so file size will be determined by checking the size of the target file,
@@ -532,15 +565,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // references to observe the the origins and comparisons of these values.
                 var context = new AnalyzeContext
                 {
-                    TargetUri = new Uri(filePath),
-                    Logger = logger
+                    FileSystem = mockFileSystem.Object,
+                    CurrentTarget = target,
+                    Logger = logger,
+                    Rule = skimmer,
                 };
 
-                SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
-                Exception exception = Record.Exception(() => skimmer.Analyze(context));
-                exception.Should().BeNull();
-
-                logger.Results.Should().BeNull();
+                Record.Exception(() => skimmer.Analyze(context)).Should().BeNull();
+                logger.NothingFired.Should().BeTrue();
             }
         }
 
@@ -560,8 +592,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (int testCase in testCases)
             {
-                var mockFileSystem = new Mock<IFileSystem>();
-
                 MatchExpression expr = CreateGuidDetectingMatchExpression();
                 SearchDefinition definition = CreateDefaultSearchDefinition(expr);
 
@@ -577,19 +607,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     sb.Append($"{Guid.NewGuid()};");
                 }
 
+                var target = new EnumeratedArtifact 
+                { 
+                    Uri = new Uri(filePath),
+                    Contents = Guid.NewGuid().ToString(),
+                };
+
                 // `MaxFileSizeInKilobytes` is set, overriding the default value used by the `AnalyzeContext`.
                 // `FileContents` is set, so file size will be determined by the length of the string.
                 // Set breakpoints in `DoesTargetFileExceedSizeLimits()` in the `SearchSkimmer` class and both
                 // references to observe the the origins and comparisons of these values.
                 var context = new AnalyzeContext
                 {
-                    TargetUri = new Uri(filePath),
+                    CurrentTarget = target,
                     Logger = logger,
                     MaxFileSizeInKilobytes = testCase,
-                    FileContents = Guid.NewGuid().ToString()
                 };
 
-                SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+                SearchSkimmer skimmer = CreateSkimmer(definition);
                 Exception exception = Record.Exception(() => skimmer.Analyze(context));
                 exception.Should().BeNull();
 
@@ -613,26 +648,31 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (int testCase in testCases)
             {
+                int guidsCount = 5;
+                var sb = new StringBuilder();
+                for (int i = 0; i < guidsCount; i++)
+                {
+                    sb.AppendLine($"{Guid.NewGuid()};");
+                }
+
                 var mockFileSystem = new Mock<IFileSystem>();
-
                 mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(testCase);
-
-                mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>())).Returns(Guid.NewGuid().ToString());
+                mockFileSystem.SetupSequence(x => x.FileReadAllText(It.IsAny<string>()))
+                    .Returns((string)null)
+                    .Returns(sb.ToString());
 
                 MatchExpression expr = CreateGuidDetectingMatchExpression();
                 SearchDefinition definition = CreateDefaultSearchDefinition(expr);
 
                 string filePath = $"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}";
-                var uri = new Uri(filePath);
+
+                var target = new EnumeratedArtifact
+                {
+                    Uri = new Uri(filePath),
+                    FileSystem = mockFileSystem.Object,
+                };
 
                 var logger = new TestLogger();
-
-                var sb = new StringBuilder();
-
-                for (int i = 0; i < 100; i++)
-                {
-                    sb.Append($"{Guid.NewGuid()};");
-                }
 
                 // `MaxFileSizeInKilobytes` is not set; the default value defined in `AnalyzeContext.cs` will be used.
                 // `FileContents` is not set, so file size will be determined by checking the size of the target file,
@@ -641,13 +681,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // references to observe the the origins and comparisons of these values.
                 var context = new AnalyzeContext
                 {
-                    TargetUri = new Uri(filePath),
+                    CurrentTarget = target,
+                    FileSystem = mockFileSystem.Object,
                     Logger = logger,
                 };
 
-                SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+                SearchSkimmer skimmer = CreateSkimmer(definition);
                 Record.Exception(() => skimmer.Analyze(context)).Should().BeNull();
+                logger.NoNotificationsFired.Should().BeTrue();
                 logger.Results.Should().NotBeNullOrEmpty();
+                logger.Results.Count.Should().Be(guidsCount);
             }
         }
 
@@ -669,18 +712,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var logger = new TestLogger();
 
-            var context = new AnalyzeContext
-            {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
-                Logger = logger,
-                MaxFileSizeInKilobytes = 1,
-                Rule = reportingDescriptor
-            };
-
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>())).Throws(new FileNotFoundException());
 
-            SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            var target = new EnumeratedArtifact
+            {
+                Uri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
+                FileSystem = mockFileSystem.Object,
+            };
+
+            var context = new AnalyzeContext
+            {
+                Logger = logger,
+                CurrentTarget = target,
+                Rule = reportingDescriptor,
+                MaxFileSizeInKilobytes = 1,
+                FileSystem = mockFileSystem.Object,
+            };
+
+            SearchSkimmer skimmer = CreateSkimmer(definition);
             Exception exception = Record.Exception(() => skimmer.Analyze(context));
             exception.Should().BeNull();
 
@@ -705,21 +755,27 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var logger = new TestLogger();
 
-            var context = new AnalyzeContext
+            var target = new EnumeratedArtifact
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}.{scanTargetExtension}"),
-                FileContents = definition.Id,
-                Logger = logger,
-                FileRegionsCache = new FileRegionsCache(),
+                Uri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}.{scanTargetExtension}"),
+                Contents = definition.Id,
             };
 
             var mockFileSystem = new Mock<IFileSystem>();
-            mockFileSystem.Setup(x => x.FileReadAllText(context.TargetUri.LocalPath)).Returns(definition.Id);
+            mockFileSystem.Setup(x => x.FileReadAllText(target.Uri.LocalPath)).Returns(definition.Id);
+
+            var context = new AnalyzeContext
+            {
+                CurrentTarget = target,
+                Logger = new TestLogger(),
+                FileSystem= mockFileSystem.Object, 
+                FileRegionsCache = new FileRegionsCache(),
+            };
+
 
             skimmer = CreateSkimmer(
                 definition,
-                validators: validators,
-                fileSystem: mockFileSystem.Object);
+                validators: validators);
 
             return context;
         }
@@ -727,8 +783,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private SearchSkimmer CreateSkimmer(
             SearchDefinition definition,
             IRegex engine = null,
-            ValidatorsCache validators = null,
-            IFileSystem fileSystem = null)
+            ValidatorsCache validators = null)
         {
             var definitions = new SearchDefinitions
             {
@@ -740,8 +795,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return new SearchSkimmer(
                 engine: engine ?? RE2Regex.Instance,
                 validators: validators,
-                definition: definitions.Definitions[0],
-                fileSystem: fileSystem);
+                definition: definitions.Definitions[0]);
         }
 
         private SearchDefinition CreateDefaultSearchDefinition(MatchExpression matchExpression)

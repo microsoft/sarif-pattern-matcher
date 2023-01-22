@@ -197,8 +197,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     skimmers.Add(
                         new SearchSkimmer(engine: engine,
                                           validators: validators,
-                                          definition,
-                                          fileSystem));
+                                          definition));
 
                     const string singleSpace = " ";
 
@@ -396,10 +395,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             AnalyzeOptions options,
             IAnalysisLogger logger,
             RuntimeConditions runtimeErrors,
-            PropertiesDictionary policy = null,
-            Uri targetUri = null)
+            PropertiesDictionary policy = null)
         {
-            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy, targetUri);
+            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy);
+            context.FileSystem = FileSystem;
+
+            // TBD push file system into base class.
+            context.FileSystem = FileSystem;
 
             if (options != null)
             {
@@ -432,7 +434,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             ICollection<IList<Result>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
 
-            if (resultLists != null && context.TargetUri.ToString().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+            if (resultLists != null && context.CurrentTarget.Uri.ToString().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
             {
                 var aggregatedResults = new List<Result>();
                 foreach (IList<Result> resultList in resultLists)

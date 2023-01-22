@@ -37,7 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         // TODO delete this entirely.
         public FlexString FileContents
         {
-            get => this.fileContents ?? this.CurrentScanTarget?.Contents;
+            get => this.fileContents ?? this.CurrentTarget?.Contents;
             set => this.fileContents = value;
         }
 

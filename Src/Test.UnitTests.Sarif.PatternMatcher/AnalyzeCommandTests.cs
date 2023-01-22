@@ -84,7 +84,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Logger = logger,
                 Skimmers = skimmers,
                 CancellationToken = ct.Token,
-                ScanTargetsProvider = new ZipArchiveArtifactProvider(CreateTestZipArchive()),
+                TargetsProvider = new ZipArchiveArtifactProvider(CreateTestZipArchive()),
             };
 
             // The rule will pause for 500 ms giving us time to cancel;
@@ -108,7 +108,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 Logger = logger,
                 Skimmers = skimmers,
-                ScanTargetsProvider = new ZipArchiveArtifactProvider(CreateTestZipArchive()),
+                TargetsProvider = new ZipArchiveArtifactProvider(CreateTestZipArchive()),
                 TimeoutInMilliseconds = 5,
             };
 
@@ -161,7 +161,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // Logger, rules and scan targets.
                 Logger = logger,
                 Skimmers = skimmers,
-                ScanTargetsProvider = new ZipArchiveArtifactProvider(archiveToAnalyze),
+                TargetsProvider = new ZipArchiveArtifactProvider(archiveToAnalyze),
 
                 // Execution configuration.
                 Threads = 2,
@@ -289,7 +289,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 Logger = logger,
                 Skimmers = skimmers,
-                ScanTargetsProvider = artifactProvider,
+                TargetsProvider = artifactProvider,
             };
 
             AnalyzeCommand.AnalyzeFromContext(context);

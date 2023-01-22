@@ -13,13 +13,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             AnalyzeOptions options,
             IAnalysisLogger logger,
             RuntimeConditions runtimeErrors,
-            PropertiesDictionary policy = null,
-            Uri targetUri = null)
+            PropertiesDictionary policy = null)
         {
-            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy, targetUri);
+            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy);
 
             var aggregatingLogger = (AggregatingLogger)context.Logger;
-
             aggregatingLogger.Loggers.Add(new TestLogger());
 
             return context;
