@@ -187,25 +187,9 @@ namespace Microsoft.CodeAnalysis.Sarif
                     for (uint i = 0; i < errorsCount; i++)
                     {
                         context.Logger.Log(this,
-                            new Result
-                            {
-                                RuleId = this.Id,
-                                Level = FailureLevel.Error,
-                                Message = new Message { Text = "Simple test rule message." },
-                                Locations = new Location[]
-                                {
-                                    new Location
-                                    {
-                                        PhysicalLocation = new PhysicalLocation
-                                        {
-                                            ArtifactLocation = new ArtifactLocation
-                                            {
-                                                Uri = context.CurrentTarget.Uri
-                                            }
-                                        }
-                                    }
-                                }
-                            });
+                            RuleUtilities.BuildResult(FailureLevel.Error, context, null,
+                            nameof(SkimmerBaseTestResources.TEST1001_ErrorMessageFromTestBehavior),
+                            context.CurrentTarget.Uri.GetFileName()));
 
                         Thread.Sleep(s_random.Next(0, 10));
                     }
@@ -223,25 +207,9 @@ namespace Microsoft.CodeAnalysis.Sarif
             for (uint i = 0; i < fooInstanceCount; i++)
             {
                 context.Logger.Log(this,
-                    new Result
-                    {
-                        RuleId = this.Id,
-                        Level = FailureLevel.Error,
-                        Message = new Message { Text = "Found a foo in the file." },
-                        Locations = new Location[]
-                        {
-                            new Location
-                            {
-                                PhysicalLocation = new PhysicalLocation
-                                {
-                                    ArtifactLocation = new ArtifactLocation
-                                    {
-                                        Uri = context.CurrentTarget.Uri
-                                    }
-                                }
-                            }
-                        }
-                    });
+                    RuleUtilities.BuildResult(FailureLevel.Error, context, null,
+                    nameof(SkimmerBaseTestResources.TEST1001_FoundAFooInTheFile),
+                    context.CurrentTarget.Uri.GetFileName()));
             }
 
             string fileName = context.CurrentTarget.Uri.ToString();

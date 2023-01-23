@@ -156,10 +156,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 // that catastrophic event is logged as a SARIF notification.
                 var disabledSkimmers = new HashSet<string>();
 
+                var target = new EnumeratedArtifact
+                {
+                    Uri = new Uri(filePath, UriKind.Absolute),
+                    Contents = logContents,
+                };
+
                 var context = new AnalyzeContext
                 {
-                    TargetUri = new Uri(filePath, UriKind.Absolute),
-                    FileContents = logContents,
+                    CurrentTarget = target,
                     Logger = logger,
                 };
 

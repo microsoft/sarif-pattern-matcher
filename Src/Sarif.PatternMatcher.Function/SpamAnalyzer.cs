@@ -56,12 +56,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 // that catastrophic event is logged as a SARIF notification.
                 var disabledSkimmers = new HashSet<string>();
 
+                var target = new EnumeratedArtifact
+                {
+                    Uri = new Uri(filePath, UriKind.RelativeOrAbsolute),
+                    Contents = text,
+                };
+
                 var context = new AnalyzeContext
                 {
                     DataToInsert = dataToInsert,
-                    TargetUri = new Uri(filePath, UriKind.RelativeOrAbsolute),
-                    FileContents = text,
                     Logger = logger,
+                    CurrentTarget = target,
                     DynamicValidation = true,
                     DisableDynamicValidationCaching = true,
                 };

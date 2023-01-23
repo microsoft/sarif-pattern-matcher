@@ -30,8 +30,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
 
-        public IFileSystem FileSystem { get; internal set; }
-
         private FlexString fileContents;
 
         // TODO delete this entirely.

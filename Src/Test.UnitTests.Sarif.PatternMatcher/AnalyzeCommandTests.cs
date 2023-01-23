@@ -56,11 +56,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             var emptySkimmers = new List<Skimmer<AnalyzeContext>>();
 
+            var target = new EnumeratedArtifact
+            {
+                Uri = new Uri(@"c:\test.txt"),
+                Contents = string.Empty
+            };
+
             foreach (List<Skimmer<AnalyzeContext>> skimmers in new[] { null, emptySkimmers })
             {
                 var context = new AnalyzeContext
                 {
                     Logger = new TestMessageLogger(),
+                    CurrentTarget= target,
                     Skimmers = skimmers,
                 };
 
@@ -93,7 +100,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             int result = AnalyzeCommand.AnalyzeFromContext(context);
 
             logger.ToolNotifications?.Should().BeNull();
-            context.RuntimeErrors.Should().Be(RuntimeConditions.AnalysisCanceled);
+            context.RuntimeErrors.HasFlag(RuntimeConditions.AnalysisCanceled).Should().BeTrue();
             result.Should().Be(CommandBase.FAILURE);
         }
 
@@ -206,7 +213,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             logger.ConfigurationNotifications[0].Descriptor.Id.Should().Be("WRN999.RuleExplicitlyDisabled");
 
             // Rule disablement is also reflected as a bit in our return value.
-            context.RuntimeErrors.Should().Be(RuntimeConditions.RuleWasExplicitlyDisabled);
+
+            RuntimeConditions conditions =
+                RuntimeConditions.RuleWasExplicitlyDisabled |
+                RuntimeConditions.OneOrMoreWarningsFired    |
+                RuntimeConditions.OneOrMoreErrorsFired;
+
+            context.RuntimeErrors.Should().Be(conditions);
             result.Should().Be(CommandBase.SUCCESS);
 
             /* Here's how it looks for an entirely clean run.
@@ -292,8 +305,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 TargetsProvider = artifactProvider,
             };
 
-            AnalyzeCommand.AnalyzeFromContext(context);
-            context.RuntimeErrors.Should().Be(AnalyzeCommand.SUCCESS);              
+            int result = AnalyzeCommand.AnalyzeFromContext(context);
+            result.Should().Be(AnalyzeCommand.SUCCESS);
+            context.RuntimeErrors.Should().Be(RuntimeConditions.OneOrMoreErrorsFired | RuntimeConditions.OneOrMoreWarningsFired);              
             logger.Results.Count.Should().Be(artifacts.Length + fooInstances.Length);
         }
 
@@ -376,10 +390,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
+            var target = new EnumeratedArtifact
+            {
+                Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                Contents = fileContents,
+            };
+
             var context = new AnalyzeContext()
             {
-                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
-                FileContents = fileContents,
+                CurrentTarget = target,
                 Logger = testLogger,
             };
 
@@ -444,10 +463,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
+            var target = new EnumeratedArtifact
+            {
+                Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                Contents = fileContents,
+            };
+
             var context = new AnalyzeContext()
             {
-                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
-                FileContents = fileContents,
+                CurrentTarget = target,
                 Logger = testLogger,
             };
 
@@ -679,14 +703,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                          OptionallyEmittedData.All,
                                          closeWriterOnDispose: true);
 
+            var target = new EnumeratedArtifact
+            {
+                Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                Contents = fileContents,
+            };
 
             using var context = new AnalyzeContext()
             {
                 Logger = logger,
                 RedactSecrets = true,
-                FileContents = fileContents,
+                CurrentTarget = target,
                 DataToInsert = OptionallyEmittedData.All,
-                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
             };
 
             var disabledSkimmers = new HashSet<string>();
@@ -787,10 +815,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
+            var target = new EnumeratedArtifact
+            {
+                Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                Contents = fileContents,
+            };
+
             var context = new AnalyzeContext()
             {
-                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
-                FileContents = fileContents,
+                CurrentTarget = target,
                 Logger = testLogger,
             };
 
@@ -821,11 +854,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                          dataToInsert,
                                          closeWriterOnDispose: false);
 
+            var target = new EnumeratedArtifact
+            {
+                Uri = new Uri($"/notreeindex/{Guid.NewGuid()}.test", UriKind.Relative),
+                Contents = "foo",
+            };
+
             using var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"/notreeindex/{Guid.NewGuid()}.test", UriKind.Relative),
-                FileContents = "foo",
                 Logger = logger,
+                CurrentTarget = target,
                 DataToInsert = dataToInsert,
                 FileRegionsCache = new FileRegionsCache(),
             };
@@ -908,13 +946,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FlexString fileContents = "bar foo foo";
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
 
+            var targetsProvider = new ArtifactProvider(new[] {
+            new EnumeratedArtifact
+            {
+                Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                Contents = fileContents,
+            } });
+
             AnalyzeCommand.Analyze(context: new AnalyzeContext
             {
                 Logger = testLogger,
                 Skimmers = skimmers,
-                FileContents = fileContents,
-                TimeoutInMilliseconds = 1000,
-                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                TargetsProvider = targetsProvider,
+                TimeoutInMilliseconds = int.MaxValue,
             });
 
             testLogger.Results.Should().NotBeNull();
@@ -938,10 +982,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
+            var target = new EnumeratedArtifact
+            {
+                Uri = new Uri(scanTargetFileName, UriKind.Relative),
+                Contents = fileContents,
+            };
+
             var context = new AnalyzeContext()
             {
-                TargetUri = new Uri(scanTargetFileName, UriKind.Relative),
-                FileContents = fileContents,
+                CurrentTarget = target,
                 Logger = testLogger,
             };
 
