@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 
+using Microsoft.CodeAnalysis.Sarif.Driver;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class MatchExpression
@@ -24,6 +26,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public string HelpUri { get; set; }
 
         public string Message { get; set; }
+
+        public RuleEnabledState RuleEnabledState { get; set; }
 
         public FailureLevel Level { get; set; }
 

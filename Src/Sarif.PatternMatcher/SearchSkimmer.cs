@@ -120,6 +120,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
+                if (matchExpression.RuleEnabledState == RuleEnabledState.Disabled)
+                {
+                    continue;
+                }
+
                 if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(filePath, matchExpression.FileNameDenyRegex))
                 {
                     continue;
@@ -196,6 +201,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
+                if (matchExpression.RuleEnabledState == RuleEnabledState.Disabled)
+                {
+                    continue;
+                }
+
                 if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
                 {
                     if (!_engine.IsMatch(filePath,
