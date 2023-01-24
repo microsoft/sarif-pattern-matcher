@@ -62,8 +62,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 { nameof(SdkResources.NotApplicable_InvalidMetadata), new MultiformatMessageString() { Text = SdkResources.NotApplicable_InvalidMetadata, } },
             };
 
+            var enabledMatchExpressionList = new List<MatchExpression>();
             foreach (MatchExpression matchExpression in definition.MatchExpressions)
             {
+                if (matchExpression.RuleEnabledState == RuleEnabledState.Disabled)
+                {
+                    continue;
+                }
+
+                enabledMatchExpressionList.Add(matchExpression);
+
                 string matchExpressionMessage = matchExpression.Message;
                 matchExpression.ArgumentNameToIndexMap = GenerateIndicesForNamedArguments(ref matchExpressionMessage);
 
@@ -87,7 +95,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 };
             }
 
-            _matchExpressions = definition.MatchExpressions;
+            _matchExpressions = enabledMatchExpressionList;
         }
 
         public override Uri HelpUri => _helpUri;
@@ -120,11 +128,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
-                if (matchExpression.RuleEnabledState == RuleEnabledState.Disabled)
-                {
-                    continue;
-                }
-
                 if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(filePath, matchExpression.FileNameDenyRegex))
                 {
                     continue;
@@ -201,11 +204,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
-                if (matchExpression.RuleEnabledState == RuleEnabledState.Disabled)
-                {
-                    continue;
-                }
-
                 if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
                 {
                     if (!_engine.IsMatch(filePath,
@@ -535,9 +533,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             // We'll limit rank precision to two decimal places. Because this value
-            // is actually converted from a nomalized range of 0.0 to 1.0, to the
+            // is actually converted from a normalized range of 0.0 to 1.0, to the
             // SARIF 0.0 to 100.0 equivalent, this is effectively four decimal places
-            // of precision as far as the normalized Shannon entrop is concerned.
+            // of precision as far as the normalized Shannon entropy is concerned.
             rank = Math.Round(rank, 2, MidpointRounding.AwayFromZero);
 
             var result = new Result()
@@ -895,7 +893,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         continue;
                     }
 
-                    // TODO: we only support a single intraline match per expression. How shoud
+                    // TODO: we only support a single intraline match per expression. How should
                     // we report or error out in cases where this expectation isn't met?
                     Dictionary<string, FlexMatch> intralineMatch = intralineMatches[0];
 
