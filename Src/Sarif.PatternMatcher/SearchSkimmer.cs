@@ -62,16 +62,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 { nameof(SdkResources.NotApplicable_InvalidMetadata), new MultiformatMessageString() { Text = SdkResources.NotApplicable_InvalidMetadata, } },
             };
 
-            var enabledMatchExpressionList = new List<MatchExpression>();
             foreach (MatchExpression matchExpression in definition.MatchExpressions)
             {
-                if (matchExpression.RuleEnabledState == RuleEnabledState.Disabled)
-                {
-                    continue;
-                }
-
-                enabledMatchExpressionList.Add(matchExpression);
-
                 string matchExpressionMessage = matchExpression.Message;
                 matchExpression.ArgumentNameToIndexMap = GenerateIndicesForNamedArguments(ref matchExpressionMessage);
 
@@ -95,7 +87,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 };
             }
 
-            _matchExpressions = enabledMatchExpressionList;
+            _matchExpressions = definition.MatchExpressions;
         }
 
         public override Uri HelpUri => _helpUri;

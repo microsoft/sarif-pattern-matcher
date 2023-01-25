@@ -148,6 +148,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 foreach (MatchExpression matchExpression in definition.MatchExpressions)
                 {
+                    if (matchExpression.RuleEnabledState == RuleEnabledState.Disabled) { continue; }
+
                     if (matchExpression.SingleLineRegexes?.Count > 0)
                     {
                         for (int i = 0; i < matchExpression.SingleLineRegexes.Count; i++)
@@ -155,8 +157,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             string current = matchExpression.SingleLineRegexes[i];
                             matchExpression.SingleLineRegexes[i] =
                                 PushData(current,
-                                         definition.SharedStrings,
-                                         sharedStrings);
+                                            definition.SharedStrings,
+                                            sharedStrings);
                         }
                     }
 
