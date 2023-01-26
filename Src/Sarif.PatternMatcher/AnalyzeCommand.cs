@@ -157,8 +157,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             string current = matchExpression.SingleLineRegexes[i];
                             matchExpression.SingleLineRegexes[i] =
                                 PushData(current,
-                                            definition.SharedStrings,
-                                            sharedStrings);
+                                         definition.SharedStrings,
+                                         sharedStrings);
                         }
                     }
 
