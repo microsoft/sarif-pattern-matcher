@@ -3,6 +3,7 @@
 ## Unreleased
 - Update SARIF SDK submodule from [31f49b2 to 235394a](https://github.com/microsoft/sarif-sdk/compare/31f49b2..235394a). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/7805847d075b0991da6917cc934fb0924015402d/src/ReleaseHistory.md).
 - Update SEC101/028.PlaintextPassword regular expression to include scenarios where a variable name is used instead of string (added `*` after `["']`).
+- FEATURE: Allow rule disabling from definitions file by adding `"RuleEnabledState: "Disabled""` to rule MatchExpression.
 - BREAKING: Properly introduce fingerprint versioned hierarchical strings (according to the [SARIF spec](https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html#_Toc34317441)) by updating `/current` component to `/v0`. 
 - BREAKING: Remove non-functional `multiline` argument from command-line. This argument should simply be removed from all command-lines.
 - BREAKING: Remove `file-size-in-kb` argument. Its use should be replaced by `max-file-size-in-kb`, a more descriptive name we pick up from the SARIF driver framework.
