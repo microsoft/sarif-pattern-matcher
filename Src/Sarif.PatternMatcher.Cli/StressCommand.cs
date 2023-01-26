@@ -41,7 +41,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         public void AnalyzingTarget(IAnalysisContext context) { }
 
-        public void Log(ReportingDescriptor rule, Result result)
+        public void Log(ReportingDescriptor rule, Result result, ToolComponent toolComponent)
         {
             // Build your ADO data contract here
             ViolationsSeen++;

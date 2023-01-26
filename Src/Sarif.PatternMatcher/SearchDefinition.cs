@@ -7,6 +7,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchDefinition
     {
+        public string ExtensionName { get; set; }
+
         public Dictionary<string, string> SharedStrings { get; set; }
 
         public string Id { get; set; }

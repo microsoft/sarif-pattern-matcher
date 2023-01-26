@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Writers;
@@ -58,6 +59,36 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     continue;
                 }
 
+                string name = definitions.ExtensionName;
+                string semanticVersion = null;
+                string version = null;
+
+                if (!string.IsNullOrEmpty(definitions.ValidatorsAssemblyName))
+                {
+                    string directory = Path.GetDirectoryName(searchDefinitionsPath);
+                    var fvi = FileVersionInfo.GetVersionInfo(Path.Combine(directory, definitions.ValidatorsAssemblyName));
+                    Console.WriteLine(fvi.ToString());
+
+                    name = $"{fvi.CompanyName}/{fvi.FileDescription}/{name}";
+                    semanticVersion = fvi.ProductVersion;
+                    version = fvi.FileVersion;
+                }
+
+                var toolComponent = new ToolComponent
+                {
+                    Name = name,
+                    Guid = definitions.Guid,
+                    Version = version,
+                    SemanticVersion = semanticVersion,
+                    Locations = new List<ArtifactLocation>(new[]
+                    {
+                        new ArtifactLocation
+                        {
+                            Uri = new Uri(searchDefinitionsPath),
+                        },
+                    }),
+                };
+
                 string validatorPath = null;
                 string definitionsDirectory = Path.GetDirectoryName(searchDefinitionsPath);
 
@@ -104,7 +135,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         new SearchSkimmer(engine: engine,
                                           validators: validators,
                                           definition,
-                                          fileSystem));
+                                          fileSystem)
+                        {
+                            Extension = toolComponent,
+                        });
 
                     const string singleSpace = " ";
 
@@ -136,6 +170,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             var idToExpressionsMap = new Dictionary<string, List<MatchExpression>>();
 
+            int extensionsCount = 0;
             foreach (SearchDefinition definition in definitions.Definitions)
             {
                 definition.FileNameDenyRegex = PushData(definition.FileNameDenyRegex,
@@ -227,6 +262,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     cachedMatchExpressions.Add(matchExpression);
                 }
+                extensionsCount++;
             }
 
             var searchDefinitions = new SearchDefinitions
@@ -293,6 +329,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
+        public override int Run(AnalyzeOptions options)
+        {
+            Tool = Tool.CreateFromAssemblyData();
+            Tool.Driver.Name = "Spmi";
+            return base.Run(options);
+        }
+
         protected override AnalyzeContext CreateContext(
             AnalyzeOptions options,
             IAnalysisLogger logger,
@@ -322,23 +365,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
         {
-            return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
+            ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
+
+            var extensions = new HashSet<Guid>();
+
+            foreach (Skimmer<AnalyzeContext> skimmer in skimmers)
+            {
+                Tool.Extensions ??= new List<ToolComponent>();
+
+                if (!extensions.Contains(skimmer.Extension.Guid.Value))
+                {
+                    Tool.Extensions.Add(skimmer.Extension);
+                    extensions.Add(skimmer.Extension.Guid.Value);
+                }
+            }
+
+            return skimmers;
         }
 
         protected override AnalyzeContext DetermineApplicabilityAndAnalyze(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers, ISet<string> disabledSkimmers)
         {
             context = base.DetermineApplicabilityAndAnalyze(context, skimmers, disabledSkimmers);
 
-            ICollection<IList<Result>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
+            ICollection<IList<Tuple<Result, ToolComponent>>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
 
             if (resultLists != null && context.TargetUri.ToString().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
             {
                 var aggregatedResults = new List<Result>();
-                foreach (IList<Result> resultList in resultLists)
+                foreach (IList<Tuple<Result, ToolComponent>> resultList in resultLists)
                 {
-                    foreach (Result result in resultList)
+                    foreach (Tuple<Result, ToolComponent> tuple in resultList)
                     {
-                        aggregatedResults.Add(result);
+                        aggregatedResults.Add(tuple.Item1);
                     }
                 }
 

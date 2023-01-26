@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
         }
 
-        public void Log(ReportingDescriptor rule, Result result)
+        public void Log(ReportingDescriptor rule, Result result, ToolComponent toolComponent)
         {
             Results ??= new List<Result>();
             Results.Add(result);
