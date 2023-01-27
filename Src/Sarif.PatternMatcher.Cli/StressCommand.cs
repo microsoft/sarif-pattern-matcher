@@ -148,7 +148,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         {
             IFileSystem fileSystem = Sarif.FileSystem.Instance;
             s_configurationFiles = new string[] { options.InputFilePath };
-            ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, s_configurationFiles, out ISet<ToolComponent> toolComponents);
+            Tool tool = Tool.CreateFromAssemblyData();
+            ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, s_configurationFiles, tool);
 
             var logger = new AdoLogger();
             var scanContext = new ScanContext();
@@ -163,7 +164,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             for (int i = 0; i < 10000000; i++)
             {
-                skimmers ??= AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, s_configurationFiles, out ISet<ToolComponent> toolComponents);
+                skimmers ??= AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, s_configurationFiles, tool);
 
                 var context = new AnalyzeContext
                 {
@@ -192,7 +193,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             List<string> filesToSearch = GetWhatFilesToSearch(options);
 
-            ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, options.SearchDefinitionsPaths, out ISet<ToolComponent> toolComponents);
+            Tool tool = Tool.CreateFromAssemblyData();
+            ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, options.SearchDefinitionsPaths, tool);
 
             var totalRunTimer = new Stopwatch();
             totalRunTimer.Start();

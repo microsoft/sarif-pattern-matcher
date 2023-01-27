@@ -248,7 +248,10 @@
         {
           "rule": {
             "id": "SEC105/002",
-            "index": 1
+            "index": 1,
+            "toolComponent": {
+              "index": 0
+            }
           },
           "message": {
             "id": "Default",
@@ -322,7 +325,10 @@
         {
           "rule": {
             "id": "SEC105/003",
-            "index": 2
+            "index": 2,
+            "toolComponent": {
+              "index": 0
+            }
           },
           "message": {
             "id": "Default",
@@ -364,7 +370,10 @@
         {
           "rule": {
             "id": "SEC105/003",
-            "index": 2
+            "index": 2,
+            "toolComponent": {
+              "index": 0
+            }
           },
           "message": {
             "id": "Default",
@@ -406,7 +415,10 @@
         {
           "rule": {
             "id": "SEC105/003",
-            "index": 2
+            "index": 2,
+            "toolComponent": {
+              "index": 0
+            }
           },
           "message": {
             "id": "Default",
@@ -448,7 +460,10 @@
         {
           "rule": {
             "id": "SEC105/003",
-            "index": 2
+            "index": 2,
+            "toolComponent": {
+              "index": 0
+            }
           },
           "message": {
             "id": "Default",

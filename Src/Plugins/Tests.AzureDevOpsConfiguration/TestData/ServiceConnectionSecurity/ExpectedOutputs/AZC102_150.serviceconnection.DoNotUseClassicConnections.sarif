@@ -132,7 +132,10 @@
         {
           "rule": {
             "id": "AZC102/190",
-            "index": 1
+            "index": 1,
+            "toolComponent": {
+              "index": 0
+            }
           },
           "message": {
             "id": "Default",

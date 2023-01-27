@@ -24,19 +24,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public abstract class EndToEndTests : FileDiffingUnitTests
     {
-        public static ISet<Skimmer<AnalyzeContext>> CreateOrRetrievedCachedSkimmer(IFileSystem fileSystem, string regexDefinitionsPath, out ISet<ToolComponent> components)
+        public static ISet<Skimmer<AnalyzeContext>> CreateOrRetrievedCachedSkimmer(IFileSystem fileSystem, string regexDefinitionsPath, Tool tool)
         {
             // Load all rules from JSON. This also automatically loads any validations file that
             // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
             // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
             // extension name changes from .json to .dll).
 
-            components = null;
-
             ISet<Skimmer<AnalyzeContext>> skimmers =
                 AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, 
-                                                                    new string[] { regexDefinitionsPath },
-                                                                    out components);
+                                                                  new string[] { regexDefinitionsPath },
+                                                                  tool);
             return skimmers;
         }
 
@@ -136,21 +134,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 parameter as string);
 
             IFileSystem fileSystem = FileSystem.Instance;
+            var sb = new StringBuilder();
+
+            var tool = Tool.CreateFromAssemblyData(typeof(AnalyzeCommand).Assembly, omitSemanticVersion: true);
+            tool.Driver.Name = "Spmi";
 
             // Load all rules from JSON. This also automatically loads any validations file that
             // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
             // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
             // extension name changes from .json to .dll).
             ISet<Skimmer<AnalyzeContext>> skimmers =
-                CreateOrRetrievedCachedSkimmer(fileSystem, DefinitionsPath, out ISet<ToolComponent> components);
-
-            var sb = new StringBuilder();
-
-            var tool = Tool.CreateFromAssemblyData(typeof(AnalyzeCommand).Assembly, omitSemanticVersion: true);
-            tool.Driver.Name = "Spmi";
-            tool.Extensions = new List<ToolComponent>();
-
-            ((List<ToolComponent>)tool.Extensions).AddRange(components);
+                CreateOrRetrievedCachedSkimmer(fileSystem, DefinitionsPath, tool);
 
             using (var outputTextWriter = new StringWriter(sb))
             using (var logger = new SarifLogger(

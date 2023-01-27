@@ -105,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks
                 PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
                     fileSystemMock.Object,
                     new string[] { searchDefinitionsPath },
-                    out ISet<ToolComponent> toolComponents,
+                    Tool.CreateFromAssemblyData(),
                     engine);
 
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");

@@ -32,7 +32,20 @@
           "properties": {
             "Comments": "A general pattern matching engine that persist results to SARIF."
           }
-        }
+        },
+        "extensions": [
+          {
+            "guid": "3a7488cc-1b12-4f27-9239-af10146ebf30",
+            "name": "Microsoft/Security/ReviewPotentiallySensitiveFiles",
+            "version": "1.11.0",
+            "locations": [
+              {
+                "uri": "SEC103.ReviewPotentiallySensitiveFiles.json",
+                "uriBaseId": "PLUGIN_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {

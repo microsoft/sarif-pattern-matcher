@@ -44,10 +44,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(
             IFileSystem fileSystem,
             IEnumerable<string> searchDefinitionsPaths,
-            out ISet<ToolComponent> toolComponents,
+            Tool tool,
             IRegex engine = null)
         {
-            toolComponents = new HashSet<ToolComponent>();
+            tool.Extensions ??= new List<ToolComponent>();
+
             engine ??= RE2Regex.Instance;
 
             var validators = new ValidatorsCache(validatorBinaryPaths: null, fileSystem);
@@ -107,8 +108,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     }),
                 };
 
-                int extensionIndex = toolComponents.Count;
-                toolComponents.Add(toolComponent);
+                int extensionIndex = tool.Extensions.Count;
+                tool.Extensions.Add(toolComponent);
 
                 string validatorPath = null;
                 string definitionsDirectory = Path.GetDirectoryName(searchDefinitionsPath);
@@ -380,13 +381,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
         {
             ISet<Skimmer<AnalyzeContext>> skimmers =
-                CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths, out ISet<ToolComponent> toolComponents);
-
-            foreach (ToolComponent toolComponent in toolComponents)
-            {
-                Tool.Extensions ??= new List<ToolComponent>();
-                Tool.Extensions.Add(toolComponent);
-            }
+                CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths, Tool);
 
             return skimmers;
         }
