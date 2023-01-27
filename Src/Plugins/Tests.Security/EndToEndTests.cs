@@ -60,9 +60,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override IDictionary<string, string> ConstructTestOutputsFromInputResources(IEnumerable<string> inputResourceNames, object parameter)
         {
-            var inputFiles = parameter as List<string>;
-            var results = new Dictionary<string, string>();
-
             // INTERESTING BREAKPOINT: unexpected differences in an end-to-end test
             // scan. In practice, debugging the end-to-end tests when multithreaded
             // is difficult. The common scenario is to debug one or a few files and
@@ -74,7 +71,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // outside of the debugger. There are some theoretical problems (such
             // as bugs in test utilization of shared resources) that could result.
             //
-            results = Debugger.IsAttached
+            var inputFiles = parameter as List<string>;
+            Dictionary<string, string>  results = Debugger.IsAttached
                 ? SingleThreadedConstructTestOutputs(inputResourceNames, inputFiles)
                 : MultiThreadedConstructTestOutputs(inputResourceNames, inputFiles);
 
@@ -98,17 +96,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             var results = new Dictionary<string, string>();
 
-            var dict = new Dictionary<string, Task<string>>();
+            var inputFileToTaskMap = new Dictionary<string, Task<string>>();
 
             foreach (string inputResourceName in inputResourceNames)
             {
                 string name = inputFiles.First(i => inputResourceName.EndsWith(i));
-                dict[name] = Task.Factory.StartNew(() => ConstructTestOutputFromInputResource(inputResourceName, name));
+                inputFileToTaskMap[name] = Task.Factory.StartNew(() => ConstructTestOutputFromInputResource(inputResourceName, name));
             }
 
             try
             {
-                Task.WaitAll(dict.Values.ToArray());
+                Task.WaitAll(inputFileToTaskMap.Values.ToArray());
             }
             catch (AggregateException ae)
             {
@@ -116,7 +114,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 throw;
             }
 
-            foreach (KeyValuePair<string, Task<string>> item in dict)
+            foreach (KeyValuePair<string, Task<string>> item in inputFileToTaskMap)
             {
                 results[item.Key] = item.Value.Result;
             }
