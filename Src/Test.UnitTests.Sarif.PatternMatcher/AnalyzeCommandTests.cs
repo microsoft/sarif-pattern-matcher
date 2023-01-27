@@ -119,6 +119,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
                 mockFileSystem.Object,
                 new string[] { searchDefinitionsPath },
+                out ISet<ToolComponent> toolComponents,
                 RE2Regex.Instance);
 
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
@@ -186,7 +187,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // Acquire skimmers for searchers
             ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
                 mockFileSystem.Object,
-                new string[] { searchDefinitionsPath },
+                new string[] { searchDefinitionsPath }, 
+                out ISet<ToolComponent> toolComponents,
                 RE2Regex.Instance);
 
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
@@ -414,7 +416,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // Acquire skimmers for searchers.
             ISet<Skimmer<AnalyzeContext>> skimmers =
                 PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(mockFileSystem.Object,
-                                                                                 new string[] { searchDefinitionsPath },
+                                                                                 new string[] { searchDefinitionsPath }, 
+                                                                                 out ISet<ToolComponent> toolComponents,
                                                                                  RE2Regex.Instance);
 
             string scanTargetFileName = $"C:\\{Guid.NewGuid()}.test";
@@ -530,6 +533,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
                 mockFileSystem.Object,
                 new string[] { searchDefinitionsPath },
+                out ISet<ToolComponent> toolComponents,
                 RE2Regex.Instance);
 
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
@@ -645,7 +649,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // Acquire skimmers for searchers
             return PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
                     mockFileSystem.Object,
-                    new string[] { searchDefinitionsPath },
+                    new string[] { searchDefinitionsPath }, 
+                    out ISet<ToolComponent> toolComponents,
                     engine);
         }
 

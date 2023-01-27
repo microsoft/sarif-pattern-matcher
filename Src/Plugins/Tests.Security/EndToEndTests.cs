@@ -24,24 +24,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public abstract class EndToEndTests : FileDiffingUnitTests
     {
-        private static ConcurrentDictionary<string, ISet<Skimmer<AnalyzeContext>>> s_definitionsPathToSkimmersMap;
-
-        public static ISet<Skimmer<AnalyzeContext>> CreateOrRetrievedCachedSkimmer(IFileSystem fileSystem, string regexDefinitionsPath)
+        public static ISet<Skimmer<AnalyzeContext>> CreateOrRetrievedCachedSkimmer(IFileSystem fileSystem, string regexDefinitionsPath, out ISet<ToolComponent> components)
         {
             // Load all rules from JSON. This also automatically loads any validations file that
             // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
             // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
             // extension name changes from .json to .dll).
 
+            components = null;
 
-            s_definitionsPathToSkimmersMap ??= new ConcurrentDictionary<string, ISet<Skimmer<AnalyzeContext>>>();
-
-            if (!s_definitionsPathToSkimmersMap.TryGetValue(regexDefinitionsPath, out ISet<Skimmer<AnalyzeContext>> skimmers))
-            {
-                skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, new string[] { regexDefinitionsPath });
-                s_definitionsPathToSkimmersMap.TryAdd(regexDefinitionsPath, skimmers);
-            }
-
+            ISet<Skimmer<AnalyzeContext>> skimmers =
+                AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, 
+                                                                    new string[] { regexDefinitionsPath },
+                                                                    out components);
             return skimmers;
         }
 
@@ -104,16 +99,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private Dictionary<string, string> MultiThreadedConstructTestOutputs(IEnumerable<string> inputResourceNames, List<string> inputFiles)
         {
             var results = new Dictionary<string, string>();
+
             var dict = new Dictionary<string, Task<string>>();
 
             foreach (string inputResourceName in inputResourceNames)
             {
                 string name = inputFiles.First(i => inputResourceName.EndsWith(i));
-
                 dict[name] = Task.Factory.StartNew(() => ConstructTestOutputFromInputResource(inputResourceName, name));
             }
 
-            Task.WaitAll(dict.Values.ToArray());
+            try
+            {
+                Task.WaitAll(dict.Values.ToArray());
+            }
+            catch (AggregateException ae)
+            {
+                Console.WriteLine(ae.InnerExceptions.ToString());
+                throw;
+            }
 
             foreach (KeyValuePair<string, Task<string>> item in dict)
             {
@@ -139,14 +142,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
             // extension name changes from .json to .dll).
             ISet<Skimmer<AnalyzeContext>> skimmers =
-                CreateOrRetrievedCachedSkimmer(fileSystem, DefinitionsPath);
+                CreateOrRetrievedCachedSkimmer(fileSystem, DefinitionsPath, out ISet<ToolComponent> components);
 
             var sb = new StringBuilder();
+
+            var tool = Tool.CreateFromAssemblyData(typeof(AnalyzeCommand).Assembly, omitSemanticVersion: true);
+            tool.Driver.Name = "Spmi";
+            tool.Extensions = new List<ToolComponent>();
+
+            ((List<ToolComponent>)tool.Extensions).AddRange(components);
 
             using (var outputTextWriter = new StringWriter(sb))
             using (var logger = new SarifLogger(
                 outputTextWriter,
                 LogFilePersistenceOptions.PrettyPrint,
+                tool: tool,
                 dataToRemove: OptionallyEmittedData.NondeterministicProperties,
                 levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
                 kinds: new List<ResultKind> { ResultKind.Fail, ResultKind.Pass }))
@@ -175,9 +185,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             SarifLog sarifLog = JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
 
-            string sourceRoot = GitHelper.Default.GetTopLevel(Path.GetDirectoryName(filePath)) + @"\";
+            string pluginRoot = Path.GetDirectoryName(DefinitionsPath) + @"\";
+            var rebaseUriVisitor = new RebaseUriVisitor("PLUGIN_ROOT", new Uri(pluginRoot));
+            rebaseUriVisitor.Visit(sarifLog);
 
-            var rebaseUriVisitor = new RebaseUriVisitor("SRC_ROOT", new Uri(sourceRoot));
+            string sourceRoot = GitHelper.Default.GetTopLevel(Path.GetDirectoryName(filePath)) + @"\";
+            rebaseUriVisitor = new RebaseUriVisitor("SRC_ROOT", new Uri(sourceRoot));
             rebaseUriVisitor.Visit(sarifLog);
 
             // It would be nice if RebaseUriVisitor was configurable

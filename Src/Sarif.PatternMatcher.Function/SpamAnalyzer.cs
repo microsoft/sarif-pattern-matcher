@@ -33,7 +33,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
                 // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
                 // extension name changes from .json to .dll).
-                Skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, regexDefinitions);
+                Skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, regexDefinitions, out ISet<ToolComponent> toolComponents);
             }
 
             var sb = new StringBuilder();

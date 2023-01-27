@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
@@ -23,11 +24,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
         }
 
+        private Tool tool;
+
+        protected override Tool Tool
+        {
+            get
+            {
+                if (tool == null)
+                {
+                    this.tool = Tool.CreateFromAssemblyData(this.GetType().Assembly);
+                    this.tool.Driver.Name = "Spmi";
+                }
+                return this.tool;
+           }
+
+            set => this.tool = value;
+        }
+
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(
             IFileSystem fileSystem,
             IEnumerable<string> searchDefinitionsPaths,
+            out ISet<ToolComponent> toolComponents,
             IRegex engine = null)
         {
+            toolComponents = new HashSet<ToolComponent>();
             engine ??= RE2Regex.Instance;
 
             var validators = new ValidatorsCache(validatorBinaryPaths: null, fileSystem);
@@ -66,12 +86,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (!string.IsNullOrEmpty(definitions.ValidatorsAssemblyName))
                 {
                     string directory = Path.GetDirectoryName(searchDefinitionsPath);
-                    var fvi = FileVersionInfo.GetVersionInfo(Path.Combine(directory, definitions.ValidatorsAssemblyName));
-                    Console.WriteLine(fvi.ToString());
+                    FileVersionInfo fvi = fileSystem.FileVersionInfoGetVersionInfo(Path.Combine(directory, definitions.ValidatorsAssemblyName));
 
-                    name = $"{fvi.CompanyName}/{fvi.FileDescription}/{name}";
-                    semanticVersion = fvi.ProductVersion;
-                    version = fvi.FileVersion;
+                    name = $"{fvi?.CompanyName}/{fvi?.FileDescription}/{name}";
+                    semanticVersion = fvi?.ProductVersion;
+                    version = fvi?.FileVersion;
                 }
 
                 var toolComponent = new ToolComponent
@@ -79,7 +98,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Name = name,
                     Guid = definitions.Guid,
                     Version = version,
-                    SemanticVersion = semanticVersion,
                     Locations = new List<ArtifactLocation>(new[]
                     {
                         new ArtifactLocation
@@ -88,6 +106,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         },
                     }),
                 };
+
+                int extensionIndex = toolComponents.Count;
+                toolComponents.Add(toolComponent);
 
                 string validatorPath = null;
                 string definitionsDirectory = Path.GetDirectoryName(searchDefinitionsPath);
@@ -137,7 +158,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                           definition,
                                           fileSystem)
                         {
-                            Extension = toolComponent,
+                            ExtensionIndex = extensionIndex,
                         });
 
                     const string singleSpace = " ";
@@ -329,13 +350,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        public override int Run(AnalyzeOptions options)
-        {
-            Tool = Tool.CreateFromAssemblyData();
-            Tool.Driver.Name = "Spmi";
-            return base.Run(options);
-        }
-
         protected override AnalyzeContext CreateContext(
             AnalyzeOptions options,
             IAnalysisLogger logger,
@@ -365,19 +379,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
         {
-            ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
+            ISet<Skimmer<AnalyzeContext>> skimmers =
+                CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths, out ISet<ToolComponent> toolComponents);
 
-            var extensions = new HashSet<Guid>();
-
-            foreach (Skimmer<AnalyzeContext> skimmer in skimmers)
+            foreach (ToolComponent toolComponent in toolComponents)
             {
                 Tool.Extensions ??= new List<ToolComponent>();
-
-                if (!extensions.Contains(skimmer.Extension.Guid.Value))
-                {
-                    Tool.Extensions.Add(skimmer.Extension);
-                    extensions.Add(skimmer.Extension.Guid.Value);
-                }
+                Tool.Extensions.Add(toolComponent);
             }
 
             return skimmers;
@@ -387,7 +395,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             context = base.DetermineApplicabilityAndAnalyze(context, skimmers, disabledSkimmers);
 
-            ICollection<IList<Tuple<Result, ToolComponent>>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
+            ICollection<IList<Tuple<Result, int?>>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
 
             if (resultLists != null && context.TargetUri.ToString().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
             {

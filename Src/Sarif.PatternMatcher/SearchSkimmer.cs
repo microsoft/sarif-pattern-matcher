@@ -1198,7 +1198,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // for example, the sub-id may change for every match
             // expression. We will therefore generate a snapshot of
             // current ReportingDescriptor state when logging.
-            context.Logger.Log(reportingDescriptor, result, this.Extension);
+            context.Logger.Log(reportingDescriptor, result, this.ExtensionIndex);
         }
 
         internal static void RedactSecretFromSnippet(Region region, string secret)

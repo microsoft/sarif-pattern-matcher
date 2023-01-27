@@ -39,7 +39,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
                 {
-                    rules.Add(matchExpression.Name.Split('/')[1]);
+                    rules.Add(matchExpression.Name);
                 }
             }
 
