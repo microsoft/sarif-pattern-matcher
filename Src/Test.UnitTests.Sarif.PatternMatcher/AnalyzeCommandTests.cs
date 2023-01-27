@@ -190,7 +190,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // Acquire skimmers for searchers
             ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
                 mockFileSystem.Object,
-                new string[] { searchDefinitionsPath }, 
+                new string[] { searchDefinitionsPath },
                 tool,
                 RE2Regex.Instance);
 
@@ -421,7 +421,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // Acquire skimmers for searchers.
             ISet<Skimmer<AnalyzeContext>> skimmers =
                 PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(mockFileSystem.Object,
-                                                                                 new string[] { searchDefinitionsPath }, 
+                                                                                 new string[] { searchDefinitionsPath },
                                                                                  tool,
                                                                                  RE2Regex.Instance);
 
@@ -661,7 +661,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ISet<Skimmer<AnalyzeContext>> skimmers =
                 PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
                     mockFileSystem.Object,
-                    new string[] { searchDefinitionsPath }, 
+                    new string[] { searchDefinitionsPath },
                     tool,
                     engine);
 

@@ -430,6 +430,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             mockFileSystem.Setup(x => x.FileInfoLength(SmallTargetName)).Returns(fileContents.Length);
 
+            Program.ClearUnitTestData();
             Program.FileSystem = mockFileSystem.Object;
 
             string tempFileName = Path.GetTempFileName();
@@ -519,6 +520,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileInfoLength(smallTargetPath)).Returns(smallFileContents.Length);
             mockFileSystem.Setup(x => x.FileInfoLength(largeTargetPath)).Returns(largeFileSizeInBytes);
 
+            Program.ClearUnitTestData();
             Program.FileSystem = mockFileSystem.Object;
 
             string tempFileName = Path.GetTempFileName();

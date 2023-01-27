@@ -32,7 +32,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // extension name changes from .json to .dll).
 
             ISet<Skimmer<AnalyzeContext>> skimmers =
-                AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, 
+                AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem,
                                                                   new string[] { regexDefinitionsPath },
                                                                   tool);
             return skimmers;

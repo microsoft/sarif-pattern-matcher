@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     this.tool.Driver.Name = "Spmi";
                 }
                 return this.tool;
-           }
+            }
 
             set => this.tool = value;
         }
