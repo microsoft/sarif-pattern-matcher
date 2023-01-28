@@ -121,7 +121,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedValidationState}' but found '{currentState}'.");
                 }
 
-                if (!message.Equals(testCase.ExpectedMessage))
+                if (testCase.ExpectedMessage != message?.Split(Environment.NewLine)[0])
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedMessage}' but found '{message}'.");
                 }

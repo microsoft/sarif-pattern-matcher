@@ -397,9 +397,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (resultLists != null && context.TargetUri.ToString().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
             {
                 var aggregatedResults = new List<Result>();
-                foreach (IList<Tuple<Result, ToolComponent>> resultList in resultLists)
+                foreach (IList<Tuple<Result, int?>> resultList in resultLists)
                 {
-                    foreach (Tuple<Result, ToolComponent> tuple in resultList)
+                    foreach (Tuple<Result, int?> tuple in resultList)
                     {
                         aggregatedResults.Add(tuple.Item1);
                     }

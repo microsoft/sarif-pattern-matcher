@@ -221,7 +221,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
                 {
-                    string ruleName = matchExpression.Name.Split('/')[1];
+                    string ruleName = matchExpression.Name;
                     string ruleID = matchExpression.Id;
 
                     if (!ruleNameToIdMap.ContainsKey(ruleName))
