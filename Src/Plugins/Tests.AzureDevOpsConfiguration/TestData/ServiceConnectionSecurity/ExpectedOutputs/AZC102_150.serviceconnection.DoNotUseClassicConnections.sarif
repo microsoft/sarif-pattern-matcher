@@ -5,47 +5,60 @@
     {
       "tool": {
         "driver": {
-          "name": "testhost",
-          "organization": "Microsoft Corporation",
-          "product": "Microsoft.TestHost",
-          "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
-          "rules": [
-            {
-              "id": "AZC102/150",
-              "name": "DoNotUseClassicConnections",
-              "fullDescription": {
-                "text": "Do not use classic Azure service connections to access a subscription."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+          "name": "Spmi",
+          "organization": "Microsoft",
+          "product": "Microsoft SARIF Pattern Matcher",
+          "fullName": "Sarif.PatternMatcher ",
+          "properties": {
+            "Comments": "A general pattern matching engine that persist results to SARIF."
+          }
+        },
+        "extensions": [
+          {
+            "guid": "47df6279-81d8-4975-b003-b24985217187",
+            "name": "SecureAzureDevOps",
+            "rules": [
+              {
+                "id": "AZC102/150",
+                "name": "DoNotUseClassicConnections",
+                "fullDescription": {
+                  "text": "Do not use classic Azure service connections to access a subscription."
                 },
-                "Default": {
-                  "text": "[Service connection Id:{0}]({1}/{2}/{3}/_settings/adminservices?resourceId={0}) in organization '{2}' project '{3}' was found {4} {5} {6}."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            },
-            {
-              "id": "AZC102/190",
-              "name": "DoNotGrantAllPipelinesAccess",
-              "fullDescription": {
-                "text": "Do not make service connection accessible to all pipelines."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "[Service connection Id:{0}]({1}/{2}/{3}/_settings/adminservices?resourceId={0}) in organization '{2}' project '{3}' was found {4} {5} {6}."
+                  }
                 },
-                "Default": {
-                  "text": "[Service connection Id:{0}]({1}) in organization '{2}' project '{3}' was scanned. {4}. {5} {6}."
-                }
+                "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
               },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            }
-          ]
-        }
+              {
+                "id": "AZC102/190",
+                "name": "DoNotGrantAllPipelinesAccess",
+                "fullDescription": {
+                  "text": "Do not make service connection accessible to all pipelines."
+                },
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "[Service connection Id:{0}]({1}) in organization '{2}' project '{3}' was scanned. {4}. {5} {6}."
+                  }
+                },
+                "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+              }
+            ],
+            "locations": [
+              {
+                "uri": "AZC102.ServiceConnectionSecurity.json",
+                "uriBaseId": "PLUGIN_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {
@@ -62,8 +75,13 @@
       ],
       "results": [
         {
-          "ruleId": "AZC102/150",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "AZC102/150",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "error",
           "message": {
             "id": "Default",
@@ -109,8 +127,13 @@
           "rank": 46.29
         },
         {
-          "ruleId": "AZC102/190",
-          "ruleIndex": 1,
+          "rule": {
+            "id": "AZC102/190",
+            "index": 1,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [

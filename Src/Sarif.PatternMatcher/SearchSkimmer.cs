@@ -1,4 +1,5 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -1197,7 +1198,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // for example, the sub-id may change for every match
             // expression. We will therefore generate a snapshot of
             // current ReportingDescriptor state when logging.
-            context.Logger.Log(reportingDescriptor, result);
+            context.Logger.Log(reportingDescriptor, result, this.ExtensionIndex);
         }
 
         internal static void RedactSecretFromSnippet(Region region, string secret)

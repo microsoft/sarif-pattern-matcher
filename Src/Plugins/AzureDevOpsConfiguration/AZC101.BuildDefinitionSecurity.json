@@ -1,6 +1,8 @@
 {
-  "SharedStringsFileName": "AzureDevOpsConfiguration.SharedStrings.txt",
   "ValidatorsAssemblyName": "AzureDevOpsConfiguration.dll",
+  "SharedStringsFileName": "AzureDevOpsConfiguration.SharedStrings.txt",
+  "ExtensionName": "SecureAzureDevOps",
+  "Guid": "183f9c88-1424-4f6c-a8a5-cd59c0bdc312",
   "Definitions": [
     {
       "Id": "AZC101",

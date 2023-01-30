@@ -1,5 +1,7 @@
 {
   "SharedStringsFileName": "Security.SharedStrings.txt",
+  "ExtensionName": "UseSecureApi",
+  "Guid": "07374f10-f46b-458a-9179-cc937e1857e4",
   "Definitions": [
     {
       "Id": "SEC104/001",

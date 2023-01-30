@@ -179,8 +179,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             }
 
             message = (account == null) ?
-                $"An unexpected exception was caught attempting to validate '{asset}': {e.Message}" :
-                $"An unexpected exception was caught attempting to validate the '{account}' account on '{asset}': {e.Message}";
+                $"An unexpected exception was caught attempting to validate '{asset}': {e}" :
+                $"An unexpected exception was caught attempting to validate the '{account}' account on '{asset}': {e}";
 
             return ValidationState.Unknown;
         }

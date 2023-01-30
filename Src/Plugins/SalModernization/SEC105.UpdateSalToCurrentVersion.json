@@ -1,6 +1,8 @@
 {
-  "SharedStringsFileName": "SalModernization.SharedStrings.txt",
   "ValidatorsAssemblyName": "SalModernization.dll",
+  "SharedStringsFileName": "SalModernization.SharedStrings.txt",
+  "ExtensionName": "UseCurrentSalAnnotations",
+  "Guid": "9c5b3438-9e4c-4261-a785-1cec3e6e9efc",
   "Definitions": [
     {
       "Id": "SEC105/001",

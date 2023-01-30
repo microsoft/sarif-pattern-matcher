@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -398,7 +399,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             string scanTargetPath = Path.Combine(rootDirectory, scanTargetName);
             string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
 
+
+            var fvi = FileVersionInfo.GetVersionInfo(this.GetType().Assembly.Location);
+
             var mockFileSystem = new Mock<IFileSystem>();
+
+            mockFileSystem.Setup(x => x.FileVersionInfoGetVersionInfo(It.IsAny<string>())).Returns(fvi);
             mockFileSystem.Setup(x => x.DirectoryExists(rootDirectory)).Returns(true);
             mockFileSystem.Setup(x => x.DirectoryEnumerateFiles(rootDirectory,
                                                                 scanTargetName,
@@ -424,6 +430,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             mockFileSystem.Setup(x => x.FileInfoLength(SmallTargetName)).Returns(fileContents.Length);
 
+            Program.ClearUnitTestData();
             Program.FileSystem = mockFileSystem.Object;
 
             string tempFileName = Path.GetTempFileName();
@@ -441,6 +448,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 };
 
                 int result = Program.Main(args);
+                Program.RuntimeException.Should().BeNull();
                 Program.InstantiatedAnalyzeCommand.RuntimeErrors.Should().Be(0);
                 result.Should().Be(0);
 
@@ -512,6 +520,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileInfoLength(smallTargetPath)).Returns(smallFileContents.Length);
             mockFileSystem.Setup(x => x.FileInfoLength(largeTargetPath)).Returns(largeFileSizeInBytes);
 
+            Program.ClearUnitTestData();
             Program.FileSystem = mockFileSystem.Object;
 
             string tempFileName = Path.GetTempFileName();
