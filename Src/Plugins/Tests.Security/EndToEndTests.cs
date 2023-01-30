@@ -72,7 +72,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // as bugs in test utilization of shared resources) that could result.
             //
             var inputFiles = parameter as List<string>;
-            Dictionary<string, string>  results = Debugger.IsAttached
+            Dictionary<string, string> results = Debugger.IsAttached
                 ? SingleThreadedConstructTestOutputs(inputResourceNames, inputFiles)
                 : MultiThreadedConstructTestOutputs(inputResourceNames, inputFiles);
 
