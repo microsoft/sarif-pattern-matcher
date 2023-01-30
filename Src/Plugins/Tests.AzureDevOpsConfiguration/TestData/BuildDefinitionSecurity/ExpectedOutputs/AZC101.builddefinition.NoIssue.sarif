@@ -8,9 +8,7 @@
           "name": "Spmi",
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
-          "fullName": "Sarif.PatternMatcher 3.0.0.0",
-          "version": "3.0.0.1",
-          "dottedQuadFileVersion": "3.0.0.0",
+          "fullName": "Sarif.PatternMatcher ",
           "properties": {
             "Comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -19,7 +17,7 @@
           {
             "guid": "183f9c88-1424-4f6c-a8a5-cd59c0bdc312",
             "name": "Microsoft/AzureDevOpsConfiguration/SecureAzureDevOps",
-            "version": "3.0.0.1",
+            "version": "3.0.0.2",
             "locations": [
               {
                 "uri": "AZC101.BuildDefinitionSecurity.json",

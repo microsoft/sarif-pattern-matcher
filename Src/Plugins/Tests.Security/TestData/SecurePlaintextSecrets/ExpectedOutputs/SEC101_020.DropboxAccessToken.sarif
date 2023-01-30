@@ -8,9 +8,7 @@
           "name": "Spmi",
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
-          "fullName": "Sarif.PatternMatcher 3.0.0.0",
-          "version": "3.0.0.1",
-          "dottedQuadFileVersion": "3.0.0.0",
+          "fullName": "Sarif.PatternMatcher ",
           "properties": {
             "Comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -19,7 +17,7 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
-            "version": "3.0.0.1",
+            "version": "3.0.0.2",
             "rules": [
               {
                 "id": "SEC101/020",
