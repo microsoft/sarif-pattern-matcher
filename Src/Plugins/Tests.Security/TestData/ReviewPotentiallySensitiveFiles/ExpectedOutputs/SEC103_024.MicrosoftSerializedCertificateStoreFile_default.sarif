@@ -8,9 +8,9 @@
           "name": "Spmi",
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
-          "fullName": "Sarif.PatternMatcher 1.11.0.0",
-          "version": "1.11.0",
-          "dottedQuadFileVersion": "1.11.0.0",
+          "fullName": "Sarif.PatternMatcher 3.0.0.0",
+          "version": "3.0.0.1",
+          "dottedQuadFileVersion": "3.0.0.0",
           "rules": [
             {
               "id": "SEC103/024",
@@ -37,7 +37,7 @@
           {
             "guid": "3a7488cc-1b12-4f27-9239-af10146ebf30",
             "name": "Microsoft/Security/ReviewPotentiallySensitiveFiles",
-            "version": "1.11.0",
+            "version": "3.0.0.1",
             "locations": [
               {
                 "uri": "SEC103.ReviewPotentiallySensitiveFiles.json",
