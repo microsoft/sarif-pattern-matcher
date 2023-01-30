@@ -81,9 +81,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
 
                 string name = definitions.ExtensionName;
-                string semanticVersion = null;
                 string version = null;
 
+                /* 
+                string semanticVersion = null;
                 if (!string.IsNullOrEmpty(definitions.ValidatorsAssemblyName))
                 {
                     string directory = Path.GetDirectoryName(searchDefinitionsPath);
@@ -93,6 +94,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     semanticVersion = fvi?.ProductVersion;
                     version = fvi?.FileVersion;
                 }
+                */
 
                 var toolComponent = new ToolComponent
                 {

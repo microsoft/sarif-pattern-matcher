@@ -34,8 +34,7 @@
         "extensions": [
           {
             "guid": "3a7488cc-1b12-4f27-9239-af10146ebf30",
-            "name": "Microsoft/Security/ReviewPotentiallySensitiveFiles",
-            "version": "3.0.0.2",
+            "name": "ReviewPotentiallySensitiveFiles",
             "locations": [
               {
                 "uri": "SEC103.ReviewPotentiallySensitiveFiles.json",

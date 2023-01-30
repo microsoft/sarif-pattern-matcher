@@ -16,8 +16,7 @@
         "extensions": [
           {
             "guid": "9c5b3438-9e4c-4261-a785-1cec3e6e9efc",
-            "name": "Microsoft/SalModernization/UseCurrentSalAnnotations",
-            "version": "3.0.0.2",
+            "name": "UseCurrentSalAnnotations",
             "rules": [
               {
                 "id": "SEC105/001",

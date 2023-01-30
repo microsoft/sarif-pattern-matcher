@@ -16,8 +16,7 @@
         "extensions": [
           {
             "guid": "183f9c88-1424-4f6c-a8a5-cd59c0bdc312",
-            "name": "Microsoft/AzureDevOpsConfiguration/SecureAzureDevOps",
-            "version": "3.0.0.2",
+            "name": "SecureAzureDevOps",
             "locations": [
               {
                 "uri": "AZC101.BuildDefinitionSecurity.json",
