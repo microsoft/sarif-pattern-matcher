@@ -1,5 +1,7 @@
 {
   "ValidatorsAssemblyName": "Security.dll",
+  "ExtensionName": "ReviewPotentiallySensitiveFiles",
+  "Guid": "3a7488cc-1b12-4f27-9239-af10146ebf30",
   "Definitions": [
     {
       "Name": "ReviewPotentiallySensitiveFiles",
@@ -9,7 +11,7 @@
       "Message": "'{0:scanTarget}' is {1:validationPrefix}{2:fileKind}{3:validationSuffix}{4:validatorMessage}.",
       "MatchExpressions": [
         {
-          "Id":  "SEC103/001",
+          "Id": "SEC103/001",
           "Name": "ReviewPotentiallySensitiveFiles/OnePasswordFile",
           "FileNameAllowRegex": "(?i)\\.(agilekeychain|agilekeychain_zip)$",
           "MessageArguments": { "fileKind": "1Password manager database file" }

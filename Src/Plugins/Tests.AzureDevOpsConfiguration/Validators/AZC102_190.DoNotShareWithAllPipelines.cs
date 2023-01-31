@@ -176,7 +176,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                     sb.AppendLine($"The test '{testCase.Title}' was expecting '{testCase.ExpectedValidationState}' but found '{currentState}'.");
                 }
 
-                if (message != testCase.ExpectedMessage)
+                if (message?.Split(Environment.NewLine)[0] != testCase.ExpectedMessage)
                 {
                     sb.AppendLine($"The test '{testCase.Title}' was expecting '{testCase.ExpectedMessage}' but found '{message}'.");
                 }

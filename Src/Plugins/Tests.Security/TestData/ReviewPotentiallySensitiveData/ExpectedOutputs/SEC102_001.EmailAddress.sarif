@@ -5,31 +5,44 @@
     {
       "tool": {
         "driver": {
-          "name": "testhost",
-          "organization": "Microsoft Corporation",
-          "product": "Microsoft.TestHost",
-          "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
-          "rules": [
-            {
-              "id": "SEC102/001",
-              "name": "ReviewPotentiallySensitiveData/EmailAddress",
-              "fullDescription": {
-                "text": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+          "name": "Spmi",
+          "organization": "Microsoft",
+          "product": "Microsoft SARIF Pattern Matcher",
+          "fullName": "Sarif.PatternMatcher ",
+          "properties": {
+            "Comments": "A general pattern matching engine that persist results to SARIF."
+          }
+        },
+        "extensions": [
+          {
+            "guid": "dad7661b-34d6-4052-87b4-e234d9aae66b",
+            "name": "ReviewPotentiallySensitiveData",
+            "rules": [
+              {
+                "id": "SEC102/001",
+                "name": "ReviewPotentiallySensitiveData/EmailAddress",
+                "fullDescription": {
+                  "text": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc."
                 },
-                "Default": {
-                  "text": "'{0}@{1}' is an apparent {2}."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            }
-          ]
-        }
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}@{1}' is an apparent {2}."
+                  }
+                },
+                "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+              }
+            ],
+            "locations": [
+              {
+                "uri": "SEC102.ReviewPotentiallySensitiveData.json",
+                "uriBaseId": "PLUGIN_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {
@@ -46,8 +59,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -88,8 +106,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -130,8 +153,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -172,8 +200,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -214,8 +247,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -256,8 +294,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -298,8 +341,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -340,8 +388,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -382,8 +435,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -424,8 +482,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -466,8 +529,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -508,8 +576,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -550,8 +623,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -592,8 +670,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -634,8 +717,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -676,8 +764,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -718,8 +811,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -760,8 +858,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -802,8 +905,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -844,8 +952,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -886,8 +999,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -928,8 +1046,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -970,8 +1093,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -1012,8 +1140,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -1054,8 +1187,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -1096,8 +1234,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -1138,8 +1281,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -1180,8 +1328,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -1222,8 +1375,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -1264,8 +1422,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -1306,8 +1469,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -1348,8 +1516,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -1390,8 +1563,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -1432,8 +1610,13 @@
           }
         },
         {
-          "ruleId": "SEC102/001",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
