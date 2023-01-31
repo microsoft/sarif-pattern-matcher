@@ -9,8 +9,9 @@
           "organization": "Microsoft Corporation",
           "product": "Microsoft.TestHost",
           "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
+          "version": "15.0.0",
+          "semanticVersion": "17.4.1",
+          "dottedQuadFileVersion": "15.0.0.0",
           "rules": [
             {
               "id": "SEC105/001",

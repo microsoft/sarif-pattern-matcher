@@ -19,6 +19,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         public virtual IEnumerable<IEnumeratedArtifact> Artifacts { get; set; }
+
+        public ICollection<IEnumeratedArtifact> Skipped {get;set; }
     }
 
     public class ZipArchiveArtifactProvider : ArtifactProvider 

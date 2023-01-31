@@ -117,12 +117,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     {
                         try
                         {
+                            var target = new EnumeratedArtifact
+                            {
+                                Uri = new Uri(contentName, UriKind.RelativeOrAbsolute),
+                                Contents = contentData,
+                            };
+
                             var context = new AnalyzeContext
                             {
                                 Logger = logger,
-                                FileContents = contentData,
+                                CurrentTarget = target,
                                 DynamicValidation = dynamicValidation,
-                                TargetUri = new Uri(contentName, UriKind.RelativeOrAbsolute),
                             };
 
                             using (context)

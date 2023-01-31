@@ -110,15 +110,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
 
+            var target = new EnumeratedArtifact            
+            { 
+                Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                Contents = fileContents,
+            };
+
             var context = new AnalyzeContext()
             {
-                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
-                FileContents = fileContents,
+                CurrentTarget = target,
                 Logger = testLogger
             };
 
             IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
-
             PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
         }
     }

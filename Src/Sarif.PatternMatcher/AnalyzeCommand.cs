@@ -432,7 +432,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             context = base.DetermineApplicabilityAndAnalyze(context, skimmers, disabledSkimmers);
 
-            ICollection<IList<Result>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
+            ICollection<IList<Tuple<Result, int?>>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
 
             if (resultLists != null && context.CurrentTarget.Uri.ToString().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
             {
