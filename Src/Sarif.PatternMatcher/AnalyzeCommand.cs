@@ -85,7 +85,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string name = definitions.ExtensionName;
                 string version = null;
 
-                /* 
                 string semanticVersion = null;
                 if (!string.IsNullOrEmpty(definitions.ValidatorsAssemblyName))
                 {
@@ -96,13 +95,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     semanticVersion = fvi?.ProductVersion;
                     version = fvi?.FileVersion;
                 }
-                */
 
                 var toolComponent = new ToolComponent
                 {
                     Name = name,
                     Guid = definitions.Guid,
                     Version = version,
+                    SemanticVersion = semanticVersion,
                     Locations = new List<ArtifactLocation>(new[]
                     {
                         new ArtifactLocation
