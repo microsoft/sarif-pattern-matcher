@@ -24,6 +24,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public bool RedactSecrets { get; set; }
 
+        public IDictionary<int, string> RollingHashMap { get; set; }
+
         public Exception TargetLoadException { get; set; }
 
         public bool IsValidAnalysisTarget { get; set; }

@@ -28,7 +28,7 @@
             }
           ],
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
@@ -38,7 +38,7 @@
             "locations": [
               {
                 "uri": "SEC103.ReviewPotentiallySensitiveFiles.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -83,11 +83,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "de6098dea4c3cb10ee0d3c77c19e388d01883e5e0648079cb9103abe8767e10e",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "09d422748177efd90b0212a3072f3896978fe0404509f8d199a9bd1bb3f4fabb",
-            "SecretFingerprint/v0": "{\"secret\":\"07939EFF34140F8D8BBCC3DD59F958A72979C806BF02797AC2F8841C37541FAE\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"07939EFF34140F8D8BBCC3DD59F958A72979C806BF02797AC2F8841C37541FAE\"}"
+            "secretHashSha256/v0": "de6098dea4c3cb10ee0d3c77c19e388d01883e5e0648079cb9103abe8767e10e",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "09d422748177efd90b0212a3072f3896978fe0404509f8d199a9bd1bb3f4fabb",
+            "secretFingerprint/v0": "{\"secret\":\"07939EFF34140F8D8BBCC3DD59F958A72979C806BF02797AC2F8841C37541FAE\"}",
+            "validationFingerprint/v0": "{\"secret\":\"07939EFF34140F8D8BBCC3DD59F958A72979C806BF02797AC2F8841C37541FAE\"}"
           },
           "rank": 55.25
         }

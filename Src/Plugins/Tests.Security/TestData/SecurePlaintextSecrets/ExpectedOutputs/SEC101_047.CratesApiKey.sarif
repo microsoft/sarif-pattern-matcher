@@ -10,7 +10,7 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
@@ -38,7 +38,7 @@
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "f9f97b54ef62ff95abbea391097ee612991be049f4af59d7da922229edda2b57",
-            "AssetFingerprint/v0": "{\"platform\":\"Crates\"}",
-            "ValidationFingerprintHashSha256/v0": "9ae3596b73b37748eac0f276b2ce08fa96a6ceebcd3270e5d4ec573df0e27e28",
-            "SecretFingerprint/v0": "{\"secret\":\"ciodeaddeaddead123412341234dead1234\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"ciodeaddeaddead123412341234dead1234\"}"
+            "secretHashSha256/v0": "f9f97b54ef62ff95abbea391097ee612991be049f4af59d7da922229edda2b57",
+            "assetFingerprint/v0": "{\"platform\":\"Crates\"}",
+            "validationFingerprintHashSha256/v0": "9ae3596b73b37748eac0f276b2ce08fa96a6ceebcd3270e5d4ec573df0e27e28",
+            "secretFingerprint/v0": "{\"secret\":\"ciodeaddeaddead123412341234dead1234\"}",
+            "validationFingerprint/v0": "{\"secret\":\"ciodeaddeaddead123412341234dead1234\"}"
           },
           "rank": 43.89
         }

@@ -10,7 +10,7 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
@@ -38,7 +38,7 @@
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "98312e0f2d594fd4e3d71b7be906d302fcf64291f04ad62970864114a9076688",
-            "AssetFingerprint/v0": "{\"id\":\"0123456789\",\"platform\":\"Slack\"}",
-            "ValidationFingerprintHashSha256/v0": "904b560d930b8b7497aefc45f1249618b2afd955d425163beef027b9cc42c096",
-            "SecretFingerprint/v0": "{\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}",
-            "ValidationFingerprint/v0": "{\"id\":\"0123456789\",\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}"
+            "secretHashSha256/v0": "98312e0f2d594fd4e3d71b7be906d302fcf64291f04ad62970864114a9076688",
+            "assetFingerprint/v0": "{\"id\":\"0123456789\",\"platform\":\"Slack\"}",
+            "validationFingerprintHashSha256/v0": "904b560d930b8b7497aefc45f1249618b2afd955d425163beef027b9cc42c096",
+            "secretFingerprint/v0": "{\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}",
+            "validationFingerprint/v0": "{\"id\":\"0123456789\",\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}"
           },
           "rank": 52.82
         }

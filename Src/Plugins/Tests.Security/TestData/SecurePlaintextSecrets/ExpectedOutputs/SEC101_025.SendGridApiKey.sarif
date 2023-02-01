@@ -10,7 +10,7 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
@@ -38,7 +38,7 @@
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "a7ca915496a65d2f6b638f37479c374aaacedd2b4d97d915d9dfaa36a900b89a",
-            "AssetFingerprint/v0": "{\"platform\":\"SendGrid\"}",
-            "ValidationFingerprintHashSha256/v0": "39a60e0e3fa2033b1fbb8c8cb81e01b033a0be7cfe5c7bc497a7015f1585b79f",
-            "SecretFingerprint/v0": "{\"secret\":\"SG.0deadbeef0deadbeef0dea.deadbeef0deadbeef0deadbeef0deadbeef0deadbee\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"SG.0deadbeef0deadbeef0dea.deadbeef0deadbeef0deadbeef0deadbeef0deadbee\"}"
+            "secretHashSha256/v0": "a7ca915496a65d2f6b638f37479c374aaacedd2b4d97d915d9dfaa36a900b89a",
+            "assetFingerprint/v0": "{\"platform\":\"SendGrid\"}",
+            "validationFingerprintHashSha256/v0": "39a60e0e3fa2033b1fbb8c8cb81e01b033a0be7cfe5c7bc497a7015f1585b79f",
+            "secretFingerprint/v0": "{\"secret\":\"SG.0deadbeef0deadbeef0dea.deadbeef0deadbeef0deadbeef0deadbeef0deadbee\"}",
+            "validationFingerprint/v0": "{\"secret\":\"SG.0deadbeef0deadbeef0dea.deadbeef0deadbeef0deadbeef0deadbeef0deadbee\"}"
           },
           "rank": 38.09
         }

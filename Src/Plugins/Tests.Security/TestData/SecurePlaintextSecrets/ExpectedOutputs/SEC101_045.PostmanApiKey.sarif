@@ -10,7 +10,7 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
@@ -38,7 +38,7 @@
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "569865df0a806d56435d3db7b65e4ecb3993da5355a9af882ae0d8d14b6473b8",
-            "AssetFingerprint/v0": "{\"platform\":\"Postman\"}",
-            "ValidationFingerprintHashSha256/v0": "c9b49e4731fb96dd02e603d3b7f02294d29d20bbbf1742a7d91dab621c2fb079",
-            "SecretFingerprint/v0": "{\"secret\":\"PMAK-dead0000dead11113c1e4064-92f00edbc2d214a356c39a3dd537ad1921\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"PMAK-dead0000dead11113c1e4064-92f00edbc2d214a356c39a3dd537ad1921\"}"
+            "secretHashSha256/v0": "569865df0a806d56435d3db7b65e4ecb3993da5355a9af882ae0d8d14b6473b8",
+            "assetFingerprint/v0": "{\"platform\":\"Postman\"}",
+            "validationFingerprintHashSha256/v0": "c9b49e4731fb96dd02e603d3b7f02294d29d20bbbf1742a7d91dab621c2fb079",
+            "secretFingerprint/v0": "{\"secret\":\"PMAK-dead0000dead11113c1e4064-92f00edbc2d214a356c39a3dd537ad1921\"}",
+            "validationFingerprint/v0": "{\"secret\":\"PMAK-dead0000dead11113c1e4064-92f00edbc2d214a356c39a3dd537ad1921\"}"
           },
           "rank": 56.32
         }

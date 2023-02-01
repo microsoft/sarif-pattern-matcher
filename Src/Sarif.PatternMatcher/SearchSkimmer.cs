@@ -20,11 +20,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmer : Skimmer<AnalyzeContext>
     {
-        public const string SecretHashSha256Current = "SecretHashSha256/v0";
-        public const string AssetFingerprintCurrent = "AssetFingerprint/v0";
-        public const string SecretFingerprintCurrent = "SecretFingerprint/v0";
-        public const string ValidationFingerprintCurrent = "ValidationFingerprint/v0";
-        public const string ValidationFingerprintHashSha256Current = "ValidationFingerprintHashSha256/v0";
+        public const string SecretHashSha256Current = "secretHashSha256/v0";
+        public const string AssetFingerprintCurrent = "assetFingerprint/v0";
+        public const string SecretFingerprintCurrent = "secretFingerprint/v0";
+        public const string ValidationFingerprintCurrent = "validationFingerprint/v0";
+        public const string ValidationFingerprintHashSha256Current = "validationFingerprintHashSha256/v0";
 
         public const string DynamicValidationNotEnabled = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
 
@@ -518,6 +518,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 },
             };
 
+            IDictionary<string, string> partialFingerprints = null;
+            if (context.DataToInsert.HasFlag(OptionallyEmittedData.RollingHashPartialFingerprints))
+            {
+                context.RollingHashMap ??= HashUtilities.RollingHash(context.FileContents);
+                string rollingHash = context.RollingHashMap[location.PhysicalLocation.Region.StartLine];
+                partialFingerprints = new Dictionary<string, string>() { { "primaryLocationLineHash", rollingHash } };
+            }
+
             Dictionary<string, string> fingerprints = BuildFingerprints(context.RedactSecrets, fingerprint, out double rank);
 
             if (!string.IsNullOrEmpty(matchExpression.SubId))
@@ -544,6 +552,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Rank = rank,
                 Locations = new List<Location>(new[] { location }),
                 Fingerprints = fingerprints,
+                PartialFingerprints = partialFingerprints,
             };
 
             if (matchExpression.Fixes?.Count > 0)

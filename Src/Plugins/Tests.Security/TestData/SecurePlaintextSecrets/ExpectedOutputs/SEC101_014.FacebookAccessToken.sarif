@@ -10,7 +10,7 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
@@ -38,7 +38,7 @@
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "a9e57fe95cd1cce2bc5440ba090ae24fca3fcfa61969c6d4c2cf3e70f06a147d",
-            "AssetFingerprint/v0": "{\"platform\":\"Facebook\"}",
-            "ValidationFingerprintHashSha256/v0": "edfa7f059db84fd0c3a1dbc8011f86849725f19c20f18bfb8e21a2cf690c5752",
-            "SecretFingerprint/v0": "{\"secret\":\"EAACEdEose0cBAtestjunk111111\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"EAACEdEose0cBAtestjunk111111\"}"
+            "secretHashSha256/v0": "a9e57fe95cd1cce2bc5440ba090ae24fca3fcfa61969c6d4c2cf3e70f06a147d",
+            "assetFingerprint/v0": "{\"platform\":\"Facebook\"}",
+            "validationFingerprintHashSha256/v0": "edfa7f059db84fd0c3a1dbc8011f86849725f19c20f18bfb8e21a2cf690c5752",
+            "secretFingerprint/v0": "{\"secret\":\"EAACEdEose0cBAtestjunk111111\"}",
+            "validationFingerprint/v0": "{\"secret\":\"EAACEdEose0cBAtestjunk111111\"}"
           },
           "rank": 52.85
         },
@@ -150,11 +150,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "19f396ec3ab2b13e84b6d5274fe2922264a0d5eb15ce8c559ba9a5edb8e31447",
-            "AssetFingerprint/v0": "{\"platform\":\"Facebook\"}",
-            "ValidationFingerprintHashSha256/v0": "f882ac7a29fbe83f340fb4040af4c2a19a2cc156aca6bbb95dc833142571916e",
-            "SecretFingerprint/v0": "{\"secret\":\"EAACEdEose0cBAtestjunk22222222\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"EAACEdEose0cBAtestjunk22222222\"}"
+            "secretHashSha256/v0": "19f396ec3ab2b13e84b6d5274fe2922264a0d5eb15ce8c559ba9a5edb8e31447",
+            "assetFingerprint/v0": "{\"platform\":\"Facebook\"}",
+            "validationFingerprintHashSha256/v0": "f882ac7a29fbe83f340fb4040af4c2a19a2cc156aca6bbb95dc833142571916e",
+            "secretFingerprint/v0": "{\"secret\":\"EAACEdEose0cBAtestjunk22222222\"}",
+            "validationFingerprint/v0": "{\"secret\":\"EAACEdEose0cBAtestjunk22222222\"}"
           },
           "rank": 51.28
         }

@@ -10,7 +10,7 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
@@ -38,7 +38,7 @@
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "edf1e039990516ea6534dca0ae1df9d4c1a9ae482b55751604e04c851d009feb",
-            "AssetFingerprint/v0": "{\"platform\":\"Stripe\"}",
-            "ValidationFingerprintHashSha256/v0": "72b30afe882333ec2c3c051f1922bbbc94ba6f43af19ae71de44f260819dbf35",
-            "SecretFingerprint/v0": "{\"secret\":\"sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}"
+            "secretHashSha256/v0": "edf1e039990516ea6534dca0ae1df9d4c1a9ae482b55751604e04c851d009feb",
+            "assetFingerprint/v0": "{\"platform\":\"Stripe\"}",
+            "validationFingerprintHashSha256/v0": "72b30afe882333ec2c3c051f1922bbbc94ba6f43af19ae71de44f260819dbf35",
+            "secretFingerprint/v0": "{\"secret\":\"sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}",
+            "validationFingerprint/v0": "{\"secret\":\"sk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}"
           },
           "rank": 38.3
         },
@@ -150,11 +150,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "fea458040857dd3a00ef6004acd50b848352661633a4cbe907836537e47d0a92",
-            "AssetFingerprint/v0": "{\"platform\":\"Stripe\"}",
-            "ValidationFingerprintHashSha256/v0": "d32d85683e21369010a37c401e0ec45a5ecd09d6f3073c8a84866a9529f556c0",
-            "SecretFingerprint/v0": "{\"secret\":\"sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}"
+            "secretHashSha256/v0": "fea458040857dd3a00ef6004acd50b848352661633a4cbe907836537e47d0a92",
+            "assetFingerprint/v0": "{\"platform\":\"Stripe\"}",
+            "validationFingerprintHashSha256/v0": "d32d85683e21369010a37c401e0ec45a5ecd09d6f3073c8a84866a9529f556c0",
+            "secretFingerprint/v0": "{\"secret\":\"sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}",
+            "validationFingerprint/v0": "{\"secret\":\"sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}"
           },
           "rank": 38.84
         }
