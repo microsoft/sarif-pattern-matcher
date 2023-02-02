@@ -77,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var logger = new TestLogger();
 
-            var target = new EnumeratedArtifact
+            var target = new EnumeratedArtifact(FileSystem.Instance)
             {
                 Uri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
                 Contents = base64Encoded,
@@ -135,7 +135,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
 
-            var target = new EnumeratedArtifact
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
             {
                 Uri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
                 Contents = definition.Id,
@@ -145,7 +145,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var context = new AnalyzeContext
             {
                 CurrentTarget = target,
-                FileSystem = mockFileSystem.Object,
                 Logger = logger
             };
 
@@ -166,7 +165,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var logger = new TestLogger();
 
-            var target = new EnumeratedArtifact
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
             {
                 Uri = new Uri($"file:///c:/{definition.Name}.Fake.asc"),
                 Contents = $"{definition.Id}",
@@ -434,7 +433,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
 
-            var target = new EnumeratedArtifact
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
             {
                 Uri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
                 Contents = definition.Id,
@@ -495,7 +494,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 var logger = new TestLogger();
 
-                var target = new EnumeratedArtifact
+                var target = new EnumeratedArtifact(mockFileSystem.Object)
                 {
                     Uri = new Uri(filePath),
                     FileSystem = mockFileSystem.Object,
@@ -550,13 +549,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 string filePath = $"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}";
                 var uri = new Uri(filePath);
-                var target = new EnumeratedArtifact
+                var target = new EnumeratedArtifact(mockFileSystem.Object)
                 {
                     Uri = new Uri(filePath),
-                    FileSystem = mockFileSystem.Object,
                 };
-                
-                var logger = new TestLogger();                
+
+                var logger = new TestLogger();
 
                 // `MaxFileSizeInKilobytes` is not set; the default value defined in `AnalyzeContext.cs` will be used.
                 // `FileContents` is not set, so file size will be determined by checking the size of the target file,
@@ -607,8 +605,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     sb.Append($"{Guid.NewGuid()};");
                 }
 
-                var target = new EnumeratedArtifact 
-                { 
+                var target = new EnumeratedArtifact(FileSystem.Instance)
+                {
                     Uri = new Uri(filePath),
                     Contents = Guid.NewGuid().ToString(),
                 };
@@ -666,10 +664,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 string filePath = $"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}";
 
-                var target = new EnumeratedArtifact
+                var target = new EnumeratedArtifact(mockFileSystem.Object)
                 {
                     Uri = new Uri(filePath),
-                    FileSystem = mockFileSystem.Object,
                 };
 
                 var logger = new TestLogger();
@@ -715,10 +712,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>())).Throws(new FileNotFoundException());
 
-            var target = new EnumeratedArtifact
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
             {
                 Uri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
-                FileSystem = mockFileSystem.Object,
             };
 
             var context = new AnalyzeContext
@@ -753,22 +749,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             definition ??= CreateDefaultSearchDefinition(expression);
 
-            var logger = new TestLogger();
 
-            var target = new EnumeratedArtifact
+            var uri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}.{scanTargetExtension}");
+            var logger = new TestLogger();
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileReadAllText(uri.LocalPath)).Returns(definition.Id);
+
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
             {
-                Uri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}.{scanTargetExtension}"),
+                Uri = uri,
                 Contents = definition.Id,
             };
-
-            var mockFileSystem = new Mock<IFileSystem>();
-            mockFileSystem.Setup(x => x.FileReadAllText(target.Uri.LocalPath)).Returns(definition.Id);
 
             var context = new AnalyzeContext
             {
                 CurrentTarget = target,
                 Logger = new TestLogger(),
-                FileSystem= mockFileSystem.Object, 
+                FileSystem = mockFileSystem.Object,
                 FileRegionsCache = new FileRegionsCache(),
             };
 

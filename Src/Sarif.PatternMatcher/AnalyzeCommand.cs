@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 using CommandLine;
 
@@ -248,8 +249,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     skimmers.Add(
                         new SearchSkimmer(engine: engine,
                                           validators: validators,
-                                          definition,
-                                          fileSystem)
+                                          definition)
                         {
                             ExtensionIndex = extensionIndex,
                         });

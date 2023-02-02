@@ -143,17 +143,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 new {
                     largeFileSize = (long)ulong.MinValue,
                     maxFileSize = 1,
-                    expectedResult = 4
+                    expectedResult = 2
                 },
                 new {
-                    largeFileSize = (long)ulong.MinValue,
+                    largeFileSize = (long)ulong.MinValue + 1,
                     maxFileSize = 2000,
                     expectedResult = 4
                 },
                 new {
                     largeFileSize = (long)ulong.MinValue,
                     maxFileSize = int.MaxValue,
-                    expectedResult = 4
+                    expectedResult = 2
                 },
                 new {
                     largeFileSize = (long)1024,
@@ -164,9 +164,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             foreach (var testCase in testCases)
             {
-                RuntimeConditions runtimeConditions = testCase.expectedResult != 4
-                    ? RuntimeConditions.OneOrMoreFilesSkippedDueToSize
-                    : RuntimeConditions.None;
+                RuntimeConditions runtimeConditions =
+                    testCase.expectedResult != 4
+                        ? RuntimeConditions.OneOrMoreFilesSkippedDueToSize
+                        : RuntimeConditions.None;
 
                 SarifLog logFile =
                     RunAnalyzeCommandWithFileSizeLimits(maxFileSizeInKilobytes: testCase.maxFileSize,
@@ -211,14 +212,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             sarifLogWithLargeFileExcluded.Should().NotBeNull();
             sarifLogWithLargeFileExcluded.Runs?[0].Results?.Count.Should().Be(2);
-            sarifLogWithLargeFileExcluded.Runs?[0].Artifacts?.Count.Should().Be(2);
+            sarifLogWithLargeFileExcluded.Runs?[0].Artifacts?.Count.Should().Be(1);
             sarifLogWithLargeFileExcluded.Runs[0].Results
                 .Where(r => r.Locations[0].PhysicalLocation.ArtifactLocation.Uri.LocalPath.EndsWith(SmallTargetName))
                 .Count().Should().Be(2);
-            
+
             SarifLog sarifLogWithLargeFileIncluded = RunAnalyzeCommandWithFileSizeLimits(
-                maxFileSizeInKilobytes: 1024,
-                largeFileSizeInBytes: 0,
+                maxFileSizeInKilobytes: 1,
+                largeFileSizeInBytes: 1,
                 shouldUseObsoleteOption: false,
                 RuntimeConditions.None);
 
@@ -405,6 +406,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             var mockFileSystem = new Mock<IFileSystem>();
 
+            mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(1025);
             mockFileSystem.Setup(x => x.FileVersionInfoGetVersionInfo(It.IsAny<string>())).Returns(fvi);
             mockFileSystem.Setup(x => x.DirectoryExists(rootDirectory)).Returns(true);
             mockFileSystem.Setup(x => x.DirectoryEnumerateFiles(rootDirectory,
@@ -619,7 +621,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
 
-            mockFileSystem.Setup(x => x.FileInfoLength(SmallTargetName)).Returns(fileContents.Length);
+            mockFileSystem.Setup(x => x.FileInfoLength(scanTargetPath)).Returns(fileContents.Length);
             mockFileSystem.Setup(x => x.FileExists(@$"c:\Test.UnitTests.Sarif.PatternMatcher.Cli.dll")).Returns(true);
             mockFileSystem.Setup(x => x.AssemblyLoadFrom(It.IsAny<string>())).Returns(Assembly.LoadFrom(dllLocation));
 
@@ -658,9 +660,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 string[] args = runDynamicValidation ? dynamicArgs : staticArgs;
 
                 int result = Program.Main(args);
-                result.Should().Be(0);
-
                 sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
+                result.Should().Be(0);
             }
             finally
             {

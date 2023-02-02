@@ -119,7 +119,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     {
                         try
                         {
-                            var target = new EnumeratedArtifact
+                            var target = new EnumeratedArtifact(FileSystem)
                             {
                                 Uri = new Uri(contentName, UriKind.RelativeOrAbsolute),
                                 Contents = contentData,

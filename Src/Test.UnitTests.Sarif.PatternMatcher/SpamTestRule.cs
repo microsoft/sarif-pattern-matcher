@@ -267,9 +267,9 @@ namespace Microsoft.CodeAnalysis.Sarif
 
         private int CountAllInstancesOfFoo(string fileContents)
         {
-            if (string.IsNullOrEmpty(fileContents) || fileContents.IndexOf("foo") == -1) 
-            { 
-                return 0; 
+            if (string.IsNullOrEmpty(fileContents) || fileContents.IndexOf("foo") == -1)
+            {
+                return 0;
             }
 
             string[] tokens = fileContents.Split(' ', StringSplitOptions.RemoveEmptyEntries);

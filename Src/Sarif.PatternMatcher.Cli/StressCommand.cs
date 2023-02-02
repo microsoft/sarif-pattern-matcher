@@ -167,7 +167,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             {
                 skimmers ??= AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, s_configurationFiles, tool);
 
-                var target = new EnumeratedArtifact
+                var target = new EnumeratedArtifact(FileSystem)
                 {
                     Uri = new Uri(scanContext.SourceContext.ResourceName, UriKind.RelativeOrAbsolute),
                     Contents = resourceContent,
@@ -252,7 +252,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             {
                 var logger = new AdoLogger();
 
-                var target = new EnumeratedArtifact
+                var target = new EnumeratedArtifact(FileSystem)
                 {
                     Uri = new Uri(filePath, UriKind.RelativeOrAbsolute),
                     Contents = resourceContent,

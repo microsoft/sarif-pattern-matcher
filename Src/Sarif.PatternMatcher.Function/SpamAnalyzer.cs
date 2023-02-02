@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             FileSystem = Sarif.FileSystem.Instance;
         }
 
-        private static Tool s_tool = Tool.CreateFromAssemblyData();
+        private static readonly Tool s_tool = Tool.CreateFromAssemblyData();
 
         public static SarifLog Analyze(string filePath, string text, string rulePath, string originalFileName)
         {
@@ -60,7 +60,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 // that catastrophic event is logged as a SARIF notification.
                 var disabledSkimmers = new HashSet<string>();
 
-                var target = new EnumeratedArtifact
+                var target = new EnumeratedArtifact(FileSystem)
                 {
                     Uri = new Uri(filePath, UriKind.RelativeOrAbsolute),
                     Contents = text,

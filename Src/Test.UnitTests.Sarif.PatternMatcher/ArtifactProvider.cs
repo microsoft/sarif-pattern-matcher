@@ -9,9 +9,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ArtifactProvider : IArtifactProvider
     {
-        private readonly IEnumerable<IEnumeratedArtifact> artifact;
-
-        internal ArtifactProvider() { }
+        internal ArtifactProvider(IFileSystem fileSystem)
+        {
+            FileSystem = fileSystem;
+        }
 
         public ArtifactProvider(IEnumerable<IEnumeratedArtifact> artifacts)
         {
@@ -20,14 +21,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public virtual IEnumerable<IEnumeratedArtifact> Artifacts { get; set; }
 
-        public ICollection<IEnumeratedArtifact> Skipped {get;set; }
+        public ICollection<IEnumeratedArtifact> Skipped { get; set; }
+        public IFileSystem FileSystem { get; set; }
     }
 
-    public class ZipArchiveArtifactProvider : ArtifactProvider 
+    public class ZipArchiveArtifactProvider : ArtifactProvider
     {
         private readonly ZipArchive zipArchive;
 
-        public ZipArchiveArtifactProvider(ZipArchive zipArchive)
+        public ZipArchiveArtifactProvider(ZipArchive zipArchive, IFileSystem fileSystem) : base(fileSystem)
         {
             this.zipArchive = zipArchive;
         }
@@ -38,7 +40,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 foreach (ZipArchiveEntry entry in this.zipArchive.Entries)
                 {
-                    yield return new EnumeratedArtifact
+                    yield return new EnumeratedArtifact(Sarif.FileSystem.Instance)
                     {
                         Uri = new Uri(entry.FullName, UriKind.RelativeOrAbsolute),
                         Stream = entry.Open()

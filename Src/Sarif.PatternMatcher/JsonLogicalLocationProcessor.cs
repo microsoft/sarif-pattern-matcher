@@ -102,8 +102,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         ///  form safe to use as a stable fingerprint. It removes all array indices
         ///  from the path to cause results to match when they move within arrays.
         /// </summary>
-        /// <param name="logicalLocation">JsonPath logical location to convert</param>
-        /// <returns>Canonical Logical Location safe for fingerprint use, or null if unable to compute</returns>
+        /// <param name="logicalLocation">JsonPath logical location to convert.</param>
+        /// <returns>Canonical Logical Location safe for fingerprint use, or null if unable to compute.</returns>
         public static string ToFingerprint(string logicalLocation)
         {
             if (string.IsNullOrEmpty(logicalLocation)) { return null; }

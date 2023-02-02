@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif
             throw new NotImplementedException();
         }
 
-        public IEnumerable<IOption> GetOptions()
+        public new IEnumerable<IOption> GetOptions()
         {
             throw new NotImplementedException();
         }

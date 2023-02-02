@@ -56,7 +56,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             var emptySkimmers = new List<Skimmer<AnalyzeContext>>();
 
-            var target = new EnumeratedArtifact
+            var target = new EnumeratedArtifact(FileSystem.Instance)
             {
                 Uri = new Uri(@"c:\test.txt"),
                 Contents = string.Empty
@@ -67,7 +67,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 var context = new AnalyzeContext
                 {
                     Logger = new TestMessageLogger(),
-                    CurrentTarget= target,
+                    CurrentTarget = target,
                     Skimmers = skimmers,
                 };
 
@@ -91,12 +91,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Logger = logger,
                 Skimmers = skimmers,
                 CancellationToken = ct.Token,
-                TargetsProvider = new ZipArchiveArtifactProvider(CreateTestZipArchive()),
+                TargetsProvider = new ZipArchiveArtifactProvider(CreateTestZipArchive(), FileSystem.Instance),
             };
 
             // The rule will pause for 500 ms giving us time to cancel;
             context.Policy.SetProperty(TestRule.DelayInMilliseconds, 100);
-            
+
             int result = AnalyzeCommand.AnalyzeFromContext(context);
 
             logger.ToolNotifications?.Should().BeNull();
@@ -115,7 +115,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 Logger = logger,
                 Skimmers = skimmers,
-                TargetsProvider = new ZipArchiveArtifactProvider(CreateTestZipArchive()),
+                TargetsProvider = new ZipArchiveArtifactProvider(CreateTestZipArchive(), FileSystem.Instance),
                 TimeoutInMilliseconds = 5,
             };
 
@@ -168,7 +168,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // Logger, rules and scan targets.
                 Logger = logger,
                 Skimmers = skimmers,
-                TargetsProvider = new ZipArchiveArtifactProvider(archiveToAnalyze),
+                TargetsProvider = new ZipArchiveArtifactProvider(archiveToAnalyze, FileSystem.Instance),
 
                 // Execution configuration.
                 Threads = 2,
@@ -205,7 +205,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             logger.ToolNotifications.Should().NotBeNull();
             logger.ToolNotifications.Count.Should().Be(1);
             logger.ToolNotifications[0].Descriptor.Id.Should().Be("TRC101.ScanTime");
-            
+
             // Config notifications relate specifically to how you've configured analysis.
             // The scanner will emit a notification for every disabled check.
             logger.ConfigurationNotifications.Should().NotBeNull();
@@ -216,7 +216,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             RuntimeConditions conditions =
                 RuntimeConditions.RuleWasExplicitlyDisabled |
-                RuntimeConditions.OneOrMoreWarningsFired    |
+                RuntimeConditions.OneOrMoreWarningsFired |
                 RuntimeConditions.OneOrMoreErrorsFired;
 
             context.RuntimeErrors.Should().Be(conditions);
@@ -239,7 +239,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private const int ERROR_TARGETS = 1;
         private const int DEFAULT_TARGETS_COUNT = ERROR_TARGETS + WARN_TARGETS;
         private const int ALL_TARGETS_COUNT = ERROR_TARGETS + WARN_TARGETS + NOTE_TARGETS;
-        
+
         // A default # of 'foo' tokens in each scan target, each of which will generate an error.
         private const int DEFAULT_FOO_COUNT = 2;
 
@@ -252,7 +252,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 fooString.Append(FOO);
             }
-            
+
             var stream = new MemoryStream();
             using (var populateArchive = new ZipArchive(stream, ZipArchiveMode.Update, leaveOpen: true))
             {
@@ -288,7 +288,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var artifacts = new EnumeratedArtifact[]
             {
-                new EnumeratedArtifact()
+                new EnumeratedArtifact(FileSystem.Instance)
                 {
                     Uri = new Uri("c:\\FireOneWarning.txt", UriKind.Absolute),
                     Contents = $"Will fire a single warning due to the file name. " +
@@ -307,7 +307,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             int result = AnalyzeCommand.AnalyzeFromContext(context);
             result.Should().Be(AnalyzeCommand.SUCCESS);
-            context.RuntimeErrors.Should().Be(RuntimeConditions.OneOrMoreErrorsFired | RuntimeConditions.OneOrMoreWarningsFired);              
+            context.RuntimeErrors.Should().Be(RuntimeConditions.OneOrMoreErrorsFired | RuntimeConditions.OneOrMoreWarningsFired);
             logger.Results.Count.Should().Be(artifacts.Length + fooInstances.Length);
         }
 
@@ -392,7 +392,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
-            var target = new EnumeratedArtifact
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
             {
                 Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
                 Contents = fileContents,
@@ -468,7 +468,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
-            var target = new EnumeratedArtifact
+            var target = new EnumeratedArtifact(FileSystem.Instance)
             {
                 Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
                 Contents = fileContents,
@@ -712,7 +712,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                          tool: tool,
                                          closeWriterOnDispose: true);
 
-            var target = new EnumeratedArtifact
+            var target = new EnumeratedArtifact(FileSystem.Instance)
             {
                 Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
                 Contents = fileContents,
@@ -827,7 +827,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
-            var target = new EnumeratedArtifact
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
             {
                 Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
                 Contents = fileContents,
@@ -869,7 +869,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                          tool: tool,
                                          closeWriterOnDispose: false);
 
-            var target = new EnumeratedArtifact
+            var target = new EnumeratedArtifact(FileSystem.Instance)
             {
                 Uri = new Uri($"/notreeindex/{Guid.NewGuid()}.test", UriKind.Relative),
                 Contents = "foo",
@@ -970,7 +970,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
 
             var targetsProvider = new ArtifactProvider(new[] {
-            new EnumeratedArtifact
+            new EnumeratedArtifact(FileSystem.Instance)
             {
                 Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
                 Contents = fileContents,
@@ -1005,9 +1005,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             string scanTargetFileName = Path.Combine(Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
-            FlexString fixedFileContents = "bar bar bar";
 
-            var target = new EnumeratedArtifact
+            var target = new EnumeratedArtifact(FileSystem.Instance)
             {
                 Uri = new Uri(scanTargetFileName, UriKind.Relative),
                 Contents = fileContents,

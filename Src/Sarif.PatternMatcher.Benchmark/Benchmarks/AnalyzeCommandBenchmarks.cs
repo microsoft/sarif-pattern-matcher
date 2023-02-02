@@ -111,8 +111,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
 
-            var target = new EnumeratedArtifact            
-            { 
+            var target = new EnumeratedArtifact(this.fileSystemMock.Object)
+            {
                 Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
                 Contents = fileContents,
             };
