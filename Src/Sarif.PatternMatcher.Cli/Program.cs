@@ -47,6 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return Parser.Default.ParseArguments<
                 AnalyzeOptions,
                 AnalyzeDatabaseOptions,
+                ExportConfigurationOptions,
                 ExportRulesMetatadaOptions,
                 ExportSearchDefinitionsOptions,
                 ImportAndAnalyzeOptions,
@@ -55,6 +56,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
               .MapResult(
                 (AnalyzeOptions options) => RunAnalyzeCommand(options),
                 (AnalyzeDatabaseOptions options) => new AnalyzeDatabaseCommand().Run(options),
+                (ExportConfigurationOptions options) => new ExportConfigurationCommand().Run(options),
                 (ExportRulesMetatadaOptions options) => new ExportRulesMetatadaCommand().Run(options),
                 (ExportSearchDefinitionsOptions options) => new ExportSearchDefinitionsCommand().Run(options),
                 (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),

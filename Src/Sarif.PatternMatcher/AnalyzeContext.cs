@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
-using Microsoft.CodeAnalysis.Sarif.Baseline;
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.Strings.Interop;
 
@@ -106,6 +104,5 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 "An upper bound on the size of the RE2 DFA cache. When the cache size exceeds this " +
                 "limit RE2 will fallback to an alternate (much less performant) search mechanism. " +
                 "Negative values will be discarded in favor of the default of 5096 KB.");
-
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.Sarif.Driver;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
-    [Verb("validate")]
+    [Verb("validate", HelpText = "Validate credentials persisted to SARIF log file.")]
     public class ValidateOptions : MultipleFilesOptionsBase
     {
         [Option(
