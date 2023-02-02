@@ -8,8 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-
 using CommandLine;
 
 using FluentAssertions;
@@ -19,7 +17,6 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 
 using Moq;
 
