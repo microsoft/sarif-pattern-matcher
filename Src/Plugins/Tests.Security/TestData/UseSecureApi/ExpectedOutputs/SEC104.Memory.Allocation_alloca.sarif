@@ -10,7 +10,7 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
@@ -41,7 +41,7 @@
             "locations": [
               {
                 "uri": "SEC104.UseSecureApi.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
-            "AssetFingerprint/v0": "{\"id\":\"_alloca\"}",
-            "ValidationFingerprintHashSha256/v0": "b7def400029e894d96939eb68b0a7a65a04509f2c20b83ba65fb68be26a56e81",
-            "SecretFingerprint/v0": "{}",
-            "ValidationFingerprint/v0": "{\"id\":\"_alloca\"}"
+            "secretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "assetFingerprint/v0": "{\"id\":\"_alloca\"}",
+            "validationFingerprintHashSha256/v0": "b7def400029e894d96939eb68b0a7a65a04509f2c20b83ba65fb68be26a56e81",
+            "secretFingerprint/v0": "{}",
+            "validationFingerprint/v0": "{\"id\":\"_alloca\"}"
           },
           "fixes": [
             {

@@ -10,13 +10,13 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
-            "name": "DoNotExposePlaintextSecrets",
+            "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
             "rules": [
               {
                 "id": "SEC101/012",
@@ -38,7 +38,7 @@
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "d693a51796332f66b5c623f099e3a6c65b49581051982e158dd81272d688bfbf",
-            "AssetFingerprint/v0": "{\"id\":\"T01JYS3KLKU\",\"platform\":\"Slack\"}",
-            "ValidationFingerprintHashSha256/v0": "7287fd0b7057f4726d34ec2b6881a537ae271ac5152b31b6e127140d2b34009f",
-            "SecretFingerprint/v0": "{\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}",
-            "ValidationFingerprint/v0": "{\"id\":\"T01JYS3KLKU\",\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}"
+            "secretHashSha256/v0": "d693a51796332f66b5c623f099e3a6c65b49581051982e158dd81272d688bfbf",
+            "assetFingerprint/v0": "{\"id\":\"T01JYS3KLKU\",\"platform\":\"Slack\"}",
+            "validationFingerprintHashSha256/v0": "7287fd0b7057f4726d34ec2b6881a537ae271ac5152b31b6e127140d2b34009f",
+            "secretFingerprint/v0": "{\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}",
+            "validationFingerprint/v0": "{\"id\":\"T01JYS3KLKU\",\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}"
           },
           "rank": 49.76
         }

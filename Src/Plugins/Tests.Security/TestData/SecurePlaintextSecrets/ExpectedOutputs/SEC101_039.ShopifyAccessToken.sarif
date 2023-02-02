@@ -10,13 +10,13 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
-            "name": "DoNotExposePlaintextSecrets",
+            "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
             "rules": [
               {
                 "id": "SEC101/039",
@@ -38,7 +38,7 @@
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "4a5eeb71ad3d1147d749bbe1c9e80fe221a91ed69bb8f52dc7fc204288e15a16",
-            "AssetFingerprint/v0": "{\"platform\":\"Shopify\"}",
-            "ValidationFingerprintHashSha256/v0": "44b02244ed103c0dba6bc8e2eccb37772cd24d4db0371fd1b29c671d83b6838f",
-            "SecretFingerprint/v0": "{\"secret\":\"shpat_11111111110123456789012345678901\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"shpat_11111111110123456789012345678901\"}"
+            "secretHashSha256/v0": "4a5eeb71ad3d1147d749bbe1c9e80fe221a91ed69bb8f52dc7fc204288e15a16",
+            "assetFingerprint/v0": "{\"platform\":\"Shopify\"}",
+            "validationFingerprintHashSha256/v0": "44b02244ed103c0dba6bc8e2eccb37772cd24d4db0371fd1b29c671d83b6838f",
+            "secretFingerprint/v0": "{\"secret\":\"shpat_11111111110123456789012345678901\"}",
+            "validationFingerprint/v0": "{\"secret\":\"shpat_11111111110123456789012345678901\"}"
           },
           "rank": 49.08
         },
@@ -150,11 +150,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "1401e838828b18e718881e295a2143dd825864818274180e7e24ab882dc5cac4",
-            "AssetFingerprint/v0": "{\"platform\":\"Shopify\"}",
-            "ValidationFingerprintHashSha256/v0": "9f414c7bd38a02bb5e8d7b0a20da82370b9ef354aff990749be8538780a945ee",
-            "SecretFingerprint/v0": "{\"secret\":\"shpca_22222222220123456789012345678901\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"shpca_22222222220123456789012345678901\"}"
+            "secretHashSha256/v0": "1401e838828b18e718881e295a2143dd825864818274180e7e24ab882dc5cac4",
+            "assetFingerprint/v0": "{\"platform\":\"Shopify\"}",
+            "validationFingerprintHashSha256/v0": "9f414c7bd38a02bb5e8d7b0a20da82370b9ef354aff990749be8538780a945ee",
+            "secretFingerprint/v0": "{\"secret\":\"shpca_22222222220123456789012345678901\"}",
+            "validationFingerprint/v0": "{\"secret\":\"shpca_22222222220123456789012345678901\"}"
           },
           "rank": 49.96
         },
@@ -200,11 +200,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "0c76fb43b8103cea29280018f79d162bcea443f586445376e4a25e5ea77d88d9",
-            "AssetFingerprint/v0": "{\"platform\":\"Shopify\"}",
-            "ValidationFingerprintHashSha256/v0": "6928bc4f432e9e9e8b9062bb8053da186c70de097cc4a0e7e8aad26ab0501169",
-            "SecretFingerprint/v0": "{\"secret\":\"shppa_33333333330123456789012345678901\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"shppa_33333333330123456789012345678901\"}"
+            "secretHashSha256/v0": "0c76fb43b8103cea29280018f79d162bcea443f586445376e4a25e5ea77d88d9",
+            "assetFingerprint/v0": "{\"platform\":\"Shopify\"}",
+            "validationFingerprintHashSha256/v0": "6928bc4f432e9e9e8b9062bb8053da186c70de097cc4a0e7e8aad26ab0501169",
+            "secretFingerprint/v0": "{\"secret\":\"shppa_33333333330123456789012345678901\"}",
+            "validationFingerprint/v0": "{\"secret\":\"shppa_33333333330123456789012345678901\"}"
           },
           "rank": 49.21
         }

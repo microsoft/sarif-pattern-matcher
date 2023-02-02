@@ -148,7 +148,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             using (var logger = new SarifLogger(
                 outputTextWriter,
                 LogFilePersistenceOptions.PrettyPrint,
-                tool: tool,
+                run: new Run() { Tool = tool },
                 dataToRemove: OptionallyEmittedData.NondeterministicProperties,
                 levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
                 kinds: new List<ResultKind> { ResultKind.Fail, ResultKind.Pass }))
@@ -178,7 +178,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             SarifLog sarifLog = JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
 
             string pluginRoot = Path.GetDirectoryName(DefinitionsPath) + @"\";
-            var rebaseUriVisitor = new RebaseUriVisitor("PLUGIN_ROOT", new Uri(pluginRoot));
+            var rebaseUriVisitor = new RebaseUriVisitor("EXTENSION_ROOT", new Uri(pluginRoot));
             rebaseUriVisitor.Visit(sarifLog);
 
             string sourceRoot = GitHelper.Default.GetTopLevel(Path.GetDirectoryName(filePath)) + @"\";

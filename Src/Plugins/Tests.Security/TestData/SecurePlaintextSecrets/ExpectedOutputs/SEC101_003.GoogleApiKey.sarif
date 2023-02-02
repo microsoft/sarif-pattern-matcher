@@ -10,13 +10,13 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
-            "name": "DoNotExposePlaintextSecrets",
+            "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
             "rules": [
               {
                 "id": "SEC101/003",
@@ -38,7 +38,7 @@
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "68fcb0c4aa13dabd119dfe2adaf028d9addfe9f9ca4e4be9bd0b364882f29dc6",
-            "AssetFingerprint/v0": "{\"platform\":\"Google\"}",
-            "ValidationFingerprintHashSha256/v0": "8bdc58a544a5b0d75ba5ff5d19e10fb001cb71064c3fccd7907253eb01768f1c",
-            "SecretFingerprint/v0": "{\"secret\":\"AIza0deadbeef00deadbeef00deadbeef00dead\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"AIza0deadbeef00deadbeef00deadbeef00dead\"}"
+            "secretHashSha256/v0": "68fcb0c4aa13dabd119dfe2adaf028d9addfe9f9ca4e4be9bd0b364882f29dc6",
+            "assetFingerprint/v0": "{\"platform\":\"Google\"}",
+            "validationFingerprintHashSha256/v0": "8bdc58a544a5b0d75ba5ff5d19e10fb001cb71064c3fccd7907253eb01768f1c",
+            "secretFingerprint/v0": "{\"secret\":\"AIza0deadbeef00deadbeef00deadbeef00dead\"}",
+            "validationFingerprint/v0": "{\"secret\":\"AIza0deadbeef00deadbeef00deadbeef00dead\"}"
           },
           "rank": 39.61
         }

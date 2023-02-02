@@ -10,7 +10,7 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
@@ -41,7 +41,7 @@
             "locations": [
               {
                 "uri": "SEC104.UseSecureApi.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -102,11 +102,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
-            "AssetFingerprint/v0": "{\"id\":\"_malloca\"}",
-            "ValidationFingerprintHashSha256/v0": "582290aa80b7a22d4aa98aa1227346b61831fcdc156e2a570bc6ad5b8763ccf2",
-            "SecretFingerprint/v0": "{}",
-            "ValidationFingerprint/v0": "{\"id\":\"_malloca\"}"
+            "secretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "assetFingerprint/v0": "{\"id\":\"_malloca\"}",
+            "validationFingerprintHashSha256/v0": "582290aa80b7a22d4aa98aa1227346b61831fcdc156e2a570bc6ad5b8763ccf2",
+            "secretFingerprint/v0": "{}",
+            "validationFingerprint/v0": "{\"id\":\"_malloca\"}"
           }
         }
       ],

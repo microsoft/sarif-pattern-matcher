@@ -1,9 +1,10 @@
 # Release History
 
-## v3.0.0-dev1 Released 01/27/2023
-- Update SARIF SDK submodule from [31f49b2 to 59643b0](https://github.com/microsoft/sarif-sdk/compare/31f49b2..59643b0). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/59643b0/src/ReleaseHistory.md).
+## v3.0.0 Released 02/02/2023
+- Update SARIF SDK submodule from [24c773b to fdb2545](https://github.com/microsoft/sarif-sdk/compare/31f49b2..fdb2545). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/fdb2545/src/ReleaseHistory.md).
 - Update SEC101/028.PlaintextPassword regular expression to include scenarios where a variable name is used instead of string (added `*` after `["']`).
 - FEATURE: Allow rule disabling from definitions file by adding `"RuleEnabledState: "Disabled""` to rule MatchExpression.
+- FEATURE: Support persisting CodeQL rolling hash partial fingerprints to SARIF output.
 - BREAKING: Properly introduce fingerprint versioned hierarchical strings (according to the [SARIF spec](https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html#_Toc34317441)) by updating `/current` component to `/v0`. 
 - BREAKING: Remove non-functional `multiline` argument from command-line. This argument should simply be removed from all command-lines.
 - BREAKING: Remove `file-size-in-kb` argument. Its use should be replaced by `max-file-size-in-kb`, a more descriptive name we pick up from the SARIF driver framework.
@@ -19,8 +20,6 @@
 	
   These exceptions are caused by incompatibilities between Alibaba code and .Net core 3.1 and 6.0. Will restore rule when dependencies are updated. [#700](https://github.com/microsoft/sarif-pattern-matcher/pull/700)
 
-## *2.0.0-dev*
-- Update `sarif-sdk` submodule to commit [24c773bf194100d11c896ce67581832428304a35](https://github.com/microsoft/sarif-sdk/commit/24c773bf194100d11c896ce67581832428304a35), which applies `FileRegionsCache` fixes (from an unreleased version of the SDK).
 - Update search definitions probing logic to look for file alongside the client tool.
 - BUG: Resolve `OutofMemoryException` and `NullReferenceException' failures resulting from a failure to honor file size scan limits set by `--file-size-in-kb` argument and updated Sarif.Sdk submodule to commit [ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b](https://github.com/microsoft/sarif-sdk/commit/ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b). [#621](https://github.com/microsoft/sarif-pattern-matcher/pull/621)
 - BUG: Resolve SAL Modernization Plugin capture group showing incorrect region properties in SARIF. [#626](https://github.com/microsoft/sarif-pattern-matcher/pull/626)

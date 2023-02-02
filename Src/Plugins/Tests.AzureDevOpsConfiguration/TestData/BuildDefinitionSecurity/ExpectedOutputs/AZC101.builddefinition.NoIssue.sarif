@@ -10,17 +10,17 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
           {
             "guid": "183f9c88-1424-4f6c-a8a5-cd59c0bdc312",
-            "name": "SecureAzureDevOps",
+            "name": "Microsoft/AzureDevOpsConfiguration/SecureAzureDevOps",
             "locations": [
               {
                 "uri": "AZC101.BuildDefinitionSecurity.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }

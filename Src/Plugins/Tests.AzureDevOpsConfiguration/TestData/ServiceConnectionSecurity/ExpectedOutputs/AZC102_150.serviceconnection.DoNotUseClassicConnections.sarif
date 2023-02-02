@@ -10,13 +10,13 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
           {
             "guid": "47df6279-81d8-4975-b003-b24985217187",
-            "name": "SecureAzureDevOps",
+            "name": "Microsoft/AzureDevOpsConfiguration/SecureAzureDevOps",
             "rules": [
               {
                 "id": "AZC102/150",
@@ -54,7 +54,7 @@
             "locations": [
               {
                 "uri": "AZC102.ServiceConnectionSecurity.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -118,11 +118,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "9e80eb212bd8b9b20f2e605a55c75b129ab2902bd892b8def87e0fb6fd859ab8",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "21104afac53ac5993c33d2318dff5325302f73856df10eca3e24260619f241e0",
-            "SecretFingerprint/v0": "{\"secret\":\"\\\"type\\\": \\\"azure\\\"\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"\\\"type\\\": \\\"azure\\\"\"}"
+            "secretHashSha256/v0": "9e80eb212bd8b9b20f2e605a55c75b129ab2902bd892b8def87e0fb6fd859ab8",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "21104afac53ac5993c33d2318dff5325302f73856df10eca3e24260619f241e0",
+            "secretFingerprint/v0": "{\"secret\":\"\\\"type\\\": \\\"azure\\\"\"}",
+            "validationFingerprint/v0": "{\"secret\":\"\\\"type\\\": \\\"azure\\\"\"}"
           },
           "rank": 46.29
         },
@@ -169,11 +169,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
-            "AssetFingerprint/v0": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"platform\":\"AzureDevOps\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}",
-            "ValidationFingerprintHashSha256/v0": "e4d78c2bd639c80de9a75619e350d6f2f942eefdd202afe01365a0fcda26597e",
-            "SecretFingerprint/v0": "{}",
-            "ValidationFingerprint/v0": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}"
+            "secretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "assetFingerprint/v0": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"platform\":\"AzureDevOps\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}",
+            "validationFingerprintHashSha256/v0": "e4d78c2bd639c80de9a75619e350d6f2f942eefdd202afe01365a0fcda26597e",
+            "secretFingerprint/v0": "{}",
+            "validationFingerprint/v0": "{\"host\":\"testorg.visualstudio.com\",\"id\":\"27843de2-2bea-45ab-b677-27ea718b557e\",\"resource\":\"f0f0a9fa-a2ad-47bc-b6f0-2c080f9a420f\"}"
           }
         }
       ],
