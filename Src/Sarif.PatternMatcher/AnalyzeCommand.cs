@@ -92,8 +92,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     FileVersionInfo fvi = fileSystem.FileVersionInfoGetVersionInfo(Path.Combine(directory, definitions.ValidatorsAssemblyName));
 
                     name = $"{fvi?.CompanyName}/{fvi?.FileDescription}/{name}";
-                    semanticVersion = fvi?.ProductVersion;
-                    version = fvi?.FileVersion;
+                    // TBD add version details. Breaks test baselines currently.
+                    //semanticVersion = fvi?.ProductVersion;
+                    //version = fvi?.FileVersion;
                 }
 
                 var toolComponent = new ToolComponent

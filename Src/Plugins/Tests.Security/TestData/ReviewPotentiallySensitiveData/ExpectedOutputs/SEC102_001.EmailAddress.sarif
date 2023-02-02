@@ -16,7 +16,7 @@
         "extensions": [
           {
             "guid": "dad7661b-34d6-4052-87b4-e234d9aae66b",
-            "name": "ReviewPotentiallySensitiveData",
+            "name": "Microsoft/Security/ReviewPotentiallySensitiveData",
             "rules": [
               {
                 "id": "SEC102/001",

@@ -16,7 +16,7 @@
         "extensions": [
           {
             "guid": "47df6279-81d8-4975-b003-b24985217187",
-            "name": "SecureAzureDevOps",
+            "name": "Microsoft/AzureDevOpsConfiguration/SecureAzureDevOps",
             "rules": [
               {
                 "id": "AZC102/150",
