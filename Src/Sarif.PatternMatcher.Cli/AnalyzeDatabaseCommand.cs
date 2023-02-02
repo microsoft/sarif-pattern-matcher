@@ -39,20 +39,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                 AggregatingLogger aggregatingLogger = InitializeLogger(options);
 
-                Tool tool = MakeTool();
+                var run = new Run { Tool = MakeTool() };
 
                 var sarifLogger = new SarifLogger(
                     options.OutputFilePath,
                     options.ConvertToLogFilePersistenceOptions(),
                     dataToInsert: options.DataToInsert.ToFlags(),
                     dataToRemove: options.DataToRemove.ToFlags(),
-                    tool: tool,
+                    run: run,
                     levels: options.Level,
                     kinds: options.Kind);
                 aggregatingLogger.Loggers.Add(sarifLogger);
 
                 aggregatingLogger.AnalysisStarted();
-                ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, options.SearchDefinitionsPaths, tool);
+                ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, options.SearchDefinitionsPaths, run.Tool);
 
                 var workers = new Task<bool>[options.Threads];
 

@@ -10,13 +10,13 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
-            "name": "DoNotExposePlaintextSecrets",
+            "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
             "rules": [
               {
                 "id": "SEC101/042",
@@ -38,7 +38,7 @@
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "a360609024007e0ee25f294a6844fbc8e1be83370107fc4868057d973dc2d4fd",
-            "AssetFingerprint/v0": "{\"platform\":\"Dynatrace\"}",
-            "ValidationFingerprintHashSha256/v0": "c03a91fe2e9488302fdffa31e60346c6ba7a08f79aa345c456f963088770f51a",
-            "SecretFingerprint/v0": "{\"secret\":\"dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123\"}"
+            "secretHashSha256/v0": "a360609024007e0ee25f294a6844fbc8e1be83370107fc4868057d973dc2d4fd",
+            "assetFingerprint/v0": "{\"platform\":\"Dynatrace\"}",
+            "validationFingerprintHashSha256/v0": "c03a91fe2e9488302fdffa31e60346c6ba7a08f79aa345c456f963088770f51a",
+            "secretFingerprint/v0": "{\"secret\":\"dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123\"}",
+            "validationFingerprint/v0": "{\"secret\":\"dt0a11.111111111101234567890123.0123456789012345678901234567890123456789012345678901234567890123\"}"
           },
           "rank": 49.07
         },
@@ -150,11 +150,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "2ebd4dec392eb66522715326b003b42e32f453cd0aac1f0553db179742c54c90",
-            "AssetFingerprint/v0": "{\"platform\":\"Dynatrace\"}",
-            "ValidationFingerprintHashSha256/v0": "06f1446690c1d649571bc2a9f0fa367a857ae4277fc123014bed7051236f752e",
-            "SecretFingerprint/v0": "{\"secret\":\"dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123\"}"
+            "secretHashSha256/v0": "2ebd4dec392eb66522715326b003b42e32f453cd0aac1f0553db179742c54c90",
+            "assetFingerprint/v0": "{\"platform\":\"Dynatrace\"}",
+            "validationFingerprintHashSha256/v0": "06f1446690c1d649571bc2a9f0fa367a857ae4277fc123014bed7051236f752e",
+            "secretFingerprint/v0": "{\"secret\":\"dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123\"}",
+            "validationFingerprint/v0": "{\"secret\":\"dt0a11.222222222201234567890123.0123456789012345678901234567890123456789012345678901234567890123\"}"
           },
           "rank": 49.37
         }

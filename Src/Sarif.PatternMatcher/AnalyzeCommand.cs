@@ -68,6 +68,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
+        private Tool tool;
+
         public AnalyzeCommand(IFileSystem fileSystem = null)
             : base(fileSystem)
         {
@@ -79,8 +81,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return Analyze(args: null, options: null, context, fileSystem);
         }
 
-        private Tool tool;
-
         protected override Tool Tool
         {
             get
@@ -89,7 +89,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     this.tool = Tool.CreateFromAssemblyData(this.GetType().Assembly);
                     this.tool.Driver.Name = "Spmi";
+                    this.tool.Driver.InformationUri = new Uri("https://aka.ms/sarif-pattern-matcher");
                 }
+
                 return this.tool;
             }
 
@@ -174,7 +176,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 string name = definitions.ExtensionName;
                 string version = null;
 
-                /* 
                 string semanticVersion = null;
                 if (!string.IsNullOrEmpty(definitions.ValidatorsAssemblyName))
                 {
@@ -182,16 +183,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     FileVersionInfo fvi = fileSystem.FileVersionInfoGetVersionInfo(Path.Combine(directory, definitions.ValidatorsAssemblyName));
 
                     name = $"{fvi?.CompanyName}/{fvi?.FileDescription}/{name}";
-                    semanticVersion = fvi?.ProductVersion;
-                    version = fvi?.FileVersion;
+                    // TBD add version details. Breaks test baselines currently.
+                    //semanticVersion = fvi?.ProductVersion;
+                    //version = fvi?.FileVersion;
                 }
-                */
 
                 var toolComponent = new ToolComponent
                 {
                     Name = name,
                     Guid = definitions.Guid,
                     Version = version,
+                    SemanticVersion = semanticVersion,
                     Locations = new List<ArtifactLocation>(new[]
                     {
                         new ArtifactLocation

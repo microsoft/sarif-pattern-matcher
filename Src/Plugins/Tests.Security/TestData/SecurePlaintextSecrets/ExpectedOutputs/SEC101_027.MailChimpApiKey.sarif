@@ -10,13 +10,13 @@
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
           "properties": {
-            "Comments": "A general pattern matching engine that persist results to SARIF."
+            "comments": "A general pattern matching engine that persist results to SARIF."
           }
         },
         "extensions": [
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
-            "name": "DoNotExposePlaintextSecrets",
+            "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
             "rules": [
               {
                 "id": "SEC101/027",
@@ -38,7 +38,7 @@
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
-                "uriBaseId": "PLUGIN_ROOT"
+                "uriBaseId": "EXTENSION_ROOT"
               }
             ]
           }
@@ -100,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "b89845a472b26de038b9cd8a66ee407924b9cffee7b62ac416eb20cfdf39ff13",
-            "AssetFingerprint/v0": "{\"platform\":\"MailChimp\"}",
-            "ValidationFingerprintHashSha256/v0": "9e899d57e95439fb96286592fd01c9795948980e9963c6c919923d7fdb95dac1",
-            "SecretFingerprint/v0": "{\"secret\":\"11111111110123456789012345678901-us012345678901\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"11111111110123456789012345678901-us012345678901\"}"
+            "secretHashSha256/v0": "b89845a472b26de038b9cd8a66ee407924b9cffee7b62ac416eb20cfdf39ff13",
+            "assetFingerprint/v0": "{\"platform\":\"MailChimp\"}",
+            "validationFingerprintHashSha256/v0": "9e899d57e95439fb96286592fd01c9795948980e9963c6c919923d7fdb95dac1",
+            "secretFingerprint/v0": "{\"secret\":\"11111111110123456789012345678901-us012345678901\"}",
+            "validationFingerprint/v0": "{\"secret\":\"11111111110123456789012345678901-us012345678901\"}"
           },
           "rank": 46.45
         },
@@ -150,11 +150,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "1e2740d86e27d044265112e0a389df062f41845fc429b2ca7568307904042e84",
-            "AssetFingerprint/v0": "{\"platform\":\"MailChimp\"}",
-            "ValidationFingerprintHashSha256/v0": "f876d22070ca5881213679637a3fa240d8a30865b84a0c35cd75a24b2b7da0d7",
-            "SecretFingerprint/v0": "{\"secret\":\"22222222220123456789012345678901-us012345678901\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"22222222220123456789012345678901-us012345678901\"}"
+            "secretHashSha256/v0": "1e2740d86e27d044265112e0a389df062f41845fc429b2ca7568307904042e84",
+            "assetFingerprint/v0": "{\"platform\":\"MailChimp\"}",
+            "validationFingerprintHashSha256/v0": "f876d22070ca5881213679637a3fa240d8a30865b84a0c35cd75a24b2b7da0d7",
+            "secretFingerprint/v0": "{\"secret\":\"22222222220123456789012345678901-us012345678901\"}",
+            "validationFingerprint/v0": "{\"secret\":\"22222222220123456789012345678901-us012345678901\"}"
           },
           "rank": 47.56
         }

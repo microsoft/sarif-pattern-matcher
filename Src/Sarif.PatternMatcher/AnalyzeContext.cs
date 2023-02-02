@@ -29,6 +29,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public bool RedactSecrets { get; set; }
 
         public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
+        public IDictionary<int, string> RollingHashMap { get; set; }
+
+        public Exception TargetLoadException { get; set; }
 
         private FlexString fileContents;
 

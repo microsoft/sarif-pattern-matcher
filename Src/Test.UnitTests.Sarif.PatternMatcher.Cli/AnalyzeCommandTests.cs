@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 
 using FluentAssertions;
 
@@ -753,6 +755,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             {
                 ValidatorsAssemblyName = assemblyName,
                 SharedStringsFileName = "SharedStrings.txt",
+                ExtensionName = "IntrafileRules",
                 Definitions = new List<SearchDefinition>(new[]
                 {
                     new SearchDefinition()
@@ -782,9 +785,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             {
                 ValidatorsAssemblyName = assemblyName,
                 SharedStringsFileName = "SharedStrings.txt",
-
+                ExtensionName = "SingleLineDefinition",
                 Definitions = new List<SearchDefinition>(new[]
                 {
+
                     new SearchDefinition()
                     {
                         Name = "SingleLineRule", Id = "SingleLine1001",
@@ -812,6 +816,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             {
                 ValidatorsAssemblyName = assemblyName,
                 SharedStringsFileName = "SharedStrings.txt",
+                ExtensionName = "SingleLineDefinition",
 
                 Definitions = new List<SearchDefinition>(new[]
                 {
@@ -848,5 +853,47 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             return JsonConvert.SerializeObject(definitions);
         }
+
+        // We create one each of scan targets named in a way to produce an error,
+        // a warning, and a note. The default configuration enables errors/warnings only.
+        private const int NOTE_TARGETS = 1;
+        private const int WARN_TARGETS = 1;
+        private const int ERROR_TARGETS = 1;
+        private const int DEFAULT_TARGETS_COUNT = ERROR_TARGETS + WARN_TARGETS;
+        private const int ALL_TARGETS_COUNT = ERROR_TARGETS + WARN_TARGETS + NOTE_TARGETS;
+
+        // A default # of 'foo' tokens in each scan target, each of which will generate an error.
+        private const int DEFAULT_FOO_COUNT = 2;
+
+        private static ZipArchive CreateTestZipArchive(int fooInstancesPerTarget = DEFAULT_FOO_COUNT)
+        {
+            const string FOO = " foo ";
+
+            var fooString = new StringBuilder();
+            for (int i = 0; i < fooInstancesPerTarget; i++)
+            {
+                fooString.Append(FOO);
+            }
+
+            var stream = new MemoryStream();
+            using (var populateArchive = new ZipArchive(stream, ZipArchiveMode.Update, leaveOpen: true))
+            {
+                ZipArchiveEntry entry = populateArchive.CreateEntry("error.txt");
+                using var errorWriter = new StreamWriter(entry.Open());
+                errorWriter.WriteLine($"Generates an error and an error for each of : {fooString}");
+
+                ZipArchiveEntry warningEntry = populateArchive.CreateEntry("warning.txt");
+                using var warningWriter = new StreamWriter(warningEntry.Open());
+                warningWriter.WriteLine($"Generates a warning and an error for each of : {fooString}");
+
+                ZipArchiveEntry noteEntry = populateArchive.CreateEntry("note.txt");
+                using var noteWriter = new StreamWriter(noteEntry.Open());
+                noteWriter.WriteLine($"Generates a note and an error for each of : {fooString}");
+            }
+
+            stream.Position = 0;
+            return new ZipArchive(stream, ZipArchiveMode.Read); ;
+        }
+
     }
 }
