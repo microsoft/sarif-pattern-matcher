@@ -361,7 +361,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 tool,
                 RE2Regex.Instance);
 
-            var target = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute);
+            var targetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute);
 
             var sb = new StringBuilder();
             using var writer = new StringWriter(sb);
@@ -369,14 +369,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                               dataToInsert: OptionallyEmittedData.RegionSnippets | OptionallyEmittedData.Hashes,
                                               run: new Run() { Tool = tool })
             {
-                ComputeHashData = (uri) => uri == target ? HashUtilities.ComputeHashesForText(fileContents) : null
+                ComputeHashData = (uri) => uri == targetUri ? HashUtilities.ComputeHashesForText(fileContents) : null
+            };
+
+            var target = new EnumeratedArtifact(FileSystem.Instance)
+            {
+                Uri = targetUri,
+                Contents = fileContents,
             };
 
             var context = new AnalyzeContext()
             {
-                TargetUri = target,
+                CurrentTarget = target,
                 DataToInsert = OptionallyEmittedData.Hashes,
-                FileContents = fileContents,
                 Logger = sarifLogger,
             };
 

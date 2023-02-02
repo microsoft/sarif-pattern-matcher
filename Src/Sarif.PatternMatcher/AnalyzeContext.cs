@@ -13,6 +13,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeContext : AnalyzeContextBase
     {
+        private FlexString fileContents;
+
         public AnalyzeContext()
         {
             // Any file is a candidate for regex-driven search.
@@ -29,11 +31,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public bool RedactSecrets { get; set; }
 
         public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
+
         public IDictionary<int, string> RollingHashMap { get; set; }
-
-        public Exception TargetLoadException { get; set; }
-
-        private FlexString fileContents;
 
         // TODO delete this entirely.
         public FlexString FileContents
