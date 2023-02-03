@@ -42,7 +42,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 args[0] == "help" &&
                 ((args.Length == 2 && IsValidVerbName(args[1])) || args.Length == 1);
 
-            bool isVersionCommand = args[0] == "version" && args.Length == 1;
+            bool isVersionCommand = args.Length == 1 && args[0] == "version";
+
+            isVersionCommand = args[0] == "version";
 
             return Parser.Default.ParseArguments<
                 AnalyzeOptions,

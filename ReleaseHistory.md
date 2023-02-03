@@ -1,104 +1,88 @@
 # Release History
 
-## v3.0.0 Released 02/02/2023
-- Update SARIF SDK submodule from [24c773b to fdb2545](https://github.com/microsoft/sarif-sdk/compare/31f49b2..fdb2545). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/fdb2545/src/ReleaseHistory.md).
-- Update SEC101/028.PlaintextPassword regular expression to include scenarios where a variable name is used instead of string (added `*` after `["']`).
-- FEATURE: Allow rule disabling from definitions file by adding `"RuleEnabledState: "Disabled""` to rule MatchExpression.
-- FEATURE: Support persisting CodeQL rolling hash partial fingerprints to SARIF output.
-- BREAKING: Properly introduce fingerprint versioned hierarchical strings (according to the [SARIF spec](https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html#_Toc34317441)) by updating `/current` component to `/v0`. 
-- BREAKING: Remove non-functional `multiline` argument from command-line. This argument should simply be removed from all command-lines.
-- BREAKING: Remove `file-size-in-kb` argument. Its use should be replaced by `max-file-size-in-kb`, a more descriptive name we pick up from the SARIF driver framework.
-- BREAKING: Fix bug resulting in static validators returning `FailureLevel.Note` despite configured `FailureLevel`. [#645](https://github.com/microsoft/sarif-pattern-matcher/pull/645)
-- Update SEC101/028.PlaintextPassword regular expression to include scenarios where a variable name is used instead of string (added `*` after `["']`).
-- Update `spam` executable and dotnet library name to Sarif.PatternMatcher.Cli. 
-- Update `Microsoft.Security.Utilities` to [v1.4.0](https://github.com/microsoft/security-utilities/releases/tag/v1.4.0). [#662](https://github.com/microsoft/sarif-pattern-matcher/pull/662)
-- Rename `SEC101/050.IdentifiableNpmLegacyAuthorToken` to `SEC101/050.NpmIdentifiableAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
-- Rename `SEC101/017.NpmAuthorToken` to `SEC101/017.NpmAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
-- Rename `SEC101/006.GitHubPat` to `SEC101/006.GitHubLegacyPat` [#678](https://github.com/microsoft/sarif-pattern-matcher/pull/678)
-- Disable `SEC101/029.AlibabaCloudCredentials` which throws ScanErrors with message: 
-	>ValidationError:Could not load file or assembly 'AlibabaCloud.OpenApiClient, Version=0.1.4.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. A strongly-named assembly is required. (Exception from HRESULT: 0x80131044)
-	
-  These exceptions are caused by incompatibilities between Alibaba code and .Net core 3.1 and 6.0. Will restore rule when dependencies are updated. [#700](https://github.com/microsoft/sarif-pattern-matcher/pull/700)
+## Definitions
+- NR  => New rule.
+- DEP => Update dependency.
+- BRK => General breaking change.
+- BUG => General bug fix.
+- NEW -> New feature.
+- PRF => Performance work.
+- FCR => Fingerprint change or refactor.
+- RRR => Rule rename or refactor.
+- FPC => Regex candidate reduction.
+- FNC => Regex candidate increase.
+- FPS => False positive reduction in static analysis.
+- FNS => False negative reduction in static analysis.
+- FPD => False positive reduction in dynamic analysis.
+- FND => False negative reduction in dynamic analysis.
+- UER => Eliminate unhandled exceptions in rule.
+- UEE => Eliminate unhandled exceptions in engine.
 
-- Update search definitions probing logic to look for file alongside the client tool.
+## UNRELEASED
+- BUG: Eliminate `IndexOutOfRangeException` error invoking `Sarif.PatternMatcher.Cli.exe` with no arguments.
+
+## v3.0.0 Released 02/02/2023
+- DEP: Update SARIF SDK submodule from [24c773b to fdb2545](https://github.com/microsoft/sarif-sdk/compare/31f49b2..fdb2545). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/fdb2545/src/ReleaseHistory.md).
+- DEP: Update `spam` executable and dotnet library name to Sarif.PatternMatcher.Cli. 
+- DEP: Update `Microsoft.Security.Utilities` to [v1.4.0](https://github.com/microsoft/security-utilities/releases/tag/v1.4.0). [#662](https://github.com/microsoft/sarif-pattern-matcher/pull/662)
+- DEP: Upgrade `Microsoft.Security.Utilities` from 1.1.0 to 1.3.0. [#642](https://github.com/microsoft/sarif-pattern-matcher/pull/642)
+- DEP: Sarif.PatternMatcher projects will start using a fixed version of `RE2.Managed` and `Strings.Interop`. [#638](https://github.com/microsoft/sarif-pattern-matcher/pull/638)
+- BRK: Properly introduce fingerprint versioned hierarchical strings (according to the [SARIF spec](https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html#_Toc34317441)) by updating `/current` component to `/v0`. 
+- BRK: Remove non-functional `multiline` argument from command-line. This argument should simply be removed from all command-lines.
+- BRK: Remove `file-size-in-kb` argument. Its use should be replaced by `max-file-size-in-kb`, a more descriptive name we pick up from the SARIF driver framework.
+- BRK: Fix bug resulting in static validators returning `FailureLevel.Note` despite configured `FailureLevel`. [#645](https://github.com/microsoft/sarif-pattern-matcher/pull/645)
+- BRK: Rename `SEC101/050.IdentifiableNpmLegacyAuthorToken` to `SEC101/050.NpmIdentifiableAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
+- BRK: Rename `SEC101/017.NpmAuthorToken` to `SEC101/017.NpmAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
+- BRK: Rename `SEC101/006.GitHubPat` to `SEC101/006.GitHubLegacyPat` [#678](https://github.com/microsoft/sarif-pattern-matcher/pull/678)
+- BRK: Disable `SEC101/029.AlibabaCloudCredentials` which throws ScanErrors with message: 
+	>ValidationError:Could not load file or assembly 'AlibabaCloud.OpenApiClient, Version=0.1.4.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. A strongly-named assembly is required. (Exception from HRESULT: 0x80131044)
+  These exceptions are caused by incompatibilities between Alibaba code and .Net core 3.1 and 6.0. Will restore rule when dependencies are updated. [#700](https://github.com/microsoft/sarif-pattern-matcher/pull/700)
+- FNS: Edit `SEC101/028.PlaintextPassword` regular expression to include scenarios where a variable name is used instead of string (added `*` after `["']`).
+- BUG: Update search definitions probing logic to look for file alongside the client tool.
 - BUG: Resolve `OutofMemoryException` and `NullReferenceException' failures resulting from a failure to honor file size scan limits set by `--file-size-in-kb` argument and updated Sarif.Sdk submodule to commit [ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b](https://github.com/microsoft/sarif-sdk/commit/ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b). [#621](https://github.com/microsoft/sarif-pattern-matcher/pull/621)
 - BUG: Resolve SAL Modernization Plugin capture group showing incorrect region properties in SARIF. [#626](https://github.com/microsoft/sarif-pattern-matcher/pull/626)
-- SDK: Sarif.PatternMatcher projects will start using a fixed version of `RE2.Managed` and `Strings.Interop`. [#638](https://github.com/microsoft/sarif-pattern-matcher/pull/638)
-- Bump Microsoft.Security.Utilities from 1.1.0 to 1.3.0. [#642](https://github.com/microsoft/sarif-pattern-matcher/pull/642)
 - BUG: Fix false negative when `SearchSkimmer` is invoked directly and `MaxFileSizeInKilobytes` is not set. This will now default to approximately 10MB. [#637](https://github.com/microsoft/sarif-pattern-matcher/pull/637)
 - BUG: Loosen `Newtonsoft.Json` minimum version requirement to 12.0.3 for `Sarif.PatternMatcher` project. [#644](https://github.com/microsoft/sarif-pattern-matcher/pull/644)
+- NEW: Allow rule disabling from definitions file by adding `"RuleEnabledState: "Disabled""` to rule MatchExpression.
+- NEW: Support persisting CodeQL rolling hash partial fingerprints to SARIF output.
 
 ## *v1.10.0*
-- FEATURE: Enable response file parsing provided by driver framework. Arguments (e.g., '@Commands.rsp') prefixed with a '@' character will be evaluated as a file path to a text file that contains commands to be injected on the command-line. 
-- BREAKING: Change fingerprint naming conventions and add new unique secret fingerprint (and opaque unique fingerprint hash).
-- RE2.Native will now compile in all environments with the latest Windows SDK 10.0.* installed. [#607](https://github.com/microsoft/sarif-pattern-matcher/pull/607). Our current release pipelines build NuGet packages with Windows SDK version 10.0.22000.
+- BRK: Change fingerprint naming conventions and add new unique secret fingerprint (and opaque unique fingerprint hash).
+- BUG: RE2.Native will now compile in all environments with the latest Windows SDK 10.0.* installed. [#607](https://github.com/microsoft/sarif-pattern-matcher/pull/607). Our current release pipelines build NuGet packages with Windows SDK version 10.0.22000.
+- NEW: Enable response file parsing provided by driver framework. Arguments (e.g., '@Commands.rsp') prefixed with a '@' character will be evaluated as a file path to a text file that contains commands to be injected on the command-line. 
 
 ## *v1.9.0*
-- Bump MongoDB.Driver from 2.13.1 to 2.15.0 and Microsoft.AspNetCore.Http from 2.1.0 to 2.2.0. [#608](https://github.com/microsoft/sarif-pattern-matcher/pull/608)
-- Bump Sarif.Sdk from 2.4.13 to [2.4.15](https://github.com/microsoft/sarif-sdk/blob/v2.4.15/src/ReleaseHistory.md) by updating submodule to commit [9f0eed7549736b28d59a2e93f443ba47e3bd978e](https://github.com/microsoft/sarif-sdk/commit/9f0eed7549736b28d59a2e93f443ba47e3bd978e). [#612](https://github.com/microsoft/sarif-pattern-matcher/pull/612)
-- NR: Adding Url rule in the plugin `ReviewPotentiallySensitiveData`. [#611](https://github.com/microsoft/sarif-pattern-matcher/pull/611)
+- DEP: Upgrade `MongoDB.Driver` from 2.13.1 to 2.15.0 and Microsoft.AspNetCore.Http from 2.1.0 to 2.2.0. [#608](https://github.com/microsoft/sarif-pattern-matcher/pull/608)
+- DEP: Upgrade `Sarif.Sdk` from 2.4.13 to [2.4.15](https://github.com/microsoft/sarif-sdk/blob/v2.4.15/src/ReleaseHistory.md) by updating submodule to commit [9f0eed7549736b28d59a2e93f443ba47e3bd978e](https://github.com/microsoft/sarif-sdk/commit/9f0eed7549736b28d59a2e93f443ba47e3bd978e). [#612](https://github.com/microsoft/sarif-pattern-matcher/pull/612)
+- NR : Adding Url rule in the plugin `ReviewPotentiallySensitiveData`. [#611](https://github.com/microsoft/sarif-pattern-matcher/pull/611)
 
 ## *v1.8.0*
-- BUG: Resolve `InvalidOperationException` and `IndexOutOfRange` exceptions in `StaticValidatorBase.IsValidStatic` due to unsafe use of HashSet<string> class.
-  [#595](https://github.com/microsoft/sarif-pattern-matcher/pull/585)
-- NR: Adding SlackWorkflow rule with dynamic validation.
-  [#585](https://github.com/microsoft/sarif-pattern-matcher/pull/585)
-- NR: Adding TelegramBotToken rule with dynamic validation.
-  [#587](https://github.com/microsoft/sarif-pattern-matcher/pull/587)
-- SDK: Exposing `automationId`, `automationGuid`, and `postUri` in the
-  `analyze` command.
-  [#586](https://github.com/microsoft/sarif-pattern-matcher/pull/586)
-- NR: Adding IdentifiableNpmLegacyAuthorToken rule with dynamic validation.
-  [#588](https://github.com/microsoft/sarif-pattern-matcher/pull/588)
+- BUG: Resolve `InvalidOperationException` and `IndexOutOfRange` exceptions in `StaticValidatorBase.IsValidStatic` due to unsafe use of HashSet<string> class. [#595](https://github.com/microsoft/sarif-pattern-matcher/pull/585)
+- NR : Add `SEC101/048.SlackWorkflow` rule with dynamic validation. [#585](https://github.com/microsoft/sarif-pattern-matcher/pull/585)
+- NR : Add `SEC101/049.TelegramBotToken` rule with dynamic validation. [#587](https://github.com/microsoft/sarif-pattern-matcher/pull/587)
+- NR : Add `SEC101/017.NpmLegacyAuthorToken` rule with dynamic validation. [#588](https://github.com/microsoft/sarif-pattern-matcher/pull/588)
+- NEW: Provide `automationId`, `automationGuid`, and `postUri` in the `analyze` command. [#586](https://github.com/microsoft/sarif-pattern-matcher/pull/586)
     
 ## *v1.5.0-g9f639c22c7*
-- FPC: Improving RabbitMQ regex (removing new lines and spaces) from secret.
-  [#548](https://github.com/microsoft/sarif-pattern-matcher/pull/548)
-- FND: Improving `SEC101/018.TwilioCredentials` dynamic validation for test
-  credentials.
-  [#549](https://github.com/microsoft/sarif-pattern-matcher/pull/549)
-- FPC: Normalizing regular expressions (`\s\n` got replaced by `\s`). Rules 
-- FPC: Normalizing regular expressions (`\s\n` got replaced by `\s`). Rules
-  `SEC101/036.MySqlCredential`, `SEC101/037.SqlCredentials`,
-  `SEC101/038.PostgreSqlCredentials` won't accept spaces in `id` and `secret`.
-  [#550](https://github.com/microsoft/sarif-pattern-matcher/pull/550)
-- SDK: Single match expression can run multiple regex types.
-  [#553](https://github.com/microsoft/sarif-pattern-matcher/pull/553)
-- FPC: Eliminate whitespace and commas from MongoDB match candidates (and
-  resulting fingerprints).
-  [#554](https://github.com/microsoft/sarif-pattern-matcher/pull/554)
-- FPC: Improving regular expressions for rules `SEC101/036.MySqlCredentials`,
-  `SEC101/038.PostgreSqlCredentials`, and `SEC101/041.RabbitMqCredentials`
-  removing invalid characters (`,`, `=`, `|`, `&`, `[`, `]`, `>`) from `Id` and
-  `Resource`.
-  [#555](https://github.com/microsoft/sarif-pattern-matcher/pull/555)
-- RRR: Improving `SEC101/025.SendGridApiKeyValidator` dynamic validator,
-  replacing tcp for http calls, retrieving the scope of the key if available.
-  [#562](https://github.com/microsoft/sarif-pattern-matcher/pull/562)
+- FPC: Improving RabbitMQ regex (removing new lines and spaces) from secret. [#548](https://github.com/microsoft/sarif-pattern-matcher/pull/548)
+- FND: Improving `SEC101/018.TwilioCredentials` dynamic validation for test credentials. [#549](https://github.com/microsoft/sarif-pattern-matcher/pull/549)
+- FPC: Normalizing regular expressions (`\s\n` got replaced by `\s`). Rules `SEC101/036.MySqlCredential`, `SEC101/037.SqlCredentials`, `SEC101/038.PostgreSqlCredentials` won't accept spaces in `id` and `secret`. [#550](https://github.com/microsoft/sarif-pattern-matcher/pull/550)
+- SDK: Single match expression can run multiple regex types. [#553](https://github.com/microsoft/sarif-pattern-matcher/pull/553)
+- FPC: Eliminate whitespace and commas from MongoDB match candidates (and resulting fingerprints). [#554](https://github.com/microsoft/sarif-pattern-matcher/pull/554)
+- FPC: Improving regular expressions for rules `SEC101/036.MySqlCredentials`, `SEC101/038.PostgreSqlCredentials`, and `SEC101/041.RabbitMqCredentials` removing invalid characters (`,`, `=`, `|`, `&`, `[`, `]`, `>`) from `Id` and `Resource`. [#555](https://github.com/microsoft/sarif-pattern-matcher/pull/555)
+- RRR: Improving `SEC101/025.SendGridApiKeyValidator` dynamic validator, replacing tcp for http calls, retrieving the scope of the key if available. [#562](https://github.com/microsoft/sarif-pattern-matcher/pull/562)
 
 ## *v1.5.0-alpha-0117-g136d47026e*
-- Plugin Improvement: Required properties will throw `KeyNotFoundException` if
-  they do not exist.
-  [#539](https://github.com/microsoft/sarif-pattern-matcher/pull/539)
-- Tool should emit fixes with comprehensive region properties.
-  [#540](https://github.com/microsoft/sarif-pattern-matcher/pull/540)
-- Plugin Improvement: Added `Fixes` property in SEC104 rules that provide only
-  one option.
-  [#541](https://github.com/microsoft/sarif-pattern-matcher/pull/541)
-- Reducing unhandled exceptions for the certificate rules.
-  [#544](https://github.com/microsoft/sarif-pattern-matcher/pull/544)
-- UER: Added a check for PostgreSql instances that are not reachable from
-  external networks, reducing total unhandled exceptions.
-  [#545](https://github.com/microsoft/sarif-pattern-matcher/pull/545)
+- NEW: Required properties will throw `KeyNotFoundException` if they do not exist. [#539](https://github.com/microsoft/sarif-pattern-matcher/pull/539)
+- BUG: Tool should emit fixes with comprehensive region properties. [#540](https://github.com/microsoft/sarif-pattern-matcher/pull/540)
+- NEW: Added `Fixes` property in SEC104 rules that provide only one option. [#541](https://github.com/microsoft/sarif-pattern-matcher/pull/541)
+- UER: Reducing unhandled exceptions for the certificate rules. [#544](https://github.com/microsoft/sarif-pattern-matcher/pull/544)
+- UER: Added a check for PostgreSql instances that are not reachable from external networks, reducing total unhandled exceptions. [#545](https://github.com/microsoft/sarif-pattern-matcher/pull/545)
   
 ## *v1.5.0-alpha-0109-gf687e5e98a*
-- NR: Adding CratesApiKey rule with dynamic validation.
-  [#531](https://github.com/microsoft/sarif-pattern-matcher/pull/531)
-- Replacing `\b` to the correct border regular expression reducing false
-  positives. [#533](https://github.com/microsoft/sarif-pattern-matcher/pull/533)
-- Tool Improvement: Refactoring `ValidatorBase` in `StaticValidatorBase` and
-  `DynamicValidatorBase`.
-  [#534](https://github.com/microsoft/sarif-pattern-matcher/pull/534)
+- NR: Adding CratesApiKey rule with dynamic validation. [#531](https://github.com/microsoft/sarif-pattern-matcher/pull/531)
+- Replacing `\b` to the correct border regular expression reducing false positives. [#533](https://github.com/microsoft/sarif-pattern-matcher/pull/533)
+- Tool Improvement: Refactoring `ValidatorBase` in `StaticValidatorBase` and `DynamicValidatorBase`. [#534](https://github.com/microsoft/sarif-pattern-matcher/pull/534)
 
 ## *v1.5.0-alpha-0100-g6ee5829558*
 - [6ee5829](https://github.com/microsoft/sarif-pattern-matcher/commit/6ee5829) Adding tests for NPM rule (#525)
