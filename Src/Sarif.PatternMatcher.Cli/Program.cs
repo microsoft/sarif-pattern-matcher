@@ -13,10 +13,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
     internal static class Program
     {
         [ThreadStatic]
-        internal static IFileSystem FileSystem;
-
-        [ThreadStatic]
-        internal static Exception RuntimeException;
+        internal static AnalyzeContext GlobalContext;
 
         [ThreadStatic]
         internal static AnalyzeCommand InstantiatedAnalyzeCommand;
@@ -24,15 +21,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         internal static int Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
+            GlobalContext ??= new AnalyzeContext();
 
             try
             {
-                args = EntryPointUtilities.GenerateArguments(args, FileSystem ?? new FileSystem(), new EnvironmentVariables());
+                args = EntryPointUtilities.GenerateArguments(args, GlobalContext.FileSystem ?? new FileSystem(), new EnvironmentVariables());
                 args = RewriteArgs(args);
             }
             catch (Exception ex)
             {
-                RuntimeException = ex;
+                GlobalContext.RuntimeErrors |= RuntimeConditions.ExceptionInEngine;
+                GlobalContext.RuntimeException = ex;
                 Console.WriteLine(ex.ToString());
                 return CommandBase.FAILURE;
             }
@@ -71,15 +70,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         internal static void ClearUnitTestData()
         {
-            FileSystem = null;
-            RuntimeException = null;
+            GlobalContext = null;
             InstantiatedAnalyzeCommand = null;
         }
 
         internal static int RunAnalyzeCommand(AnalyzeOptions options)
         {
-            InstantiatedAnalyzeCommand = new AnalyzeCommand(fileSystem: FileSystem);
-            return InstantiatedAnalyzeCommand.Run(options);
+            InstantiatedAnalyzeCommand = new AnalyzeCommand();
+            int result = InstantiatedAnalyzeCommand.Run(options, ref GlobalContext);
+            return result;
         }
 
         private static bool IsValidVerbName(string verb)

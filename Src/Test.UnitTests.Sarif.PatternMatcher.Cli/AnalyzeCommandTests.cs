@@ -9,7 +9,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading;
 
 using FluentAssertions;
 
@@ -273,7 +272,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
                 .Returns<string>((path) => { return GetSharedStrings(); });
 
-            Program.FileSystem = mockFileSystem.Object;
+            Program.ClearUnitTestData();
+            Program.GlobalContext = new AnalyzeContext
+            {
+                FileSystem = mockFileSystem.Object
+            };
 
             string tempFileName = Path.GetTempFileName();
             string sarifLogFileName = $"{tempFileName}.sarif";
@@ -290,9 +293,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             };
 
             int result = Program.Main(args);
+            Program.GlobalContext.RuntimeErrors.Should().Be(RuntimeConditions.ExceptionInEngine);
+            Program.GlobalContext.RuntimeException.Should().NotBeNull();
             result.Should().Be(1);
-
-            Program.InstantiatedAnalyzeCommand.Should().NotBeNull();
         }
 
 
@@ -436,7 +439,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileInfoLength(SmallTargetName)).Returns(fileContents.Length);
 
             Program.ClearUnitTestData();
-            Program.FileSystem = mockFileSystem.Object;
+            Program.GlobalContext = new AnalyzeContext
+            {
+                FileSystem = mockFileSystem.Object
+            };
 
             string tempFileName = Path.GetTempFileName();
             string sarifLogFileName = $"{tempFileName}.sarif";
@@ -452,11 +458,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     $"-o", sarifLogFileName,
                 };
 
-                Program.FileSystem = mockFileSystem.Object;
+                Program.ClearUnitTestData();
+                Program.GlobalContext = new AnalyzeContext
+                {
+                    FileSystem = mockFileSystem.Object
+                };
 
                 int result = Program.Main(args);
-                Program.RuntimeException.Should().BeNull();
-                Program.InstantiatedAnalyzeCommand.RuntimeErrors.Should().Be(0);
+                Program.GlobalContext.RuntimeException.Should().BeNull();
+                Program.GlobalContext.RuntimeErrors.Should().Be(0);
                 result.Should().Be(0);
 
                 sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
@@ -528,7 +538,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileInfoLength(largeTargetPath)).Returns(largeFileSizeInBytes);
 
             Program.ClearUnitTestData();
-            Program.FileSystem = mockFileSystem.Object;
+            Program.GlobalContext = new AnalyzeContext
+            {
+                FileSystem = mockFileSystem.Object
+            };
 
             string tempFileName = Path.GetTempFileName();
             string sarifLogFileName = $"{tempFileName}.sarif";
@@ -562,12 +575,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         };
                 }
 
-                Program.FileSystem = mockFileSystem.Object;
+                Program.ClearUnitTestData();
+                Program.GlobalContext = new AnalyzeContext
+                {
+                    FileSystem = mockFileSystem.Object
+                };
+                
                 int result = Program.Main(args);
                 sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
                 sarifLog.Runs[0].Invocations?[0].ToolExecutionNotifications.Should().BeNull();
 
-                Program.InstantiatedAnalyzeCommand.RuntimeErrors.Should().Be(runtimeConditions);
+                Program.GlobalContext.RuntimeErrors.Should().Be(runtimeConditions);
                 result.Should().Be(CommandBase.SUCCESS);
             }
             finally
@@ -586,10 +604,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return sarifLog;
         }
 
-        private SarifLog RunAnalyzeCommandWithDynamicValidation(
-            string definitionsText,
-            string fileContents,
-            bool runDynamicValidation)
+        private SarifLog RunAnalyzeCommandWithDynamicValidation(string definitionsText,
+                                                                string fileContents,
+                                                                bool runDynamicValidation)
         {
             string sarifOutput;
             string rootDirectory = @"e:\repros";
@@ -627,7 +644,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileExists(@$"c:\Test.UnitTests.Sarif.PatternMatcher.Cli.dll")).Returns(true);
             mockFileSystem.Setup(x => x.AssemblyLoadFrom(It.IsAny<string>())).Returns(Assembly.LoadFrom(dllLocation));
 
-            Program.FileSystem = mockFileSystem.Object;
+            Program.ClearUnitTestData();
+            Program.GlobalContext = new AnalyzeContext
+            {
+                FileSystem = mockFileSystem.Object
+            };
 
             string tempFileName = Path.GetTempFileName();
             string sarifLogFileName = $"{tempFileName}.sarif";
@@ -662,6 +683,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 string[] args = runDynamicValidation ? dynamicArgs : staticArgs;
 
                 int result = Program.Main(args);
+                (Program.GlobalContext.RuntimeErrors & ~RuntimeConditions.Nonfatal).Should().Be(0);
                 sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
                 result.Should().Be(0);
             }

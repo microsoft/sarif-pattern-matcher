@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             // Explicitly clear the file system object, in case an
             // out-of-order test execution has set it to a mocked object.
-            Program.FileSystem = null;
+            Program.ClearUnitTestData();
 
             string[] args = new[] { responseFilePath };
             int result = Program.Main(args);
@@ -42,8 +42,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             // code path in tests where an uninstantiated FileSystem object
             // causes a null dereference. All other tests for this area provide
             // a non-null file system object instance.
-            Program.RuntimeException.Should().NotBeNull();
-            Program.RuntimeException.GetType().Should().Be(typeof(FileNotFoundException));
+            Program.GlobalContext.RuntimeException.Should().NotBeNull();
+            Program.GlobalContext.RuntimeException.GetType().Should().Be(typeof(FileNotFoundException));
         }
 
         [Fact]
@@ -126,7 +126,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     return responseFileContents;
                 });
 
-            Program.FileSystem = mockFileSystem.Object;
+            Program.ClearUnitTestData();
+            Program.GlobalContext = new AnalyzeContext
+            {
+                FileSystem = mockFileSystem.Object
+            };
 
             string[] args = new[] { responseFilePath };
             string flattenedResponseFile = string.Join(' ', responseFileContents);

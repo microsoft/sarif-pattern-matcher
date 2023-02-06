@@ -59,7 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
             finally
             {
-                context.Logger.AnalysisStopped(RuntimeErrors);
+                context.Logger.AnalysisStopped(context.RuntimeErrors);
             }
 
             return context.RuntimeErrors;
@@ -134,11 +134,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return analyzeCommand.Run(options);
         }
 
-        public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(
-            IFileSystem fileSystem,
-            IEnumerable<string> searchDefinitionsPaths,
-            Tool tool,
-            IRegex engine = null)
+        public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem,
+                                                                                       IEnumerable<string> searchDefinitionsPaths,
+                                                                                       Tool tool,
+                                                                                       IRegex engine = null)
         {
             tool.Extensions ??= new List<ToolComponent>();
 
@@ -456,13 +455,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             AnalyzeOptions options,
             IAnalysisLogger logger,
             RuntimeConditions runtimeErrors,
+            IFileSystem fileSystem = null,
             PropertiesDictionary policy = null)
         {
-            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy);
-            context.FileSystem = FileSystem;
-
-            // TBD push file system into base class.
-            context.FileSystem = FileSystem;
+            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, fileSystem, policy);
 
             if (options != null)
             {
@@ -487,7 +483,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
         {
             ISet<Skimmer<AnalyzeContext>> skimmers =
-                CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths, Tool);
+                CreateSkimmersFromDefinitionsFiles(context.FileSystem, options.SearchDefinitionsPaths, Tool);
 
             return skimmers;
         }

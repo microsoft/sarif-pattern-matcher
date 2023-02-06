@@ -26,6 +26,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             TextToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
         }
 
+        public Exception RuntimeException { get; set; }
+
         public bool RedactSecrets { get; set; }
 
         public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
@@ -83,6 +85,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override void Dispose()
         {
+            base.Dispose();
+
             FileRegionsCache?.ClearCache();
             FileRegionsCache = null;
 

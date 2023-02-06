@@ -137,12 +137,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override void Analyze(AnalyzeContext context)
         {
-            string filePath = context.CurrentTarget.Uri.OriginalString;
-
-            if (filePath.StartsWith("file://"))
-            {
-                filePath = context.CurrentTarget.Uri.LocalPath;
-            }
+            string filePath = context.CurrentTarget.Uri.GetFilePath();
 
             try
             {
@@ -1252,9 +1247,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Fingerprint fingerprint = default;
             string validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
-            string filePath = context.CurrentTarget.Uri.IsAbsoluteUri
-                ? context.CurrentTarget.Uri.LocalPath
-                : context.CurrentTarget.Uri.OriginalString;
+            string filePath = context.CurrentTarget.Uri.GetFilePath();
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 groups["scanTargetFullPath"] = new FlexMatch() { Value = filePath };
