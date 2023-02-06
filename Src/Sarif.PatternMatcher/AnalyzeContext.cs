@@ -26,8 +26,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             TextToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
         }
 
-        public Exception RuntimeException { get; set; }
-
         public bool RedactSecrets { get; set; }
 
         public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }

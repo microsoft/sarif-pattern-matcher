@@ -451,12 +451,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        protected override AnalyzeContext CreateContext(
-            AnalyzeOptions options,
-            IAnalysisLogger logger,
-            RuntimeConditions runtimeErrors,
-            IFileSystem fileSystem = null,
-            PropertiesDictionary policy = null)
+        protected override AnalyzeContext CreateContext(AnalyzeOptions options,
+                                                        IAnalysisLogger logger,
+                                                        RuntimeConditions runtimeErrors,
+                                                        IFileSystem fileSystem = null,
+                                                        PropertiesDictionary policy = null)
         {
             AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, fileSystem, policy);
 
