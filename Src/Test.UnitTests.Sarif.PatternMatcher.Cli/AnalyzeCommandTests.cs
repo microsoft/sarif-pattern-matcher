@@ -580,7 +580,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 {
                     FileSystem = mockFileSystem.Object
                 };
-                
+
                 int result = Program.Main(args);
                 sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
                 sarifLog.Runs[0].Invocations?[0].ToolExecutionNotifications.Should().BeNull();
