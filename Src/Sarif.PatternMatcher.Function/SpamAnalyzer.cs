@@ -52,7 +52,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             using (var outputTextWriter = new StringWriter(sb))
             using (var logger = new SarifLogger(
                 outputTextWriter,
-                LogFilePersistenceOptions.PrettyPrint,
+                FilePersistenceOptions.PrettyPrint,
                 dataToInsert,
                 run: run,
                 levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },

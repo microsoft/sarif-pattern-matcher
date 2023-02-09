@@ -775,7 +775,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var writer = new StringWriter(sb);
 
             var logger = new SarifLogger(writer,
-                                         LogFilePersistenceOptions.None,
+                                         FilePersistenceOptions.None,
                                          OptionallyEmittedData.All,
                                          run: run,
                                          closeWriterOnDispose: true);
@@ -932,7 +932,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var run = new Run { Tool = Tool.CreateFromAssemblyData() };
 
             var logger = new SarifLogger(writer,
-                                         LogFilePersistenceOptions.None,
+                                         FilePersistenceOptions.None,
                                          dataToInsert,
                                          run: run,
                                          closeWriterOnDispose: false);

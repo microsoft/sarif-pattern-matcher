@@ -26,6 +26,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             TextToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
         }
 
+        public StringSet SearchDefinitionsPaths { get; set; }
+
         public bool RedactSecrets { get; set; }
 
         public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
@@ -106,5 +108,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 "An upper bound on the size of the RE2 DFA cache. When the cache size exceeds this " +
                 "limit RE2 will fallback to an alternate (much less performant) search mechanism. " +
                 "Negative values will be discarded in favor of the default of 5096 KB.");
+
+        public static PerLanguageOption<StringSet> SearchDefinitionsPathsProperty { get; } =
+                    new PerLanguageOption<StringSet>(
+                        "CoreSettings", nameof(SearchDefinitionsPaths), defaultValue: () => new StringSet(),
+                        "One or more paths to files containing one or more search definitions to drive analysis.");
+
     }
 }

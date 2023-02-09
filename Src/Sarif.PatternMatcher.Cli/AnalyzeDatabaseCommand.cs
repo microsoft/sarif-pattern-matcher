@@ -43,7 +43,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                 var sarifLogger = new SarifLogger(
                     options.OutputFilePath,
-                    options.ConvertToLogFilePersistenceOptions(),
+                    options.OutputFileOptions.ToFlags(),
                     dataToInsert: options.DataToInsert.ToFlags(),
                     dataToRemove: options.DataToRemove.ToFlags(),
                     run: run,

@@ -451,38 +451,37 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        protected override AnalyzeContext CreateContext(AnalyzeOptions options,
-                                                        IAnalysisLogger logger,
-                                                        RuntimeConditions runtimeErrors,
-                                                        IFileSystem fileSystem = null,
-                                                        PropertiesDictionary policy = null)
+        public override AnalyzeContext InitializeContextFromOptions(AnalyzeOptions options, ref AnalyzeContext context)
         {
-            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, fileSystem, policy);
+            context = base.InitializeContextFromOptions(options, ref context);
 
-            if (options != null)
+            context.Retry = options.Retry;
+            context.RedactSecrets = options.RedactSecrets;
+            context.EnhancedReporting = options.EnhancedReporting;
+            context.DynamicValidation = options.DynamicValidation;
+            context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
+
+            context.SearchDefinitionsPaths = new StringSet(options.SearchDefinitionsPaths);
+
+            return context;
+        }
+
+        public override AnalyzeContext ValidateContext(AnalyzeContext context)
+        {
+            context = base.ValidateContext(context);
+
+            if (ValidateFiles(context, context.SearchDefinitionsPaths, shouldExist: true))
             {
-                context.Traces =
-                    options.Traces.Any() == true ?
-                        new StringSet(options.Traces) :
-                        new StringSet();
 
-                context.DataToInsert = options.DataToInsert.ToFlags();
-
-                context.Retry = options.Retry;
-                context.RedactSecrets = options.RedactSecrets;
-                context.EnhancedReporting = options.EnhancedReporting;
-                context.DynamicValidation = options.DynamicValidation;
-                context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
-                context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
             }
 
             return context;
         }
 
-        protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
+        protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeContext context)
         {
             ISet<Skimmer<AnalyzeContext>> skimmers =
-                CreateSkimmersFromDefinitionsFiles(context.FileSystem, options.SearchDefinitionsPaths, Tool);
+                CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.SearchDefinitionsPaths, Tool);
 
             return skimmers;
         }

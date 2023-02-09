@@ -147,7 +147,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             using (var outputTextWriter = new StringWriter(sb))
             using (var logger = new SarifLogger(
                 outputTextWriter,
-                LogFilePersistenceOptions.PrettyPrint,
+                FilePersistenceOptions.PrettyPrint,
                 run: new Run() { Tool = tool },
                 dataToRemove: OptionallyEmittedData.NondeterministicProperties,
                 levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
