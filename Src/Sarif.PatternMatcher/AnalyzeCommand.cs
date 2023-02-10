@@ -32,12 +32,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             try
             {
-                var options = new AnalyzeOptions
-                {
-                    Threads = this.context.Threads,
-                };
-
-                AnalyzeTargets(options, this.context, this.context.Skimmers);
+                AnalyzeTargets(this.context, this.context.Skimmers);
             }
             catch (ExitApplicationException<ExitReason> _)
             {
