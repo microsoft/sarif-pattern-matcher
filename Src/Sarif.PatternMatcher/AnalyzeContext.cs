@@ -34,13 +34,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public IDictionary<int, string> RollingHashMap { get; set; }
 
-        // TODO delete this entirely.
-        public FlexString FileContents
-        {
-            get => this.fileContents ?? this.CurrentTarget?.Contents;
-            set => this.fileContents = value;
-        }
-
         public override bool AnalysisComplete { get; set; }
 
         public bool DynamicValidation

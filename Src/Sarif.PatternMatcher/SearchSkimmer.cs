@@ -139,58 +139,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             string filePath = context.CurrentTarget.Uri.GetFilePath();
 
-            try
-            {
-                if (context.CurrentTarget != null)
-                {
-                    context.FileContents = context.CurrentTarget.Contents;
-                }
-
-                if (context.FileContents.String == null)
-                {
-                    // Ensure that the byte of the file does not exceed the limit set by the
-                    // file-size-in-kilobytes argument.
-                    long fileSize = context.FileSystem.FileInfoLength(filePath);
-                    if (DoesTargetFileExceedSizeLimits(fileSize, context.MaxFileSizeInKilobytes))
-                    {
-                        return;
-                    }
-
-                    context.FileContents = context.FileSystem.FileReadAllText(filePath);
-                }
-                else
-                {
-                    if (DoesTargetFileExceedSizeLimits(context.CurrentTarget.Contents.Length, context.MaxFileSizeInKilobytes))
-                    {
-                        return;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                if (e is IOException || e is UnauthorizedAccessException)
-                {
-                    // We should log and return here because we want the rule to continue to run. i.e., the issue is likely
-                    // in permissions with the scan target, not a general problem with the rule. In other cases, we 'throw',
-                    // which will result in the rule getting disabled.
-                    context.Logger.LogToolNotification(
-                        Errors.CreateNotification(
-                            context.CurrentTarget.Uri,
-                            "ERR998.ExceptionInAnalyze",
-                            context.Rule.Id,
-                            FailureLevel.Error,
-                            e,
-                            persistExceptionStack: true,
-                            messageFormat: null,
-                            e.GetType().Name,
-                            context.CurrentTarget.Uri.GetFileName(),
-                            context.Rule.Name));
-                    return;
-                }
-
-                throw;
-            }
-
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
@@ -226,7 +174,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         string.Format(Base64DecodingFormatString, "{" + unpaddedLength + "}") +
                         new string('=', paddedLength - unpaddedLength);
 
-                    foreach (FlexMatch flexMatch in _engine.Matches(context.FileContents, base64DecodingRegexText))
+                    foreach (FlexMatch flexMatch in _engine.Matches(context.CurrentTarget.Contents, base64DecodingRegexText))
                     {
                         // This will run the match expression against the decoded content.
                         RunMatchExpression(binary64DecodedMatch: flexMatch,
@@ -517,7 +465,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IDictionary<string, string> partialFingerprints = null;
             if (context.DataToInsert.HasFlag(OptionallyEmittedData.RollingHashPartialFingerprints))
             {
-                context.RollingHashMap ??= HashUtilities.RollingHash(context.FileContents);
+                context.RollingHashMap ??= HashUtilities.RollingHash(context.CurrentTarget.Contents);
                 string rollingHash = context.RollingHashMap[location.PhysicalLocation.Region.StartLine];
                 partialFingerprints = new Dictionary<string, string>() { { "primaryLocationLineHash", rollingHash } };
             }
@@ -745,7 +693,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return context.FileRegionsCache.PopulateTextRegionProperties(region,
                                                                              context.CurrentTarget.Uri,
                                                                              populateSnippet: true,
-                                                                             fileText: context.FileContents);
+                                                                             fileText: context.CurrentTarget.Contents);
             }
 
             lock (FileRegionsCache.Instance)
@@ -753,7 +701,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return FileRegionsCache.Instance.PopulateTextRegionProperties(region,
                                                                               context.CurrentTarget.Uri,
                                                                               populateSnippet: true,
-                                                                              fileText: context.FileContents);
+                                                                              fileText: context.CurrentTarget.Contents);
             }
         }
 
@@ -802,7 +750,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private void RunMatchExpressionForIntrafileRegexes(AnalyzeContext context, MatchExpression matchExpression)
         {
             ResultKind kind = matchExpression.Kind;
-            string searchText = context.FileContents;
+            string searchText = context.CurrentTarget.Contents;
             FailureLevel level = matchExpression.Level;
 
             var mergedGroups = new Dictionary<string, ISet<FlexMatch>>();
@@ -850,7 +798,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             ResultKind kind = matchExpression.Kind;
-            string searchText = context.FileContents;
+            string searchText = context.CurrentTarget.Contents;
             FailureLevel level = matchExpression.Level;
 
             string firstRegex = matchExpression.SingleLineRegexes[0];
@@ -992,8 +940,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FailureLevel level = matchExpression.Level;
             string filePath = context.CurrentTarget.Uri.GetFilePath();
             string searchText = binary64DecodedMatch != null
-                                                   ? Decode(binary64DecodedMatch.Value)
-                                                   : context.FileContents;
+                                                   ? Decode(binary64DecodedMatch.Value).String
+                                                   : context.CurrentTarget.Contents;
 
             long maxMemoryInKB =
                 context.MaxMemoryInKilobytes == -1
@@ -1233,14 +1181,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ReportingDescriptor reportingDescriptor = this;
             IDictionary<string, FlexMatch> groups = new Dictionary<string, FlexMatch>();
 
-            if (!string.IsNullOrEmpty(context.FileContents))
+            if (!string.IsNullOrEmpty(context.CurrentTarget.Contents))
             {
                 groups["content"] = new FlexMatch
                 {
                     Index = 0,
-                    Length = context.FileContents.String8.Length,
+                    Length = (int)context.CurrentTarget.SizeInBytes,
                     Success = true,
-                    Value = context.FileContents,
+                    Value = context.CurrentTarget.Contents,
                 };
             }
 
@@ -1419,13 +1367,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private bool DoesTargetFileExceedSizeLimits(long fileLength, long maxFileSize)
+        private bool DoesTargetFileExceedSizeLimits(ulong fileLength, long maxFileSize)
         {
             // Ensure that the byte of the file does not exceed the limit set by the
             // file-size-in-kilobytes command line argument, which defaults to ~10MB.
-            long fileSize = fileLength / 1024;
+            ulong fileSize = fileLength / 1024;
 
-            return maxFileSize > -1 && fileSize > maxFileSize;
+            return maxFileSize > -1 && fileSize > (ulong)maxFileSize;
         }
     }
 }
