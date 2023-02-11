@@ -55,7 +55,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 StressOptions,
                 ValidateOptions>(args)
               .MapResult(
-                (AnalyzeOptions options) => RunAnalyzeCommand(options),
+                (AnalyzeOptions options) => new AnalyzeCommand().Run(options, ref GlobalContext),
                 (AnalyzeDatabaseOptions options) => new AnalyzeDatabaseCommand().Run(options),
                 (ExportConfigurationOptions options) => new ExportConfigurationCommand().Run(options),
                 (ExportRulesMetatadaOptions options) => new ExportRulesMetatadaCommand().Run(options),
@@ -72,13 +72,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         {
             GlobalContext = null;
             InstantiatedAnalyzeCommand = null;
-        }
-
-        internal static int RunAnalyzeCommand(AnalyzeOptions options)
-        {
-            InstantiatedAnalyzeCommand = new AnalyzeCommand();
-            int result = InstantiatedAnalyzeCommand.Run(options);
-            return result;
         }
 
         private static bool IsValidVerbName(string verb)
