@@ -77,7 +77,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         internal static int RunAnalyzeCommand(AnalyzeOptions options)
         {
             InstantiatedAnalyzeCommand = new AnalyzeCommand();
-            int result = InstantiatedAnalyzeCommand.Run(options, ref GlobalContext);
+            int result = InstantiatedAnalyzeCommand.Run(options);
             return result;
         }
 
