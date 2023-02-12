@@ -293,7 +293,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             };
 
             int result = Program.Main(args);
-            Program.GlobalContext.RuntimeErrors.Should().Be(RuntimeConditions.ExceptionInEngine);
+            Program.GlobalContext.RuntimeErrors.Should().Be(RuntimeConditions.ExceptionProcessingCommandline);
             Program.GlobalContext.RuntimeException.Should().NotBeNull();
             result.Should().Be(1);
         }

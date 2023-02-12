@@ -7,6 +7,7 @@ using System.Text;
 using CommandLine;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.Writers;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
@@ -20,52 +21,56 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         internal static int Main(string[] args)
         {
-            Console.OutputEncoding = Encoding.UTF8;
-            GlobalContext ??= new AnalyzeContext();
-
             try
             {
-                args = EntryPointUtilities.GenerateArguments(args, GlobalContext.FileSystem ?? new FileSystem(), new EnvironmentVariables());
+                Console.OutputEncoding = Encoding.UTF8;
+                GlobalContext ??= new AnalyzeContext();
+
+                // TBD FileSystem.Instance??
+                GlobalContext.FileSystem ??= new FileSystem();
+
+                // TBD Environment variables to context
+                args = EntryPointUtilities.GenerateArguments(args, GlobalContext.FileSystem, new EnvironmentVariables());
                 args = RewriteArgs(args);
+
+                bool isValidHelpCommand =
+                    args.Length > 0 &&
+                    args[0] == "help" &&
+                    ((args.Length == 2 && IsValidVerbName(args[1])) || args.Length == 1);
+
+                bool isVersionCommand = args.Length == 1 && args[0] == "version";
+
+                isVersionCommand = args[0] == "version";
+
+                return Parser.Default.ParseArguments<
+                    AnalyzeOptions,
+                    AnalyzeDatabaseOptions,
+                    ExportConfigurationOptions,
+                    ExportRulesMetatadaOptions,
+                    ExportSearchDefinitionsOptions,
+                    ImportAndAnalyzeOptions,
+                    StressOptions,
+                    ValidateOptions>(args)
+                  .MapResult(
+                    (AnalyzeOptions options) => new AnalyzeCommand().Run(options, ref GlobalContext),
+                    (AnalyzeDatabaseOptions options) => new AnalyzeDatabaseCommand().Run(options),
+                    (ExportConfigurationOptions options) => new ExportConfigurationCommand().Run(options),
+                    (ExportRulesMetatadaOptions options) => new ExportRulesMetatadaCommand().Run(options),
+                    (ExportSearchDefinitionsOptions options) => new ExportSearchDefinitionsCommand().Run(options),
+                    (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),
+                    (StressOptions options) => new StressCommand().Run(options),
+                    (ValidateOptions options) => new ValidateCommand().Run(options),
+                    _ => isValidHelpCommand || isVersionCommand
+                            ? CommandBase.SUCCESS
+                            : CommandBase.FAILURE);
             }
             catch (Exception ex)
             {
-                GlobalContext.RuntimeErrors |= RuntimeConditions.ExceptionInEngine;
+                Errors.LogUnhandledEngineException(GlobalContext, ex);
+                GlobalContext.RuntimeErrors |= RuntimeConditions.ExceptionProcessingCommandline;
                 GlobalContext.RuntimeException = ex;
-                Console.WriteLine(ex.ToString());
                 return CommandBase.FAILURE;
             }
-
-            bool isValidHelpCommand =
-                args.Length > 0 &&
-                args[0] == "help" &&
-                ((args.Length == 2 && IsValidVerbName(args[1])) || args.Length == 1);
-
-            bool isVersionCommand = args.Length == 1 && args[0] == "version";
-
-            isVersionCommand = args[0] == "version";
-
-            return Parser.Default.ParseArguments<
-                AnalyzeOptions,
-                AnalyzeDatabaseOptions,
-                ExportConfigurationOptions,
-                ExportRulesMetatadaOptions,
-                ExportSearchDefinitionsOptions,
-                ImportAndAnalyzeOptions,
-                StressOptions,
-                ValidateOptions>(args)
-              .MapResult(
-                (AnalyzeOptions options) => new AnalyzeCommand().Run(options, ref GlobalContext),
-                (AnalyzeDatabaseOptions options) => new AnalyzeDatabaseCommand().Run(options),
-                (ExportConfigurationOptions options) => new ExportConfigurationCommand().Run(options),
-                (ExportRulesMetatadaOptions options) => new ExportRulesMetatadaCommand().Run(options),
-                (ExportSearchDefinitionsOptions options) => new ExportSearchDefinitionsCommand().Run(options),
-                (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),
-                (StressOptions options) => new StressCommand().Run(options),
-                (ValidateOptions options) => new ValidateCommand().Run(options),
-                _ => isValidHelpCommand || isVersionCommand
-                        ? CommandBase.SUCCESS
-                        : CommandBase.FAILURE);
         }
 
         internal static void ClearUnitTestData()

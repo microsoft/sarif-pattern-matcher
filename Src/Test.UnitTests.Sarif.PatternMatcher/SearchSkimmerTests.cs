@@ -452,7 +452,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             exception.Should().NotBeNull();
             exception.GetType().Should().Be(typeof(InvalidOperationException));
         }
- 
+
         private AnalyzeContext CreateGuidMatchingSkimmer(
             string scanTargetExtension,
             ref SearchDefinition definition,
