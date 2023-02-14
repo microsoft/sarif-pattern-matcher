@@ -24,6 +24,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public bool RedactSecrets { get; set; }
 
+        public IDictionary<int, string> RollingHashMap { get; set; }
+
         public Exception TargetLoadException { get; set; }
 
         public bool IsValidAnalysisTarget { get; set; }
@@ -52,7 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public string GlobalFileDenyRegex { get; set; }
 
-        public int MaxFileSizeInKilobytes { get; set; } = 10000;
+        public long MaxFileSizeInKilobytes { get; set; } = 10000;
 
         public bool DisableDynamicValidationCaching { get; set; }
 

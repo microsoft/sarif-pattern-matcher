@@ -23,8 +23,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             FileSystem = Sarif.FileSystem.Instance;
         }
 
+        private static Tool s_tool = Tool.CreateFromAssemblyData();
+
         public static SarifLog Analyze(string filePath, string text, string rulePath, string originalFileName)
         {
+
             if (Skimmers == null)
             {
                 IEnumerable<string> regexDefinitions = FileSystem.DirectoryGetFiles(Path.Combine(rulePath, @"..\bin\"), "*.json");
@@ -33,7 +36,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
                 // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
                 // extension name changes from .json to .dll).
-                Skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, regexDefinitions);
+                Skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, regexDefinitions, s_tool);
             }
 
             var sb = new StringBuilder();
@@ -43,11 +46,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                                                  OptionallyEmittedData.ContextRegionSnippets |
                                                  OptionallyEmittedData.ComprehensiveRegionProperties;
 
+            var run = new Run { Tool = s_tool };
+
+
             using (var outputTextWriter = new StringWriter(sb))
             using (var logger = new SarifLogger(
                 outputTextWriter,
                 LogFilePersistenceOptions.PrettyPrint,
                 dataToInsert,
+                run: run,
                 levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
                 kinds: new List<ResultKind> { ResultKind.Fail }))
             {

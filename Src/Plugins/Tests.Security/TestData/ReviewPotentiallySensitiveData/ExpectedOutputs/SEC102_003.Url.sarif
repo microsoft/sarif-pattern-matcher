@@ -5,31 +5,44 @@
     {
       "tool": {
         "driver": {
-          "name": "testhost",
-          "organization": "Microsoft Corporation",
-          "product": "Microsoft.TestHost",
-          "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
-          "rules": [
-            {
-              "id": "SEC102/003",
-              "name": "ReviewPotentiallySensitiveData/Url",
-              "fullDescription": {
-                "text": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+          "name": "Spmi",
+          "organization": "Microsoft",
+          "product": "Microsoft SARIF Pattern Matcher",
+          "fullName": "Sarif.PatternMatcher ",
+          "properties": {
+            "comments": "A general pattern matching engine that persist results to SARIF."
+          }
+        },
+        "extensions": [
+          {
+            "guid": "dad7661b-34d6-4052-87b4-e234d9aae66b",
+            "name": "Microsoft/Security/ReviewPotentiallySensitiveData",
+            "rules": [
+              {
+                "id": "SEC102/003",
+                "name": "ReviewPotentiallySensitiveData/Url",
+                "fullDescription": {
+                  "text": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc."
                 },
-                "Default": {
-                  "text": "'{0}' is an apparent URL."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            }
-          ]
-        }
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is an apparent URL."
+                  }
+                },
+                "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+              }
+            ],
+            "locations": [
+              {
+                "uri": "SEC102.ReviewPotentiallySensitiveData.json",
+                "uriBaseId": "EXTENSION_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {
@@ -46,8 +59,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC102/003",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/003",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -78,16 +96,21 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
-            "AssetFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test\"}",
-            "ValidationFingerprintHashSha256/v0": "14d50b9e6825ad93a9a957dcd484fa1ffce642125b1b615693fb7d02ced5338c",
-            "SecretFingerprint/v0": "{}",
-            "ValidationFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}"
+            "secretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "assetFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test\"}",
+            "validationFingerprintHashSha256/v0": "14d50b9e6825ad93a9a957dcd484fa1ffce642125b1b615693fb7d02ced5338c",
+            "secretFingerprint/v0": "{}",
+            "validationFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}"
           }
         },
         {
-          "ruleId": "SEC102/003",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/003",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -118,16 +141,21 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
-            "AssetFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test/\"}",
-            "ValidationFingerprintHashSha256/v0": "06da657d809a85c1b27e844129ffe0cf3fc123c1a61e9f63246c108b2b90ceb2",
-            "SecretFingerprint/v0": "{}",
-            "ValidationFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test/\",\"port\":\"443\"}"
+            "secretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "assetFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test/\"}",
+            "validationFingerprintHashSha256/v0": "06da657d809a85c1b27e844129ffe0cf3fc123c1a61e9f63246c108b2b90ceb2",
+            "secretFingerprint/v0": "{}",
+            "validationFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test/\",\"port\":\"443\"}"
           }
         },
         {
-          "ruleId": "SEC102/003",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/003",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -158,11 +186,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
-            "AssetFingerprint/v0": "{\"host\":\"msn.com\",\"part\":\"?foo=bar\",\"path\":\"/test\"}",
-            "ValidationFingerprintHashSha256/v0": "14d50b9e6825ad93a9a957dcd484fa1ffce642125b1b615693fb7d02ced5338c",
-            "SecretFingerprint/v0": "{}",
-            "ValidationFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}"
+            "secretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "assetFingerprint/v0": "{\"host\":\"msn.com\",\"part\":\"?foo=bar\",\"path\":\"/test\"}",
+            "validationFingerprintHashSha256/v0": "14d50b9e6825ad93a9a957dcd484fa1ffce642125b1b615693fb7d02ced5338c",
+            "secretFingerprint/v0": "{}",
+            "validationFingerprint/v0": "{\"host\":\"msn.com\",\"path\":\"/test\",\"port\":\"443\"}"
           }
         }
       ],

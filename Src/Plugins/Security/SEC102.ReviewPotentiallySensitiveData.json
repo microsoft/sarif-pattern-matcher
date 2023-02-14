@@ -1,6 +1,8 @@
 {
   "ValidatorsAssemblyName": "Security.dll",
   "SharedStringsFileName": "Security.SharedStrings.txt",
+  "ExtensionName": "ReviewPotentiallySensitiveData",
+  "Guid": "dad7661b-34d6-4052-87b4-e234d9aae66b",
   "Definitions": [
     {
       "Id": "SEC102",

@@ -5,31 +5,44 @@
     {
       "tool": {
         "driver": {
-          "name": "testhost",
-          "organization": "Microsoft Corporation",
-          "product": "Microsoft.TestHost",
-          "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
-          "rules": [
-            {
-              "id": "SEC101/022",
-              "name": "DoNotExposePlaintextSecrets/PayPalBraintreeAccessToken",
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+          "name": "Spmi",
+          "organization": "Microsoft",
+          "product": "Microsoft SARIF Pattern Matcher",
+          "fullName": "Sarif.PatternMatcher ",
+          "properties": {
+            "comments": "A general pattern matching engine that persist results to SARIF."
+          }
+        },
+        "extensions": [
+          {
+            "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
+            "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
+            "rules": [
+              {
+                "id": "SEC101/022",
+                "name": "PayPalBraintreeAccessToken",
+                "fullDescription": {
+                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
                 },
-                "Default": {
-                  "text": "'{0}' is {1}{2}{3}{4}{5}."
-                }
-              },
-              "helpUri": "https://developer.paypal.com/braintree/docs/guides/extend/oauth/access-tokens/"
-            }
-          ]
-        }
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is {1}{2}{3}{4}{5}."
+                  }
+                },
+                "helpUri": "https://developer.paypal.com/braintree/docs/guides/extend/oauth/access-tokens/"
+              }
+            ],
+            "locations": [
+              {
+                "uri": "SEC101.SecurePlaintextSecrets.json",
+                "uriBaseId": "EXTENSION_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {
@@ -46,8 +59,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/022",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC101/022",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -82,17 +100,22 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "3e023c9f79a4c9337077de4a711c3add6e416cd0716ad6f726ede1f87fb25720",
-            "AssetFingerprint/v0": "{\"platform\":\"PayPal\"}",
-            "ValidationFingerprintHashSha256/v0": "46d5c6342d738e19ec1b89df0f6933f408cb6a5d4412e3751af4fb837a5aa186",
-            "SecretFingerprint/v0": "{\"secret\":\"1111111111012345$01234567890123456789012345678901\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"1111111111012345$01234567890123456789012345678901\"}"
+            "secretHashSha256/v0": "3e023c9f79a4c9337077de4a711c3add6e416cd0716ad6f726ede1f87fb25720",
+            "assetFingerprint/v0": "{\"platform\":\"PayPal\"}",
+            "validationFingerprintHashSha256/v0": "46d5c6342d738e19ec1b89df0f6933f408cb6a5d4412e3751af4fb837a5aa186",
+            "secretFingerprint/v0": "{\"secret\":\"1111111111012345$01234567890123456789012345678901\"}",
+            "validationFingerprint/v0": "{\"secret\":\"1111111111012345$01234567890123456789012345678901\"}"
           },
           "rank": 44.87
         },
         {
-          "ruleId": "SEC101/022",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC101/022",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -127,11 +150,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "8d34f9813cfeebf8ae5356fabb6a9e49d9db049742614e8aa4d20f4a4885a242",
-            "AssetFingerprint/v0": "{\"platform\":\"PayPal\"}",
-            "ValidationFingerprintHashSha256/v0": "e0e406e1513fbcdb3d512f332ed0830cce2a3806104c560c4c460c4c4d1c216f",
-            "SecretFingerprint/v0": "{\"secret\":\"2222222222012345$01234567890123456789012345678901\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"2222222222012345$01234567890123456789012345678901\"}"
+            "secretHashSha256/v0": "8d34f9813cfeebf8ae5356fabb6a9e49d9db049742614e8aa4d20f4a4885a242",
+            "assetFingerprint/v0": "{\"platform\":\"PayPal\"}",
+            "validationFingerprintHashSha256/v0": "e0e406e1513fbcdb3d512f332ed0830cce2a3806104c560c4c460c4c4d1c216f",
+            "secretFingerprint/v0": "{\"secret\":\"2222222222012345$01234567890123456789012345678901\"}",
+            "validationFingerprint/v0": "{\"secret\":\"2222222222012345$01234567890123456789012345678901\"}"
           },
           "rank": 45.36
         }

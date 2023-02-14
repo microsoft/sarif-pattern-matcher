@@ -5,31 +5,44 @@
     {
       "tool": {
         "driver": {
-          "name": "testhost",
-          "organization": "Microsoft Corporation",
-          "product": "Microsoft.TestHost",
-          "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
-          "rules": [
-            {
-              "id": "SEC101/010",
-              "name": "DoNotExposePlaintextSecrets/SquarePat",
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+          "name": "Spmi",
+          "organization": "Microsoft",
+          "product": "Microsoft SARIF Pattern Matcher",
+          "fullName": "Sarif.PatternMatcher ",
+          "properties": {
+            "comments": "A general pattern matching engine that persist results to SARIF."
+          }
+        },
+        "extensions": [
+          {
+            "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
+            "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
+            "rules": [
+              {
+                "id": "SEC101/010",
+                "name": "SquarePat",
+                "fullDescription": {
+                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
                 },
-                "Default": {
-                  "text": "'{0}' is {1}{2}{3}{4}{5}."
-                }
-              },
-              "helpUri": "https://developer.squareup.com/docs/build-basics/access-tokens"
-            }
-          ]
-        }
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is {1}{2}{3}{4}{5}."
+                  }
+                },
+                "helpUri": "https://developer.squareup.com/docs/build-basics/access-tokens"
+              }
+            ],
+            "locations": [
+              {
+                "uri": "SEC101.SecurePlaintextSecrets.json",
+                "uriBaseId": "EXTENSION_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {
@@ -46,8 +59,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/010",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC101/010",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -82,17 +100,22 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "931662a875dca101f008e07a65f87d0c381518aaab6ef14074bc312ee91a6580",
-            "AssetFingerprint/v0": "{\"platform\":\"Square\"}",
-            "ValidationFingerprintHashSha256/v0": "863b377b99b0384e00828a99527c1c21e1f52d76e34b0ec8586bf749e422acc3",
-            "SecretFingerprint/v0": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671\"}"
+            "secretHashSha256/v0": "931662a875dca101f008e07a65f87d0c381518aaab6ef14074bc312ee91a6580",
+            "assetFingerprint/v0": "{\"platform\":\"Square\"}",
+            "validationFingerprintHashSha256/v0": "863b377b99b0384e00828a99527c1c21e1f52d76e34b0ec8586bf749e422acc3",
+            "secretFingerprint/v0": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671\"}",
+            "validationFingerprint/v0": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81671\"}"
           },
           "rank": 74.86
         },
         {
-          "ruleId": "SEC101/010",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC101/010",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -127,17 +150,22 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "ac0d8f24abc48da21f6bcb3fb5d4d751e1f056cf6a104a6c0ce6bff24323b17e",
-            "AssetFingerprint/v0": "{\"platform\":\"Square\"}",
-            "ValidationFingerprintHashSha256/v0": "4d253f2b1ce91d2cf60838b5b92867263b312d816f70d4b5a748e0ca9950850b",
-            "SecretFingerprint/v0": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672\"}"
+            "secretHashSha256/v0": "ac0d8f24abc48da21f6bcb3fb5d4d751e1f056cf6a104a6c0ce6bff24323b17e",
+            "assetFingerprint/v0": "{\"platform\":\"Square\"}",
+            "validationFingerprintHashSha256/v0": "4d253f2b1ce91d2cf60838b5b92867263b312d816f70d4b5a748e0ca9950850b",
+            "secretFingerprint/v0": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672\"}",
+            "validationFingerprint/v0": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81672\"}"
           },
           "rank": 74.86
         },
         {
-          "ruleId": "SEC101/010",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC101/010",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -172,11 +200,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "84f3a80bb3dd531a344b5b6fe7788e558e8116d09869a1f474ceeece42676b4b",
-            "AssetFingerprint/v0": "{\"platform\":\"Square\"}",
-            "ValidationFingerprintHashSha256/v0": "1cd837839c38675c3f4b9eed987a68db8d8df979be4d570da7a226beb6e0d00c",
-            "SecretFingerprint/v0": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673\"}"
+            "secretHashSha256/v0": "84f3a80bb3dd531a344b5b6fe7788e558e8116d09869a1f474ceeece42676b4b",
+            "assetFingerprint/v0": "{\"platform\":\"Square\"}",
+            "validationFingerprintHashSha256/v0": "1cd837839c38675c3f4b9eed987a68db8d8df979be4d570da7a226beb6e0d00c",
+            "secretFingerprint/v0": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673\"}",
+            "validationFingerprint/v0": "{\"secret\":\"EAAAEBpgJyJZkHNhmvmIzc2jPU4fnuYzw3LmTy-ch0fhmFnmLt_faEIS_5i81673\"}"
           },
           "rank": 74.86
         }

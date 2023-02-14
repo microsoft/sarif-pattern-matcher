@@ -24,24 +24,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public abstract class EndToEndTests : FileDiffingUnitTests
     {
-        private static ConcurrentDictionary<string, ISet<Skimmer<AnalyzeContext>>> s_definitionsPathToSkimmersMap;
-
-        public static ISet<Skimmer<AnalyzeContext>> CreateOrRetrievedCachedSkimmer(IFileSystem fileSystem, string regexDefinitionsPath)
+        public static ISet<Skimmer<AnalyzeContext>> CreateOrRetrievedCachedSkimmer(IFileSystem fileSystem, string regexDefinitionsPath, Tool tool)
         {
             // Load all rules from JSON. This also automatically loads any validations file that
             // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
             // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
             // extension name changes from .json to .dll).
 
-
-            s_definitionsPathToSkimmersMap ??= new ConcurrentDictionary<string, ISet<Skimmer<AnalyzeContext>>>();
-
-            if (!s_definitionsPathToSkimmersMap.TryGetValue(regexDefinitionsPath, out ISet<Skimmer<AnalyzeContext>> skimmers))
-            {
-                skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, new string[] { regexDefinitionsPath });
-                s_definitionsPathToSkimmersMap.TryAdd(regexDefinitionsPath, skimmers);
-            }
-
+            ISet<Skimmer<AnalyzeContext>> skimmers =
+                AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem,
+                                                                  new string[] { regexDefinitionsPath },
+                                                                  tool);
             return skimmers;
         }
 
@@ -67,9 +60,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override IDictionary<string, string> ConstructTestOutputsFromInputResources(IEnumerable<string> inputResourceNames, object parameter)
         {
-            var inputFiles = parameter as List<string>;
-            var results = new Dictionary<string, string>();
-
             // INTERESTING BREAKPOINT: unexpected differences in an end-to-end test
             // scan. In practice, debugging the end-to-end tests when multithreaded
             // is difficult. The common scenario is to debug one or a few files and
@@ -81,7 +71,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // outside of the debugger. There are some theoretical problems (such
             // as bugs in test utilization of shared resources) that could result.
             //
-            results = Debugger.IsAttached
+            var inputFiles = parameter as List<string>;
+            Dictionary<string, string> results = Debugger.IsAttached
                 ? SingleThreadedConstructTestOutputs(inputResourceNames, inputFiles)
                 : MultiThreadedConstructTestOutputs(inputResourceNames, inputFiles);
 
@@ -104,18 +95,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private Dictionary<string, string> MultiThreadedConstructTestOutputs(IEnumerable<string> inputResourceNames, List<string> inputFiles)
         {
             var results = new Dictionary<string, string>();
-            var dict = new Dictionary<string, Task<string>>();
+
+            var inputFileToTaskMap = new Dictionary<string, Task<string>>();
 
             foreach (string inputResourceName in inputResourceNames)
             {
                 string name = inputFiles.First(i => inputResourceName.EndsWith(i));
-
-                dict[name] = Task.Factory.StartNew(() => ConstructTestOutputFromInputResource(inputResourceName, name));
+                inputFileToTaskMap[name] = Task.Factory.StartNew(() => ConstructTestOutputFromInputResource(inputResourceName, name));
             }
 
-            Task.WaitAll(dict.Values.ToArray());
+            try
+            {
+                Task.WaitAll(inputFileToTaskMap.Values.ToArray());
+            }
+            catch (AggregateException ae)
+            {
+                Console.WriteLine(ae.InnerExceptions.ToString());
+                throw;
+            }
 
-            foreach (KeyValuePair<string, Task<string>> item in dict)
+            foreach (KeyValuePair<string, Task<string>> item in inputFileToTaskMap)
             {
                 results[item.Key] = item.Value.Result;
             }
@@ -133,20 +132,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 parameter as string);
 
             IFileSystem fileSystem = FileSystem.Instance;
+            var sb = new StringBuilder();
+
+            var tool = Tool.CreateFromAssemblyData(typeof(AnalyzeCommand).Assembly, omitSemanticVersion: true);
+            tool.Driver.Name = "Spmi";
 
             // Load all rules from JSON. This also automatically loads any validations file that
             // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
             // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
             // extension name changes from .json to .dll).
             ISet<Skimmer<AnalyzeContext>> skimmers =
-                CreateOrRetrievedCachedSkimmer(fileSystem, DefinitionsPath);
-
-            var sb = new StringBuilder();
+                CreateOrRetrievedCachedSkimmer(fileSystem, DefinitionsPath, tool);
 
             using (var outputTextWriter = new StringWriter(sb))
             using (var logger = new SarifLogger(
                 outputTextWriter,
                 LogFilePersistenceOptions.PrettyPrint,
+                run: new Run() { Tool = tool },
                 dataToRemove: OptionallyEmittedData.NondeterministicProperties,
                 levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
                 kinds: new List<ResultKind> { ResultKind.Fail, ResultKind.Pass }))
@@ -175,9 +177,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             SarifLog sarifLog = JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
 
-            string sourceRoot = GitHelper.Default.GetTopLevel(Path.GetDirectoryName(filePath)) + @"\";
+            string pluginRoot = Path.GetDirectoryName(DefinitionsPath) + @"\";
+            var rebaseUriVisitor = new RebaseUriVisitor("EXTENSION_ROOT", new Uri(pluginRoot));
+            rebaseUriVisitor.Visit(sarifLog);
 
-            var rebaseUriVisitor = new RebaseUriVisitor("SRC_ROOT", new Uri(sourceRoot));
+            string sourceRoot = GitHelper.Default.GetTopLevel(Path.GetDirectoryName(filePath)) + @"\";
+            rebaseUriVisitor = new RebaseUriVisitor("SRC_ROOT", new Uri(sourceRoot));
             rebaseUriVisitor.Visit(sarifLog);
 
             // It would be nice if RebaseUriVisitor was configurable

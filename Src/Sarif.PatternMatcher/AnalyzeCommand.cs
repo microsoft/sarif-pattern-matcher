@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Writers;
@@ -17,16 +19,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
+        private Tool tool;
+
         public AnalyzeCommand(IFileSystem fileSystem = null)
             : base(fileSystem)
         {
         }
 
+        protected override Tool Tool
+        {
+            get
+            {
+                if (tool == null)
+                {
+                    this.tool = Tool.CreateFromAssemblyData(this.GetType().Assembly);
+                    this.tool.Driver.Name = "Spmi";
+                    this.tool.Driver.InformationUri = new Uri("https://aka.ms/sarif-pattern-matcher");
+                }
+
+                return this.tool;
+            }
+
+            set => this.tool = value;
+        }
+
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(
             IFileSystem fileSystem,
             IEnumerable<string> searchDefinitionsPaths,
+            Tool tool,
             IRegex engine = null)
         {
+            tool.Extensions ??= new List<ToolComponent>();
+
             engine ??= RE2Regex.Instance;
 
             var validators = new ValidatorsCache(validatorBinaryPaths: null, fileSystem);
@@ -57,6 +81,39 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     continue;
                 }
+
+                string name = definitions.ExtensionName;
+                string version = null;
+
+                string semanticVersion = null;
+                if (!string.IsNullOrEmpty(definitions.ValidatorsAssemblyName))
+                {
+                    string directory = Path.GetDirectoryName(searchDefinitionsPath);
+                    FileVersionInfo fvi = fileSystem.FileVersionInfoGetVersionInfo(Path.Combine(directory, definitions.ValidatorsAssemblyName));
+
+                    name = $"{fvi?.CompanyName}/{fvi?.FileDescription}/{name}";
+                    // TBD add version details. Breaks test baselines currently.
+                    //semanticVersion = fvi?.ProductVersion;
+                    //version = fvi?.FileVersion;
+                }
+
+                var toolComponent = new ToolComponent
+                {
+                    Name = name,
+                    Guid = definitions.Guid,
+                    Version = version,
+                    SemanticVersion = semanticVersion,
+                    Locations = new List<ArtifactLocation>(new[]
+                    {
+                        new ArtifactLocation
+                        {
+                            Uri = new Uri(searchDefinitionsPath),
+                        },
+                    }),
+                };
+
+                int extensionIndex = tool.Extensions.Count;
+                tool.Extensions.Add(toolComponent);
 
                 string validatorPath = null;
                 string definitionsDirectory = Path.GetDirectoryName(searchDefinitionsPath);
@@ -104,7 +161,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         new SearchSkimmer(engine: engine,
                                           validators: validators,
                                           definition,
-                                          fileSystem));
+                                          fileSystem)
+                        {
+                            ExtensionIndex = extensionIndex,
+                        });
 
                     const string singleSpace = " ";
 
@@ -136,6 +196,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             var idToExpressionsMap = new Dictionary<string, List<MatchExpression>>();
 
+            int extensionsCount = 0;
             foreach (SearchDefinition definition in definitions.Definitions)
             {
                 definition.FileNameDenyRegex = PushData(definition.FileNameDenyRegex,
@@ -148,6 +209,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 foreach (MatchExpression matchExpression in definition.MatchExpressions)
                 {
+                    if (matchExpression.RuleEnabledState == RuleEnabledState.Disabled) { continue; }
+
                     if (matchExpression.SingleLineRegexes?.Count > 0)
                     {
                         for (int i = 0; i < matchExpression.SingleLineRegexes.Count; i++)
@@ -227,6 +290,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     cachedMatchExpressions.Add(matchExpression);
                 }
+                extensionsCount++;
             }
 
             var searchDefinitions = new SearchDefinitions
@@ -300,6 +364,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             PropertiesDictionary policy = null,
             string filePath = null)
         {
+            AnalyzeContextBase.MaxFileSizeInKilobytesDefaultValue = 10 * 1024;
             AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy, filePath);
 
             context.Traces =
@@ -314,7 +379,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.DataToInsert = options.DataToInsert.ToFlags();
             context.GlobalFileDenyRegex = options.FileNameDenyRegex;
             context.MaxMemoryInKilobytes = options.MaxMemoryInKilobytes;
-            context.MaxFileSizeInKilobytes = options.MaxFileSizeInKilobytes;
             context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
 
             return context;
@@ -322,23 +386,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
         {
-            return CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths);
+            ISet<Skimmer<AnalyzeContext>> skimmers =
+                CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths, Tool);
+
+            return skimmers;
         }
 
         protected override AnalyzeContext DetermineApplicabilityAndAnalyze(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers, ISet<string> disabledSkimmers)
         {
             context = base.DetermineApplicabilityAndAnalyze(context, skimmers, disabledSkimmers);
 
-            ICollection<IList<Result>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
+            ICollection<IList<Tuple<Result, int?>>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
 
             if (resultLists != null && context.TargetUri.ToString().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
             {
                 var aggregatedResults = new List<Result>();
-                foreach (IList<Result> resultList in resultLists)
+                foreach (IList<Tuple<Result, int?>> resultList in resultLists)
                 {
-                    foreach (Result result in resultList)
+                    foreach (Tuple<Result, int?> tuple in resultList)
                     {
-                        aggregatedResults.Add(result);
+                        aggregatedResults.Add(tuple.Item1);
                     }
                 }
 

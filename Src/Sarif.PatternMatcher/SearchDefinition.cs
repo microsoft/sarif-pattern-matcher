@@ -3,10 +3,14 @@
 
 using System.Collections.Generic;
 
+using Microsoft.CodeAnalysis.Sarif.Driver;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchDefinition
     {
+        public string ExtensionName { get; set; }
+
         public Dictionary<string, string> SharedStrings { get; set; }
 
         public string Id { get; set; }
@@ -18,6 +22,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public string Message { get; set; }
 
         public ResultKind Kind { get; set; }
+
+        public RuleEnabledState RuleEnabledState { get; set; }
 
         public FailureLevel Level { get; set; }
 

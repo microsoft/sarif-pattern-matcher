@@ -64,7 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             dict.AddProperties(properties);
             dict.Should().BeEmpty();
 
-            // Empty properties sould not affect dictionary
+            // Empty properties should not affect dictionary
             properties = new Dictionary<string, string>();
             dict.Should().BeEmpty();
 
@@ -80,7 +80,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             dict.Count.Should().Be(2);
             foreach (KeyValuePair<string, string> kv in properties)
             {
-                dict[kv.Key].Value.Should().Be(kv.Value);
+                dict[kv.Key].Value.ToString().Should().Be(kv.Value);
             }
 
             // Duplicated items should not replace original value.
@@ -88,7 +88,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             properties.Add("key3", "value3");
             dict.AddProperties(properties);
             dict.Count.Should().Be(3);
-            dict["key3"].Value.Should().Be("original");
+            dict["key3"].Value.ToString().Should().Be("original");
         }
     }
 }

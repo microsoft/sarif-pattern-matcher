@@ -5,31 +5,44 @@
     {
       "tool": {
         "driver": {
-          "name": "testhost",
-          "organization": "Microsoft Corporation",
-          "product": "Microsoft.TestHost",
-          "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
-          "rules": [
-            {
-              "id": "SEC102/002",
-              "name": "ReviewPotentiallySensitiveData/SocialSecurityNumber",
-              "fullDescription": {
-                "text": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+          "name": "Spmi",
+          "organization": "Microsoft",
+          "product": "Microsoft SARIF Pattern Matcher",
+          "fullName": "Sarif.PatternMatcher ",
+          "properties": {
+            "comments": "A general pattern matching engine that persist results to SARIF."
+          }
+        },
+        "extensions": [
+          {
+            "guid": "dad7661b-34d6-4052-87b4-e234d9aae66b",
+            "name": "Microsoft/Security/ReviewPotentiallySensitiveData",
+            "rules": [
+              {
+                "id": "SEC102/002",
+                "name": "ReviewPotentiallySensitiveData/SocialSecurityNumber",
+                "fullDescription": {
+                  "text": "Review exposed potentially sensitive data, such as service principal names, social security numbers, etc."
                 },
-                "Default": {
-                  "text": "'{0}' is an apparent {1}."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            }
-          ]
-        }
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is an apparent {1}."
+                  }
+                },
+                "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+              }
+            ],
+            "locations": [
+              {
+                "uri": "SEC102.ReviewPotentiallySensitiveData.json",
+                "uriBaseId": "EXTENSION_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {
@@ -46,8 +59,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC102/002",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/002",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -79,17 +97,22 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "11e9207babcd9683ac3ebe611f71d7a364f5beedb77ab6aedda642900b3c3cbf",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "e24918902d0a1fcc33cbded1f97ce06a372acb99a255b0a934600e5abcacd6d7",
-            "SecretFingerprint/v0": "{\"secret\":\"123-45-6789\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"123-45-6789\"}"
+            "secretHashSha256/v0": "11e9207babcd9683ac3ebe611f71d7a364f5beedb77ab6aedda642900b3c3cbf",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "e24918902d0a1fcc33cbded1f97ce06a372acb99a255b0a934600e5abcacd6d7",
+            "secretFingerprint/v0": "{\"secret\":\"123-45-6789\"}",
+            "validationFingerprint/v0": "{\"secret\":\"123-45-6789\"}"
           },
           "rank": 46.82
         },
         {
-          "ruleId": "SEC102/002",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/002",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -121,17 +144,22 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "dc71acf4f9703ec7325bca06b81c7231124a8a7c7c17a2117c322af2fbe039d8",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "45b4cec67315682d05693fec840472963e76da5ae6dfe071bee8ae662712e4d6",
-            "SecretFingerprint/v0": "{\"secret\":\"111-45-6789\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"111-45-6789\"}"
+            "secretHashSha256/v0": "dc71acf4f9703ec7325bca06b81c7231124a8a7c7c17a2117c322af2fbe039d8",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "45b4cec67315682d05693fec840472963e76da5ae6dfe071bee8ae662712e4d6",
+            "secretFingerprint/v0": "{\"secret\":\"111-45-6789\"}",
+            "validationFingerprint/v0": "{\"secret\":\"111-45-6789\"}"
           },
           "rank": 40.65
         },
         {
-          "ruleId": "SEC102/002",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/002",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -163,17 +191,22 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "d9238c0e3015301c9fc7f7682440b940001e36e4c42537bcfe09962fefc3ac41",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "d79d4d3f92125fb103c1619cc4701b61313119b25ff5cc9b0573d2e747a9d46e",
-            "SecretFingerprint/v0": "{\"secret\":\"123-44-6789\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"123-44-6789\"}"
+            "secretHashSha256/v0": "d9238c0e3015301c9fc7f7682440b940001e36e4c42537bcfe09962fefc3ac41",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "d79d4d3f92125fb103c1619cc4701b61313119b25ff5cc9b0573d2e747a9d46e",
+            "secretFingerprint/v0": "{\"secret\":\"123-44-6789\"}",
+            "validationFingerprint/v0": "{\"secret\":\"123-44-6789\"}"
           },
           "rank": 44.23
         },
         {
-          "ruleId": "SEC102/002",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC102/002",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "level": "note",
           "message": {
             "id": "Default",
@@ -205,11 +238,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "0d0cf347e087a202f94d8757274bc513a62a2dbf86d2097466dcf68e6ac92920",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "0ff33c39a69c033141f37181b7881af96cd4997738752932f7984613b5212e6e",
-            "SecretFingerprint/v0": "{\"secret\":\"123-45-6666\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"123-45-6666\"}"
+            "secretHashSha256/v0": "0d0cf347e087a202f94d8757274bc513a62a2dbf86d2097466dcf68e6ac92920",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "0ff33c39a69c033141f37181b7881af96cd4997738752932f7984613b5212e6e",
+            "secretFingerprint/v0": "{\"secret\":\"123-45-6666\"}",
+            "validationFingerprint/v0": "{\"secret\":\"123-45-6666\"}"
           },
           "rank": 36.43
         }

@@ -23,7 +23,7 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
 
 2. Run BuildAndTest.cmd from the root of the enlistment. This will properly load all submodules and validate some machine configuration/settings. Complete any recommended installs/upgrades (e.g., to install a newer sdk via VS installer individual components):
 
-    `D:\src\sarif-pattern-matcher> BuildAndTest.cmd`
+    `D:\src\sarif-pattern-matcher> ./BuildAndTest.cmd`
 
 3. Create a branch:
 
@@ -40,7 +40,7 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
 
 1. Identify an example of a secret to test (ie. a false negative or false positive). If you need a testable pattern just to explore the code base you can use the following (which is not an actual credential):
 ~~~
-<add key="GitHubPat" value="dead885a8624460a855540c6592698d2f1812843" />
+<add key="GitHubLegacyPat" value="dead885a8624460a855540c6592698d2f1812843" />
 ~~~
 
 2. Create and save a text file somewhere easily accessible that contains the test pattern (e.g., in a file named `d:\testFiles\repro.txt`).
@@ -73,9 +73,9 @@ spam.exe help analyze
     - [in Visual Studio 2022 only] Click `Open debug launch profiles UI`
     - Enter the following into the command-line arguments field: `analyze @d:\testFiles\SpamArguments.rsp`
 
-6. Open the rule file associated with the pattern, e.g., the file associated with the test pattern at `.\src\Plugins\Security\SecurePlaintextSecretsValidators\SEC101_006.GitHubPatValidator.cs`. Set a breakpoint in the `IsValidStaticHelper` override to verify whether the pattern is detect for the first, strictly static detection phase.
+6. Open the rule file associated with the pattern, e.g., the file associated with the test pattern at `.\src\Plugins\Security\SecurePlaintextSecretsValidators\SEC101_006.GitHubLegacyPatValidator.cs`. Set a breakpoint in the `IsValidStaticHelper` override to verify whether the pattern is detect for the first, strictly static detection phase.
 
-7. Set a breakpoint in the `IsValidDynamicHelper` override. If the static analysis phase finds a valid secret candidate, this helper should be called next (if the `--dynamic-analysis` argument is present on the command-line) in order to detect whether the secret is 'live' (and therefore exploitable). 
+7. Set a breakpoint in the `IsValidDynamicHelper` override. If the static analysis phase finds a valid secret candidate, this helper should be called next (if the `--dynamic-validation` argument is present on the command-line) in order to detect whether the secret is 'live' (and therefore exploitable). 
 
 8. Start debugging by hitting `F5` or choosing `Start Debugging` from the Visual Studio `Debug` menu.
 

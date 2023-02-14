@@ -5,31 +5,44 @@
     {
       "tool": {
         "driver": {
-          "name": "testhost",
-          "organization": "Microsoft Corporation",
-          "product": "Microsoft.TestHost",
-          "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
-          "rules": [
-            {
-              "id": "SEC101/048",
-              "name": "DoNotExposePlaintextSecrets/SlackWorkflowKey",
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+          "name": "Spmi",
+          "organization": "Microsoft",
+          "product": "Microsoft SARIF Pattern Matcher",
+          "fullName": "Sarif.PatternMatcher ",
+          "properties": {
+            "comments": "A general pattern matching engine that persist results to SARIF."
+          }
+        },
+        "extensions": [
+          {
+            "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
+            "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
+            "rules": [
+              {
+                "id": "SEC101/048",
+                "name": "SlackWorkflowKey",
+                "fullDescription": {
+                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
                 },
-                "Default": {
-                  "text": "'{0}' is {1}{2}{3}{4}{5}."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            }
-          ]
-        }
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is {1}{2}{3}{4}{5}."
+                  }
+                },
+                "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+              }
+            ],
+            "locations": [
+              {
+                "uri": "SEC101.SecurePlaintextSecrets.json",
+                "uriBaseId": "EXTENSION_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {
@@ -46,8 +59,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/048",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC101/048",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -82,11 +100,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "98312e0f2d594fd4e3d71b7be906d302fcf64291f04ad62970864114a9076688",
-            "AssetFingerprint/v0": "{\"id\":\"0123456789\",\"platform\":\"Slack\"}",
-            "ValidationFingerprintHashSha256/v0": "904b560d930b8b7497aefc45f1249618b2afd955d425163beef027b9cc42c096",
-            "SecretFingerprint/v0": "{\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}",
-            "ValidationFingerprint/v0": "{\"id\":\"0123456789\",\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}"
+            "secretHashSha256/v0": "98312e0f2d594fd4e3d71b7be906d302fcf64291f04ad62970864114a9076688",
+            "assetFingerprint/v0": "{\"id\":\"0123456789\",\"platform\":\"Slack\"}",
+            "validationFingerprintHashSha256/v0": "904b560d930b8b7497aefc45f1249618b2afd955d425163beef027b9cc42c096",
+            "secretFingerprint/v0": "{\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}",
+            "validationFingerprint/v0": "{\"id\":\"0123456789\",\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}"
           },
           "rank": 52.82
         }

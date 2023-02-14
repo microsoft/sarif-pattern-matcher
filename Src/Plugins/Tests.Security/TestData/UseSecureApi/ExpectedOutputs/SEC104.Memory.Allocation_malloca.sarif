@@ -5,34 +5,47 @@
     {
       "tool": {
         "driver": {
-          "name": "testhost",
-          "organization": "Microsoft Corporation",
-          "product": "Microsoft.TestHost",
-          "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
-          "rules": [
-            {
-              "id": "SEC104/001",
-              "name": "UseSecureApi/Memory/Allocation",
-              "fullDescription": {
-                "text": "Developers should use secure API in preferance of insecure alternates."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+          "name": "Spmi",
+          "organization": "Microsoft",
+          "product": "Microsoft SARIF Pattern Matcher",
+          "fullName": "Sarif.PatternMatcher ",
+          "properties": {
+            "comments": "A general pattern matching engine that persist results to SARIF."
+          }
+        },
+        "extensions": [
+          {
+            "guid": "07374f10-f46b-458a-9179-cc937e1857e4",
+            "name": "UseSecureApi",
+            "rules": [
+              {
+                "id": "SEC104/001",
+                "name": "UseSecureApi/Memory/Allocation",
+                "fullDescription": {
+                  "text": "Developers should use secure API in preferance of insecure alternates."
                 },
-                "Default": {
-                  "text": "'{0}' contains a call to '{1}', a potentially insecure API that could be replaced with a more secure alternative: {2}."
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' contains a call to '{1}', a potentially insecure API that could be replaced with a more secure alternative: {2}."
+                  },
+                  "Default_Secure": {
+                    "text": "'{0}' contains a call to '{1}', a more secure alternative to one or more potentially insecure APIs: {2}."
+                  }
                 },
-                "Default_Secure": {
-                  "text": "'{0}' contains a call to '{1}', a more secure alternative to one or more potentially insecure APIs: {2}."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            }
-          ]
-        }
+                "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+              }
+            ],
+            "locations": [
+              {
+                "uri": "SEC104.UseSecureApi.json",
+                "uriBaseId": "EXTENSION_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {
@@ -49,8 +62,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC104/001/_malloca",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC104/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "kind": "pass",
           "level": "none",
           "message": {
@@ -84,11 +102,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
-            "AssetFingerprint/v0": "{\"id\":\"_malloca\"}",
-            "ValidationFingerprintHashSha256/v0": "582290aa80b7a22d4aa98aa1227346b61831fcdc156e2a570bc6ad5b8763ccf2",
-            "SecretFingerprint/v0": "{}",
-            "ValidationFingerprint/v0": "{\"id\":\"_malloca\"}"
+            "secretHashSha256/v0": "a4965ae12f3568daff154d92dc41cddff82ae7b6674138279bbdac60217d7d1b",
+            "assetFingerprint/v0": "{\"id\":\"_malloca\"}",
+            "validationFingerprintHashSha256/v0": "582290aa80b7a22d4aa98aa1227346b61831fcdc156e2a570bc6ad5b8763ccf2",
+            "secretFingerprint/v0": "{}",
+            "validationFingerprint/v0": "{\"id\":\"_malloca\"}"
           }
         }
       ],

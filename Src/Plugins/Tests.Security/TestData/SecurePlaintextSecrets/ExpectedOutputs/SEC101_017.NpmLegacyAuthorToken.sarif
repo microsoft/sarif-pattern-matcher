@@ -5,34 +5,47 @@
     {
       "tool": {
         "driver": {
-          "name": "testhost",
-          "organization": "Microsoft Corporation",
-          "product": "Microsoft.TestHost",
-          "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
-          "rules": [
-            {
-              "id": "SEC101/017",
-              "name": "DoNotExposePlaintextSecrets/NpmLegacyAuthorToken",
-              "deprecatedNames": [
-                "DoNotExposePlaintextSecrets/NpmAuthorToken"
-              ],
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+          "name": "Spmi",
+          "organization": "Microsoft",
+          "product": "Microsoft SARIF Pattern Matcher",
+          "fullName": "Sarif.PatternMatcher ",
+          "properties": {
+            "comments": "A general pattern matching engine that persist results to SARIF."
+          }
+        },
+        "extensions": [
+          {
+            "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
+            "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
+            "rules": [
+              {
+                "id": "SEC101/017",
+                "name": "NpmLegacyAuthorToken",
+                "deprecatedNames": [
+                  "NpmAuthorToken"
+                ],
+                "fullDescription": {
+                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
                 },
-                "Default": {
-                  "text": "'{0}' is {1}{2}{3}{4}{5}."
-                }
-              },
-              "helpUri": "https://docs.npmjs.com/creating-and-viewing-access-tokens"
-            }
-          ]
-        }
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is {1}{2}{3}{4}{5}."
+                  }
+                },
+                "helpUri": "https://docs.npmjs.com/creating-and-viewing-access-tokens"
+              }
+            ],
+            "locations": [
+              {
+                "uri": "SEC101.SecurePlaintextSecrets.json",
+                "uriBaseId": "EXTENSION_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {
@@ -49,8 +62,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/017",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC101/017",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -85,17 +103,22 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "8353c03c8a8bb6f139a28a0eb0b6aa821c6e2d05607eac41285d834204f87b85",
-            "AssetFingerprint/v0": "{\"platform\":\"Npm\"}",
-            "ValidationFingerprintHashSha256/v0": "748c862ce66f04dd431cef753972f4901ff7b960faea29c5a0df580abe855ca3",
-            "SecretFingerprint/v0": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777ca\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777ca\"}"
+            "secretHashSha256/v0": "8353c03c8a8bb6f139a28a0eb0b6aa821c6e2d05607eac41285d834204f87b85",
+            "assetFingerprint/v0": "{\"platform\":\"Npm\"}",
+            "validationFingerprintHashSha256/v0": "748c862ce66f04dd431cef753972f4901ff7b960faea29c5a0df580abe855ca3",
+            "secretFingerprint/v0": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777ca\"}",
+            "validationFingerprint/v0": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777ca\"}"
           },
           "rank": 52.63
         },
         {
-          "ruleId": "SEC101/017",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC101/017",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -130,11 +153,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "2fc4513ceeb418b38ca61fdc8e0d6a9a86b2df83921f05636a8c67e457d74ab6",
-            "AssetFingerprint/v0": "{\"platform\":\"Npm\"}",
-            "ValidationFingerprintHashSha256/v0": "1336f4b9b15c79836867464c8d6448eaad30eacd48e0f513d9f9f97fe6280cc4",
-            "SecretFingerprint/v0": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777cb\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777cb\"}"
+            "secretHashSha256/v0": "2fc4513ceeb418b38ca61fdc8e0d6a9a86b2df83921f05636a8c67e457d74ab6",
+            "assetFingerprint/v0": "{\"platform\":\"Npm\"}",
+            "validationFingerprintHashSha256/v0": "1336f4b9b15c79836867464c8d6448eaad30eacd48e0f513d9f9f97fe6280cc4",
+            "secretFingerprint/v0": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777cb\"}",
+            "validationFingerprint/v0": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777cb\"}"
           },
           "rank": 52.33
         }

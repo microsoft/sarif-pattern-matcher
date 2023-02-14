@@ -5,12 +5,10 @@
     {
       "tool": {
         "driver": {
-          "name": "testhost",
-          "organization": "Microsoft Corporation",
-          "product": "Microsoft.TestHost",
-          "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
+          "name": "Spmi",
+          "organization": "Microsoft",
+          "product": "Microsoft SARIF Pattern Matcher",
+          "fullName": "Sarif.PatternMatcher ",
           "rules": [
             {
               "id": "SEC103/002",
@@ -28,8 +26,23 @@
               },
               "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
             }
-          ]
-        }
+          ],
+          "properties": {
+            "comments": "A general pattern matching engine that persist results to SARIF."
+          }
+        },
+        "extensions": [
+          {
+            "guid": "3a7488cc-1b12-4f27-9239-af10146ebf30",
+            "name": "Microsoft/Security/ReviewPotentiallySensitiveFiles",
+            "locations": [
+              {
+                "uri": "SEC103.ReviewPotentiallySensitiveFiles.json",
+                "uriBaseId": "EXTENSION_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {
@@ -70,11 +83,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "cd2099a31af74edb52f9e10e620289f310c43b5f3dcdb41ad30b8a0b2a4e14c6",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "3091100e5f9225c2bf47cc2be58c2f19d305e63417d7e0205cfec5788b2c6138",
-            "SecretFingerprint/v0": "{\"secret\":\"BE81853AB9435115A64B36C2A3E51B7561ED1DB28B44F945A095D78C751B1238\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"BE81853AB9435115A64B36C2A3E51B7561ED1DB28B44F945A095D78C751B1238\"}"
+            "secretHashSha256/v0": "cd2099a31af74edb52f9e10e620289f310c43b5f3dcdb41ad30b8a0b2a4e14c6",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "3091100e5f9225c2bf47cc2be58c2f19d305e63417d7e0205cfec5788b2c6138",
+            "secretFingerprint/v0": "{\"secret\":\"BE81853AB9435115A64B36C2A3E51B7561ED1DB28B44F945A095D78C751B1238\"}",
+            "validationFingerprint/v0": "{\"secret\":\"BE81853AB9435115A64B36C2A3E51B7561ED1DB28B44F945A095D78C751B1238\"}"
           },
           "rank": 54.24
         }

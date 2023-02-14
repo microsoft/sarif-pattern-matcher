@@ -5,34 +5,47 @@
     {
       "tool": {
         "driver": {
-          "name": "testhost",
-          "organization": "Microsoft Corporation",
-          "product": "Microsoft.TestHost",
-          "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
-          "rules": [
-            {
-              "id": "SEC101/050",
-              "name": "DoNotExposePlaintextSecrets/NpmIdentifiableAuthorToken",
-              "deprecatedNames": [
-                "DoNotExposePlaintextSecrets/IdentifiableNpmLegacyAuthorToken"
-              ],
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+          "name": "Spmi",
+          "organization": "Microsoft",
+          "product": "Microsoft SARIF Pattern Matcher",
+          "fullName": "Sarif.PatternMatcher ",
+          "properties": {
+            "comments": "A general pattern matching engine that persist results to SARIF."
+          }
+        },
+        "extensions": [
+          {
+            "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
+            "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
+            "rules": [
+              {
+                "id": "SEC101/050",
+                "name": "NpmIdentifiableAuthorToken",
+                "deprecatedNames": [
+                  "IdentifiableNpmLegacyAuthorToken"
+                ],
+                "fullDescription": {
+                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
                 },
-                "Default": {
-                  "text": "'{0}' is {1}{2}{3}{4}{5}."
-                }
-              },
-              "helpUri": "https://docs.npmjs.com/creating-and-viewing-access-tokens"
-            }
-          ]
-        }
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is {1}{2}{3}{4}{5}."
+                  }
+                },
+                "helpUri": "https://docs.npmjs.com/creating-and-viewing-access-tokens"
+              }
+            ],
+            "locations": [
+              {
+                "uri": "SEC101.SecurePlaintextSecrets.json",
+                "uriBaseId": "EXTENSION_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {
@@ -49,8 +62,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC101/050",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC101/050",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -85,11 +103,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "35a3c91aac24face8a1fae7aafb504b1f141ff5c92181687905b4f08ca0ed1ed",
-            "AssetFingerprint/v0": "{\"platform\":\"Npm\"}",
-            "ValidationFingerprintHashSha256/v0": "114602da1f4a63fa289c8ae1e2fea58d536eb90ec5ffbf3a2dddbf2b2ef653d9",
-            "SecretFingerprint/v0": "{\"secret\":\"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\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"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\"}"
+            "secretHashSha256/v0": "35a3c91aac24face8a1fae7aafb504b1f141ff5c92181687905b4f08ca0ed1ed",
+            "assetFingerprint/v0": "{\"platform\":\"Npm\"}",
+            "validationFingerprintHashSha256/v0": "114602da1f4a63fa289c8ae1e2fea58d536eb90ec5ffbf3a2dddbf2b2ef653d9",
+            "secretFingerprint/v0": "{\"secret\":\"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\"}",
+            "validationFingerprint/v0": "{\"secret\":\"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\"}"
           },
           "rank": 61.07
         }

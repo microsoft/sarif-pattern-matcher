@@ -5,63 +5,76 @@
     {
       "tool": {
         "driver": {
-          "name": "testhost",
-          "organization": "Microsoft Corporation",
-          "product": "Microsoft.TestHost",
-          "fullName": "testhost 15.0.0.0",
-          "version": "15.0.0.0",
-          "semanticVersion": "15.0.0",
-          "rules": [
-            {
-              "id": "SEC105/001",
-              "name": "RemoveObsoleteOrRedundantAnnotations",
-              "fullDescription": {
-                "text": "Obsolete or redundant SAL annotation."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+          "name": "Spmi",
+          "organization": "Microsoft",
+          "product": "Microsoft SARIF Pattern Matcher",
+          "fullName": "Sarif.PatternMatcher ",
+          "properties": {
+            "comments": "A general pattern matching engine that persist results to SARIF."
+          }
+        },
+        "extensions": [
+          {
+            "guid": "9c5b3438-9e4c-4261-a785-1cec3e6e9efc",
+            "name": "Microsoft/SalModernization/UseCurrentSalAnnotations",
+            "rules": [
+              {
+                "id": "SEC105/001",
+                "name": "RemoveObsoleteOrRedundantAnnotations",
+                "fullDescription": {
+                  "text": "Obsolete or redundant SAL annotation."
                 },
-                "Default": {
-                  "text": "The SAL v1 '{0}' annotation is obsolete in SAL v2 and should be removed."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            },
-            {
-              "id": "SEC105/002",
-              "name": "RenameLegacyAnnotationsToCurrentVersion",
-              "fullDescription": {
-                "text": "SAL 1 can be replaced with SAL 2."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "The SAL v1 '{0}' annotation is obsolete in SAL v2 and should be removed."
+                  }
                 },
-                "Default": {
-                  "text": "The SAL v1 '{0}' annotation is obsolete and should be replaced with the SAL v2 equivalent '{1}'."
-                }
+                "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
               },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            },
-            {
-              "id": "SEC105/003",
-              "name": "UpdateAnnotationsToCurrentVersion",
-              "fullDescription": {
-                "text": "Conversion from SAL 1 to SAL 2 cannot be automatically done."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+              {
+                "id": "SEC105/002",
+                "name": "RenameLegacyAnnotationsToCurrentVersion",
+                "fullDescription": {
+                  "text": "SAL 1 can be replaced with SAL 2."
                 },
-                "Default": {
-                  "text": "The SAL v1 '{0}' annotation has changed in SAL v2 and should be converted manually to the correct pattern."
-                }
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "The SAL v1 '{0}' annotation is obsolete and should be replaced with the SAL v2 equivalent '{1}'."
+                  }
+                },
+                "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
               },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
-            }
-          ]
-        }
+              {
+                "id": "SEC105/003",
+                "name": "UpdateAnnotationsToCurrentVersion",
+                "fullDescription": {
+                  "text": "Conversion from SAL 1 to SAL 2 cannot be automatically done."
+                },
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "The SAL v1 '{0}' annotation has changed in SAL v2 and should be converted manually to the correct pattern."
+                  }
+                },
+                "helpUri": "https://github.com/microsoft/sarif-pattern-matcher"
+              }
+            ],
+            "locations": [
+              {
+                "uri": "SEC105.UpdateSalToCurrentVersion.json",
+                "uriBaseId": "EXTENSION_ROOT"
+              }
+            ]
+          }
+        ]
       },
       "invocations": [
         {
@@ -78,8 +91,13 @@
       ],
       "results": [
         {
-          "ruleId": "SEC105/001/allocator",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC105/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -109,11 +127,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
-            "SecretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
+            "secretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
+            "secretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
+            "validationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42,
           "fixes": [
@@ -149,8 +167,13 @@
           ]
         },
         {
-          "ruleId": "SEC105/001/allocator",
-          "ruleIndex": 0,
+          "rule": {
+            "id": "SEC105/001",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -180,11 +203,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
-            "SecretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
+            "secretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
+            "secretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
+            "validationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42,
           "fixes": [
@@ -220,8 +243,13 @@
           ]
         },
         {
-          "ruleId": "SEC105/002/analysisassume",
-          "ruleIndex": 1,
+          "rule": {
+            "id": "SEC105/002",
+            "index": 1,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -252,11 +280,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
-            "SecretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
+            "secretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
+            "secretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
+            "validationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42,
           "fixes": [
@@ -292,8 +320,13 @@
           ]
         },
         {
-          "ruleId": "SEC105/003/maybenull",
-          "ruleIndex": 2,
+          "rule": {
+            "id": "SEC105/003",
+            "index": 2,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -323,17 +356,22 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
-            "SecretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
+            "secretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
+            "secretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
+            "validationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42
         },
         {
-          "ruleId": "SEC105/003/notnull",
-          "ruleIndex": 2,
+          "rule": {
+            "id": "SEC105/003",
+            "index": 2,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -363,17 +401,22 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
-            "SecretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
+            "secretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
+            "secretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
+            "validationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42
         },
         {
-          "ruleId": "SEC105/003/postinvalid",
-          "ruleIndex": 2,
+          "rule": {
+            "id": "SEC105/003",
+            "index": 2,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -403,17 +446,22 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
-            "SecretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
+            "secretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
+            "secretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
+            "validationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42
         },
         {
-          "ruleId": "SEC105/003/postinvalid",
-          "ruleIndex": 2,
+          "rule": {
+            "id": "SEC105/003",
+            "index": 2,
+            "toolComponent": {
+              "index": 0
+            }
+          },
           "message": {
             "id": "Default",
             "arguments": [
@@ -443,11 +491,11 @@
             }
           ],
           "fingerprints": {
-            "SecretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
-            "AssetFingerprint/v0": "{}",
-            "ValidationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
-            "SecretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
-            "ValidationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
+            "secretHashSha256/v0": "9dc9fc7e9bdbb4af988847caf672e8aab78bff499e10c033c5024b805d2ac6d3",
+            "assetFingerprint/v0": "{}",
+            "validationFingerprintHashSha256/v0": "11626548a2bba258a57c3ddd73dc6980361c0e2f0e34895104be73678ce1640b",
+            "secretFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}",
+            "validationFingerprint/v0": "{\"secret\":\"4D4967B311CCE348B4DC5945D87CCF8484E0FF1223A889C3D6B2A38B543F38E9\"}"
           },
           "rank": 54.42
         }
