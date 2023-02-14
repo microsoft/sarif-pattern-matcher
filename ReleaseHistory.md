@@ -1,7 +1,10 @@
 # Release History
 
+## v3.0.1 Released 02/14/2023
+- Update SARIF SDK submodule from [fdb2545 to ec93dcc](https://github.com/microsoft/sarif-sdk/compare/fdb2545..ec93dcc). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/ec93dcc/src/ReleaseHistory.md).
+
 ## v3.0.0 Released 02/02/2023
-- Update SARIF SDK submodule from [24c773b to fdb2545](https://github.com/microsoft/sarif-sdk/compare/31f49b2..fdb2545). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/fdb2545/src/ReleaseHistory.md).
+- Update SARIF SDK submodule from [24c773b to fdb2545](https://github.com/microsoft/sarif-sdk/compare/24c773b..fdb2545). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/fdb2545/src/ReleaseHistory.md).
 - Update SEC101/028.PlaintextPassword regular expression to include scenarios where a variable name is used instead of string (added `*` after `["']`).
 - FEATURE: Allow rule disabling from definitions file by adding `"RuleEnabledState: "Disabled""` to rule MatchExpression.
 - FEATURE: Support persisting CodeQL rolling hash partial fingerprints to SARIF output.
