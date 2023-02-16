@@ -17,9 +17,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // The actual applicability of a file for a specific
             // search definition is governed by its name/extension.
             IsValidAnalysisTarget = true;
-            ObservedFingerprintCache = new HashSet<string>();
-            FileRegionsCache = null;
-            TextToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
+            //TextToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
         }
 
         public bool RedactSecrets { get; set; }
@@ -69,12 +67,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
 
         /// <summary>
-        /// Gets a hashset that stores observed fingerprints in the
+        /// Gets or sets a hashset that stores observed fingerprints in the
         /// current scan target. This data is used to prevent firing
         /// multiple instances of the same logically unique apparent
         /// credential.
         /// </summary>
-        public HashSet<string> ObservedFingerprintCache { get; private set; }
+        public HashSet<string> ObservedFingerprintCache { get; set; }
 
         /// <summary>
         /// Gets or sets flags that specify how region data should be
@@ -85,14 +83,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         /// <summary>
         /// Gets or sets a dictionary linking file text with
-        /// A String8 that is used to in RE2 searching
+        /// A String8 that is used to in RE2 searching.
         /// An array of bytes that comprise a buffer used in String8 conversion
         /// An array of integers that comprise a map of UTF8 to UTF16 byte
         /// indices. This data is required to rationalize match segments
         /// when analyzing .NET strings in RE2 (which processes UTF8).
         /// </summary>
         public Dictionary<string, Tuple<String8, byte[], int[]>> TextToRE2DataMap;
-
 
         public void Dispose()
         {
