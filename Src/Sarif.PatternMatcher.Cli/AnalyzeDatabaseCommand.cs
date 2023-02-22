@@ -47,8 +47,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     dataToInsert: options.DataToInsert.ToFlags(),
                     dataToRemove: options.DataToRemove.ToFlags(),
                     run: run,
-                    levels: options.Level,
-                    kinds: options.Kind);
+                    levels: options.FailureLevels,
+                    kinds: options.ResultKinds);
                 aggregatingLogger.Loggers.Add(sarifLogger);
 
                 aggregatingLogger.AnalysisStarted();
