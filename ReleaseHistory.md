@@ -1,7 +1,7 @@
 # Release History
 
 ## v3.1.0 UNRELEASED
-- Update SARIF SDK submodule from [ec93dcc to 0fe3695](https://github.com/microsoft/sarif-sdk/compare/fdb2545..0fe3695). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/0fe3695/src/ReleaseHistory.md).
+- Update SARIF SDK submodule from [ec93dcc to 62031c4](https://github.com/microsoft/sarif-sdk/compare/fdb2545..62031c4). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/62031c4/src/ReleaseHistory.md).
 
 ## v3.0.2 Released 02/14/2023
 - Update SARIF SDK submodule from [fdb2545 to ec93dcc](https://github.com/microsoft/sarif-sdk/compare/fdb2545..ec93dcc). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/ec93dcc/src/ReleaseHistory.md).
