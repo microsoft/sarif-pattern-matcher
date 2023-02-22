@@ -17,7 +17,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // The actual applicability of a file for a specific
             // search definition is governed by its name/extension.
             IsValidAnalysisTarget = true;
-            //TextToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
         }
 
         public bool RedactSecrets { get; set; }
@@ -101,6 +100,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             TextToRE2DataMap?.Clear();
             TextToRE2DataMap = null;
+
+            RollingHashMap?.Clear();
+            RollingHashMap = null;
         }
     }
 }
