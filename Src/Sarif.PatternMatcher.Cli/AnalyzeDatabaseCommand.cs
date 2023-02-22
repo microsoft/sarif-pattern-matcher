@@ -47,8 +47,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     dataToInsert: options.DataToInsert.ToFlags(),
                     dataToRemove: options.DataToRemove.ToFlags(),
                     run: run,
-                    levels: options.Level,
-                    kinds: options.Kind);
+                    levels: options.FailureLevels,
+                    kinds: options.ResultKinds);
                 aggregatingLogger.Loggers.Add(sarifLogger);
 
                 aggregatingLogger.AnalysisStarted();
@@ -150,7 +150,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             if (!analyzeOptions.Quiet)
             {
-                var consoleLogger = new ConsoleLogger(analyzeOptions.Quiet, tool.Driver.Name, analyzeOptions.Level, analyzeOptions.Kind);
+                var consoleLogger = new ConsoleLogger(analyzeOptions.Quiet, tool.Driver.Name, analyzeOptions.FailureLevels, analyzeOptions.ResultKinds);
                 logger.Loggers.Add(consoleLogger);
             }
 

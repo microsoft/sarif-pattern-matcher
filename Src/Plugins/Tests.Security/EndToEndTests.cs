@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -150,8 +151,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 LogFilePersistenceOptions.PrettyPrint,
                 run: new Run() { Tool = tool },
                 dataToRemove: OptionallyEmittedData.NondeterministicProperties,
-                levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
-                kinds: new List<ResultKind> { ResultKind.Fail, ResultKind.Pass }))
+                levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None }.ToImmutableHashSet(),
+                kinds: new List<ResultKind> { ResultKind.Fail, ResultKind.Pass }.ToImmutableHashSet()))
             {
                 // The analysis will disable skimmers that raise an exception. This
                 // hash set stores the disabled skimmers. When a skimmer is disabled,
