@@ -155,7 +155,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             if (!analyzeOptions.Quiet)
             {
-                var consoleLogger = new ConsoleLogger(analyzeOptions.Quiet, tool.Driver.Name, analyzeOptions.Level, analyzeOptions.Kind);
+                var consoleLogger = new ConsoleLogger(analyzeOptions.Quiet, tool.Driver.Name, analyzeOptions.FailureLevels, analyzeOptions.ResultKinds);
                 logger.Loggers.Add(consoleLogger);
             }
 

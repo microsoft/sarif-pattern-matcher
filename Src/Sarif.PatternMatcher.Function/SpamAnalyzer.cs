@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 
@@ -55,8 +56,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 FilePersistenceOptions.PrettyPrint,
                 dataToInsert,
                 run: run,
-                levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
-                kinds: new List<ResultKind> { ResultKind.Fail }))
+                levels: new[] { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None }.ToImmutableHashSet(),
+                kinds: BaseLogger.Fail))
             {
                 // The analysis will disable skimmers that raise an exception. This
                 // hash set stores the disabled skimmers. When a skimmer is disabled,

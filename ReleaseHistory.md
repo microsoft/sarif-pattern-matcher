@@ -37,6 +37,9 @@
 - BRK: Disable `SEC101/029.AlibabaCloudCredentials` which throws ScanErrors with message: 
 	>ValidationError:Could not load file or assembly 'AlibabaCloud.OpenApiClient, Version=0.1.4.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. A strongly-named assembly is required. (Exception from HRESULT: 0x80131044)
   These exceptions are caused by incompatibilities between Alibaba code and .Net core 3.1 and 6.0. Will restore rule when dependencies are updated. [#700](https://github.com/microsoft/sarif-pattern-matcher/pull/700)
+- RRR: Rename `SEC101/050.IdentifiableNpmLegacyAuthorToken` to `SEC101/050.NpmIdentifiableAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
+- RRR: Rename `SEC101/017.NpmAuthorToken` to `SEC101/017.NpmAuthorToken` [#683](https://github.com/microsoft/sarif-pattern-matcher/pull/683)
+- RRR: Rename `SEC101/006.GitHubPat` to `SEC101/006.GitHubLegacyPat` [#678](https://github.com/microsoft/sarif-pattern-matcher/pull/678)
 - FNS: Edit `SEC101/028.PlaintextPassword` regular expression to include scenarios where a variable name is used instead of string (added `*` after `["']`).
 - BUG: Update search definitions probing logic to look for file alongside the client tool.
 - BUG: Resolve `OutofMemoryException` and `NullReferenceException' failures resulting from a failure to honor file size scan limits set by `--file-size-in-kb` argument and updated Sarif.Sdk submodule to commit [ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b](https://github.com/microsoft/sarif-sdk/commit/ce8c5cb12d29aa407d0bf98f5fa2c764ec7fb65b). [#621](https://github.com/microsoft/sarif-pattern-matcher/pull/621)

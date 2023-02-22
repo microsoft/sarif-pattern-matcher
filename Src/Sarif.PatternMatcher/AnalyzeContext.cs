@@ -20,10 +20,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // search definition is governed by its name/extension.
             FileRegionsCache = null;
             IsValidAnalysisTarget = true;
-            FileSystem = new FileSystem();
-            Policy = new PropertiesDictionary();
-            ObservedFingerprintCache = new HashSet<string>();
-            TextToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
         }
 
         public StringSet SearchDefinitionsPaths { get; set; }
@@ -59,16 +55,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public FileRegionsCache FileRegionsCache { get; set; }
 
         /// <summary>
-        /// Gets a hashset that stores observed fingerprints in the
+        /// Gets or sets a hashset that stores observed fingerprints in the
         /// current scan target. This data is used to prevent firing
         /// multiple instances of the same logically unique apparent
         /// credential.
         /// </summary>
-        public HashSet<string> ObservedFingerprintCache { get; private set; }
+        public HashSet<string> ObservedFingerprintCache { get; set; }
 
         /// <summary>
         /// Gets or sets a dictionary linking file text with
-        /// A String8 that is used to in RE2 searching
+        /// A String8 that is used to in RE2 searching.
         /// An array of bytes that comprise a buffer used in String8 conversion
         /// An array of integers that comprise a map of UTF8 to UTF16 byte
         /// indices. This data is required to rationalize match segments
@@ -88,6 +84,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             TextToRE2DataMap?.Clear();
             TextToRE2DataMap = null;
+
+            RollingHashMap?.Clear();
+            RollingHashMap = null;
         }
 
         public static PerLanguageOption<bool> DynamicValidationProperty =>

@@ -192,6 +192,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return new[] { validationResult };
             }
 
+            context.ObservedFingerprintCache ??= new HashSet<string>();
             IEnumerable<ValidationResult> validationResults = staticValidator.IsValidStatic(groups, context.ObservedFingerprintCache);
 
             // An 'ExtensibleStaticValidatorBase' is a rule that extends DynamicValidatorBase

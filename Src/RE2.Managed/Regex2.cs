@@ -196,7 +196,7 @@ namespace Microsoft.RE2.Managed
                                           out List<Dictionary<string, FlexMatch>> matches,
                                           long maxMemoryInBytes)
         {
-            var textToRE2DataMap = new Dictionary<string, Tuple<String8, byte[], int[]>>();
+            Dictionary<string, Tuple<String8, byte[], int[]>> textToRE2DataMap = null;
             return Matches(pattern, text, out matches, ref textToRE2DataMap, maxMemoryInBytes);
         }
 
@@ -206,6 +206,7 @@ namespace Microsoft.RE2.Managed
                                           ref Dictionary<string, Tuple<String8, byte[], int[]>> textToRE2DataMap,
                                           long maxMemoryInBytes)
         {
+            textToRE2DataMap ??= new Dictionary<string, Tuple<String8, byte[], int[]>>();
             ParsedRegexCache cache = null;
             try
             {
