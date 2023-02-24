@@ -71,7 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Skimmers = skimmers,
                 };
 
-                AnalyzeCommand.AnalyzeFromContext(context);
+                new AnalyzeCommand().Run(options: null, ref context);
                 context.RuntimeErrors.Should().Be(RuntimeConditions.NoRulesLoaded);
             }
         }
@@ -95,11 +95,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             };
 
             // The rule will pause for 500 ms giving us time to cancel;
-            context.Policy.SetProperty(TestRule.DelayInMilliseconds, 100);
+            context.Policy.SetProperty(TestRule.DelayInMilliseconds, 500);
 
-            int result = AnalyzeCommand.AnalyzeFromContext(context);
+            int result = new AnalyzeCommand().Run(options: null, ref context);
 
-            logger.ToolNotifications?.Should().BeNull();
+            logger.ConfigurationNotifications.Should().NotBeNull();
+            logger.ConfigurationNotifications.Count.Should().Be(1);
+            logger.ConfigurationNotifications[0].Descriptor.Id.Should().Be("ERR999.AnalysisCanceled");
+            
             context.RuntimeErrors.HasFlag(RuntimeConditions.AnalysisCanceled).Should().BeTrue();
             result.Should().Be(CommandBase.FAILURE);
         }
@@ -122,7 +125,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // The rule will pause for 100 ms, provoking our 5 ms timeout;
             context.Policy.SetProperty(TestRule.DelayInMilliseconds, 100);
 
-            int result = AnalyzeCommand.AnalyzeFromContext(context);
+            int result = new AnalyzeCommand().Run(options: null, ref context);
             context.RuntimeErrors.Should().Be(RuntimeConditions.AnalysisTimedOut);
             result.Should().Be(CommandBase.FAILURE);
         }
@@ -177,7 +180,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 // Optional configuration for enriching output.
                 DataToInsert = OptionallyEmittedData.Hashes | OptionallyEmittedData.Guids,
-                Traces = new StringSet(new[] { nameof(DefaultTraces.ScanTime) })
+
+                Traces = new StringSet(new[] {nameof(DefaultTraces.ScanTime)}),
             };
 
             // OPTIONAL: Turn off a badly behaved rule. You could
@@ -191,7 +195,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             int result = CommandBase.FAILURE;
             try
             {
-                result = AnalyzeCommand.AnalyzeFromContext(context);
+                result = new AnalyzeCommand().Run(options: null, ref context);
             }
             catch (Exception)
             {
@@ -200,11 +204,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // a service incident here.
                 false.Should().BeTrue();
             }
-
-            // We have enabled a single tool (trace) notification which publishes scan time.
-            logger.ToolNotifications.Should().NotBeNull();
-            logger.ToolNotifications.Count.Should().Be(1);
-            logger.ToolNotifications[0].Descriptor.Id.Should().Be("TRC101.ScanTime");
 
             // Config notifications relate specifically to how you've configured analysis.
             // The scanner will emit a notification for every disabled check.
@@ -305,7 +304,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 TargetsProvider = artifactProvider,
             };
 
-            int result = AnalyzeCommand.AnalyzeFromContext(context);
+            int result = new AnalyzeCommand().Run(options: null, ref context);
             result.Should().Be(AnalyzeCommand.SUCCESS);
             context.RuntimeErrors.Should().Be(RuntimeConditions.OneOrMoreErrorsFired | RuntimeConditions.OneOrMoreWarningsFired);
             logger.Results.Count.Should().Be(artifacts.Length + fooInstances.Length);
@@ -1029,7 +1028,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private static void RunAnalyzeCommand(IRegex engine)
         {
             var testLogger = new TestLogger();
-            var disabledSkimmers = new HashSet<string>();
 
             var tool = Tool.CreateFromAssemblyData();
 
@@ -1045,14 +1043,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Contents = fileContents,
             } });
 
-            AnalyzeCommand.Analyze(context: new AnalyzeContext
+            var context = new AnalyzeContext
             {
                 Logger = testLogger,
                 Skimmers = skimmers,
                 TargetsProvider = targetsProvider,
                 TimeoutInMilliseconds = int.MaxValue,
-            });
+            };
 
+            new AnalyzeCommand().Run(options: null, ref context);
+
+            (context.RuntimeErrors & ~RuntimeConditions.Nonfatal).Should().Be(0);
             testLogger.Results.Should().NotBeNull();
             testLogger.Results.Count.Should().Be(2);
 

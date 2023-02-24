@@ -153,9 +153,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             Tool tool = MakeTool();
             var logger = new AggregatingLogger();
 
-            if (!analyzeOptions.Quiet)
+            if (!(analyzeOptions.Quiet== true))
             {
-                var consoleLogger = new ConsoleLogger(analyzeOptions.Quiet, tool.Driver.Name, analyzeOptions.FailureLevels, analyzeOptions.ResultKinds);
+                var consoleLogger = new ConsoleLogger(quietConsole: false, tool.Driver.Name, analyzeOptions.FailureLevels, analyzeOptions.ResultKinds);
                 logger.Loggers.Add(consoleLogger);
             }
 

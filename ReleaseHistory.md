@@ -18,7 +18,8 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## UNRELEASED
+## v4.0.0 Released 02/24/2023
+- DEP: Update SARIF SDK submodule from [fdb2545 to a29f202](https://github.com/microsoft/sarif-sdk/compare/fdb2545..a29f202). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/a29f202/src/ReleaseHistory.md).
 - BUG: Eliminate `IndexOutOfRangeException` error invoking `Sarif.PatternMatcher.Cli.exe` with no arguments.
 
 ## v3.0.0 Released 02/02/2023

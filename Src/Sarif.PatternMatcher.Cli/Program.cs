@@ -16,9 +16,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         [ThreadStatic]
         internal static AnalyzeContext GlobalContext;
 
-        [ThreadStatic]
-        internal static AnalyzeCommand InstantiatedAnalyzeCommand;
-
         internal static int Main(string[] args)
         {
             try
@@ -76,7 +73,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         internal static void ClearUnitTestData()
         {
             GlobalContext = null;
-            InstantiatedAnalyzeCommand = null;
         }
 
         private static bool IsValidVerbName(string verb)

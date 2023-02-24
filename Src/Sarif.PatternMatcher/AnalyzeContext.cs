@@ -11,8 +11,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeContext : AnalyzeContextBase
     {
-        private FlexString fileContents;
-
         public AnalyzeContext()
         {
             // Any file is a candidate for regex-driven search.

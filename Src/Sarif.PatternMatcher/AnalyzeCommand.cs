@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using CommandLine;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.Visitors;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 using Microsoft.RE2.Managed;
 
@@ -18,49 +19,6 @@ using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
-    public class AnalyzeFromContext : AnalyzeCommand
-    {
-        private readonly AnalyzeContext context;
-
-        public AnalyzeFromContext(AnalyzeContext context, IFileSystem fileSystem = null)
-            : base(fileSystem)
-        {
-            this.context = context;
-        }
-
-        internal RuntimeConditions Analyze()
-        {
-            try
-            {
-                AnalyzeTargets(this.context, this.context.Skimmers);
-            }
-            catch (ExitApplicationException<ExitReason> _)
-            {
-                // These exceptions have already been logged
-                return context.RuntimeErrors;
-            }
-            catch (Exception ex)
-            {
-                ex = ex.InnerException ?? ex;
-
-                if (!(ex is ExitApplicationException<ExitReason>))
-                {
-                    // These exceptions escaped our net and must be logged here
-                    Errors.LogUnhandledEngineException(context, ex);
-                }
-
-                ExecutionException = ex;
-                return context.RuntimeErrors;
-            }
-            finally
-            {
-                context.Logger.AnalysisStopped(context.RuntimeErrors);
-            }
-
-            return context.RuntimeErrors;
-        }
-    }
-
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
         private Tool tool;
@@ -68,12 +26,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public AnalyzeCommand(IFileSystem fileSystem = null)
             : base(fileSystem)
         {
-        }
-
-        public static int AnalyzeFromContext(AnalyzeContext context = null,
-                                             IFileSystem fileSystem = null)
-        {
-            return Analyze(args: null, options: null, context, fileSystem);
         }
 
         protected override Tool Tool
@@ -92,43 +44,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             set => this.tool = value;
         }
-
-        public static int Analyze(string[] args = null,
-                                  AnalyzeOptions options = null,
-                                  AnalyzeContext context = null,
-                                  IFileSystem fileSystem = null)
-        {
-            if (context != null)
-            {
-                Task<int> analyzeTask = Task.Factory.StartNew(() =>
-                {
-                    new AnalyzeFromContext(context).Analyze();
-                    return SUCCESS;
-                }, context.CancellationToken);
-
-                int msDelay = context.TimeoutInMilliseconds;
-                if (Task.WhenAny(analyzeTask, Task.Delay(msDelay)).GetAwaiter().GetResult() == analyzeTask)
-                {
-                    bool succeeded = (context.RuntimeErrors & ~RuntimeConditions.Nonfatal) == RuntimeConditions.None;
-
-                    Debug.Assert(
-                        !(analyzeTask.IsFaulted && succeeded),
-                        "Task faulted without setting a fatal runtime condition flag.");
-
-                    // TBD rich return code.
-
-                    return succeeded ? SUCCESS : FAILURE;
-                }
-
-                context.RuntimeErrors |= RuntimeConditions.AnalysisTimedOut;
-                return FAILURE;
-            }
-
-            options ??= ConvertCommandlineArgumentsToAnalysisOptions(args);
-            var analyzeCommand = new AnalyzeCommand(fileSystem);
-            return analyzeCommand.Run(options);
-        }
-
+  
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem,
                                                                                        IEnumerable<string> searchDefinitionsPaths,
                                                                                        Tool tool,
@@ -475,10 +391,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeContext context)
         {
-            ISet<Skimmer<AnalyzeContext>> skimmers =
-                CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.SearchDefinitionsPaths, Tool);
+            ISet<Skimmer<AnalyzeContext>> aggregatedSkimmers = new HashSet<Skimmer<AnalyzeContext>>();
 
-            return skimmers;
+            if (context.Skimmers != null)
+            {
+                aggregatedSkimmers = new HashSet<Skimmer<AnalyzeContext>>(context.Skimmers);
+            }
+
+            if (context.SearchDefinitionsPaths?.Any() == true)
+            {
+                foreach (var skimmer in CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.SearchDefinitionsPaths, Tool))
+                {
+                    aggregatedSkimmers.Add(skimmer);
+                }
+            }
+
+            return aggregatedSkimmers;
         }
 
         protected override AnalyzeContext DetermineApplicabilityAndAnalyze(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers, ISet<string> disabledSkimmers)

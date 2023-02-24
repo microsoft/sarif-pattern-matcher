@@ -151,8 +151,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 FilePersistenceOptions.PrettyPrint,
                 run: new Run() { Tool = tool },
                 dataToRemove: OptionallyEmittedData.NondeterministicProperties,
-                levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None }.ToImmutableHashSet(),
-                kinds: new List<ResultKind> { ResultKind.Fail, ResultKind.Pass }.ToImmutableHashSet()))
+                levels: new FailureLevelSet { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
+                kinds: new ResultKindSet { ResultKind.Fail, ResultKind.Pass }))
             {
                 // The analysis will disable skimmers that raise an exception. This
                 // hash set stores the disabled skimmers. When a skimmer is disabled,

@@ -140,23 +140,9 @@ namespace Microsoft.CodeAnalysis.Sarif
         public override void Analyze(AnalyzeContext context)
         {
             int delay = context.Policy.GetProperty(TestRule.DelayInMilliseconds);
+            Thread.Sleep(delay);
 
-            for (int i = 0; i < delay; i++)
-            {
-                Task.Delay(1).Wait();
-            }
-
-            // We do not access the static test rule behaviors here. We also want to 
-            // ensure this data is only set with flags (if any) that are legal for 
-            // this property.
-            (s_testRuleBehaviors & s_testRuleBehaviors.AccessibleOutsideOfContextOnly())
-                .Should().Be(s_testRuleBehaviors);
-
-            // Now we'll make sure the context test rule behaviors are restricted
-            // to settings that are legal to pass in a context object.
             TestRuleBehaviors testRuleBehaviors = context.Policy.GetProperty(TestRule.Behaviors);
-            (testRuleBehaviors & testRuleBehaviors.AccessibleWithinContextOnly())
-                .Should().Be(testRuleBehaviors);
 
             switch (testRuleBehaviors)
             {
