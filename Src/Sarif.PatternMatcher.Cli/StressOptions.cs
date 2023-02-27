@@ -44,6 +44,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
     {
         Statelessness = 0,
         RE2Timing,
-        FileSizeVsTime,
+        SingleThreadedTelemetry,
+        MultiThreadedTelemetry
     }
 }
