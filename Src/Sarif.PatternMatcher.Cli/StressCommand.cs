@@ -248,6 +248,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         private void TimeScanFileWithSkimmers(string filePath, ISet<Skimmer<AnalyzeContext>> skimmers)
         {
             string resourceContent = fileSystem.FileReadAllText(filePath);
+            long fileSizeInBytes = fileSystem.FileInfoLength(filePath);
             Process.GetCurrentProcess().Refresh();
 
             var timer = new Stopwatch();
