@@ -164,13 +164,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     Skimmers = skimmers,
                     Threads = threads,
                     TargetsProvider = provider,
-                    TimeoutInMilliseconds = 5,
+                    TimeoutInMilliseconds = 15,
                 };
 
                 // The rule will pause for 100 ms, provoking our 5 ms timeout;
                 context.Policy.SetProperty(TestRule.DelayInMilliseconds, 100);
 
                 int result = new AnalyzeCommand().Run(options: null, ref context);
+                context.RuntimeExceptions.Should().BeNull();
                 (context.RuntimeErrors & RuntimeConditions.AnalysisTimedOut).Should().Be(RuntimeConditions.AnalysisTimedOut);
                 result.Should().Be(CommandBase.FAILURE);
             }

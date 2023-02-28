@@ -27,7 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public IFileSystem FileSystem { get; set; }
     }
-    /*
+    
     public class SinglethreadedZipArchiveArtifactProvider : ArtifactProvider
     {
         public SinglethreadedZipArchiveArtifactProvider(ZipArchive zipArchive, IFileSystem fileSystem) : base(fileSystem)
@@ -45,32 +45,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             Artifacts = artifacts;
         }
-    }*/
-
-    public class SinglethreadedZipArchiveArtifactProvider : ArtifactProvider
-    {
-        private readonly ZipArchive zipArchive;
-
-        public SinglethreadedZipArchiveArtifactProvider(ZipArchive zipArchive, IFileSystem fileSystem) : base(fileSystem)
-        {
-            this.zipArchive = zipArchive;
-        }
-
-        public override IEnumerable<IEnumeratedArtifact> Artifacts
-        {
-            get
-            {
-                foreach (ZipArchiveEntry entry in this.zipArchive.Entries)
-                {
-                    yield return new EnumeratedArtifact(Sarif.FileSystem.Instance)
-                    {
-                        Uri = new Uri(entry.FullName, UriKind.RelativeOrAbsolute),
-                        Contents = new StreamReader(entry.Open()).ReadToEnd(),
-                    };
-                }
-            }
-        }
     }
+
     public class MultithreadedZipArchiveArtifactProvider : ArtifactProvider
     {
         private readonly ZipArchive zipArchive;

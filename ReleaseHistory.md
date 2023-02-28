@@ -20,9 +20,10 @@
 
 ## v4.0.0 Released 02/27/2023
 - BRK: This change switches to a new, highly-context driven API provided by the SARIF driver framework.
-- DEP: Update SARIF SDK submodule from [ec93dcc to  615a31a](https://github.com/microsoft/sarif-sdk/compare/ec93dcc..615a31a). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/615a31a/src/ReleaseHistory.md).
+- DEP: Update SARIF SDK submodule from [ec93dcc to 615a31a](https://github.com/microsoft/sarif-sdk/compare/ec93dcc..615a31a). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/615a31a/src/ReleaseHistory.md).
 - BUG: Eliminate `IndexOutOfRangeException` error invoking `Sarif.PatternMatcher.Cli.exe` with no arguments.
 - Re-enable `SEC101/029.AlibabaCloudCredentials` in `Security` removing AlibabaCloud SDK reference.
+- FPS: Eliminate `SEC101/047.CratesApiKey` false positives due to bad prefix regex pattern. [#713](https://github.com/microsoft/sarif-pattern-matcher/pull/713)
 
 ## v3.0.2 Released 02/14/2023
 - Update SARIF SDK submodule from [fdb2545 to ec93dcc](https://github.com/microsoft/sarif-sdk/compare/fdb2545..ec93dcc). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/ec93dcc/src/ReleaseHistory.md).
