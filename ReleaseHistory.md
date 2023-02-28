@@ -20,7 +20,7 @@
 
 ## v4.0.0 Released 02/27/2023
 - BRK: This change switches to a new, highly-context driven API provided by the SARIF driver framework.
-- DEP: Update SARIF SDK submodule from [ec93dcc to 11b52ed](https://github.com/microsoft/sarif-sdk/compare/ec93dcc..11b52ed). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/11b52ed/src/ReleaseHistory.md).
+- DEP: Update SARIF SDK submodule from [ec93dcc to  615a31a](https://github.com/microsoft/sarif-sdk/compare/ec93dcc..615a31a). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/615a31a/src/ReleaseHistory.md).
 - BUG: Eliminate `IndexOutOfRangeException` error invoking `Sarif.PatternMatcher.Cli.exe` with no arguments.
 - Re-enable `SEC101/029.AlibabaCloudCredentials` in `Security` removing AlibabaCloud SDK reference.
 

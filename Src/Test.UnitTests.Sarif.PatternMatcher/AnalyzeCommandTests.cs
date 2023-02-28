@@ -77,62 +77,103 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
-        public void AnalyzeCommand_AnalyzeFromContext_CancelledExternally()
+        public void AnalyzeCommand_AnalyzeFromContext_CancelledExternallyMultithreaded()
         {
-            var logger = new TestMessageLogger();
-            using ZipArchive archiveToAnalyze = CreateTestZipArchive();
-            var skimmers = new List<Skimmer<AnalyzeContext>> { new SpamTestRule() };
-
-            var ct = new CancellationTokenSource();
-            ct.CancelAfter(TimeSpan.FromMilliseconds(100));
-
-            var context = new AnalyzeContext
-            {
-                Logger = logger,
-                Skimmers = skimmers,
-                CancellationToken = ct.Token,
-                TargetsProvider = new MultithreadedZipArchiveArtifactProvider(CreateTestZipArchive(), FileSystem.Instance),
-            };
-
-            // The rule will pause for 2000 ms giving us time to cancel;
-            context.Policy.SetProperty(TestRule.DelayInMilliseconds, 2000);
-            int result = new AnalyzeCommand().Run(options: null, ref context);
-
-            context.RuntimeExceptions.Should().NotBeNull();
-            context.RuntimeExceptions[0].Should().NotBeNull();
-            context.RuntimeExceptions[0].GetType().Should().Be(typeof(ExitApplicationException<ExitReason>));
-            context.RuntimeExceptions[0].InnerException.Should().NotBeNull();
-            context.RuntimeExceptions[0].InnerException.GetType().Should().Be(typeof(TaskCanceledException));
-
-            logger.ConfigurationNotifications.Should().NotBeNull();
-            logger.ConfigurationNotifications.Count.Should().Be(1);
-            logger.ConfigurationNotifications[0].Descriptor.Id.Should().Be("ERR999.AnalysisCanceled");
-
-            context.RuntimeErrors.HasFlag(RuntimeConditions.AnalysisCanceled).Should().BeTrue();
-            result.Should().Be(CommandBase.FAILURE);
+            CancelledExternallyHelper(iterations: 10, threads: 2);
         }
 
         [Fact]
-        public void AnalyzeCommand_AnalyzeFromContext_TimesOut()
+        public void AnalyzeCommand_AnalyzeFromContext_CancelledExternallySinglethreaded()
         {
-            var logger = new TestMessageLogger();
-            using ZipArchive archiveToAnalyze = CreateTestZipArchive();
-            var skimmers = new List<Skimmer<AnalyzeContext>> { new SpamTestRule() };
+            CancelledExternallyHelper(iterations: 10, threads: 1);
+        }
 
-            var context = new AnalyzeContext
+        private void CancelledExternallyHelper(int iterations, int threads)
+        {
+            using ZipArchive archive = CreateTestZipArchive();
+
+            for (int i = 0; i < iterations; i++)
             {
-                Logger = logger,
-                Skimmers = skimmers,
-                TargetsProvider = new MultithreadedZipArchiveArtifactProvider(CreateTestZipArchive(), FileSystem.Instance),
-                TimeoutInMilliseconds = 5,
-            };
+                var logger = new TestMessageLogger();
+                using ZipArchive archiveToAnalyze = CreateTestZipArchive();
+                var skimmers = new List<Skimmer<AnalyzeContext>> { new SpamTestRule() };
 
-            // The rule will pause for 100 ms, provoking our 5 ms timeout;
-            context.Policy.SetProperty(TestRule.DelayInMilliseconds, 100);
+                ArtifactProvider provider = (threads == 1)
+                    ? (ArtifactProvider)new SinglethreadedZipArchiveArtifactProvider(archive, FileSystem.Instance)
+                    : new MultithreadedZipArchiveArtifactProvider(archive, FileSystem.Instance);
 
-            int result = new AnalyzeCommand().Run(options: null, ref context);
-            (context.RuntimeErrors & RuntimeConditions.AnalysisTimedOut).Should().Be(RuntimeConditions.AnalysisTimedOut);
-            result.Should().Be(CommandBase.FAILURE);
+                var ct = new CancellationTokenSource();
+                ct.CancelAfter(TimeSpan.FromMilliseconds(10));
+
+                var context = new AnalyzeContext
+                {
+                    Logger = logger,
+                    Skimmers = skimmers,
+                    CancellationToken = ct.Token,
+                    Threads = threads,
+                    TargetsProvider = provider,
+                };
+
+                // The rule will pause for 100 ms giving us time to cancel;
+                context.Policy.SetProperty(TestRule.DelayInMilliseconds, 100);
+                int result = new AnalyzeCommand().Run(options: null, ref context);
+
+                context.RuntimeExceptions.Should().NotBeNull();
+                context.RuntimeExceptions[0].Should().NotBeNull();
+                context.RuntimeExceptions[0].GetType().Should().Be(typeof(ExitApplicationException<ExitReason>));
+                context.RuntimeExceptions[0].InnerException.Should().NotBeNull();
+                context.RuntimeExceptions[0].InnerException.GetType().Should().Be(typeof(TaskCanceledException));
+
+                logger.ConfigurationNotifications.Should().NotBeNull();
+                logger.ConfigurationNotifications.Count.Should().Be(1);
+                logger.ConfigurationNotifications[0].Descriptor.Id.Should().Be("ERR999.AnalysisCanceled");
+
+                context.RuntimeErrors.HasFlag(RuntimeConditions.AnalysisCanceled).Should().BeTrue();
+                result.Should().Be(CommandBase.FAILURE);
+            }
+        }
+
+        [Fact]
+        public void AnalyzeCommand_AnalyzeFromContext_TimesOutMultithreaded()
+        {
+            TimesOutHelper(iterations: 10, threads: 2);
+        }
+
+        [Fact]
+        public void AnalyzeCommand_AnalyzeFromContext_TimesOutSinglethreaded()
+        {
+            TimesOutHelper(iterations: 10, threads: 1);
+        }
+
+        private void TimesOutHelper(int iterations, int threads)
+        {
+            using ZipArchive archive = CreateTestZipArchive();
+
+            for (int i = 0; i < iterations; i++)
+            {
+                var logger = new TestMessageLogger();
+                var skimmers = new List<Skimmer<AnalyzeContext>> { new SpamTestRule() };
+
+                ArtifactProvider provider = (threads == 1)
+                    ? (ArtifactProvider)new SinglethreadedZipArchiveArtifactProvider(archive, FileSystem.Instance)
+                    : new MultithreadedZipArchiveArtifactProvider(archive, FileSystem.Instance);
+
+                var context = new AnalyzeContext
+                {
+                    Logger = logger,
+                    Skimmers = skimmers,
+                    Threads = threads,
+                    TargetsProvider = provider,
+                    TimeoutInMilliseconds = 5,
+                };
+
+                // The rule will pause for 100 ms, provoking our 5 ms timeout;
+                context.Policy.SetProperty(TestRule.DelayInMilliseconds, 100);
+
+                int result = new AnalyzeCommand().Run(options: null, ref context);
+                (context.RuntimeErrors & RuntimeConditions.AnalysisTimedOut).Should().Be(RuntimeConditions.AnalysisTimedOut);
+                result.Should().Be(CommandBase.FAILURE);
+            }
         }
 
         [Fact]
