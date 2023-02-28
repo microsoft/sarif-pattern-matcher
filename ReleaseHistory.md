@@ -18,7 +18,7 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## v4.0.0 Released 02/24/2023
+## v4.0.0 Released 02/27/2023
 - DEP: Update SARIF SDK submodule from [ec93dcc to b023883](https://github.com/microsoft/sarif-sdk/compare/ec93dcc..b023883). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/b023883/src/ReleaseHistory.md).
 - BUG: Eliminate `IndexOutOfRangeException` error invoking `Sarif.PatternMatcher.Cli.exe` with no arguments.
 - Re-enable `SEC101/029.AlibabaCloudCredentials` in `Security` removing AlibabaCloud SDK reference.
