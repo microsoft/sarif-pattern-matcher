@@ -42,8 +42,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             // code path in tests where an uninstantiated FileSystem object
             // causes a null dereference. All other tests for this area provide
             // a non-null file system object instance.
-            Program.GlobalContext.RuntimeException.Should().NotBeNull();
-            Program.GlobalContext.RuntimeException.GetType().Should().Be(typeof(FileNotFoundException));
+            Program.GlobalContext.RuntimeExceptions.Should().NotBeNull();
+            Program.GlobalContext.RuntimeExceptions[0].GetType().Should().Be(typeof(FileNotFoundException));
         }
 
         [Fact]

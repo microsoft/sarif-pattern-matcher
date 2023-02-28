@@ -295,7 +295,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             int result = Program.Main(args);
             Program.GlobalContext.RuntimeErrors.Should().Be(RuntimeConditions.ExceptionProcessingCommandline);
-            Program.GlobalContext.RuntimeException.Should().NotBeNull();
+            Program.GlobalContext.RuntimeExceptions.Should().NotBeNull();
             result.Should().Be(1);
         }
 
@@ -466,7 +466,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 };
 
                 int result = Program.Main(args);
-                Program.GlobalContext.RuntimeException.Should().BeNull();
+                Program.GlobalContext.RuntimeExceptions?[0].Should().BeNull();
                 Program.GlobalContext.RuntimeErrors.Should().Be(0);
                 result.Should().Be(0);
 

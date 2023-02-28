@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Compression;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
@@ -22,14 +23,34 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public virtual IEnumerable<IEnumeratedArtifact> Artifacts { get; set; }
 
         public ICollection<IEnumeratedArtifact> Skipped { get; set; }
+
         public IFileSystem FileSystem { get; set; }
     }
 
-    public class ZipArchiveArtifactProvider : ArtifactProvider
+    public class MultithreadedZipArchiveArtifactProvider : ArtifactProvider
+    {
+        public MultithreadedZipArchiveArtifactProvider(ZipArchive zipArchive, IFileSystem fileSystem) : base(fileSystem)
+        {
+            var artifacts = new List<IEnumeratedArtifact>();
+
+            foreach (ZipArchiveEntry entry in zipArchive.Entries)
+            {
+                artifacts.Add(new EnumeratedArtifact(Sarif.FileSystem.Instance)
+                {
+                    Uri = new Uri(entry.FullName, UriKind.RelativeOrAbsolute),
+                    Contents = new StreamReader(entry.Open()).ReadToEnd()
+                });
+            }
+
+            Artifacts = artifacts;
+        }
+    }
+
+    public class SinglethreadedZipArchiveArtifactProvider : ArtifactProvider
     {
         private readonly ZipArchive zipArchive;
 
-        public ZipArchiveArtifactProvider(ZipArchive zipArchive, IFileSystem fileSystem) : base(fileSystem)
+        public SinglethreadedZipArchiveArtifactProvider(ZipArchive zipArchive, IFileSystem fileSystem) : base(fileSystem)
         {
             this.zipArchive = zipArchive;
         }

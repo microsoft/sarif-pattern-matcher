@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 using CommandLine;
@@ -65,7 +66,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             {
                 Errors.LogUnhandledEngineException(GlobalContext, ex);
                 GlobalContext.RuntimeErrors |= RuntimeConditions.ExceptionProcessingCommandline;
-                GlobalContext.RuntimeException = ex;
+                GlobalContext.RuntimeExceptions ??= new List<Exception>();
+                GlobalContext.RuntimeExceptions.Add(ex);
                 return CommandBase.FAILURE;
             }
         }

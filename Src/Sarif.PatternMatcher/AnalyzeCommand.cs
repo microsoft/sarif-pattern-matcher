@@ -44,7 +44,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             set => this.tool = value;
         }
-  
+
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem,
                                                                                        IEnumerable<string> searchDefinitionsPaths,
                                                                                        Tool tool,

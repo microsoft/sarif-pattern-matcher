@@ -84,25 +84,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var skimmers = new List<Skimmer<AnalyzeContext>> { new SpamTestRule() };
 
             var ct = new CancellationTokenSource();
-            ct.CancelAfter(TimeSpan.FromMilliseconds(10));
+            ct.CancelAfter(TimeSpan.FromMilliseconds(100));
 
             var context = new AnalyzeContext
             {
                 Logger = logger,
                 Skimmers = skimmers,
                 CancellationToken = ct.Token,
-                TargetsProvider = new ZipArchiveArtifactProvider(CreateTestZipArchive(), FileSystem.Instance),
+                TargetsProvider = new MultithreadedZipArchiveArtifactProvider(CreateTestZipArchive(), FileSystem.Instance),
             };
 
-            // The rule will pause for 500 ms giving us time to cancel;
-            context.Policy.SetProperty(TestRule.DelayInMilliseconds, 500);
-
+            // The rule will pause for 2000 ms giving us time to cancel;
+            context.Policy.SetProperty(TestRule.DelayInMilliseconds, 2000);
             int result = new AnalyzeCommand().Run(options: null, ref context);
+
+            context.RuntimeExceptions.Should().NotBeNull();
+            context.RuntimeExceptions[0].Should().NotBeNull();
+            context.RuntimeExceptions[0].GetType().Should().Be(typeof(ExitApplicationException<ExitReason>));
+            context.RuntimeExceptions[0].InnerException.Should().NotBeNull();
+            context.RuntimeExceptions[0].InnerException.GetType().Should().Be(typeof(TaskCanceledException));
 
             logger.ConfigurationNotifications.Should().NotBeNull();
             logger.ConfigurationNotifications.Count.Should().Be(1);
             logger.ConfigurationNotifications[0].Descriptor.Id.Should().Be("ERR999.AnalysisCanceled");
-            
+
             context.RuntimeErrors.HasFlag(RuntimeConditions.AnalysisCanceled).Should().BeTrue();
             result.Should().Be(CommandBase.FAILURE);
         }
@@ -118,7 +123,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 Logger = logger,
                 Skimmers = skimmers,
-                TargetsProvider = new ZipArchiveArtifactProvider(CreateTestZipArchive(), FileSystem.Instance),
+                TargetsProvider = new MultithreadedZipArchiveArtifactProvider(CreateTestZipArchive(), FileSystem.Instance),
                 TimeoutInMilliseconds = 5,
             };
 
@@ -171,17 +176,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // Logger, rules and scan targets.
                 Logger = logger,
                 Skimmers = skimmers,
-                TargetsProvider = new ZipArchiveArtifactProvider(archiveToAnalyze, FileSystem.Instance),
+                TargetsProvider = new MultithreadedZipArchiveArtifactProvider(archiveToAnalyze, FileSystem.Instance),
 
                 // Execution configuration.
-                Threads = 2,
-                TimeoutInMilliseconds = 1000,
+                Threads = 20,
+                TimeoutInMilliseconds = 1000 * 60 * 2,
                 CancellationToken = default,
 
                 // Optional configuration for enriching output.
                 DataToInsert = OptionallyEmittedData.Hashes | OptionallyEmittedData.Guids,
 
-                Traces = new StringSet(new[] {nameof(DefaultTraces.ScanTime)}),
+                Traces = new StringSet(new[] { nameof(DefaultTraces.ScanTime) }),
             };
 
             // OPTIONAL: Turn off a badly behaved rule. You could
@@ -204,6 +209,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // a service incident here.
                 false.Should().BeTrue();
             }
+
+            context.RuntimeExceptions?[0].InnerException.Should().BeNull();
+            context.RuntimeExceptions.Should().BeNull();
 
             // Config notifications relate specifically to how you've configured analysis.
             // The scanner will emit a notification for every disabled check.
@@ -253,22 +261,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             var stream = new MemoryStream();
-            using (var populateArchive = new ZipArchive(stream, ZipArchiveMode.Update, leaveOpen: true))
+            using (var populateArchive = new ZipArchive(stream, ZipArchiveMode.Create, leaveOpen: true))
             {
-                ZipArchiveEntry entry = populateArchive.CreateEntry("error.txt");
-                using var errorWriter = new StreamWriter(entry.Open());
-                errorWriter.WriteLine($"Generates an error and an error for each of : {fooString}");
+                ZipArchiveEntry entry = populateArchive.CreateEntry("error.txt", CompressionLevel.NoCompression);
+                using (var errorWriter = new StreamWriter(entry.Open()))
+                {
+                    errorWriter.WriteLine($"Generates an error and an error for each of : {fooString}");
+                }
 
-                ZipArchiveEntry warningEntry = populateArchive.CreateEntry("warning.txt");
-                using var warningWriter = new StreamWriter(warningEntry.Open());
-                warningWriter.WriteLine($"Generates a warning and an error for each of : {fooString}");
+                ZipArchiveEntry warningEntry = populateArchive.CreateEntry("warning.txt", CompressionLevel.NoCompression);
+                using (var warningWriter = new StreamWriter(warningEntry.Open()))
+                {
+                    warningWriter.WriteLine($"Generates a warning and an error for each of : {fooString}");
+                }
 
-                ZipArchiveEntry noteEntry = populateArchive.CreateEntry("note.txt");
-                using var noteWriter = new StreamWriter(noteEntry.Open());
-                noteWriter.WriteLine($"Generates a note and an error for each of : {fooString}");
+                ZipArchiveEntry noteEntry = populateArchive.CreateEntry("note.txt", CompressionLevel.NoCompression);
+                using (var noteWriter = new StreamWriter(noteEntry.Open()))
+                {
+                    noteWriter.WriteLine($"Generates a note and an error for each of : {fooString}");
+                }
             }
-
+            stream.Flush();
             stream.Position = 0;
+
             return new ZipArchive(stream, ZipArchiveMode.Read); ;
         }
 
