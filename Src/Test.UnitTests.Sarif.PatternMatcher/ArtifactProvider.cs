@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Text;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
@@ -26,10 +27,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public IFileSystem FileSystem { get; set; }
     }
-
-    public class MultithreadedZipArchiveArtifactProvider : ArtifactProvider
+    
+    public class SinglethreadedZipArchiveArtifactProvider : ArtifactProvider
     {
-        public MultithreadedZipArchiveArtifactProvider(ZipArchive zipArchive, IFileSystem fileSystem) : base(fileSystem)
+        public SinglethreadedZipArchiveArtifactProvider(ZipArchive zipArchive, IFileSystem fileSystem) : base(fileSystem)
         {
             var artifacts = new List<IEnumeratedArtifact>();
 
@@ -46,11 +47,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
     }
 
-    public class SinglethreadedZipArchiveArtifactProvider : ArtifactProvider
+    public class MultithreadedZipArchiveArtifactProvider : ArtifactProvider
     {
         private readonly ZipArchive zipArchive;
 
-        public SinglethreadedZipArchiveArtifactProvider(ZipArchive zipArchive, IFileSystem fileSystem) : base(fileSystem)
+        public MultithreadedZipArchiveArtifactProvider(ZipArchive zipArchive, IFileSystem fileSystem) : base(fileSystem)
         {
             this.zipArchive = zipArchive;
         }
@@ -61,13 +62,72 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 foreach (ZipArchiveEntry entry in this.zipArchive.Entries)
                 {
-                    yield return new EnumeratedArtifact(Sarif.FileSystem.Instance)
-                    {
-                        Uri = new Uri(entry.FullName, UriKind.RelativeOrAbsolute),
-                        Stream = entry.Open()
-                    };
+                    yield return new ZipArchiveArtifact(this.zipArchive, entry);
                 }
             }
+        }
+    }
+
+    public class ZipArchiveArtifact : IEnumeratedArtifact
+    {
+        private ZipArchiveEntry entry;
+        private readonly ZipArchive archive;
+        private readonly Uri uri;
+        private string contents;
+
+        public ZipArchiveArtifact(ZipArchive archive, ZipArchiveEntry entry)
+        {
+            this.entry = entry;
+            this.archive = archive;
+            this.uri = new Uri(entry.FullName, UriKind.RelativeOrAbsolute);
+        }
+
+        public Uri Uri => this.uri;
+
+        public Stream Stream { 
+            get
+            { 
+                lock (this.archive)
+                {
+                    return entry != null
+                        ? entry.Open()
+                        : null;
+                }
+            }
+            set => throw new NotImplementedException(); 
+        }
+
+        public Encoding Encoding { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public string Contents
+        {
+            get
+            {
+                lock (this.archive)
+                {
+                    if (this.contents != null) { return this.contents; }
+                    this.contents = new StreamReader(Stream).ReadToEnd();
+                    this.entry = null;
+                    return this.contents;
+                }
+            }
+            set => throw new NotImplementedException();
+        }
+
+        public ulong? SizeInBytes 
+        { 
+            get
+            {
+                lock (this.archive)
+                {
+                    if (Stream != null)
+                    {
+                        return (ulong)Stream.Length;
+                    }
+                    return (ulong)this.contents.Length;
+                }
+            }
+            set => throw new NotImplementedException(); 
         }
     }
 }
