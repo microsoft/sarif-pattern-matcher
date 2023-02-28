@@ -65,7 +65,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     yield return new EnumeratedArtifact(Sarif.FileSystem.Instance)
                     {
                         Uri = new Uri(entry.FullName, UriKind.RelativeOrAbsolute),
-                        Stream = entry.Open()
+                        Contents = new StreamReader(entry.Open()).ReadToEnd(),
                     };
                 }
             }
@@ -113,7 +113,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             { 
                 lock (this.archive)
                 {
-                    return entry.Open();
+                    return entry != null
+                        ? entry.Open()
+                        : null;
                 }
             }
             set => throw new NotImplementedException(); 
@@ -129,7 +131,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     if (this.contents != null) { return this.contents; }
                     this.contents = new StreamReader(Stream).ReadToEnd();
-                    Stream = null;
+                    this.entry = null;
                     return this.contents;
                 }
             }

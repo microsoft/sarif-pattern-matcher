@@ -267,6 +267,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 RuntimeConditions.OneOrMoreWarningsFired |
                 RuntimeConditions.OneOrMoreErrorsFired;
 
+            context.RuntimeExceptions.Should().BeNull();
             context.RuntimeErrors.Should().Be(conditions);
             result.Should().Be(CommandBase.SUCCESS);
 
