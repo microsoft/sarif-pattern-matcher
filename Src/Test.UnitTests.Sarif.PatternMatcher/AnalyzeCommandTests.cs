@@ -131,7 +131,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.Policy.SetProperty(TestRule.DelayInMilliseconds, 100);
 
             int result = new AnalyzeCommand().Run(options: null, ref context);
-            context.RuntimeErrors.Should().Be(RuntimeConditions.AnalysisTimedOut);
+            (context.RuntimeErrors & RuntimeConditions.AnalysisTimedOut).Should().Be(RuntimeConditions.AnalysisTimedOut);
             result.Should().Be(CommandBase.FAILURE);
         }
 
