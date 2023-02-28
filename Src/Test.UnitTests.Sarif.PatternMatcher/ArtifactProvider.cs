@@ -94,7 +94,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
     public class ZipArchiveArtifact : IEnumeratedArtifact
     {
-        private readonly ZipArchiveEntry entry;
+        private ZipArchiveEntry entry;
         private readonly ZipArchive archive;
         private readonly Uri uri;
         private string contents;
