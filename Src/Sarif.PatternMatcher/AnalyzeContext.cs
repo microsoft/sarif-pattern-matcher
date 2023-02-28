@@ -9,49 +9,40 @@ using Microsoft.Strings.Interop;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
-    public class AnalyzeContext : IAnalysisContext
+    public class AnalyzeContext : AnalyzeContextBase
     {
         public AnalyzeContext()
         {
             // Any file is a candidate for regex-driven search.
             // The actual applicability of a file for a specific
             // search definition is governed by its name/extension.
+            FileRegionsCache = null;
             IsValidAnalysisTarget = true;
         }
 
+        public StringSet SearchDefinitionsPaths { get; set; }
+
         public bool RedactSecrets { get; set; }
+
+        public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
 
         public IDictionary<int, string> RollingHashMap { get; set; }
 
-        public Exception TargetLoadException { get; set; }
+        public override bool AnalysisComplete { get; set; }
 
-        public bool IsValidAnalysisTarget { get; set; }
+        public bool DynamicValidation
+        {
+            get => this.Policy.GetProperty(DynamicValidationProperty);
+            set => this.Policy.SetProperty(DynamicValidationProperty, value);
+        }
 
-        public IAnalysisLogger Logger { get; set; }
-
-        public ReportingDescriptor Rule { get; set; }
-
-        public PropertiesDictionary Policy { get; set; }
-
-        public string MimeType { get; set; }
-
-        public HashData Hashes { get; set; }
-
-        public RuntimeConditions RuntimeErrors { get; set; }
-
-        public Uri TargetUri { get; set; }
-
-        public FlexString FileContents { get; set; }
-
-        public bool AnalysisComplete { get; set; }
-
-        public DefaultTraces Traces { get; set; }
-
-        public bool DynamicValidation { get; set; }
+        public long MaxMemoryInKilobytes
+        {
+            get => this.Policy.GetProperty(MaxMemoryInKilobytesProperty);
+            set => this.Policy.SetProperty(MaxMemoryInKilobytesProperty, value >= 0 ? value : MaxFileSizeInKilobytesProperty.DefaultValue());
+        }
 
         public string GlobalFileDenyRegex { get; set; }
-
-        public long MaxFileSizeInKilobytes { get; set; } = 10000;
 
         public bool DisableDynamicValidationCaching { get; set; }
 
@@ -59,11 +50,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public bool Retry { get; set; }
 
-        public long MaxMemoryInKilobytes { get; set; } = -1;
-
         public FileRegionsCache FileRegionsCache { get; set; }
-
-        public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
 
         /// <summary>
         /// Gets or sets a hashset that stores observed fingerprints in the
@@ -72,13 +59,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// credential.
         /// </summary>
         public HashSet<string> ObservedFingerprintCache { get; set; }
-
-        /// <summary>
-        /// Gets or sets flags that specify how region data should be
-        /// constructed (for example if comprehensive regions properties
-        /// should be computed).
-        /// </summary>
-        public OptionallyEmittedData DataToInsert { get; set; }
 
         /// <summary>
         /// Gets or sets a dictionary linking file text with
@@ -90,8 +70,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public Dictionary<string, Tuple<String8, byte[], int[]>> TextToRE2DataMap;
 
-        public void Dispose()
+        public override void Dispose()
         {
+            base.Dispose();
+
             FileRegionsCache?.ClearCache();
             FileRegionsCache = null;
 
@@ -104,5 +86,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             RollingHashMap?.Clear();
             RollingHashMap = null;
         }
+
+        public static PerLanguageOption<bool> DynamicValidationProperty =>
+            new PerLanguageOption<bool>(
+                "CoreSettings", nameof(DynamicValidation), defaultValue: () => false,
+                "Specifies whether to invoke rule dynamic validation, when available.");
+
+        public static PerLanguageOption<long> MaxMemoryInKilobytesProperty =>
+            new PerLanguageOption<long>(
+                "CoreSettings", nameof(MaxMemoryInKilobytes), defaultValue: () => 5096,
+                "An upper bound on the size of the RE2 DFA cache. When the cache size exceeds this " +
+                "limit RE2 will fallback to an alternate (much less performant) search mechanism. " +
+                "Negative values will be discarded in favor of the default of 5096 KB.");
+
+        public static PerLanguageOption<StringSet> SearchDefinitionsPathsProperty { get; } =
+                    new PerLanguageOption<StringSet>(
+                        "CoreSettings", nameof(SearchDefinitionsPaths), defaultValue: () => new StringSet(),
+                        "One or more paths to files containing one or more search definitions to drive analysis.");
+
     }
 }

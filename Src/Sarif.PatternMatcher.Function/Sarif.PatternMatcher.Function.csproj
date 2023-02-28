@@ -39,6 +39,12 @@
     <RuleFiles Include="$(OutDir)SEC*.json" />
     <SecurityTextFile Include="$(OutDir)Security.SharedStrings.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
   <Target Name="CopyFilesAfterBuild" AfterTargets="AfterBuild">
     <Copy SourceFiles="@(RuleFiles)" DestinationFolder="$(OutDir)\bin\" />
     <Copy SourceFiles="@(SecurityTextFile)" DestinationFolder="$(OutDir)\bin\" />

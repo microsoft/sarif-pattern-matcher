@@ -11,6 +11,7 @@ using System.Text;
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
+using Microsoft.TeamFoundation.SourceControl.WebApi.Legacy;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
@@ -166,10 +167,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             {
                 skimmers ??= AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, s_configurationFiles, tool);
 
+                var target = new EnumeratedArtifact(FileSystem)
+                {
+                    Uri = new Uri(scanContext.SourceContext.ResourceName, UriKind.RelativeOrAbsolute),
+                    Contents = resourceContent,
+                };
+
                 var context = new AnalyzeContext
                 {
-                    TargetUri = new Uri(scanContext.SourceContext.ResourceName, UriKind.RelativeOrAbsolute),
-                    FileContents = resourceContent,
+                    CurrentTarget = target,
                     Logger = logger,
                 };
 
@@ -238,8 +244,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         private void TimeScanFileWithSkimmers(string filePath, ISet<Skimmer<AnalyzeContext>> skimmers)
         {
             string resourceContent = fileSystem.FileReadAllText(filePath);
-            long fileSizeInBytes = fileSystem.FileInfoLength(filePath);
-            int milliSecondTimeout = 60000;
 
             var timer = new Stopwatch();
             timer.Start();
@@ -248,11 +252,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             {
                 var logger = new AdoLogger();
 
+                var target = new EnumeratedArtifact(FileSystem)
+                {
+                    Uri = new Uri(filePath, UriKind.RelativeOrAbsolute),
+                    Contents = resourceContent,
+                };
+
                 // Set up Context
                 var context = new AnalyzeContext
                 {
-                    TargetUri = new Uri(filePath, UriKind.RelativeOrAbsolute),
-                    FileContents = resourceContent,
+                    CurrentTarget = target,
                     Logger = logger,
                     FileRegionsCache = new FileRegionsCache(),
                 };

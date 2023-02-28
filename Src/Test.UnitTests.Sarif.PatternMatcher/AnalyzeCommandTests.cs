@@ -4,11 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 using CommandLine;
+
+using CsvHelper;
 
 using FluentAssertions;
 
@@ -47,6 +52,280 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
+        public void AnalyzeCommand_AnalyzeFromContextNoRulesProvided()
+        {
+            var emptySkimmers = new List<Skimmer<AnalyzeContext>>();
+
+            var target = new EnumeratedArtifact(FileSystem.Instance)
+            {
+                Uri = new Uri(@"c:\test.txt"),
+                Contents = string.Empty
+            };
+
+            foreach (List<Skimmer<AnalyzeContext>> skimmers in new[] { null, emptySkimmers })
+            {
+                var context = new AnalyzeContext
+                {
+                    Logger = new TestMessageLogger(),
+                    CurrentTarget = target,
+                    Skimmers = skimmers,
+                };
+
+                new AnalyzeCommand().Run(options: null, ref context);
+                context.RuntimeErrors.Should().Be(RuntimeConditions.NoRulesLoaded);
+            }
+        }
+
+        [Fact]
+        public void AnalyzeCommand_AnalyzeFromContext_CancelledExternally()
+        {
+            var logger = new TestMessageLogger();
+            using ZipArchive archiveToAnalyze = CreateTestZipArchive();
+            var skimmers = new List<Skimmer<AnalyzeContext>> { new SpamTestRule() };
+
+            var ct = new CancellationTokenSource();
+            ct.CancelAfter(TimeSpan.FromMilliseconds(100));
+
+            var context = new AnalyzeContext
+            {
+                Logger = logger,
+                Skimmers = skimmers,
+                CancellationToken = ct.Token,
+                TargetsProvider = new MultithreadedZipArchiveArtifactProvider(CreateTestZipArchive(), FileSystem.Instance),
+            };
+
+            // The rule will pause for 2000 ms giving us time to cancel;
+            context.Policy.SetProperty(TestRule.DelayInMilliseconds, 2000);
+            int result = new AnalyzeCommand().Run(options: null, ref context);
+
+            context.RuntimeExceptions.Should().NotBeNull();
+            context.RuntimeExceptions[0].Should().NotBeNull();
+            context.RuntimeExceptions[0].GetType().Should().Be(typeof(ExitApplicationException<ExitReason>));
+            context.RuntimeExceptions[0].InnerException.Should().NotBeNull();
+            context.RuntimeExceptions[0].InnerException.GetType().Should().Be(typeof(TaskCanceledException));
+
+            logger.ConfigurationNotifications.Should().NotBeNull();
+            logger.ConfigurationNotifications.Count.Should().Be(1);
+            logger.ConfigurationNotifications[0].Descriptor.Id.Should().Be("ERR999.AnalysisCanceled");
+
+            context.RuntimeErrors.HasFlag(RuntimeConditions.AnalysisCanceled).Should().BeTrue();
+            result.Should().Be(CommandBase.FAILURE);
+        }
+
+        [Fact]
+        public void AnalyzeCommand_AnalyzeFromContext_TimesOut()
+        {
+            var logger = new TestMessageLogger();
+            using ZipArchive archiveToAnalyze = CreateTestZipArchive();
+            var skimmers = new List<Skimmer<AnalyzeContext>> { new SpamTestRule() };
+
+            var context = new AnalyzeContext
+            {
+                Logger = logger,
+                Skimmers = skimmers,
+                TargetsProvider = new MultithreadedZipArchiveArtifactProvider(CreateTestZipArchive(), FileSystem.Instance),
+                TimeoutInMilliseconds = 5,
+            };
+
+            // The rule will pause for 100 ms, provoking our 5 ms timeout;
+            context.Policy.SetProperty(TestRule.DelayInMilliseconds, 100);
+
+            int result = new AnalyzeCommand().Run(options: null, ref context);
+            (context.RuntimeErrors & RuntimeConditions.AnalysisTimedOut).Should().Be(RuntimeConditions.AnalysisTimedOut);
+            result.Should().Be(CommandBase.FAILURE);
+        }
+
+        [Fact]
+        public void AnalyzeCommand_AnalyzeFromContext_RetrievedFromZippedContent()
+        {
+            var badlyBehavedRule = new BadlyBehavedRule();
+
+            // Initialize a logger to receive callbacks for all results, notifications, etc.
+            var logger = new TestMessageLogger();
+
+            // Initialize and manage a set of skimmers to apply to every scan targets.
+            var skimmers = new List<Skimmer<AnalyzeContext>>
+            {
+                new SpamTestRule(),
+                badlyBehavedRule,
+            };
+
+            // Retrieve the zip archive with all scan targets.
+            using ZipArchive archiveToAnalyze = CreateTestZipArchive();
+
+            /* We will use a special zip archive enumerator below. But here's
+             * how you could create a provider manually using a generic pattern.
+             *
+                var enumeratedArtifacts = new List<EnumeratedArtifact>();
+
+                foreach (ZipArchiveEntry entry in archiveToAnalyze.Entries)
+                {
+                    enumeratedArtifacts.Add(new EnumeratedArtifact
+                    {
+                        Uri = new Uri(entry.FullName, UriKind.RelativeOrAbsolute),
+                        Stream = entry.Open()
+                    });
+                }
+                var unusedArtifactsProvider = new ArtifactProvider(enumeratedArtifacts);
+            *
+            */
+
+            // Initialize an 'analyze command context' object that holds all config.
+            var context = new AnalyzeContext
+            {
+                // Logger, rules and scan targets.
+                Logger = logger,
+                Skimmers = skimmers,
+                TargetsProvider = new MultithreadedZipArchiveArtifactProvider(archiveToAnalyze, FileSystem.Instance),
+
+                // Execution configuration.
+                Threads = 20,
+                TimeoutInMilliseconds = 1000 * 60 * 2,
+                CancellationToken = default,
+
+                // Optional configuration for enriching output.
+                DataToInsert = OptionallyEmittedData.Hashes | OptionallyEmittedData.Guids,
+
+                Traces = new StringSet(new[] { nameof(DefaultTraces.ScanTime) }),
+            };
+
+            // OPTIONAL: Turn off a badly behaved rule. You could
+            //           also simply omit it from the skimmers set.
+            PerLanguageOption<RuleEnabledState> ruleEnabledProperty =
+                DefaultDriverOptions.CreateRuleSpecificOption(badlyBehavedRule, DefaultDriverOptions.RuleEnabled);
+
+            context.Policy.SetProperty(ruleEnabledProperty, RuleEnabledState.Disabled);
+
+            // Perform the analysis. 
+            int result = CommandBase.FAILURE;
+            try
+            {
+                result = new AnalyzeCommand().Run(options: null, ref context);
+            }
+            catch (Exception)
+            {
+                // This code path should never get hit. It indicates a catastrophic condition
+                // in the scanner. We could log this and generate telemetry for creating 
+                // a service incident here.
+                false.Should().BeTrue();
+            }
+
+            context.RuntimeExceptions?[0].InnerException.Should().BeNull();
+            context.RuntimeExceptions.Should().BeNull();
+
+            // Config notifications relate specifically to how you've configured analysis.
+            // The scanner will emit a notification for every disabled check.
+            logger.ConfigurationNotifications.Should().NotBeNull();
+            logger.ConfigurationNotifications.Count.Should().Be(1);
+            logger.ConfigurationNotifications[0].Descriptor.Id.Should().Be("WRN999.RuleExplicitlyDisabled");
+
+            // Rule disablement is also reflected as a bit in our return value.
+
+            RuntimeConditions conditions =
+                RuntimeConditions.RuleWasExplicitlyDisabled |
+                RuntimeConditions.OneOrMoreWarningsFired |
+                RuntimeConditions.OneOrMoreErrorsFired;
+
+            context.RuntimeErrors.Should().Be(conditions);
+            result.Should().Be(CommandBase.SUCCESS);
+
+            /* Here's how it looks for an entirely clean run.
+             * 
+             *      context.RuntimeErrors.Should().Be(CommandBase.SUCCESS);
+             *      
+             */
+
+            int expectedResultsCount = DEFAULT_TARGETS_COUNT + (DEFAULT_FOO_COUNT * ALL_TARGETS_COUNT);
+            logger.Results.Count.Should().Be(expectedResultsCount);
+        }
+
+        // We create one each of scan targets named in a way to produce an error,
+        // a warning, and a note. The default configuration enables errors/warnings only.
+        private const int NOTE_TARGETS = 1;
+        private const int WARN_TARGETS = 1;
+        private const int ERROR_TARGETS = 1;
+        private const int DEFAULT_TARGETS_COUNT = ERROR_TARGETS + WARN_TARGETS;
+        private const int ALL_TARGETS_COUNT = ERROR_TARGETS + WARN_TARGETS + NOTE_TARGETS;
+
+        // A default # of 'foo' tokens in each scan target, each of which will generate an error.
+        private const int DEFAULT_FOO_COUNT = 2;
+
+        private static ZipArchive CreateTestZipArchive(int fooInstancesPerTarget = DEFAULT_FOO_COUNT)
+        {
+            const string FOO = " foo ";
+
+            var fooString = new StringBuilder();
+            for (int i = 0; i < fooInstancesPerTarget; i++)
+            {
+                fooString.Append(FOO);
+            }
+
+            var stream = new MemoryStream();
+            using (var populateArchive = new ZipArchive(stream, ZipArchiveMode.Create, leaveOpen: true))
+            {
+                ZipArchiveEntry entry = populateArchive.CreateEntry("error.txt", CompressionLevel.NoCompression);
+                using (var errorWriter = new StreamWriter(entry.Open()))
+                {
+                    errorWriter.WriteLine($"Generates an error and an error for each of : {fooString}");
+                }
+
+                ZipArchiveEntry warningEntry = populateArchive.CreateEntry("warning.txt", CompressionLevel.NoCompression);
+                using (var warningWriter = new StreamWriter(warningEntry.Open()))
+                {
+                    warningWriter.WriteLine($"Generates a warning and an error for each of : {fooString}");
+                }
+
+                ZipArchiveEntry noteEntry = populateArchive.CreateEntry("note.txt", CompressionLevel.NoCompression);
+                using (var noteWriter = new StreamWriter(noteEntry.Open()))
+                {
+                    noteWriter.WriteLine($"Generates a note and an error for each of : {fooString}");
+                }
+            }
+            stream.Flush();
+            stream.Position = 0;
+
+            return new ZipArchive(stream, ZipArchiveMode.Read); ;
+        }
+
+        [Fact]
+        public void AnalyzeCommand_AnalyzeFromContext_EnumeratedArtifact()
+        {
+            var logger = new TestMessageLogger();
+            var skimmers = new List<Skimmer<AnalyzeContext>>
+            {
+                new SpamTestRule()
+            };
+
+            const string FOO = " foo ";
+            string[] fooInstances = { FOO, FOO, FOO };
+            string fooString = string.Join(' ', fooInstances);
+
+            var artifacts = new EnumeratedArtifact[]
+            {
+                new EnumeratedArtifact(FileSystem.Instance)
+                {
+                    Uri = new Uri("c:\\FireOneWarning.txt", UriKind.Absolute),
+                    Contents = $"Will fire a single warning due to the file name. " +
+                           $"Will fire two errors due to this content: {fooString}.",
+                }
+            };
+
+            var artifactProvider = new ArtifactProvider(artifacts);
+
+            var context = new AnalyzeContext
+            {
+                Logger = logger,
+                Skimmers = skimmers,
+                TargetsProvider = artifactProvider,
+            };
+
+            int result = new AnalyzeCommand().Run(options: null, ref context);
+            result.Should().Be(AnalyzeCommand.SUCCESS);
+            context.RuntimeErrors.Should().Be(RuntimeConditions.OneOrMoreErrorsFired | RuntimeConditions.OneOrMoreWarningsFired);
+            logger.Results.Count.Should().Be(artifacts.Length + fooInstances.Length);
+        }
+
+        [Fact]
         public void AnalyzeCommand_SimpleAnalysis()
         {
             var regexList = new List<IRegex>
@@ -58,7 +337,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (IRegex regex in regexList)
             {
-                AnalyzeCommand(regex);
+                RunAnalyzeCommand(regex);
             }
         }
 
@@ -96,7 +375,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 tool,
                 RE2Regex.Instance);
 
-            var target = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute);
+            var targetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute);
 
             var sb = new StringBuilder();
             using var writer = new StringWriter(sb);
@@ -104,14 +383,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                               dataToInsert: OptionallyEmittedData.RegionSnippets | OptionallyEmittedData.Hashes,
                                               run: new Run() { Tool = tool })
             {
-                ComputeHashData = (uri) => uri == target ? HashUtilities.ComputeHashesForText(fileContents) : null
+                ComputeHashData = (uri) => uri == targetUri ? HashUtilities.ComputeHashesForText(fileContents) : null
+            };
+
+            var target = new EnumeratedArtifact(FileSystem.Instance)
+            {
+                Uri = targetUri,
+                Contents = fileContents,
             };
 
             var context = new AnalyzeContext()
             {
-                TargetUri = target,
+                CurrentTarget = target,
                 DataToInsert = OptionallyEmittedData.Hashes,
-                FileContents = fileContents,
                 Logger = sarifLogger,
             };
 
@@ -189,10 +473,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
+            {
+                Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                Contents = fileContents,
+            };
+
             var context = new AnalyzeContext()
             {
-                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
-                FileContents = fileContents,
+                CurrentTarget = target,
                 Logger = testLogger,
             };
 
@@ -260,10 +549,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
+            var target = new EnumeratedArtifact(FileSystem.Instance)
+            {
+                Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                Contents = fileContents,
+            };
+
             var context = new AnalyzeContext()
             {
-                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
-                FileContents = fileContents,
+                CurrentTarget = target,
                 Logger = testLogger,
             };
 
@@ -495,19 +789,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var writer = new StringWriter(sb);
 
             var logger = new SarifLogger(writer,
-                                         LogFilePersistenceOptions.None,
+                                         FilePersistenceOptions.None,
                                          OptionallyEmittedData.All,
                                          run: run,
                                          closeWriterOnDispose: true);
 
+            var target = new EnumeratedArtifact(FileSystem.Instance)
+            {
+                Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                Contents = fileContents,
+            };
 
             using var context = new AnalyzeContext()
             {
                 Logger = logger,
                 RedactSecrets = true,
-                FileContents = fileContents,
+                CurrentTarget = target,
                 DataToInsert = OptionallyEmittedData.All,
-                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
             };
 
             var disabledSkimmers = new HashSet<string>();
@@ -611,10 +909,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
+            {
+                Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                Contents = fileContents,
+            };
+
             var context = new AnalyzeContext()
             {
-                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
-                FileContents = fileContents,
+                CurrentTarget = target,
                 Logger = testLogger,
             };
 
@@ -643,16 +946,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var run = new Run { Tool = Tool.CreateFromAssemblyData() };
 
             var logger = new SarifLogger(writer,
-                                         LogFilePersistenceOptions.None,
+                                         FilePersistenceOptions.None,
                                          dataToInsert,
                                          run: run,
                                          closeWriterOnDispose: false);
 
+            var target = new EnumeratedArtifact(FileSystem.Instance)
+            {
+                Uri = new Uri($"/notreeindex/{Guid.NewGuid()}.test", UriKind.Relative),
+                Contents = "foo",
+            };
+
             using var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"/notreeindex/{Guid.NewGuid()}.test", UriKind.Relative),
-                FileContents = "foo",
                 Logger = logger,
+                CurrentTarget = target,
                 DataToInsert = dataToInsert,
                 FileRegionsCache = new FileRegionsCache(),
             };
@@ -732,30 +1040,35 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return skimmers;
         }
 
-        private static void AnalyzeCommand(IRegex engine)
+        private static void RunAnalyzeCommand(IRegex engine)
         {
             var testLogger = new TestLogger();
-            var disabledSkimmers = new HashSet<string>();
 
             var tool = Tool.CreateFromAssemblyData();
 
             ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmers(engine, tool);
 
-            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
-            FlexString fixedFileContents = "bar bar bar";
+            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
 
-            var context = new AnalyzeContext()
+            var targetsProvider = new ArtifactProvider(new[] {
+            new EnumeratedArtifact(FileSystem.Instance)
             {
-                TargetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
-                FileContents = fileContents,
+                Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                Contents = fileContents,
+            } });
+
+            var context = new AnalyzeContext
+            {
                 Logger = testLogger,
+                Skimmers = skimmers,
+                TargetsProvider = targetsProvider,
+                TimeoutInMilliseconds = int.MaxValue,
             };
 
-            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
+            new AnalyzeCommand().Run(options: null, ref context);
 
-            PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
-
+            (context.RuntimeErrors & ~RuntimeConditions.Nonfatal).Should().Be(0);
             testLogger.Results.Should().NotBeNull();
             testLogger.Results.Count.Should().Be(2);
 
@@ -803,12 +1116,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             string scanTargetFileName = Path.Combine(Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
-            FlexString fixedFileContents = "bar bar bar";
+
+            var target = new EnumeratedArtifact(FileSystem.Instance)
+            {
+                Uri = new Uri(scanTargetFileName, UriKind.Relative),
+                Contents = fileContents,
+            };
 
             var context = new AnalyzeContext()
             {
-                TargetUri = new Uri(scanTargetFileName, UriKind.Relative),
-                FileContents = fileContents,
+                CurrentTarget = target,
                 Logger = testLogger,
             };
 

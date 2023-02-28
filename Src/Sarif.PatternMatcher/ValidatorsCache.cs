@@ -90,7 +90,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var results = new List<ValidationResult>();
             combinations ??= GetCombinations(mergedGroups);
 
-            string filePath = context.TargetUri.GetFilePath();
+            string filePath = context.CurrentTarget.Uri.GetFilePath();
             var flexMatchProperties = new Dictionary<string, FlexMatch>();
             flexMatchProperties.AddProperties(properties);
             flexMatchProperties["scanTargetFullPath"] = new FlexMatch { Value = filePath };
@@ -177,9 +177,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // This condition occurs in cases when a regex does not provide a group that
                 // maps to a fingerprint member. This is the case for binary detections, i.e.,
                 // analysis that is simply looking for specific file kinds.
-                if (validationResult.Fingerprint == default && context.TargetUri.IsAbsoluteUri)
+                if (validationResult.Fingerprint == default && context.CurrentTarget.Uri.IsAbsoluteUri)
                 {
-                    string secret = HashUtilities.ComputeSha256Hash(context.TargetUri.LocalPath);
+                    string secret = HashUtilities.ComputeSha256Hash(context.CurrentTarget.Uri.GetFilePath());
 
                     // If we have no static analysis validator, the file itself
                     // is the sensitive asset, and so we will use the hash as the id.

@@ -2,80 +2,79 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 using CommandLine;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.Writers;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
     internal static class Program
     {
         [ThreadStatic]
-        internal static IFileSystem FileSystem;
-
-        [ThreadStatic]
-        internal static Exception RuntimeException;
-
-        [ThreadStatic]
-        internal static AnalyzeCommand InstantiatedAnalyzeCommand;
+        internal static AnalyzeContext GlobalContext;
 
         internal static int Main(string[] args)
         {
-            Console.OutputEncoding = Encoding.UTF8;
-
             try
             {
-                args = EntryPointUtilities.GenerateArguments(args, FileSystem ?? new FileSystem(), new EnvironmentVariables());
+                Console.OutputEncoding = Encoding.UTF8;
+                GlobalContext ??= new AnalyzeContext();
+
+                // TBD FileSystem.Instance??
+                GlobalContext.FileSystem ??= new FileSystem();
+
+                // TBD Environment variables to context
+                args = EntryPointUtilities.GenerateArguments(args, GlobalContext.FileSystem, new EnvironmentVariables());
                 args = RewriteArgs(args);
+
+                bool isValidHelpCommand =
+                    args.Length > 0 &&
+                    args[0] == "help" &&
+                    ((args.Length == 2 && IsValidVerbName(args[1])) || args.Length == 1);
+
+                bool isVersionCommand = args.Length == 1 && args[0] == "version";
+
+                isVersionCommand = args[0] == "version";
+
+                return Parser.Default.ParseArguments<
+                    AnalyzeOptions,
+                    AnalyzeDatabaseOptions,
+                    ExportConfigurationOptions,
+                    ExportRulesMetatadaOptions,
+                    ExportSearchDefinitionsOptions,
+                    ImportAndAnalyzeOptions,
+                    StressOptions,
+                    ValidateOptions>(args)
+                  .MapResult(
+                    (AnalyzeOptions options) => new AnalyzeCommand().Run(options, ref GlobalContext),
+                    (AnalyzeDatabaseOptions options) => new AnalyzeDatabaseCommand().Run(options),
+                    (ExportConfigurationOptions options) => new ExportConfigurationCommand().Run(options),
+                    (ExportRulesMetatadaOptions options) => new ExportRulesMetatadaCommand().Run(options),
+                    (ExportSearchDefinitionsOptions options) => new ExportSearchDefinitionsCommand().Run(options),
+                    (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),
+                    (StressOptions options) => new StressCommand().Run(options),
+                    (ValidateOptions options) => new ValidateCommand().Run(options),
+                    _ => isValidHelpCommand || isVersionCommand
+                            ? CommandBase.SUCCESS
+                            : CommandBase.FAILURE);
             }
             catch (Exception ex)
             {
-                RuntimeException = ex;
-                Console.WriteLine(ex.ToString());
+                Errors.LogUnhandledEngineException(GlobalContext, ex);
+                GlobalContext.RuntimeErrors |= RuntimeConditions.ExceptionProcessingCommandline;
+                GlobalContext.RuntimeExceptions ??= new List<Exception>();
+                GlobalContext.RuntimeExceptions.Add(ex);
                 return CommandBase.FAILURE;
             }
-
-            bool isValidHelpCommand =
-                args.Length > 0 &&
-                args[0] == "help" &&
-                ((args.Length == 2 && IsValidVerbName(args[1])) || args.Length == 1);
-
-            bool isVersionCommand = args[0] == "version" && args.Length == 1;
-
-            return Parser.Default.ParseArguments<
-                AnalyzeOptions,
-                AnalyzeDatabaseOptions,
-                ExportRulesMetatadaOptions,
-                ExportSearchDefinitionsOptions,
-                ImportAndAnalyzeOptions,
-                StressOptions,
-                ValidateOptions>(args)
-              .MapResult(
-                (AnalyzeOptions options) => RunAnalyzeCommand(options),
-                (AnalyzeDatabaseOptions options) => new AnalyzeDatabaseCommand().Run(options),
-                (ExportRulesMetatadaOptions options) => new ExportRulesMetatadaCommand().Run(options),
-                (ExportSearchDefinitionsOptions options) => new ExportSearchDefinitionsCommand().Run(options),
-                (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),
-                (StressOptions options) => new StressCommand().Run(options),
-                (ValidateOptions options) => new ValidateCommand().Run(options),
-                _ => isValidHelpCommand || isVersionCommand
-                        ? CommandBase.SUCCESS
-                        : CommandBase.FAILURE);
         }
 
         internal static void ClearUnitTestData()
         {
-            FileSystem = null;
-            RuntimeException = null;
-            InstantiatedAnalyzeCommand = null;
-        }
-
-        internal static int RunAnalyzeCommand(AnalyzeOptions options)
-        {
-            InstantiatedAnalyzeCommand = new AnalyzeCommand(fileSystem: FileSystem);
-            return InstantiatedAnalyzeCommand.Run(options);
+            GlobalContext = null;
         }
 
         private static bool IsValidVerbName(string verb)
