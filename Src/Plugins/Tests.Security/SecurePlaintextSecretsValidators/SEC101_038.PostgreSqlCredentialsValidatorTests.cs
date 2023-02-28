@@ -33,5 +33,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                                                                                                   ref resultLevelKind);
             Assert.Equal(ExpectedValidationState, actualValidationState);
         }
+
+        [Fact]
+        public void PostgreSqlCredentialsValidator_DebugFingerprint()
+        {
+            string fingerprintText = "[host=place.location.com][id=database][secret=password]";
+            string message = "";
+            ResultLevelKind resultLevelKind = default;
+            var options = new Dictionary<string, string>();
+            var fingerprint = new Fingerprint(fingerprintText);
+
+            ValidationState expectedState = ValidationState.UnknownHost;
+
+            var postgreSqlCredentialsValidator = new PostgreSqlCredentialsValidator();
+            ValidationState actualState = postgreSqlCredentialsValidator.IsValidDynamic(ref fingerprint, ref message, options, ref resultLevelKind);
+
+            Assert.Equal(expectedState, actualState);
+        }
+
     }
 }

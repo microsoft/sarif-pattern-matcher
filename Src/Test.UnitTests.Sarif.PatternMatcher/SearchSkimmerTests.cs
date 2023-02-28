@@ -11,6 +11,7 @@ using FluentAssertions;
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 using Moq;
 
@@ -20,8 +21,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmerTests
     {
-        private const int DefaultMaxFileSizeInKilobytes = 10000;
-
         private static MatchExpression CreateGuidDetectingMatchExpression(
             string denyFileExtension = null,
             string allowFileExtension = null)
@@ -78,14 +77,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var logger = new TestLogger();
 
+            var target = new EnumeratedArtifact(FileSystem.Instance)
+            {
+                Uri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
+                Contents = base64Encoded,
+            };
+
             var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
-                FileContents = base64Encoded,
+                CurrentTarget = target,
+                FileSystem = mockFileSystem.Object,
                 Logger = logger,
             };
 
-            SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            SearchSkimmer skimmer = CreateSkimmer(definition);
             skimmer.Analyze(context);
 
             // Analyzing base64-encoded values with MatchLengthToDecode > 0 succeeds
@@ -98,16 +103,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             definition.MatchExpressions[0].MatchLengthToDecode = 0;
 
             logger.Results.Clear();
-            skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            skimmer = CreateSkimmer(definition);
             skimmer.Analyze(context);
 
             logger.Results.Count.Should().Be(0);
 
             // Analyzing plaintext values with MatchLengthToDecode > 0 succeeds
-            context.FileContents = scanTargetContents;
+            context.CurrentTarget.Contents = scanTargetContents;
 
             logger.Results.Clear();
-            skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            skimmer = CreateSkimmer(definition);
             skimmer.Analyze(context);
 
             // But we should see a change in encoding information in message. Note
@@ -130,15 +135,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
 
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
+            {
+                Uri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
+                Contents = definition.Id,
+            };
+
             var logger = new TestLogger();
             var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
-                FileContents = definition.Id,
+                CurrentTarget = target,
                 Logger = logger
             };
 
-            SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            SearchSkimmer skimmer = CreateSkimmer(definition);
             skimmer.Analyze(context);
 
             ValidateResultsAgainstDefinition(logger.Results, definition, skimmer);
@@ -154,14 +164,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
 
             var logger = new TestLogger();
+
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
+            {
+                Uri = new Uri($"file:///c:/{definition.Name}.Fake.asc"),
+                Contents = $"{definition.Id}",
+            };
+
             var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.Fake.asc"),
-                FileContents = $"{ definition.Id}",
+                CurrentTarget = target,
+                FileSystem = mockFileSystem.Object,
                 Logger = logger
             };
 
-            SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            SearchSkimmer skimmer = CreateSkimmer(definition);
             skimmer.Analyze(context);
 
             logger.Results.Should().BeNull();
@@ -212,7 +229,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             skimmer.Analyze(context);
             ValidateResultsAgainstDefinition(((TestLogger)context.Logger).Results, definition, skimmer);
 
-            context.FileContents = null;
+            context.CurrentTarget.Contents = null;
             ((TestLogger)context.Logger).Results.Clear();
 
             skimmer.Analyze(context);
@@ -416,280 +433,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
 
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
+            {
+                Uri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
+                Contents = definition.Id,
+            };
+
             var logger = new TestLogger();
             var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.Fake.{fileExtension}"),
-                FileContents = definition.Id,
-                Logger = logger
+                Logger = logger,
+                CurrentTarget = target,
+                FileSystem = mockFileSystem.Object,
             };
 
-            SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
+            SearchSkimmer skimmer = CreateSkimmer(definition);
             Exception exception = Record.Exception(() => skimmer.Analyze(context));
             exception.Should().NotBeNull();
             exception.GetType().Should().Be(typeof(InvalidOperationException));
-        }
-
-        [Fact]
-        public void SearchSkimmer_ShouldNotEvaluateTooLargeFiles()
-        {
-            var testCases = new[]
-            {
-                new {
-                    fileSize = long.MaxValue,
-                    maxFileSize = (int)uint.MinValue + 1,
-                },
-                new {
-                    fileSize = long.MaxValue,
-                    maxFileSize = int.MaxValue,
-                },
-                new {
-                    fileSize = (long)50000000,
-                    maxFileSize = DefaultMaxFileSizeInKilobytes,
-                },
-            };
-
-            foreach (var testCase in testCases)
-            {
-                var mockFileSystem = new Mock<IFileSystem>();
-
-                mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(testCase.fileSize);
-
-                mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>())).Returns(Guid.NewGuid().ToString());
-
-                MatchExpression expr = CreateGuidDetectingMatchExpression();
-                SearchDefinition definition = CreateDefaultSearchDefinition(expr);
-
-                string filePath = $"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}";
-                var uri = new Uri(filePath);
-
-                var logger = new TestLogger();
-
-                var sb = new StringBuilder();
-
-                for (int i = 0; i < 100; i++)
-                {
-                    sb.Append($"{Guid.NewGuid()};");
-                }
-
-                // `MaxFileSizeInKilobytes` is set, overriding the default value used by the `AnalyzeContext`.
-                // `FileContents` is not set, so file size will be determined by checking the size of the target file,
-                // via `_fileSystem.FileInfoLength()`.
-                // Set breakpoints in `DoesTargetFileExceedSizeLimits()` in the `SearchSkimmer` class and both
-                // references to observe the the origins and comparisons of these values.
-                var context = new AnalyzeContext
-                {
-                    TargetUri = new Uri(filePath),
-                    Logger = logger,
-                    MaxFileSizeInKilobytes = testCase.maxFileSize
-                };
-
-                SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
-                Exception exception = Record.Exception(() => skimmer.Analyze(context));
-                exception.Should().BeNull();
-
-                logger.Results.Should().BeNull();
-
-                mockFileSystem.Verify(x => x.FileInfoLength(uri.LocalPath), Times.Once());
-            }
-        }
-
-        [Fact]
-        public void SearchSkimmer_SearchSkimmer_ShouldNotEvaluateFilesExceedingDefaultLimit()
-        {
-            // Length of files to be returned by the mocked file system. Will be divided by 1024 to convert to KB.
-            int[] testCases = new int[]
-            {
-                int.MaxValue,
-                1024 * (DefaultMaxFileSizeInKilobytes + 1)
-            };
-
-            foreach (int testCase in testCases)
-            {
-                var mockFileSystem = new Mock<IFileSystem>();
-
-                mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(testCase);
-
-                mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>())).Returns(Guid.NewGuid().ToString());
-
-                MatchExpression expr = CreateGuidDetectingMatchExpression();
-                SearchDefinition definition = CreateDefaultSearchDefinition(expr);
-
-                string filePath = $"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}";
-                var uri = new Uri(filePath);
-
-                var logger = new TestLogger();
-
-                var sb = new StringBuilder();
-
-                for (int i = 0; i < 100; i++)
-                {
-                    sb.Append($"{Guid.NewGuid()};");
-                }
-
-                // `MaxFileSizeInKilobytes` is not set; the default value defined in `AnalyzeContext.cs` will be used.
-                // `FileContents` is not set, so file size will be determined by checking the size of the target file,
-                // via `_fileSystem.FileInfoLength()`.
-                // Set breakpoints in `DoesTargetFileExceedSizeLimits()` in the `SearchSkimmer` class and both
-                // references to observe the the origins and comparisons of these values.
-                var context = new AnalyzeContext
-                {
-                    TargetUri = new Uri(filePath),
-                    Logger = logger
-                };
-
-                SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
-                Exception exception = Record.Exception(() => skimmer.Analyze(context));
-                exception.Should().BeNull();
-
-                logger.Results.Should().BeNull();
-            }
-        }
-
-        [Fact]
-        public void SearchSkimmer_ShouldEvaluateFilesUnderLimit()
-        {
-            // `MaxFileSizeInKilobytes` values to test.
-            int[] testCases = new int[]
-            {
-                (int)uint.MinValue + 1,
-                10000,
-                100000,
-                1000000,
-                1024 * (DefaultMaxFileSizeInKilobytes - 1),
-                int.MaxValue,
-            };
-
-            foreach (int testCase in testCases)
-            {
-                var mockFileSystem = new Mock<IFileSystem>();
-
-                MatchExpression expr = CreateGuidDetectingMatchExpression();
-                SearchDefinition definition = CreateDefaultSearchDefinition(expr);
-
-                string filePath = $"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}";
-                var uri = new Uri(filePath);
-
-                var logger = new TestLogger();
-
-                var sb = new StringBuilder();
-
-                for (int i = 0; i < 100; i++)
-                {
-                    sb.Append($"{Guid.NewGuid()};");
-                }
-
-                // `MaxFileSizeInKilobytes` is set, overriding the default value used by the `AnalyzeContext`.
-                // `FileContents` is set, so file size will be determined by the length of the string.
-                // Set breakpoints in `DoesTargetFileExceedSizeLimits()` in the `SearchSkimmer` class and both
-                // references to observe the the origins and comparisons of these values.
-                var context = new AnalyzeContext
-                {
-                    TargetUri = new Uri(filePath),
-                    Logger = logger,
-                    MaxFileSizeInKilobytes = testCase,
-                    FileContents = Guid.NewGuid().ToString()
-                };
-
-                SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
-                Exception exception = Record.Exception(() => skimmer.Analyze(context));
-                exception.Should().BeNull();
-
-                logger.Results.Should().NotBeNullOrEmpty();
-            }
-        }
-
-        [Fact]
-        public void SearchSkimmer_ShouldEvaluateFilesUnderDefaultLimit()
-        {
-            // Length of files to be returned by the mocked file system.
-            int[] testCases = new int[]
-            {
-                0,
-                1,
-                DefaultMaxFileSizeInKilobytes,
-                100000,
-                1000000,
-                1024 * (DefaultMaxFileSizeInKilobytes - 1),
-            };
-
-            foreach (int testCase in testCases)
-            {
-                var mockFileSystem = new Mock<IFileSystem>();
-
-                mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(testCase);
-
-                mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>())).Returns(Guid.NewGuid().ToString());
-
-                MatchExpression expr = CreateGuidDetectingMatchExpression();
-                SearchDefinition definition = CreateDefaultSearchDefinition(expr);
-
-                string filePath = $"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}";
-                var uri = new Uri(filePath);
-
-                var logger = new TestLogger();
-
-                var sb = new StringBuilder();
-
-                for (int i = 0; i < 100; i++)
-                {
-                    sb.Append($"{Guid.NewGuid()};");
-                }
-
-                // `MaxFileSizeInKilobytes` is not set; the default value defined in `AnalyzeContext.cs` will be used.
-                // `FileContents` is not set, so file size will be determined by checking the size of the target file,
-                // via `_fileSystem.FileInfoLength()`.
-                // Set breakpoints in `DoesTargetFileExceedSizeLimits()` in the `SearchSkimmer` class and both
-                // references to observe the the origins and comparisons of these values.
-                var context = new AnalyzeContext
-                {
-                    TargetUri = new Uri(filePath),
-                    Logger = logger
-                };
-
-                SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
-                Exception exception = Record.Exception(() => skimmer.Analyze(context));
-                exception.Should().BeNull();
-
-                logger.Results.Should().NotBeNullOrEmpty();
-            }
-        }
-
-        [Fact]
-        public void SearchSkimmer_ShouldLogIOExceptionIfFileNotFound()
-        {
-            MatchExpression expr = CreateGuidDetectingMatchExpression();
-            SearchDefinition definition = CreateDefaultSearchDefinition(expr);
-            IRegex regexEngine = RE2Regex.Instance;
-
-            var searchDefinition = new SearchDefinition
-            {
-                HelpUri = "https://www.microsoft.com",
-                MatchExpressions = new List<MatchExpression>(),
-            };
-
-            var searchSkimmer = new SearchSkimmer(regexEngine, validators: null, searchDefinition);
-            var reportingDescriptor = searchSkimmer as ReportingDescriptor;
-
-            var logger = new TestLogger();
-
-            var context = new AnalyzeContext
-            {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
-                Logger = logger,
-                MaxFileSizeInKilobytes = 1,
-                Rule = reportingDescriptor
-            };
-
-            var mockFileSystem = new Mock<IFileSystem>();
-            mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>())).Throws(new FileNotFoundException());
-
-            SearchSkimmer skimmer = CreateSkimmer(definition, fileSystem: mockFileSystem.Object);
-            Exception exception = Record.Exception(() => skimmer.Analyze(context));
-            exception.Should().BeNull();
-
-            logger.ToolNotifications[0].Exception.Should().NotBeNull();
-            logger.ToolNotifications[0].Exception.Kind.Should().Be(nameof(FileNotFoundException));
         }
 
         private AnalyzeContext CreateGuidMatchingSkimmer(
@@ -707,23 +468,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             definition ??= CreateDefaultSearchDefinition(expression);
 
+
+            var uri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}.{scanTargetExtension}");
             var logger = new TestLogger();
+            var mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileReadAllText(uri.LocalPath)).Returns(definition.Id);
+
+            var target = new EnumeratedArtifact(mockFileSystem.Object)
+            {
+                Uri = uri,
+                Contents = definition.Id,
+            };
 
             var context = new AnalyzeContext
             {
-                TargetUri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}.{scanTargetExtension}"),
-                FileContents = definition.Id,
-                Logger = logger,
+                CurrentTarget = target,
+                Logger = new TestLogger(),
+                FileSystem = mockFileSystem.Object,
                 FileRegionsCache = new FileRegionsCache(),
             };
 
-            var mockFileSystem = new Mock<IFileSystem>();
-            mockFileSystem.Setup(x => x.FileReadAllText(context.TargetUri.LocalPath)).Returns(definition.Id);
 
             skimmer = CreateSkimmer(
                 definition,
-                validators: validators,
-                fileSystem: mockFileSystem.Object);
+                validators: validators);
 
             return context;
         }
@@ -731,8 +499,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private SearchSkimmer CreateSkimmer(
             SearchDefinition definition,
             IRegex engine = null,
-            ValidatorsCache validators = null,
-            IFileSystem fileSystem = null)
+            ValidatorsCache validators = null)
         {
             var definitions = new SearchDefinitions
             {
@@ -744,8 +511,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return new SearchSkimmer(
                 engine: engine ?? RE2Regex.Instance,
                 validators: validators,
-                definition: definitions.Definitions[0],
-                fileSystem: fileSystem);
+                definition: definitions.Definitions[0]);
         }
 
         private SearchDefinition CreateDefaultSearchDefinition(MatchExpression matchExpression)

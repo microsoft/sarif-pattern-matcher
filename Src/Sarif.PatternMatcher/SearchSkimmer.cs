@@ -1,5 +1,4 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
-// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -38,7 +37,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly string _name; // TODO there's no mechanism for flowing rule names to rules.
         private readonly Uri _helpUri;
         private readonly IRegex _engine;
-        private readonly IFileSystem _fileSystem;
         private readonly ValidatorsCache _validators;
         private readonly IList<string> _deprecatedNames;
         private readonly IList<MatchExpression> _matchExpressions;
@@ -47,14 +45,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public SearchSkimmer(IRegex engine,
                              ValidatorsCache validators,
-                             SearchDefinition definition,
-                             IFileSystem fileSystem = null)
+                             SearchDefinition definition)
         {
             _engine = engine;
             _id = definition.Id;
             _name = definition.Name;
             _validators = validators;
-            _fileSystem = fileSystem ?? FileSystem.Instance;
             _helpUri = new Uri(definition.HelpUri ?? DefaultHelpUri);
             _fullDescription = new MultiformatMessageString { Text = definition.Description };
 
@@ -109,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override AnalysisApplicability CanAnalyze(AnalyzeContext context, out string reasonIfNotApplicable)
         {
-            string filePath = context.TargetUri.GetFilePath();
+            string filePath = context.CurrentTarget.Uri.GetFilePath();
             reasonIfNotApplicable = null;
 
             if (!string.IsNullOrWhiteSpace(context.GlobalFileDenyRegex) &&
@@ -141,59 +137,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override void Analyze(AnalyzeContext context)
         {
-            string filePath = context.TargetUri.OriginalString;
-
-            if (filePath.StartsWith("file://"))
-            {
-                filePath = context.TargetUri.LocalPath;
-            }
-
-            if (context.FileContents == null)
-            {
-                try
-                {
-                    // Ensure that the byte of the file does not exceed the limit set by the
-                    // file-size-in-kilobytes argument.
-                    long fileSize = _fileSystem.FileInfoLength(filePath);
-                    if (DoesTargetFileExceedSizeLimits(fileSize, context.MaxFileSizeInKilobytes))
-                    {
-                        return;
-                    }
-
-                    context.FileContents = _fileSystem.FileReadAllText(filePath);
-                }
-                catch (Exception e)
-                {
-                    if (e is IOException || e is UnauthorizedAccessException)
-                    {
-                        // We should log and return here because we want the rule to continue to run. i.e., the issue is likely
-                        // in permissions with the scan target, not a general problem with the rule. In other cases, we 'throw',
-                        // which will result in the rule getting disabled.
-                        context.Logger.LogToolNotification(
-                            Errors.CreateNotification(
-                                context.TargetUri,
-                                "ERR998.ExceptionInAnalyze",
-                                context.Rule.Id,
-                                FailureLevel.Error,
-                                e,
-                                persistExceptionStack: true,
-                                messageFormat: null,
-                                e.GetType().Name,
-                                context.TargetUri.GetFileName(),
-                                context.Rule.Name));
-                        return;
-                    }
-
-                    throw;
-                }
-            }
-            else
-            {
-                if (DoesTargetFileExceedSizeLimits(context.FileContents.String.Length, context.MaxFileSizeInKilobytes))
-                {
-                    return;
-                }
-            }
+            string filePath = context.CurrentTarget.Uri.GetFilePath();
 
             foreach (MatchExpression matchExpression in _matchExpressions)
             {
@@ -230,7 +174,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         string.Format(Base64DecodingFormatString, "{" + unpaddedLength + "}") +
                         new string('=', paddedLength - unpaddedLength);
 
-                    foreach (FlexMatch flexMatch in _engine.Matches(context.FileContents, base64DecodingRegexText))
+                    foreach (FlexMatch flexMatch in _engine.Matches(context.CurrentTarget.Contents, base64DecodingRegexText))
                     {
                         // This will run the match expression against the decoded content.
                         RunMatchExpression(binary64DecodedMatch: flexMatch,
@@ -275,7 +219,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     {
                         // An illegal state was returned running check '{0}' against '{1}' ({2}).
                         context.Logger.LogToolNotification(
-                            Errors.CreateNotification(context.TargetUri,
+                            Errors.CreateNotification(context.CurrentTarget.Uri,
                                                       "ERR998.ValidatorReturnedIllegalValidationState",
                                                       context.Rule.Id,
                                                       FailureLevel.Error,
@@ -283,7 +227,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                       persistExceptionStack: false,
                                                       messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
                                                       context.Rule.Id,
-                                                      context.TargetUri.GetFileName(),
+                                                      context.CurrentTarget.Uri.GetFileName(),
                                                       validatorMessage));
                     }
 
@@ -512,7 +456,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     ArtifactLocation = new ArtifactLocation
                     {
-                        Uri = context.TargetUri,
+                        Uri = context.CurrentTarget.Uri,
                     },
                     Region = region,
                 },
@@ -521,7 +465,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IDictionary<string, string> partialFingerprints = null;
             if (context.DataToInsert.HasFlag(OptionallyEmittedData.RollingHashPartialFingerprints))
             {
-                context.RollingHashMap ??= HashUtilities.RollingHash(context.FileContents);
+                context.RollingHashMap ??= HashUtilities.RollingHash(context.CurrentTarget.Contents);
                 string rollingHash = context.RollingHashMap[location.PhysicalLocation.Region.StartLine];
                 partialFingerprints = new Dictionary<string, string>() { { "primaryLocationLineHash", rollingHash } };
             }
@@ -747,17 +691,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (context.FileRegionsCache != null)
             {
                 return context.FileRegionsCache.PopulateTextRegionProperties(region,
-                                                                             context.TargetUri,
+                                                                             context.CurrentTarget.Uri,
                                                                              populateSnippet: true,
-                                                                             fileText: context.FileContents);
+                                                                             fileText: context.CurrentTarget.Contents);
             }
 
             lock (FileRegionsCache.Instance)
             {
                 return FileRegionsCache.Instance.PopulateTextRegionProperties(region,
-                                                                              context.TargetUri,
+                                                                              context.CurrentTarget.Uri,
                                                                               populateSnippet: true,
-                                                                              fileText: context.FileContents);
+                                                                              fileText: context.CurrentTarget.Contents);
             }
         }
 
@@ -806,7 +750,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private void RunMatchExpressionForIntrafileRegexes(AnalyzeContext context, MatchExpression matchExpression)
         {
             ResultKind kind = matchExpression.Kind;
-            string searchText = context.FileContents;
+            string searchText = context.CurrentTarget.Contents;
             FailureLevel level = matchExpression.Level;
 
             var mergedGroups = new Dictionary<string, ISet<FlexMatch>>();
@@ -854,7 +798,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             ResultKind kind = matchExpression.Kind;
-            string searchText = context.FileContents;
+            string searchText = context.CurrentTarget.Contents;
             FailureLevel level = matchExpression.Level;
 
             string firstRegex = matchExpression.SingleLineRegexes[0];
@@ -934,7 +878,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
-                string filePath = context.TargetUri.GetFilePath();
+                string filePath = context.CurrentTarget.Uri.GetFilePath();
                 string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
                 IEnumerable<ValidationResult> validationResults = _validators.Validate(ruleName,
                                                                                        context,
@@ -994,10 +938,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             ResultKind kind = matchExpression.Kind;
             FailureLevel level = matchExpression.Level;
-            string filePath = context.TargetUri.GetFilePath();
+            string filePath = context.CurrentTarget.Uri.GetFilePath();
             string searchText = binary64DecodedMatch != null
-                                                   ? Decode(binary64DecodedMatch.Value)
-                                                   : context.FileContents;
+                                                   ? Decode(binary64DecodedMatch.Value).String
+                                                   : context.CurrentTarget.Contents;
 
             long maxMemoryInKB =
                 context.MaxMemoryInKilobytes == -1
@@ -1070,6 +1014,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                 ref validationSuffix,
                                                                 ref validatorMessage,
                                                                 pluginSupportsDynamicValidation);
+
                             validationResult.Message = validatorMessage;
                             validationResult.ResultLevelKind = new ResultLevelKind { Kind = kind, Level = level };
                             ConstructResultAndLogForContentsRegex(binary64DecodedMatch,
@@ -1220,12 +1165,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             if (context.FileRegionsCache != null)
             {
-                return context.FileRegionsCache.ConstructMultilineContextSnippet(region, context.TargetUri);
+                return context.FileRegionsCache.ConstructMultilineContextSnippet(region, context.CurrentTarget.Uri);
             }
 
             lock (FileRegionsCache.Instance)
             {
-                return FileRegionsCache.Instance.ConstructMultilineContextSnippet(region, context.TargetUri);
+                return FileRegionsCache.Instance.ConstructMultilineContextSnippet(region, context.CurrentTarget.Uri);
             }
         }
 
@@ -1236,23 +1181,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ReportingDescriptor reportingDescriptor = this;
             IDictionary<string, FlexMatch> groups = new Dictionary<string, FlexMatch>();
 
-            if (!string.IsNullOrEmpty(context.FileContents))
+            if (!string.IsNullOrEmpty(context.CurrentTarget.Contents))
             {
                 groups["content"] = new FlexMatch
                 {
                     Index = 0,
-                    Length = context.FileContents.String8.Length,
+                    Length = (int)context.CurrentTarget.SizeInBytes,
                     Success = true,
-                    Value = context.FileContents,
+                    Value = context.CurrentTarget.Contents,
                 };
             }
 
             Fingerprint fingerprint = default;
             string validatorMessage = null;
             string validationPrefix = string.Empty, validationSuffix = string.Empty;
-            string filePath = context.TargetUri.IsAbsoluteUri
-                ? context.TargetUri.LocalPath
-                : context.TargetUri.OriginalString;
+            string filePath = context.CurrentTarget.Uri.GetFilePath();
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 groups["scanTargetFullPath"] = new FlexMatch() { Value = filePath };
@@ -1285,7 +1228,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                 // An illegal state was returned running check '{0}' against '{1}' ({2}).
                                 context.Logger.LogToolNotification(
                                     Errors.CreateNotification(
-                                        context.TargetUri,
+                                        context.CurrentTarget.Uri,
                                         "ERR998.ValidatorReturnedIllegalValidationState",
                                         context.Rule.Id,
                                         FailureLevel.Error,
@@ -1293,7 +1236,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                         persistExceptionStack: false,
                                         messageFormat: SpamResources.ERR998_ValidatorReturnedIllegalValidationState,
                                         context.Rule.Id,
-                                        context.TargetUri.GetFileName(),
+                                        context.CurrentTarget.Uri.GetFileName(),
                                         validatorMessage));
 
                                 level = FailureLevel.Error;
@@ -1424,13 +1367,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private bool DoesTargetFileExceedSizeLimits(long fileLength, long maxFileSize)
+        private bool DoesTargetFileExceedSizeLimits(ulong fileLength, long maxFileSize)
         {
             // Ensure that the byte of the file does not exceed the limit set by the
             // file-size-in-kilobytes command line argument, which defaults to ~10MB.
-            long fileSize = fileLength / 1024;
+            ulong fileSize = fileLength / 1024;
 
-            return maxFileSize > -1 && fileSize > maxFileSize;
+            return maxFileSize > -1 && fileSize > (ulong)maxFileSize;
         }
     }
 }

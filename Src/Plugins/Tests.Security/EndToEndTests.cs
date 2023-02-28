@@ -148,21 +148,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             using (var outputTextWriter = new StringWriter(sb))
             using (var logger = new SarifLogger(
                 outputTextWriter,
-                LogFilePersistenceOptions.PrettyPrint,
+                FilePersistenceOptions.PrettyPrint,
                 run: new Run() { Tool = tool },
                 dataToRemove: OptionallyEmittedData.NondeterministicProperties,
-                levels: new List<FailureLevel> { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None }.ToImmutableHashSet(),
-                kinds: new List<ResultKind> { ResultKind.Fail, ResultKind.Pass }.ToImmutableHashSet()))
+                levels: new FailureLevelSet { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None },
+                kinds: new ResultKindSet { ResultKind.Fail, ResultKind.Pass }))
             {
                 // The analysis will disable skimmers that raise an exception. This
                 // hash set stores the disabled skimmers. When a skimmer is disabled,
                 // that catastrophic event is logged as a SARIF notification.
                 var disabledSkimmers = new HashSet<string>();
 
+                var target = new EnumeratedArtifact(FileSystem.Instance)
+                {
+                    Uri = new Uri(filePath, UriKind.Absolute),
+                    Contents = logContents,
+                };
+
                 var context = new AnalyzeContext
                 {
-                    TargetUri = new Uri(filePath, UriKind.Absolute),
-                    FileContents = logContents,
+                    CurrentTarget = target,
                     Logger = logger,
                 };
 

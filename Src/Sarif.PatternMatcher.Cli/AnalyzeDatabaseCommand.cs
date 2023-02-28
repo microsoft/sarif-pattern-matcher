@@ -43,7 +43,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                 var sarifLogger = new SarifLogger(
                     options.OutputFilePath,
-                    options.ConvertToLogFilePersistenceOptions(),
+                    options.OutputFileOptions.ToFlags(),
                     dataToInsert: options.DataToInsert.ToFlags(),
                     dataToRemove: options.DataToRemove.ToFlags(),
                     run: run,
@@ -119,12 +119,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     {
                         try
                         {
+                            var target = new EnumeratedArtifact(FileSystem)
+                            {
+                                Uri = new Uri(contentName, UriKind.RelativeOrAbsolute),
+                                Contents = contentData,
+                            };
+
                             var context = new AnalyzeContext
                             {
                                 Logger = logger,
-                                FileContents = contentData,
+                                CurrentTarget = target,
                                 DynamicValidation = dynamicValidation,
-                                TargetUri = new Uri(contentName, UriKind.RelativeOrAbsolute),
                             };
 
                             using (context)
@@ -148,9 +153,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             Tool tool = MakeTool();
             var logger = new AggregatingLogger();
 
-            if (!analyzeOptions.Quiet)
+            if (!(analyzeOptions.Quiet == true))
             {
-                var consoleLogger = new ConsoleLogger(analyzeOptions.Quiet, tool.Driver.Name, analyzeOptions.FailureLevels, analyzeOptions.ResultKinds);
+                var consoleLogger = new ConsoleLogger(quietConsole: false, tool.Driver.Name, analyzeOptions.FailureLevels, analyzeOptions.ResultKinds);
                 logger.Loggers.Add(consoleLogger);
             }
 

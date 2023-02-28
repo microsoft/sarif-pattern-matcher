@@ -28,4 +28,11 @@
     <ProjectReference Include="..\sarif-sdk\src\Sarif.Multitool.Library\Sarif.Multitool.Library.csproj" />
     <ProjectReference Include="..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>

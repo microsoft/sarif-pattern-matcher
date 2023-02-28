@@ -425,7 +425,7 @@
 //            };
 
 //            var mockFileSystem = new Mock<IFileSystem>();
-//            mockFileSystem.Setup(x => x.FileReadAllText(context.TargetUri.LocalPath)).Returns(definition.Id);
+//            mockFileSystem.Setup(x => x.FileReadAllText(context.CurrentScanTarget.Uri.LocalPath)).Returns(definition.Id);
 
 //            skimmer = CreateSkimmer(
 //                definition,

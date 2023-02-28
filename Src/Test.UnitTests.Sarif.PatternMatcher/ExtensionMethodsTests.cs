@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using FluentAssertions;
 
 using Microsoft.RE2.Managed;
+using Microsoft.Strings.Interop;
+
+using Mono.Cecil.Rocks;
 
 using Xunit;
 
@@ -60,35 +63,46 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             var dict = new Dictionary<string, FlexMatch>();
             Dictionary<string, string> properties = null;
 
-            // Null properties should not affect dictionary
+            // Null properties should not affect dictionary when added.
             dict.AddProperties(properties);
             dict.Should().BeEmpty();
 
-            // Empty properties should not affect dictionary
+            // Empty properties should not affect dictionary when added.
             properties = new Dictionary<string, string>();
+            dict.AddProperties(properties);
             dict.Should().BeEmpty();
 
-            // Adding single, should generate single.
+            // Adding properties collection with one key.
             properties.Add("key1", "value1");
             dict.AddProperties(properties);
-            dict.Should().NotBeEmpty();
             dict.Count.Should().Be(1);
 
-            // Duplicated items should not throw exception.
+            // Duplicated items should not throw exception, instead
+            // any previously unobserved properties should be added.
             properties.Add("key2", "value2");
             dict.AddProperties(properties);
             dict.Count.Should().Be(2);
+
             foreach (KeyValuePair<string, string> kv in properties)
             {
-                dict[kv.Key].Value.ToString().Should().Be(kv.Value);
+                // FluentAssertions no longer operates in a way that
+                // invokes our implicit operator to convert a FlexString
+                // to string. So we will make the connection explicitly.
+                (dict[kv.Key].Value == kv.Value).Should().BeTrue();
+                dict[kv.Key].Value.String.Should().Be(kv.Value);
             }
 
             // Duplicated items should not replace original value.
-            dict.Add("key3", new FlexMatch { Value = "original" });
-            properties.Add("key3", "value3");
+            properties.Add("key3", "original");
             dict.AddProperties(properties);
             dict.Count.Should().Be(3);
-            dict["key3"].Value.ToString().Should().Be("original");
+
+            properties["key3"] = "value3";
+            dict.AddProperties(properties);
+            dict.Count.Should().Be(3);
+
+            (dict["key3"].Value == "original").Should().BeTrue();
+            dict["key3"].Value.String.Should().Be("original");
         }
     }
 }

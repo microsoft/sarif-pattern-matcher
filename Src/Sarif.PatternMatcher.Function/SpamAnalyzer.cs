@@ -24,11 +24,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
             FileSystem = Sarif.FileSystem.Instance;
         }
 
-        private static Tool s_tool = Tool.CreateFromAssemblyData();
+        private static readonly Tool s_tool = Tool.CreateFromAssemblyData();
 
         public static SarifLog Analyze(string filePath, string text, string rulePath, string originalFileName)
         {
-
             if (Skimmers == null)
             {
                 IEnumerable<string> regexDefinitions = FileSystem.DirectoryGetFiles(Path.Combine(rulePath, @"..\bin\"), "*.json");
@@ -49,14 +48,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 
             var run = new Run { Tool = s_tool };
 
-
             using (var outputTextWriter = new StringWriter(sb))
             using (var logger = new SarifLogger(
                 outputTextWriter,
-                LogFilePersistenceOptions.PrettyPrint,
+                FilePersistenceOptions.PrettyPrint,
                 dataToInsert,
                 run: run,
-                levels: new[] { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None }.ToImmutableHashSet(),
+                levels: new FailureLevelSet(new[] { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note, FailureLevel.None }),
                 kinds: BaseLogger.Fail))
             {
                 // The analysis will disable skimmers that raise an exception. This
@@ -64,12 +62,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 // that catastrophic event is logged as a SARIF notification.
                 var disabledSkimmers = new HashSet<string>();
 
+                var target = new EnumeratedArtifact(FileSystem)
+                {
+                    Uri = new Uri(filePath, UriKind.RelativeOrAbsolute),
+                    Contents = text,
+                };
+
                 var context = new AnalyzeContext
                 {
                     DataToInsert = dataToInsert,
-                    TargetUri = new Uri(filePath, UriKind.RelativeOrAbsolute),
-                    FileContents = text,
                     Logger = logger,
+                    CurrentTarget = target,
                     DynamicValidation = true,
                     DisableDynamicValidationCaching = true,
                 };

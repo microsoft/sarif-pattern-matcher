@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.Visitors;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 using Microsoft.RE2.Managed;
 
@@ -43,11 +43,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             set => this.tool = value;
         }
 
-        public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(
-            IFileSystem fileSystem,
-            IEnumerable<string> searchDefinitionsPaths,
-            Tool tool,
-            IRegex engine = null)
+        public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem,
+                                                                                       IEnumerable<string> searchDefinitionsPaths,
+                                                                                       Tool tool,
+                                                                                       IRegex engine = null)
         {
             tool.Extensions ??= new List<ToolComponent>();
 
@@ -160,8 +159,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     skimmers.Add(
                         new SearchSkimmer(engine: engine,
                                           validators: validators,
-                                          definition,
-                                          fileSystem)
+                                          definition)
                         {
                             ExtensionIndex = extensionIndex,
                         });
@@ -357,33 +355,51 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        protected override AnalyzeContext CreateContext(
-            AnalyzeOptions options,
-            IAnalysisLogger logger,
-            RuntimeConditions runtimeErrors,
-            PropertiesDictionary policy = null,
-            string filePath = null)
+        public override AnalyzeContext InitializeContextFromOptions(AnalyzeOptions options, ref AnalyzeContext context)
         {
-            AnalyzeContextBase.MaxFileSizeInKilobytesDefaultValue = 10 * 1024;
-            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, policy, filePath);
+            context = base.InitializeContextFromOptions(options, ref context);
 
             context.Retry = options.Retry;
             context.RedactSecrets = options.RedactSecrets;
             context.EnhancedReporting = options.EnhancedReporting;
             context.DynamicValidation = options.DynamicValidation;
-            context.DataToInsert = options.DataToInsert.ToFlags();
-            context.GlobalFileDenyRegex = options.FileNameDenyRegex;
             context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
+
+            context.SearchDefinitionsPaths = new StringSet(options.SearchDefinitionsPaths);
 
             return context;
         }
 
-        protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeOptions options, AnalyzeContext context)
+        public override AnalyzeContext ValidateContext(AnalyzeContext context)
         {
-            ISet<Skimmer<AnalyzeContext>> skimmers =
-                CreateSkimmersFromDefinitionsFiles(this.FileSystem, options.SearchDefinitionsPaths, Tool);
+            context = base.ValidateContext(context);
 
-            return skimmers;
+            if (ValidateFiles(context, context.SearchDefinitionsPaths, shouldExist: true))
+            {
+
+            }
+
+            return context;
+        }
+
+        protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeContext context)
+        {
+            ISet<Skimmer<AnalyzeContext>> aggregatedSkimmers = new HashSet<Skimmer<AnalyzeContext>>();
+
+            if (context.Skimmers != null)
+            {
+                aggregatedSkimmers = new HashSet<Skimmer<AnalyzeContext>>(context.Skimmers);
+            }
+
+            if (context.SearchDefinitionsPaths?.Any() == true)
+            {
+                foreach (var skimmer in CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.SearchDefinitionsPaths, Tool))
+                {
+                    aggregatedSkimmers.Add(skimmer);
+                }
+            }
+
+            return aggregatedSkimmers;
         }
 
         protected override AnalyzeContext DetermineApplicabilityAndAnalyze(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers, ISet<string> disabledSkimmers)
@@ -392,7 +408,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             ICollection<IList<Tuple<Result, int?>>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
 
-            if (resultLists != null && context.TargetUri.ToString().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+            if (resultLists != null && context.CurrentTarget.Uri.ToString().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
             {
                 var aggregatedResults = new List<Result>();
                 foreach (IList<Tuple<Result, int?>> resultList in resultLists)
@@ -406,7 +422,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (aggregatedResults.Count > 0)
                 {
                     var jsonLogicalLocationProcessor = new JsonLogicalLocationProcessor();
-                    jsonLogicalLocationProcessor.Process(aggregatedResults, context.FileContents);
+                    jsonLogicalLocationProcessor.Process(aggregatedResults, context.CurrentTarget.Contents);
                 }
             }
 
