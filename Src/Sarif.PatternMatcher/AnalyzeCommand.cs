@@ -8,8 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-using CommandLine;
-
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Visitors;
 using Microsoft.CodeAnalysis.Sarif.Writers;
@@ -190,11 +188,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return skimmers;
-        }
-
-        private static AnalyzeOptions ConvertCommandlineArgumentsToAnalysisOptions(string[] args)
-        {
-            return Parser.Default.ParseArguments<AnalyzeOptions>(args).Value;
         }
 
         internal static SearchDefinitions PushInheritedData(SearchDefinitions definitions, Dictionary<string, string> sharedStrings)
