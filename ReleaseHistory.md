@@ -19,7 +19,7 @@
 - UEE => Eliminate unhandled exceptions in engine.
 
 ## v4.1.0 Released 03/01/2023
-- DEP: Update SARIF SDK submodule from [615a31a to f24d782](https://github.com/microsoft/sarif-sdk/compare/615a31a..f24d782). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/f24d782/src/ReleaseHistory.md).
+- DEP: Update SARIF SDK submodule from [615a31a to 2f79183](https://github.com/microsoft/sarif-sdk/compare/615a31a..2f79183). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/2f79183/src/ReleaseHistory.md).
 
 ## v4.0.0 Released 02/28/2023
 - BRK: This change switches to a new, highly-context driven API provided by the SARIF driver framework.
