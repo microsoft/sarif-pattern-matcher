@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using CommandLine;
@@ -21,6 +22,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         {
             try
             {
+                ulong a = BitConverter.ToUInt64(Encoding.ASCII.GetBytes("IoTHub00").Reverse().ToArray());
+                ulong b = BitConverter.ToUInt64(Encoding.ASCII.GetBytes("Device00").Reverse().ToArray());
+                ulong c = BitConverter.ToUInt64(Encoding.ASCII.GetBytes("Passwd00").Reverse().ToArray());
+
                 Console.OutputEncoding = Encoding.UTF8;
                 GlobalContext ??= new AnalyzeContext();
 
