@@ -118,18 +118,75 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return true;
         }
 
-        public static bool ContainsDigitAndChar(string matchedPattern)
+        public static bool ContainsDigitAndChar(string secret)
         {
-            bool oneDigit = false, oneLetter = false;
+            return ContainAtLeastNDigit(secret, 1) && ContainAtLeastNLetter(secret, 1);
+        }
 
-            foreach (char ch in matchedPattern)
+        public static bool ContainLowerAndUpperCaseLetter(string secret)
+        {
+            return ContainAtLeastNLowerCaseLetter(secret, 1) && ContainAtLeastNUpperCaseLetter(secret, 1);
+        }
+
+        public static bool ContainAtLeastNDigit(string secret, int n)
+        {
+            int digitCount = 0;
+
+            foreach (char c in secret)
             {
-                if (char.IsDigit(ch)) { oneDigit = true; }
-                if (char.IsLetter(ch)) { oneLetter = true; }
-                if (oneDigit && oneLetter) { return true; }
+                if (char.IsDigit(c))
+                {
+                    digitCount++;
+                }
             }
 
-            return false;
+            return digitCount >= n;
+        }
+
+
+        public static bool ContainAtLeastNLetter(string secret, int n)
+        {
+            int letterCount = 0;
+
+            foreach (char c in secret)
+            {
+                if (char.IsLetter(c))
+                {
+                    letterCount++;
+                }
+            }
+
+            return letterCount >= n;
+        }
+
+        public static bool ContainAtLeastNUpperCaseLetter(string secret, int n)
+        {
+            int upperCount = 0;
+
+            foreach (char c in secret)
+            {
+                if (char.IsUpper(c))
+                {
+                    upperCount++;
+                }
+            }
+
+            return upperCount >= n;
+        }
+
+        public static bool ContainAtLeastNLowerCaseLetter(string secret, int n)
+        {
+            int lowerCount = 0;
+
+            foreach (char c in secret)
+            {
+                if (char.IsLower(c))
+                {
+                    lowerCount++;
+                }
+            }
+
+            return lowerCount >= n;
         }
 
         public static ValidationState ReturnUnexpectedResponseCode(ref string message,
