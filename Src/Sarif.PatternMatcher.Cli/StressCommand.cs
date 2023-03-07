@@ -42,7 +42,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         public void AnalyzingTarget(IAnalysisContext context) { }
 
-        public void TargetAnalyzed(IAnalysisContext context){ }
+        public void TargetAnalyzed(IAnalysisContext context) { }
 
         public void Log(ReportingDescriptor rule, Result result, int? extensionIndex)
         {
