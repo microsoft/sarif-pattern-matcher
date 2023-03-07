@@ -42,7 +42,7 @@ jobs:
     - run: |
         .\BuildAndTest.cmd -NoFormat -NoTest
 
-    - name: Build
+    - name: Disk Usage Analytics
         run: |
           echo "Free space:"
           df -h
