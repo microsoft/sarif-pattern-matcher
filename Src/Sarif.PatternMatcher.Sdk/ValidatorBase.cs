@@ -118,21 +118,38 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return true;
         }
 
-        public static bool ContainsDigitAndChar(string secret)
+        /// <summary>
+        /// Determines whether the input string contains both digit and letter.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <returns>true if the input string contains both digit and letter; otherwise, false.</returns>
+        public static bool ContainsDigitAndChar(string text)
         {
-            return ContainAtLeastNDigit(secret, 1) && ContainAtLeastNLetter(secret, 1);
+            // TODO, change the function name as ContainsDigitAndLetter and also fixed the 44 references
+            return ContainAtLeastNDigits(text, 1) && ContainAtLeastNLetters(text, 1);
         }
 
-        public static bool ContainLowerAndUpperCaseLetter(string secret)
+        /// <summary>
+        /// Determines whether the input string contains both lowercase and uppercase letter.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <returns>true if the input string contains both lowercase and uppercase letter; otherwise, false.</returns>
+        public static bool ContainLowercaseAndUppercaseLetter(string text)
         {
-            return ContainAtLeastNLowerCaseLetter(secret, 1) && ContainAtLeastNUpperCaseLetter(secret, 1);
+            return ContainAtLeastNLowercaseLetters(text, 1) && ContainAtLeastNUppercaseLetters(text, 1);
         }
 
-        public static bool ContainAtLeastNDigit(string secret, int n)
+        /// <summary>
+        /// Determines whether the input string contains at least n digits.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <param name="n">The number of digits required.</param>
+        /// <returns>true if the input string contains at least n digits; otherwise, false.</returns>
+        public static bool ContainAtLeastNDigits(string text, int n)
         {
             int digitCount = 0;
 
-            foreach (char c in secret)
+            foreach (char c in text)
             {
                 if (char.IsDigit(c))
                 {
@@ -148,12 +165,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return false;
         }
 
-
-        public static bool ContainAtLeastNLetter(string secret, int n)
+        /// <summary>
+        /// Determines whether the input string contains at least n letters.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <param name="n">The number of letters required.</param>
+        /// <returns>true if the input string contains at least n letters; otherwise, false.</returns>
+        public static bool ContainAtLeastNLetters(string text, int n)
         {
             int letterCount = 0;
 
-            foreach (char c in secret)
+            foreach (char c in text)
             {
                 if (char.IsLetter(c))
                 {
@@ -169,11 +191,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return false;
         }
 
-        public static bool ContainAtLeastNUpperCaseLetter(string secret, int n)
+        /// <summary>
+        /// Determines whether the input string contains at least n uppercase letters.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <param name="n">The number of uppercase letters required.</param>
+        /// <returns>true if the input string contains at least n uppercase letters; otherwise, false.</returns>
+        public static bool ContainAtLeastNUppercaseLetters(string text, int n)
         {
             int upperCount = 0;
 
-            foreach (char c in secret)
+            foreach (char c in text)
             {
                 if (char.IsUpper(c))
                 {
@@ -189,11 +217,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return false;
         }
 
-        public static bool ContainAtLeastNLowerCaseLetter(string secret, int n)
+        /// <summary>
+        /// Determines whether the input string contains at least n lowercase letters.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <param name="n">The number of lowercase letters required.</param>
+        /// <returns>true if the input string contains at least n lowercase letters; otherwise, false.</returns>
+        public static bool ContainAtLeastNLowercaseLetters(string text, int n)
         {
             int lowerCount = 0;
 
-            foreach (char c in secret)
+            foreach (char c in text)
             {
                 if (char.IsLower(c))
                 {
