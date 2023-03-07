@@ -44,5 +44,10 @@ jobs:
     - run: |
         .\BuildAndTest.cmd -NoFormat -NoTest
 
+    - name: Build
+        run: |
+          echo "Free space:"
+          df -h
+
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
