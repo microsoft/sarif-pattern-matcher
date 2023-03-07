@@ -138,9 +138,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 {
                     digitCount++;
                 }
+
+                if (digitCount >= n)
+                {
+                    return true;
+                }
             }
 
-            return digitCount >= n;
+            return false;
         }
 
 
@@ -154,9 +159,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 {
                     letterCount++;
                 }
+
+                if (letterCount >= n)
+                {
+                    return true;
+                }
             }
 
-            return letterCount >= n;
+            return false;
         }
 
         public static bool ContainAtLeastNUpperCaseLetter(string secret, int n)
@@ -169,9 +179,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 {
                     upperCount++;
                 }
+
+                if (upperCount >= n)
+                {
+                    return true;
+                }
             }
 
-            return upperCount >= n;
+            return false;
         }
 
         public static bool ContainAtLeastNLowerCaseLetter(string secret, int n)
@@ -184,9 +199,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 {
                     lowerCount++;
                 }
+
+                if (lowerCount >= n)
+                {
+                    return true;
+                }
             }
 
-            return lowerCount >= n;
+            return false;
         }
 
         public static ValidationState ReturnUnexpectedResponseCode(ref string message,
