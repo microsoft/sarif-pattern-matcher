@@ -18,6 +18,10 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## v4.2.0 Released 03/07/2023
+- DEP: Update SARIF SDK submodule from [2f79183 to 420fe9c](https://github.com/microsoft/sarif-sdk/compare/2f79183..420fe9c). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/420fe9c/src/ReleaseHistory.md).
+- BUG: Dependency update above resolve an issue where `IAnalysisLogger.AnalyzeTarget` callbacks did not occur.
+
 ## v4.1.0 Released 03/01/2023
 - DEP: Update SARIF SDK submodule from [615a31a to 2f79183](https://github.com/microsoft/sarif-sdk/compare/615a31a..2f79183). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/2f79183/src/ReleaseHistory.md).
 
