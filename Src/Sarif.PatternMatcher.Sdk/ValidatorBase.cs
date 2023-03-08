@@ -143,7 +143,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// Determines whether the input string contains at least n digits.
         /// </summary>
         /// <param name="text">The input string.</param>
-        /// <param name="n">The number of digits required.</param>
+        /// <param name="n">The least number of digits required.</param>
         /// <returns>true if the input string contains at least n digits; otherwise, false.</returns>
         public static bool ContainAtLeastNDigits(string text, int n)
         {
@@ -169,7 +169,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// Determines whether the input string contains at least n letters.
         /// </summary>
         /// <param name="text">The input string.</param>
-        /// <param name="n">The number of letters required.</param>
+        /// <param name="n">The least number of letters required.</param>
         /// <returns>true if the input string contains at least n letters; otherwise, false.</returns>
         public static bool ContainAtLeastNLetters(string text, int n)
         {
@@ -195,7 +195,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// Determines whether the input string contains at least n uppercase letters.
         /// </summary>
         /// <param name="text">The input string.</param>
-        /// <param name="n">The number of uppercase letters required.</param>
+        /// <param name="n">The least number of uppercase letters required.</param>
         /// <returns>true if the input string contains at least n uppercase letters; otherwise, false.</returns>
         public static bool ContainAtLeastNUppercaseLetters(string text, int n)
         {
@@ -221,7 +221,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// Determines whether the input string contains at least n lowercase letters.
         /// </summary>
         /// <param name="text">The input string.</param>
-        /// <param name="n">The number of lowercase letters required.</param>
+        /// <param name="n">The least number of lowercase letters required.</param>
         /// <returns>true if the input string contains at least n lowercase letters; otherwise, false.</returns>
         public static bool ContainAtLeastNLowercaseLetters(string text, int n)
         {
