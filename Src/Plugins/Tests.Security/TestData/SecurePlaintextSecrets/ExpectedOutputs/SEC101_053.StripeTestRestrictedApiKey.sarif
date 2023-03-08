@@ -19,8 +19,8 @@
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
             "rules": [
               {
-                "id": "SEC101/016",
-                "name": "StripeApiKey",
+                "id": "SEC101/053",
+                "name": "StripeTestRestrictedApiKey",
                 "fullDescription": {
                   "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
                 },
@@ -52,7 +52,7 @@
       "artifacts": [
         {
           "location": {
-            "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_016.StripeApiKey.txt",
+            "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_053.StripeTestRestrictedApiKey.txt",
             "uriBaseId": "SRC_ROOT"
           }
         }
@@ -60,7 +60,7 @@
       "results": [
         {
           "rule": {
-            "id": "SEC101/016",
+            "id": "SEC101/053",
             "index": 0,
             "toolComponent": {
               "index": 0
@@ -72,7 +72,7 @@
               "…0deadb",
               "an apparent ",
               "",
-              "Stripe API key",
+              "Stripe test restricted API key",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -81,7 +81,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_016.StripeApiKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_053.StripeTestRestrictedApiKey.txt",
                   "uriBaseId": "SRC_ROOT",
                   "index": 0
                 },
@@ -93,24 +93,24 @@
                   "charOffset": 2,
                   "charLength": 32,
                   "snippet": {
-                    "text": "sk_live_0deadbeef0deadbeef0deadb"
+                    "text": "rk_test_0deadbeef0deadbeef0deadb"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "secretHashSha256/v0": "5568fa5fba933f9c7d63f9ea92c8c46a9b8f0ab4563d793a6dbc57ea3afb2110",
+            "secretHashSha256/v0": "406e5e3d1700bf2646aa8cde101396d16d6412768ce5ec31f62ac25042cb081d",
             "assetFingerprint/v0": "{\"platform\":\"Stripe\"}",
-            "validationFingerprintHashSha256/v0": "415c1a89c1901d08dc16d5f508356bc5392b62cee2c8a9a6d0d3d458e831520c",
-            "secretFingerprint/v0": "{\"secret\":\"sk_live_0deadbeef0deadbeef0deadb\"}",
-            "validationFingerprint/v0": "{\"secret\":\"sk_live_0deadbeef0deadbeef0deadb\"}"
+            "validationFingerprintHashSha256/v0": "7528134de4b57f0d99b7d5334e91221dec4cf8a3b493856461582287f347054a",
+            "secretFingerprint/v0": "{\"secret\":\"rk_test_0deadbeef0deadbeef0deadb\"}",
+            "validationFingerprint/v0": "{\"secret\":\"rk_test_0deadbeef0deadbeef0deadb\"}"
           },
-          "rank": 45.64
+          "rank": 44.74
         },
         {
           "rule": {
-            "id": "SEC101/016",
+            "id": "SEC101/053",
             "index": 0,
             "toolComponent": {
               "index": 0
@@ -122,7 +122,7 @@
               "…deadbe",
               "an apparent ",
               "",
-              "Stripe API key",
+              "Stripe test restricted API key",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -131,7 +131,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_016.StripeApiKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_053.StripeTestRestrictedApiKey.txt",
                   "uriBaseId": "SRC_ROOT",
                   "index": 0
                 },
@@ -143,24 +143,24 @@
                   "charOffset": 38,
                   "charLength": 42,
                   "snippet": {
-                    "text": "sk_live_0deadbeef0deadbeef0deadbeef0deadbe"
+                    "text": "rk_test_0deadbeef0deadbeef0deadbeef0deadbe"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "secretHashSha256/v0": "5e1dc058bebb24208590415c56ac5f89f307e503442a53221381d284cbbada9d",
+            "secretHashSha256/v0": "ba3e5de6fa5e8ae0fb5491ec584d3b662aeb27a41b044d72b7f2a277a22d8ffb",
             "assetFingerprint/v0": "{\"platform\":\"Stripe\"}",
-            "validationFingerprintHashSha256/v0": "f1d05a287fec7ebf7f44817193c1a8a582aea26c98aafdb050159d65d7cdce2c",
-            "secretFingerprint/v0": "{\"secret\":\"sk_live_0deadbeef0deadbeef0deadbeef0deadbe\"}",
-            "validationFingerprint/v0": "{\"secret\":\"sk_live_0deadbeef0deadbeef0deadbeef0deadbe\"}"
+            "validationFingerprintHashSha256/v0": "de98553f5bcf33e4d5c576ec2f481b2b02753b11d80c149f292b8bb2413fc541",
+            "secretFingerprint/v0": "{\"secret\":\"rk_test_0deadbeef0deadbeef0deadbeef0deadbe\"}",
+            "validationFingerprint/v0": "{\"secret\":\"rk_test_0deadbeef0deadbeef0deadbeef0deadbe\"}"
           },
-          "rank": 43.78
+          "rank": 43.1
         },
         {
           "rule": {
-            "id": "SEC101/016",
+            "id": "SEC101/053",
             "index": 0,
             "toolComponent": {
               "index": 0
@@ -172,7 +172,7 @@
               "…ebeef0",
               "an apparent ",
               "",
-              "Stripe API key",
+              "Stripe test restricted API key",
               "",
               " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
             ]
@@ -181,7 +181,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_016.StripeApiKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_053.StripeTestRestrictedApiKey.txt",
                   "uriBaseId": "SRC_ROOT",
                   "index": 0
                 },
@@ -193,20 +193,20 @@
                   "charOffset": 84,
                   "charLength": 107,
                   "snippet": {
-                    "text": "sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0"
+                    "text": "rk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0"
                   }
                 }
               }
             }
           ],
           "fingerprints": {
-            "secretHashSha256/v0": "fea458040857dd3a00ef6004acd50b848352661633a4cbe907836537e47d0a92",
+            "secretHashSha256/v0": "bc3cf7f35418d4c1a4cc028695f846b1451b33bebbe2af14627ec7c198f49d37",
             "assetFingerprint/v0": "{\"platform\":\"Stripe\"}",
-            "validationFingerprintHashSha256/v0": "d32d85683e21369010a37c401e0ec45a5ecd09d6f3073c8a84866a9529f556c0",
-            "secretFingerprint/v0": "{\"secret\":\"sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}",
-            "validationFingerprint/v0": "{\"secret\":\"sk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}"
+            "validationFingerprintHashSha256/v0": "a87e7193304c7a1bd05eecd34ec335f2b1bfb13866a380cfaeb87443458c9c3a",
+            "secretFingerprint/v0": "{\"secret\":\"rk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}",
+            "validationFingerprint/v0": "{\"secret\":\"rk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}"
           },
-          "rank": 38.84
+          "rank": 38.57
         }
       ],
       "columnKind": "utf16CodeUnits"
