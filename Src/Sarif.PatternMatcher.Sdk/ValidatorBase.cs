@@ -126,7 +126,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public static bool ContainsDigitAndChar(string text)
         {
             // TODO, change the function name as ContainsDigitAndLetter and also fixed the 44 references
-            return ContainAtLeastNDigits(text, 1) && ContainAtLeastNLetters(text, 1);
+            return ContainsMinimumCountOfDigits(text, 1) && ContainsMinimumCountOfLetters(text, 1);
         }
 
         /// <summary>
@@ -136,16 +136,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// <returns>true if the input string contains both lowercase and uppercase letter; otherwise, false.</returns>
         public static bool ContainLowercaseAndUppercaseLetter(string text)
         {
-            return ContainAtLeastNLowercaseLetters(text, 1) && ContainAtLeastNUppercaseLetters(text, 1);
+            return ContainsMinimumCountOfLowercaseLetters(text, 1) && ContainsMinimumCountOfUppercaseLetters(text, 1);
         }
 
         /// <summary>
-        /// Determines whether the input string contains at least n digits.
+        /// Determines whether the input string contains mininum count of digits.
         /// </summary>
         /// <param name="text">The input string.</param>
-        /// <param name="n">The least number of digits required.</param>
-        /// <returns>true if the input string contains at least n digits; otherwise, false.</returns>
-        public static bool ContainAtLeastNDigits(string text, int n)
+        /// <param name="lowerBound">The minimum count of digits required.</param>
+        /// <returns>true if the input string contains minimum count of digits; otherwise, false.</returns>
+        public static bool ContainsMinimumCountOfDigits(string text, int lowerBound)
         {
             int digitCount = 0;
 
@@ -156,7 +156,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     digitCount++;
                 }
 
-                if (digitCount >= n)
+                if (digitCount >= lowerBound)
                 {
                     return true;
                 }
@@ -166,12 +166,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         }
 
         /// <summary>
-        /// Determines whether the input string contains at least n letters.
+        /// Determines whether the input string contains minimum count of letters.
         /// </summary>
         /// <param name="text">The input string.</param>
-        /// <param name="n">The least number of letters required.</param>
-        /// <returns>true if the input string contains at least n letters; otherwise, false.</returns>
-        public static bool ContainAtLeastNLetters(string text, int n)
+        /// <param name="lowerBound">The minimum count of letters required.</param>
+        /// <returns>true if the input string contains minimum count of letters; otherwise, false.</returns>
+        public static bool ContainsMinimumCountOfLetters(string text, int lowerBound)
         {
             int letterCount = 0;
 
@@ -182,7 +182,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     letterCount++;
                 }
 
-                if (letterCount >= n)
+                if (letterCount >= lowerBound)
                 {
                     return true;
                 }
@@ -192,12 +192,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         }
 
         /// <summary>
-        /// Determines whether the input string contains at least n uppercase letters.
+        /// Determines whether the input string contains minimum count of uppercase letters.
         /// </summary>
         /// <param name="text">The input string.</param>
-        /// <param name="n">The least number of uppercase letters required.</param>
-        /// <returns>true if the input string contains at least n uppercase letters; otherwise, false.</returns>
-        public static bool ContainAtLeastNUppercaseLetters(string text, int n)
+        /// <param name="lowerBound">The minimum count of uppercase letters required.</param>
+        /// <returns>true if the input string contains minimum count of uppercase letters; otherwise, false.</returns>
+        public static bool ContainsMinimumCountOfUppercaseLetters(string text, int lowerBound)
         {
             int upperCount = 0;
 
@@ -208,7 +208,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     upperCount++;
                 }
 
-                if (upperCount >= n)
+                if (upperCount >= lowerBound)
                 {
                     return true;
                 }
@@ -218,12 +218,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         }
 
         /// <summary>
-        /// Determines whether the input string contains at least n lowercase letters.
+        /// Determines whether the input string contains minimum count of lowercase letters.
         /// </summary>
         /// <param name="text">The input string.</param>
-        /// <param name="n">The least number of lowercase letters required.</param>
-        /// <returns>true if the input string contains at least n lowercase letters; otherwise, false.</returns>
-        public static bool ContainAtLeastNLowercaseLetters(string text, int n)
+        /// <param name="lowerBound">The minimum count of lowercase letters required.</param>
+        /// <returns>true if the input string contains minimum count of lowercase letters; otherwise, false.</returns>
+        public static bool ContainsMinimumCountOfLowercaseLetters(string text, int lowerBound)
         {
             int lowerCount = 0;
 
@@ -234,7 +234,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                     lowerCount++;
                 }
 
-                if (lowerCount >= n)
+                if (lowerCount >= lowerBound)
                 {
                     return true;
                 }
