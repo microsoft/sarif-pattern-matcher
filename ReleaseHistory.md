@@ -19,11 +19,11 @@
 - UEE => Eliminate unhandled exceptions in engine.
 
 ## v4.2.1 UNRELEASED
-- RRR: Updated `SEC101/016.StripeApiKey` rule to only handle live standard keys. Moved live restricted keys and test standard/restricted keys to new rules.
-- FPC: Updated `SEC101/016.StripeApiKey` regular expression to only consider keys with random part of length 24, 34, or 99+.
-- NR : Added `SEC101/051.StripeTestApiKey` rule with dynamic validation.
-- NR : Added `SEC101/052.StripeLiveRestrictedApiKey` rule with dynamic validation.
-- NR : Added `SEC101/053.StripeTestRestrictedApiKey` rule with dynamic validation.
+- RRR: Updated `SEC101/016.StripeApiKey` rule to only handle live standard keys. Moved live restricted keys and test standard/restricted keys to new rules. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
+- FPC: Updated `SEC101/016.StripeApiKey` regular expression to only consider keys with random part of length 24, 34, or 99+. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
+- NR : Added `SEC101/051.StripeTestApiKey` rule with dynamic validation. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
+- NR : Added `SEC101/052.StripeLiveRestrictedApiKey` rule with dynamic validation. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
+- NR : Added `SEC101/053.StripeTestRestrictedApiKey` rule with dynamic validation. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
 
 ## v4.2.0 Released 03/07/2023
 - DEP: Update SARIF SDK submodule from [2f79183 to 420fe9c](https://github.com/microsoft/sarif-sdk/compare/2f79183..420fe9c). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/420fe9c/src/ReleaseHistory.md).
