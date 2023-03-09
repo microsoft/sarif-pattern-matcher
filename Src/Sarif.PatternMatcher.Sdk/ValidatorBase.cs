@@ -134,7 +134,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// </summary>
         /// <param name="text">The input string.</param>
         /// <returns>true if the input string contains both lowercase and uppercase letter; otherwise, false.</returns>
-        public static bool ContainLowercaseAndUppercaseLetter(string text)
+        public static bool ContainsLowercaseAndUppercaseLetter(string text)
         {
             return ContainsMinimumCountOfLowercaseLetters(text, 1) && ContainsMinimumCountOfUppercaseLetters(text, 1);
         }
