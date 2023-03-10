@@ -18,6 +18,9 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## v4.2.0 Unreleased
+- DEP: Remove MongoDB.Driver from `Security`
+
 ## v4.2.0 Released 03/07/2023
 - DEP: Update SARIF SDK submodule from [2f79183 to 420fe9c](https://github.com/microsoft/sarif-sdk/compare/2f79183..420fe9c). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/420fe9c/src/ReleaseHistory.md).
 - BUG: Dependency update above resolve an issue where `IAnalysisLogger.AnalyzeTarget` callbacks did not occur.
