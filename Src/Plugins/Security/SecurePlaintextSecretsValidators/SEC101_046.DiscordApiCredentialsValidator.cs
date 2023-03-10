@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
-            if (!ContainsDigitAndChar(secret.Value))
+            if (!secret.Value.ToString().ContainsDigitAndLetter())
             {
                 return ValidationResult.CreateNoMatch();
             }
