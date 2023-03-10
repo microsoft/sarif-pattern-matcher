@@ -20,7 +20,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             FlexMatch id = groups["id"];
             FlexMatch secret = groups["secret"];
 
-            if (!ContainsDigitAndChar(secret.Value))
+            if (!secret.Value.ToString().ContainsDigitAndLetter())
             {
                 return ValidationResult.CreateNoMatch();
             }
