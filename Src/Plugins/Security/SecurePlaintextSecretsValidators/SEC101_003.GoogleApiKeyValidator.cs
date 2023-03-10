@@ -21,7 +21,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             // It is highly likely we do not have a key if we can't
             // find at least one letter and digit within the pattern.
-            if (!ContainsDigitAndChar(secret.Value))
+            if (!ContainsDigitAndLetter(secret.Value))
             {
                 return ValidationResult.CreateNoMatch();
             }

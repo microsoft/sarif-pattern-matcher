@@ -26,7 +26,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             FlexMatch secret = groups["secret"];
 
-            if (!ContainsDigitAndChar(secret.Value))
+            if (!ContainsDigitAndLetter(secret.Value))
             {
                 return ValidationResult.CreateNoMatch();
             }

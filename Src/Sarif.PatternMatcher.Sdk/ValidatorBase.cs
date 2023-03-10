@@ -123,9 +123,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// </summary>
         /// <param name="text">The input string.</param>
         /// <returns>true if the input string contains both digit and letter; otherwise, false.</returns>
-        public static bool ContainsDigitAndChar(string text)
+        public static bool ContainsDigitAndLetter(string text)
         {
-            // TODO, change the function name as ContainsDigitAndLetter and also fixed the 44 references
             return ContainsMinimumCountOfDigits(text, 1) && ContainsMinimumCountOfLetters(text, 1);
         }
 

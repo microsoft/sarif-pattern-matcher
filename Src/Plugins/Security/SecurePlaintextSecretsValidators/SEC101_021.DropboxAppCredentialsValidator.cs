@@ -31,8 +31,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             FlexMatch id = groups["id"];
             FlexMatch secret = groups["secret"];
 
-            if (!ContainsDigitAndChar(id.Value) ||
-                !ContainsDigitAndChar(secret.Value))
+            if (!ContainsDigitAndLetter(id.Value) ||
+                !ContainsDigitAndLetter(secret.Value))
             {
                 return ValidationResult.CreateNoMatch();
             }
