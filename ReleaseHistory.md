@@ -19,6 +19,7 @@
 - UEE => Eliminate unhandled exceptions in engine.
 
 ## v4.2.0 Unreleased
+- DEP: Remove MongoDB.Driver from `Security`.
 - BRK: Add/Rename functions in ExtensionMethods. [#722](https://github.com/microsoft/sarif-pattern-matcher/pull/722)
 
 ## v4.2.0 Released 03/07/2023
