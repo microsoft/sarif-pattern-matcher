@@ -34,6 +34,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
         }
 
+        public void TargetAnalyzed(IAnalysisContext context)
+        {
+        }
+
         public void Log(ReportingDescriptor rule, Result result, int? extensionIndex)
         {
             Results ??= new List<Result>();
