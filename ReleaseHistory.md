@@ -20,6 +20,7 @@
 
 ## v4.2.0 Unreleased
 - DEP: Remove MongoDB.Driver from `Security`.
+- DEP: Update `System.Data.SqlClient` from 4.7.0 to 4.8.5. [#698](https://github.com/microsoft/sarif-pattern-matcher/pull/698)
 - BRK: Add/Rename functions in ExtensionMethods. [#722](https://github.com/microsoft/sarif-pattern-matcher/pull/722)
 
 ## v4.2.0 Released 03/07/2023
