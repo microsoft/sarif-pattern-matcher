@@ -52,6 +52,112 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
+        public void AnalyzeCommand_TracesInMemory()
+        {
+            var testOutput = new StringBuilder();
+
+            foreach (DefaultTraces trace in new[] { DefaultTraces.None, DefaultTraces.ScanTime, DefaultTraces.RuleScanTime, DefaultTraces.PeakWorkingSet })
+            {
+                foreach (Uri uri in new[] { new Uri(@"c:\doesnotexist.txt"), new Uri(@"doesnotexist.txt", UriKind.Relative) })
+                {
+                    var command = new TestMultithreadedAnalyzeCommand();
+
+                    var options = new TestAnalyzeOptions
+                    {
+                        Trace = new[] { trace.ToString() },
+                    };
+
+                    var sarifOutput = new StringBuilder();
+                    using var writer = new StringWriter(sarifOutput);
+
+                    var logger = new SarifLogger(writer,
+                                                 run: new Run { Tool = command.Tool },
+                                                 levels: BaseLogger.ErrorWarningNote,
+                                                 kinds: BaseLogger.Fail);
+
+                    var target = new EnumeratedArtifact(FileSystem.Instance) { Uri = uri, Contents = string.Empty };
+
+                    var context = new TestAnalysisContext
+                    {
+                        TargetsProvider = new ArtifactProvider(new[] { target }),
+                        FailureLevels = BaseLogger.ErrorWarningNote,
+                        ResultKinds = BaseLogger.Fail,
+                        Logger = logger,
+                    };
+
+                    int result = command.Run(options, ref context);
+                    context.ValidateCommandExecution(result);
+
+                    SarifLog sarifLog = JsonConvert.DeserializeObject<SarifLog>(sarifOutput.ToString());
+
+                    int validTargetsCount = 1;
+                    AnalyzeCommandBaseTests.Validate(sarifLog.Runs?[0], trace, validTargetsCount, testOutput);
+                }
+
+                testOutput.Length.Should().Be(0, $"test cases failed : {Environment.NewLine}{testOutput}");
+            }
+        }
+
+        [Fact]
+        public void AnalyzeCommandBase_InMemoryAnalysisGeneratesHashes()
+        {
+            string expiredSendGridSecret = "SG.LGS6i3i1RnijKO2MvTm9sg.99e5Sv0_K0-qehN9MW0kkVcnMGMvsK6TfgTiWUlUgnc";
+            HashData hashData = HashUtilities.ComputeHashesForText(expiredSendGridSecret);
+
+            var target = new EnumeratedArtifact(FileSystem.Instance)
+            {
+                Uri = new Uri("Example.txt", UriKind.Relative),
+                Contents = expiredSendGridSecret,
+            };
+
+            var options = new AnalyzeOptions
+            {
+                SearchDefinitionsPaths = new[] { "SEC101.SecurePlaintextSecrets.json" },
+                Trace = new string[] { nameof(DefaultTraces.RuleScanTime) },
+            };
+
+            var analyzeCommand = new AnalyzeCommand();
+
+            var sb = new StringBuilder();
+            var writer = new StringWriter(sb);
+            var run = new Run { Tool = analyzeCommand.Tool };
+            var failureLevels = new FailureLevelSet(new[] { FailureLevel.Warning, FailureLevel.Note });
+
+            var logger = new SarifLogger(writer,
+                                         run: run,
+                                         dataToInsert: OptionallyEmittedData.Hashes,
+                                         levels: failureLevels,
+                                         kinds: BaseLogger.Fail);
+
+            var context = new AnalyzeContext
+            {
+                Logger = logger,
+                Traces = new HashSet<string>(new[] { "RuleScanTime" }),
+                TargetsProvider = new ArtifactProvider(new[] { target }),
+                FailureLevels = failureLevels,
+                ResultKinds = BaseLogger.Fail,
+            };
+
+            int result = analyzeCommand.Run(options, ref context);
+
+            context.RuntimeExceptions?[0].InnerException.Should().BeNull();
+            context.RuntimeExceptions?[0].Should().BeNull();
+            context.RuntimeErrors.Fatal().Should().Be(0);
+
+            result.Should().Be(CommandBase.SUCCESS);
+
+            SarifLog sarifLog = JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
+
+            sarifLog.Runs?[0].Results.Should().NotBeNull();
+
+            sarifLog.Runs[0].Artifacts.Should().NotBeNull();
+            sarifLog.Runs[0].Artifacts[0].Hashes.Should().Equal(hashData.ToDictionary());
+
+            sarifLog.Runs[0].Invocations?[0].ToolExecutionNotifications.Should().NotBeNull();
+        }
+
+
+        [Fact]
         public void AnalyzeCommand_AnalyzeFromContextNoRulesProvided()
         {
             var emptySkimmers = new List<Skimmer<AnalyzeContext>>();
@@ -397,73 +503,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             foreach (IRegex regex in regexList)
             {
                 AnalyzeFileCommand(regex);
-            }
-        }
-
-
-        [Fact]
-        public void AnalyzeCommand_InMemoryOnlyProducesHashes()
-        {
-            SearchDefinitions definitions = CreateFooFindingDefinitions();
-            Mock<IFileSystem> mockFileSystem = CreateMockFileSystemForDefinitions(definitions, out string searchDefinitionsPath);
-
-            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
-            FlexString fileContents = "bar foo foo";
-
-            // Acquire skimmers for searchers
-            var tool = Tool.CreateFromAssemblyData();
-            ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
-                mockFileSystem.Object,
-                new string[] { searchDefinitionsPath },
-                tool,
-                RE2Regex.Instance);
-
-            var targetUri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute);
-
-            var sb = new StringBuilder();
-            using var writer = new StringWriter(sb);
-            var sarifLogger = new SarifLogger(writer,
-                                              dataToInsert: OptionallyEmittedData.RegionSnippets | OptionallyEmittedData.Hashes,
-                                              run: new Run() { Tool = tool })
-            {
-                ComputeHashData = (uri) => uri == targetUri ? HashUtilities.ComputeHashesForText(fileContents) : null
-            };
-
-            var target = new EnumeratedArtifact(FileSystem.Instance)
-            {
-                Uri = targetUri,
-                Contents = fileContents,
-            };
-
-            var context = new AnalyzeContext()
-            {
-                CurrentTarget = target,
-                DataToInsert = OptionallyEmittedData.Hashes,
-                Logger = sarifLogger,
-            };
-
-            var disabledSkimmers = new HashSet<string>();
-            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
-            PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
-
-            sarifLogger.Dispose();
-            SarifLog sarifLog = JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
-
-            sarifLog.Runs[0].Results.Should().NotBeNull();
-            sarifLog.Runs[0].Results.Count.Should().Be(2);
-
-            foreach (Result result in sarifLog.Runs[0].Results)
-            {
-                result.Level.Should().Be(FailureLevel.Error);
-                result.Locations[0].PhysicalLocation.Region.Snippet.Should().NotBeNull();
-            }
-
-            foreach (Artifact artifact in sarifLog.Runs[0].Artifacts)
-            {
-                artifact.Hashes.Should().NotBeNull().And.HaveCount(3);
-                artifact.Hashes["md5"].Should().NotBeNull();
-                artifact.Hashes["sha-1"].Should().NotBeNull();
-                artifact.Hashes["sha-256"].Should().NotBeNull();
             }
         }
 
