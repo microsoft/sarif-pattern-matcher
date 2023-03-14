@@ -118,20 +118,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return true;
         }
 
-        public static bool ContainsDigitAndChar(string matchedPattern)
-        {
-            bool oneDigit = false, oneLetter = false;
-
-            foreach (char ch in matchedPattern)
-            {
-                if (char.IsDigit(ch)) { oneDigit = true; }
-                if (char.IsLetter(ch)) { oneLetter = true; }
-                if (oneDigit && oneLetter) { return true; }
-            }
-
-            return false;
-        }
-
         public static ValidationState ReturnUnexpectedResponseCode(ref string message,
                                                                    HttpStatusCode status,
                                                                    string asset = null,

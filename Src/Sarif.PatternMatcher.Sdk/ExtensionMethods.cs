@@ -48,5 +48,129 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                    truncatedText +
                    suffix;
         }
+
+        /// <summary>
+        /// Determines whether the input string contains both digit and letter.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <returns>true if the input string contains both digit and letter; otherwise, false.</returns>
+        public static bool ContainsDigitAndLetter(this string text)
+        {
+            return text.ContainsMinimumCountOfDigits(1) && text.ContainsMinimumCountOfLetters(1);
+        }
+
+        /// <summary>
+        /// Determines whether the input string contains both lowercase and uppercase letter.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <returns>true if the input string contains both lowercase and uppercase letter; otherwise, false.</returns>
+        public static bool ContainsLowercaseAndUppercaseLetter(this string text)
+        {
+            return text.ContainsMinimumCountOfLowercaseLetters(1) && text.ContainsMinimumCountOfUppercaseLetters(1);
+        }
+
+        /// <summary>
+        /// Determines whether the input string contains mininum count of digits.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <param name="lowerBound">The minimum count of digits required.</param>
+        /// <returns>true if the input string contains minimum count of digits; otherwise, false.</returns>
+        public static bool ContainsMinimumCountOfDigits(this string text, int lowerBound)
+        {
+            int digitCount = 0;
+
+            foreach (char c in text)
+            {
+                if (char.IsDigit(c))
+                {
+                    digitCount++;
+                }
+
+                if (digitCount >= lowerBound)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether the input string contains minimum count of letters.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <param name="lowerBound">The minimum count of letters required.</param>
+        /// <returns>true if the input string contains minimum count of letters; otherwise, false.</returns>
+        public static bool ContainsMinimumCountOfLetters(this string text, int lowerBound)
+        {
+            int letterCount = 0;
+
+            foreach (char c in text)
+            {
+                if (char.IsLetter(c))
+                {
+                    letterCount++;
+                }
+
+                if (letterCount >= lowerBound)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether the input string contains minimum count of uppercase letters.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <param name="lowerBound">The minimum count of uppercase letters required.</param>
+        /// <returns>true if the input string contains minimum count of uppercase letters; otherwise, false.</returns>
+        public static bool ContainsMinimumCountOfUppercaseLetters(this string text, int lowerBound)
+        {
+            int upperCount = 0;
+
+            foreach (char c in text)
+            {
+                if (char.IsUpper(c))
+                {
+                    upperCount++;
+                }
+
+                if (upperCount >= lowerBound)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether the input string contains minimum count of lowercase letters.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <param name="lowerBound">The minimum count of lowercase letters required.</param>
+        /// <returns>true if the input string contains minimum count of lowercase letters; otherwise, false.</returns>
+        public static bool ContainsMinimumCountOfLowercaseLetters(this string text, int lowerBound)
+        {
+            int lowerCount = 0;
+
+            foreach (char c in text)
+            {
+                if (char.IsLower(c))
+                {
+                    lowerCount++;
+                }
+
+                if (lowerCount >= lowerBound)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

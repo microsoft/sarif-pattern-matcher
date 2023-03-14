@@ -101,7 +101,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void AnalyzeCommandBase_InMemoryAnalysisGeneratesHashes()
         {
-            string expiredSendGridSecret = "SG.LGS6i3i1RnijKO2MvTm9sg.99e5Sv0_K0-qehN9MW0kkVcnMGMvsK6TfgTiWUlUgnc";
+            string expiredSendGridSecret = "SG.LGS6i3i1RnijKO2MvTm9sg.99e5Sv0_K0-deaddeaddeaddeaddeaddead0123dead";
             HashData hashData = HashUtilities.ComputeHashesForText(expiredSendGridSecret);
 
             var target = new EnumeratedArtifact(FileSystem.Instance)
