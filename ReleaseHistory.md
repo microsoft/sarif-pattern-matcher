@@ -18,20 +18,11 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-<<<<<<< HEAD
 ## v4.3.0 Released 03/14/2023
 - DEP: Update SARIF SDK submodule from [420fe9c to 98d2d25](https://github.com/microsoft/sarif-sdk/compare/420fe9c..98d2d25). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/420fe9c/src/ReleaseHistory.md).
 - DEP: Remove MongoDB.Driver from `Security`.
 - DEP: Update `System.Data.SqlClient` from 4.7.0 to 4.8.5. [#698](https://github.com/microsoft/sarif-pattern-matcher/pull/698)
-=======
-## v4.2.0 Unreleased
-- DEP: Remove MongoDB.Driver from `Security`.
-<<<<<<< HEAD
->>>>>>> 5196ffc (Bump MongoDB.Driver from 2.15.0 to 2.19.0 in /Src/Plugins/Security (#716))
-=======
-- DEP: Update `System.Data.SqlClient` from 4.7.0 to 4.8.5. [#698](https://github.com/microsoft/sarif-pattern-matcher/pull/698)
->>>>>>> 74548d8 (Bump System.Data.SqlClient from 4.7.0 to 4.8.5 in /Src/Plugins/Security (#698))
-- BRK: Add/Rename functions in ExtensionMethods. [#722](https://github.com/microsoft/sarif-pattern-matcher/pull/722)
+- NEW: Add `ContainsDigitAndLetter`, `ContainsLowercaseAndUppercaseLetter` and other text evaluation functions to `ExtensionMethods`. [#722](https://github.com/microsoft/sarif-pattern-matcher/pull/722)
 - BUG: Various fixes to allow for in-memory analysis and logging.
 
 ## v4.2.0 Released 03/07/2023
