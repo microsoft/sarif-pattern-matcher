@@ -19,28 +19,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
-        private Tool tool;
-
         public AnalyzeCommand(IFileSystem fileSystem = null)
             : base(fileSystem)
         {
-        }
-
-        protected override Tool Tool
-        {
-            get
-            {
-                if (tool == null)
-                {
-                    this.tool = Tool.CreateFromAssemblyData(this.GetType().Assembly);
-                    this.tool.Driver.Name = "Spmi";
-                    this.tool.Driver.InformationUri = new Uri("https://aka.ms/sarif-pattern-matcher");
-                }
-
-                return this.tool;
-            }
-
-            set => this.tool = value;
+            Tool.Driver.Name = "Spmi";
+            this.Tool.Driver.InformationUri = new Uri("https://aka.ms/sarif-pattern-matcher");
         }
 
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem,

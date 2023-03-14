@@ -3,9 +3,7 @@
 
 using System.Collections.Generic;
 
-using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
-
-namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
+namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public static class SharedUtilities
     {
