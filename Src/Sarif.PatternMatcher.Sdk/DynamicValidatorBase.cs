@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
@@ -25,10 +26,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 return result.Item1;
             }
 
-            ValidationState validationState = IsValidDynamicHelper(ref fingerprint,
-                                                                   ref message,
+            Tuple<ValidationState, Fingerprint, string, ResultLevelKind> dynamicValidationResponse = await IsValidDynamicHelper(fingerprint,
+                                                                   message,
                                                                    options,
-                                                                   ref resultLevelKind);
+                                                                   resultLevelKind);
 
             FingerprintToResultCache[fingerprint] =
                 new Tuple<ValidationState, ResultLevelKind, string>(validationState, resultLevelKind, message);
@@ -36,7 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return validationState;
         }
 
-        protected virtual ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
+        protected virtual async Task<ValidationState> IsValidDynamicHelper(ref Fingerprint fingerprint,
                                                                ref string message,
                                                                IDictionary<string, string> options,
                                                                ref ResultLevelKind resultLevelKind)
