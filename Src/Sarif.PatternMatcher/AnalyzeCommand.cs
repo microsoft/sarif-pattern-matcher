@@ -36,7 +36,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             engine ??= RE2Regex.Instance;
 
             var validators = new ValidatorsCache(validatorBinaryPaths: null, fileSystem);
-            FileRegionsCache fileRegionsCache = FileRegionsCache.Instance;
 
             var skimmers = new HashSet<Skimmer<AnalyzeContext>>();
 
@@ -376,7 +375,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (context.SearchDefinitionsPaths?.Any() == true)
             {
-                foreach (var skimmer in CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.SearchDefinitionsPaths, Tool))
+                foreach (Skimmer<AnalyzeContext> skimmer in CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.SearchDefinitionsPaths, Tool))
                 {
                     aggregatedSkimmers.Add(skimmer);
                 }
