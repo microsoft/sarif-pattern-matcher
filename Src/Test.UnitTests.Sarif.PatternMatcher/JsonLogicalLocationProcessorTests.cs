@@ -119,7 +119,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Test.Processors
             // https://dev.azure.com/mseng/1ES/_workitems/edit/2040914
             //
             // Fix shipped in 4.3.3.
-            
+
             string fileContents = "{\r\n  \"variables\": {\r\n    \"firstInFile\": {\r\n      \"value\": \"1/000000000000000:deaddeaddeaddeaddeaddeaddeaddead\"\r\n    },\r\n    \"system.debug\": {\r\n      \"value\": \"true\",\r\n      \"allowOverride\": true\r\n    },\r\n    \"secondInFile\": {\r\n      \"value\": \"deadpat0deadpat0deadpat0deadpat0deadpat0deadpat0dead\"\r\n    }\r\n  }\r\n}";
             string serializedResults = "[{\"ruleId\":\"SEC101/102\",\"level\":\"error\",\"message\":{\"id\":\"Default\",\"arguments\":[\"…p2izpq\",\"an apparent \",\"\",\"Azure DevOps personal access token (PAT)\",\"\",\"\"]},\"locations\":[{\"physicalLocation\":{\"artifactLocation\":{\"uri\":\"file:///d:/testfiles/repro.json\"},\"region\":{\"startLine\":11,\"startColumn\":17,\"endLine\":11,\"endColumn\":69,\"charOffset\":243,\"charLength\":52,\"snippet\":{\"text\":\"deadpat0deadpat0deadpat0deadpat0deadpat0deadpat0dead\"}},\"contextRegion\":{\"startLine\":10,\"startColumn\":1,\"endLine\":12,\"endColumn\":6,\"charOffset\":204,\"charLength\":99,\"snippet\":{\"text\":\"    \\\"secondInFile\\\": {\\r\\n      \\\"value\\\": \\\"deadpat0deadpat0deadpat0deadpat0deadpat0deadpat0dead\\\"\\r\\n    }\"}}}}],\"fingerprints\":{\"secretHashSha256/v0\":\"9307d491acfa06793dfb54bd90f0bef1859fc6e3caacf6a4f496c1a3d1dfc56a\",\"assetFingerprint/v0\":\"{\\\"platform\\\":\\\"AzureDevOps\\\"}\",\"validationFingerprintHashSha256/v0\":\"90ecd2b4cacbfb53e5aee13addaac7ebbb5389658d5cb93d116beeff4a402988\",\"secretFingerprint/v0\":\"{\\\"secret\\\":\\\"deadpat0deadpat0deadpat0deadpat0deadpat0deadpat0dead\\\"}\",\"validationFingerprint/v0\":\"{\\\"secret\\\":\\\"deadpat0deadpat0deadpat0deadpat0deadpat0deadpat0dead\\\"}\"},\"rank\":63.02},{\"ruleId\":\"SEC101/504\",\"message\":{\"id\":\"Default\",\"arguments\":[\"…addead\",\"an apparent \",\"\",\"Asana personal access token\",\"\",\"\"]},\"locations\":[{\"physicalLocation\":{\"artifactLocation\":{\"uri\":\"file:///d:/testfiles/repro.json\"},\"region\":{\"startLine\":4,\"startColumn\":17,\"endLine\":4,\"endColumn\":67,\"charOffset\":59,\"charLength\":50,\"snippet\":{\"text\":\"1/000000000000000:deaddeaddeaddeaddeaddeaddeaddead\"}},\"contextRegion\":{\"startLine\":3,\"startColumn\":1,\"endLine\":5,\"endColumn\":7,\"charOffset\":21,\"charLength\":97,\"snippet\":{\"text\":\"    \\\"firstInFile\\\": {\\r\\n      \\\"value\\\": \\\"1/000000000000000:deaddeaddeaddeaddeaddeaddeaddead\\\"\\r\\n    },\"}}}}],\"fingerprints\":{\"secretHashSha256/v0\":\"ed1ae91ea40454506c72a6b4b065c6259b2f5e1cb636db3a8d7e23e49f486c85\",\"assetFingerprint/v0\":\"{\\\"platform\\\":\\\"Asana\\\"}\",\"validationFingerprintHashSha256/v0\":\"c57f113b230e27a46530b64e3cd4e923e1ddc272b705a64b260afe4f3bedd0d9\",\"secretFingerprint/v0\":\"{\\\"secret\\\":\\\"1/000000000000000:deaddeaddeaddeaddeaddeaddeaddead\\\"}\",\"validationFingerprint/v0\":\"{\\\"secret\\\":\\\"1/000000000000000:deaddeaddeaddeaddeaddeaddeaddead\\\"}\"},\"rank\":31.88}]";
             ICollection<Result> results = JsonConvert.DeserializeObject<ICollection<Result>>(serializedResults);
@@ -127,10 +127,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Test.Processors
             var processor = new JsonLogicalLocationProcessor();
             processor.Process(results, fileContents);
 
-            var expectedPaths = new HashSet<string>(new[] 
-                { 
-                    "variables.firstInFile.value", 
-                    "variables.secondInFile.value" 
+            var expectedPaths = new HashSet<string>(new[]
+                {
+                    "variables.firstInFile.value",
+                    "variables.secondInFile.value"
                 });
 
             var actualPaths = new HashSet<string>();
