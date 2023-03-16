@@ -77,7 +77,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Test.Processors
             var result = new Result();
             result.Locations = new List<Location>();
             result.Locations.Add(new Location());
-            result.Locations[0].PhysicalLocation = new PhysicalLocation();
+            result.Locations[0].PhysicalLocation = new PhysicalLocation()
+            {
+                ArtifactLocation = new ArtifactLocation()
+                {
+                    Uri = new Uri($"c:\\{Guid.NewGuid()}.txt")
+                }
+            };
+
             result.Locations[0].PhysicalLocation.Region = region;
 
             // TODO: Our JSON logical path processor currently depends on line locations.
