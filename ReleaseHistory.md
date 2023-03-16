@@ -19,7 +19,7 @@
 - UEE => Eliminate unhandled exceptions in engine.
 
 ## v4.3.2 Released 03/16/2023
-- BUG: JSON logical location `fullyQualifiedName` properties incorrect when scan returns results in a different order than they occur in the file. 
+- BUG: JSON logical location `fullyQualifiedName` properties incorrect when scan returns results in a different order than they occur in the file. [#726](https://github.com/microsoft/sarif-pattern-matcher/pull/726)
 
 ## v4.3.2 Released 03/16/2023
 - BRK: Remove `AnalyzeContext.FileRegionsCache` property. The cache is now produced and managed by the scan engine. [#725](https://github.com/microsoft/sarif-pattern-matcher/pull/725)
