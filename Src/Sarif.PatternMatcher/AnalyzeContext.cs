@@ -16,7 +16,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // Any file is a candidate for regex-driven search.
             // The actual applicability of a file for a specific
             // search definition is governed by its name/extension.
-            FileRegionsCache = null;
             IsValidAnalysisTarget = true;
         }
 
@@ -50,8 +49,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public bool Retry { get; set; }
 
-        public FileRegionsCache FileRegionsCache { get; set; }
-
         /// <summary>
         /// Gets or sets a hashset that stores observed fingerprints in the
         /// current scan target. This data is used to prevent firing
@@ -73,9 +70,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public override void Dispose()
         {
             base.Dispose();
-
-            FileRegionsCache?.ClearCache();
-            FileRegionsCache = null;
 
             ObservedFingerprintCache?.Clear();
             ObservedFingerprintCache = null;

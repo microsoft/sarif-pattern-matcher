@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -688,21 +689,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private static Region PopulateTextRegionProperties(AnalyzeContext context, Region region)
         {
-            if (context.FileRegionsCache != null)
-            {
-                return context.FileRegionsCache.PopulateTextRegionProperties(region,
+            context.Logger.FileRegionsCache ??= new FileRegionsCache();
+
+            return
+                context.Logger.FileRegionsCache.PopulateTextRegionProperties(region,
                                                                              context.CurrentTarget.Uri,
                                                                              populateSnippet: true,
                                                                              fileText: context.CurrentTarget.Contents);
-            }
-
-            lock (FileRegionsCache.Instance)
-            {
-                return FileRegionsCache.Instance.PopulateTextRegionProperties(region,
-                                                                              context.CurrentTarget.Uri,
-                                                                              populateSnippet: true,
-                                                                              fileText: context.CurrentTarget.Contents);
-            }
         }
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
@@ -1163,15 +1156,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private static Region ConstructMultilineContextSnippet(AnalyzeContext context, Region region)
         {
-            if (context.FileRegionsCache != null)
-            {
-                return context.FileRegionsCache.ConstructMultilineContextSnippet(region, context.CurrentTarget.Uri);
-            }
+            context.Logger.FileRegionsCache ??= new FileRegionsCache();
 
-            lock (FileRegionsCache.Instance)
-            {
-                return FileRegionsCache.Instance.ConstructMultilineContextSnippet(region, context.CurrentTarget.Uri);
-            }
+            return
+                context.Logger.FileRegionsCache.ConstructMultilineContextSnippet(region, context.CurrentTarget.Uri);
         }
 
         private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression)

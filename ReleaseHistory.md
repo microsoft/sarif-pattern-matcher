@@ -18,7 +18,11 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## v4.3.0 Released 03/14/2023
+## v4.3.2 Released 03/16/2023
+- BRK: Remove `AnalyzeContext.FileRegionsCache` property. The cache is now produced and managed by the scan engine.
+- DEP: Update SARIF SDK submodule from [98d2d25 to 98d2d25](https://github.com/microsoft/sarif-sdk/compare/98d2d25..98d2d25). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/420fe9c/src/ReleaseHistory.md).
+
+## v4.3.1 Released 03/14/2023
 - DEP: Update SARIF SDK submodule from [420fe9c to 98d2d25](https://github.com/microsoft/sarif-sdk/compare/420fe9c..98d2d25). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/420fe9c/src/ReleaseHistory.md).
 - DEP: Remove MongoDB.Driver from `Security`.
 - DEP: Update `System.Data.SqlClient` from 4.7.0 to 4.8.5. [#698](https://github.com/microsoft/sarif-pattern-matcher/pull/698)

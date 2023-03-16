@@ -22,6 +22,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             get => Results == null && NoNotificationsFired;
         }
 
+        public FileRegionsCache FileRegionsCache { get; set; }
+
         public void AnalysisStarted()
         {
         }

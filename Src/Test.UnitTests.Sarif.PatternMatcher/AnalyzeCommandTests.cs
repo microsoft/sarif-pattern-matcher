@@ -1044,7 +1044,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Logger = logger,
                 CurrentTarget = target,
                 DataToInsert = dataToInsert,
-                FileRegionsCache = new FileRegionsCache(),
             };
 
             var disabledSkimmers = new HashSet<string>();
@@ -1052,7 +1051,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
 
             logger.AnalysisStarted();
-            FileRegionsCache.Instance.ClearCache();
             PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
             logger.AnalysisStopped(RuntimeConditions.None);
 
