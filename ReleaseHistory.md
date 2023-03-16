@@ -18,7 +18,7 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## v4.3.2 Released 03/16/2023
+## v4.3.3 Released 03/16/2023
 - BUG: JSON logical location `fullyQualifiedName` properties incorrect when scan returns results in a different order than they occur in the file. [#726](https://github.com/microsoft/sarif-pattern-matcher/pull/726)
 
 ## v4.3.2 Released 03/16/2023
