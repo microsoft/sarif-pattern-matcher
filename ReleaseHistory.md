@@ -18,6 +18,9 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## v4.3.3 Released 03/16/2023
+- BUG: JSON logical location `fullyQualifiedName` properties incorrect when scan returns results in a different order than they occur in the file. [#726](https://github.com/microsoft/sarif-pattern-matcher/pull/726)
+
 ## v4.3.2 Released 03/16/2023
 - BRK: Remove `AnalyzeContext.FileRegionsCache` property. The cache is now produced and managed by the scan engine. [#725](https://github.com/microsoft/sarif-pattern-matcher/pull/725)
 - DEP: Update SARIF SDK submodule from [98d2d25 to 39ea626](https://github.com/microsoft/sarif-sdk/compare/98d2d25..39ea626). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/39ea626/src/ReleaseHistory.md).

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 using Newtonsoft.Json;
@@ -26,7 +27,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         ///     - For arrays, one might report the whole array, but this gets "closer" to the match.
         ///     - For objects, spanning properties will get "closer" to the match.
         /// </remarks>
-        public void Process(ICollection<Result> results, string fileContents)
+        public void Process(ICollection<Result> results, string fileContents, FileRegionsCache fileRegionsCache = null)
         {
             if (results?.Count == 0) { return; }
 
@@ -38,7 +39,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     string lastPath = null;
 
+                    fileRegionsCache ??= new FileRegionsCache();
+
+                    var sortedByLocation = new SortedDictionary<int, Result>();
+
                     foreach (Result result in results)
+                    {
+                        Location location = result.Locations[0];
+                        Region region = location.PhysicalLocation.Region;
+
+                        fileRegionsCache.PopulateTextRegionProperties(region,
+                                                                      location.PhysicalLocation.ArtifactLocation.Uri,
+                                                                      populateSnippet: false,
+                                                                      fileText: fileContents);
+
+                        sortedByLocation[region.CharOffset] = result;
+                    }
+
+                    foreach (Result result in sortedByLocation.Values)
                     {
                         Region region = result.Locations[0].PhysicalLocation.Region;
                         if (CurrentTokenIsAfter(reader, region))

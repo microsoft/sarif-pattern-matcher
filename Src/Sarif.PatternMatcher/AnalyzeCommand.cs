@@ -404,7 +404,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (aggregatedResults.Count > 0)
                 {
                     var jsonLogicalLocationProcessor = new JsonLogicalLocationProcessor();
-                    jsonLogicalLocationProcessor.Process(aggregatedResults, context.CurrentTarget.Contents);
+                    jsonLogicalLocationProcessor.Process(aggregatedResults, context.CurrentTarget.Contents, context.Logger.FileRegionsCache);
                 }
             }
 
