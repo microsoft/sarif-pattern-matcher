@@ -16,7 +16,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             'd',
             "search-definitions",
             Separator = ';',
-            Required = true,
             HelpText = "A path to a file containing one or more search definitions to drive analysis.")]
         public IEnumerable<string> SearchDefinitionsPaths { get; set; }
 
@@ -24,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             "dynamic-validation",
             HelpText = "Enable dynamic validations, if any (may compromise " +
                        "performance and/or result in calls across the network).")]
-        public bool DynamicValidation { get; internal set; }
+        public bool? DynamicValidation { get; internal set; }
 
         [Option(
             "deny-regex",
@@ -34,17 +33,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Option(
             "disable-dynamic-validation-caching",
             HelpText = "Disable caching from dynamic validation.")]
-        public bool DisableDynamicValidationCaching { get; internal set; }
+        public bool? DisableDynamicValidationCaching { get; internal set; }
 
         [Option(
             "enhanced-reporting",
             HelpText = "Enable enhanced reporting provided by dynamic validators (when --dynamic-validation is also enabled).")]
-        public bool EnhancedReporting { get; internal set; }
+        public bool? EnhancedReporting { get; internal set; }
 
         [Option(
             "retry",
             HelpText = "Enable retry connection if enabled.")]
-        public bool Retry { get; set; }
+        public bool? Retry { get; set; }
 
         [Option(
             "max-memory-in-kb",
@@ -55,6 +54,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Option(
             "redact-secrets",
             HelpText = "Redact sensitive credential components from log files.")]
-        public bool RedactSecrets { get; internal set; }
+        public bool? RedactSecrets { get; internal set; }
     }
 }

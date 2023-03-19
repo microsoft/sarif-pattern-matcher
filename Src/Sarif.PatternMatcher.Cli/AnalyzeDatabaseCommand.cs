@@ -33,7 +33,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             {
                 options.BatchSize = (options.BatchSize > 0) ? options.BatchSize : DefaultBatchSize;
                 options.Threads = options.Threads > 0 ? options.Threads : Environment.ProcessorCount * 4;
-                dynamicValidation = options.DynamicValidation;
+                dynamicValidation = options.DynamicValidation != null ? options.DynamicValidation.Value : false;
 
                 contentChannel = Channel.CreateUnbounded<string>();
 
