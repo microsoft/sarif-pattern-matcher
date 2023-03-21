@@ -22,6 +22,11 @@
 - DEP: Update SARIF SDK submodule from [39ea626 to 53b0246](https://github.com/microsoft/sarif-sdk/compare/39ea626..53b0246). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/53b0246/src/ReleaseHistory.md). Adds version control provenance.
 - BRK: `AnalyzeOptions` `DynamicValidation`, `DisableDynamicValidationCaching`, `EnhancedReporting`, `Retry` and `RedactSecrets` properties are now `bool?'. [#727](https://github.com/microsoft/sarif-pattern-matcher/pull/727)
 - BRK: Obsolete `--file-size-in-kb` argument removed. [#727](https://github.com/microsoft/sarif-pattern-matcher/pull/727)
+- RRR: Updated `SEC101/016.StripeApiKey` rule to only handle live standard keys. Moved live restricted keys and test standard/restricted keys to new rules. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
+- FPC: Updated `SEC101/016.StripeApiKey` regular expression to only consider keys with random part of length 24, 34, or 99+. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
+- NR : Added `SEC101/051.StripeTestApiKey` rule with dynamic validation. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
+- NR : Added `SEC101/052.StripeLiveRestrictedApiKey` rule with dynamic validation. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
+- NR : Added `SEC101/053.StripeTestRestrictedApiKey` rule with dynamic validation. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
 
 ## v4.3.3 Released 03/16/2023
 - BUG: JSON logical location `fullyQualifiedName` properties incorrect when scan returns results in a different order than they occur in the file. [#726](https://github.com/microsoft/sarif-pattern-matcher/pull/726)
