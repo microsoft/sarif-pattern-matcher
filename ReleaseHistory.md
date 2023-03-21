@@ -19,7 +19,7 @@
 - UEE => Eliminate unhandled exceptions in engine.
 
 ## v4.3.5 Released 03/21/2023
-- DEP: Update SARIF SDK submodule from [39ea626 to 023b19b](https://github.com/microsoft/sarif-sdk/compare/39ea626..023b19b). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/023b19b/src/ReleaseHistory.md).
+- DEP: Update SARIF SDK submodule from [39ea626 to  53b0246](https://github.com/microsoft/sarif-sdk/compare/39ea626.. 53b0246). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/023b19b/src/ReleaseHistory.md). Adds version control provenance.
 - BRK: `AnalyzeOptions` `DynamicValidation`, `DisableDynamicValidationCaching`, `EnhancedReporting`, `Retry` and `RedactSecrets` properties are now `bool?'. [#727](https://github.com/microsoft/sarif-pattern-matcher/pull/727)
 - BRK: Obsolete `--file-size-in-kb` argument removed. [#727](https://github.com/microsoft/sarif-pattern-matcher/pull/727)
 

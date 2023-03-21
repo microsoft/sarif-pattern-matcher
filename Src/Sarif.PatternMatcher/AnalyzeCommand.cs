@@ -348,6 +348,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.DynamicValidation = options.DynamicValidation != null ? options.DynamicValidation.Value : context.DynamicValidation;
             context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching != null ? options.DisableDynamicValidationCaching.Value : context.DisableDynamicValidationCaching;
 
+            if (options.VersionControlProvenance != null)
+            {
+                context.VersionControlProvenance = 
+                    JsonConvert.DeserializeObject<List<VersionControlDetails>>(options.VersionControlProvenance);
+            }
+
             context.SearchDefinitionsPaths = options.SearchDefinitionsPaths.Any() ? new StringSet(options.SearchDefinitionsPaths) : context.SearchDefinitionsPaths;
 
             return context;
