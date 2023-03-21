@@ -49,14 +49,6 @@
           "executionSuccessful": true
         }
       ],
-      "artifacts": [
-        {
-          "location": {
-            "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_003.Url.ps1",
-            "uriBaseId": "SRC_ROOT"
-          }
-        }
-      ],
       "results": [
         {
           "rule": {
@@ -78,8 +70,7 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_003.Url.ps1",
-                  "uriBaseId": "SRC_ROOT",
-                  "index": 0
+                  "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 1,
@@ -123,8 +114,7 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_003.Url.ps1",
-                  "uriBaseId": "SRC_ROOT",
-                  "index": 0
+                  "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 2,
@@ -168,8 +158,7 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_003.Url.ps1",
-                  "uriBaseId": "SRC_ROOT",
-                  "index": 0
+                  "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 3,

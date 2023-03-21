@@ -36,6 +36,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         public long ViolationsSeen { get; set; }
 
+        public FileRegionsCache FileRegionsCache { get; set; }
+
         public void AnalysisStarted() { }
 
         public void AnalysisStopped(RuntimeConditions runtimeConditions) { }
@@ -265,7 +267,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 {
                     CurrentTarget = target,
                     Logger = logger,
-                    FileRegionsCache = new FileRegionsCache(),
                 };
 
                 var disabledSkimmers = new HashSet<string>();

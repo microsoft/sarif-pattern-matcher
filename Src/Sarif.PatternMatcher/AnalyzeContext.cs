@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.Writers;
 using Microsoft.Strings.Interop;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
@@ -16,11 +17,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // Any file is a candidate for regex-driven search.
             // The actual applicability of a file for a specific
             // search definition is governed by its name/extension.
-            FileRegionsCache = null;
             IsValidAnalysisTarget = true;
         }
 
-        public StringSet SearchDefinitionsPaths { get; set; }
+        public StringSet SearchDefinitionsPaths
+        {
+            get => this.Policy.GetProperty(SearchDefinitionsPathsProperty);
+            set => this.Policy.SetProperty(SearchDefinitionsPathsProperty, value);
+        }
 
         public bool RedactSecrets { get; set; }
 
@@ -42,15 +46,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             set => this.Policy.SetProperty(MaxMemoryInKilobytesProperty, value >= 0 ? value : MaxFileSizeInKilobytesProperty.DefaultValue());
         }
 
-        public string GlobalFileDenyRegex { get; set; }
+        public string GlobalFileDenyRegex
+        {
+            get => this.Policy.GetProperty(GlobalFileDenyRegexProperty);
+            set => this.Policy.SetProperty(GlobalFileDenyRegexProperty, value);
+        }
 
         public bool DisableDynamicValidationCaching { get; set; }
 
         public bool EnhancedReporting { get; set; }
 
         public bool Retry { get; set; }
-
-        public FileRegionsCache FileRegionsCache { get; set; }
 
         /// <summary>
         /// Gets or sets a hashset that stores observed fingerprints in the
@@ -73,9 +79,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public override void Dispose()
         {
             base.Dispose();
-
-            FileRegionsCache?.ClearCache();
-            FileRegionsCache = null;
 
             ObservedFingerprintCache?.Clear();
             ObservedFingerprintCache = null;
@@ -104,5 +107,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         "CoreSettings", nameof(SearchDefinitionsPaths), defaultValue: () => new StringSet(),
                         "One or more paths to files containing one or more search definitions to drive analysis.");
 
+        public static PerLanguageOption<string> GlobalFileDenyRegexProperty { get; } =
+                    new PerLanguageOption<string>(
+                        "CoreSettings", nameof(GlobalFileDenyRegex), defaultValue: () => string.Empty,
+                        "An optional regex that can be used to filter unwanted files or directories from analysis.");
     }
 }

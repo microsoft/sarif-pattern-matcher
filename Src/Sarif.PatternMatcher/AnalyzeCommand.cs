@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -19,28 +20,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
-        private Tool tool;
-
         public AnalyzeCommand(IFileSystem fileSystem = null)
             : base(fileSystem)
         {
-        }
-
-        protected override Tool Tool
-        {
-            get
-            {
-                if (tool == null)
-                {
-                    this.tool = Tool.CreateFromAssemblyData(this.GetType().Assembly);
-                    this.tool.Driver.Name = "Spmi";
-                    this.tool.Driver.InformationUri = new Uri("https://aka.ms/sarif-pattern-matcher");
-                }
-
-                return this.tool;
-            }
-
-            set => this.tool = value;
+            Tool.Driver.Name = "Spmi";
+            this.Tool.Driver.InformationUri = new Uri("https://aka.ms/sarif-pattern-matcher");
         }
 
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem,
@@ -53,7 +37,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             engine ??= RE2Regex.Instance;
 
             var validators = new ValidatorsCache(validatorBinaryPaths: null, fileSystem);
-            FileRegionsCache fileRegionsCache = FileRegionsCache.Instance;
 
             var skimmers = new HashSet<Skimmer<AnalyzeContext>>();
 
@@ -359,13 +342,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             context = base.InitializeContextFromOptions(options, ref context);
 
-            context.Retry = options.Retry;
-            context.RedactSecrets = options.RedactSecrets;
-            context.EnhancedReporting = options.EnhancedReporting;
-            context.DynamicValidation = options.DynamicValidation;
-            context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
+            context.Retry = options.Retry != null ? options.Retry.Value : context.Retry;
+            context.RedactSecrets = options.RedactSecrets != null ? options.RedactSecrets.Value : context.RedactSecrets;
+            context.EnhancedReporting = options.EnhancedReporting != null ? options.EnhancedReporting.Value : context.EnhancedReporting;
+            context.DynamicValidation = options.DynamicValidation != null ? options.DynamicValidation.Value : context.DynamicValidation;
+            context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching != null ? options.DisableDynamicValidationCaching.Value : context.DisableDynamicValidationCaching;
 
-            context.SearchDefinitionsPaths = new StringSet(options.SearchDefinitionsPaths);
+            context.SearchDefinitionsPaths = options.SearchDefinitionsPaths.Any() ? new StringSet(options.SearchDefinitionsPaths) : context.SearchDefinitionsPaths;
 
             return context;
         }
@@ -393,7 +376,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (context.SearchDefinitionsPaths?.Any() == true)
             {
-                foreach (var skimmer in CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.SearchDefinitionsPaths, Tool))
+                foreach (Skimmer<AnalyzeContext> skimmer in CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.SearchDefinitionsPaths, Tool))
                 {
                     aggregatedSkimmers.Add(skimmer);
                 }
@@ -422,7 +405,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (aggregatedResults.Count > 0)
                 {
                     var jsonLogicalLocationProcessor = new JsonLogicalLocationProcessor();
-                    jsonLogicalLocationProcessor.Process(aggregatedResults, context.CurrentTarget.Contents);
+                    jsonLogicalLocationProcessor.Process(aggregatedResults, context.CurrentTarget.Contents, context.Logger.FileRegionsCache);
                 }
             }
 

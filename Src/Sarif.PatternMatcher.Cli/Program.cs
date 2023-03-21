@@ -91,34 +91,55 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         private static string[] RewriteArgs(string[] args)
         {
-            bool hasObsoleteArgument = false;
-            bool hasCurrentFileSizeArg = false;
-
+            var rewritten = new List<string>();
             for (int i = 0; i < args.Length; i++)
             {
-                if (args[i] == "--file-size-in-kb")
-                {
-                    hasObsoleteArgument = true;
-                    args[i] = "--max-file-size-in-kb";
+                rewritten.Add(args[i]);
+                string next =
+                    i + 1 < args.Length
+                        ? args[i + 1]
+                        : null;
 
-                    Console.WriteLine("Please update the command line arguments: `--file-size-in-kb` " +
-                        "should be replaced with `--max-file-size-in-kb`.");
-                }
-                else if (args[i] == "--max-file-size-in-kb")
+                switch (args[i])
                 {
-                    hasCurrentFileSizeArg = true;
-                }
+                    // AnalyzeOptionsBase
+                    case "-q":
+                    case "--quiet":
+                    case "-r":
+                    case "--recurse":
+                    case "-e":
+                    case "--environment":
+                    case "--rich-return-code":
 
-                if (hasObsoleteArgument && hasCurrentFileSizeArg)
-                {
-                    string message = $"Both `--max-file-size-in-kb` and `--file-size-in-kb` were used. "
-                        + "Please remove the obsolete option `--file-size-in-kb`.";
+                    // AnalyzeOptions
+                    case "--retry":
+                    case "--redact-secrets":
+                    case "--enhanced-reporting":
+                    case "--dynamic-validation":
+                    case "--disable-dynamic-validation-caching":
+                    {
+                        if (!EvaluatesToTrueOrFalse(next))
+                        {
+                            rewritten.Add("True");
+                        }
+                        break;
+                    }
 
-                    throw new ArgumentException(message);
+                    default:
+                    {
+                        break;
+                    }
                 }
             }
 
-            return args;
+            return rewritten.ToArray();
+        }
+
+        private static bool EvaluatesToTrueOrFalse(string value)
+        {
+            return value == "True" || value == "False" ||
+                   value == "true" || value == "false" ||
+                   value == "1" || value == "0";
         }
     }
 }

@@ -52,14 +52,6 @@
           "executionSuccessful": true
         }
       ],
-      "artifacts": [
-        {
-          "location": {
-            "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC104.Memory.Allocation_malloca.c",
-            "uriBaseId": "SRC_ROOT"
-          }
-        }
-      ],
       "results": [
         {
           "rule": {
@@ -84,8 +76,7 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC104.Memory.Allocation_malloca.c",
-                  "uriBaseId": "SRC_ROOT",
-                  "index": 0
+                  "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 10,

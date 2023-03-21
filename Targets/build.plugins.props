@@ -1,9 +1,5 @@
 <Project>
 
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)..\src\Sarif.PatternMatcher\SharedUtilities.cs" />
-  </ItemGroup>
-
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
   </PropertyGroup>

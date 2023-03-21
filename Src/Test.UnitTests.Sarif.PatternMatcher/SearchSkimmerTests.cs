@@ -485,9 +485,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 CurrentTarget = target,
                 Logger = new TestLogger(),
                 FileSystem = mockFileSystem.Object,
-                FileRegionsCache = new FileRegionsCache(),
             };
-
 
             skimmer = CreateSkimmer(
                 definition,

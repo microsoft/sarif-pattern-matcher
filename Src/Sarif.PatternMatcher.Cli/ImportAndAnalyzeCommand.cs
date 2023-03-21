@@ -39,7 +39,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                 // This is needed to scan the temp folder.
                 options.TargetFileSpecifiers = new List<string> { basePath };
-                options.Recurse = false;
+                options.Recurse = true;
                 return new AnalyzeCommand().Run(options);
             }
             catch (Exception ex)

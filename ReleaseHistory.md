@@ -18,12 +18,29 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## v4.2.1 UNRELEASED
+## v4.3.5 Released 03/21/2023
+- DEP: Update SARIF SDK submodule from [39ea626 to 023b19b](https://github.com/microsoft/sarif-sdk/compare/39ea626..023b19b). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/023b19b/src/ReleaseHistory.md).
+- BRK: `AnalyzeOptions` `DynamicValidation`, `DisableDynamicValidationCaching`, `EnhancedReporting`, `Retry` and `RedactSecrets` properties are now `bool?'. [#727](https://github.com/microsoft/sarif-pattern-matcher/pull/727)
+- BRK: Obsolete `--file-size-in-kb` argument removed. [#727](https://github.com/microsoft/sarif-pattern-matcher/pull/727)
 - RRR: Updated `SEC101/016.StripeApiKey` rule to only handle live standard keys. Moved live restricted keys and test standard/restricted keys to new rules. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
 - FPC: Updated `SEC101/016.StripeApiKey` regular expression to only consider keys with random part of length 24, 34, or 99+. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
 - NR : Added `SEC101/051.StripeTestApiKey` rule with dynamic validation. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
 - NR : Added `SEC101/052.StripeLiveRestrictedApiKey` rule with dynamic validation. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
 - NR : Added `SEC101/053.StripeTestRestrictedApiKey` rule with dynamic validation. [#721](https://github.com/microsoft/sarif-pattern-matcher/pull/721)
+
+## v4.3.3 Released 03/16/2023
+- BUG: JSON logical location `fullyQualifiedName` properties incorrect when scan returns results in a different order than they occur in the file. [#726](https://github.com/microsoft/sarif-pattern-matcher/pull/726)
+
+## v4.3.2 Released 03/15/2023
+- BRK: Remove `AnalyzeContext.FileRegionsCache` property. The cache is now produced and managed by the scan engine. [#725](https://github.com/microsoft/sarif-pattern-matcher/pull/725)
+- DEP: Update SARIF SDK submodule from [98d2d25 to 39ea626](https://github.com/microsoft/sarif-sdk/compare/98d2d25..39ea626). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/39ea626/src/ReleaseHistory.md).
+
+## v4.3.1 Released 03/14/2023
+- DEP: Update SARIF SDK submodule from [420fe9c to 98d2d25](https://github.com/microsoft/sarif-sdk/compare/420fe9c..98d2d25). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/420fe9c/src/ReleaseHistory.md).
+- DEP: Remove MongoDB.Driver from `Security`.
+- DEP: Update `System.Data.SqlClient` from 4.7.0 to 4.8.5. [#698](https://github.com/microsoft/sarif-pattern-matcher/pull/698)
+- NEW: Add `ContainsDigitAndLetter`, `ContainsLowercaseAndUppercaseLetter` and other text evaluation functions to `ExtensionMethods`. [#722](https://github.com/microsoft/sarif-pattern-matcher/pull/722)
+- BUG: Various fixes to allow for in-memory analysis and logging.
 
 ## v4.2.0 Released 03/07/2023
 - DEP: Update SARIF SDK submodule from [2f79183 to 420fe9c](https://github.com/microsoft/sarif-sdk/compare/2f79183..420fe9c). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/420fe9c/src/ReleaseHistory.md).
