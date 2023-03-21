@@ -350,7 +350,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (options.VersionControlProvenance != null)
             {
-                context.VersionControlProvenance = 
+                context.VersionControlProvenance =
                     JsonConvert.DeserializeObject<List<VersionControlDetails>>(options.VersionControlProvenance);
             }
 
