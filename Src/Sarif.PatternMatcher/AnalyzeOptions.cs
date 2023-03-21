@@ -13,6 +13,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     public class AnalyzeOptions : AnalyzeOptionsBase
     {
         [Option(
+            "vcp",
+            Separator = ';',
+            HelpText = "A serialized JSON version control details object to persist to the output file.")]
+        public string VersionControlProvenance { get; set; }
+
+        [Option(
             'd',
             "search-definitions",
             Separator = ';',
