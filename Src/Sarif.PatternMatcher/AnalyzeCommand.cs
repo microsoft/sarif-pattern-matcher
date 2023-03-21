@@ -345,7 +345,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.Retry = options.Retry != null ? options.Retry.Value : context.Retry;
             context.RedactSecrets = options.RedactSecrets != null ? options.RedactSecrets.Value : context.RedactSecrets;
             context.EnhancedReporting = options.EnhancedReporting != null ? options.EnhancedReporting.Value : context.EnhancedReporting;
-            context.DynamicValidation = options.DynamicValidation  != null ? options.DynamicValidation.Value : context.DynamicValidation;
+            context.DynamicValidation = options.DynamicValidation != null ? options.DynamicValidation.Value : context.DynamicValidation;
             context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching != null ? options.DisableDynamicValidationCaching.Value : context.DisableDynamicValidationCaching;
 
             context.SearchDefinitionsPaths = options.SearchDefinitionsPaths.Any() ? new StringSet(options.SearchDefinitionsPaths) : context.SearchDefinitionsPaths;

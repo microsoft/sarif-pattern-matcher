@@ -19,7 +19,7 @@
 - UEE => Eliminate unhandled exceptions in engine.
 
 ## v4.3.5 UNRELEASED
-- DEP: Update SARIF SDK submodule from [39ea626 to 173ba97](https://github.com/microsoft/sarif-sdk/compare/39ea626..173ba97). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/173ba97/src/ReleaseHistory.md).
+- DEP: Update SARIF SDK submodule from [39ea626 to 023b19b](https://github.com/microsoft/sarif-sdk/compare/39ea626..023b19b). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/023b19b/src/ReleaseHistory.md).
 
 ## v4.3.3 Released 03/16/2023
 - BUG: JSON logical location `fullyQualifiedName` properties incorrect when scan returns results in a different order than they occur in the file. [#726](https://github.com/microsoft/sarif-pattern-matcher/pull/726)

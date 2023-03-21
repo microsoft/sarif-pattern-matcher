@@ -80,12 +80,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             base.Dispose();
 
-            if (this.Logger is IDisposable disposable)
-            {
-                disposable.Dispose();
-                this.Logger = null;
-            }
-
             ObservedFingerprintCache?.Clear();
             ObservedFingerprintCache = null;
 

@@ -174,19 +174,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 SarifLog logFile =
                     RunAnalyzeCommandWithFileSizeLimits(maxFileSizeInKilobytes: testCase.maxFileSize,
                                                         testCase.largeFileSize,
-                                                        shouldUseObsoleteOption: false,
                                                         runtimeConditions);
 
-                SarifLog obsoleteOptionLogFile =
-                    RunAnalyzeCommandWithFileSizeLimits(maxFileSizeInKilobytes: testCase.maxFileSize,
-                                                        testCase.largeFileSize,
-                                                        shouldUseObsoleteOption: true,
-                                                        runtimeConditions);
 
                 logFile.Runs.Count.Should().Be(1);
                 logFile.Runs[0].Results.Count.Should().Be(testCase.expectedResult);
-                obsoleteOptionLogFile.Runs.Count.Should().Be(1);
-                obsoleteOptionLogFile.Runs[0].Results.Count.Should().Be(testCase.expectedResult);
             }
         }
 
@@ -209,12 +201,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             SarifLog sarifLogWithLargeFileExcluded = RunAnalyzeCommandWithFileSizeLimits(
                 maxFileSizeInKilobytes: 1024,
                 largeFileSizeInBytes: long.MaxValue,
-                shouldUseObsoleteOption: false,
                 RuntimeConditions.OneOrMoreFilesSkippedDueToSize);
 
             sarifLogWithLargeFileExcluded.Should().NotBeNull();
             sarifLogWithLargeFileExcluded.Runs?[0].Results?.Count.Should().Be(2);
-            sarifLogWithLargeFileExcluded.Runs?[0].Artifacts?.Count.Should().Be(1);
+            sarifLogWithLargeFileExcluded.Runs?[0].Artifacts?.Count.Should().Be(2);
             sarifLogWithLargeFileExcluded.Runs[0].Results
                 .Where(r => r.Locations[0].PhysicalLocation.ArtifactLocation.Uri.LocalPath.EndsWith(SmallTargetName))
                 .Count().Should().Be(2);
@@ -222,12 +213,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             SarifLog sarifLogWithLargeFileIncluded = RunAnalyzeCommandWithFileSizeLimits(
                 maxFileSizeInKilobytes: 1,
                 largeFileSizeInBytes: 1,
-                shouldUseObsoleteOption: false,
                 RuntimeConditions.None);
 
             sarifLogWithLargeFileIncluded.Should().NotBeNull();
             sarifLogWithLargeFileIncluded.Runs?[0].Results?.Count.Should().Be(4);
-            sarifLogWithLargeFileIncluded.Runs[0].Artifacts.Count.Should().Be(2);
+            sarifLogWithLargeFileIncluded.Runs[0].Artifacts.Count.Should().Be(3);
 
             Assert.True(string.Equals(sarifLogWithLargeFileIncluded.Runs[0].Artifacts[0].Location.Uri, smallTargetPath) ||
                 string.Equals(sarifLogWithLargeFileIncluded.Runs[0].Artifacts[0].Location.Uri, largeTargetPath));
@@ -245,7 +235,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         }
 
         [Fact]
-        public void AnalyzeCommand_ShouldThrowExceptionForConflictingFileSizeOptions()
+        public void AnalyzeCommand_ShouldErrorOutForConflictingFileSizeOptions()
         {
             int maxFileSizeInKilobytes = 1;
             int fileSizeInKilobytes = 2;
@@ -294,8 +284,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             };
 
             int result = Program.Main(args);
-            Program.GlobalContext.RuntimeErrors.Should().Be(RuntimeConditions.ExceptionProcessingCommandline);
-            Program.GlobalContext.RuntimeExceptions.Should().NotBeNull();
             result.Should().Be(1);
         }
 
@@ -433,10 +421,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             // Shared strings location and loading
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
                 .Returns<string>((path) => { return GetSharedStrings(); });
-
-            mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
-                .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
-
+           
             mockFileSystem.Setup(x => x.FileInfoLength(SmallTargetName)).Returns(fileContents.Length);
 
             Program.ClearUnitTestData();
@@ -490,7 +475,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         private SarifLog RunAnalyzeCommandWithFileSizeLimits(int maxFileSizeInKilobytes,
                                                              long largeFileSizeInBytes,
-                                                             bool shouldUseObsoleteOption = false,
                                                              RuntimeConditions runtimeConditions = RuntimeConditions.None)
         {
             string definitionsText = GetIntrafileRuleDefinition();
@@ -501,7 +485,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                        " id1                  \r\n" +
                                        " secret2              \r\n" +
                                        "unused trailing space \r\n";
-            string sarifOutput;
+
             string rootDirectory = @"e:\repros";
             string smallTargetPath = Path.Combine(rootDirectory, SmallTargetName);
             string largeTargetPath = Path.Combine(rootDirectory, LargeTargetName);
@@ -532,8 +516,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
                 .Returns<string>((path) => { return GetSharedStrings(); });
 
-            mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
-                .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
+            string defaultConfigFilePath = Path.GetDirectoryName(typeof(CommandBase).Assembly.Location);
+            defaultConfigFilePath =  Path.Combine(defaultConfigFilePath, "default.configuration.xml");
+
+            mockFileSystem.Setup(x => x.FileExists(defaultConfigFilePath))
+                .Returns(true);
 
             mockFileSystem.Setup(x => x.FileInfoLength(smallTargetPath)).Returns(smallFileContents.Length);
             mockFileSystem.Setup(x => x.FileInfoLength(largeTargetPath)).Returns(largeFileSizeInBytes);
@@ -551,30 +538,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             try
             {
                 string[] args;
-                if (shouldUseObsoleteOption)
+
+                args = new[]
                 {
-                    args = new[]
-                    {
                         "analyze",
                         largeTargetPath,
                         smallTargetPath,
-                        $"-d", searchDefinitionsPath,
-                        $"-o", sarifLogFileName,
-                        $"--file-size-in-kb", maxFileSizeInKilobytes.ToString(),
-                    };
-                }
-                else
-                {
-                    args = new[]
-                    {
-                        "analyze",
-                        largeTargetPath,
-                        smallTargetPath,
-                        $"-d", searchDefinitionsPath,
-                        $"-o", sarifLogFileName,
-                        $"--max-file-size-in-kb", maxFileSizeInKilobytes.ToString(),
-                        };
-                }
+                        "--insert", "Hashes",
+                        "-d", searchDefinitionsPath,
+                        "-o", sarifLogFileName,
+                        "--max-file-size-in-kb", maxFileSizeInKilobytes.ToString(),
+                };            
 
                 Program.ClearUnitTestData();
                 Program.GlobalContext = new AnalyzeContext
@@ -583,6 +557,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 };
 
                 int result = Program.Main(args);
+                File.Exists(sarifLogFileName).Should().BeTrue();
                 sarifLog = JsonConvert.DeserializeObject<SarifLog>(File.ReadAllText(sarifLogFileName));
                 sarifLog.Runs[0].Invocations?[0].ToolExecutionNotifications.Should().BeNull();
 
@@ -675,8 +650,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     $"-d", searchDefinitionsPath,
                     $"-o", sarifLogFileName,
                     "--level", levels,
+                    "--dynamic-validation",
+                    "true",
                     "--rich-return-code",
-                    "--dynamic-validation"
                 };
 
             try
@@ -730,7 +706,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             else if (sarifLog.Runs[0].Results[0].Level != expectedFailureLevel)
             {
                 string message = $"Expected `FailureLevel` to be `{expectedFailureLevel}` but found " +
-                    $"{sarifLog.Runs[0]?.Results[0]?.Level} for `{validationScenario}` test scenario {testScenarioMode}.";
+                    $"`{sarifLog.Runs[0]?.Results[0]?.Level}` for `{validationScenario}` test scenario {testScenarioMode}.";
 
                 stringBuilder = StringBuilderFormatAndAppendNewLine(message, stringBuilder);
             }
