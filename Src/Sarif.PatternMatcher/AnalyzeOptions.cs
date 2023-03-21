@@ -15,7 +15,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Option(
             "vcp",
             Separator = ';',
-            HelpText = "A serialized JSON version control details object to persist to the output fil.")]
+            HelpText = "A serialized JSON version control details object to persist to the output file.")]
         public string VersionControlProvenance { get; set; }
 
         [Option(
