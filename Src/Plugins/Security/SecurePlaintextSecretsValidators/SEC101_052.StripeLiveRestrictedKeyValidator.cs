@@ -3,7 +3,7 @@
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class StripeApiKeyValidator : StripeApiKeyValidatorBase
+    public class StripeLiveRestrictedApiKeyValidator : StripeApiKeyValidatorBase
     {
     }
 }
