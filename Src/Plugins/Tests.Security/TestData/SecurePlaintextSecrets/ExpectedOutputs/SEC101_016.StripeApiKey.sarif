@@ -123,8 +123,7 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_016.StripeApiKey.txt",
-                  "uriBaseId": "SRC_ROOT",
-                  "index": 0
+                  "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
                   "startLine": 4,
