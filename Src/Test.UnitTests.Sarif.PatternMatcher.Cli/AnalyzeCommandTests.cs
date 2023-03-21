@@ -421,7 +421,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             // Shared strings location and loading
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
                 .Returns<string>((path) => { return GetSharedStrings(); });
-           
+
             mockFileSystem.Setup(x => x.FileInfoLength(SmallTargetName)).Returns(fileContents.Length);
 
             Program.ClearUnitTestData();
@@ -517,7 +517,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 .Returns<string>((path) => { return GetSharedStrings(); });
 
             string defaultConfigFilePath = Path.GetDirectoryName(typeof(CommandBase).Assembly.Location);
-            defaultConfigFilePath =  Path.Combine(defaultConfigFilePath, "default.configuration.xml");
+            defaultConfigFilePath = Path.Combine(defaultConfigFilePath, "default.configuration.xml");
 
             mockFileSystem.Setup(x => x.FileExists(defaultConfigFilePath))
                 .Returns(true);
@@ -548,7 +548,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         "-d", searchDefinitionsPath,
                         "-o", sarifLogFileName,
                         "--max-file-size-in-kb", maxFileSizeInKilobytes.ToString(),
-                };            
+                };
 
                 Program.ClearUnitTestData();
                 Program.GlobalContext = new AnalyzeContext
