@@ -49,14 +49,6 @@
           "executionSuccessful": true
         }
       ],
-      "artifacts": [
-        {
-          "location": {
-            "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103_004.CertificateFile_der_encoded.cer",
-            "uriBaseId": "SRC_ROOT"
-          }
-        }
-      ],
       "results": [
         {
           "ruleId": "SEC103/004",
@@ -76,8 +68,7 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103_004.CertificateFile_der_encoded.cer",
-                  "uriBaseId": "SRC_ROOT",
-                  "index": 0
+                  "uriBaseId": "SRC_ROOT"
                 }
               }
             }

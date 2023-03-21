@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -341,13 +342,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             context = base.InitializeContextFromOptions(options, ref context);
 
-            context.Retry = options.Retry;
-            context.RedactSecrets = options.RedactSecrets;
-            context.EnhancedReporting = options.EnhancedReporting;
-            context.DynamicValidation = options.DynamicValidation;
-            context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching;
+            context.Retry = options.Retry != null ? options.Retry.Value : context.Retry;
+            context.RedactSecrets = options.RedactSecrets != null ? options.RedactSecrets.Value : context.RedactSecrets;
+            context.EnhancedReporting = options.EnhancedReporting != null ? options.EnhancedReporting.Value : context.EnhancedReporting;
+            context.DynamicValidation = options.DynamicValidation != null ? options.DynamicValidation.Value : context.DynamicValidation;
+            context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching != null ? options.DisableDynamicValidationCaching.Value : context.DisableDynamicValidationCaching;
 
-            context.SearchDefinitionsPaths = new StringSet(options.SearchDefinitionsPaths);
+            context.SearchDefinitionsPaths = options.SearchDefinitionsPaths.Any() ? new StringSet(options.SearchDefinitionsPaths) : context.SearchDefinitionsPaths;
 
             return context;
         }
