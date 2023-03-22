@@ -128,7 +128,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
                     {
-                        string ruleName = matchExpression.Name.Split('/')[1];
+                        string ruleName = matchExpression.Name;
 
                         // Replacing '/' with '_' here enables calling filename.StartsWith() directly on this string.
                         string ruleID = matchExpression.Id.Replace('/', '_');
@@ -417,6 +417,76 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
             }
             return regexSet;
+        }
+
+
+        public static void VerifyAllRuleNamesAndVariablesHavePreferredNames(string definitionsFileDirectory,
+                                                                    string secureSecretsRuleId,
+                                                                    ref List<Tuple<string, string>> verboseToPreferredTupleList,
+                                                                    Assembly validatorsAssembly,
+                                                                    Assembly testsAssembly)
+        {
+            var validators = validatorsAssembly.GetTypes().Where(x => x.Name.EndsWith("Validator")).Select(x => x.Name).ToHashSet();
+            var tests = testsAssembly.GetTypes().Where(x => x.Name.EndsWith("ValidatorTests")).Select(x => x.Name).ToHashSet();
+
+            GetAllRuleNamesAndRegexesFromSearchDefinitionFiles(definitionsFileDirectory, secureSecretsRuleId, out HashSet<string> ruleNames, out HashSet<string> ruleRegexes);
+
+            var collectionsToVerboseScanList = new List<HashSet<string>>() { ruleNames, ruleRegexes, validators, tests };
+
+            var sb = new StringBuilder();
+            foreach (Tuple<string, string> verboseToPreferredTuple in verboseToPreferredTupleList)
+            {
+                foreach (HashSet<string> collection in collectionsToVerboseScanList)
+                {
+                    CheckForVerboseTerms(verboseToPreferredTuple,
+                                         collection,
+                                         ref sb);
+                }
+            }
+
+            Assert.True(sb.Length == 0, sb.ToString());
+        }
+
+        private static void GetAllRuleNamesAndRegexesFromSearchDefinitionFiles(string definitionsFileDirectory,
+                                                                              string secureSecretsRuleId,
+                                                                              out HashSet<string> ruleNames,
+                                                                              out HashSet<string> ruleRegexes)
+        {
+            // Load up all ruleNames from all relevant json files in definitionsFileDirectory
+            var jsonFilesList = Directory.GetFiles(definitionsFileDirectory, "*.json").Where(file => file.Contains(secureSecretsRuleId)).ToList();
+
+            string content;
+            SearchDefinitions sdObject;
+
+            ruleNames = new HashSet<string>();
+            ruleRegexes = new HashSet<string>();
+
+            foreach (string jsonFile in jsonFilesList)
+            {
+                //Read the json file content to get the rule names and regexes
+                content = File.ReadAllText(jsonFile);
+                sdObject = JsonConvert.DeserializeObject<SearchDefinitions>(content);
+
+                ruleRegexes.UnionWith(GetRegexSetFromSearchDefinitions(sdObject));
+
+                foreach (SearchDefinition searchDefinition in sdObject.Definitions)
+                {
+                    foreach (MatchExpression matchExpression in searchDefinition.MatchExpressions)
+                    {
+                        ruleNames.Add(matchExpression.Name);
+                    }
+                }
+            }
+        }
+        private static void CheckForVerboseTerms(Tuple<string, string> verboseToPreferredTuple, HashSet<string> listOfVerboseStrings, ref StringBuilder sb)
+        {
+            foreach (string verboseString in listOfVerboseStrings)
+            {
+                if (verboseString.Contains(verboseToPreferredTuple.Item1, StringComparison.OrdinalIgnoreCase))
+                {
+                    sb.AppendLine($"'{verboseString}' contains term '{verboseToPreferredTuple.Item1}' where '{verboseToPreferredTuple.Item2}' is preferred.");
+                }
+            }
         }
     }
 }
