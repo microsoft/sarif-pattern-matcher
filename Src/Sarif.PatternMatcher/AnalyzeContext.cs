@@ -19,12 +19,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IsValidAnalysisTarget = true;
         }
 
-        public StringSet SearchDefinitionsPaths
-        {
-            get => this.Policy.GetProperty(SearchDefinitionsPathsProperty);
-            set => this.Policy.SetProperty(SearchDefinitionsPathsProperty, value);
-        }
-
         public bool RedactSecrets { get; set; }
 
         public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
@@ -100,11 +94,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 "An upper bound on the size of the RE2 DFA cache. When the cache size exceeds this " +
                 "limit RE2 will fallback to an alternate (much less performant) search mechanism. " +
                 "Negative values will be discarded in favor of the default of 5096 KB.");
-
-        public static PerLanguageOption<StringSet> SearchDefinitionsPathsProperty { get; } =
-                    new PerLanguageOption<StringSet>(
-                        "CoreSettings", nameof(SearchDefinitionsPaths), defaultValue: () => new StringSet(),
-                        "One or more paths to files containing one or more search definitions to drive analysis.");
 
         public static PerLanguageOption<string> GlobalFileDenyRegexProperty { get; } =
                     new PerLanguageOption<string>(

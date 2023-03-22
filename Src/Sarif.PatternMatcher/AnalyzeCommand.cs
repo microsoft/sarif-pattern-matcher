@@ -354,7 +354,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     JsonConvert.DeserializeObject<List<VersionControlDetails>>(options.VersionControlProvenance);
             }
 
-            context.SearchDefinitionsPaths = options.SearchDefinitionsPaths.Any() ? new StringSet(options.SearchDefinitionsPaths) : context.SearchDefinitionsPaths;
+            context.PluginFilePaths = options.PluginFilePaths.Any() ? new StringSet(options.PluginFilePaths) : context.PluginFilePaths;
 
             return context;
         }
@@ -363,7 +363,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             context = base.ValidateContext(context);
 
-            if (ValidateFiles(context, context.SearchDefinitionsPaths, shouldExist: true))
+            if (ValidateFiles(context, context.PluginFilePaths, shouldExist: true))
             {
 
             }
@@ -380,9 +380,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 aggregatedSkimmers = new HashSet<Skimmer<AnalyzeContext>>(context.Skimmers);
             }
 
-            if (context.SearchDefinitionsPaths?.Any() == true)
+            if (context.PluginFilePaths?.Any() == true)
             {
-                foreach (Skimmer<AnalyzeContext> skimmer in CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.SearchDefinitionsPaths, Tool))
+                foreach (Skimmer<AnalyzeContext> skimmer in CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.PluginFilePaths, Tool))
                 {
                     aggregatedSkimmers.Add(skimmer);
                 }

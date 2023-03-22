@@ -52,7 +52,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 aggregatingLogger.Loggers.Add(sarifLogger);
 
                 aggregatingLogger.AnalysisStarted();
-                ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, options.SearchDefinitionsPaths, run.Tool);
+                ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, options.PluginFilePaths, run.Tool);
 
                 var workers = new Task<bool>[options.Threads];
 
