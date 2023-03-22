@@ -18,6 +18,14 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## v4.3.7 Released 03/22/2023
+- DEP: Update SARIF SDK submodule from [53b0246 to 6c5825c](https://github.com/microsoft/sarif-sdk/compare/53b0246..6c5825c). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/6c5825c/src/ReleaseHistory.md). Adds version control provenance.
+- BRK: SARIF SDK update changes `--automationId` and `--automationGuid` command-line arguments to `--automation-id` and `--automation-guid`.
+- BRK: `--search-definitions`/`-s` argument deprecated in favor of `plugin`/`-p`. [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/6c5825c/src/ReleaseHistory.md). Adds version control provenance.
+
+- BUG: Resolve bug where console failed to emit `Note` messages. [#732](https://github.com/microsoft/sarif-pattern-matcher/pull/732)
+
+
 ## v4.3.5 Released 03/21/2023
 - DEP: Update SARIF SDK submodule from [39ea626 to 53b0246](https://github.com/microsoft/sarif-sdk/compare/39ea626..53b0246). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/53b0246/src/ReleaseHistory.md). Adds version control provenance.
 - BRK: `AnalyzeOptions` `DynamicValidation`, `DisableDynamicValidationCaching`, `EnhancedReporting`, `Retry` and `RedactSecrets` properties are now `bool?'. [#727](https://github.com/microsoft/sarif-pattern-matcher/pull/727)
