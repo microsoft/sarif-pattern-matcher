@@ -277,7 +277,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 "analyze",
                 largeTargetPath,
                 smallTargetPath,
-                $"-d", searchDefinitionsPath,
+                $"-p", searchDefinitionsPath,
                 $"-o", sarifLogFileName,
                 $"--file-size-in-kb", fileSizeInKilobytes.ToString(),
                 $"--max-file-size-in-kb", maxFileSizeInKilobytes.ToString(),
@@ -389,7 +389,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         private SarifLog RunAnalyzeCommand(string definitionsText, string fileContents)
         {
-            string sarifOutput;
             string rootDirectory = @"e:\repros";
             string scanTargetName = SmallTargetName;
             string scanTargetPath = Path.Combine(rootDirectory, scanTargetName);
@@ -440,7 +439,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 {
                     "analyze",
                     scanTargetPath,
-                    $"-d", searchDefinitionsPath,
+                    $"-p", searchDefinitionsPath,
                     $"-o", sarifLogFileName,
                 };
 
@@ -545,7 +544,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         largeTargetPath,
                         smallTargetPath,
                         "--insert", "Hashes",
-                        "-d", searchDefinitionsPath,
+                        "-p", searchDefinitionsPath,
                         "-o", sarifLogFileName,
                         "--max-file-size-in-kb", maxFileSizeInKilobytes.ToString(),
                 };
@@ -636,7 +635,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 {
                     "analyze",
                     scanTargetPath,
-                    $"-d", searchDefinitionsPath,
+                    $"-p", searchDefinitionsPath,
                     $"-o", sarifLogFileName,
                     "--level", levels,
                     "--rich-return-code"
@@ -647,7 +646,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 {
                     "analyze",
                     scanTargetPath,
-                    $"-d", searchDefinitionsPath,
+                    $"-p", searchDefinitionsPath,
                     $"-o", sarifLogFileName,
                     "--level", levels,
                     "--dynamic-validation",

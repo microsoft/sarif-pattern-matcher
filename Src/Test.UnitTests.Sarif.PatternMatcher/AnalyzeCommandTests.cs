@@ -112,7 +112,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var options = new AnalyzeOptions
             {
-                SearchDefinitionsPaths = new[] { "SEC101.SecurePlaintextSecrets.json" },
+                PluginFilePaths = new[] { "SEC101.SecurePlaintextSecrets.json" },
                 Trace = new string[] { nameof(DefaultTraces.RuleScanTime) },
             };
 
