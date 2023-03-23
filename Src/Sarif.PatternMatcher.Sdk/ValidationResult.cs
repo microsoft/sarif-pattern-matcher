@@ -9,6 +9,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public class ValidationResult
     {
+        public ValidationResult()
+        {
+            ValidationState = ValidationState.Unknown;
+        }
+
         public string Message { get; set; }
 
         public Fingerprint Fingerprint { get; set; }
