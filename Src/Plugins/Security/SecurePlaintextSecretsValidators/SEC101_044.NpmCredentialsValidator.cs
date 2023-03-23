@@ -75,7 +75,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Secret = password,
                     Platform = nameof(AssetPlatform.Npm),
                 },
-                ValidationState = ValidationState.Unknown,
             };
 
             return new[] { validationResult };

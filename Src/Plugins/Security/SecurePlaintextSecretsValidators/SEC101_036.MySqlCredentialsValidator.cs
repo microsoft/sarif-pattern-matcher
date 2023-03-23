@@ -73,7 +73,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             var validationResult = new ValidationResult
             {
                 Fingerprint = fingerprint,
-                ValidationState = ValidationState.Unknown,
             };
 
             return new[] { validationResult };

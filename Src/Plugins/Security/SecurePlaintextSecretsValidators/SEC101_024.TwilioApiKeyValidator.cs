@@ -21,7 +21,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Secret = secret.Value,
                     Platform = nameof(AssetPlatform.Twilio),
                 },
-                ValidationState = ValidationState.Unknown,
             };
 
             return new[] { validationResult };

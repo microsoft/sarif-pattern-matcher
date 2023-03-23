@@ -31,8 +31,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         Secret = secret.Value,
                         Platform = nameof(AssetPlatform.GitHub),
                     },
-                    ValidationState = ValidationState.Unknown,
-                };
+                    };
 
                 return new[] { validationResult };
             }
@@ -67,7 +66,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Secret = secret.Value,
                     Platform = nameof(AssetPlatform.GitHub),
                 },
-                ValidationState = ValidationState.Unknown,
             };
 
             return new[] { validationResult };

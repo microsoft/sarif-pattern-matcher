@@ -39,7 +39,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Secret = secret.Value,
                     Platform = nameof(AssetPlatform.Stripe),
                 },
-                ValidationState = ValidationState.Unknown,
             };
 
             return new[] { validationResult };

@@ -74,8 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             Secret = password,
                             Platform = nameof(AssetPlatform.NuGet),
                         },
-                        ValidationState = ValidationState.Unknown,
-                    });
+                            });
                 }
             }
 
