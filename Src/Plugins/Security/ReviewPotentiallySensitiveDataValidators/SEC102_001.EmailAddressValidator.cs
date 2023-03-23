@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         Id = id.Value,
                         Host = host.Value,
                     },
-                    };
+                };
 
                 return new[] { validationResult };
             }
