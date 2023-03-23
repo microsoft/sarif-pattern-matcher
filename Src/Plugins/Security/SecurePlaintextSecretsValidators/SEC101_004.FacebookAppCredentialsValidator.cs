@@ -38,7 +38,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Secret = secret.Value,
                     Platform = nameof(AssetPlatform.Facebook),
                 },
-                ValidationState = ValidationState.Unknown,
             };
 
             return new[] { validationResult };

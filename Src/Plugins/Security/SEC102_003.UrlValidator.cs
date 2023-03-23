@@ -38,7 +38,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Part = query,
                     Port = uri.Port.ToString(),
                 },
-                ValidationState = ValidationState.Unknown,
             };
 
             return new[] { validationResult };

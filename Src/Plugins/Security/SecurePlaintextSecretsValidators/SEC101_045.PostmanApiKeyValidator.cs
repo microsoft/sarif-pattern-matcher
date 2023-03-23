@@ -38,7 +38,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Secret = secret.Value,
                     Platform = nameof(AssetPlatform.Postman),
                 },
-                ValidationState = ValidationState.Unknown,
             };
 
             return new[] { validationResult };

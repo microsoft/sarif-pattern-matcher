@@ -35,7 +35,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Resource = resource?.Value,
                     Platform = nameof(AssetPlatform.Cloudant),
                 },
-                ValidationState = ValidationState.Unknown,
             };
 
             return new[] { validationResult };
