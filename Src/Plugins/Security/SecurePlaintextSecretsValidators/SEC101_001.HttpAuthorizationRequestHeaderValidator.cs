@@ -34,7 +34,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Scheme = scheme.Value,
                     Secret = secret.Value,
                 },
-                ValidationState = ValidationState.Unknown,
             };
 
             return new[] { validationResult };
