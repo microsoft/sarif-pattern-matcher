@@ -1,10 +1,42 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public static class ExtensionMethods
     {
+        public static HttpResponseMessage ResponseHeadersRead(this HttpClient httpClient, HttpRequestMessage request)
+        {
+            return httpClient
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        public static void Merge(this HttpRequestHeaders httpRequestHeaders,
+                                      IEnumerable<KeyValuePair<string, string>> valuesToMerge)
+        {
+            if (valuesToMerge == null)
+            {
+                throw new ArgumentNullException(nameof(valuesToMerge));
+            }
+
+            foreach (KeyValuePair<string, string> entry in valuesToMerge)
+            {
+                if (httpRequestHeaders.Contains(entry.Key))
+                {
+                    httpRequestHeaders.Remove(entry.Key);
+                }
+
+                httpRequestHeaders.Add(entry.Key, entry.Value);
+            }
+        }
+
         public static string Truncate(this string text, int lengthExclusiveOfEllipsis = 6)
         {
             text ??= string.Empty;

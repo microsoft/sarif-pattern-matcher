@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 
 using Microsoft.RE2.Managed;
@@ -9,6 +10,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public abstract class StaticValidatorBase : ValidatorBase
     {
+        protected virtual string Platform { get; set; }
+
         /// <summary>
         /// Examines the groups output by a positive regex match and
         /// optionally performs additional validation to determine
@@ -66,7 +69,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// </param>
         ///
         /// <returns>Return an enumerable ValidationResult collection.</returns>
-        protected abstract IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups);
+        protected virtual IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
+        {
+            string secret = groups["secret"].Value;
+
+            if (IsFalsePositiveOrBelongsToOtherSecurityModel(secret))
+            {
+                return ValidationResult.CreateNoMatch();
+            }
+
+            var validationResult = new ValidationResult
+            {
+                Fingerprint = new Fingerprint
+                {
+                    Secret = secret,
+                    Platform = Platform ?? throw new ArgumentNullException(nameof(Platform)),
+                },
+                ValidationState = ValidationState.Unknown,
+            };
+
+            return new[] { validationResult };
+        }
+
 
         /// <summary>
         /// Evaluates secret to determine whether is a false positive or if it perhaps
