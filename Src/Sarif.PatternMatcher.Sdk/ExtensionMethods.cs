@@ -10,7 +10,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public static class ExtensionMethods
     {
-        public static HttpResponseMessage ResponseHeadersRead(this HttpClient httpClient, HttpRequestMessage request)
+        /// <summary>
+        /// Use an <cref>HttpClient</cref> instance to retrieve request response headers only.
+        /// </summary>
+        /// <param name="httpClient">The <cref>HttpClient</cref> instance to drive the request.</param>
+        /// <param name="request">The request for which response headers should be retrieved.</param>
+        /// <returns>The <cref>HttpResponseMessage</cref> returned by the request.</returns>
+        public static HttpResponseMessage ReadResponseHeaders(this HttpClient httpClient, HttpRequestMessage request)
         {
             return httpClient
                 .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
@@ -18,8 +24,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 .GetResult();
         }
 
+        /// <summary>
+        /// Merges a dictionary of values into an HttpRequestHeaders instance.
+        /// </summary>
+        /// <param name="httpRequestHeaders">The HttpRequestHeaders instance to merge data into.</param>
+        /// <param name="valuesToMerge">A collection of KeyValuePairs to merge into the request headers.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="valuesToMerge"/> is null.</exception>
         public static void Merge(this HttpRequestHeaders httpRequestHeaders,
-                                      IEnumerable<KeyValuePair<string, string>> valuesToMerge)
+                                 IEnumerable<KeyValuePair<string, string>> valuesToMerge)
         {
             if (valuesToMerge == null)
             {
