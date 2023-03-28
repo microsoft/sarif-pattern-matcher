@@ -1,10 +1,54 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public static class ExtensionMethods
     {
+        /// <summary>
+        /// Use an <cref>HttpClient</cref> instance to retrieve request response headers only.
+        /// </summary>
+        /// <param name="httpClient">The <cref>HttpClient</cref> instance to drive the request.</param>
+        /// <param name="request">The request for which response headers should be retrieved.</param>
+        /// <returns>The <cref>HttpResponseMessage</cref> returned by the request.</returns>
+        public static HttpResponseMessage ReadResponseHeaders(this HttpClient httpClient, HttpRequestMessage request)
+        {
+            return httpClient
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        /// <summary>
+        /// Merges a dictionary of values into an HttpRequestHeaders instance.
+        /// </summary>
+        /// <param name="httpRequestHeaders">The HttpRequestHeaders instance to merge data into.</param>
+        /// <param name="valuesToMerge">A collection of KeyValuePairs to merge into the request headers.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="valuesToMerge"/> is null.</exception>
+        public static void Merge(this HttpRequestHeaders httpRequestHeaders,
+                                 IEnumerable<KeyValuePair<string, string>> valuesToMerge)
+        {
+            if (valuesToMerge == null)
+            {
+                throw new ArgumentNullException(nameof(valuesToMerge));
+            }
+
+            foreach (KeyValuePair<string, string> entry in valuesToMerge)
+            {
+                if (httpRequestHeaders.Contains(entry.Key))
+                {
+                    httpRequestHeaders.Remove(entry.Key);
+                }
+
+                httpRequestHeaders.Add(entry.Key, entry.Value);
+            }
+        }
+
         public static string Truncate(this string text, int lengthExclusiveOfEllipsis = 6)
         {
             text ??= string.Empty;
