@@ -59,10 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     request.Content = new StringContent(ScanIdentityGuid, Encoding.UTF8, "application/json");
                 }
 
-                using HttpResponseMessage response = client
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = client.ReadResponseHeaders(request);
 
                 HttpStatusCode status = response.StatusCode;
 

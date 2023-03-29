@@ -54,10 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 using var request = new HttpRequestMessage(HttpMethod.Post, uri);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
-                using HttpResponseMessage response = httpClient
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = httpClient.ReadResponseHeaders(request);
 
                 switch (response.StatusCode)
                 {

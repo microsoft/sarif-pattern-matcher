@@ -59,10 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 request.Content = new StringContent($@"{{""client_id"": ""{id}"",""client_secret"": ""{secret}""}}", Encoding.UTF8, "application/json");
                 request.Headers.Add("User-Agent", "SarifPatternMatcher");
 
-                using HttpResponseMessage response = client
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = client.ReadResponseHeaders(request);
 
                 switch (response.StatusCode)
                 {
