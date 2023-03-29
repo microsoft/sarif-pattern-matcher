@@ -20,6 +20,7 @@
 
 ## v4.3.8 UNRELEASED
 - BRK: `ValidationResult` constructor now sets `ValidationState` to `Unknown`. [#733](https://github.com/microsoft/sarif-pattern-matcher/pull/733)
+- BUG: Consistently report asset data (which may be the truncated secret) when reporting unhandled exceptions in dynamic validators. [#736](https://github.com/microsoft/sarif-pattern-matcher/pull/736)
 
 ## v4.3.7 Released 03/22/2023
 - DEP: Update SARIF SDK submodule from [53b0246 to 1ff3956](https://github.com/microsoft/sarif-sdk/compare/53b0246..1ff3956). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/1ff3956/src/ReleaseHistory.md). Adds version control provenance.
