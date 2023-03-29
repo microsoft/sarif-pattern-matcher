@@ -25,6 +25,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         }
 
         /// <summary>
+        /// Use an <cref>HttpClient</cref> instance to retrieve request response headers only.
+        /// </summary>
+        /// <param name="httpClient">The <cref>HttpClient</cref> instance to drive the request.</param>
+        /// <param name="uri">The Uri the request is sent to.</param>
+        /// <returns>The <cref>HttpResponseMessage</cref> returned by the request.</returns>
+        public static HttpResponseMessage ReadResponseHeaders(this HttpClient httpClient, string uri)
+        {
+            return httpClient
+                .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        /// <summary>
         /// Merges a dictionary of values into an HttpRequestHeaders instance.
         /// </summary>
         /// <param name="httpRequestHeaders">The HttpRequestHeaders instance to merge data into.</param>

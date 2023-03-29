@@ -68,9 +68,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 };
 
                 using HttpResponseMessage responseWithNoCredentials = clientWithNoCredentials
-                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                    .ReadResponseHeaders(uri);
 
                 if (responseWithNoCredentials.StatusCode == HttpStatusCode.OK)
                 {
@@ -89,10 +87,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     BaseAddress = new Uri(uri),
                 };
 
-                using HttpResponseMessage response = client
-                    .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = client.ReadResponseHeaders(uri);
 
                 switch (response.StatusCode)
                 {
