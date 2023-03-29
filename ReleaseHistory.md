@@ -20,7 +20,7 @@
 
 ## v4.3.8 UNRELEASED
 - BRK: `ValidationResult` constructor now sets `ValidationState` to `Unknown`. [#733](https://github.com/microsoft/sarif-pattern-matcher/pull/733)
-- BRK: `ValidatorBase.ReturnUnhandledException` not requires an `asset` parameter. [#736](https://github.com/microsoft/sarif-pattern-matcher/pull/736)
+- BRK: `ValidatorBase.ReturnUnhandledException` now requires an `asset` parameter. [#736](https://github.com/microsoft/sarif-pattern-matcher/pull/736)
 - BUG: Consistently report asset data (which may be the truncated secret) when reporting unhandled exceptions in dynamic validators. [#736](https://github.com/microsoft/sarif-pattern-matcher/pull/736)
 
 ## v4.3.7 Released 03/22/2023
