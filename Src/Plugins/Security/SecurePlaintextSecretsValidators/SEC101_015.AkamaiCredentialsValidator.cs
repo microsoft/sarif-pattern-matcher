@@ -81,10 +81,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 using HttpRequestMessage request = GenerateRequestMessage(id, host, secret, resource, scanIdentityGuid, datetime);
 
-                using HttpResponseMessage httpResponse = httpClient
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage httpResponse = httpClient.ReadResponseHeaders(request);
 
                 switch (httpResponse.StatusCode)
                 {
