@@ -73,6 +73,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                                                          ref Fingerprint fingerprint,
                                                          ref string message)
         {
+            // @michaelcfanning 3/28/23
+            // https://github.com/microsoft/sarif-pattern-matcher/issues/737
+            // We should encode the 'rawData' here and grab the first six
+            // characters of it to use as a slug/thumbprint for this finding.
             string asset = "[TBD]";
             try
             {
@@ -111,6 +115,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                                                                    ref Fingerprint fingerprint,
                                                                    ref string message)
         {
+            // @michaelcfanning 3/28/23
+            // https://github.com/microsoft/sarif-pattern-matcher/issues/737
+            // We should encode the 'rawData' here and grab the first six
+            // characters of it to use as a slug/thumbprint for this finding.
             string asset = "[TBD]";
             var certificates = new X509Certificate2Collection();
             try
