@@ -59,6 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                        HttpClient client)
         {
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
 
             try
             {
@@ -90,7 +91,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ValidatorBase.ReturnUnhandledException(ref message, e, asset: secret.Truncate());
+                return ValidatorBase.ReturnUnhandledException(ref message, e, asset);
             }
         }
 

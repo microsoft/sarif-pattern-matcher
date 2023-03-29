@@ -33,7 +33,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string secret = $"{key1}-{key2}";
             string secretFingerprint = $"[secret={secret}]";
             string asset = secret.Truncate();
-            
+
             string authorizedMessage = null, unknownMessage = null, exceptionMessage = null;
 
             var request = new HttpRequestMessage(HttpMethod.Get, string.Format(MailChimpApiKeyValidator.ApiUri, key2));

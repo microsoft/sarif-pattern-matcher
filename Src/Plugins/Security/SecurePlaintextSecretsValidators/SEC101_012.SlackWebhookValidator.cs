@@ -10,8 +10,6 @@ using System.Text;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
-using static System.Net.WebRequestMethods;
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class SlackWebhookValidator : DynamicValidatorBase

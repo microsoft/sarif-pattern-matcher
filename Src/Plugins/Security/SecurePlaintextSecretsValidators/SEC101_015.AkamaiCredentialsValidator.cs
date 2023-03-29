@@ -60,7 +60,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string id = fingerprint.Id;
             string host = fingerprint.Host;
             string secret = fingerprint.Secret;
-            string asset = secret.Truncate(); // TBD
+            string asset = secret.Truncate();
             string resource = fingerprint.Resource;
 
             string date;

@@ -17,7 +17,6 @@ using Newtonsoft.Json;
 
 using Xunit;
 
-using static System.Net.WebRequestMethods;
 using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration.DoNotGrantAllPipelinesAccessValidator;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration.Validators
@@ -39,23 +38,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                 Resource = "TestProject",
                 Id = "A1B326D6-0D73-4C01-A64B-FB43FE5E2A13",
             };
-            string adoPat = "testpat";
+            string secret = "testpat";
             string asset = $"https://{host}/{resource}/_apis/pipelines/pipelinePermissions/endpoint/{id}";
 
-            string pipelinePermissionAPI = "https://{0}/{1}/_apis/pipelines/pipelinePermissions/endpoint/{2}?api-version=6.1-preview.1";
+            string pipelinePermissionUri = $"{asset}/{secret}?api-version=6.1-preview.1";
 
             var defaultRequest = new HttpRequestMessage(
                     HttpMethod.Get,
-                    string.Format(pipelinePermissionAPI,
-                                  fingerprint.Host,
-                                  fingerprint.Resource,
-                                  fingerprint.Id));
+                    pipelinePermissionUri);
 
             defaultRequest.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             defaultRequest.Headers.Authorization = new AuthenticationHeaderValue("Basic",
                 Convert.ToBase64String(
                     ASCIIEncoding.ASCII.GetBytes(
-                        string.Format("{0}:{1}", string.Empty, adoPat))));
+                        string.Format("{0}:{1}", string.Empty, secret))));
 
             string allPipelinesHaveAccessResponseJson = JsonConvert.SerializeObject(
                     new PipelinePermission
@@ -172,7 +168,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
 
                 using var httpClient = new HttpClient(mockHandler);
                 pipelineAccessValidator.SetHttpClient(httpClient);
-                SetAdoPat(adoPat);
+                SetAdoPat(secret);
                 ValidationState currentState = pipelineAccessValidator.IsValidDynamic(ref fingerprint,
                                                                                       ref message,
                                                                                       keyValuePairs,
