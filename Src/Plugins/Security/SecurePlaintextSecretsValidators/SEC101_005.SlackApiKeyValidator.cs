@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -44,13 +45,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref ResultLevelKind resultLevelKind)
         {
             const string uri = "https://slack.com/api/auth.test";
+            string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
 
             try
             {
                 HttpClient client = CreateOrRetrieveCachedHttpClient();
                 var dict = new Dictionary<string, string>
                 {
-                    { "token", fingerprint.Secret },
+                    { "token", secret },
                 };
 
                 using var request = new HttpRequestMessage(HttpMethod.Post, uri);
@@ -89,7 +92,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
 

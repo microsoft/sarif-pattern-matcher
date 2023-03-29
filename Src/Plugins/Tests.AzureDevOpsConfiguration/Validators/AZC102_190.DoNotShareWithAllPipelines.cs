@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 
 using Xunit;
 
+using static System.Net.WebRequestMethods;
 using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration.DoNotGrantAllPipelinesAccessValidator;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration.Validators
@@ -29,6 +30,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
         [Fact]
         public void DoNotGrantAllPipelinesAccessValidator_MockHttpTests()
         {
+            string host = "testorg.visualstudio.com";
+            string resource = "TestProject";
+            string id = "A1B326D6-0D73-4C01-A64B-FB43FE5E2A13";
             var fingerprint = new Fingerprint
             {
                 Host = "testorg.visualstudio.com",
@@ -36,13 +40,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                 Id = "A1B326D6-0D73-4C01-A64B-FB43FE5E2A13",
             };
             string adoPat = "testpat";
+            string asset = $"https://{host}/{resource}/_apis/pipelines/pipelinePermissions/endpoint/{id}";
+
+            string pipelinePermissionAPI = "https://{0}/{1}/_apis/pipelines/pipelinePermissions/endpoint/{2}?api-version=6.1-preview.1";
 
             var defaultRequest = new HttpRequestMessage(
-                HttpMethod.Get,
-                string.Format(PipelinePermissionAPI,
-                              fingerprint.Host,
-                              fingerprint.Resource,
-                              fingerprint.Id));
+                    HttpMethod.Get,
+                    string.Format(pipelinePermissionAPI,
+                                  fingerprint.Host,
+                                  fingerprint.Resource,
+                                  fingerprint.Id));
 
             defaultRequest.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             defaultRequest.Headers.Authorization = new AuthenticationHeaderValue("Basic",
@@ -143,7 +150,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                     Title = "Null Reference Exception",
                     HttpRequestMessages = new List<HttpRequestMessage> { null },
                     HttpResponseMessages = new List<HttpResponseMessage> { null },
-                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref unhandledMessage, new NullReferenceException()),
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref unhandledMessage, new NullReferenceException(), asset),
                     ExpectedMessage = unhandledMessage
                 }
             };

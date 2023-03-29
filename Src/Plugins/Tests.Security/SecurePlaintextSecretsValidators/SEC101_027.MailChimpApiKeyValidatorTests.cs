@@ -30,8 +30,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string key1 = "key1";
             const string key2 = "key2";
             const string accountName = "account";
-            string secret = $"[secret={key1}-{key2}]";
-
+            string secret = $"{key1}-{key2}";
+            string secretFingerprint = $"[secret={secret}]";
+            string asset = secret.Truncate();
+            
             string authorizedMessage = null, unknownMessage = null, exceptionMessage = null;
 
             var request = new HttpRequestMessage(HttpMethod.Get, string.Format(MailChimpApiKeyValidator.ApiUri, key2));
@@ -78,7 +80,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "HttpClient throwing NullReferenceException",
                     HttpRequestMessages = new List<HttpRequestMessage>{ null },
                     HttpResponseMessages = new List<HttpResponseMessage>{ null },
-                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref exceptionMessage, new NullReferenceException()),
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref exceptionMessage, new NullReferenceException(), asset),
                     ExpectedMessage = exceptionMessage,
                 },
             };
@@ -96,7 +98,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
-                var fingerprint = new Fingerprint(secret);
+                var fingerprint = new Fingerprint(secretFingerprint);
                 var keyValuePairs = new Dictionary<string, string>();
 
                 using var httpClient = new HttpClient(mockHandler);

@@ -73,6 +73,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                                                          ref Fingerprint fingerprint,
                                                          ref string message)
         {
+            string asset = "[TBD]";
             try
             {
                 // If this certificate needs a password or it is a bundle, it will throw an exception.
@@ -102,7 +103,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     }
                 }
 
-                return ValidatorBase.ReturnUnhandledException(ref message, e);
+                return ValidatorBase.ReturnUnhandledException(ref message, e, asset);
             }
         }
 
@@ -110,6 +111,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                                                                    ref Fingerprint fingerprint,
                                                                    ref string message)
         {
+            string asset = "[TBD]";
             var certificates = new X509Certificate2Collection();
             try
             {
@@ -119,7 +121,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             }
             catch (Exception e)
             {
-                return ValidatorBase.ReturnUnhandledException(ref message, e);
+                return ValidatorBase.ReturnUnhandledException(ref message, e, asset);
             }
         }
 

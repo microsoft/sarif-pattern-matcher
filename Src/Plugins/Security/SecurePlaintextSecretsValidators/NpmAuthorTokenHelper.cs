@@ -90,7 +90,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ValidatorBase.ReturnUnhandledException(ref message, e);
+                return ValidatorBase.ReturnUnhandledException(ref message, e, asset: secret.Truncate());
             }
         }
 

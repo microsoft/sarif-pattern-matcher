@@ -10,6 +10,8 @@ using System.Text;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
+using static System.Net.WebRequestMethods;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class SlackWebhookValidator : DynamicValidatorBase
@@ -42,7 +44,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
-            string uri = $"https://hooks.slack.com/services/{id}/{secret}";
+            string asset = $"https://hooks.slack.com/services/{id}";
+            string uri = $"{asset}/{secret}";
 
             HttpClient client = CreateOrRetrieveCachedHttpClient();
 
@@ -93,7 +96,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
     }
