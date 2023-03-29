@@ -34,14 +34,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
             string id = "A1B326D6-0D73-4C01-A64B-FB43FE5E2A13";
             var fingerprint = new Fingerprint
             {
-                Host = "testorg.visualstudio.com",
-                Resource = "TestProject",
-                Id = "A1B326D6-0D73-4C01-A64B-FB43FE5E2A13",
+                Host = host,
+                Resource = resource,
+                Id = id,
             };
             string secret = "testpat";
             string asset = $"https://{host}/{resource}/_apis/pipelines/pipelinePermissions/endpoint/{id}";
-
-            string pipelinePermissionUri = $"{asset}/{secret}?api-version=6.1-preview.1";
+            string pipelinePermissionUri = $"{asset}?api-version=6.1-preview.1";
 
             var defaultRequest = new HttpRequestMessage(
                     HttpMethod.Get,
