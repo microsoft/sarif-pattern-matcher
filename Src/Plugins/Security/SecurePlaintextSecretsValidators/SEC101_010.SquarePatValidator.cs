@@ -38,7 +38,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
-            string pat = fingerprint.Secret;
+            string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
 
             const string uri = "https://connect.squareup.com/v2/catalog/list";
 
@@ -47,7 +48,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 HttpClient client = CreateOrRetrieveCachedHttpClient();
 
                 using var request = new HttpRequestMessage(HttpMethod.Get, uri);
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", pat);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
                 using HttpResponseMessage response = client.ReadResponseHeaders(request);
 
@@ -71,7 +72,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
     }

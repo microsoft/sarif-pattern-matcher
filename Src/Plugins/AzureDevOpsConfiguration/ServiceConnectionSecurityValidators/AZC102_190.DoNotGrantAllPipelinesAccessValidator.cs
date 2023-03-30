@@ -19,7 +19,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
 {
     public class DoNotGrantAllPipelinesAccessValidator : DynamicValidatorBase
     {
-        internal const string PipelinePermissionAPI = "https://{0}/{1}/_apis/pipelines/pipelinePermissions/endpoint/{2}?api-version=6.1-preview.1";
         internal const string NotAuthorizedMessage = "Not able to access required ADO API to check.";
         private const string AdoPatFile = "AdoPat.txt";
         private static string adoPat = null;
@@ -75,11 +74,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                                                                 IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
+            string asset = string.Empty;
             try
             {
                 string organization = fingerprint.Host;
                 string project = fingerprint.Resource;
                 string serviceConnectionId = fingerprint.Id;
+                asset = $"https://{organization}/{project}/_apis/pipelines/pipelinePermissions/endpoint/{serviceConnectionId}";
 
                 adoPat ??= ReadPatFromFile(AdoPatFile);
                 if (string.IsNullOrEmpty(adoPat))
@@ -88,8 +89,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                 }
 
                 HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
-
-                string apiUri = string.Format(PipelinePermissionAPI, organization, project, serviceConnectionId);
+                string apiUri = $"{asset}?api-version=6.1-preview.1";
                 using var request = new HttpRequestMessage(HttpMethod.Get, apiUri);
 
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -129,7 +129,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
 

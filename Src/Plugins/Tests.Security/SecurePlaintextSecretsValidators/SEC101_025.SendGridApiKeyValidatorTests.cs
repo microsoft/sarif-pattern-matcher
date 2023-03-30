@@ -28,6 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         public void SendGridApiKeyValidator_MockHttpTests()
         {
             const string secret = "secret";
+            string asset = secret.Truncate();
             string fingerprintText = $"[secret={secret}]";
             string unknownMessage = null, unhandledMessage = null;
 
@@ -72,7 +73,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Unhandled Exception",
                     HttpRequestMessages = new HttpRequestMessage[] { null },
                     HttpResponseMessages = new HttpResponseMessage[] { null },
-                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref unhandledMessage, new NullReferenceException()),
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref unhandledMessage, new NullReferenceException(), asset),
                     ExpectedMessage = unhandledMessage,
                 },
                 new HttpMockTestCase

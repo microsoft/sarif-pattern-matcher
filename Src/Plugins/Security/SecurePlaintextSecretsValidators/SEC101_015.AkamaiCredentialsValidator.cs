@@ -60,9 +60,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string id = fingerprint.Id;
             string host = fingerprint.Host;
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
             string resource = fingerprint.Resource;
-            string scanIdentityGuid = string.Empty;
-            string date = string.Empty;
+
+            string date;
+            string scanIdentityGuid;
             DateTime datetime = DateTime.UtcNow;
 
             if (options.TryGetValue("datetime", out date))
@@ -98,7 +100,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
 

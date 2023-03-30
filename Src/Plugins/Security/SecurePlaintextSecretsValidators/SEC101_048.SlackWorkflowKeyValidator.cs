@@ -45,7 +45,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
-            string uri = string.Format(WorkflowUri, id, secret);
+            string asset = $"https://hooks.slack.com/workflows/{id}";
+            string uri = $"{asset}/{secret}";
 
             try
             {
@@ -82,7 +83,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
     }
