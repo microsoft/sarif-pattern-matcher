@@ -43,6 +43,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var sb = new StringBuilder();
             var fingerprint = new Fingerprint(fingerprintText);
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
 
             sb.AppendLine($"Running tests for: {fingerprintText}");
             expectedLength += sb.Length;
@@ -87,7 +88,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Generates Null Reference Exception",
                     HttpRequestMessages = new List<HttpRequestMessage> { null },
                     HttpResponseMessages = new List<HttpResponseMessage> { null },
-                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref unhandledErrorResponseMessage, new NullReferenceException()),
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref unhandledErrorResponseMessage, new NullReferenceException(), asset),
                     ExpectedMessage = unhandledErrorResponseMessage
                 },
             };

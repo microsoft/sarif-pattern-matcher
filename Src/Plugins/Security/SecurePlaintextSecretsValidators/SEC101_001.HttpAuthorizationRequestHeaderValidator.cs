@@ -63,10 +63,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     requestDummy.Headers.Authorization = new AuthenticationHeaderValue("Basic", this.ScanIdentityGuid);
                 }
 
-                using HttpResponseMessage responseDummy = client
-                    .SendAsync(requestDummy, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage responseDummy = client.ReadResponseHeaders(requestDummy);
 
                 if (responseDummy.StatusCode == HttpStatusCode.OK ||
                     responseDummy.StatusCode == HttpStatusCode.NotFound ||
@@ -77,10 +74,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 using var request = new HttpRequestMessage(HttpMethod.Get, uri);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Basic", fingerprint.Secret);
-                using HttpResponseMessage response = client
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = client.ReadResponseHeaders(request);
 
                 switch (response.StatusCode)
                 {

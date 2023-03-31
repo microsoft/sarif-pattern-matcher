@@ -95,10 +95,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             try
             {
                 using var requestWithNoCredentials = new HttpRequestMessage(HttpMethod.Get, uri);
-                using HttpResponseMessage responseWithNoCredentials = client
-                    .SendAsync(requestWithNoCredentials, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage responseWithNoCredentials = client.ReadResponseHeaders(requestWithNoCredentials);
 
                 if (responseWithNoCredentials.StatusCode == HttpStatusCode.OK ||
                     responseWithNoCredentials.StatusCode == HttpStatusCode.NotFound ||
@@ -112,10 +109,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 using var request = new HttpRequestMessage(HttpMethod.Get, uri);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
-                using HttpResponseMessage responseWithCredentials = client
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage responseWithCredentials = client.ReadResponseHeaders(request);
 
                 switch (responseWithCredentials.StatusCode)
                 {

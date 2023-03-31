@@ -57,15 +57,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
+
             HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
 
             try
             {
                 using var request = GenerateRequestMessage(id, secret);
-                using HttpResponseMessage response = httpClient
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = httpClient.ReadResponseHeaders(request);
 
                 switch (response.StatusCode)
                 {
@@ -101,7 +100,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
     }

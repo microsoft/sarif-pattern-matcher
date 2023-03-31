@@ -29,26 +29,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
         [Fact]
         public void DoNotGrantAllPipelinesAccessValidator_MockHttpTests()
         {
+            string host = "testorg.visualstudio.com";
+            string resource = "TestProject";
+            string id = "A1B326D6-0D73-4C01-A64B-FB43FE5E2A13";
             var fingerprint = new Fingerprint
             {
-                Host = "testorg.visualstudio.com",
-                Resource = "TestProject",
-                Id = "A1B326D6-0D73-4C01-A64B-FB43FE5E2A13",
+                Host = host,
+                Resource = resource,
+                Id = id,
             };
-            string adoPat = "testpat";
+            string secret = "testpat";
+            string asset = $"https://{host}/{resource}/_apis/pipelines/pipelinePermissions/endpoint/{id}";
+            string pipelinePermissionUri = $"{asset}?api-version=6.1-preview.1";
 
             var defaultRequest = new HttpRequestMessage(
-                HttpMethod.Get,
-                string.Format(PipelinePermissionAPI,
-                              fingerprint.Host,
-                              fingerprint.Resource,
-                              fingerprint.Id));
+                    HttpMethod.Get,
+                    pipelinePermissionUri);
 
             defaultRequest.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             defaultRequest.Headers.Authorization = new AuthenticationHeaderValue("Basic",
                 Convert.ToBase64String(
                     ASCIIEncoding.ASCII.GetBytes(
-                        string.Format("{0}:{1}", string.Empty, adoPat))));
+                        string.Format("{0}:{1}", string.Empty, secret))));
 
             string allPipelinesHaveAccessResponseJson = JsonConvert.SerializeObject(
                     new PipelinePermission
@@ -143,7 +145,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
                     Title = "Null Reference Exception",
                     HttpRequestMessages = new List<HttpRequestMessage> { null },
                     HttpResponseMessages = new List<HttpResponseMessage> { null },
-                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref unhandledMessage, new NullReferenceException()),
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref unhandledMessage, new NullReferenceException(), asset),
                     ExpectedMessage = unhandledMessage
                 }
             };
@@ -165,7 +167,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
 
                 using var httpClient = new HttpClient(mockHandler);
                 pipelineAccessValidator.SetHttpClient(httpClient);
-                SetAdoPat(adoPat);
+                SetAdoPat(secret);
                 ValidationState currentState = pipelineAccessValidator.IsValidDynamic(ref fingerprint,
                                                                                       ref message,
                                                                                       keyValuePairs,

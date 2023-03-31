@@ -32,6 +32,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string id = fingerprint.Id;
             string host = fingerprint.Host;
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
             string resource = fingerprint.Resource;
             var options = new Dictionary<string, string>();
             options.Add("datetime", DateTime.UtcNow.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture));
@@ -52,7 +53,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Raise NullReferenceException",
                     HttpRequestMessages = new List<HttpRequestMessage>{ null },
                     HttpResponseMessages = new List<HttpResponseMessage>{ null },
-                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException()),
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException(), asset),
                     ExpectedMessage = nullRefResponseMessage,
                 },
                 new HttpMockTestCase

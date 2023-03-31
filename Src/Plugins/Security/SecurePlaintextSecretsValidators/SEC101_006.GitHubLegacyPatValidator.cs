@@ -76,11 +76,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
-            string pat = fingerprint.Secret;
+            string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
 
             try
             {
-                var credentials = new Credentials(pat);
+                var credentials = new Credentials(secret);
                 var credentialsStore = new InMemoryCredentialStore(credentials);
                 var client = new GitHubClient(new ProductHeaderValue(ScanIdentityGuid), credentialsStore);
 
@@ -93,6 +94,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     name = $" ({name})";
                 }
 
+                asset = $"{id}{name}";
                 message = $"the compromised GitHub account is '[{id}{name}](https://github.com/{id})'";
 
                 IReadOnlyList<Organization> orgs = client.Organization.GetAllForCurrent().GetAwaiter().GetResult();
@@ -126,7 +128,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
     }

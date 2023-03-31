@@ -28,6 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         {
             var fingerprint = new Fingerprint(fingerprintText);
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
             HttpRequestMessage request = PostmanApiKeyValidator.GenerateRequestMessage(secret);
 
             string unexpectedResponseMessage = string.Empty;
@@ -40,7 +41,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Raise NullReferenceException",
                     HttpRequestMessages = new List<HttpRequestMessage>{ null },
                     HttpResponseMessages = new List<HttpResponseMessage>{ null },
-                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException()),
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException(), asset),
                     ExpectedMessage = nullRefResponseMessage,
                 },
                 new HttpMockTestCase

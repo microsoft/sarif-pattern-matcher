@@ -30,7 +30,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string unexpectedResponseCodeMessage = null, nullRefResponseMessage = null;
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
-            string uri = string.Format(SlackWorkflowKeyValidator.WorkflowUri, id, secret);
+            string asset = $"https://hooks.slack.com/workflows/{id}";
+            string uri = $"{asset}/{secret}";
 
             var request = new HttpRequestMessage(HttpMethod.Post, uri);
 
@@ -41,7 +42,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Raise NullReferenceException",
                     HttpRequestMessages = new List<HttpRequestMessage>{ null },
                     HttpResponseMessages = new List<HttpResponseMessage>{ null },
-                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException()),
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException(), asset),
                     ExpectedMessage = nullRefResponseMessage,
                 },
                 new HttpMockTestCase

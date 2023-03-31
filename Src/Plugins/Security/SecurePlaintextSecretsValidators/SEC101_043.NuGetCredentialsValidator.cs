@@ -108,10 +108,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 using var request = new HttpRequestMessage(HttpMethod.Get, host);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
-                using HttpResponseMessage responseWithCredentials = client
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage responseWithCredentials = client.ReadResponseHeaders(request);
 
                 switch (responseWithCredentials.StatusCode)
                 {
@@ -221,10 +218,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
 
             // Making a request without a key.
-            using HttpResponseMessage responseWithoutSecret = httpClient
-                .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
-                .GetAwaiter()
-                .GetResult();
+            using HttpResponseMessage responseWithoutSecret = httpClient.ReadResponseHeaders(uri);
 
             if (responseWithoutSecret.StatusCode == HttpStatusCode.OK ||
                 responseWithoutSecret.StatusCode == HttpStatusCode.NotFound ||
@@ -239,10 +233,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             using var request = new HttpRequestMessage(HttpMethod.Get, uri);
             request.Headers.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
-            using HttpResponseMessage responseDummy = httpClient
-                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                .GetAwaiter()
-                .GetResult();
+            using HttpResponseMessage responseDummy = httpClient.ReadResponseHeaders(request);
 
             if (responseDummy.StatusCode == HttpStatusCode.OK ||
                 responseDummy.StatusCode == HttpStatusCode.NotFound ||

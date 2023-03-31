@@ -141,7 +141,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public static ValidationState ReturnUnhandledException(ref string message,
                                                                Exception e,
-                                                               string asset = null,
+                                                               string asset,
                                                                string account = null)
         {
             if (TestExceptionForMessage(e, s_noSuchHostIsKnown, ref asset))
