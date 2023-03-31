@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.Extensions.Logging;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 using Microsoft.TeamFoundation.SourceControl.WebApi.Legacy;
@@ -66,9 +67,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
     internal class StressCommand : CommandBase
     {
         private static int filesScanned = 0;
-        private IEnumerable<string> s_configurationFiles;
         private readonly List<Tuple<string, long, long, double, double>> fileDataTupleList = new List<Tuple<string, long, long, double, double>>();
         private readonly IFileSystem fileSystem = Sarif.FileSystem.Instance;
+
+        private IEnumerable<string> s_configurationFiles;
 
         public int Run(StressOptions options)
         {
@@ -91,6 +93,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     // For simplicity, I added the timing tests to stress command
                     // It runs with a folder passed in as the file.
                     RunSingleThreadedTelemetry(options);
+                    break;
+                }
+
+                case StressScenario.MultiThreadedTelemetry:
+                {
+                    RunMultiThreadedTelemetry(options);
                     break;
                 }
             }
@@ -153,7 +161,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         {
             IFileSystem fileSystem = Sarif.FileSystem.Instance;
             s_configurationFiles = new string[] { options.InputFilePath };
-            Tool tool = Tool.CreateFromAssemblyData();
+            var tool = Tool.CreateFromAssemblyData();
             ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, s_configurationFiles, tool);
 
             var logger = new AdoLogger();
@@ -203,7 +211,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             List<string> filesToSearch = GetWhatFilesToSearch(options);
 
-            Tool tool = Tool.CreateFromAssemblyData();
+            var tool = Tool.CreateFromAssemblyData();
             ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem, options.SearchDefinitionsPaths, tool);
 
             var totalRunTimer = new Stopwatch();
@@ -219,6 +227,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             ExportSizeAndExecutionTime(totalRunTimer.Elapsed, options.CSVFilePath);
 
             Console.WriteLine($"Timing Tests Finished. Total Runtime: {totalRunTimer.Elapsed}");
+        }
+
+        private void RunMultiThreadedTelemetry(StressOptions options)
+        {
+            var analyzeOptions = new AnalyzeOptions()
+            {
+                TargetFileSpecifiers = new List<string> { options.InputFilePath },
+                Recurse = true,
+                OutputFilePath = options.OutputFilePath,
+                OutputFileOptions = new List<FilePersistenceOptions>() { FilePersistenceOptions.ForceOverwrite },
+                Level = new FailureLevelSet(new[] { FailureLevel.Error, FailureLevel.Warning, FailureLevel.Note }),
+                Kind = new ResultKindSet(new[] { ResultKind.Fail }),
+                MaxFileSizeInKilobytes = 99999999,
+                Threads = Environment.ProcessorCount - 1,
+                PluginFilePaths = options.SearchDefinitionsPaths,
+            };
+
+            new AnalyzeCommand().Run(analyzeOptions);
         }
 
         private List<string> GetWhatFilesToSearch(StressOptions options)

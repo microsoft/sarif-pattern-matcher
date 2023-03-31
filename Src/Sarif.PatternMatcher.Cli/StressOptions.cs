@@ -9,6 +9,14 @@ using Microsoft.CodeAnalysis.Sarif.Driver;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
+    public enum StressScenario
+    {
+        Statelessness = 0,
+        RE2Timing,
+        SingleThreadedTelemetry,
+        MultiThreadedTelemetry,
+    }
+
     [Verb("stress", HelpText = "Run various stress scenarios.")]
     internal class StressOptions : SingleFileOptionsBase
     {
@@ -38,13 +46,5 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             HelpText = "A path to create a csv file for outputs.")]
 
         public string CSVFilePath { get; set; }
-    }
-
-    public enum StressScenario
-    {
-        Statelessness = 0,
-        RE2Timing,
-        SingleThreadedTelemetry,
-        MultiThreadedTelemetry
     }
 }
