@@ -6,10 +6,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 using Microsoft.TeamFoundation.SourceControl.WebApi.Legacy;
@@ -207,7 +209,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         private void RunSingleThreadedTelemetry(StressOptions options)
         {
-            Console.WriteLine("Starting Timing Tests - Current Tool!");
+            if (options.CSVPathAggregated == null || options.CSVPathPerFile == null)
+            {
+                throw new ArgumentNullException($"{nameof(options.CSVPathAggregated)} and {nameof(options.CSVPathPerFile)} must not be null during single-threaded analysis.");
+            }
 
             List<string> filesToSearch = GetWhatFilesToSearch(options);
 
@@ -224,13 +229,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             }
 
             totalRunTimer.Stop();
-            ExportSizeAndExecutionTime(totalRunTimer.Elapsed, options.CSVFilePath);
+            ExportSizeAndExecutionTime(totalRunTimer.Elapsed, options);
 
             Console.WriteLine($"Timing Tests Finished. Total Runtime: {totalRunTimer.Elapsed}");
         }
 
         private void RunMultiThreadedTelemetry(StressOptions options)
         {
+            if (options.CSVPathAggregated == null)
+            {
+                throw new ArgumentNullException($"{nameof(options.CSVPathAggregated)} must not be null during multi-threaded analysis.");
+            }
+
+            var sb = new StringBuilder();
+
             var analyzeOptions = new AnalyzeOptions()
             {
                 TargetFileSpecifiers = new List<string> { options.InputFilePath },
@@ -244,7 +256,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 PluginFilePaths = options.SearchDefinitionsPaths,
             };
 
+            Process.GetCurrentProcess().Refresh();
+
+            var timer = new Stopwatch();
+            TimeSpan startCpu = Process.GetCurrentProcess().TotalProcessorTime;
+
+            timer.Start();
+
             new AnalyzeCommand().Run(analyzeOptions);
+
+            TimeSpan endCpu = Process.GetCurrentProcess().TotalProcessorTime;
+            timer.Stop();
+
+            double cpuUtilization = 100 * (endCpu.TotalMilliseconds - startCpu.TotalMilliseconds) / (Environment.ProcessorCount * timer.ElapsedMilliseconds);
+
+            if (!File.Exists(options.CSVPathAggregated))
+            {
+                sb.AppendLine($"Timestamp, Runtime in ms, %-CPU Utilization, Peak Mem (MB){Environment.NewLine}");
+            }
+
+            sb.AppendLine($"{DateTime.Now}, {timer.ElapsedMilliseconds}, {cpuUtilization}, {(double)Process.GetCurrentProcess().PeakVirtualMemorySize64 / 1000000}");
+
+            File.WriteAllText(options.CSVPathAggregated, sb.ToString());
         }
 
         private List<string> GetWhatFilesToSearch(StressOptions options)
@@ -258,17 +291,33 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return filesToSearch;
         }
 
-        private void ExportSizeAndExecutionTime(TimeSpan totalRunTime, string outputFilePath)
+        private void ExportSizeAndExecutionTime(TimeSpan totalRunTime, StressOptions options)
         {
-            // output Tuple list to csv in 3 columns
-            var sb = new StringBuilder($"Filename, File Size in KB, Runtime in ms, %-CPU Utilization, Peak Mem (MB), Total RunTime: {totalRunTime}{Environment.NewLine}");
+            var perFileSb = new StringBuilder($"Filename, File Size in KB, Runtime in ms, %-CPU Utilization, Peak Mem (MB)");
+            var aggregatedSb = new StringBuilder();
+
+            double meanAnalysisRate = 0;
+            double meanCpuUtil = 0;
 
             foreach (Tuple<string, long, long, double, double> runData in fileDataTupleList)
             {
-                sb.AppendLine($"{runData.Item1}, {runData.Item2}, {runData.Item3}, {runData.Item4}, {runData.Item5}");
+                perFileSb.AppendLine($"{runData.Item1}, {runData.Item2}, {runData.Item3}, {runData.Item4}, {runData.Item5}");
+                meanAnalysisRate += (double)runData.Item3 / (double)runData.Item2;
+                meanCpuUtil += runData.Item4;
             }
 
-            File.WriteAllText(outputFilePath, sb.ToString());
+            meanAnalysisRate /= fileDataTupleList.Count;
+            meanCpuUtil /= fileDataTupleList.Count;
+
+            if (!File.Exists(options.CSVPathAggregated))
+            {
+                aggregatedSb.AppendLine($"Timestamp, Total Runtime (ms), Mean Analysis Rate (ms/KB), mean %-CPU utilization");
+            }
+
+            aggregatedSb.AppendLine($"{DateTime.Now}, {totalRunTime}, {meanAnalysisRate}, {meanCpuUtil}");
+;
+            File.WriteAllText(options.CSVPathPerFile, perFileSb.ToString());
+            File.WriteAllText(options.CSVPathAggregated, aggregatedSb.ToString());
         }
 
         private void TimeScanFileWithSkimmers(string filePath, ISet<Skimmer<AnalyzeContext>> skimmers)
