@@ -42,9 +42,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         public IEnumerable<string> SearchDefinitionsPaths { get; set; }
 
         [Option(
-            "csv",
-            HelpText = "A path to create a csv file for outputs.")]
+            "csv-per-file",
+            HelpText = "CSV path to store analysis results per-file.")]
+        public string CSVPathPerFile { get; set; }
 
-        public string CSVFilePath { get; set; }
+        [Option(
+            "csv-aggregate",
+            HelpText = "CSV path to store aggregated analysis.")]
+
+        public string CSVPathAggregated { get; set; }
     }
 }
