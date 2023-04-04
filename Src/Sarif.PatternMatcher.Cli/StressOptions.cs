@@ -34,8 +34,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         public int Iterations { get; set; }
 
         [Option(
-            'd',
-            "search-definitions",
+            'p',
+            "plugin",
             Separator = ';',
             Required = true,
             HelpText = "A path to a file containing one or more search definitions to drive analysis.")]
