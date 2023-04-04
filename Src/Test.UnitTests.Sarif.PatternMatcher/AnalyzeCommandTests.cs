@@ -878,7 +878,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             sarifLog = JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
             results = sarifLog.Runs?[0].Results;
 
-            results?.Count().Should().Be(fooCount); 
+            results?.Count().Should().Be(fooCount);
             results.Where(r => r.Rule.Id == FooRuleId).Count().Should().Be(fooCount);
             results.Where(r => r.Level == FailureLevel.Error).Count().Should().Be(fooCount);
         }
