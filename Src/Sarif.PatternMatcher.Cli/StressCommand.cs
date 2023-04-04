@@ -66,10 +66,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         }
     }
 
+    internal class AnalysisResult
+    {
+        public string FileName { get; internal set; }
+
+        public long FileSizeInKB { get; internal set; }
+
+        public long AnalysisTimeInMs { get; internal set; }
+
+        public double CpuUtilization { get; internal set; }
+
+        public double MaxMemoryUsageInMB { get; internal set; }
+    }
+
     internal class StressCommand : CommandBase
     {
         private static int filesScanned = 0;
-        private readonly List<Tuple<string, long, long, double, double>> fileDataTupleList = new List<Tuple<string, long, long, double, double>>();
+        private readonly HashSet<AnalysisResult> analysisResults = new HashSet<AnalysisResult>();
         private readonly IFileSystem fileSystem = Sarif.FileSystem.Instance;
 
         private IEnumerable<string> s_configurationFiles;
@@ -302,15 +315,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             double meanAnalysisRate = 0;
             double meanCpuUtil = 0;
 
-            foreach (Tuple<string, long, long, double, double> runData in fileDataTupleList)
+            foreach (AnalysisResult analysisResult in analysisResults)
             {
-                perFileSb.AppendLine($"{runData.Item1}, {runData.Item2}, {runData.Item3}, {runData.Item4}, {runData.Item5}");
-                meanAnalysisRate += (double)runData.Item3 / (double)runData.Item2;
-                meanCpuUtil += runData.Item4;
+                perFileSb.AppendLine($"{analysisResult.FileName}, " +
+                                     $"{analysisResult.FileSizeInKB}, " +
+                                     $"{analysisResult.AnalysisTimeInMs}, " +
+                                     $"{analysisResult.CpuUtilization}, " +
+                                     $"{analysisResult.MaxMemoryUsageInMB}");
+
+                meanAnalysisRate += (double)analysisResult.AnalysisTimeInMs / (double)analysisResult.FileSizeInKB;
+                meanCpuUtil += analysisResult.CpuUtilization;
             }
 
-            meanAnalysisRate /= fileDataTupleList.Count;
-            meanCpuUtil /= fileDataTupleList.Count;
+            meanAnalysisRate /= analysisResults.Count;
+            meanCpuUtil /= analysisResults.Count;
 
             if (!File.Exists(options.CSVPathAggregated))
             {
@@ -371,11 +389,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             TimeSpan endCpu = Process.GetCurrentProcess().TotalProcessorTime;
             timer.Stop();
 
-            fileDataTupleList.Add(Tuple.Create(filePath.Replace(',', ';'), 
-                                               fileSystem.FileInfoLength(filePath) / 1024, 
-                                               timer.ElapsedMilliseconds, 
-                                               ComputeCPUUtilization(startCpu, endCpu, timer), 
-                                               (double)Process.GetCurrentProcess().PeakWorkingSet64 / 1000000));
+            analysisResults.Add(new AnalysisResult
+            {
+                FileName = filePath.Replace(',', ';'),
+                FileSizeInKB = fileSystem.FileInfoLength(filePath) / 1024,
+                AnalysisTimeInMs = timer.ElapsedMilliseconds,
+                CpuUtilization = ComputeCPUUtilization(startCpu, endCpu, timer),
+                MaxMemoryUsageInMB = (double)Process.GetCurrentProcess().PeakWorkingSet64 / 1000000,
+            });
         }
 
         private double ComputeCPUUtilization(TimeSpan startCpu, TimeSpan endCpu, Stopwatch timer)
