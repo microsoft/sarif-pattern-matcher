@@ -822,6 +822,127 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
+        public void AnalyzeCommand_DisableSpecificRules()
+        {
+            ISet<Skimmer<AnalyzeContext>> skimmers = CreateFooBarRules(out Run run, out Mock<IFileSystem> mockFileSystem);
+
+            var sb = new StringBuilder();
+
+            var target = new EnumeratedArtifact(FileSystem.Instance)
+            {
+                Uri = new Uri($"C:\\{Guid.NewGuid()}.test"),
+                Contents = $"myFoo1 myBar1 myFoo2",
+            };
+
+            var context = new AnalyzeContext()
+            {
+                Skimmers = skimmers,
+                Logger = new SarifLogger(new StringWriter(sb), run: run),
+                TargetsProvider = new ArtifactProvider(new[] { target }),
+            };
+
+            /* FIRST RUN ALL CHECKS TO ENSURE EVERYTHING'S WORKING **/
+            int fooCount = 2;
+            int barCount = 1;
+
+            int result = new AnalyzeCommand().Run(options: null, ref context);
+            context.ValidateCommandExecution(result);
+
+            SarifLog sarifLog = JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
+            IList<Result> results = sarifLog.Runs?[0].Results;
+
+            results?.Count().Should().Be(fooCount + barCount);
+            results.Where(r => r.Rule.Id == FooRuleId).Count().Should().Be(fooCount);
+            results.Where(r => r.Rule.Id == BarRuleId).Count().Should().Be(barCount);
+            results.Where(r => r.Level == FailureLevel.Error).Count().Should().Be(fooCount);
+            results.Where(r => r.Level == FailureLevel.Warning).Count().Should().Be(barCount);
+
+            /* NOW DISABLED THE 'BAR' RULE TO POSITIVELY ENSURE THAT OCCURRED **/
+
+            // 1. Locate the skimmer of interest, e.g., by rule id.
+            Skimmer<AnalyzeContext> barRule =
+                skimmers.Where(s => s.Id == BarRuleId).First();
+
+            // 2. Synthesize a property descriptor that governs rule enabled state.
+            PerLanguageOption<RuleEnabledState> ruleEnabledProperty =
+                DefaultDriverOptions.CreateRuleSpecificOption(barRule, DefaultDriverOptions.RuleEnabled);
+
+            // 3. Inject the property into the context property bag.
+            context.Policy.SetProperty(ruleEnabledProperty, RuleEnabledState.Disabled);
+
+            sb.Clear();
+            context.Logger = new SarifLogger(new StringWriter(sb), run: run);
+            result = new AnalyzeCommand().Run(options: null, ref context);
+            context.ValidateCommandExecution(result);
+
+            sarifLog = JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
+            results = sarifLog.Runs?[0].Results;
+
+            results?.Count().Should().Be(fooCount); 
+            results.Where(r => r.Rule.Id == FooRuleId).Count().Should().Be(fooCount);
+            results.Where(r => r.Level == FailureLevel.Error).Count().Should().Be(fooCount);
+        }
+
+        private const string FooRuleId = "TEST1009";
+        private const string BarRuleId = "TEST1010";
+
+        private ISet<Skimmer<AnalyzeContext>> CreateFooBarRules(out Run run, out Mock<IFileSystem> mockFileSystem)
+        {
+            string secretText = nameof(secretText);
+
+            var definitions = new SearchDefinitions()
+            {
+                ExtensionName = "DoNotPersistFooOrBar",
+                Definitions = new List<SearchDefinition>(new[]
+                {
+                    new SearchDefinition()
+                    {
+                        Name = "WeDoNotLikeFoo", Id = FooRuleId,
+                        Level = FailureLevel.Error,
+                        FileNameAllowRegex = "(?i)\\.test$",
+                        Message = "Found sensitive data '{0:truncatedSecret}' in '{1:scanTarget}'.",
+                        MatchExpressions = new List<MatchExpression>(new[]
+                        {
+                            new MatchExpression()
+                            {
+                                ContentsRegex = $"(?i)(?P<secret>foo)",
+                            }
+                        })
+                    },
+                    new SearchDefinition()
+                    {
+                        Name = "WeDoNotLikeBar", Id = BarRuleId,
+                        Level = FailureLevel.Warning,
+                        FileNameAllowRegex = "(?i)\\.test$",
+                        Message = "Found sensitive data '{0:truncatedSecret}' in '{1:scanTarget}'.",
+                        MatchExpressions = new List<MatchExpression>(new[]
+                        {
+                            new MatchExpression()
+                            {
+                                ContentsRegex = $"(?i)(?P<secret>bar)",
+                            }
+                        })
+                    }
+                })
+            };
+
+            string definitionsText = JsonConvert.SerializeObject(definitions);
+            string searchDefinitionsPath = Path.GetFullPath(Guid.NewGuid().ToString());
+
+            mockFileSystem = new Mock<IFileSystem>();
+            mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
+            mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
+
+            run = new Run { Tool = Tool.CreateFromAssemblyData() };
+
+            return
+                PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(mockFileSystem.Object,
+                                                                                 new string[] { searchDefinitionsPath },
+                                                                                 run.Tool,
+                                                                                 RE2Regex.Instance);
+        }
+
+        [Fact]
         public void AnalyzeCommand_RedactSensitiveData()
         {
             string secretText = nameof(secretText);
