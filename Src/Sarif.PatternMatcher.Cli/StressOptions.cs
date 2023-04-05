@@ -5,10 +5,20 @@ using System.Collections.Generic;
 
 using CommandLine;
 
+using CsvHelper.Configuration.Attributes;
+
 using Microsoft.CodeAnalysis.Sarif.Driver;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
+    public enum StressScenario
+    {
+        Statelessness = 0,
+        RE2Timing,
+        SingleThreadedTelemetry,
+        MultiThreadedTelemetry,
+    }
+
     [Verb("stress", HelpText = "Run various stress scenarios.")]
     internal class StressOptions : SingleFileOptionsBase
     {
@@ -26,24 +36,30 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         public int Iterations { get; set; }
 
         [Option(
-            'd',
-            "search-definitions",
+            'p',
+            "plugin",
             Separator = ';',
             Required = true,
             HelpText = "A path to a file containing one or more search definitions to drive analysis.")]
         public IEnumerable<string> SearchDefinitionsPaths { get; set; }
 
         [Option(
-            "csv",
-            HelpText = "A path to create a csv file for outputs.")]
+            "csv-per-file",
+            HelpText = "CSV path to store analysis results per-file.")]
+        public string CSVPathPerFile { get; set; }
 
-        public string CSVFilePath { get; set; }
-    }
+        [Option(
+            "csv-aggregate",
+            HelpText = "CSV path to store aggregated analysis.")]
 
-    public enum StressScenario
-    {
-        Statelessness = 0,
-        RE2Timing,
-        FileSizeVsTime,
+        public string CSVPathAggregated { get; set; }
+
+        [Option(
+            "experiment-nickname",
+            HelpText = "Add a nickname for the experiment",
+            Default = "GenericExperiment")]
+
+        public string ExperimentNickname { get; set; }
+
     }
 }
