@@ -28,6 +28,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         private const string LargeTargetName = "largeTarget.txt";
 
         [Fact]
+        public void AnalyzeCommand_NoArgumentsInvokesHelp()
+        {
+            string[] args = Array.Empty<string>();
+            Program.ClearUnitTestData();
+            int result = Program.Main(args);
+            Program.GlobalContext.RuntimeExceptions.Should().BeNull();
+            result.Should().Be(CommandBase.SUCCESS);
+        }
+
+        [Fact]
         public void AnalyzeCommand_DefinitionsArgumentIsRequired()
         {
             string[] args = new[]
@@ -39,14 +49,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             Program.ClearUnitTestData();
             int result = Program.Main(args);
+            Program.GlobalContext.RuntimeExceptions.Should().NotBeNull();
+            var ex = (ExitApplicationException<ExitReason>)Program.GlobalContext.RuntimeExceptions[0];
+            ex.ExitReason.Should().Be(ExitReason.NoRulesLoaded);
             result.Should().Be(CommandBase.FAILURE);
-
-            // TBD replace this.
-            // This validation is sufficient because the null check for an
-            // instantiated analyze command verifies that we failed the 
-            // CommandLine parsing code and error out before attempting
-            // analysis.
-            //Program.InstantiatedAnalyzeCommand.Should().BeNull();
         }
 
         [Fact]
