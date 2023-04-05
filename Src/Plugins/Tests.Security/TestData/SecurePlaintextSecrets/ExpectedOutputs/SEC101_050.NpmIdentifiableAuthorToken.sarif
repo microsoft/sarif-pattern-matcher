@@ -35,7 +35,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://docs.npmjs.com/creating-and-viewing-access-tokens"
+                "helpUri": "https://docs.npmjs.com/creating-and-viewing-access-tokens",
+                "properties": {
+                  "sarif/uiLabel": "NPM identifiable author token"
+                }
               }
             ],
             "locations": [

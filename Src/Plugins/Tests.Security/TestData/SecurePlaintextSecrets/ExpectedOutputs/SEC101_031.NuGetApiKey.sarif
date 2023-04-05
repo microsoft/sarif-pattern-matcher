@@ -32,7 +32,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://aka.ms/1eslivesecrets/remediation#sec101031---nugetapikey"
+                "helpUri": "https://aka.ms/1eslivesecrets/remediation#sec101031---nugetapikey",
+                "properties": {
+                  "sarif/uiLabel": "NuGet API Key"
+                }
               }
             ],
             "locations": [

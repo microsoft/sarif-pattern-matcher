@@ -35,7 +35,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/token-expiration-and-revocation"
+                "helpUri": "https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/token-expiration-and-revocation",
+                "properties": {
+                  "sarif/uiLabel": "Legacy format GitHub personal access token"
+                }
               }
             ],
             "locations": [

@@ -32,7 +32,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://mailchimp.com/help/about-api-keys/"
+                "helpUri": "https://mailchimp.com/help/about-api-keys/",
+                "properties": {
+                  "sarif/uiLabel": "MailChimp API Key"
+                }
               }
             ],
             "locations": [

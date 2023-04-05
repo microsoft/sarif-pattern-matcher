@@ -35,7 +35,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://slack.com/help/articles/215770388-Create-and-regenerate-API-tokens"
+                "helpUri": "https://slack.com/help/articles/215770388-Create-and-regenerate-API-tokens",
+                "properties": {
+                  "sarif/uiLabel": "Slack api key"
+                }
               }
             ],
             "locations": [

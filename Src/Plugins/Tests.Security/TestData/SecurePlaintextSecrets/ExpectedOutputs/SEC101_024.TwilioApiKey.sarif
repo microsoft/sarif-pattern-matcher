@@ -32,7 +32,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://www.twilio.com/docs/usage/api/keys"
+                "helpUri": "https://www.twilio.com/docs/usage/api/keys",
+                "properties": {
+                  "sarif/uiLabel": "Twilio API Key"
+                }
               }
             ],
             "locations": [
