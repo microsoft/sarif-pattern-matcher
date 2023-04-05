@@ -32,7 +32,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://support.google.com/googleapi/answer/6158862?hl=en"
+                "helpUri": "https://support.google.com/googleapi/answer/6158862?hl=en",
+                "properties": {
+                  "sarif/uiLabel": "Google API key"
+                }
               }
             ],
             "locations": [

@@ -32,7 +32,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://www.eventbrite.com/platform/api#/introduction/authentication"
+                "helpUri": "https://www.eventbrite.com/platform/api#/introduction/authentication",
+                "properties": {
+                  "sarif/uiLabel": "Picatic API key"
+                }
               }
             ],
             "locations": [

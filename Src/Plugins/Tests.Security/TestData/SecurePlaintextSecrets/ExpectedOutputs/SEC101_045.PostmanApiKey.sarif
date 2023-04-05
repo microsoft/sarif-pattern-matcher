@@ -32,7 +32,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://learning.postman.com/docs/developer/intro-api/"
+                "helpUri": "https://learning.postman.com/docs/developer/intro-api/",
+                "properties": {
+                  "sarif/uiLabel": "Postman API key"
+                }
               }
             ],
             "locations": [
