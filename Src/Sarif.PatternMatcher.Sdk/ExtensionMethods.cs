@@ -112,7 +112,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// </summary>
         /// <param name="text">The input string.</param>
         /// <returns>true if the input string contains an uppercase letter and lowercase letter and digit; otherwise, false.</returns>
-        public static bool ContainsLowercaseAndUppercaseAndDigit(this string text)
+        public static bool ContainsDigitLowercaseAndUppercaseLetter(this string text)
         {
             /*
                 Assuming a random string of length L for this proof

@@ -136,47 +136,47 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             string lowercaseOnly = "onlylowercase";
             lowercaseOnly.ContainsDigitAndLetter().Should().BeFalse();
             lowercaseOnly.ContainsLowercaseAndUppercaseLetter().Should().BeFalse();
-            lowercaseOnly.ContainsLowercaseAndUppercaseAndDigit().Should().BeFalse();
+            lowercaseOnly.ContainsDigitLowercaseAndUppercaseLetter().Should().BeFalse();
 
             string uppercaseOnly = "ONLYUPPERCASE";
             uppercaseOnly.ContainsDigitAndLetter().Should().BeFalse();
             uppercaseOnly.ContainsLowercaseAndUppercaseLetter().Should().BeFalse();
-            uppercaseOnly.ContainsLowercaseAndUppercaseAndDigit().Should().BeFalse();
+            uppercaseOnly.ContainsDigitLowercaseAndUppercaseLetter().Should().BeFalse();
 
             string digitsOnly = "0123456789";
             digitsOnly.ContainsDigitAndLetter().Should().BeFalse();
             digitsOnly.ContainsLowercaseAndUppercaseLetter().Should().BeFalse();
-            digitsOnly.ContainsLowercaseAndUppercaseAndDigit().Should().BeFalse();
+            digitsOnly.ContainsDigitLowercaseAndUppercaseLetter().Should().BeFalse();
 
             string symbolsAndDigits = "!@#$%^&*(()0123467";
             symbolsAndDigits.ContainsDigitAndLetter().Should().BeFalse();
             symbolsAndDigits.ContainsLowercaseAndUppercaseLetter().Should().BeFalse();
-            symbolsAndDigits.ContainsLowercaseAndUppercaseAndDigit().Should().BeFalse();
+            symbolsAndDigits.ContainsDigitLowercaseAndUppercaseLetter().Should().BeFalse();
 
             string lowerAndUppercase = "lowercaseUPPERCASE";
             lowerAndUppercase.ContainsDigitAndLetter().Should().BeFalse();
             lowerAndUppercase.ContainsLowercaseAndUppercaseLetter().Should().BeTrue();
-            lowerAndUppercase.ContainsLowercaseAndUppercaseAndDigit().Should().BeFalse();
+            lowerAndUppercase.ContainsDigitLowercaseAndUppercaseLetter().Should().BeFalse();
 
             string lowercaseAndDigits = "lowercase0123456";
             lowercaseAndDigits.ContainsDigitAndLetter().Should().BeTrue();
             lowercaseAndDigits.ContainsLowercaseAndUppercaseLetter().Should().BeFalse();
-            lowercaseAndDigits.ContainsLowercaseAndUppercaseAndDigit().Should().BeFalse();
+            lowercaseAndDigits.ContainsDigitLowercaseAndUppercaseLetter().Should().BeFalse();
 
             string uppercaseAndDigits = "UPPERCASE0123456";
             uppercaseAndDigits.ContainsDigitAndLetter().Should().BeTrue();
             uppercaseAndDigits.ContainsLowercaseAndUppercaseLetter().Should().BeFalse();
-            uppercaseAndDigits.ContainsLowercaseAndUppercaseAndDigit().Should().BeFalse();
+            uppercaseAndDigits.ContainsDigitLowercaseAndUppercaseLetter().Should().BeFalse();
 
             string lowerUpperDigits = "lowerUPPER0123456";
             lowerUpperDigits.ContainsDigitAndLetter().Should().BeTrue();
             lowerUpperDigits.ContainsLowercaseAndUppercaseLetter().Should().BeTrue();
-            lowerUpperDigits.ContainsLowercaseAndUppercaseAndDigit().Should().BeTrue();
+            lowerUpperDigits.ContainsDigitLowercaseAndUppercaseLetter().Should().BeTrue();
 
             string shortString = "eM3";
             shortString.ContainsDigitAndLetter().Should().BeTrue();
             shortString.ContainsLowercaseAndUppercaseLetter().Should().BeTrue();
-            shortString.ContainsLowercaseAndUppercaseAndDigit().Should().BeTrue();
+            shortString.ContainsDigitLowercaseAndUppercaseLetter().Should().BeTrue();
         }
     }
 }
