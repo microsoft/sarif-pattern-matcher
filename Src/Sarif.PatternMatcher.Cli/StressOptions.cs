@@ -59,7 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             HelpText = "Add a nickname for the experiment",
             Default = "GenericExperiment")]
 
-        public string ExperimentNickname { get; set; };
+        public string ExperimentNickname { get; set; }
 
     }
 }

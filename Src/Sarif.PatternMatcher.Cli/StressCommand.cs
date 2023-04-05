@@ -289,7 +289,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             }
 
             sb.AppendLine($"{DateTime.Now}, " +
-                          $"{options.ExperimentNickname}" +
+                          $"{options.ExperimentNickname}," +
                           $"{timer.ElapsedMilliseconds}, " +
                           $"{ComputeCPUUtilization(startCpu, endCpu, timer)}, " +
                           $"{(double)Process.GetCurrentProcess().PeakWorkingSet64 / 1000000}");
