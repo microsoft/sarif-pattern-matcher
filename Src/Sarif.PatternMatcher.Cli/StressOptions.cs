@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 using CommandLine;
 
+using CsvHelper.Configuration.Attributes;
+
 using Microsoft.CodeAnalysis.Sarif.Driver;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
@@ -51,5 +53,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             HelpText = "CSV path to store aggregated analysis.")]
 
         public string CSVPathAggregated { get; set; }
+
+        [Option(
+            "experiment-nickname",
+            HelpText = "Add a nickname for the experiment",
+            Default = "GenericExperiment")]
+
+        public string ExperimentNickname { get; set; };
+
     }
 }

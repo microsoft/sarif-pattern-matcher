@@ -285,10 +285,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             if (!File.Exists(options.CSVPathAggregated))
             {
-                sb.AppendLine($"Timestamp, Runtime in ms, %-CPU Utilization, Peak Mem (MB)");
+                sb.AppendLine($"Timestamp, ExperimentName, Runtime in ms, %-CPU Utilization, Peak Mem (MB)");
             }
 
             sb.AppendLine($"{DateTime.Now}, " +
+                          $"{options.ExperimentNickname}" +
                           $"{timer.ElapsedMilliseconds}, " +
                           $"{ComputeCPUUtilization(startCpu, endCpu, timer)}, " +
                           $"{(double)Process.GetCurrentProcess().PeakWorkingSet64 / 1000000}");
@@ -332,10 +333,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             if (!File.Exists(options.CSVPathAggregated))
             {
-                aggregatedSb.AppendLine($"Timestamp, Total Runtime (ms), Mean Analysis Rate (ms/KB), mean %-CPU utilization");
+                aggregatedSb.AppendLine($"Timestamp, ExperimentName, Total Runtime (ms), Mean Analysis Rate (ms/KB), mean %-CPU utilization");
             }
 
-            aggregatedSb.AppendLine($"{DateTime.Now}, {totalRunTime}, {meanAnalysisRate}, {meanCpuUtil}");
+            aggregatedSb.AppendLine($"{DateTime.Now}, {options.ExperimentNickname}, {totalRunTime}, {meanAnalysisRate}, {meanCpuUtil}");
 
             File.WriteAllText(options.CSVPathPerFile, perFileSb.ToString());
             File.WriteAllText(options.CSVPathAggregated, aggregatedSb.ToString());
