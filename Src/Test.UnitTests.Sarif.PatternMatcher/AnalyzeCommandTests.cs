@@ -872,7 +872,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var logger = new SarifLogger(writer,
                                          FilePersistenceOptions.None,
-                                         OptionallyEmittedData.None,
+                                         OptionallyEmittedData.All,
                                          run: run,
                                          closeWriterOnDispose: true);
 
@@ -886,6 +886,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 Logger = logger,
                 RedactSecrets = true,
+                DataToInsert = OptionallyEmittedData.All,
                 CurrentTarget = target,
                 Skimmers = skimmers,
                 TargetsProvider = new ArtifactProvider(new[] { target }),
