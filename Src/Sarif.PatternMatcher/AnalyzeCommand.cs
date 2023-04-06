@@ -3,14 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
-using Microsoft.CodeAnalysis.Sarif.Visitors;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 using Microsoft.RE2.Managed;
 
@@ -355,7 +352,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             context.PluginFilePaths = options.PluginFilePaths.Any() ? new StringSet(options.PluginFilePaths) : context.PluginFilePaths;
+            this.redactSecrets = context.RedactSecrets;
+            return context;
+        }
 
+        private bool redactSecrets;
+
+        protected override AnalyzeContext CreateContext(AnalyzeOptions options, IAnalysisLogger logger, RuntimeConditions runtimeErrors, IFileSystem fileSystem = null, PropertiesDictionary policy = null)
+        {
+            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, fileSystem, policy);
+            context.RedactSecrets = this.redactSecrets;
             return context;
         }
 
