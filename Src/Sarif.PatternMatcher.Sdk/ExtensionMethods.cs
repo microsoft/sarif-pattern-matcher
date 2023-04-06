@@ -25,6 +25,20 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         }
 
         /// <summary>
+        /// Use an <cref>HttpClient</cref> instance to retrieve request response headers only.
+        /// </summary>
+        /// <param name="httpClient">The <cref>HttpClient</cref> instance to drive the request.</param>
+        /// <param name="uri">The Uri the request is sent to.</param>
+        /// <returns>The <cref>HttpResponseMessage</cref> returned by the request.</returns>
+        public static HttpResponseMessage ReadResponseHeaders(this HttpClient httpClient, string uri)
+        {
+            return httpClient
+                .GetAsync(uri, HttpCompletionOption.ResponseHeadersRead)
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        /// <summary>
         /// Merges a dictionary of values into an HttpRequestHeaders instance.
         /// </summary>
         /// <param name="httpRequestHeaders">The HttpRequestHeaders instance to merge data into.</param>
@@ -91,6 +105,61 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return prefix +
                    truncatedText +
                    suffix;
+        }
+
+        /// <summary>
+        /// Determines whether the input string contains an uppercase letter, lowercase letter, and digit.
+        /// </summary>
+        /// <param name="text">The input string.</param>
+        /// <returns>true if the input string contains an uppercase letter and lowercase letter and digit; otherwise, false.</returns>
+        public static bool ContainsDigitLowercaseAndUppercaseLetter(this string text)
+        {
+            /*
+                Assuming a random string of length L for this proof
+
+                Let
+                x1 = {strings with at least one uppercase}
+                x2 = {strings with at least one lowercase}
+                x3 = {string with at least one digit}
+
+                '+' = set union, '.' = set intersection, and '!' = set complement.
+
+                What we seek: P(x1 . x2 . x3) = 1 - P (!x1 + !x2 + !x3)
+
+                So we need to compute the size of the set (!x1 + !x2 + !x3).
+
+                By De Morgan's law:
+
+                (!x1 + !x2 + !x3) = !x1 + !x2 + !x3 - (!x1 . !x2) - (!x2 . !x3) - (!x3 . !x1) + (!x1 . !x2 . !x3)
+
+                !x1 = all strings with no uppercase = (36)^L | (26 lowercase alphabet chars + 10 digits) ^ (string length)
+                !x2 = all strings with no lowercase = (36)^L | (26 uppercase alphabet chars + 10 digits) ^ (string length)
+                !x3 = all strings with no digits = (52)^L    | (26 lowercase + 26 uppercase alphabet chars) ^ (string length)
+
+                !x1 . !x2 = all strings with no uppercase and no lowercase = all strings with only digits = (10)^L
+                !x2 . !x3 = all strings with no lowercase and no digits = all strings with only uppercase = (26)^L
+                !x3 . !x1 = all strings with no digits and no uppercase = all strings with only lowercase = (26)^L
+
+                !x1. !x2. !x3 = all strings with no uppercase, no lowercase, no digits = 0
+
+                So the final solution:
+
+                1  - (52 ^ L)/(62 ^ L) - (36 ^ L)/(62 ^ L)  - (36 ^ L)/(62 ^ L) + ((26 ^ L)/(62 ^ L) + (26 ^ L)/(62 ^ L) + (10 ^ L)/(62 ^ L)
+
+                Results:
+                Random strings length | Probability they contain upper, lower, and digit
+                                   25 | ~98.769%
+                                   32 | ~99.641%
+                                   40 | ~99.912%
+                                   42 | ~99.938%
+                                   52 | ~99.989%
+                                   86 | ~99.999%
+
+                CAUTION: This proof is under the assumption that every secret checked will be a random string. Variable names are
+                a good example of strings that would fit the length requirement, but are less likely to contain digits for example.
+             */
+
+            return text.ContainsLowercaseAndUppercaseLetter() && text.ContainsMinimumCountOfDigits(1);
         }
 
         /// <summary>

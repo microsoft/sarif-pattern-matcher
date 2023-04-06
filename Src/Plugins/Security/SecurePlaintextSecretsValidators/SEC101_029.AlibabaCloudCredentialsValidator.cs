@@ -56,6 +56,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
 
             try
             {
@@ -67,10 +68,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 requestSigner.SignRequest(request, id, secret);
 
-                using HttpResponseMessage response = client
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = client.ReadResponseHeaders(request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -105,7 +103,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
     }

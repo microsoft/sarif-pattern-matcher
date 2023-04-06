@@ -28,6 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         {
             const string fingerprintText = "[secret=secret]";
             var fingerprint = new Fingerprint(fingerprintText);
+            string asset = fingerprint.Secret.Truncate();
 
             string unexpectedResponseCodeMessage = null, nullRefResponseMessage = null;
             string secret = fingerprint.Secret;
@@ -54,7 +55,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Raise NullReferenceException",
                     HttpRequestMessages = new List<HttpRequestMessage>{ null },
                     HttpResponseMessages = new List<HttpResponseMessage>{ null },
-                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException()),
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException(), asset),
                     ExpectedMessage = nullRefResponseMessage,
                 },
                 new HttpMockTestCase

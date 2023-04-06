@@ -32,7 +32,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://docs.sendgrid.com/api-reference/api-keys/delete-api-keys"
+                "helpUri": "https://docs.sendgrid.com/api-reference/api-keys/delete-api-keys",
+                "properties": {
+                  "sarif/uiLabel": "SendGrid API Key"
+                }
               }
             ],
             "locations": [

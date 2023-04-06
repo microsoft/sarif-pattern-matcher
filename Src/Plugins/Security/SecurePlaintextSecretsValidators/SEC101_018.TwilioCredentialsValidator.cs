@@ -45,6 +45,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
 
             const string uri = "https://api.twilio.com/2010-04-01/Accounts.json";
 
@@ -55,10 +56,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 using var request = new HttpRequestMessage(HttpMethod.Get, uri);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
-                using HttpResponseMessage response = httpClient
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = httpClient.ReadResponseHeaders(request);
 
                 switch (response.StatusCode)
                 {
@@ -93,7 +91,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
     }

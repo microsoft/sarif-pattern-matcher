@@ -32,7 +32,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://developer.paypal.com/braintree/docs/guides/extend/oauth/access-tokens/"
+                "helpUri": "https://developer.paypal.com/braintree/docs/guides/extend/oauth/access-tokens/",
+                "properties": {
+                  "sarif/uiLabel": "PayPal/Braintree Access Token"
+                }
               }
             ],
             "locations": [

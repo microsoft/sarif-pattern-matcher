@@ -85,6 +85,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             _matchExpressions = definition.MatchExpressions;
+
+            if (definition.MatchExpressions?.Count > 0 &&
+                definition.MatchExpressions[0].MessageArguments != null &&
+                definition.MatchExpressions[0].MessageArguments.TryGetValue("secretKind", out string uiLabel))
+            {
+                // By convention, our secret skimmers publish the kind of secret associated with a find
+                // as a message argument named 'secretKind'. This user-facing string comprises a nice
+                // human-readable rule name. We will use this data for this purpose, if available.
+                // Moving forward, this concept of a rule 'UI label' would be a good addition to
+                // the SARIF format. https://github.com/oasis-tcs/sarif-spec/issues/567.
+                //
+                //  "MessageArguments": { "secretKind": "legacy format GitHub personal access token" }
+                //      will be rendered as:
+                //  "Legacy format GitHub personal access token"
+                uiLabel = uiLabel[0].ToString().ToUpperInvariant() + uiLabel.Substring(1);
+                this.SetProperty("sarif/uiLabel", uiLabel);
+            }
         }
 
         public override Uri HelpUri => _helpUri;

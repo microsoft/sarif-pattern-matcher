@@ -50,6 +50,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
 
             string keyKind = secret.Contains("_test_") ? "test" : "live production";
 
@@ -62,10 +63,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 using var request = new HttpRequestMessage(HttpMethod.Get, StripeUri);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
-                using HttpResponseMessage response = client
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = client.ReadResponseHeaders(request);
 
                 switch (response.StatusCode)
                 {
@@ -92,7 +90,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
     }

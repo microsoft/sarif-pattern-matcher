@@ -106,10 +106,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 using var request = new HttpRequestMessage(HttpMethod.Get, url);
 
-                using HttpResponseMessage response = httpClient
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = httpClient.ReadResponseHeaders(request);
 
                 switch (response.StatusCode)
                 {

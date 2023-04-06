@@ -42,7 +42,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
-            string uri = $"https://hooks.slack.com/services/{id}/{secret}";
+            string asset = $"https://hooks.slack.com/services/{id}";
+            string uri = $"{asset}/{secret}";
 
             HttpClient client = CreateOrRetrieveCachedHttpClient();
 
@@ -58,10 +59,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     request.Content = new StringContent(ScanIdentityGuid, Encoding.UTF8, "application/json");
                 }
 
-                using HttpResponseMessage response = client
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = client.ReadResponseHeaders(request);
 
                 HttpStatusCode status = response.StatusCode;
 
@@ -93,7 +91,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
     }

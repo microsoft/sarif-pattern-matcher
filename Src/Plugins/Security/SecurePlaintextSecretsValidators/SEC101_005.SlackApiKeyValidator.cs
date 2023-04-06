@@ -44,22 +44,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref ResultLevelKind resultLevelKind)
         {
             const string uri = "https://slack.com/api/auth.test";
+            string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
 
             try
             {
                 HttpClient client = CreateOrRetrieveCachedHttpClient();
                 var dict = new Dictionary<string, string>
                 {
-                    { "token", fingerprint.Secret },
+                    { "token", secret },
                 };
 
                 using var request = new HttpRequestMessage(HttpMethod.Post, uri);
                 request.Content = new FormUrlEncodedContent(dict);
 
-                using HttpResponseMessage response = client
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = client.ReadResponseHeaders(request);
 
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
@@ -89,7 +88,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
 

@@ -40,6 +40,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
 
             try
             {
@@ -49,10 +50,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 using var request = new HttpRequestMessage(HttpMethod.Get, string.Format(ApiUri, keys[1]));
                 request.Headers.Authorization = new AuthenticationHeaderValue("Basic", keys[0]);
 
-                using HttpResponseMessage response = client
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = client.ReadResponseHeaders(request);
 
                 switch (response.StatusCode)
                 {
@@ -77,7 +75,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
 

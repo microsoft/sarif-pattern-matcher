@@ -45,6 +45,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             const string uri = "https://api.dropboxapi.com/2/file_requests/count";
 
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
+
             HttpClient httpClient = CreateOrRetrieveCachedHttpClient();
 
             try
@@ -52,10 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 using var request = new HttpRequestMessage(HttpMethod.Post, uri);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
 
-                using HttpResponseMessage response = httpClient
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                    .GetAwaiter()
-                    .GetResult();
+                using HttpResponseMessage response = httpClient.ReadResponseHeaders(request);
 
                 switch (response.StatusCode)
                 {
@@ -79,7 +78,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         {
                             if (secret.Length != 64)
                             {
-                                // Short expiration token (4h).
+                                // Short-lived token (4h).
                                 resultLevelKind = new ResultLevelKind { Level = FailureLevel.Warning };
                             }
 
@@ -102,7 +101,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             }
             catch (Exception e)
             {
-                return ReturnUnhandledException(ref message, e);
+                return ReturnUnhandledException(ref message, e, asset);
             }
         }
     }

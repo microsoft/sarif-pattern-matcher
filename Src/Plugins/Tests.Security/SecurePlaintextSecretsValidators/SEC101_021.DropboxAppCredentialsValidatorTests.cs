@@ -29,6 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
 
             using HttpRequestMessage defaultRequest = DropboxAppCredentialsValidator.GenerateRequestMessage(id, secret);
 
@@ -57,7 +58,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Nullref Exception",
                     HttpRequestMessages = new List<HttpRequestMessage> { null },
                     HttpResponseMessages = new List<HttpResponseMessage> { null },
-                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException()),
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref nullRefResponseMessage, new NullReferenceException(), asset),
                     ExpectedMessage = nullRefResponseMessage
                 },
                 new HttpMockTestCase

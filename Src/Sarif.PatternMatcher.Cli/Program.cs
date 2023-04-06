@@ -31,6 +31,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 // TBD Environment variables to context
                 args = EntryPointUtilities.GenerateArguments(args, GlobalContext.FileSystem, new EnvironmentVariables());
                 args = RewriteArgs(args);
+                args = args.Length == 0 ? new string[] { "help" } : args;
 
                 bool isValidHelpCommand =
                     args.Length > 0 &&

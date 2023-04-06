@@ -23,6 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string fingerprintText = "[secret=abc123]";
             fingerprint = new Fingerprint(fingerprintText);
             string secret = fingerprint.Secret;
+            string asset = secret.Truncate();
 
             var defaultRequest = new HttpRequestMessage(HttpMethod.Get, NpmLegacyAuthorTokenHelper.Uri);
             defaultRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", secret);
@@ -171,7 +172,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Null Reference Exception",
                     HttpRequestMessages = new List<HttpRequestMessage> { null },
                     HttpResponseMessages = new List<HttpResponseMessage> { null },
-                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref unhandledMessage, new NullReferenceException()),
+                    ExpectedValidationState = ValidatorBase.ReturnUnhandledException(ref unhandledMessage, new NullReferenceException(), asset),
                     ExpectedMessage = unhandledMessage
                 }
             };

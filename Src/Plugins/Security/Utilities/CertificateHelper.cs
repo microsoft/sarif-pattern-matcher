@@ -73,6 +73,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                                                          ref Fingerprint fingerprint,
                                                          ref string message)
         {
+            // @michaelcfanning 3/28/23
+            // https://github.com/microsoft/sarif-pattern-matcher/issues/737
+            // We should encode the 'rawData' here and grab the first six
+            // characters of it to use as a slug/thumbprint for this finding.
+            string asset = "[TBD]";
             try
             {
                 // If this certificate needs a password or it is a bundle, it will throw an exception.
@@ -102,7 +107,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                     }
                 }
 
-                return ValidatorBase.ReturnUnhandledException(ref message, e);
+                return ValidatorBase.ReturnUnhandledException(ref message, e, asset);
             }
         }
 
@@ -110,6 +115,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
                                                                    ref Fingerprint fingerprint,
                                                                    ref string message)
         {
+            // @michaelcfanning 3/28/23
+            // https://github.com/microsoft/sarif-pattern-matcher/issues/737
+            // We should encode the 'rawData' here and grab the first six
+            // characters of it to use as a slug/thumbprint for this finding.
+            string asset = "[TBD]";
             var certificates = new X509Certificate2Collection();
             try
             {
@@ -119,7 +129,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
             }
             catch (Exception e)
             {
-                return ValidatorBase.ReturnUnhandledException(ref message, e);
+                return ValidatorBase.ReturnUnhandledException(ref message, e, asset);
             }
         }
 

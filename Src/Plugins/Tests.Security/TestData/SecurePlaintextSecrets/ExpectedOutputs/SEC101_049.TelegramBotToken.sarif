@@ -32,7 +32,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://core.telegram.org/bots#generating-an-authentication-token"
+                "helpUri": "https://core.telegram.org/bots#generating-an-authentication-token",
+                "properties": {
+                  "sarif/uiLabel": "Telegram bot token"
+                }
               }
             ],
             "locations": [

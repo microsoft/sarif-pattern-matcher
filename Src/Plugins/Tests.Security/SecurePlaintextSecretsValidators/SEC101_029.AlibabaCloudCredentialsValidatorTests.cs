@@ -28,6 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             var fingerprint = new Fingerprint("[id=LTAIid1][secret=abc]");
             var expectedFingerprint = new Fingerprint("[id=LTAIid1][secret=abc]");
+            string asset = expectedFingerprint.Secret.Truncate();
             string uri = string.Format(AlibabaCloudCredentialsValidator.UriTemplate);
 
             DateTime timestamp = DateTime.UtcNow;
@@ -37,7 +38,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             signer.SignRequest(defaultRequest, fingerprint.Id, fingerprint.Secret);
 
             ValidatorBase.ReturnUnexpectedResponseCode(ref unknownStatusCodeMessage, HttpStatusCode.InternalServerError);
-            ValidatorBase.ReturnUnhandledException(ref unhandledExceptionMessage, new NullReferenceException());
+            ValidatorBase.ReturnUnhandledException(ref unhandledExceptionMessage, new NullReferenceException(), asset);
 
             var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
