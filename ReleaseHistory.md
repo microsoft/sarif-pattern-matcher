@@ -18,7 +18,7 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## v4.3.8 UNRELEASED
+## v4.3.8 Released 04/06/2023
 - BRK: `ValidationResult` constructor now sets `ValidationState` to `Unknown`. [#733](https://github.com/microsoft/sarif-pattern-matcher/pull/733)
 - BRK: `ValidatorBase.ReturnUnhandledException` now requires an `asset` parameter. [#736](https://github.com/microsoft/sarif-pattern-matcher/pull/736)
 - BUG: Consistently report asset data (which may be the truncated secret) when reporting unhandled exceptions in dynamic validators. [#736](https://github.com/microsoft/sarif-pattern-matcher/pull/736)
