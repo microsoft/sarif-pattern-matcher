@@ -872,7 +872,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var logger = new SarifLogger(writer,
                                          FilePersistenceOptions.None,
-                                         OptionallyEmittedData.All,
+                                         OptionallyEmittedData.None,
                                          run: run,
                                          closeWriterOnDispose: true);
 
@@ -882,21 +882,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Contents = fileContents,
             };
 
-            using var context = new AnalyzeContext()
+            var context = new AnalyzeContext()
             {
                 Logger = logger,
                 RedactSecrets = true,
                 CurrentTarget = target,
-                DataToInsert = OptionallyEmittedData.All,
+                Skimmers = skimmers,
+                TargetsProvider = new ArtifactProvider(new[] { target }),
             };
 
             var disabledSkimmers = new HashSet<string>();
 
-            IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
-            logger.AnalysisStarted();
-            PatternMatcher.AnalyzeCommand.AnalyzeTargetHelper(context, applicableSkimmers, disabledSkimmers);
-            logger.AnalysisStopped(RuntimeConditions.None);
-            logger.Dispose();
+            var options = new AnalyzeOptions
+            {
+                PluginFilePaths = new string[] { },
+            };
+
+            int exitCode = new AnalyzeCommand().Run(options: options, ref context);
 
             // Test file contents:
             // foobar1\r\n foobar2 \r\n3foobar
@@ -934,7 +936,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 fingerprints[SearchSkimmer.ValidationFingerprintHashSha256Current]
                     .Should().Be(fingerprint.GetValidationFingerprintHash());
             }
-
 
             sarifLogText.IndexOf($"{secretText}").Should().Be(-1, $"there should be no plaintext occurrence of '{secretText}'");
         }

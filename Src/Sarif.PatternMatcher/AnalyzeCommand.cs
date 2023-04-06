@@ -7,6 +7,7 @@ using System.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
@@ -355,7 +356,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             context.PluginFilePaths = options.PluginFilePaths.Any() ? new StringSet(options.PluginFilePaths) : context.PluginFilePaths;
+            this.redactSecrets = context.RedactSecrets;
+            return context;
+        }
 
+        private bool redactSecrets;
+
+        protected override AnalyzeContext CreateContext(AnalyzeOptions options, IAnalysisLogger logger, RuntimeConditions runtimeErrors, IFileSystem fileSystem = null, PropertiesDictionary policy = null)
+        {
+            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, fileSystem, policy);
+            context.RedactSecrets = this.redactSecrets;
             return context;
         }
 
