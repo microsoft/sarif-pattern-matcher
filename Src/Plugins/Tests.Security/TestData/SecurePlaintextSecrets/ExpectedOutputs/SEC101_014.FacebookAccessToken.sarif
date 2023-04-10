@@ -32,7 +32,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://developers.facebook.com/docs/facebook-login/access-tokens"
+                "helpUri": "https://developers.facebook.com/docs/facebook-login/access-tokens",
+                "properties": {
+                  "sarif/uiLabel": "Facebook access token"
+                }
               }
             ],
             "locations": [

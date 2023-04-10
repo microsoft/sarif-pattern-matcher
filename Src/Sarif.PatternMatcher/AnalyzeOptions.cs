@@ -20,22 +20,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             "dynamic-validation",
             HelpText = "Enable dynamic validations, if any (may compromise " +
                        "performance and/or result in calls across the network).")]
-        public bool? DynamicValidation { get; internal set; }
+        public bool? DynamicValidation { get; set; }
 
         [Option(
             "deny-regex",
             HelpText = "A regular expression used to suppress scanning for any file or directory path that matches the regex.")]
-        public string FileNameDenyRegex { get; internal set; }
+        public string FileNameDenyRegex { get; set; }
 
         [Option(
             "disable-dynamic-validation-caching",
             HelpText = "Disable caching from dynamic validation.")]
-        public bool? DisableDynamicValidationCaching { get; internal set; }
+        public bool? DisableDynamicValidationCaching { get; set; }
 
         [Option(
             "enhanced-reporting",
             HelpText = "Enable enhanced reporting provided by dynamic validators (when --dynamic-validation is also enabled).")]
-        public bool? EnhancedReporting { get; internal set; }
+        public bool? EnhancedReporting { get; set; }
 
         [Option(
             "retry",
@@ -46,11 +46,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             "max-memory-in-kb",
             HelpText = "The maximum memory (in kilobytes) that can be used for RE2.",
             Default = -1)]
-        public long MaxMemoryInKilobytes { get; internal set; }
+        public long MaxMemoryInKilobytes { get; set; }
 
         [Option(
             "redact-secrets",
             HelpText = "Redact sensitive credential components from log files.")]
-        public bool? RedactSecrets { get; internal set; }
+        public bool? RedactSecrets { get; set; }
     }
 }

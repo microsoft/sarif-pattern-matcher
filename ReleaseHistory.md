@@ -18,10 +18,14 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## v4.3.8 UNRELEASED
+## v4.3.8 Released 04/06/2023
 - BRK: `ValidationResult` constructor now sets `ValidationState` to `Unknown`. [#733](https://github.com/microsoft/sarif-pattern-matcher/pull/733)
 - BRK: `ValidatorBase.ReturnUnhandledException` now requires an `asset` parameter. [#736](https://github.com/microsoft/sarif-pattern-matcher/pull/736)
 - BUG: Consistently report asset data (which may be the truncated secret) when reporting unhandled exceptions in dynamic validators. [#736](https://github.com/microsoft/sarif-pattern-matcher/pull/736)
+- BUG: Properly report command-line help rather than raising `IndexOutOfRangeException` when invoking tool with no arguments. [#743](https://github.com/microsoft/sarif-pattern-matcher/pull/743)
+- BUG: We do not flow `--redact-secrets` argument properly to analysis. [#746](https://github.com/microsoft/sarif-pattern-matcher/pull/746)
+- NEW: All secret detecting rules now provide a `sarif/uiLabel` value in the property bag that represents a human-readable UX label for the check. [#743](https://github.com/microsoft/sarif-pattern-matcher/pull/743)
+- NEW: All `AnalyzeOptions` properties now settable. [#746](https://github.com/microsoft/sarif-pattern-matcher/pull/746)
 
 ## v4.3.7 Released 03/22/2023
 - DEP: Update SARIF SDK submodule from [53b0246 to 1ff3956](https://github.com/microsoft/sarif-sdk/compare/53b0246..1ff3956). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/1ff3956/src/ReleaseHistory.md). Adds version control provenance.

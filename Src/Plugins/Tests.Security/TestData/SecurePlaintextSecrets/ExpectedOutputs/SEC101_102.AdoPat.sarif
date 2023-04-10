@@ -32,7 +32,10 @@
                     "text": "'{0}' is {1}{2}{3}{4}{5}."
                   }
                 },
-                "helpUri": "https://aka.ms/1eslivesecrets/remediation#sec101102---adopat"
+                "helpUri": "https://aka.ms/1eslivesecrets/remediation#sec101102---adopat",
+                "properties": {
+                  "sarif/uiLabel": "Azure DevOps personal access token"
+                }
               }
             ],
             "locations": [
