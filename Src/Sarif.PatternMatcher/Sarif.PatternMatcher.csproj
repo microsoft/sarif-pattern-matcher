@@ -17,7 +17,6 @@
     <ProjectReference Include="..\RE2.Managed\RE2.Managed.csproj" />
     <ProjectReference Include="..\sarif-sdk\src\Sarif.Driver\Sarif.Driver.csproj" />
     <ProjectReference Include="..\sarif-sdk\src\Sarif\Sarif.csproj" />
-    <ProjectReference Include="..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
     <ProjectReference Include="..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
     <ProjectReference Include="..\Strings.Interop\Strings.Interop.csproj" />
   </ItemGroup>

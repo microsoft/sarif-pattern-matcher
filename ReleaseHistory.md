@@ -18,6 +18,9 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## v4.3.9 UNRELEASED
+- BUG: Remove unnecessary `Test.Utilities.Sarif` reference from `Sarif.PatternMatcher` project. This test binary isn't built into our tool NuGet package and the erroneous reference causes missing file messages in some contexts. [#749](https://github.com/microsoft/sarif-pattern-matcher/pull/749)
+
 ## v4.3.8 Released 04/06/2023
 - BRK: `ValidationResult` constructor now sets `ValidationState` to `Unknown`. [#733](https://github.com/microsoft/sarif-pattern-matcher/pull/733)
 - BRK: `ValidatorBase.ReturnUnhandledException` now requires an `asset` parameter. [#736](https://github.com/microsoft/sarif-pattern-matcher/pull/736)
