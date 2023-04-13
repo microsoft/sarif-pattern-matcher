@@ -19,7 +19,11 @@
 - UEE => Eliminate unhandled exceptions in engine.
 
 ## v4.3.9 UNRELEASED
+- DEP: Update SARIF SDK submodule from [1ff3956 to 36b4792](https://github.com/microsoft/sarif-sdk/compare/1ff3956..36b4792). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/36b4792/src/ReleaseHistory.md). Adds version control provenance.
+- NEW: All `AnalyzeContext` parameters can now be expressed as XML configuration. [#750](https://github.com/microsoft/sarif-pattern-matcher/pull/750)
+- BUG: We now report the anonymized base64-encoded secret (rather than it decoded form) for rules like `SEC101/102.AdoPat` with this support. [#750](https://github.com/microsoft/sarif-pattern-matcher/pull/750)
 - BUG: Remove unnecessary `Test.Utilities.Sarif` reference from `Sarif.PatternMatcher` project. This test binary isn't built into our tool NuGet package and the erroneous reference causes missing file messages in some contexts. [#749](https://github.com/microsoft/sarif-pattern-matcher/pull/749)
+
 
 ## v4.3.8 Released 04/06/2023
 - BRK: `ValidationResult` constructor now sets `ValidationState` to `Unknown`. [#733](https://github.com/microsoft/sarif-pattern-matcher/pull/733)

@@ -335,9 +335,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        public override AnalyzeContext InitializeContextFromOptions(AnalyzeOptions options, ref AnalyzeContext context)
+        public override AnalyzeContext InitializeGlobalContextFromOptions(AnalyzeOptions options, ref AnalyzeContext context)
         {
-            context = base.InitializeContextFromOptions(options, ref context);
+            context = base.InitializeGlobalContextFromOptions(options, ref context);
 
             context.Retry = options.Retry != null ? options.Retry.Value : context.Retry;
             context.RedactSecrets = options.RedactSecrets != null ? options.RedactSecrets.Value : context.RedactSecrets;
@@ -352,16 +352,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             context.PluginFilePaths = options.PluginFilePaths.Any() ? new StringSet(options.PluginFilePaths) : context.PluginFilePaths;
-            this.redactSecrets = context.RedactSecrets;
-            return context;
-        }
-
-        private bool redactSecrets;
-
-        protected override AnalyzeContext CreateContext(AnalyzeOptions options, IAnalysisLogger logger, RuntimeConditions runtimeErrors, IFileSystem fileSystem = null, PropertiesDictionary policy = null)
-        {
-            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, fileSystem, policy);
-            context.RedactSecrets = this.redactSecrets;
             return context;
         }
 

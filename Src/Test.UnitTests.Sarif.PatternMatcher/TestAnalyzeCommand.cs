@@ -9,19 +9,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class TestAnalyzeCommand : AnalyzeCommand
     {
-        protected override AnalyzeContext CreateContext(
-            AnalyzeOptions options,
-            IAnalysisLogger logger,
-            RuntimeConditions runtimeErrors,
-            IFileSystem fileSystem,
-            PropertiesDictionary policy = null)
+        protected override AnalyzeContext CreateScanTargetContext(AnalyzeContext globalContext)
         {
-            AnalyzeContext context = base.CreateContext(options, logger, runtimeErrors, fileSystem, policy);
+            globalContext = base.CreateScanTargetContext(globalContext);
 
-            var aggregatingLogger = (AggregatingLogger)context.Logger;
+            var aggregatingLogger = (AggregatingLogger)globalContext.Logger;
             aggregatingLogger.Loggers.Add(new TestLogger());
 
-            return context;
+            return globalContext;
         }
     }
 }

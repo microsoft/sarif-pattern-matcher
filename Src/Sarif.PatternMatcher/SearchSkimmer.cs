@@ -1112,9 +1112,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             Region region = ConstructRegionForSecret(context, regionFlexMatch);
 
+            string toRedact = binary64DecodedMatch != null
+                ? binary64DecodedMatch.Value.String
+                : validationResult.Fingerprint.Secret;
+
             if (context.RedactSecrets)
             {
-                RedactSecretFromSnippet(region, validationResult.Fingerprint.Secret);
+                RedactSecretFromSnippet(region, toRedact);
             }
 
             Dictionary<string, string> messageArguments = matchExpression.MessageArguments != null ?
@@ -1127,7 +1131,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             messageArguments["validationPrefix"] = validationPrefix;
             messageArguments["validationSuffix"] = validationSuffix;
-            messageArguments["truncatedSecret"] = validationResult.Fingerprint.Secret.Truncate();
+
+            messageArguments["truncatedSecret"] = binary64DecodedMatch != null ?
+                binary64DecodedMatch.Value.String.Truncate() :
+                validationResult.Fingerprint.Secret.Truncate();
 
             IList<string> arguments = GetMessageArguments(groups,
                                                           matchExpression.ArgumentNameToIndexMap,
@@ -1151,7 +1158,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (context.RedactSecrets)
                 {
-                    RedactSecretFromSnippet(contextRegion, validationResult.Fingerprint.Secret);
+                    RedactSecretFromSnippet(contextRegion, toRedact);
                 }
 
                 result.Locations[0].PhysicalLocation.ContextRegion = contextRegion;
