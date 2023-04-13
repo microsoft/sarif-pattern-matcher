@@ -19,7 +19,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IsValidAnalysisTarget = true;
         }
 
-        public bool RedactSecrets { get; set; }
+        public bool RedactSecrets
+        {
+            get => this.Policy.GetProperty(RedactSecretsProperty);
+            set => this.Policy.SetProperty(RedactSecretsProperty, value);
+        }
 
         public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
 
@@ -45,11 +49,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             set => this.Policy.SetProperty(GlobalFileDenyRegexProperty, value);
         }
 
-        public bool DisableDynamicValidationCaching { get; set; }
+        public bool DisableDynamicValidationCaching
+        {
+            get => this.Policy.GetProperty(DisableDynamicValidationCachingProperty);
+            set => this.Policy.SetProperty(DisableDynamicValidationCachingProperty, value);
+        }
 
-        public bool EnhancedReporting { get; set; }
+        public bool EnhancedReporting
+        {
+            get => this.Policy.GetProperty(EnhancedReportingProperty);
+            set => this.Policy.SetProperty(EnhancedReportingProperty, value);
+        }
 
-        public bool Retry { get; set; }
+        public bool Retry
+        {
+            get => this.Policy.GetProperty(RetryProperty);
+            set => this.Policy.SetProperty(RetryProperty, value);
+        }
 
         /// <summary>
         /// Gets or sets a hashset that stores observed fingerprints in the
@@ -82,6 +98,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             RollingHashMap?.Clear();
             RollingHashMap = null;
         }
+
+        public static PerLanguageOption<bool> EnhancedReportingProperty =>
+            new PerLanguageOption<bool>(
+                "CoreSettings", nameof(EnhancedReporting), defaultValue: () => false,
+                "Specifies whether to enhance findings with asset ownership details.");
+
+        public static PerLanguageOption<bool> DisableDynamicValidationCachingProperty =>
+            new PerLanguageOption<bool>(
+                "CoreSettings", nameof(DisableDynamicValidationCaching), defaultValue: () => false,
+                "Specifies whether to disable dynamic validation caching.");
+
+        public static PerLanguageOption<bool> RetryProperty =>
+            new PerLanguageOption<bool>(
+                "CoreSettings", nameof(Retry), defaultValue: () => false,
+                "Specifies whether to retry dynamic validation in some failure cases.");
+
+        public static PerLanguageOption<bool> RedactSecretsProperty =>
+            new PerLanguageOption<bool>(
+                "CoreSettings", nameof(RedactSecrets), defaultValue: () => false,
+                "Specifies whether to redact secrets from SARIF log.");
 
         public static PerLanguageOption<bool> DynamicValidationProperty =>
             new PerLanguageOption<bool>(
