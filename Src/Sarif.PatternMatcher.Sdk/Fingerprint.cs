@@ -23,6 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public const string PathKeyName = "path";
         public const string PortKeyName = "port";
         public const string SchemeKeyName = "scheme";
+        public const string QueryStringKeyName = "queryString";
         public const string SecretKeyName = "secret";
         public const string PlatformKeyName = "platform";
         public const string ResourceKeyName = "resource";
@@ -53,7 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             SecretSymbolSetCount = 0;
 
             // Validation fingerprint properties.
-            Id = Host = Path = Port = Scheme = Secret = Resource = Thumbprint = null;
+            Id = Host = Path = Port = Scheme = QueryString = Secret = Resource = Thumbprint = null;
 
             // Asset fingerprint properties.
             Platform = Part = null;
@@ -99,7 +100,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             SecretSymbolSetCount = 0;
 
             // Validation fingerprint properties.
-            Id = Host = Path = Port = Scheme = Secret = Resource = Thumbprint = null;
+            Id = Host = Path = Port = Scheme = QueryString = Secret = Resource = Thumbprint = null;
 
             // Asset fingerprint properties.
             Platform = Part = null;
@@ -144,6 +145,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public string Path { get; set; }
 
         public string Port { get; set; }
+
+        public string QueryString { get; set; }
 
         public string Scheme { get; set; }
 
@@ -284,6 +287,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 case PortKeyName: { Port = value; break; }
                 case SecretKeyName: { Secret = value; break; }
                 case SchemeKeyName: { Scheme = value; break; }
+                case QueryStringKeyName: { QueryString = value; break; }
                 case PlatformKeyName: { Platform = value; break; }
                 case ResourceKeyName: { Resource = value; break; }
                 case ThumbprintKeyName: { Thumbprint = value; break; }
@@ -315,6 +319,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             this.Platform ??= previousFingerprint.Platform;
             this.Resource ??= previousFingerprint.Resource;
             this.Thumbprint ??= previousFingerprint.Thumbprint;
+            this.QueryString ??= previousFingerprint.QueryString;
         }
 
         public override string ToString()
@@ -331,6 +336,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                    Path == equatable.Path &&
                    Port == equatable.Port &&
                    Scheme == equatable.Scheme &&
+                   QueryString == equatable.QueryString &&
                    Secret == equatable.Secret &&
                    Platform == equatable.Platform &&
                    Resource == equatable.Resource &&
@@ -375,6 +381,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 if (this.Scheme != null)
                 {
                     result = (result * 31) + this.Scheme.GetHashCode();
+                }
+
+                if (this.QueryString != null)
+                {
+                    result = (result * 31) + this.QueryString.GetHashCode();
                 }
 
                 if (this.Secret != null)
@@ -442,6 +453,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             {
                 json.WritePropertyName(PortKeyName);
                 json.WriteValue(f.Port.Trim());
+            }
+
+            if (!string.IsNullOrEmpty(f.QueryString) && !denyList.Contains(QueryStringKeyName))
+            {
+                json.WritePropertyName(QueryStringKeyName);
+                json.WriteValue(f.QueryString.Trim());
             }
 
             if (!string.IsNullOrEmpty(f.Resource) && !denyList.Contains(ResourceKeyName))
@@ -520,6 +537,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             if (!string.IsNullOrEmpty(f.Port) && !denyList.Contains(PortKeyName))
             {
                 components.Add(PortKeyName, $"{prefix}{PortKeyName}{separator}{f.Port.Trim()}{suffix}");
+            }
+
+            if (!string.IsNullOrEmpty(f.QueryString) && !denyList.Contains(QueryStringKeyName))
+            {
+                components.Add(QueryStringKeyName, $"{prefix}{QueryStringKeyName}{separator}{f.QueryString.Trim()}{suffix}");
             }
 
             if (!string.IsNullOrEmpty(f.Resource) && !denyList.Contains(ResourceKeyName))
