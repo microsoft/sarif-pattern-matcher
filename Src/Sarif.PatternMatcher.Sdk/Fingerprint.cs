@@ -23,11 +23,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         public const string PathKeyName = "path";
         public const string PortKeyName = "port";
         public const string SchemeKeyName = "scheme";
-        public const string QueryStringKeyName = "queryString";
         public const string SecretKeyName = "secret";
         public const string PlatformKeyName = "platform";
         public const string ResourceKeyName = "resource";
         public const string ThumbprintKeyName = "thumbprint";
+        public const string QueryStringKeyName = "queryString";
 
         private const string HashKey = "7B2FD4B8B55B49428DBFB22C9E61D817";
 
@@ -287,10 +287,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                 case PortKeyName: { Port = value; break; }
                 case SecretKeyName: { Secret = value; break; }
                 case SchemeKeyName: { Scheme = value; break; }
-                case QueryStringKeyName: { QueryString = value; break; }
                 case PlatformKeyName: { Platform = value; break; }
                 case ResourceKeyName: { Resource = value; break; }
                 case ThumbprintKeyName: { Thumbprint = value; break; }
+                case QueryStringKeyName: { QueryString = value; break; }
                 default:
                 {
                     if (!ignoreRecognizedKeyNames)
@@ -336,11 +336,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                    Path == equatable.Path &&
                    Port == equatable.Port &&
                    Scheme == equatable.Scheme &&
-                   QueryString == equatable.QueryString &&
                    Secret == equatable.Secret &&
                    Platform == equatable.Platform &&
                    Resource == equatable.Resource &&
-                   Thumbprint == equatable.Thumbprint;
+                   Thumbprint == equatable.Thumbprint &&
+                   QueryString == equatable.QueryString;
         }
 
         public override int GetHashCode()
