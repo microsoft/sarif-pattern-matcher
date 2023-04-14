@@ -19,7 +19,7 @@
 - UEE => Eliminate unhandled exceptions in engine.
 
 ## v4.3.10 04/14/2023
-- NEW: Added `QueryString` property to Fingerprint class.
+- NEW: Added `QueryString` property to Fingerprint. [#751](https://github.com/microsoft/sarif-pattern-matcher/pull/751)
 
 ## v4.3.9 04/13/2023
 - DEP: Update SARIF SDK submodule from [1ff3956 to 36b4792](https://github.com/microsoft/sarif-sdk/compare/1ff3956..36b4792). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/36b4792/src/ReleaseHistory.md). Adds version control provenance.
