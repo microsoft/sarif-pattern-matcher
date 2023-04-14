@@ -19,10 +19,11 @@
 - UEE => Eliminate unhandled exceptions in engine.
 
 ## v4.3.10 04/14/2023
-- NEW: Added `QueryString` property to Fingerprint class.
+- DEP: Update SARIF SDK submodule from [36b4792 to e5f6770](https://github.com/microsoft/sarif-sdk/compare/36b4792..e5f6770). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/e5f6770/ReleaseHistory.md).
+- NEW: Added `QueryString` property to Fingerprint. [#751](https://github.com/microsoft/sarif-pattern-matcher/pull/751)
 
 ## v4.3.9 04/13/2023
-- DEP: Update SARIF SDK submodule from [1ff3956 to 36b4792](https://github.com/microsoft/sarif-sdk/compare/1ff3956..36b4792). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/36b4792/src/ReleaseHistory.md). Adds version control provenance.
+- DEP: Update SARIF SDK submodule from [1ff3956 to 36b4792](https://github.com/microsoft/sarif-sdk/compare/1ff3956..36b4792). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/36b4792/ReleaseHistory.md). Adds version control provenance.
 - NEW: All `AnalyzeContext` parameters can now be expressed as XML configuration. [#750](https://github.com/microsoft/sarif-pattern-matcher/pull/750)
 - BUG: We now report the anonymized base64-encoded secret (rather than it decoded form) for rules like `SEC101/102.AdoPat` with this support. [#750](https://github.com/microsoft/sarif-pattern-matcher/pull/750)
 - BUG: Remove unnecessary `Test.Utilities.Sarif` reference from `Sarif.PatternMatcher` project. This test binary isn't built into our tool NuGet package and the erroneous reference causes missing file messages in some contexts. [#749](https://github.com/microsoft/sarif-pattern-matcher/pull/749)
