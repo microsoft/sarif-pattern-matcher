@@ -18,7 +18,7 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## v4.3.10 04/14/2023
+## v4.3.10 04/19/2023
 - DEP: Update SARIF SDK submodule from [36b4792 to 51ae42](https://github.com/microsoft/sarif-sdk/compare/36b4792..51ae42). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/51ae42/ReleaseHistory.md).
 - NEW: Added `QueryString` property to Fingerprint. [#751](https://github.com/microsoft/sarif-pattern-matcher/pull/751)
 
