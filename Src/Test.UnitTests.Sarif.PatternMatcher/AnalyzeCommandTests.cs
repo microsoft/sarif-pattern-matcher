@@ -13,8 +13,6 @@ using System.Threading.Tasks;
 
 using CommandLine;
 
-using CsvHelper;
-
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
@@ -49,6 +47,49 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 property.SetValue(result, optionAttribute.Default);
             }
             return result;
+        }
+
+        [Fact]
+        public void AnalyzeCommand_InMemoryExceptionWhileAnalyzing()
+        {
+            OptionallyEmittedData toInsert = OptionallyEmittedData.Hashes;
+
+            var inMemoryLogger = new MemoryStreamSarifLogger(dataToInsert: toInsert);
+
+            var skimmers = new List<Skimmer<AnalyzeContext>> { new SpamTestRule() };
+
+            var target = new EnumeratedArtifact(FileSystem.Instance)
+            {
+                Uri = new Uri("c:\\FireOneWarning.txt", UriKind.Absolute),
+                Contents = $"Will fire a single warning due to the file name. " +
+                           $"Will fire two errors due to this content: ' foo foo '.",
+            };
+
+            var context = new AnalyzeContext
+            {
+                Skimmers = skimmers,
+                Logger = inMemoryLogger,
+                DataToInsert = toInsert,
+                TargetsProvider = new ArtifactProvider(new[] { target }),
+            };
+
+            context.Policy.SetProperty(TestRule.Behaviors, TestRuleBehaviors.RaiseExceptionInvokingAnalyze);
+
+            var command = new AnalyzeCommand();
+
+            int result = command.Run(options: null, ref context);
+            context.RuntimeErrors.Fatal().Should().Be(RuntimeConditions.ExceptionInSkimmerAnalyze);
+            result.Should().Be(CommandBase.FAILURE);
+
+            var sarifLog = inMemoryLogger.ToSarifLog();
+
+            // One artifact for the scan target, the other for the top
+            // frame of the exception raised by the rule.
+            sarifLog.Runs?[0].Artifacts.Should().HaveCount(2);
+
+            // We generate 3 hash kinds by default for every artifact.
+            sarifLog.Runs?[0].Artifacts[0].Hashes.Count.Should().Be(3);
+            sarifLog.Runs?[0].Artifacts[1].Hashes.Count.Should().Be(3);
         }
 
         [Fact]
