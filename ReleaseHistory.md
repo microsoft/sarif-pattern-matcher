@@ -18,6 +18,9 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## v4.3.11 Unreleased
+- BRK: Disable `SEC101/047.CratesApiKey`. Current dynamic validator returns status code 200 to all tokens. No API endpoint seems to return different status codes to valid or invalid API Keys.
+
 ## v4.3.10 04/19/2023
 - DEP: Update SARIF SDK submodule from [36b4792 to 51ae42](https://github.com/microsoft/sarif-sdk/compare/36b4792..51ae42). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/51ae42/ReleaseHistory.md).
 - NEW: Added `QueryString` property to Fingerprint. [#751](https://github.com/microsoft/sarif-pattern-matcher/pull/751)
