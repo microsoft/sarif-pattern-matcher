@@ -25,35 +25,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         public static readonly uint[] Crc32CastagnoliTable = CreateCrcTable(Crc32CastagnoliPolynomial);
 
-        public static uint Calculate(string text)
-        {
-            byte[] data = Encoding.ASCII.GetBytes(text);
-            return Calculate(data);
-        }
-
-        public static uint Calculate(byte[] buffer)
-        {
-            return Calculate(0, buffer, 0, buffer.Length);
-        }
-
-        public static uint Calculate(uint checksum, byte[] buffer, int offset, int length)
-        {
-            return Calculate(checksum, buffer, offset, length, Crc32IEEETable);
-        }
-
-        public static uint Calculate(string text, uint[] crc32Table)
+        public static uint Calculate(string text, uint[] crc32Table = null)
         {
             byte[] data = Encoding.ASCII.GetBytes(text);
             return Calculate(data, crc32Table);
         }
 
-        public static uint Calculate(byte[] buffer, uint[] crc32Table)
+        public static uint Calculate(byte[] buffer, uint[] crc32Table = null)
         {
             return Calculate(0, buffer, 0, buffer.Length, crc32Table);
         }
 
-        public static uint Calculate(uint checksum, byte[] buffer, int offset, int length, uint[] crc32Table)
+        public static uint Calculate(uint checksum, byte[] buffer, int offset, int length, uint[] crc32Table = null)
         {
+            if (crc32Table == null)
+            {
+                crc32Table = Crc32IEEETable;
+            }
+
             checksum ^= 0xffffffffU;
 
             while (length >= 16)
@@ -95,7 +84,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         private static uint[] CreateCrcTable(uint polynomial)
         {
-            var table = new uint[16 * 256];
+            uint[] table = new uint[16 * 256];
 
             for (uint i = 0; i < 256; i++)
             {
