@@ -31,6 +31,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override bool AnalysisComplete { get; set; }
 
+        public string SniffRegex
+        {
+            get => this.Policy.GetProperty(SniffRegexProperty);
+            set => this.Policy.SetProperty(SniffRegexProperty, value);
+        }
+
         public bool DynamicValidation
         {
             get => this.Policy.GetProperty(DynamicValidationProperty);
@@ -98,6 +104,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             RollingHashMap?.Clear();
             RollingHashMap = null;
         }
+
+        public static PerLanguageOption<string> SniffRegexProperty =>
+            new PerLanguageOption<string>(
+                "CoreSettings", nameof(SniffRegex), defaultValue: () => string.Empty,
+                "An optional regex applied to all scan targets as a filter. Files that" +
+                "do not match the sniff regex will be skipped at analysis time. ");
 
         public static PerLanguageOption<bool> EnhancedReportingProperty =>
             new PerLanguageOption<bool>(

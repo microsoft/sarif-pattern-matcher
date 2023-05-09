@@ -50,6 +50,50 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
+        public void AnalyzeCommand_SniffRegex()
+        {
+            var inMemoryLogger = new MemoryStreamSarifLogger();
+            var skimmers = new List<Skimmer<AnalyzeContext>> { new SpamTestRule() };
+
+            var target = new EnumeratedArtifact(FileSystem.Instance)
+            {
+                Uri = new Uri("c:\\FireOneError.txt", UriKind.Absolute),
+                Contents = $"Will fire a single error due to the file name. ",
+            };
+
+            var context = new AnalyzeContext
+            {
+                Skimmers = skimmers,
+                Logger = inMemoryLogger,
+                SniffRegex = "Will fire", // Will match target contents above.
+                TargetsProvider = new ArtifactProvider(new[] { target }),
+            };
+
+            var command = new AnalyzeCommand();
+            int result = command.Run(options: null, ref context);
+            context.ValidateCommandExecution(result);
+
+            var sarifLog = inMemoryLogger.ToSarifLog();
+            sarifLog.Runs?[0]?.Results?.Count().Should().Be(1);
+
+            inMemoryLogger = new MemoryStreamSarifLogger();
+            context = new AnalyzeContext
+            {
+                Skimmers = skimmers,
+                Logger = inMemoryLogger,
+                SniffRegex = "Won't fire",
+                TargetsProvider = new ArtifactProvider(new[] { target }),
+            };
+
+            command = new AnalyzeCommand();
+            result = command.Run(options: null, ref context);
+            context.ValidateCommandExecution(result);
+
+            sarifLog = inMemoryLogger.ToSarifLog();
+            sarifLog.Runs?[0]?.Results?.Count().Should().Be(0);
+        }
+
+        [Fact]
         public void AnalyzeCommand_InMemoryExceptionWhileAnalyzing()
         {
             OptionallyEmittedData toInsert = OptionallyEmittedData.Hashes;

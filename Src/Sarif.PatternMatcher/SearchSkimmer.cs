@@ -952,11 +952,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                    ? Decode(binary64DecodedMatch.Value).String
                                                    : context.CurrentTarget.Contents;
 
-            long maxMemoryInKB =
-                context.MaxMemoryInKilobytes == -1
-                    ? context.MaxMemoryInKilobytes
-                    : 1024 * context.MaxMemoryInKilobytes;
-
             // INTERESTING BREAKPPOINT: debug static analysis match failures.
             // Set a conditional breakpoint on 'matchExpression.Name' to filter by specific rules.
             // Set a conditional breakpoint on 'searchText' to filter on specific target text patterns.
