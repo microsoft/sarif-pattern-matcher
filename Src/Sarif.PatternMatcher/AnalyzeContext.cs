@@ -108,7 +108,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public static PerLanguageOption<string> SniffRegexProperty =>
             new PerLanguageOption<string>(
                 "CoreSettings", nameof(SniffRegex), defaultValue: () => string.Empty,
-                "An optional regex applied to all scan targets as a filter. Files that" +
+                "An optional regex applied to all scan targets as a filter. Files that " +
                 "do not match the sniff regex will be skipped at analysis time. ");
 
         public static PerLanguageOption<bool> EnhancedReportingProperty =>
