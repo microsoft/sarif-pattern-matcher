@@ -10,6 +10,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 using Microsoft.RE2.Managed;
+using Microsoft.Strings.Interop;
 
 using Newtonsoft.Json;
 
@@ -389,6 +390,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         protected override AnalyzeContext DetermineApplicabilityAndAnalyze(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers, ISet<string> disabledSkimmers)
         {
+            if (!string.IsNullOrWhiteSpace(context.SniffRegex))
+            {
+                byte[] buffer = null;
+                var string8 = String8.Convert(context.CurrentTarget.Contents, ref buffer);
+                if (!Regex2.IsMatch(string8, context.SniffRegex))
+                {
+                    return context;
+                }
+            }
+
             context = base.DetermineApplicabilityAndAnalyze(context, skimmers, disabledSkimmers);
 
             ICollection<IList<Tuple<Result, int?>>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
