@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Writers;
@@ -169,6 +170,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return skimmers;
+        }
+
+        protected override void AnalyzeTargets(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers)
+        {
+            base.AnalyzeTargets(context, skimmers);
+            Console.WriteLine($"{AnalyzeContext.FilesFilteredBySniffRegex} file(s) were skipped due to not matching global sniff regex.");
         }
 
         internal static SearchDefinitions PushInheritedData(SearchDefinitions definitions, Dictionary<string, string> sharedStrings)
@@ -396,6 +403,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 var string8 = String8.Convert(context.CurrentTarget.Contents, ref buffer);
                 if (!Regex2.IsMatch(string8, context.SniffRegex))
                 {
+                    Interlocked.Increment(ref AnalyzeContext.FilesFilteredBySniffRegex);
                     return context;
                 }
             }
