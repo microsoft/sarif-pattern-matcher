@@ -467,6 +467,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                               MatchExpression matchExpression,
                                               IList<string> arguments)
         {
+            DriverEventSource.Log.RuleFired(context.CurrentTarget.Uri.GetFilePath(),
+                                            ruleId,
+                                            matchExpression.SubId,
+                                            level);
+
             var location = new Location()
             {
                 PhysicalLocation = new PhysicalLocation
