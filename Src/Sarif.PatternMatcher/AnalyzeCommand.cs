@@ -401,19 +401,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (!string.IsNullOrWhiteSpace(context.SniffRegex))
             {
                 string filePath = context.CurrentTarget.Uri.GetFilePath();
-                DriverEventSource.Log.TargetReservedStart(filePath, nameof(SpmiEvents.ScanTargetSniff));
                 byte[] buffer = null;
                 var string8 = String8.Convert(context.CurrentTarget.Contents, ref buffer);
                 bool matched = Regex2.IsMatch(string8, context.SniffRegex);
-                DriverEventSource.Log.TargetReservedStop(filePath, nameof(SpmiEvents.ScanTargetSniff));
 
                 if (!matched)
                 {
                     Interlocked.Increment(ref AnalyzeContext.FilesFilteredBySniffRegex);
-                    DriverEventSource.Log.TargetReserved(eventId: SpmiEvents.TargetFilteredBySniff, filePath);
                     return context;
                 }
-                DriverEventSource.Log.TargetReserved(eventId: SpmiEvents.TargetNotFilteredBySniff, filePath);
             }
 
             context = base.DetermineApplicabilityAndAnalyze(context, skimmers, disabledSkimmers);

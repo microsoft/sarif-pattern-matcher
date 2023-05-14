@@ -467,10 +467,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                               MatchExpression matchExpression,
                                               IList<string> arguments)
         {
-            DriverEventSource.Log.RuleFired(context.CurrentTarget.Uri.GetFilePath(),
+            DriverEventSource.Log.RuleFired(level,
+                                            context.CurrentTarget.Uri.GetFilePath(),
                                             ruleId,
-                                            matchExpression.SubId,
-                                            level);
+                                            matchExpression.SubId);
 
             var location = new Location()
             {

@@ -49,7 +49,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     ExportRulesMetatadaOptions,
                     ExportSearchDefinitionsOptions,
                     ImportAndAnalyzeOptions,
-                    StressOptions,
+                    ExportEventsOptions,
+                    DumpEventsOptions,
                     ValidateOptions>(args)
                   .MapResult(
                     (AnalyzeOptions options) => new AnalyzeCommand().Run(options, ref GlobalContext),
@@ -58,7 +59,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     (ExportRulesMetatadaOptions options) => new ExportRulesMetatadaCommand().Run(options),
                     (ExportSearchDefinitionsOptions options) => new ExportSearchDefinitionsCommand().Run(options),
                     (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),
-                    (StressOptions options) => new StressCommand().Run(options),
+                    (ExportEventsOptions options) => new ExportEventsCommand().Run(options),
+                    (DumpEventsOptions options) => new DumpEventsCommand().Run(options),
                     (ValidateOptions options) => new ValidateCommand().Run(options),
                     _ => isValidHelpCommand || isVersionCommand
                             ? CommandBase.SUCCESS
