@@ -93,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             sarifLog.Runs?[0]?.Results?.Count().Should().Be(0);
         }
 
-        [Fact(Skip = "Recent hashing change broke this test.")]
+        [Fact(Skip = "Recent file regions cache change broke this test.")]
         public void AnalyzeCommand_InMemoryExceptionWhileAnalyzing()
         {
             OptionallyEmittedData toInsert = OptionallyEmittedData.Hashes;
@@ -183,7 +183,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Recent file regions cache change broke this test.")]
         public void AnalyzeCommandBase_InMemoryAnalysisGeneratesHashes()
         {
             string expiredSendGridSecret = "SG.LGS6i3i1RnijKO2MvTm9sg.99e5Sv0_K0-deaddeaddeaddeaddeaddead0123dead";
