@@ -6,10 +6,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Writers;
+using Microsoft.Extensions.FileSystemGlobbing;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 
@@ -176,7 +179,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             base.AnalyzeTargets(context, skimmers);
 
-            Console.WriteLine($"{AnalyzeContext.FilesFilteredBySniffRegex} file(s) were skipped due to not matching global sniff regex.");
+            if (!string.IsNullOrWhiteSpace(context.SniffRegex))
+            {
+                Console.WriteLine($"{AnalyzeContext.FilesFilteredBySniffRegex} file(s) were skipped due to not matching global sniff regex.");
+            }
         }
 
         internal static SearchDefinitions PushInheritedData(SearchDefinitions definitions, Dictionary<string, string> sharedStrings)
@@ -398,21 +404,34 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         protected override AnalyzeContext DetermineApplicabilityAndAnalyze(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers, ISet<string> disabledSkimmers)
         {
-            if (!string.IsNullOrWhiteSpace(context.SniffRegex))
+            bool sniffing = !string.IsNullOrWhiteSpace(context.SniffRegex);
+            string filePath = null;
+            if (sniffing)
             {
-                string filePath = context.CurrentTarget.Uri.GetFilePath();
+                filePath = context.CurrentTarget.Uri.GetFilePath();
                 byte[] buffer = null;
-                var string8 = String8.Convert(context.CurrentTarget.Contents, ref buffer);
-                bool matched = Regex2.IsMatch(string8, context.SniffRegex);
 
-                if (!matched)
+                DriverEventSource.Log.ArtifactReserved1Start("Sniffing", filePath);
+                var string8 = String8.Convert(context.CurrentTarget.Contents, ref buffer);
+                Match2 match2 = Regex2.Match(string8, context.SniffRegex);
+                DriverEventSource.Log.ArtifactReserved1Stop("Sniffing", filePath);
+
+                if (match2.Index == -1)
                 {
                     Interlocked.Increment(ref AnalyzeContext.FilesFilteredBySniffRegex);
+                    DriverEventSource.Log.ArtifactReserved0("SniffFilteredArtifact", filePath, $"Sniff did not match and so file was skipped.");
                     return context;
                 }
+
+                int lastUtf8Index = 0;
+                int lastUtf16Index = 0;
+                FlexMatch flexMatch = RE2Regex.Instance.ToFlex(match2, string8, ref lastUtf8Index, ref lastUtf16Index);
+                DriverEventSource.Log.ArtifactReserved0("SniffDidNotFilterArtifact", filePath, $"Sniff matched '{flexMatch.Value}' and so was fully scanned.");
             }
 
+            if (sniffing) { DriverEventSource.Log.ArtifactReserved1Start("PostSniff", filePath); }
             context = base.DetermineApplicabilityAndAnalyze(context, skimmers, disabledSkimmers);
+            if (sniffing) { DriverEventSource.Log.ArtifactReserved1Stop("PostSniff", filePath); }
 
             ICollection<IList<Tuple<Result, int?>>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
 
