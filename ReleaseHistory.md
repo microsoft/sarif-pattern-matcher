@@ -18,6 +18,10 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## v4.5.0 UNRELEASED
+- DEP: Update SARIF SDK submodule from [36b4792 to 140d730](https://github.com/microsoft/sarif-sdk/compare/36b4792..bc8cb57). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/bc8cb57/ReleaseHistory.md). Adds version control provenance.
+- NEW: Added ETW event tracing support.
+
 ## v4.4.1 5/9/2023
 - BRK: Disable `SEC101/047.CratesApiKey`. Current dynamic validator returns status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API Keys
 - NEW: Provide new `AnalyzeContext.SniffRegex` property that applies a pre-filter contents regex to all scan targets, when configured. https://github.com/microsoft/sarif-pattern-matcher/pull/756

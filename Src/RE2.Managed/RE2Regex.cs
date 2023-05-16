@@ -11,7 +11,7 @@ namespace Microsoft.RE2.Managed
 {
     public class RE2Regex : IRegex
     {
-        public static IRegex Instance = new RE2Regex();
+        public static RE2Regex Instance = new RE2Regex();
         public static TimeSpan DefaultTimeout = TimeSpan.FromMilliseconds(int.MaxValue - 1);
 
         private RE2Regex()
@@ -62,7 +62,7 @@ namespace Microsoft.RE2.Managed
             return Regex2.Matches(pattern, text, out matches, ref textToRE2DataMap, maxMemoryInBytes);
         }
 
-        private FlexMatch ToFlex(Match2 match, FlexString input, ref int lastUtf8Index, ref int lastUtf16Index)
+        public FlexMatch ToFlex(Match2 match, FlexString input, ref int lastUtf8Index, ref int lastUtf16Index)
         {
             if (match.Index == -1) { return new FlexMatch() { Success = false, Index = -1, Length = -1, Value = null }; }
 
