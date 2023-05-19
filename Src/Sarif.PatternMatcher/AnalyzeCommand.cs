@@ -76,9 +76,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     FileVersionInfo fvi = fileSystem.FileVersionInfoGetVersionInfo(Path.Combine(directory, definitions.ValidatorsAssemblyName));
 
                     name = $"{fvi?.CompanyName}/{fvi?.FileDescription}/{name}";
+
                     // TBD add version details. Breaks test baselines currently.
-                    //semanticVersion = fvi?.ProductVersion;
-                    //version = fvi?.FileVersion;
+                    // semanticVersion = fvi?.ProductVersion;
+                    // version = fvi?.FileVersion;
                 }
 
                 var toolComponent = new ToolComponent
@@ -175,14 +176,35 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return skimmers;
         }
 
-        protected override void AnalyzeTargets(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers)
+        public override AnalyzeContext InitializeGlobalContextFromOptions(AnalyzeOptions options, ref AnalyzeContext context)
         {
-            base.AnalyzeTargets(context, skimmers);
+            context = base.InitializeGlobalContextFromOptions(options, ref context);
 
-            if (!string.IsNullOrWhiteSpace(context.SniffRegex))
+            context.Retry = options.Retry != null ? options.Retry.Value : context.Retry;
+            context.RedactSecrets = options.RedactSecrets != null ? options.RedactSecrets.Value : context.RedactSecrets;
+            context.EnhancedReporting = options.EnhancedReporting != null ? options.EnhancedReporting.Value : context.EnhancedReporting;
+            context.DynamicValidation = options.DynamicValidation != null ? options.DynamicValidation.Value : context.DynamicValidation;
+            context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching != null ? options.DisableDynamicValidationCaching.Value : context.DisableDynamicValidationCaching;
+
+            if (options.VersionControlProvenance != null)
             {
-                Console.WriteLine($"{AnalyzeContext.FilesFilteredBySniffRegex} file(s) were skipped due to not matching global sniff regex.");
+                context.VersionControlProvenance =
+                    JsonConvert.DeserializeObject<List<VersionControlDetails>>(options.VersionControlProvenance);
             }
+
+            context.PluginFilePaths = options.PluginFilePaths.Any() ? new StringSet(options.PluginFilePaths) : context.PluginFilePaths;
+            return context;
+        }
+
+        public override AnalyzeContext ValidateContext(AnalyzeContext context)
+        {
+            context = base.ValidateContext(context);
+
+            if (ValidateFiles(context, context.PluginFilePaths, shouldExist: true))
+            {
+            }
+
+            return context;
         }
 
         internal static SearchDefinitions PushInheritedData(SearchDefinitions definitions, Dictionary<string, string> sharedStrings)
@@ -283,6 +305,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     cachedMatchExpressions.Add(matchExpression);
                 }
+
                 extensionsCount++;
             }
 
@@ -350,36 +373,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return result;
         }
 
-        public override AnalyzeContext InitializeGlobalContextFromOptions(AnalyzeOptions options, ref AnalyzeContext context)
+        protected override void AnalyzeTargets(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers)
         {
-            context = base.InitializeGlobalContextFromOptions(options, ref context);
+            base.AnalyzeTargets(context, skimmers);
 
-            context.Retry = options.Retry != null ? options.Retry.Value : context.Retry;
-            context.RedactSecrets = options.RedactSecrets != null ? options.RedactSecrets.Value : context.RedactSecrets;
-            context.EnhancedReporting = options.EnhancedReporting != null ? options.EnhancedReporting.Value : context.EnhancedReporting;
-            context.DynamicValidation = options.DynamicValidation != null ? options.DynamicValidation.Value : context.DynamicValidation;
-            context.DisableDynamicValidationCaching = options.DisableDynamicValidationCaching != null ? options.DisableDynamicValidationCaching.Value : context.DisableDynamicValidationCaching;
-
-            if (options.VersionControlProvenance != null)
+            if (!string.IsNullOrWhiteSpace(context.SniffRegex))
             {
-                context.VersionControlProvenance =
-                    JsonConvert.DeserializeObject<List<VersionControlDetails>>(options.VersionControlProvenance);
+                Console.WriteLine($"{AnalyzeContext.FilesFilteredBySniffRegex} file(s) were skipped due to not matching global sniff regex.");
             }
-
-            context.PluginFilePaths = options.PluginFilePaths.Any() ? new StringSet(options.PluginFilePaths) : context.PluginFilePaths;
-            return context;
-        }
-
-        public override AnalyzeContext ValidateContext(AnalyzeContext context)
-        {
-            context = base.ValidateContext(context);
-
-            if (ValidateFiles(context, context.PluginFilePaths, shouldExist: true))
-            {
-
-            }
-
-            return context;
         }
 
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeContext context)

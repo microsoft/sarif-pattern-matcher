@@ -19,12 +19,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         internal static readonly IFileSystem FileSystem;
         internal static ISet<Skimmer<AnalyzeContext>> Skimmers;
 
+        private static readonly Tool s_tool = Tool.CreateFromAssemblyData();
+
         static SpamAnalyzer()
         {
             FileSystem = Sarif.FileSystem.Instance;
         }
-
-        private static readonly Tool s_tool = Tool.CreateFromAssemblyData();
 
         public static SarifLog Analyze(string filePath, string text, string rulePath, string originalFileName)
         {

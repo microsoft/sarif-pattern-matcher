@@ -7,6 +7,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public static class Crc32
     {
+        public static readonly uint[] Crc32IEEETable = CreateCrcTable(Crc32IEEEPolynomial);
+
+        public static readonly uint[] Crc32CastagnoliTable = CreateCrcTable(Crc32CastagnoliPolynomial);
+
         // https://crc32.online/
         // https://github.com/force-net/Crc32.NET
         // https://en.wikipedia.org/wiki/Cyclic_redundancy_check
@@ -20,10 +24,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         // Has better error detection characteristics than IEEE.
         // https://dx.doi.org/10.1109/26.231911
         private const uint Crc32CastagnoliPolynomial = 0x82f63b78;
-
-        public static readonly uint[] Crc32IEEETable = CreateCrcTable(Crc32IEEEPolynomial);
-
-        public static readonly uint[] Crc32CastagnoliTable = CreateCrcTable(Crc32CastagnoliPolynomial);
 
         public static uint Calculate(string text, uint[] crc32Table = null)
         {

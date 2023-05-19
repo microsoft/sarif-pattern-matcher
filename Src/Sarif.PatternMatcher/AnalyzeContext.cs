@@ -13,6 +13,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     {
         public static long FilesFilteredBySniffRegex;
 
+        /// <summary>
+        /// Gets or sets a dictionary linking file text with
+        /// A String8 that is used to in RE2 searching.
+        /// An array of bytes that comprise a buffer used in String8 conversion
+        /// An array of integers that comprise a map of UTF8 to UTF16 byte
+        /// indices. This data is required to rationalize match segments
+        /// when analyzing .NET strings in RE2 (which processes UTF8).
+        /// </summary>
+        public Dictionary<string, Tuple<String8, byte[], int[]>> TextToRE2DataMap;
+
         public AnalyzeContext()
         {
             // Any file is a candidate for regex-driven search.
@@ -21,11 +31,64 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             IsValidAnalysisTarget = true;
         }
 
-        public bool RedactSecrets
-        {
-            get => this.Policy.GetProperty(RedactSecretsProperty);
-            set => this.Policy.SetProperty(RedactSecretsProperty, value);
-        }
+        public static PerLanguageOption<string> SniffRegexProperty =>
+            new PerLanguageOption<string>(
+                "CoreSettings",
+                nameof(SniffRegex),
+                defaultValue: () => string.Empty,
+                "An optional regex applied to all scan targets as a filter. Files that " +
+                "do not match the sniff regex will be skipped at analysis time. ");
+
+        public static PerLanguageOption<bool> EnhancedReportingProperty =>
+            new PerLanguageOption<bool>(
+                "CoreSettings",
+                nameof(EnhancedReporting),
+                defaultValue: () => false,
+                "Specifies whether to enhance findings with asset ownership details.");
+
+        public static PerLanguageOption<bool> DisableDynamicValidationCachingProperty =>
+            new PerLanguageOption<bool>(
+                "CoreSettings",
+                nameof(DisableDynamicValidationCaching),
+                defaultValue: () => false,
+                "Specifies whether to disable dynamic validation caching.");
+
+        public static PerLanguageOption<bool> RetryProperty =>
+            new PerLanguageOption<bool>(
+                "CoreSettings",
+                nameof(Retry),
+                defaultValue: () => false,
+                "Specifies whether to retry dynamic validation in some failure cases.");
+
+        public static PerLanguageOption<bool> RedactSecretsProperty =>
+            new PerLanguageOption<bool>(
+                "CoreSettings",
+                nameof(RedactSecrets),
+                defaultValue: () => false,
+                "Specifies whether to redact secrets from SARIF log.");
+
+        public static PerLanguageOption<bool> DynamicValidationProperty =>
+            new PerLanguageOption<bool>(
+                "CoreSettings",
+                nameof(DynamicValidation),
+                defaultValue: () => false,
+                "Specifies whether to invoke rule dynamic validation, when available.");
+
+        public static PerLanguageOption<long> MaxMemoryInKilobytesProperty =>
+            new PerLanguageOption<long>(
+                "CoreSettings",
+                nameof(MaxMemoryInKilobytes),
+                defaultValue: () => 5096,
+                "An upper bound on the size of the RE2 DFA cache. When the cache size exceeds this " +
+                "limit RE2 will fallback to an alternate (much less performant) search mechanism. " +
+                "Negative values will be discarded in favor of the default of 5096 KB.");
+
+        public static PerLanguageOption<string> GlobalFileDenyRegexProperty { get; } =
+            new PerLanguageOption<string>(
+                "CoreSettings",
+                nameof(GlobalFileDenyRegex),
+                defaultValue: () => string.Empty,
+                "An optional regex that can be used to filter unwanted files or directories from analysis.");
 
         public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
 
@@ -37,6 +100,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             get => this.Policy.GetProperty(SniffRegexProperty);
             set => this.Policy.SetProperty(SniffRegexProperty, value);
+        }
+
+        public bool RedactSecrets
+        {
+            get => this.Policy.GetProperty(RedactSecretsProperty);
+            set => this.Policy.SetProperty(RedactSecretsProperty, value);
         }
 
         public bool DynamicValidation
@@ -83,16 +152,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// </summary>
         public HashSet<string> ObservedFingerprintCache { get; set; }
 
-        /// <summary>
-        /// Gets or sets a dictionary linking file text with
-        /// A String8 that is used to in RE2 searching.
-        /// An array of bytes that comprise a buffer used in String8 conversion
-        /// An array of integers that comprise a map of UTF8 to UTF16 byte
-        /// indices. This data is required to rationalize match segments
-        /// when analyzing .NET strings in RE2 (which processes UTF8).
-        /// </summary>
-        public Dictionary<string, Tuple<String8, byte[], int[]>> TextToRE2DataMap;
-
         public override void Dispose()
         {
             base.Dispose();
@@ -106,48 +165,5 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             RollingHashMap?.Clear();
             RollingHashMap = null;
         }
-
-        public static PerLanguageOption<string> SniffRegexProperty =>
-            new PerLanguageOption<string>(
-                "CoreSettings", nameof(SniffRegex), defaultValue: () => string.Empty,
-                "An optional regex applied to all scan targets as a filter. Files that " +
-                "do not match the sniff regex will be skipped at analysis time. ");
-
-        public static PerLanguageOption<bool> EnhancedReportingProperty =>
-            new PerLanguageOption<bool>(
-                "CoreSettings", nameof(EnhancedReporting), defaultValue: () => false,
-                "Specifies whether to enhance findings with asset ownership details.");
-
-        public static PerLanguageOption<bool> DisableDynamicValidationCachingProperty =>
-            new PerLanguageOption<bool>(
-                "CoreSettings", nameof(DisableDynamicValidationCaching), defaultValue: () => false,
-                "Specifies whether to disable dynamic validation caching.");
-
-        public static PerLanguageOption<bool> RetryProperty =>
-            new PerLanguageOption<bool>(
-                "CoreSettings", nameof(Retry), defaultValue: () => false,
-                "Specifies whether to retry dynamic validation in some failure cases.");
-
-        public static PerLanguageOption<bool> RedactSecretsProperty =>
-            new PerLanguageOption<bool>(
-                "CoreSettings", nameof(RedactSecrets), defaultValue: () => false,
-                "Specifies whether to redact secrets from SARIF log.");
-
-        public static PerLanguageOption<bool> DynamicValidationProperty =>
-            new PerLanguageOption<bool>(
-                "CoreSettings", nameof(DynamicValidation), defaultValue: () => false,
-                "Specifies whether to invoke rule dynamic validation, when available.");
-
-        public static PerLanguageOption<long> MaxMemoryInKilobytesProperty =>
-            new PerLanguageOption<long>(
-                "CoreSettings", nameof(MaxMemoryInKilobytes), defaultValue: () => 5096,
-                "An upper bound on the size of the RE2 DFA cache. When the cache size exceeds this " +
-                "limit RE2 will fallback to an alternate (much less performant) search mechanism. " +
-                "Negative values will be discarded in favor of the default of 5096 KB.");
-
-        public static PerLanguageOption<string> GlobalFileDenyRegexProperty { get; } =
-                    new PerLanguageOption<string>(
-                        "CoreSettings", nameof(GlobalFileDenyRegex), defaultValue: () => string.Empty,
-                        "An optional regex that can be used to filter unwanted files or directories from analysis.");
     }
 }

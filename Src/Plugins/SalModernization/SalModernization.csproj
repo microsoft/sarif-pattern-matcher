@@ -11,6 +11,12 @@
     <PackageId>Sarif.PatternMatcher.SalModernization</PackageId>
   </PropertyGroup>
 
+  <PropertyGroup>
+	<MSBuildWarningsAsMessages>
+	    $(MSBuildWarningsAsMessages);MSB3277;MSB3030
+	</MSBuildWarningsAsMessages>
+  </PropertyGroup>
+	
   <ItemGroup>
     <Content Include="build\Sarif.PatternMatcher.SalModernization.targets">
       <PackagePath>build\</PackagePath>

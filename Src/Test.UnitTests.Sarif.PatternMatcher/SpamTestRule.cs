@@ -29,11 +29,11 @@ namespace Microsoft.CodeAnalysis.Sarif
         internal static Random s_random = new Random(s_seed);
 
         [ThreadStatic]
-        internal static TestRuleBehaviors s_testRuleBehaviors;
+        private static TestRuleBehaviors s_testRuleBehaviors;
 
         public SpamTestRule()
         {
-            if (s_testRuleBehaviors.HasFlag(TestRuleBehaviors.RaiseExceptionInvokingConstructor))
+            if (S_testRuleBehaviors.HasFlag(TestRuleBehaviors.RaiseExceptionInvokingConstructor))
             {
                 throw new InvalidOperationException(nameof(TestRuleBehaviors.RaiseExceptionInvokingConstructor));
             }
@@ -58,7 +58,7 @@ namespace Microsoft.CodeAnalysis.Sarif
         {
             get
             {
-                if (s_testRuleBehaviors.HasFlag(TestRuleBehaviors.TreatPlatformAsInvalid))
+                if (S_testRuleBehaviors.HasFlag(TestRuleBehaviors.TreatPlatformAsInvalid))
                 {
                     return SupportedPlatform.Unknown;
                 }
@@ -71,7 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif
         {
             get
             {
-                if (s_testRuleBehaviors == TestRuleBehaviors.RaiseExceptionAccessingId)
+                if (S_testRuleBehaviors == TestRuleBehaviors.RaiseExceptionAccessingId)
                 {
                     throw new InvalidOperationException(nameof(TestRuleBehaviors.RaiseExceptionAccessingId));
                 }
@@ -88,7 +88,7 @@ namespace Microsoft.CodeAnalysis.Sarif
         {
             get
             {
-                if (s_testRuleBehaviors == TestRuleBehaviors.RaiseExceptionAccessingName)
+                if (S_testRuleBehaviors == TestRuleBehaviors.RaiseExceptionAccessingName)
                 {
                     throw new InvalidOperationException(nameof(TestRuleBehaviors.RaiseExceptionAccessingId));
                 }
@@ -136,6 +136,8 @@ namespace Microsoft.CodeAnalysis.Sarif
         }
 
         public override MultiformatMessageString FullDescription { get { return new MultiformatMessageString { Text = "This is the full description for TST1001" }; } }
+
+        internal static TestRuleBehaviors S_testRuleBehaviors { get => s_testRuleBehaviors; set => s_testRuleBehaviors = value; }
 
         public override void Analyze(AnalyzeContext context)
         {

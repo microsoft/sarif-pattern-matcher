@@ -398,6 +398,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return fingerprint;
         }
 
+        internal static void RedactSecretFromSnippet(Region region, string secret)
+        {
+            string anonymizedSecret = secret.Anonymize();
+            region.Snippet.Text = region.Snippet.Text.Replace(secret, anonymizedSecret);
+        }
+
+        private static Region PopulateTextRegionProperties(AnalyzeContext context, Region region)
+        {
+            context.Logger.FileRegionsCache ??= new FileRegionsCache();
+
+            return
+                context.Logger.FileRegionsCache.PopulateTextRegionProperties(region,
+                                                                             context.CurrentTarget.Uri,
+                                                                             populateSnippet: true,
+                                                                             fileText: context.CurrentTarget.Contents);
+        }
+
         private static void MergeDictionary(IList<Dictionary<string, FlexMatch>> mergeFrom, IDictionary<string, ISet<FlexMatch>> mergedGroups)
         {
             foreach (Dictionary<string, FlexMatch> groups in mergeFrom)
@@ -697,6 +714,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return arguments;
         }
 
+        private static Region ConstructMultilineContextSnippet(AnalyzeContext context, Region region)
+        {
+            context.Logger.FileRegionsCache ??= new FileRegionsCache();
+
+            return
+                context.Logger.FileRegionsCache.ConstructMultilineContextSnippet(region, context.CurrentTarget.Uri);
+        }
+
         private Region ConstructRegionForSecret(AnalyzeContext context, FlexMatch regionFlexMatch)
         {
             var region = new Region
@@ -706,17 +731,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             };
 
             return PopulateTextRegionProperties(context, region);
-        }
-
-        private static Region PopulateTextRegionProperties(AnalyzeContext context, Region region)
-        {
-            context.Logger.FileRegionsCache ??= new FileRegionsCache();
-
-            return
-                context.Logger.FileRegionsCache.PopulateTextRegionProperties(region,
-                                                                             context.CurrentTarget.Uri,
-                                                                             populateSnippet: true,
-                                                                             fileText: context.CurrentTarget.Contents);
         }
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
@@ -1169,20 +1183,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // expression. We will therefore generate a snapshot of
             // current ReportingDescriptor state when logging.
             context.Logger.Log(reportingDescriptor, result, this.ExtensionIndex);
-        }
-
-        internal static void RedactSecretFromSnippet(Region region, string secret)
-        {
-            string anonymizedSecret = secret.Anonymize();
-            region.Snippet.Text = region.Snippet.Text.Replace(secret, anonymizedSecret);
-        }
-
-        private static Region ConstructMultilineContextSnippet(AnalyzeContext context, Region region)
-        {
-            context.Logger.FileRegionsCache ??= new FileRegionsCache();
-
-            return
-                context.Logger.FileRegionsCache.ConstructMultilineContextSnippet(region, context.CurrentTarget.Uri);
         }
 
         private void RunMatchExpressionForFileNameRegex(AnalyzeContext context, MatchExpression matchExpression)

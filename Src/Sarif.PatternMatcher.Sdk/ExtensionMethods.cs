@@ -10,6 +10,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public static class ExtensionMethods
     {
+        public static char RedactionChar => '?';
+
         /// <summary>
         /// Use an <cref>HttpClient</cref> instance to retrieve request response headers only.
         /// </summary>
@@ -83,8 +85,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
                    truncatedText.Substring(truncatedText.Length - lengthExclusiveOfEllipsis) +
                    (charsElided ? suffix : string.Empty);
         }
-
-        public static char RedactionChar => '?';
 
         public static string Anonymize(this string text, int lengthExclusiveOfEllipsis = 6)
         {

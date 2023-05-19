@@ -14,9 +14,49 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     public class JsonLogicalLocationProcessor
     {
         /// <summary>
+        ///  ToFingerprint converts the JSON path logical location to a canonical
+        ///  form safe to use as a stable fingerprint. It removes all array indices
+        ///  from the path to cause results to match when they move within arrays.
+        /// </summary>
+        /// <param name="logicalLocation">JsonPath logical location to convert.</param>
+        /// <returns>Canonical Logical Location safe for fingerprint use, or null if unable to compute.</returns>
+        public static string ToFingerprint(string logicalLocation)
+        {
+            if (string.IsNullOrEmpty(logicalLocation)) { return null; }
+
+            var fingerprint = new StringBuilder();
+
+            // Copy the JSON path with all array indices removed ([15] => [])
+            int copiedFromIndex = 0;
+            while (true)
+            {
+                // Find the next brace
+                int brace = logicalLocation.IndexOf('[', copiedFromIndex);
+                if (brace == -1) { break; }
+
+                // Copy everything up to and including the brace
+                fingerprint.Append(logicalLocation, copiedFromIndex, brace + 1 - copiedFromIndex);
+
+                // Find the closing brace
+                copiedFromIndex = logicalLocation.IndexOf(']', brace + 1);
+
+                // If there is no matching brace, return null (can't compute)
+                if (copiedFromIndex == -1) { return null; }
+            }
+
+            // Copy the rest of the Json path
+            if (copiedFromIndex < logicalLocation.Length)
+            {
+                fingerprint.Append(logicalLocation, copiedFromIndex, logicalLocation.Length - copiedFromIndex);
+            }
+
+            return fingerprint.ToString();
+        }
+
+        /// <summary>
         ///  This processor finds the JSON path for the file matches.
-        ///   If a match is between tokens or spans tokens, it returns the path of the
-        ///   last token which starts before the match start.
+        ///  If a match is between tokens or spans tokens, it returns the path of the
+        ///  last token which starts before the match start.
         /// </summary>
         /// <remarks>
         ///  Observations:
@@ -27,6 +67,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         ///     - For arrays, one might report the whole array, but this gets "closer" to the match.
         ///     - For objects, spanning properties will get "closer" to the match.
         /// </remarks>
+        /// <param name="results">collection of JSON results to process.</param>
+        /// <param name="fileContents">JSON file contents.</param>
+        /// <param name="fileRegionsCache">file cache that can be used to populate regions with comprehensive data.</param>
         public void Process(ICollection<Result> results, string fileContents, FileRegionsCache fileRegionsCache = null)
         {
             if (results?.Count == 0) { return; }
@@ -113,46 +156,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return
                 reader.LineNumber > region.StartLine ||
                 (reader.LineNumber == region.StartLine && reader.LinePosition > region.StartColumn);
-        }
-
-        /// <summary>
-        ///  ToFingerprint converts the JSON path logical location to a canonical
-        ///  form safe to use as a stable fingerprint. It removes all array indices
-        ///  from the path to cause results to match when they move within arrays.
-        /// </summary>
-        /// <param name="logicalLocation">JsonPath logical location to convert.</param>
-        /// <returns>Canonical Logical Location safe for fingerprint use, or null if unable to compute.</returns>
-        public static string ToFingerprint(string logicalLocation)
-        {
-            if (string.IsNullOrEmpty(logicalLocation)) { return null; }
-
-            var fingerprint = new StringBuilder();
-
-            // Copy the JSON path with all array indices removed ([15] => [])
-            int copiedFromIndex = 0;
-            while (true)
-            {
-                // Find the next brace
-                int brace = logicalLocation.IndexOf('[', copiedFromIndex);
-                if (brace == -1) { break; }
-
-                // Copy everything up to and including the brace
-                fingerprint.Append(logicalLocation, copiedFromIndex, brace + 1 - copiedFromIndex);
-
-                // Find the closing brace
-                copiedFromIndex = logicalLocation.IndexOf(']', brace + 1);
-
-                // If there is no matching brace, return null (can't compute)
-                if (copiedFromIndex == -1) { return null; }
-            }
-
-            // Copy the rest of the Json path
-            if (copiedFromIndex < logicalLocation.Length)
-            {
-                fingerprint.Append(logicalLocation, copiedFromIndex, logicalLocation.Length - copiedFromIndex);
-            }
-
-            return fingerprint.ToString();
         }
     }
 }

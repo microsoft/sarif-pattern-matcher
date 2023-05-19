@@ -11,7 +11,13 @@
     <PackageId>Sarif.PatternMatcher.Security</PackageId>
   </PropertyGroup>
 
-  <ItemGroup>
+  <PropertyGroup>
+	<MSBuildWarningsAsMessages>
+	    $(MSBuildWarningsAsMessages);MSB3030
+    </MSBuildWarningsAsMessages>
+  </PropertyGroup>
+
+	<ItemGroup>
     <Content Include="*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
