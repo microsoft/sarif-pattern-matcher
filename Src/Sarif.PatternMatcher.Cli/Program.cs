@@ -51,6 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     ImportAndAnalyzeOptions,
                     ExportEventsOptions,
                     DumpEventsOptions,
+                    GenerateSynthDataOptions,
                     ValidateOptions>(args)
                   .MapResult(
                     (AnalyzeOptions options) => new AnalyzeCommand().Run(options, ref GlobalContext),
@@ -61,6 +62,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                     (ImportAndAnalyzeOptions options) => new ImportAndAnalyzeCommand().Run(options),
                     (ExportEventsOptions options) => new ExportEventsCommand().Run(options),
                     (DumpEventsOptions options) => new DumpEventsCommand().Run(options),
+                    (GenerateSynthDataOptions options) => new GenerateSynthDataCommand().Run(options),
                     (ValidateOptions options) => new ValidateCommand().Run(options),
                     _ => isValidHelpCommand || isVersionCommand
                             ? CommandBase.SUCCESS
