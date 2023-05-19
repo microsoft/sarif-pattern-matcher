@@ -12,12 +12,12 @@
   </PropertyGroup>
 
   <PropertyGroup>
-	<MSBuildWarningsAsMessages>
-	    $(MSBuildWarningsAsMessages);MSB3030
+    <MSBuildWarningsAsMessages>
+        $(MSBuildWarningsAsMessages);MSB3030
     </MSBuildWarningsAsMessages>
   </PropertyGroup>
 
-	<ItemGroup>
+  <ItemGroup>
     <Content Include="*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

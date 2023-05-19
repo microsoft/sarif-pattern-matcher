@@ -13,10 +13,10 @@
 
   <PropertyGroup>
     <MSBuildWarningsAsMessages>
-	    $(MSBuildWarningsAsMessages);MSB3277;MSB3030
+        $(MSBuildWarningsAsMessages);MSB3277;MSB3030
     </MSBuildWarningsAsMessages>
   </PropertyGroup>
-	
+
   <ItemGroup>
     <None Remove="AdoPat.txt" />
     <None Remove="AZC102.ServiceConnectionSecurity.json" />
