@@ -27,6 +27,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public const string DynamicValidationNotEnabled = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
 
+        public readonly IList<MatchExpression> MatchExpressions;
+
         private const string DefaultHelpUri = "https://github.com/microsoft/sarif-pattern-matcher";
         private const string Base64DecodingFormatString = "\\b(?i)[0-9a-z\\/+]{0}";
 
@@ -39,7 +41,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly IRegex _engine;
         private readonly ValidatorsCache _validators;
         private readonly IList<string> _deprecatedNames;
-        private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
         private readonly Dictionary<string, MultiformatMessageString> _messageStrings;
 
@@ -84,7 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 };
             }
 
-            _matchExpressions = definition.MatchExpressions;
+            MatchExpressions = definition.MatchExpressions;
 
             if (definition.MatchExpressions?.Count > 0 &&
                 definition.MatchExpressions[0].MessageArguments != null &&
@@ -132,7 +133,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return AnalysisApplicability.NotApplicableToSpecifiedTarget;
             }
 
-            foreach (MatchExpression matchExpression in _matchExpressions)
+            foreach (MatchExpression matchExpression in MatchExpressions)
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(filePath, matchExpression.FileNameDenyRegex))
                 {
@@ -156,7 +157,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             string filePath = context.CurrentTarget.Uri.GetFilePath();
 
-            foreach (MatchExpression matchExpression in _matchExpressions)
+            foreach (MatchExpression matchExpression in MatchExpressions)
             {
                 if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
                 {
