@@ -40,7 +40,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         /// can be used to access Alibaba Cloud service REST API.
         /// </summary>
         /// <param name="request">Unsigned httpRequest passed in that will be signed for Alibaba Cloud service REST API.</param>
-        /// <param name="accessKey">Alibbaba Cloud access key.</param>
+        /// <param name="accessKey">Alibaba Cloud access key.</param>
         /// <param name="secret">Alibaba Cloud secret.</param>
         public void SignRequest(HttpRequestMessage request, string accessKey, string secret)
         {

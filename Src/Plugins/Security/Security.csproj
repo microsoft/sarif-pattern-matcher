@@ -13,8 +13,14 @@
 
   <PropertyGroup>
     <MSBuildWarningsAsMessages>
-        $(MSBuildWarningsAsMessages);MSB3030
-    </MSBuildWarningsAsMessages>
+		// MSB3030 - This error occurs when a file that was supposed to be
+		//  copied isn't found at the expected location.
+		//  There are copy commands that have a continueOnError=true because
+		//  there is a time in the copy process where a copy fails before it
+		//  succeeds for those commands with the continueOnError. Those copy
+		//  commands have been set to continueOnError for almost two years.
+		$(MSBuildWarningsAsMessages);MSB3030
+	</MSBuildWarningsAsMessages>
   </PropertyGroup>
 
   <ItemGroup>
