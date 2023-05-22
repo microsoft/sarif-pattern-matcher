@@ -751,7 +751,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             bool isMalformed = true;
 
-            bool singleIntraRegex = 
+            bool singleIntraRegex =
                 matchExpression.IntrafileRegexes?.Count > 0 ||
                 matchExpression.SingleLineRegexes?.Count > 0;
 

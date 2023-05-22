@@ -224,7 +224,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             }
 
                             matchExpression.SingleLineRegexes[i] =
-                                PushData(regex,
+                                PushData(matchExpression.SingleLineRegexes[i],
                                          definition.SharedStrings,
                                          sharedStrings);
                         }

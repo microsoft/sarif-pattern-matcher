@@ -68,7 +68,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return validationMethods;
         }
 
-        public IEnumerable<ValidationResult> Validate(string ruleId, 
+        public IEnumerable<ValidationResult> Validate(string ruleId,
                                                       string ruleName,
                                                       AnalyzeContext context,
                                                       IDictionary<string, FlexMatch> groups,
