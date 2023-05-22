@@ -77,8 +77,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     name = $"{fvi?.CompanyName}/{fvi?.FileDescription}/{name}";
                     // TBD add version details. Breaks test baselines currently.
-                    //semanticVersion = fvi?.ProductVersion;
-                    //version = fvi?.FileVersion;
+                    // semanticVersion = fvi?.ProductVersion;
+                    // version = fvi?.FileVersion;
                 }
 
                 var toolComponent = new ToolComponent
