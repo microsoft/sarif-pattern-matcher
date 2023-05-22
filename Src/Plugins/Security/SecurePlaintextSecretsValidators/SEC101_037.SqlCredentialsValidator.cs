@@ -38,13 +38,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
-                !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret) ||
-                !groups.TryGetNonEmptyValue("resource", out FlexMatch resource))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch id = groups[nameof(id)];
+            FlexMatch host = groups[nameof(host)];
+            FlexMatch secret = groups[nameof(secret)];
+            FlexMatch resource = groups[nameof(resource)];
 
             if (id.Length > 128 ||
                 host.Length > 128 ||

@@ -9,7 +9,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class MatchExpression
     {
-        public IList<RegexMetadata> IntrafileRegexMetadata { get; set; }
+        public IList<RegexMetadata> RegexMetadata { get; set; }
 
         public IList<string> IntrafileRegexes { get; set; }
 
@@ -18,6 +18,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public string Id { get; set; }
 
         public string SubId { get; set; }
+
+        public string Index { get; set; }
 
         public string Name { get; set; }
 
