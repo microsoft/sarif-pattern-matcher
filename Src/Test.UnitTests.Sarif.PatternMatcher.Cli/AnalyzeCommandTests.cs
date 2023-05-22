@@ -177,6 +177,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         ? RuntimeConditions.OneOrMoreFilesSkippedDueToExceedingSizeLimits
                         : RuntimeConditions.None;
 
+
+                if (runtimeConditions == RuntimeConditions.OneOrMoreFilesSkippedDueToExceedingSizeLimits)
+                {
+                    if (testCase.largeFileSize == 0)
+                    {
+                        runtimeConditions = RuntimeConditions.OneOrMoreEmptyFilesSkipped;
+                    }
+                }
+
                 SarifLog logFile =
                     RunAnalyzeCommandWithFileSizeLimits(maxFileSizeInKilobytes: testCase.maxFileSize,
                                                         testCase.largeFileSize,

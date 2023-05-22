@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
+using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.Driver.Sdk;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
@@ -66,19 +68,22 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return validationMethods;
         }
 
-        public IEnumerable<ValidationResult> Validate(string ruleName,
+        public IEnumerable<ValidationResult> Validate(string ruleId,
+                                                      string ruleName,
                                                       AnalyzeContext context,
                                                       IDictionary<string, FlexMatch> groups,
                                                       out bool pluginCanPerformDynamicAnalysis)
         {
             return ValidateHelper(RuleNameToValidationMethods,
+                                  ruleId,
                                   ruleName,
                                   context,
                                   groups,
                                   out pluginCanPerformDynamicAnalysis);
         }
 
-        public IEnumerable<ValidationResult> Validate(string ruleName,
+        public IEnumerable<ValidationResult> Validate(string ruleId,
+                                                      string ruleName,
                                                       AnalyzeContext context,
                                                       IDictionary<string, ISet<FlexMatch>> mergedGroups,
                                                       IList<IDictionary<string, FlexMatch>> combinations,
@@ -105,6 +110,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
 
                 foreach (ValidationResult result in ValidateHelper(RuleNameToValidationMethods,
+                                                                   ruleId,
                                                                    ruleName,
                                                                    context,
                                                                    groups,
@@ -156,6 +162,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         internal static IEnumerable<ValidationResult> ValidateHelper(Dictionary<string, StaticValidatorBase> ruleIdToMethodMap,
+                                                                     string ruleId,
                                                                      string ruleName,
                                                                      AnalyzeContext context,
                                                                      IDictionary<string, FlexMatch> groups,
@@ -193,7 +200,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             context.ObservedFingerprintCache ??= new HashSet<string>();
+
+            string filePath = context.CurrentTarget?.Uri.GetFilePath();
+            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase1StaticValidation, filePath, ruleId, ruleName, data1: null, data2: null);
             IEnumerable<ValidationResult> validationResults = staticValidator.IsValidStatic(groups, context.ObservedFingerprintCache);
+            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1StaticValidation, filePath, ruleId, ruleName, data1: null, data2: null);
 
             // An 'ExtensibleStaticValidatorBase' is a rule that extends DynamicValidatorBase
             // strictly so that other rules can use it as a base type and add dynamic
@@ -216,10 +227,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             string message = validationResult.Message;
                             IDictionary<string, string> stringGroups = groups.ToStringDictionary();
                             Fingerprint fingerprint = validationResult.Fingerprint;
+
+                            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.Phase2DynamicValidation, filePath, ruleId, ruleName, data1: null, data2: null);
                             validationResult.ValidationState = dynamicValidator.IsValidDynamic(ref fingerprint,
                                                                                                ref message,
                                                                                                stringGroups,
                                                                                                ref resultLevelKind);
+                            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.Phase2DynamicValidation, filePath, ruleId, ruleName, data1: null, data2: null);
+
                             validationResult.Message = message;
                             validationResult.Fingerprint = fingerprint;
                             validationResult.ResultLevelKind = resultLevelKind;
@@ -319,56 +334,60 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // We will only attempt to resolve an assembly a single time
             // to avoid re-entrance in cases where our logic below fails
             string assemblyName = args.Name.Split(',')[0];
-            if (this._resolvedNames.TryGetValue(assemblyName, out resolved))
-            {
-                return resolved;
-            }
 
-            AppDomain currentDomain = AppDomain.CurrentDomain;
-            Assembly[] assemblies = currentDomain.GetAssemblies();
-            foreach (Assembly assembly in assemblies)
+            lock (sync)
             {
-                if (assembly.FullName.Split(',')[0] == assemblyName)
+                if (_resolvedNames.TryGetValue(assemblyName, out resolved))
                 {
-                    return assembly;
+                    return resolved;
                 }
-            }
 
-            assemblyBaseFolder ??= Environment.CurrentDirectory;
-
-            if (assemblyBaseFolder.EndsWith("analyze\\..\\bin"))
-            {
-                assemblyBaseFolder = assemblyBaseFolder.Replace("analyze\\..\\bin", string.Empty);
-            }
-
-            string presumedAssemblyPath = Path.Combine(assemblyBaseFolder, Path.GetFileName(assemblyName));
-
-            if (!presumedAssemblyPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase) &&
-                !presumedAssemblyPath.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
-            {
-                presumedAssemblyPath += ".dll";
-
-                if (!File.Exists(presumedAssemblyPath))
+                AppDomain currentDomain = AppDomain.CurrentDomain;
+                Assembly[] assemblies = currentDomain.GetAssemblies();
+                foreach (Assembly assembly in assemblies)
                 {
-                    // Strip .dll and give .exe a whirl
-                    presumedAssemblyPath = Path.Combine(assemblyBaseFolder, assemblyName) + ".exe";
+                    if (assembly.FullName.Split(',')[0] == assemblyName)
+                    {
+                        return assembly;
+                    }
                 }
-            }
 
-            if (File.Exists(presumedAssemblyPath))
-            {
-                try
+                assemblyBaseFolder ??= Environment.CurrentDirectory;
+
+                if (assemblyBaseFolder.EndsWith("analyze\\..\\bin"))
                 {
-                    // If we use Assembly.LoadFrom, a FileLoadException
-                    // saying that it could not load the file.
-                    resolved = Assembly.Load(_fileSystem.FileReadAllBytes(presumedAssemblyPath));
-
-                    this._resolvedNames[assemblyName] = resolved;
+                    assemblyBaseFolder = assemblyBaseFolder.Replace("analyze\\..\\bin", string.Empty);
                 }
-                catch (IOException) { }
-                catch (TypeLoadException) { }
-                catch (BadImageFormatException) { }
-                catch (UnauthorizedAccessException) { }
+
+                string presumedAssemblyPath = Path.Combine(assemblyBaseFolder, Path.GetFileName(assemblyName));
+
+                if (!presumedAssemblyPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase) &&
+                    !presumedAssemblyPath.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+                {
+                    presumedAssemblyPath += ".dll";
+
+                    if (!File.Exists(presumedAssemblyPath))
+                    {
+                        // Strip .dll and give .exe a whirl
+                        presumedAssemblyPath = Path.Combine(assemblyBaseFolder, assemblyName) + ".exe";
+                    }
+                }
+
+                if (File.Exists(presumedAssemblyPath))
+                {
+                    try
+                    {
+                        // If we use Assembly.LoadFrom, a FileLoadException
+                        // saying that it could not load the file.
+                        resolved = Assembly.Load(_fileSystem.FileReadAllBytes(presumedAssemblyPath));
+
+                        _resolvedNames[assemblyName] = resolved;
+                    }
+                    catch (IOException) { }
+                    catch (TypeLoadException) { }
+                    catch (BadImageFormatException) { }
+                    catch (UnauthorizedAccessException) { }
+                }
             }
 
             return resolved;

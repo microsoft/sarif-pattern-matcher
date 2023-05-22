@@ -77,8 +77,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     name = $"{fvi?.CompanyName}/{fvi?.FileDescription}/{name}";
                     // TBD add version details. Breaks test baselines currently.
-                    //semanticVersion = fvi?.ProductVersion;
-                    //version = fvi?.FileVersion;
+                    // semanticVersion = fvi?.ProductVersion;
+                    // version = fvi?.FileVersion;
                 }
 
                 var toolComponent = new ToolComponent
@@ -206,11 +206,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     if (matchExpression.SingleLineRegexes?.Count > 0)
                     {
+                        matchExpression.RegexMetadata =
+                            new List<RegexMetadata>(matchExpression.SingleLineRegexes.Count);
+
                         for (int i = 0; i < matchExpression.SingleLineRegexes.Count; i++)
                         {
-                            string current = matchExpression.SingleLineRegexes[i];
+                            string regex = matchExpression.SingleLineRegexes[i];
+                            matchExpression.RegexMetadata.Add(RegexMetadata.None);
+
+                            if (regex.StartsWith("?"))
+                            {
+                                matchExpression.RegexMetadata[i] = RegexMetadata.Optional;
+
+                                // Once we record this regex as optional, mark it with the standard
+                                // prefix so that the rest of processing happens as usual.
+                                matchExpression.SingleLineRegexes[i] = "$" + regex.Substring(1);
+                            }
+
                             matchExpression.SingleLineRegexes[i] =
-                                PushData(current,
+                                PushData(matchExpression.SingleLineRegexes[i],
                                          definition.SharedStrings,
                                          sharedStrings);
                         }
@@ -218,17 +232,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     if (matchExpression.IntrafileRegexes?.Count > 0)
                     {
-                        matchExpression.IntrafileRegexMetadata =
+                        matchExpression.RegexMetadata =
                             new List<RegexMetadata>(matchExpression.IntrafileRegexes.Count);
 
                         for (int i = 0; i < matchExpression.IntrafileRegexes.Count; i++)
                         {
                             string regex = matchExpression.IntrafileRegexes[i];
-                            matchExpression.IntrafileRegexMetadata.Add(RegexMetadata.None);
+                            matchExpression.RegexMetadata.Add(RegexMetadata.None);
 
                             if (regex.StartsWith("?"))
                             {
-                                matchExpression.IntrafileRegexMetadata[i] = RegexMetadata.Optional;
+                                matchExpression.RegexMetadata[i] = RegexMetadata.Optional;
 
                                 // Once we record this regex as optional, mark it with the standard
                                 // prefix so that the rest of processing happens as usual.
@@ -283,6 +297,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                     cachedMatchExpressions.Add(matchExpression);
                 }
+
                 extensionsCount++;
             }
 
@@ -370,18 +385,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return context;
         }
 
-        public override AnalyzeContext ValidateContext(AnalyzeContext context)
-        {
-            context = base.ValidateContext(context);
-
-            if (ValidateFiles(context, context.PluginFilePaths, shouldExist: true))
-            {
-
-            }
-
-            return context;
-        }
-
         protected override ISet<Skimmer<AnalyzeContext>> CreateSkimmers(AnalyzeContext context)
         {
             ISet<Skimmer<AnalyzeContext>> aggregatedSkimmers = new HashSet<Skimmer<AnalyzeContext>>();
@@ -411,27 +414,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 filePath = context.CurrentTarget.Uri.GetFilePath();
                 byte[] buffer = null;
 
-                DriverEventSource.Log.ArtifactReserved1Start("Sniffing", filePath);
+                DriverEventSource.Log.ArtifactReserved1Start("Sniffing", filePath, data1: null, data2: null);
                 var string8 = String8.Convert(context.CurrentTarget.Contents, ref buffer);
                 Match2 match2 = Regex2.Match(string8, context.SniffRegex);
-                DriverEventSource.Log.ArtifactReserved1Stop("Sniffing", filePath);
-
+                DriverEventSource.Log.ArtifactReserved1Stop("Sniffing", filePath, data1: null, data2: null);
                 if (match2.Index == -1)
                 {
                     Interlocked.Increment(ref AnalyzeContext.FilesFilteredBySniffRegex);
-                    DriverEventSource.Log.ArtifactReserved0("SniffFilteredArtifact", filePath, $"Sniff did not match and so file was skipped.");
+                    DriverEventSource.Log.ArtifactNotScanned(filePath, SpamEventNames.ContentsSniffNoMatch, context.CurrentTarget.SizeInBytes.Value, context.SniffRegex);
                     return context;
                 }
-
-                int lastUtf8Index = 0;
-                int lastUtf16Index = 0;
-                FlexMatch flexMatch = RE2Regex.Instance.ToFlex(match2, string8, ref lastUtf8Index, ref lastUtf16Index);
-                DriverEventSource.Log.ArtifactReserved0("SniffDidNotFilterArtifact", filePath, $"Sniff matched '{flexMatch.Value}' and so was fully scanned.");
             }
 
-            if (sniffing) { DriverEventSource.Log.ArtifactReserved1Start("PostSniff", filePath); }
+            if (sniffing) { DriverEventSource.Log.ArtifactReserved1Start(SpamEventNames.PostSniff, filePath, data1: null, data2: null); }
             context = base.DetermineApplicabilityAndAnalyze(context, skimmers, disabledSkimmers);
-            if (sniffing) { DriverEventSource.Log.ArtifactReserved1Stop("PostSniff", filePath); }
+            if (sniffing) { DriverEventSource.Log.ArtifactReserved1Stop(SpamEventNames.PostSniff, filePath, data1: null, data2: null); }
 
             ICollection<IList<Tuple<Result, int?>>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
 
