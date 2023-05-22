@@ -7,9 +7,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public static class Crc32
     {
-        public static readonly uint[] Crc32IEEETable = CreateCrcTable(Crc32IEEEPolynomial);
-
         public static readonly uint[] Crc32CastagnoliTable = CreateCrcTable(Crc32CastagnoliPolynomial);
+        private static readonly uint[] Crc32IEEETable = CreateCrcTable(Crc32IEEEPolynomial);
 
         // https://crc32.online/
         // https://github.com/force-net/Crc32.NET
