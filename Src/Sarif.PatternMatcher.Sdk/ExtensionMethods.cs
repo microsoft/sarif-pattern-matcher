@@ -10,7 +10,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public static class ExtensionMethods
     {
-        public static char RedactionChar => '?';
+        public const char RedactionChar = '?';
 
         /// <summary>
         /// Use an <cref>HttpClient</cref> instance to retrieve request response headers only.
