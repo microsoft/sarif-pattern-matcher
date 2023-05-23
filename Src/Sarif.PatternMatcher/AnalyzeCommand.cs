@@ -80,6 +80,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // TBD add version details. Breaks test baselines currently.
                     // semanticVersion = fvi?.ProductVersion;
                     // version = fvi?.FileVersion;
+                    // ADO Work item: https://dev.azure.com/mseng/1ES/_workitems/edit/2066916
                 }
 
                 var toolComponent = new ToolComponent
