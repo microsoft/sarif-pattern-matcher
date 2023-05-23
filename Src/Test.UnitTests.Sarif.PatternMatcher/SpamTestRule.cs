@@ -29,7 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif
         internal static Random s_random = new Random(s_seed);
 
         [ThreadStatic]
-        private static TestRuleBehaviors s_testRuleBehaviors;
+        internal static TestRuleBehaviors s_testRuleBehaviors;
 
         public SpamTestRule()
         {
