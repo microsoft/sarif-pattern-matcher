@@ -7,6 +7,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public sealed class SpamEventNames
     {
+        public const string ScanArtifact = nameof(RunRule);
+
+        public const string Sniffing = nameof(Sniffing);
         public const string PostSniff = nameof(PostSniff);
 
         public const string RunRule = nameof(RunRule);

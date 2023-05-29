@@ -6,13 +6,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Writers;
-using Microsoft.Extensions.FileSystemGlobbing;
-using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
 
@@ -407,17 +404,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         protected override AnalyzeContext DetermineApplicabilityAndAnalyze(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers, ISet<string> disabledSkimmers)
         {
+            string filePath = context.CurrentTarget.Uri.GetFilePath();
+
             bool sniffing = !string.IsNullOrWhiteSpace(context.SniffRegex);
-            string filePath = null;
             if (sniffing)
             {
                 filePath = context.CurrentTarget.Uri.GetFilePath();
                 byte[] buffer = null;
 
-                DriverEventSource.Log.ArtifactReserved1Start("Sniffing", filePath, data1: null, data2: null);
+                DriverEventSource.Log.ArtifactReserved1Start(SpamEventNames.Sniffing, filePath, data1: null, data2: null);
                 var string8 = String8.Convert(context.CurrentTarget.Contents, ref buffer);
                 Match2 match2 = Regex2.Match(string8, context.SniffRegex);
-                DriverEventSource.Log.ArtifactReserved1Stop("Sniffing", filePath, data1: null, data2: null);
+                DriverEventSource.Log.ArtifactReserved1Stop(SpamEventNames.Sniffing, filePath, data1: null, data2: null);
                 if (match2.Index == -1)
                 {
                     Interlocked.Increment(ref AnalyzeContext.FilesFilteredBySniffRegex);

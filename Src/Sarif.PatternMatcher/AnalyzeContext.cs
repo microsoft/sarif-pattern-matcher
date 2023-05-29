@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
+#pragma warning disable SA1117 // Parameters should be on same line or separate line.
 using System;
 using System.Collections.Generic;
 
