@@ -9,7 +9,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     {
         public const string ScanArtifact = nameof(RunRule);
 
-
         public const string Sniffing = nameof(Sniffing);
         public const string PostSniff = nameof(PostSniff);
 
