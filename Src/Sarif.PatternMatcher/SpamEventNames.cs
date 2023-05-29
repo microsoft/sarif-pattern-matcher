@@ -15,9 +15,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public const string RunRule = nameof(RunRule);
 
-        public const string Phase0Regex = "Phase1-Regex";
-        public const string Phase1StaticValidation = "Phase2-StaticValidation";
-        public const string Phase2DynamicValidation = "Phase3-DynamicValidation";
+        public const string Phase0Regex = "Phase0-Regex";
+        public const string Phase1StaticValidation = "Phase1-StaticValidation";
+        public const string Phase2DynamicValidation = "Phase2-DynamicValidation";
 
         public const string RunRulePhase0Regex = $"{RunRule}/{Phase0Regex}";
         public const string RunRulePhase0RegexStop = $"{RunRulePhase0Regex}/Stop";
