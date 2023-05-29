@@ -855,7 +855,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                             matchExpression.Id,
                                                             $"{matchExpression.Name}/{matchExpression.Index}",
                                                             "IntrafileRegex",
-                                                            data2: $"No match: {regex}".CsvEscape());
+                                                            data2: @$"{{""matchCount"":0,""regex"":""{regex}""}}".CsvEscape());
                     return;
                 }
 
@@ -1128,14 +1128,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                    out List<Dictionary<string, FlexMatch>> matches,
                                    context);
 
-            string matchPrefix = matched ? "Matched" : "No match";
-
             DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
                                                     filePath,
                                                     matchExpression.Id,
                                                     $"{matchExpression.Name}/{matchExpression.Index}",
                                                     "ContentsRegex",
-                                                    data2: $"{matchPrefix}: {matchExpression.ContentsRegex}".CsvEscape());
+                                                    data2: @$"{{""matchCount"":{matches?.Count ?? 0},""regex"":""{matchExpression.ContentsRegex}""}}".CsvEscape());
 
             if (!matched)
             {

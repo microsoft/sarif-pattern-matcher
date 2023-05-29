@@ -6,11 +6,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Driver.Sdk;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.Diagnostics.Tracing;
+using Microsoft.Diagnostics.Tracing.Parsers.IIS_Trace;
 using Microsoft.RE2.Managed;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
@@ -202,9 +209,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.ObservedFingerprintCache ??= new HashSet<string>();
 
             string filePath = context.CurrentTarget?.Uri.GetFilePath();
-            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase1StaticValidation, filePath, ruleId, ruleName, data1: null, data2: null);
+            string data1, data2;
+
+            if (DriverEventSource.Log.IsEnabled())
+            {
+                data1 = $"ObservedFingerPrintCache contains {context.ObservedFingerprintCache.Count} item(s)";
+                data2 = PackageGroupsForTelemetry(groups);
+                DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase1StaticValidation, filePath, ruleId, ruleName, data1, data2);
+            }
+
             IEnumerable<ValidationResult> validationResults = staticValidator.IsValidStatic(groups, context.ObservedFingerprintCache);
-            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1StaticValidation, filePath, ruleId, ruleName, data1: null, data2: null);
+
+            if (DriverEventSource.Log.IsEnabled())
+            {
+                data1 = $"{validationResults.Count()}";
+                data2 = PackageValidationResultsForTelemetry(validationResults);
+                DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1StaticValidation, filePath, ruleId, ruleName, data1, data2);
+            }
 
             // An 'ExtensibleStaticValidatorBase' is a rule that extends DynamicValidatorBase
             // strictly so that other rules can use it as a base type and add dynamic
@@ -228,22 +249,106 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             IDictionary<string, string> stringGroups = groups.ToStringDictionary();
                             Fingerprint fingerprint = validationResult.Fingerprint;
 
-                            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.Phase2DynamicValidation, filePath, ruleId, ruleName, data1: null, data2: null);
+                            if (DriverEventSource.Log.IsEnabled())
+                            {
+                                ValidationResult toSerialize = PackageValidationResultForTelemetry(validationResult);
+                                data1 = JsonConvert.SerializeObject(toSerialize);
+                                DriverEventSource.Log.RuleReserved1Start(SpamEventNames.Phase2DynamicValidation, filePath, ruleId, ruleName, data1, data2: null);
+                            }
+
                             validationResult.ValidationState = dynamicValidator.IsValidDynamic(ref fingerprint,
                                                                                                ref message,
                                                                                                stringGroups,
                                                                                                ref resultLevelKind);
-                            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.Phase2DynamicValidation, filePath, ruleId, ruleName, data1: null, data2: null);
 
                             validationResult.Message = message;
                             validationResult.Fingerprint = fingerprint;
                             validationResult.ResultLevelKind = resultLevelKind;
+
+                            if (DriverEventSource.Log.IsEnabled())
+                            {
+                                ValidationResult toSerialize = PackageValidationResultForTelemetry(validationResult);
+                                data1 = JsonConvert.SerializeObject(toSerialize);
+                                DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.Phase2DynamicValidation, filePath, ruleId, ruleName, data1, data2: null);
+                            }
                         }
                     }
                 }
             }
 
             return validationResults;
+        }
+
+        [ThreadStatic]
+        private static StringBuilder s_sb;
+
+        private static readonly JsonSerializerSettings s_settings = new()
+        {
+            ContractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy(),
+            },
+            Formatting = Formatting.None,
+        };
+
+        private static string PackageValidationResultsForTelemetry(IEnumerable<ValidationResult> validationResults)
+        {
+            var resultsToSerialize = new List<ValidationResult>();
+
+            foreach (ValidationResult validationResult in validationResults)
+            {
+                ValidationResult toSerialize = PackageValidationResultForTelemetry(validationResult);
+                resultsToSerialize.Add(toSerialize);
+            }
+
+            return JsonConvert.SerializeObject(validationResults, s_settings);
+        }
+
+        private static ValidationResult PackageValidationResultForTelemetry(ValidationResult validationResult)
+        {
+            var resultToSerialize = new ValidationResult()
+            {
+                Message = validationResult.Message,
+                RegionFlexMatch = validationResult.RegionFlexMatch,
+                ResultLevelKind = validationResult.ResultLevelKind,
+                ValidationState = validationResult.ValidationState,
+            };
+
+            Fingerprint fingerprint = validationResult.Fingerprint;
+            string secret = fingerprint.Secret;
+            resultToSerialize.RawSecretHashSha256 = secret != null ? HashUtilities.ComputeStringSha256Hash(secret) : null;
+            fingerprint.Secret = null;
+            resultToSerialize.Fingerprint = fingerprint;
+            return resultToSerialize;
+        }
+
+        private static string PackageGroupsForTelemetry(IDictionary<string, FlexMatch> groups)
+        {
+            s_sb ??= new StringBuilder();
+            s_sb.Clear();
+            s_sb.Append('{');
+
+            groups.TryGetValue("secret", out FlexMatch secret);
+
+            if (!string.IsNullOrEmpty(secret?.Value.String))
+            {
+                string rawSecretHashSha256 = HashUtilities.ComputeStringSha256Hash(secret.Value);
+                s_sb.Append(@$"""rawSecretHashSha256"":""{rawSecretHashSha256}""");
+            }
+
+            foreach (string key in groups.Keys)
+            {
+                if (key.Equals("0") || key.Equals("secret") || key.Equals("scanTargetFullPath"))
+                {
+                    continue;
+                }
+
+                FlexMatch value = groups[key];
+                s_sb.Append(@$"{(s_sb.Length > 1 ? "," : string.Empty)}""{key}"":""{value}""");
+            }
+
+            s_sb.Append('}');
+            return s_sb.ToString();
         }
 
         private static IList<IDictionary<string, FlexMatch>> GetCombinations(IDictionary<string, ISet<FlexMatch>> mergedGroups,
