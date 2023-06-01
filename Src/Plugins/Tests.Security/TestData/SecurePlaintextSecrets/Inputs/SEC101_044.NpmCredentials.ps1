@@ -63,3 +63,11 @@ username=user3
 
 # Command line representation
 npm login -r https://registry.npmjs.org -u user4 -p deadcGFzc3dvcmQy
+
+************************************************************
+************************************************************
+************************************************************
+************************************************************
+
+# invalid password example as command line
+npm login -r https://registry.npmjs.org -u user5 -p passwordwithoutnumbers
