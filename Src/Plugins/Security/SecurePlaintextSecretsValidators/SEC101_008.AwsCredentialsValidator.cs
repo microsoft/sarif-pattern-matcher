@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -17,7 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     public class AwsCredentialsValidator : DynamicValidatorBase
     {
         internal static IRegex RegexEngine;
-
+        internal DateTime TimeStamp;
         private const string UserPrefix = "User: ";
         private const string UserSuffix = " is not authorized";
         private static readonly string AwsUserExpression = $"^{UserPrefix}.+?{UserSuffix}";
@@ -27,6 +28,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             RegexEngine = RE2Regex.Instance;
 
             RegexEngine.IsMatch(string.Empty, AwsUserExpression);
+
+            this.TimeStamp = DateTime.UtcNow;
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
@@ -57,8 +60,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             string id = fingerprint.Id;
             string secret = fingerprint.Secret;
-            string endpointUri = "https://iam.amazonaws.com/";
-            string payload = "Action=GetAccountAuthorizationDetails&Version=2010-05-08";
+            const string endpointUri = "https://iam.amazonaws.com/";
+            const string payload = "Action=GetAccountAuthorizationDetails&Version=2010-05-08";
 
             try
             {
@@ -70,7 +73,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 using var requestSigner = new AwsHttpRequestSigner(id, secret);
 
-                requestSigner.SignRequest(request, "us-east-1", "iam");
+                requestSigner.SignRequest(request, "us-east-1", "iam", this.TimeStamp);
 
                 using HttpResponseMessage response = client.ReadResponseHeaders(request);
 
