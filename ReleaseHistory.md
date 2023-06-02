@@ -18,6 +18,10 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## v4.5.2 Unreleased
+- RRR: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
+- DEP: Remove `AWSSDK.IdentityManagement` from `Security`.
+
 ## v4.5.1 5/31/2023
 - DEP: Update SARIF SDK submodule from [441fa8b to dd8b7b8](https://github.com/microsoft/sarif-sdk/compare/441fa8b..dd8b7b8). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd8b7b8/ReleaseHistory.md). Additional eventing work.
 

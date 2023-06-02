@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{B599D6C7-9
 		..\BuildAndTest.cmd = ..\BuildAndTest.cmd
 		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
 		..\README.md = ..\README.md
+		..\ReleaseHistory.md = ..\ReleaseHistory.md
 		..\version.json = ..\version.json
 	EndProjectSection
 EndProject
@@ -46,7 +47,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{BB9FC0F2-57E
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.ruleset = .ruleset
-		ReleaseHistory.md = ReleaseHistory.md
 		SarifPatternMatcher.runsettings = SarifPatternMatcher.runsettings
 		stylecop.json = stylecop.json
 	EndProjectSection
