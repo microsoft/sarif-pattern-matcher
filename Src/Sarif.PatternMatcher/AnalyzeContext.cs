@@ -54,7 +54,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             set => this.Policy.SetProperty(MaxMemoryInKilobytesProperty, value >= 0 ? value : MaxFileSizeInKilobytesProperty.DefaultValue());
         }
 
-
         public bool DisableDynamicValidationCaching
         {
             get => this.Policy.GetProperty(DisableDynamicValidationCachingProperty);

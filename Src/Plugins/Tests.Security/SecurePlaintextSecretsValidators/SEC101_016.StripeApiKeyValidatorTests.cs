@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/016.StripeApiKeyValidator
-    /// </summary
+    /// </summary>
     public class StripeApiKeyValidatorTests
     {
         private readonly string[] fingerprintStrings = new string[] { "[secret=_production_secret]", "[secret=_test_secret]" };
@@ -124,6 +124,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedMessage}' but found '{message}'.");
                 }
+
                 mockHandler.Clear();
             }
 

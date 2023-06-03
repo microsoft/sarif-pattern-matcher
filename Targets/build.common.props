@@ -31,6 +31,25 @@
     <PackageOutputPath>$(MsBuildThisFileDirectory)..\Bld\nupkg\$(OutputSubDir)\</PackageOutputPath>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+	
+  <PropertyGroup>
+    <MSBuildWarningsAsMessages>
+	  // MSB3277 - Found conflicts with different versions of the same
+	  //  dependent assembly that could not be resolved. Specifically
+	  //  for Newtonsoft where we need older versions for compatibility
+	  // MSB3030 - This error occurs when a file that was supposed to be
+	  //  copied isn't found at the expected location.
+	  //  There are copy commands that have a continueOnError=true because
+	  //  there is a time in the copy process where a copy fails before it
+	  //  succeeds for those commands with the continueOnError. Those copy
+	  //  commands have been set to continueOnError for almost two years.
+	  $(MSBuildWarningsAsMessages);MSB3277;MSB3030
+    </MSBuildWarningsAsMessages>
+  </PropertyGroup>
+	
   <ItemGroup Label="Common Packages">
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1">
       <PrivateAssets>all</PrivateAssets>

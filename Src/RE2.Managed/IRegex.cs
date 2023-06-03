@@ -21,6 +21,7 @@ namespace Microsoft.RE2.Managed
 
         IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null);
 
+#pragma warning disable CS1570 // XML comment has badly formed XML
         /// <summary>
         /// Searches the text for the specified pattern.
         ///
@@ -57,5 +58,6 @@ namespace Microsoft.RE2.Managed
         /// </code>
         /// </example>
         bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = -1);
+#pragma warning restore CS1570 // XML comment has badly formed XML
     }
 }

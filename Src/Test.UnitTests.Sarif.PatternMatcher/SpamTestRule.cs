@@ -29,7 +29,9 @@ namespace Microsoft.CodeAnalysis.Sarif
         internal static Random s_random = new Random(s_seed);
 
         [ThreadStatic]
+#pragma warning disable CS0649 // Field 'SpamTestRule.s_testRuleBehaviors' is never assigned to, and will always have its default value
         internal static TestRuleBehaviors s_testRuleBehaviors;
+#pragma warning restore CS0649 // Field 'SpamTestRule.s_testRuleBehaviors' is never assigned to, and will always have its default value
 
         public SpamTestRule()
         {
@@ -62,6 +64,7 @@ namespace Microsoft.CodeAnalysis.Sarif
                 {
                     return SupportedPlatform.Unknown;
                 }
+
                 return SupportedPlatform.All;
             }
         }
@@ -75,6 +78,7 @@ namespace Microsoft.CodeAnalysis.Sarif
                 {
                     throw new InvalidOperationException(nameof(TestRuleBehaviors.RaiseExceptionAccessingId));
                 }
+
                 return _id ?? TestRuleId;
             }
             set
@@ -92,6 +96,7 @@ namespace Microsoft.CodeAnalysis.Sarif
                 {
                     throw new InvalidOperationException(nameof(TestRuleBehaviors.RaiseExceptionAccessingId));
                 }
+
                 return _name ?? base.Name;
             }
             set
@@ -179,6 +184,7 @@ namespace Microsoft.CodeAnalysis.Sarif
 
                         Thread.Sleep(s_random.Next(0, 10));
                     }
+
                     break;
                 }
 
@@ -207,6 +213,7 @@ namespace Microsoft.CodeAnalysis.Sarif
                     nameof(SkimmerBaseTestResources.TEST1001_Failed),
                     context.CurrentTarget.Uri.GetFileName()));
             }
+
             if (fileName.Contains(nameof(FailureLevel.Warning), StringComparison.OrdinalIgnoreCase))
             {
                 context.Logger.Log(this,
@@ -214,6 +221,7 @@ namespace Microsoft.CodeAnalysis.Sarif
                     nameof(SkimmerBaseTestResources.TEST1001_Failed),
                     context.CurrentTarget.Uri.GetFileName()));
             }
+
             if (fileName.Contains(nameof(FailureLevel.Note), StringComparison.OrdinalIgnoreCase))
             {
                 context.Logger.Log(this,

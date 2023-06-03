@@ -187,7 +187,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     !_engine.IsMatch(filePath,
                                          matchExpression.FileNameAllowRegex,
                                          RegexDefaults.DefaultOptionsCaseInsensitive))
-
                 {
                     DriverEventSource.Log.RuleNotCalled(filePath,
                                                         matchExpression.Id,
