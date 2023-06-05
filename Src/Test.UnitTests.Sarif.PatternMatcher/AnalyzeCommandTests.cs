@@ -160,7 +160,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                  levels: BaseLogger.ErrorWarningNote,
                                                  kinds: BaseLogger.Fail);
 
-                    var target = new EnumeratedArtifact(FileSystem.Instance) { Uri = uri, Contents = string.Empty };
+                    var target = new EnumeratedArtifact(FileSystem.Instance)
+                    {
+                        Uri = uri,
+                        Contents = "Contents."
+                    };
 
                     var context = new TestAnalysisContext
                     {

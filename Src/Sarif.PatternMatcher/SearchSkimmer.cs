@@ -4,13 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Schema;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.Driver.Sdk;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
@@ -27,6 +30,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public const string DynamicValidationNotEnabled = "No validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match";
 
+        public readonly IList<MatchExpression> MatchExpressions;
+
         private const string DefaultHelpUri = "https://github.com/microsoft/sarif-pattern-matcher";
         private const string Base64DecodingFormatString = "\\b(?i)[0-9a-z\\/+]{0}";
 
@@ -39,7 +44,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private readonly IRegex _engine;
         private readonly ValidatorsCache _validators;
         private readonly IList<string> _deprecatedNames;
-        private readonly IList<MatchExpression> _matchExpressions;
         private readonly MultiformatMessageString _fullDescription;
         private readonly Dictionary<string, MultiformatMessageString> _messageStrings;
 
@@ -84,7 +88,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 };
             }
 
-            _matchExpressions = definition.MatchExpressions;
+            MatchExpressions = definition.MatchExpressions;
 
             if (definition.MatchExpressions?.Count > 0 &&
                 definition.MatchExpressions[0].MessageArguments != null &&
@@ -125,22 +129,40 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string filePath = context.CurrentTarget.Uri.GetFilePath();
             reasonIfNotApplicable = null;
 
-            if (!string.IsNullOrWhiteSpace(context.GlobalFileDenyRegex) &&
-                _engine.Match(filePath, pattern: context.GlobalFileDenyRegex).Success)
+            if (!string.IsNullOrWhiteSpace(context.GlobalFilePathDenyRegex) &&
+                _engine.Match(filePath, pattern: context.GlobalFilePathDenyRegex).Success)
             {
                 reasonIfNotApplicable = SpamResources.TargetWasFilteredByFileNameDenyRegex;
                 return AnalysisApplicability.NotApplicableToSpecifiedTarget;
             }
 
-            foreach (MatchExpression matchExpression in _matchExpressions)
+            foreach (MatchExpression matchExpression in MatchExpressions)
             {
-                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) && _engine.IsMatch(filePath, matchExpression.FileNameDenyRegex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) &&
+                    _engine.IsMatch(filePath,
+                                    matchExpression.FileNameDenyRegex,
+                                    RegexDefaults.DefaultOptionsCaseInsensitive))
                 {
+                    DriverEventSource.Log.RuleNotCalled(filePath,
+                                                        matchExpression.Id,
+                                                        $"{matchExpression.Name}\\{matchExpression.Index}",
+                                                        DriverEventNames.FilePathDenied,
+                                                        data2: matchExpression.FileNameDenyRegex.CsvEscape());
+
                     continue;
                 }
 
-                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex) && !_engine.IsMatch(filePath, matchExpression.FileNameAllowRegex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex) &&
+                    !_engine.IsMatch(filePath,
+                                     matchExpression.FileNameAllowRegex,
+                                     RegexDefaults.DefaultOptionsCaseInsensitive))
                 {
+                    DriverEventSource.Log.RuleNotCalled(filePath,
+                                                        matchExpression.Id,
+                                                        $"{matchExpression.Name}\\{matchExpression.Index}",
+                                                        DriverEventNames.FilePathNotAllowed,
+                                                        data2: matchExpression.FileNameAllowRegex.CsvEscape());
+
                     continue;
                 }
 
@@ -156,26 +178,36 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             string filePath = context.CurrentTarget.Uri.GetFilePath();
 
-            foreach (MatchExpression matchExpression in _matchExpressions)
+            for (int i = 0; i < MatchExpressions.Count; i++)
             {
-                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex))
-                {
-                    if (!_engine.IsMatch(filePath,
+                MatchExpression matchExpression = MatchExpressions[i];
+                matchExpression.Index ??= $"{i}";
+
+                if (!string.IsNullOrEmpty(matchExpression.FileNameAllowRegex) &&
+                    !_engine.IsMatch(filePath,
                                          matchExpression.FileNameAllowRegex,
                                          RegexDefaults.DefaultOptionsCaseInsensitive))
-                    {
-                        continue;
-                    }
+
+                {
+                    DriverEventSource.Log.RuleNotCalled(filePath,
+                                                        matchExpression.Id,
+                                                        $"{matchExpression.Name}\\{matchExpression.Index}",
+                                                        DriverEventNames.FilePathNotAllowed,
+                                                        data2: $"{matchExpression.FileNameAllowRegex}".CsvEscape());
+                    continue;
                 }
 
-                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex))
+                if (!string.IsNullOrEmpty(matchExpression.FileNameDenyRegex) &&
+                    _engine.IsMatch(filePath,
+                                    matchExpression.FileNameDenyRegex,
+                                    RegexDefaults.DefaultOptionsCaseInsensitive))
                 {
-                    if (_engine.IsMatch(filePath,
-                                        matchExpression.FileNameDenyRegex,
-                                        RegexDefaults.DefaultOptionsCaseInsensitive))
-                    {
-                        continue;
-                    }
+                    DriverEventSource.Log.RuleNotCalled(filePath,
+                                                        matchExpression.Id,
+                                                        $"{matchExpression.Name}\\{matchExpression.Index}",
+                                                        DriverEventNames.FilePathDenied,
+                                                        data2: $"{matchExpression.FileNameDenyRegex}".CsvEscape());
+                    continue;
                 }
 
                 if (matchExpression.MatchLengthToDecode > 0)
@@ -467,11 +499,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                               MatchExpression matchExpression,
                                               IList<string> arguments)
         {
-            DriverEventSource.Log.RuleFired(level,
-                                            context.CurrentTarget.Uri.GetFilePath(),
-                                            ruleId,
-                                            matchExpression.SubId);
-
             var location = new Location()
             {
                 PhysicalLocation = new PhysicalLocation
@@ -540,6 +567,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     AddFixToResult(flexMatch, fix, result, fixRegion);
                 }
             }
+
+            string secretHashSha256 = null;
+            fingerprints?.TryGetValue(SecretHashSha256Current, out secretHashSha256);
+
+            DriverEventSource.Log.RuleFired(context.CurrentTarget.Uri.GetFilePath(),
+                                            ruleId,
+                                            $"{matchExpression.Name}/{matchExpression.Index}",
+                                            level,
+                                            secretHashSha256);
 
             return result;
         }
@@ -722,9 +758,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
             bool isMalformed = true;
-            bool singleIntraRegex = matchExpression.IntrafileRegexes?.Count > 0 ||
+
+            bool singleIntraRegex =
+                matchExpression.IntrafileRegexes?.Count > 0 ||
                 matchExpression.SingleLineRegexes?.Count > 0;
+
             bool simpleRegex = !string.IsNullOrEmpty(matchExpression.ContentsRegex);
+
             bool contentRegex = simpleRegex || singleIntraRegex;
 
             if (contentRegex)
@@ -757,39 +797,80 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private void RunMatchExpressionForSingleLineAndIntrafileRegexes(AnalyzeContext context, MatchExpression matchExpression)
         {
-            RunMatchExpressionForIntrafileRegexes(context, matchExpression);
-            RunMatchExpressionForSingleLineRegexes(context, matchExpression);
+            if (matchExpression.IntrafileRegexes?.Count > 0)
+            {
+                RunMatchExpressionForIntrafileRegexes(context, matchExpression);
+            }
+
+            if (matchExpression.SingleLineRegexes?.Count > 0)
+            {
+                RunMatchExpressionForSingleLineRegexes(context, matchExpression);
+            }
         }
+
+        private StringBuilder sb;
 
         private void RunMatchExpressionForIntrafileRegexes(AnalyzeContext context, MatchExpression matchExpression)
         {
             ResultKind kind = matchExpression.Kind;
-            string searchText = context.CurrentTarget.Contents;
             FailureLevel level = matchExpression.Level;
+            string searchText = context.CurrentTarget.Contents;
+            string filePath = context.CurrentTarget.Uri.GetFilePath();
 
             var mergedGroups = new Dictionary<string, ISet<FlexMatch>>();
 
+            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase0Regex,
+                                                    filePath,
+                                                    matchExpression.Id,
+                                                    $"{matchExpression.Name}/{matchExpression.Index}",
+                                                    "IntrafileRegex",
+                                                    data2: $@"{{""searchText.GetHashCode()"":""{searchText.GetHashCode()}""}}");
+
+            if (!string.IsNullOrWhiteSpace(context.EventsFilePath))
+            {
+                sb ??= new StringBuilder();
+                sb.Clear();
+            }
+
             for (int i = 0; i < matchExpression.IntrafileRegexes?.Count; i++)
             {
-                string contentsRegex = matchExpression.IntrafileRegexes[i];
+                string regex = matchExpression.IntrafileRegexes[i];
 
-                Debug.Assert(!contentsRegex.StartsWith("$"), $"Unexpanded regex variable: {contentsRegex}");
+                Debug.Assert(!regex.StartsWith("$"), $"Unexpanded regex variable: {regex}");
 
-                if (!Matches(contentsRegex,
+                if (!Matches(regex,
                              searchText,
                              out List<Dictionary<string, FlexMatch>> matches,
                              context))
                 {
-                    if (matchExpression.IntrafileRegexMetadata[i] == RegexMetadata.Optional)
+                    if (matchExpression.RegexMetadata[i] == RegexMetadata.Optional)
                     {
+                        sb?.Append(@$"{(sb.Length > 0 ? ", " : string.Empty)}[optional no match]{regex}");
                         continue;
                     }
 
+                    sb?.Append(@$"{(sb.Length > 0 ? ", " : string.Empty)}{regex}");
+                    DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+                                                            filePath,
+                                                            matchExpression.Id,
+                                                            $"{matchExpression.Name}/{matchExpression.Index}",
+                                                            "IntrafileRegex",
+                                                            data2: @$"{{""matchCount"":0,""regex"":""{regex}""}}".CsvEscape());
                     return;
                 }
 
+                sb?.Append(@$"{(sb.Length > 0 ? ", " : string.Empty)}{regex}");
                 MergeDictionary(matches, mergedGroups);
             }
+
+            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+                                                    filePath,
+                                                    matchExpression.Id,
+                                                    $"{matchExpression.Name}/{matchExpression.Index}",
+                                                    "IntrafileRegex",
+                                                    data2: $"{sb}".CsvEscape());
+
+            sb?.Clear();
 
             if (mergedGroups.Count > 0)
             {
@@ -811,6 +892,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return;
             }
 
+            if (!string.IsNullOrWhiteSpace(context.EventsFilePath))
+            {
+                sb ??= new StringBuilder();
+                sb.Clear();
+            }
+
             ResultKind kind = matchExpression.Kind;
             string searchText = context.CurrentTarget.Contents;
             FailureLevel level = matchExpression.Level;
@@ -821,13 +908,35 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // end of lines as well as the beginning or end of the search text.
             string lineRegex = $"(?m)^.*{firstRegex}.*";
 
+            string filePath = context.CurrentTarget.Uri.GetFilePath();
+
+            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase0Regex,
+                                                     filePath,
+                                                     matchExpression.Id,
+                                                     $"{matchExpression.Name}/{matchExpression.Index}",
+                                                     "ExtractLinesRegex",
+                                                     data2: $@"{{""searchText.GetHashCode()"":""{searchText.GetHashCode()}""}}");
+
             if (!Matches(lineRegex,
                         searchText,
                         out List<Dictionary<string, FlexMatch>> singleLineMatches,
                         context))
             {
+                DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+                                                        filePath,
+                                                        matchExpression.Id,
+                                                        $"{matchExpression.Name}/{matchExpression.Index}",
+                                                        "ExtractLinesRegex",
+                                                        data2: $"No match: {lineRegex}".CsvEscape());
                 return;
             }
+
+            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+                                                    filePath,
+                                                    matchExpression.Id,
+                                                    $"{matchExpression.Name}/{matchExpression.Index}",
+                                                    "ExtractLinesRegex",
+                                                    data2: $"Matched: {lineRegex}".CsvEscape());
 
             var combinations = new List<IDictionary<string, FlexMatch>>();
 
@@ -839,35 +948,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     continue;
                 }
 
-                string lineText = lineMatch["0"].Value;
-
-                for (int i = 1; i < matchExpression.SingleLineRegexes.Count; i++)
+                if (!string.IsNullOrWhiteSpace(context.EventsFilePath))
                 {
-                    string regex = matchExpression.SingleLineRegexes[i];
-
-                    if (!Matches(regex,
-                                 lineText,
-                                 out List<Dictionary<string, FlexMatch>> intralineMatches,
-                                 context))
-                    {
-                        continue;
-                    }
-
-                    // TODO: we only support a single intraline match per expression. How should
-                    // we report or error out in cases where this expectation isn't met?
-                    Dictionary<string, FlexMatch> intralineMatch = intralineMatches[0];
-
-                    // We will copy the component groups into the per-line match.
-                    foreach (KeyValuePair<string, FlexMatch> kv in intralineMatch)
-                    {
-                        if (int.TryParse(kv.Key, out int val)) { continue; }
-
-                        kv.Value.Index += lineMatch["0"].Index;
-                        lineMatch[kv.Key] = kv.Value;
-                    }
+                    sb ??= new StringBuilder();
+                    sb.Clear();
                 }
 
-                combinations.Add(lineMatch);
+                DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase0Regex,
+                                                         filePath,
+                                                         matchExpression.Id,
+                                                         $"{matchExpression.Name}/{matchExpression.Index}",
+                                                         "IntralineRegex",
+                                                         data2: $@"{{""searchText.GetHashCode()"":""{searchText.GetHashCode()}""}}");
+
+                if (IntralineMatch(context, filePath, lineMatch, matchExpression))
+                {
+                    combinations.Add(lineMatch);
+                }
             }
 
             ValidateMatch(context,
@@ -876,6 +973,64 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                          groups: combinations,
                          ref kind,
                          ref level);
+        }
+
+        private bool IntralineMatch(AnalyzeContext context, string filePath, Dictionary<string, FlexMatch> lineMatch, MatchExpression matchExpression)
+        {
+            string lineText = lineMatch["0"].Value;
+
+            for (int i = 1; i < matchExpression.SingleLineRegexes.Count; i++)
+            {
+                string regex = matchExpression.SingleLineRegexes[i];
+
+                if (!Matches(regex,
+                             lineText,
+                             out List<Dictionary<string, FlexMatch>> intralineMatches,
+                             context))
+                {
+                    if (matchExpression.RegexMetadata[i] == RegexMetadata.Optional)
+                    {
+                        sb?.Append(@$"{(sb.Length > 0 ? ", " : string.Empty)}[optional no match]{regex}");
+                        continue;
+                    }
+
+                    sb?.Append(@$"{(sb.Length > 0 ? ", " : string.Empty)}{regex}");
+                    DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+                                                            filePath,
+                                                            matchExpression.Id,
+                                                            $"{matchExpression.Name}/{matchExpression.Index}",
+                                                            "IntralineRegex",
+                                                            data2: $"No match: {regex}".CsvEscape());
+
+                    return false;
+                }
+
+                // TODO: we only support a single intraline match per expression. How should
+                // we report or error out in cases where this expectation isn't met?
+                Dictionary<string, FlexMatch> intralineMatch = intralineMatches[0];
+
+                // We will copy the component groups into the per-line match.
+                foreach (KeyValuePair<string, FlexMatch> kv in intralineMatch)
+                {
+                    if (int.TryParse(kv.Key, out int val)) { continue; }
+
+                    kv.Value.Index += lineMatch["0"].Index;
+                    lineMatch[kv.Key] = kv.Value;
+                }
+
+                sb?.Append(@$"{(sb.Length > 0 ? ", " : string.Empty)}{regex}");
+            }
+
+            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+                                        filePath,
+                                        matchExpression.Id,
+                                        $"{matchExpression.Name}/{matchExpression.Index}",
+                                        "IntralineRegex",
+                                        data2: $"Matched: {sb}".CsvEscape());
+
+            sb?.Clear();
+
+            return true;
         }
 
         private void ValidateMatch(AnalyzeContext context,
@@ -894,7 +1049,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 string filePath = context.CurrentTarget.Uri.GetFilePath();
                 string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
-                IEnumerable<ValidationResult> validationResults = _validators.Validate(ruleName,
+                IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Id,
+                                                                                       ruleName,
                                                                                        context,
                                                                                        mergedGroups,
                                                                                        groups,
@@ -957,13 +1113,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                    ? Decode(binary64DecodedMatch.Value).String
                                                    : context.CurrentTarget.Contents;
 
+            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase0Regex,
+                                                     filePath,
+                                                     matchExpression.Id,
+                                                     $"{matchExpression.Name}/{matchExpression.Index}",
+                                                     "ContentsRegex",
+                                                     data2: $@"{{""searchText.GetHashCode()"":""{searchText.GetHashCode()}""}}");
+
             // INTERESTING BREAKPPOINT: debug static analysis match failures.
             // Set a conditional breakpoint on 'matchExpression.Name' to filter by specific rules.
             // Set a conditional breakpoint on 'searchText' to filter on specific target text patterns.
-            if (!Matches(matchExpression.ContentsRegex,
-                         searchText,
-                         out List<Dictionary<string, FlexMatch>> matches,
-                         context))
+            bool matched = Matches(matchExpression.ContentsRegex,
+                                   searchText,
+                                   out List<Dictionary<string, FlexMatch>> matches,
+                                   context);
+
+            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+                                                    filePath,
+                                                    matchExpression.Id,
+                                                    $"{matchExpression.Name}/{matchExpression.Index}",
+                                                    "ContentsRegex",
+                                                    data2: @$"{{""matchCount"":{matches?.Count ?? 0},""regex"":""{matchExpression.ContentsRegex}""}}".CsvEscape());
+
+            if (!matched)
             {
                 return;
             }
@@ -997,7 +1169,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (_validators != null && matchExpression.IsValidatorEnabled)
                 {
                     string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
-                    IEnumerable<ValidationResult> validationResults = _validators.Validate(ruleName,
+                    IEnumerable<ValidationResult> validationResults = _validators.Validate(this.Id,
+                                                                                           ruleName,
                                                                                            context,
                                                                                            match,
                                                                                            out bool pluginSupportsDynamicValidation);
@@ -1211,7 +1384,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 groups["scanTargetFullPath"] = new FlexMatch() { Value = filePath };
                 string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
-                IEnumerable<ValidationResult> validationResults = _validators.Validate(ruleName,
+                IEnumerable<ValidationResult> validationResults = _validators.Validate(this.Id,
+                                                                                       ruleName,
                                                                                        context,
                                                                                        groups,
                                                                                        out bool pluginSupportsDynamicValidation);

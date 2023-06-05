@@ -6,6 +6,7 @@
     <IsPackable>false</IsPackable>
     <RootNamespaceBase>Microsoft.CodeAnalysis</RootNamespaceBase>
     <AnalysisLevel>latest</AnalysisLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="AssemblyAttributes">
