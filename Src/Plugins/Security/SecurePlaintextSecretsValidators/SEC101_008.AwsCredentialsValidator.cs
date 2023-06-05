@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -106,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                                 if (match.Success)
                                 {
-                                    int trimmedChars = "User: ".Length + "is not authorized ".Length;
+                                    int trimmedChars = UserPrefix.Length + UserSuffix.Length;
                                     string iamUser = match.Value.String.Substring("User: ".Length, match.Value.String.Length - trimmedChars);
                                     message = $"the compromised AWS identity is '{iamUser}";
                                 }
