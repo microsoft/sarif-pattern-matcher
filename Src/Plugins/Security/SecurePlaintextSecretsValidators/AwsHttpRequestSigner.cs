@@ -16,7 +16,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     // https://docs.aws.amazon.com/general/latest/gr/create-signed-request.html
 
-    internal class AwsHttpRequestSigner : IDisposable
+    public class AwsHttpRequestSigner : IDisposable
     {
         private const string ISO8601BasicDateTimeFormat = "yyyyMMddTHHmmssZ";
 
@@ -27,31 +27,26 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private readonly string accessKey;
         private readonly string accessSecret;
 
-        internal AwsHttpRequestSigner(string accessKey, string accessSecret)
+        public AwsHttpRequestSigner(string accessKey, string accessSecret)
         {
             this.accessKey = accessKey;
             this.accessSecret = accessSecret;
             this.sha256 = SHA256.Create();
         }
 
-        internal virtual string Version => "AWS4";
+        public virtual string Version => "AWS4";
 
-        internal virtual string RequestType => "aws4_request";
+        public virtual string RequestType => "aws4_request";
 
-        internal virtual string Algorithm => "AWS4-HMAC-SHA256";
+        public virtual string Algorithm => "AWS4-HMAC-SHA256";
 
-        internal virtual string HostHeaderName => "host";
+        public virtual string HostHeaderName => "host";
 
-        internal virtual string DateHeaderName => "x-amz-date";
+        public virtual string DateHeaderName => "x-amz-date";
 
-        internal virtual string ContentSha256HeaderName => "x-amz-content-sha256";
+        public virtual string ContentSha256HeaderName => "x-amz-content-sha256";
 
-        public void Dispose()
-        {
-            sha256?.Dispose();
-        }
-
-        internal void SignRequest(HttpRequestMessage request, string region, string service, DateTime? dateTime = null)
+        public void SignRequest(HttpRequestMessage request, string region, string service, DateTime? dateTime = null)
         {
             string host = request.RequestUri.Host;
 
@@ -100,6 +95,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 signature);
 
             request.Headers.TryAddWithoutValidation("Authorization", authorizationHeader);
+        }
+
+        public void Dispose()
+        {
+            sha256?.Dispose();
         }
 
         private string ConstructCanonicalRequest(HttpRequestMessage request, string hashPayload, out string signedHeaders)
