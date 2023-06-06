@@ -15,8 +15,6 @@ using Moq;
 
 using Newtonsoft.Json;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks
 {
     [MemoryDiagnoser]

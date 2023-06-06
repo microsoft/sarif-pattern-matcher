@@ -14,8 +14,6 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Moq;
 using Moq.Protected;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
 {
     public class HttpMockHelper : DelegatingHandler

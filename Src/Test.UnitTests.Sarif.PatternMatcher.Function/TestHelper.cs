@@ -10,8 +10,6 @@ using Microsoft.Extensions.Primitives;
 
 using Moq;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 {
     public static class TestHelper

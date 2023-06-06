@@ -5,8 +5,6 @@ using System;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class TestAnalyzeCommand : AnalyzeCommand

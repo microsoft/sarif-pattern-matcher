@@ -231,7 +231,7 @@ dotnet_diagnostic.SA1204.severity = None
 dotnet_diagnostic.SA1214.severity = None
 
 # CS1591: Missing XML comment for publicly visible type or member
-dotnet_diagnostic.CS1591.severity = error
+dotnet_diagnostic.CS1591.severity = none
 
 # SA1649: File name should match first type name
 dotnet_diagnostic.SA1649.severity = none

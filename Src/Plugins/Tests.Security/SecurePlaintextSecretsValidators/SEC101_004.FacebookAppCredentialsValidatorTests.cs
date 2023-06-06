@@ -18,8 +18,6 @@ using Xunit;
 
 using static Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.FacebookAppCredentialsValidator;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>

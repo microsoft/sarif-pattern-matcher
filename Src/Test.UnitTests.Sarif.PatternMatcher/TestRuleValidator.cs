@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class TestRuleValidator : DynamicValidatorBase
