@@ -39,7 +39,7 @@
     <MSBuildWarningsAsMessages>
 	  // MSB3277 - Found conflicts with different versions of the same
 	  //  dependent assembly that could not be resolved. Specifically
-	  //  for Newtonsoft where we need older versions for compatibility
+	  //  for Newtonsoft where we need older versions for compatibility.
 	  // MSB3030 - This error occurs when a file that was supposed to be
 	  //  copied isn't found at the expected location.
 	  //  There are copy commands that have a continueOnError=true because
