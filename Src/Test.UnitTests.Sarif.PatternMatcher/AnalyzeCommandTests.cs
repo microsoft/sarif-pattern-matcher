@@ -27,11 +27,15 @@ using Newtonsoft.Json;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeCommandTests
     {
+#pragma warning disable IDE0051 // Remove unused private members
         private static AnalyzeOptions CreateDefaultAnalyzeOptions()
+#pragma warning restore IDE0051 // Remove unused private members
         {
             var result = new AnalyzeOptions();
             Type analyzeOptionsType = typeof(AnalyzeOptions);
@@ -46,6 +50,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 property.SetValue(result, optionAttribute.Default);
             }
+
             return result;
         }
 
@@ -74,7 +79,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.ValidateCommandExecution(result);
 
             var sarifLog = inMemoryLogger.ToSarifLog();
-            sarifLog.Runs?[0]?.Results?.Count().Should().Be(1);
+            sarifLog.Runs?[0]?.Results?.Count.Should().Be(1);
 
             inMemoryLogger = new MemoryStreamSarifLogger();
             context = new AnalyzeContext
@@ -90,10 +95,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context.ValidateCommandExecution(result);
 
             sarifLog = inMemoryLogger.ToSarifLog();
-            sarifLog.Runs?[0]?.Results?.Count().Should().Be(0);
+            sarifLog.Runs?[0]?.Results?.Count.Should().Be(0);
         }
 
+#pragma warning disable xUnit1004 // Test methods should not be skipped
         [Fact(Skip = "Recent file regions cache change broke this test.")]
+#pragma warning restore xUnit1004 // Test methods should not be skipped
         public void AnalyzeCommand_InMemoryExceptionWhileAnalyzing()
         {
             OptionallyEmittedData toInsert = OptionallyEmittedData.Hashes;
@@ -187,7 +194,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
+#pragma warning disable xUnit1004 // Test methods should not be skipped
         [Fact(Skip = "Recent file regions cache change broke this test.")]
+#pragma warning restore xUnit1004 // Test methods should not be skipped
         public void AnalyzeCommandBase_InMemoryAnalysisGeneratesHashes()
         {
             string expiredSendGridSecret = "SG.LGS6i3i1RnijKO2MvTm9sg.99e5Sv0_K0-deaddeaddeaddeaddeaddead0123dead";
@@ -283,7 +292,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             CancelledExternallyHelper(iterations: 10, threads: 1);
         }
 
-        private void CancelledExternallyHelper(int iterations, int threads)
+        private static void CancelledExternallyHelper(int iterations, int threads)
         {
             using ZipArchive archive = CreateTestZipArchive();
 
@@ -340,7 +349,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             TimesOutHelper(iterations: 10, threads: 1);
         }
 
-        private void TimesOutHelper(int iterations, int threads)
+        private static void TimesOutHelper(int iterations, int threads)
         {
             using ZipArchive archive = CreateTestZipArchive();
 
@@ -519,6 +528,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     noteWriter.WriteLine($"Generates a note and an error for each of : {fooString}");
                 }
             }
+
             stream.Flush();
             stream.Position = 0;
 
@@ -633,7 +643,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
             // Acquire skimmers for searchers
-            Tool tool = Tool.CreateFromAssemblyData();
+            var tool = Tool.CreateFromAssemblyData();
             ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
                 mockFileSystem.Object,
                 new string[] { searchDefinitionsPath },
@@ -707,7 +717,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
-            Tool tool = Tool.CreateFromAssemblyData();
+            var tool = Tool.CreateFromAssemblyData();
 
             // Acquire skimmers for searchers
             ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
@@ -985,7 +995,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var options = new AnalyzeOptions
             {
-                PluginFilePaths = new string[] { },
+                PluginFilePaths = Array.Empty<string>(),
             };
 
             int exitCode = new AnalyzeCommand().Run(options: options, ref context);
@@ -1069,7 +1079,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
-            Tool tool = Tool.CreateFromAssemblyData();
+            var tool = Tool.CreateFromAssemblyData();
 
             // Acquire skimmers for searchers
             ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
@@ -1250,7 +1260,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
         private static SearchDefinitions CreateFooFindingDefinitions()
+#pragma warning restore IDE0051 // Remove unused private members
         {
             var definitions = new SearchDefinitions()
             {
@@ -1314,7 +1326,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private Mock<IFileSystem> CreateMockFileSystemForDefinitions(SearchDefinitions definitions, out string definitionsPath)
+#pragma warning disable IDE0051 // Remove unused private members
+        private static Mock<IFileSystem> CreateMockFileSystemForDefinitions(SearchDefinitions definitions, out string definitionsPath)
+#pragma warning restore IDE0051 // Remove unused private members
         {
             string definitionsText = JsonConvert.SerializeObject(definitions);
             string searchDefinitionsPath = Path.GetFullPath(Guid.NewGuid().ToString());

@@ -10,6 +10,8 @@ using Microsoft.RE2.Managed;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatorsCacheTests
@@ -80,13 +82,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private int CombinationsCount(Dictionary<string, ISet<FlexMatch>> input)
+        private static int CombinationsCount(Dictionary<string, ISet<FlexMatch>> input)
         {
             int count = 1;
 
             foreach (string key in input.Keys)
             {
-                count = count * input[key].Count;
+                count *= input[key].Count;
             }
 
             return count;

@@ -11,6 +11,8 @@ using Microsoft.RE2.Managed;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class StaticValidatorBaseTests

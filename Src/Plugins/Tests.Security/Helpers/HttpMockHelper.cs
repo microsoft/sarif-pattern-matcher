@@ -14,33 +14,35 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Moq;
 using Moq.Protected;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
 {
     public class HttpMockHelper : DelegatingHandler
     {
         public static readonly HttpResponseMessage OKResponse =
-            new HttpResponseMessage(HttpStatusCode.OK);
+            new(HttpStatusCode.OK);
 
         public static readonly HttpResponseMessage NotFoundResponse =
-            new HttpResponseMessage(HttpStatusCode.NotFound);
+            new(HttpStatusCode.NotFound);
 
         public static readonly HttpResponseMessage ForbiddenResponse =
-            new HttpResponseMessage(HttpStatusCode.Forbidden);
+            new(HttpStatusCode.Forbidden);
 
         public static readonly HttpResponseMessage BadRequestResponse =
-            new HttpResponseMessage(HttpStatusCode.BadRequest);
+            new(HttpStatusCode.BadRequest);
 
         public static readonly HttpResponseMessage UnauthorizedResponse =
-            new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            new(HttpStatusCode.Unauthorized);
 
         public static readonly HttpResponseMessage InternalServerErrorResponse =
-            new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            new(HttpStatusCode.InternalServerError);
 
         public static readonly HttpResponseMessage NonAuthoritativeInformationResponse =
-            new HttpResponseMessage(HttpStatusCode.NonAuthoritativeInformation);
+            new(HttpStatusCode.NonAuthoritativeInformation);
 
         private readonly List<Tuple<HttpRequestMessage, HttpResponseMessage>> _fakeResponses =
-            new List<Tuple<HttpRequestMessage, HttpResponseMessage>>();
+            new();
 
         public void Mock(HttpRequestMessage httpRequestMessage, HttpStatusCode httpStatusCode, HttpContent httpContent)
         {

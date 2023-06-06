@@ -7,6 +7,8 @@ using FluentAssertions;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.RE2.Managed
 {
     public class FlexMatchValueComparerTests
@@ -14,14 +16,18 @@ namespace Microsoft.RE2.Managed
         [Fact]
         public void FlexMatchValueComparer_ComparerInSet()
         {
-            var hashSet = new HashSet<FlexMatch>();
-            hashSet.Add(new FlexMatch { Value = "1" });
-            hashSet.Add(new FlexMatch { Value = "1" });
+            var hashSet = new HashSet<FlexMatch>
+            {
+                new FlexMatch { Value = "1" },
+                new FlexMatch { Value = "1" }
+            };
             hashSet.Count.Should().Be(2);
 
-            hashSet = new HashSet<FlexMatch>(FlexMatchValueComparer.Instance);
-            hashSet.Add(new FlexMatch { Value = "1" });
-            hashSet.Add(new FlexMatch { Value = "1" });
+            hashSet = new HashSet<FlexMatch>(FlexMatchValueComparer.Instance)
+            {
+                new FlexMatch { Value = "1" },
+                new FlexMatch { Value = "1" }
+            };
             hashSet.Count.Should().Be(1);
         }
 

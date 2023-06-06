@@ -14,6 +14,8 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
@@ -79,8 +81,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             var sb = new StringBuilder();
             var mockHandler = new HttpMockHelper();
-            var validator = new MailgunApiCredentialsValidator();
-            validator.ScanIdentityGuid = scanIdentityGuid;
+            var validator = new MailgunApiCredentialsValidator
+            {
+                ScanIdentityGuid = scanIdentityGuid
+            };
 
             foreach (HttpMockTestCase testCase in testCases)
             {

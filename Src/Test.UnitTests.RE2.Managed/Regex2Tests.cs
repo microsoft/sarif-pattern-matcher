@@ -13,6 +13,8 @@ using Microsoft.Strings.Interop;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.RE2.Managed
 {
     public class Regex2Tests
@@ -320,6 +322,7 @@ namespace Microsoft.RE2.Managed
                 Assert.True(matches[0].ContainsKey("g2"));
                 Assert.Equal("a", matches[0]["g2"].Value);
             }
+
             ValidateMatchIndices(text, matches);
         }
 
@@ -437,7 +440,7 @@ Proxy-Connection: Keep-Alive
             }
         }
 
-        private string MatchToString(Match2 match, String8 content)
+        private static string MatchToString(Match2 match, String8 content)
         {
             return $"({match.Index}, {match.Length}: '{content.Substring(match.Index, match.Length)}')";
         }

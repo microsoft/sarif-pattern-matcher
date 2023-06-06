@@ -8,6 +8,8 @@ using FluentAssertions;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public class ExtensionMethodTests

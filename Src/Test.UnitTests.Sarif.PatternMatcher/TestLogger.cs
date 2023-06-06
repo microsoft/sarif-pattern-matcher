@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class TestLogger : IAnalysisLogger
@@ -12,15 +14,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public ISet<ReportingDescriptor> Rules { get; set; }
         public IList<Result> Results { get; set; }
 
-        public bool NoNotificationsFired
-        {
-            get => ConfigurationNotifications == null && ToolNotifications == null;
-        }
+        public bool NoNotificationsFired => ConfigurationNotifications == null && ToolNotifications == null;
 
-        public bool NothingFired
-        {
-            get => Results == null && NoNotificationsFired;
-        }
+        public bool NothingFired => Results == null && NoNotificationsFired;
 
         public FileRegionsCache FileRegionsCache { get; set; }
 

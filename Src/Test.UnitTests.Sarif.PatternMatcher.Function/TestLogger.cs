@@ -5,6 +5,8 @@ using System;
 
 using Microsoft.Extensions.Logging;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Test.UnitTest.Sarif.PatternMatcher.Function
 {
     public class TestLogger : ILogger

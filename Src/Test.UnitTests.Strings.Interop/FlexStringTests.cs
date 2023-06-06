@@ -3,6 +3,8 @@
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.Strings.Interop
 {
     public class FlexStringTests

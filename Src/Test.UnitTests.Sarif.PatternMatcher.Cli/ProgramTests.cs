@@ -19,6 +19,8 @@ using Moq;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
     public class ProgramTests
@@ -120,10 +122,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             // Returns the mocked response file contents.
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
-                .Returns<string>((path) =>
-                {
-                    return responseFileContents;
-                });
+                .Returns<string>((path) => responseFileContents);
 
             Program.ClearUnitTestData();
             Program.GlobalContext = new AnalyzeContext

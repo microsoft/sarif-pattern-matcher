@@ -4,6 +4,8 @@
 using Xunit;
 using Xunit.Abstractions;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class ReviewPotentiallySensitiveDataTests : EndToEndTests

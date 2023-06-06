@@ -7,6 +7,8 @@ using Microsoft.Strings.Interop;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.RE2.Managed
 {
     public class FlexMatchTests

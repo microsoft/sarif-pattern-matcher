@@ -14,6 +14,8 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
@@ -53,8 +55,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 { "token", token },
             };
 
-            var requestWithToken = new HttpRequestMessage(HttpMethod.Post, uri);
-            requestWithToken.Content = new FormUrlEncodedContent(dict);
+            var requestWithToken = new HttpRequestMessage(HttpMethod.Post, uri)
+            {
+                Content = new FormUrlEncodedContent(dict)
+            };
 
             var testCases = new HttpMockTestCase[]
             {

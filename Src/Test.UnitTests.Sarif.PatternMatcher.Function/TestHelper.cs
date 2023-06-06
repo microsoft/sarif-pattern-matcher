@@ -10,10 +10,13 @@ using Microsoft.Extensions.Primitives;
 
 using Moq;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 {
     public static class TestHelper
     {
+#pragma warning disable CA2211 // Non-constant fields should not be visible
         public static string SampleCode = @"
                 namespace AnalysisTestProject2
                 {
@@ -21,7 +24,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                     {
                     }
                 }
-                ";
+                "
+#pragma warning restore CA2211 // Non-constant fields should not be visible
+;
 
         public static HttpRequest MockAnalyzeFunctionRequest(string fileName, string fileContent)
         {

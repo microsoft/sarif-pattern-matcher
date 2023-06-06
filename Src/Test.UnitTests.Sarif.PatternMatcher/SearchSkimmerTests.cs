@@ -17,6 +17,8 @@ using Moq;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class SearchSkimmerTests
@@ -236,7 +238,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ValidateResultsAgainstDefinition(((TestLogger)context.Logger).Results, definition, skimmer);
         }
 
-        private void ValidateResultsAgainstDefinition(IList<Result> results, SearchDefinition definition, SearchSkimmer skimmer)
+        private static void ValidateResultsAgainstDefinition(IList<Result> results, SearchDefinition definition, SearchSkimmer skimmer)
         {
             results.Should().NotBeNull();
             results.Count.Should().Be(1);
@@ -311,9 +313,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void SearchSkimmer_ValidatorResultsAreProperlyChangingFingerprintAfterDynamicValidation()
         {
-            TestRuleValidator.OverrideIsValidStatic = (groups) =>
-            {
-                return new[] {
+            TestRuleValidator.OverrideIsValidStatic = (groups) => new[] {
                     new ValidationResult
                     {
                         Fingerprint = new Fingerprint
@@ -324,7 +324,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         ValidationState = ValidationState.Unknown,
                     }
                 };
-            };
 
             TestRuleValidator.OverrideIsValidDynamic = (ref Fingerprint fingerprint,
                                                         ref string message,
@@ -453,7 +452,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             exception.GetType().Should().Be(typeof(InvalidOperationException));
         }
 
-        private AnalyzeContext CreateGuidMatchingSkimmer(
+        private static AnalyzeContext CreateGuidMatchingSkimmer(
             string scanTargetExtension,
             ref SearchDefinition definition,
             out SearchSkimmer skimmer,
@@ -494,7 +493,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return context;
         }
 
-        private SearchSkimmer CreateSkimmer(
+        private static SearchSkimmer CreateSkimmer(
             SearchDefinition definition,
             IRegex engine = null,
             ValidatorsCache validators = null)
@@ -512,7 +511,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 definition: definitions.Definitions[0]);
         }
 
-        private SearchDefinition CreateDefaultSearchDefinition(MatchExpression matchExpression)
+        private static SearchDefinition CreateDefaultSearchDefinition(MatchExpression matchExpression)
         {
             return new SearchDefinition()
             {

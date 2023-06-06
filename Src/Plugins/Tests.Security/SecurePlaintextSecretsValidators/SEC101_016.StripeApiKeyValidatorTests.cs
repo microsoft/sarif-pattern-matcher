@@ -15,6 +15,8 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
@@ -38,7 +40,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             sb.Length.Should().Be(expectedLength, sb.ToString());
         }
 
-        private string RunTestsForFingerprint(string fingerprintText, ref int expectedLength)
+        private static string RunTestsForFingerprint(string fingerprintText, ref int expectedLength)
         {
             var sb = new StringBuilder();
             var fingerprint = new Fingerprint(fingerprintText);

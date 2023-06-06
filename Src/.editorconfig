@@ -209,7 +209,6 @@ dotnet_diagnostic.CS1570.severity = silent
 dotnet_diagnostic.CS1572.severity = silent
 dotnet_diagnostic.CS1573.severity = silent
 dotnet_diagnostic.CS1574.severity = silent
-dotnet_diagnostic.CS1591.severity = silent
 dotnet_diagnostic.CS1712.severity = silent
 dotnet_diagnostic.CS1734.severity = silent
 
@@ -232,10 +231,13 @@ dotnet_diagnostic.SA1204.severity = None
 dotnet_diagnostic.SA1214.severity = None
 
 # CS1591: Missing XML comment for publicly visible type or member
-dotnet_diagnostic.CS1591.severity = suggestion
+dotnet_diagnostic.CS1591.severity = error
 
 # SA1649: File name should match first type name
-dotnet_diagnostic.SA1649.severity = suggestion
+dotnet_diagnostic.SA1649.severity = none
+
+# IDE0045: Use conditional expression for assignment
+dotnet_diagnostic.IDE0045.severity = none
 
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
@@ -249,7 +251,6 @@ dotnet_style_prefer_auto_properties = true:suggestion
 dotnet_style_object_initializer = true:suggestion
 dotnet_style_collection_initializer = true:suggestion
 dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
-dotnet_style_prefer_conditional_expression_over_assignment = true:suggestion
 dotnet_style_prefer_conditional_expression_over_return = true:suggestion
 dotnet_style_explicit_tuple_names = true:suggestion
 dotnet_style_prefer_inferred_tuple_names = true:suggestion

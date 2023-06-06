@@ -15,6 +15,8 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
 using Xunit;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validators
 {
     /// <summary>
@@ -34,9 +36,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string secret = fingerprint.Secret;
             string asset = secret.Truncate();
             string resource = fingerprint.Resource;
-            var options = new Dictionary<string, string>();
-            options.Add("datetime", DateTime.UtcNow.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture));
-            options.Add("scanIdentityGuid", $"{Guid.NewGuid()}");
+            var options = new Dictionary<string, string>
+            {
+                { "datetime", DateTime.UtcNow.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
+                { "scanIdentityGuid", $"{Guid.NewGuid()}" }
+            };
 
             var now = DateTime.Parse(options["datetime"]);
 
