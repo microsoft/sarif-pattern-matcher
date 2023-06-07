@@ -10,8 +10,6 @@ using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 
-using Org.BouncyCastle.Utilities.Encoders;
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     // https://docs.aws.amazon.com/general/latest/gr/create-signed-request.html
@@ -25,12 +23,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         private readonly SHA256 sha256;
         private readonly string accessKey;
-        private readonly string accessSecret;
+        private readonly string secretKey;
 
-        public AwsHttpRequestSigner(string accessKey, string accessSecret)
+        public AwsHttpRequestSigner(string accessKey, string secretKey)
         {
-            this.accessKey = accessKey;
-            this.accessSecret = accessSecret;
+            this.accessKey = accessKey ?? throw new ArgumentNullException(nameof(accessKey));
+
+            this.secretKey = secretKey ?? throw new ArgumentNullException(nameof(secretKey));
+
             this.sha256 = SHA256.Create();
         }
 
@@ -48,6 +48,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         public void SignRequest(HttpRequestMessage request, string region, string service, DateTime? dateTime = null)
         {
+            if (request == null) { throw new ArgumentNullException(nameof(request)); }
+
+            if (region == null) { throw new ArgumentNullException(nameof(region)); }
+
+            if (service == null) { throw new ArgumentNullException(nameof(service)); }
+
             string host = request.RequestUri.Host;
 
             byte[] content = request.Content?.ReadAsByteArrayAsync().Result ?? Array.Empty<byte>();
@@ -80,7 +86,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 requestDateString);
 
             string signature = this.GetSignature(
-                this.accessSecret,
+                this.secretKey,
                 dateStamp,
                 region,
                 service,
@@ -99,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         public void Dispose()
         {
-            sha256?.Dispose();
+            this.sha256?.Dispose();
         }
 
         private string ConstructCanonicalRequest(HttpRequestMessage request, string hashPayload, out string signedHeaders)
