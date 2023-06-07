@@ -49,18 +49,25 @@ dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:sil
 # Modifier preferences
 dotnet_style_require_accessibility_modifiers = for_non_interface_members:error
 
+# Expression-level preferences
+dotnet_style_coalesce_expression = true:suggestion
+dotnet_style_collection_initializer = true:suggestion
+dotnet_style_explicit_tuple_names = true:suggestion
+dotnet_style_null_propagation = true:suggestion
+dotnet_style_object_initializer = true:suggestion
+dotnet_style_prefer_auto_properties = true:suggestion
+dotnet_style_prefer_compound_assignment = true:suggestion
+dotnet_style_prefer_conditional_expression_over_assignment = true:suggestion
+dotnet_style_prefer_conditional_expression_over_return = true:suggestion
+dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
+dotnet_style_prefer_inferred_tuple_names = true:suggestion
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
+
 # Field preferences
 dotnet_style_readonly_field = true:error
 
 # Parameter preferences
 dotnet_code_quality_unused_parameters = all:error
-
-# Suppression preferences
-dotnet_remove_unnecessary_suppression_exclusions = none
-
-# New line preferences
-dotnet_style_allow_multiple_blank_lines_experimental = true
-dotnet_style_allow_statement_immediately_after_block_experimental = false:warning
 
 #### C# Coding Conventions ####
 
@@ -108,13 +115,6 @@ csharp_style_unused_value_expression_statement_preference = discard_variable:sil
 
 # 'using' directive preferences
 csharp_using_directive_placement = outside_namespace:silent
-
-# New line preferences
-csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true
-csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true
-csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true:warning
-csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false
-csharp_style_allow_embedded_statements_on_same_line_experimental = true
 
 #### C# Formatting Rules ####
 
@@ -209,80 +209,26 @@ dotnet_diagnostic.CS1570.severity = silent
 dotnet_diagnostic.CS1572.severity = silent
 dotnet_diagnostic.CS1573.severity = silent
 dotnet_diagnostic.CS1574.severity = silent
+dotnet_diagnostic.CS1591.severity = silent
 dotnet_diagnostic.CS1712.severity = silent
 dotnet_diagnostic.CS1734.severity = silent
-
-# A method should not follow a class
-dotnet_diagnostic.SA1201.severity = None
-
-# 'public' members should come before 'private' members
-dotnet_diagnostic.SA1202.severity = None
-
-# Constant fields should appear before non-constant fields
-dotnet_diagnostic.SA1203.severity = None
-
-# Constant fields should appear before non-constant fields
-dotnet_diagnostic.SA1203.severity = None
-
-# Static members should appear before non-static members
-dotnet_diagnostic.SA1204.severity = None
-
-# Readonly fields should appear before non-readonly fields
-dotnet_diagnostic.SA1214.severity = None
-
-# CS0649: Field is never assigned to, and will always have its default value
-dotnet_diagnostic.CS0649.severity = none
-
-# CS1591: Missing XML comment for publicly visible type or member
-dotnet_diagnostic.CS1591.severity = none
 
 # SA1649: File name should match first type name
 dotnet_diagnostic.SA1649.severity = none
 
-# IDE0017: Object initialization can be simplified
-dotnet_diagnostic.IDE0017.severity = none
+file_header_template = Copyright (c) Microsoft. All rights reserved.\nLicensed under the MIT license. See LICENSE file in the project root for full license information.
+csharp_style_namespace_declarations = block_scoped:silent
+csharp_style_prefer_method_group_conversion = true:silent
+csharp_style_prefer_top_level_statements = true:silent
+csharp_style_prefer_null_check_over_type_check = true:suggestion
+csharp_style_prefer_local_over_anonymous_function = true:suggestion
+dotnet_diagnostic.SA1602.severity = suggestion
+dotnet_diagnostic.SA1307.severity = silent
 
-# IDE0025: Use expression body for property
-dotnet_diagnostic.IDE0025.severity = none
+[*Tests.cs]
 
-# IDE0027: Use expression body for accessor
-dotnet_diagnostic.IDE0027.severity = none
-
-# IDE0028: Collection initialization can be simplified
-dotnet_diagnostic.IDE0028.severity = none
-
-# IDE0041: Null check can be simplified
-dotnet_diagnostic.IDE0041.severity = none
-
-# IDE0045: Use conditional expression for assignment
-dotnet_diagnostic.IDE0045.severity = none
-
-# IDE0046: If statement can be simplified
-dotnet_diagnostic.IDE0046.severity = none
-
-# IDE0051: Private member is unused
-dotnet_diagnostic.IDE0051.severity = none
-
-# IDE0090: 'new' expression can be simplified
-dotnet_diagnostic.IDE0090.severity = none
-
-# CA1822: Mark members as static
-dotnet_diagnostic.CA1822.severity = none
-
-# CA1825: Avoid unnecessary zero-length array allocations. Use Array.Empty<object>() instead
-dotnet_diagnostic.CA1825.severity = none
-
-# CA1829: Use the "Count property instead of Enumerable.Count()
-dotnet_diagnostic.CA1829.severity = none
-
-# CA2249: Use 'string.Contains' instead of 'string.IndexOf' to impreove readability
-dotnet_diagnostic.CA2249.severity = none
-
-# SA1602: Enumeration items should be documented
-dotnet_diagnostic.SA1602.severity = none
-
-# xUnit1004: Test methods should not be skipped
-dotnet_diagnostic.xUnit1004.severity = none
+# CS1591: Missing XML comment for publicly visible type or member
+dotnet_diagnostic.CS1591.severity = none
 
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
@@ -296,6 +242,7 @@ dotnet_style_prefer_auto_properties = true:suggestion
 dotnet_style_object_initializer = true:suggestion
 dotnet_style_collection_initializer = true:suggestion
 dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
+dotnet_style_prefer_conditional_expression_over_assignment = true:suggestion
 dotnet_style_prefer_conditional_expression_over_return = true:suggestion
 dotnet_style_explicit_tuple_names = true:suggestion
 dotnet_style_prefer_inferred_tuple_names = true:suggestion
@@ -303,5 +250,3 @@ dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
 dotnet_style_prefer_compound_assignment = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
 dotnet_style_namespace_match_folder = true:suggestion
-
-file_header_template = Copyright (c) Microsoft. All rights reserved.\nLicensed under the MIT license. See LICENSE file in the project root for full license information.
