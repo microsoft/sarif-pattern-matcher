@@ -1316,7 +1316,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private static Mock<IFileSystem> CreateMockFileSystemForDefinitions(SearchDefinitions definitions, out string definitionsPath)
+        private Mock<IFileSystem> CreateMockFileSystemForDefinitions(SearchDefinitions definitions, out string definitionsPath)
         {
             string definitionsText = JsonConvert.SerializeObject(definitions);
             string searchDefinitionsPath = Path.GetFullPath(Guid.NewGuid().ToString());
