@@ -213,6 +213,36 @@ dotnet_diagnostic.CS1591.severity = silent
 dotnet_diagnostic.CS1712.severity = silent
 dotnet_diagnostic.CS1734.severity = silent
 
+# CS0649: Field is never assigned to, and will always have its default value
+dotnet_diagnostic.CS0649.severity = none
+
+# IDE0053: Use expression body for lambda expression
+dotnet_diagnostic.IDE0053.severity = none
+
+# A method should not follow a class
+dotnet_diagnostic.SA1201.severity = None
+
+# 'public' members should come before 'private' members
+dotnet_diagnostic.SA1202.severity = None
+
+# Constant fields should appear before non-constant fields
+dotnet_diagnostic.SA1203.severity = None
+
+# Constant fields should appear before non-constant fields
+dotnet_diagnostic.SA1203.severity = None
+
+# Static members should appear before non-static members
+dotnet_diagnostic.SA1204.severity = None
+
+# Readonly fields should appear before non-readonly fields
+dotnet_diagnostic.SA1214.severity = None
+
+# CS0649: Field is never assigned to, and will always have its default value
+dotnet_diagnostic.CS0649.severity = none
+
+# CS1591: Missing XML comment for publicly visible type or member
+dotnet_diagnostic.CS1591.severity = none
+
 # SA1649: File name should match first type name
 dotnet_diagnostic.SA1649.severity = none
 
