@@ -79,10 +79,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 
             var sb = new StringBuilder();
             var mockHandler = new HttpMockHelper();
-            var validator = new MailgunApiCredentialsValidator
-            {
-                ScanIdentityGuid = scanIdentityGuid
-            };
+            var validator = new MailgunApiCredentialsValidator();
+            validator.ScanIdentityGuid = scanIdentityGuid;
 
             foreach (HttpMockTestCase testCase in testCases)
             {

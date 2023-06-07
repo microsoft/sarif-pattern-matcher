@@ -53,10 +53,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 { "token", token },
             };
 
-            var requestWithToken = new HttpRequestMessage(HttpMethod.Post, uri)
-            {
-                Content = new FormUrlEncodedContent(dict)
-            };
+            var requestWithToken = new HttpRequestMessage(HttpMethod.Post, uri);
+            requestWithToken.Content = new FormUrlEncodedContent(dict);
 
             var testCases = new HttpMockTestCase[]
             {

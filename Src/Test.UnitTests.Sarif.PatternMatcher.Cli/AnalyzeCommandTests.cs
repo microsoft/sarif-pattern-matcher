@@ -701,7 +701,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             bool isDynamicAnalysis,
             StringBuilder stringBuilder)
         {
-            if (stringBuilder == null) { stringBuilder = new StringBuilder(); }
+            if (stringBuilder == null)
+            {
+                stringBuilder = new StringBuilder();
+            }
 
             string testScenarioMode = isDynamicAnalysis ?
                     "with dynamic validation enabled" :
@@ -737,6 +740,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             {
                 stringBuilder.AppendLine("asserted condition(s) failed:");
             }
+
             stringBuilder.AppendLine(data);
 
             return stringBuilder;

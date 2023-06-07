@@ -38,7 +38,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             sb.Length.Should().Be(expectedLength, sb.ToString());
         }
 
-        private static string RunTestsForFingerprint(string fingerprintText, ref int expectedLength)
+        private string RunTestsForFingerprint(string fingerprintText, ref int expectedLength)
         {
             var sb = new StringBuilder();
             var fingerprint = new Fingerprint(fingerprintText);

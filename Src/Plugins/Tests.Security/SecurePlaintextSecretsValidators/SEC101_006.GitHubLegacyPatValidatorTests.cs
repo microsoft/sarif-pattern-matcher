@@ -21,14 +21,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             ValidationState expectedValidationState = ValidationState.Unknown;
 
             string matchedPattern = "ghp_stuffchecksum"; // Insert new GitHub PAT here
-
-            var groups = new Dictionary<string, FlexMatch>
-            {
-                { "0", new FlexMatch() { Value = matchedPattern } },
-                { "secret", new FlexMatch() { Value = matchedPattern } },
-                { "checksum", new FlexMatch() { Value = "checksum" } },
-                { "scanTargetFullPath", new FlexMatch() { Value = "GitHitPatTest" } }
-            };
+            var groups = new Dictionary<string, FlexMatch>();
+            groups.Add("0", new FlexMatch() { Value = matchedPattern });
+            groups.Add("secret", new FlexMatch() { Value = matchedPattern });
+            groups.Add("checksum", new FlexMatch() { Value = "checksum" });
+            groups.Add("scanTargetFullPath", new FlexMatch() { Value = "GitHitPatTest" });
 
             var gitHubLegacyPatValidator = new GitHubLegacyPatValidator();
             var perFileFingerprintCache = new HashSet<string>();

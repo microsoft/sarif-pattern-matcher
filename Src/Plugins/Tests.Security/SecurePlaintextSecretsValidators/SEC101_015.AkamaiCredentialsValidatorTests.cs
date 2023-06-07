@@ -34,11 +34,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string secret = fingerprint.Secret;
             string asset = secret.Truncate();
             string resource = fingerprint.Resource;
-            var options = new Dictionary<string, string>
-            {
-                { "datetime", DateTime.UtcNow.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
-                { "scanIdentityGuid", $"{Guid.NewGuid()}" }
-            };
+            var options = new Dictionary<string, string>();
+            options.Add("datetime", DateTime.UtcNow.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture));
+            options.Add("scanIdentityGuid", $"{Guid.NewGuid()}");
 
             var now = DateTime.Parse(options["datetime"]);
 

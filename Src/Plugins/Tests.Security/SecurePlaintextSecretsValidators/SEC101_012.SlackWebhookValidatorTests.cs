@@ -31,10 +31,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             string fingerprintText = $"[id={id}][secret={secret}]";
             string TestGuid = Guid.NewGuid().ToString();
 
-            var webhookRequest = new HttpRequestMessage(HttpMethod.Post, uri)
-            {
-                Content = new StringContent(TestGuid, Encoding.UTF8, "application/json")
-            };
+            var webhookRequest = new HttpRequestMessage(HttpMethod.Post, uri);
+            webhookRequest.Content = new StringContent(TestGuid, Encoding.UTF8, "application/json");
 
             var slackWebhookValidator = new SlackWebhookValidator();
             string tmpMessage = string.Empty;
@@ -93,10 +91,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 string message = string.Empty;
                 ResultLevelKind resultLevelKind = default;
                 var fingerprint = new Fingerprint(fingerprintText);
-                var keyValuePairs = new Dictionary<string, string>
-                {
-                    ["TestGuid"] = TestGuid
-                };
+                var keyValuePairs = new Dictionary<string, string>();
+                keyValuePairs["TestGuid"] = TestGuid;
 
                 using var httpClient = new HttpClient(mockHandler);
                 slackWebhookValidator.SetHttpClient(httpClient);
