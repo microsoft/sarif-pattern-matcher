@@ -19,16 +19,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                ref ResultLevelKind resultLevelKind);
 
         [ThreadStatic]
-#pragma warning disable CA2211 // Non-constant fields should not be visible
         public static IsValidStaticDelegate OverrideIsValidStatic;
 
         [ThreadStatic]
         public static IsValidDynamicDelegate OverrideIsValidDynamic;
-#pragma warning restore CA2211 // Non-constant fields should not be visible
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            return OverrideIsValidStatic == null ? null : OverrideIsValidStatic(groups);
+            if (OverrideIsValidStatic == null)
+            {
+                return null; 
+            }
+
+            return OverrideIsValidStatic(groups);
         }
 
         protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
@@ -36,7 +39,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                 IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
-            return OverrideIsValidDynamic == null ? 0 : OverrideIsValidDynamic(ref fingerprint, ref message, options, ref resultLevelKind);
+            if (OverrideIsValidDynamic == null)
+            {
+                return 0; 
+            }
+
+            return OverrideIsValidDynamic(ref fingerprint, ref message, options, ref resultLevelKind);
         }
     }
 }

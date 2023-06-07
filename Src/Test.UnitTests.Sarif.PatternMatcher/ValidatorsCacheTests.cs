@@ -80,7 +80,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private static int CombinationsCount(Dictionary<string, ISet<FlexMatch>> input)
+        private int CombinationsCount(Dictionary<string, ISet<FlexMatch>> input)
         {
             int count = 1;
 

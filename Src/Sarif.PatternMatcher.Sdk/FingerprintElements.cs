@@ -6,7 +6,6 @@ using System;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     [Flags]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1602:Enumeration items should be documented", Justification = "Reviewed")]
     internal enum FingerprintElements
     {
         None = 0,

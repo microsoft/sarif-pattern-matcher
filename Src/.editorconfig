@@ -230,14 +230,50 @@ dotnet_diagnostic.SA1204.severity = None
 # Readonly fields should appear before non-readonly fields
 dotnet_diagnostic.SA1214.severity = None
 
+# CS0649: Field is never assigned to, and will always have its default value
+dotnet_diagnostic.CS0649.severity = none
+
 # CS1591: Missing XML comment for publicly visible type or member
 dotnet_diagnostic.CS1591.severity = none
 
 # SA1649: File name should match first type name
 dotnet_diagnostic.SA1649.severity = none
 
+# IDE0017: Object initialization can be simplified
+dotnet_diagnostic.IDE0017.severity = none
+
+# IDE0025: Use expression body for property
+dotnet_diagnostic.IDE0025.severity = none
+
+# IDE0027: Use expression body for accessor
+dotnet_diagnostic.IDE0027.severity = none
+
+# IDE0028: Collection initialization can be simplified
+dotnet_diagnostic.IDE0028.severity = none
+
+# IDE0041: Null check can be simplified
+dotnet_diagnostic.IDE0041.severity = none
+
 # IDE0045: Use conditional expression for assignment
 dotnet_diagnostic.IDE0045.severity = none
+
+# IDE0046: If statement can be simplified
+dotnet_diagnostic.IDE0046.severity = none
+
+# IDE0090: 'new' expression can be simplified
+dotnet_diagnostic.IDE0090.severity = none
+
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = none
+
+# CA1825: Avoid unnecessary zero-length array allocations. Use Array.Empty<object>() instead
+dotnet_diagnostic.CA1825.severity = none
+
+# CA2249: Use 'string.Contains' instead of 'string.IndexOf' to impreove readability
+dotnet_diagnostic.CA2249.severity = none
+
+# SA1602: Enumeration items should be documented
+dotnet_diagnostic.SA1602.severity = none
 
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line

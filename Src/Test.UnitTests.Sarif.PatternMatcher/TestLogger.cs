@@ -12,9 +12,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public ISet<ReportingDescriptor> Rules { get; set; }
         public IList<Result> Results { get; set; }
 
-        public bool NoNotificationsFired => ConfigurationNotifications == null && ToolNotifications == null;
+        public bool NoNotificationsFired
+        {
+            get => ConfigurationNotifications == null && ToolNotifications == null;
+        }
 
-        public bool NothingFired => Results == null && NoNotificationsFired;
+        public bool NothingFired
+        {
+            get => Results == null && NoNotificationsFired;
+        }
 
         public FileRegionsCache FileRegionsCache { get; set; }
 

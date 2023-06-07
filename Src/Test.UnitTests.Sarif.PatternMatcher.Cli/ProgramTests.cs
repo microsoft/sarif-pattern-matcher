@@ -120,7 +120,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             // Returns the mocked response file contents.
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
-                .Returns<string>((path) => responseFileContents);
+                .Returns<string>((path) =>
+                {
+                    return responseFileContents;
+                });
 
             Program.ClearUnitTestData();
             Program.GlobalContext = new AnalyzeContext

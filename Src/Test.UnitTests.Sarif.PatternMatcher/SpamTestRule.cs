@@ -29,9 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif
         internal static Random s_random = new Random(s_seed);
 
         [ThreadStatic]
-#pragma warning disable CS0649 // Field 'SpamTestRule.s_testRuleBehaviors' is never assigned to, and will always have its default value
         internal static TestRuleBehaviors s_testRuleBehaviors;
-#pragma warning restore CS0649 // Field 'SpamTestRule.s_testRuleBehaviors' is never assigned to, and will always have its default value
 
         public SpamTestRule()
         {

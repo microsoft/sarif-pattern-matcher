@@ -276,7 +276,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
             // Shared strings location and loading
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
-                .Returns<string>((path) => GetSharedStrings());
+                .Returns<string>((path) => { return GetSharedStrings(); });
 
             Program.ClearUnitTestData();
             Program.GlobalContext = new AnalyzeContext
@@ -425,13 +425,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             // Search definitions location and loading
             mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>()))
-                .Returns<string>((path) => path == scanTargetPath ?
-                                          fileContents :
-                                          definitionsText);
+                .Returns<string>((path) =>
+                {
+                    return path == scanTargetPath ?
+                      fileContents :
+                      definitionsText;
+                });
 
             // Shared strings location and loading
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
-                .Returns<string>((path) => GetSharedStrings());
+                .Returns<string>((path) => { return GetSharedStrings(); });
 
             mockFileSystem.Setup(x => x.FileInfoLength(SmallTargetName)).Returns(fileContents.Length);
 
@@ -516,13 +519,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             // Search definitions location and loading
             mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>()))
-                .Returns<string>((path) => (path == smallTargetPath || path == largeTargetPath)
+                .Returns<string>((path) =>
+                {
+                    return (path == smallTargetPath || path == largeTargetPath)
                         ? smallFileContents
-                        : definitionsText);
+                        : definitionsText;
+                });
 
             // Shared strings location and loading
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
-                .Returns<string>((path) => GetSharedStrings());
+                .Returns<string>((path) => { return GetSharedStrings(); });
 
             string defaultConfigFilePath = Path.GetDirectoryName(typeof(CommandBase).Assembly.Location);
             defaultConfigFilePath = Path.Combine(defaultConfigFilePath, "default.configuration.xml");
@@ -610,16 +616,19 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             // Search definitions location and loading
             mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>()))
-                .Returns<string>((path) => path == scanTargetPath ?
+                .Returns<string>((path) =>
+                {
+                    return path == scanTargetPath ?
                       fileContents :
-                      definitionsText);
+                      definitionsText;
+                });
 
             // Shared strings location and loading
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
-                .Returns<string>((path) => GetSharedStrings());
+                .Returns<string>((path) => { return GetSharedStrings(); });
 
             mockFileSystem.Setup(x => x.FileWriteAllText(It.IsAny<string>(), It.IsAny<string>()))
-                .Callback(new Action<string, string>((path, logText) => sarifOutput = logText));
+                .Callback(new Action<string, string>((path, logText) => { sarifOutput = logText; }));
 
             mockFileSystem.Setup(x => x.FileInfoLength(scanTargetPath)).Returns(fileContents.Length);
             mockFileSystem.Setup(x => x.FileExists(@$"c:\Test.UnitTests.Sarif.PatternMatcher.Cli.dll")).Returns(true);
@@ -685,14 +694,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             return sarifLog;
         }
 
-        private static StringBuilder CompareActualAndExpectedFailureLevel(
+        private StringBuilder CompareActualAndExpectedFailureLevel(
             FailureLevel expectedFailureLevel,
             SarifLog sarifLog,
             string validationScenario,
             bool isDynamicAnalysis,
             StringBuilder stringBuilder)
         {
-            stringBuilder ??= new StringBuilder();
+            if (stringBuilder == null) { stringBuilder = new StringBuilder(); }
 
             string testScenarioMode = isDynamicAnalysis ?
                     "with dynamic validation enabled" :
@@ -720,15 +729,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         }
 
-        private static StringBuilder StringBuilderFormatAndAppendNewLine(string data, StringBuilder stringBuilder)
+        private StringBuilder StringBuilderFormatAndAppendNewLine(string data, StringBuilder stringBuilder)
         {
-            stringBuilder ??= new StringBuilder();
+            if (stringBuilder == null) { stringBuilder = new StringBuilder(); }
 
             if (stringBuilder.Length == 0)
             {
                 stringBuilder.AppendLine("asserted condition(s) failed:");
             }
-
             stringBuilder.AppendLine(data);
 
             return stringBuilder;
@@ -864,17 +872,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         private const int NOTE_TARGETS = 1;
         private const int WARN_TARGETS = 1;
         private const int ERROR_TARGETS = 1;
-#pragma warning disable IDE0051 // Remove unused private members
         private const int DEFAULT_TARGETS_COUNT = ERROR_TARGETS + WARN_TARGETS;
         private const int ALL_TARGETS_COUNT = ERROR_TARGETS + WARN_TARGETS + NOTE_TARGETS;
-#pragma warning restore IDE0051 // Remove unused private members
 
         // A default # of 'foo' tokens in each scan target, each of which will generate an error.
         private const int DEFAULT_FOO_COUNT = 2;
 
-#pragma warning disable IDE0051 // Remove unused private members
         private static ZipArchive CreateTestZipArchive(int fooInstancesPerTarget = DEFAULT_FOO_COUNT)
-#pragma warning restore IDE0051 // Remove unused private members
         {
             const string FOO = " foo ";
 

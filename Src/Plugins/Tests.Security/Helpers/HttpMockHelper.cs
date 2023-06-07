@@ -19,28 +19,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Helpers
     public class HttpMockHelper : DelegatingHandler
     {
         public static readonly HttpResponseMessage OKResponse =
-            new(HttpStatusCode.OK);
+            new HttpResponseMessage(HttpStatusCode.OK);
 
         public static readonly HttpResponseMessage NotFoundResponse =
-            new(HttpStatusCode.NotFound);
+            new HttpResponseMessage(HttpStatusCode.NotFound);
 
         public static readonly HttpResponseMessage ForbiddenResponse =
-            new(HttpStatusCode.Forbidden);
+            new HttpResponseMessage(HttpStatusCode.Forbidden);
 
         public static readonly HttpResponseMessage BadRequestResponse =
-            new(HttpStatusCode.BadRequest);
+            new HttpResponseMessage(HttpStatusCode.BadRequest);
 
         public static readonly HttpResponseMessage UnauthorizedResponse =
-            new(HttpStatusCode.Unauthorized);
+            new HttpResponseMessage(HttpStatusCode.Unauthorized);
 
         public static readonly HttpResponseMessage InternalServerErrorResponse =
-            new(HttpStatusCode.InternalServerError);
+            new HttpResponseMessage(HttpStatusCode.InternalServerError);
 
         public static readonly HttpResponseMessage NonAuthoritativeInformationResponse =
-            new(HttpStatusCode.NonAuthoritativeInformation);
+            new HttpResponseMessage(HttpStatusCode.NonAuthoritativeInformation);
 
         private readonly List<Tuple<HttpRequestMessage, HttpResponseMessage>> _fakeResponses =
-            new();
+            new List<Tuple<HttpRequestMessage, HttpResponseMessage>>();
 
         public void Mock(HttpRequestMessage httpRequestMessage, HttpStatusCode httpStatusCode, HttpContent httpContent)
         {

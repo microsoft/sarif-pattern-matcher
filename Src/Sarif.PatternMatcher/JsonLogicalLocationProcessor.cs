@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// <param name="results">A collection of 'Result' objects produced by an analysis tool where each object contains many details such as RuleId, Kind, Level, Locations, etc.</param>
         /// <param name="fileContents">The literal JSON file contents.</param>
         /// <param name="fileRegionsCache">A file cache used to populate regions with comprehensive data.</param>
-        public static void Process(ICollection<Result> results, string fileContents, FileRegionsCache fileRegionsCache = null)
+        public void Process(ICollection<Result> results, string fileContents, FileRegionsCache fileRegionsCache = null)
         {
             if (results?.Count == 0) { return; }
 
@@ -90,7 +90,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        private static bool PathToLastTokenBefore(JsonTextReader reader, Region region, out string path)
+        private bool PathToLastTokenBefore(JsonTextReader reader, Region region, out string path)
         {
             path = null;
 
@@ -111,7 +111,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             return true;
         }
 
-        private static bool CurrentTokenIsAfter(JsonTextReader reader, Region region)
+        private bool CurrentTokenIsAfter(JsonTextReader reader, Region region)
         {
             return
                 reader.LineNumber > region.StartLine ||

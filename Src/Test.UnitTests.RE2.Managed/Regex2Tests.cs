@@ -438,7 +438,7 @@ Proxy-Connection: Keep-Alive
             }
         }
 
-        private static string MatchToString(Match2 match, String8 content)
+        private string MatchToString(Match2 match, String8 content)
         {
             return $"({match.Index}, {match.Length}: '{content.Substring(match.Index, match.Length)}')";
         }
