@@ -283,7 +283,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [ThreadStatic]
         private static StringBuilder s_sb;
 
-        private static readonly JsonSerializerSettings s_settings = new ()
+        private static readonly JsonSerializerSettings s_settings = new()
         {
             ContractResolver = new DefaultContractResolver
             {

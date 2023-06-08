@@ -338,7 +338,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     // Skip SecurePlaintextSecretsPushProtectionTests file.
                     if (test.Contains("SecurePlaintextSecrets"))
                     {
-                        continue; 
+                        continue;
                     }
 
                     if (test.Contains("SecureMicrosoftOnlyPlaintextSecrets"))

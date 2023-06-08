@@ -213,11 +213,50 @@ dotnet_diagnostic.CS1591.severity = silent
 dotnet_diagnostic.CS1712.severity = silent
 dotnet_diagnostic.CS1734.severity = silent
 
+# CA1822: Member 'x' does not access instance data and can be marked as static
+dotnet_diagnostic.CA1822.severity = none
+
+# CA2211: Non-constant fields should not be visible
+dotnet_diagnostic.CA1822.severity = none
+
 # CS0649: Field is never assigned to, and will always have its default value
 dotnet_diagnostic.CS0649.severity = none
 
+# IDE0017: Object initialization can be simplified
+dotnet_diagnostic.IDE0017.severity = none
+
+# IDE0017: Object initialization can be simplified
+dotnet_diagnostic.IDE0017.severity = none
+
+# IDE0025: Use expression body for property
+dotnet_diagnostic.IDE0025.severity = none
+
+# IDE0027: Use expression body for accessor
+dotnet_diagnostic.IDE0027.severity = none
+
+# IDE0028: Collection initialization can be simplified
+dotnet_diagnostic.IDE0028.severity = none
+
+# IDE0041: Null check can be simplified
+dotnet_diagnostic.IDE0041.severity = none
+
+# IDE0045: Use conditional expression for assignment
+dotnet_diagnostic.IDE0045.severity = none
+
+# IDE0046: If statement can be simplified
+dotnet_diagnostic.IDE0046.severity = none
+
+# IDE0051: Private member is unused
+dotnet_diagnostic.IDE0051.severity = none
+
 # IDE0053: Use expression body for lambda expression
 dotnet_diagnostic.IDE0053.severity = none
+
+# IDE0090: 'new' expression can be simplified
+dotnet_diagnostic.IDE0090.severity = none
+
+# The keyword 'new' should be followed by a space
+dotnet_diagnostic.SA1000.severity = None
 
 # A method should not follow a class
 dotnet_diagnostic.SA1201.severity = None

@@ -28,7 +28,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             if (OverrideIsValidStatic == null)
             {
-                return null; 
+                return null;
             }
 
             return OverrideIsValidStatic(groups);
