@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/043.NuGetCredentialsValidator
-    /// </summary
+    /// </summary>
     public class NuGetCredentialsValidatorTests
     {
         private const ValidationState ExpectedValidationState = ValidationState.Unknown;

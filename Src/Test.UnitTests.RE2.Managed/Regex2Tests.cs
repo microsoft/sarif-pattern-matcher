@@ -320,6 +320,7 @@ namespace Microsoft.RE2.Managed
                 Assert.True(matches[0].ContainsKey("g2"));
                 Assert.Equal("a", matches[0]["g2"].Value);
             }
+
             ValidateMatchIndices(text, matches);
         }
 

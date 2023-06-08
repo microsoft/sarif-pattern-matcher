@@ -91,7 +91,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             return new[] { validationResult };
         }
 
-
         /// <summary>
         /// Evaluates secret to determine whether is a false positive or if it perhaps
         /// is a true positive but one that belongs to another security model.

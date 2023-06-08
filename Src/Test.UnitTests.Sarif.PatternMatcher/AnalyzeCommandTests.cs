@@ -46,6 +46,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 property.SetValue(result, optionAttribute.Default);
             }
+
             return result;
         }
 
@@ -519,6 +520,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     noteWriter.WriteLine($"Generates a note and an error for each of : {fooString}");
                 }
             }
+
             stream.Flush();
             stream.Position = 0;
 
@@ -633,7 +635,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
             // Acquire skimmers for searchers
-            Tool tool = Tool.CreateFromAssemblyData();
+            var tool = Tool.CreateFromAssemblyData();
             ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
                 mockFileSystem.Object,
                 new string[] { searchDefinitionsPath },
@@ -707,7 +709,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
-            Tool tool = Tool.CreateFromAssemblyData();
+            var tool = Tool.CreateFromAssemblyData();
 
             // Acquire skimmers for searchers
             ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(
@@ -1069,7 +1071,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
-            Tool tool = Tool.CreateFromAssemblyData();
+            var tool = Tool.CreateFromAssemblyData();
 
             // Acquire skimmers for searchers
             ISet<Skimmer<AnalyzeContext>> skimmers = PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(

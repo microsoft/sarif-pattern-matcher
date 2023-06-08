@@ -17,7 +17,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/007.GitHubAppCredentialsValidator
-    /// </summary
+    /// </summary>
     public class GitHubAppCredentialsValidatorTests
     {
         [Fact]

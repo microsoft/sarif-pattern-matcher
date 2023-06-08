@@ -12,7 +12,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/006.GitHubLegacyPatValidator
-    /// </summary
+    /// </summary>
     public class GitHubLegacyPatValidatorTests
     {
         [Fact]

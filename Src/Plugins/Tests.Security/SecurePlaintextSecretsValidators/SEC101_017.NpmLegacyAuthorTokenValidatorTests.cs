@@ -17,7 +17,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/017.NpmLegacyAuthorTokenValidator
-    /// </summary
+    /// </summary>
     public class NpmLegacyAuthorTokenValidatorTests
     {
         [Fact]

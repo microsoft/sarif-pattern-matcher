@@ -11,7 +11,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/037.SqlCredentialsValidator
-    /// </summary
+    /// </summary>
     public class SqlCredentialsValidatorTests
     {
         [Fact]

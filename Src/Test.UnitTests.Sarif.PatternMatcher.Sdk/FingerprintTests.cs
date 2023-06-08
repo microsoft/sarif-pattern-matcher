@@ -43,6 +43,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         $"{Environment.NewLine}Could not find property matching existing key name field: {fi.Name}.");
                     continue;
                 }
+
                 expectedKeyNames.Remove(fi.Name);
             }
 
@@ -71,6 +72,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     duplicatedFieldNames.Add(
                         $"{Environment.NewLine}Field '{fi.Name}' has a value which is shared by another key name field: '{fieldValue}'.");
                 }
+
                 keyNames.Add(fieldValue);
             }
 
@@ -353,8 +355,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             $"{Environment.NewLine}'{testCase.Title}': " +
                             $"Observed unexpected exception type: {type.Name}.");
                     }
+
                     continue;
                 }
+
                 failedTestCases.Add(
                     $"{Environment.NewLine}'{testCase.Title}': " +
                     $"No '{testCase.ExceptionType.Name}' exception was raised.");

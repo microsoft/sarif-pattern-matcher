@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
 {
     /// <summary>
     /// Testing AZC102/190.DoNotGrantAllPipelinesAccessValidator
-    /// </summary
+    /// </summary>
     public class DoNotGrantAllPipelinesAccessValidatorTests
     {
         [Fact]
