@@ -9,6 +9,12 @@ using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
 
+using Azure;
+using Azure.AI.OpenAI;
+using static System.Environment;
+using System.Threading.Tasks;
+using System.ComponentModel;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class SqlCredentialsValidator : DynamicValidatorBase
@@ -16,6 +22,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         internal static IRegex RegexEngine;
 
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
+
+        private readonly string endpoint = GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT", EnvironmentVariableTarget.User) ?? string.Empty;
+        private readonly string key = GetEnvironmentVariable("AZURE_OPENAI_KEY", EnvironmentVariableTarget.User) ?? string.Empty;
+        private readonly string engine = "text-davinci-003";
 
         private static readonly List<string> AzureHosts = new List<string>
         {
@@ -34,6 +44,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             // expressions (an operation which otherwise can cause
             // threading problems).
             RegexEngine.Match(string.Empty, ClientIPExpression);
+        }
+
+        private bool QueryChatGPTAsync(string prompt)
+        {
+            var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
+
+            Response<Completions> completionsResponse = client.GetCompletions(engine, prompt);
+            string completion = completionsResponse.Value.Choices[0].Text;
+
+            return ParseChatGPTResposne(completion);
+        }
+
+        private bool ParseChatGPTResposne(string response)
+        {
+            return response.ToLowerInvariant().Contains("yes");
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
@@ -59,6 +84,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             if (hostValue == "localhost" ||
                 hostValue.IndexOf("mysql", StringComparison.OrdinalIgnoreCase) != -1 ||
                 hostValue.IndexOf("postgres", StringComparison.OrdinalIgnoreCase) != -1)
+            {
+                return ValidationResult.CreateNoMatch();
+            }
+
+            // Call to ChatGPT to see if it thinks this is a valid password!
+            bool isChatGPTClassifiedPassword = this.QueryChatGPTAsync($"Is the following a password? \"{secret.Value}\". Please say Yes or No");
+
+            if (!isChatGPTClassifiedPassword)
             {
                 return ValidationResult.CreateNoMatch();
             }
