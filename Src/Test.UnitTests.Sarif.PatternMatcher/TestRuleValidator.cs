@@ -41,7 +41,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             if (OverrideIsValidDynamic == null)
             {
-                return 0; 
+                return 0;
             }
 
             return OverrideIsValidDynamic(ref fingerprint, ref message, options, ref resultLevelKind);
