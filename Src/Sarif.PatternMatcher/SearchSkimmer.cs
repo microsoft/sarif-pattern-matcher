@@ -283,6 +283,40 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
+                case ValidationState.FalsePositiveDeterminedByAI:
+                {
+                    if (context != null)
+                    {
+                        PhysicalLocation physicalLocation = context.CurrentTarget.Uri != null
+                            ? new PhysicalLocation
+                            {
+                                ArtifactLocation = new ArtifactLocation
+                                {
+                                    Uri = context.CurrentTarget.Uri
+                                },
+                            }
+                            : null;
+
+                        var notification = new Notification
+                        {
+                            Locations = new List<Location>
+                            {
+                                new Location
+                                {
+                                    PhysicalLocation = physicalLocation
+                                }
+                            },
+                            Level = level,
+                            Message = new Message { Text = "A match was detected but has been determined to be a false positive" },
+                        };
+
+                        context.Logger.LogToolNotification(notification);
+                    }
+
+                    level = FailureLevel.None;
+                    break;
+                }
+
                 case ValidationState.Authorized:
                 {
                     level = FailureLevel.Error;
