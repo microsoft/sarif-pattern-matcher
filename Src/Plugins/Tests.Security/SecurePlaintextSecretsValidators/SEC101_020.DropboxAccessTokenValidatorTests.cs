@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/020.DropboxAccessTokenValidator
-    /// </summary
+    /// </summary>
     public class DropboxAccessTokenValidatorTests
     {
         [Fact]

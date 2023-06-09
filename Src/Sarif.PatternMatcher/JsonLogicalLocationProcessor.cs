@@ -27,6 +27,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         ///     - For arrays, one might report the whole array, but this gets "closer" to the match.
         ///     - For objects, spanning properties will get "closer" to the match.
         /// </remarks>
+        /// <param name="results">A collection of 'Result' objects produced by an analysis tool where each object contains many details such as RuleId, Kind, Level, Locations, etc.</param>
+        /// <param name="fileContents">The literal JSON file contents.</param>
+        /// <param name="fileRegionsCache">A file cache used to populate regions with comprehensive data.</param>
         public void Process(ICollection<Result> results, string fileContents, FileRegionsCache fileRegionsCache = null)
         {
             if (results?.Count == 0) { return; }

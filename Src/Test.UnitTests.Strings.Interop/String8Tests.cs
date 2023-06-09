@@ -11,7 +11,7 @@ namespace Microsoft.Strings.Interop
         public void Utf8ToUtf16()
         {
             byte[] buffer = null;
-            String8 value = String8.Convert("abc    def", ref buffer);
+            var value = String8.Convert("abc    def", ref buffer);
             String8 replacement;
 
             // Bounds
@@ -81,13 +81,13 @@ namespace Microsoft.Strings.Interop
                 string value = char.ConvertFromUtf32(codepoint);
 
                 // Append it to the String8 after 'a'
-                String8 value8 = String8.Convert(value, ref buffer, 1);
+                var value8 = String8.Convert(value, ref buffer, 1);
 
                 // Append 'b' after that
                 String8.Convert("b", ref buffer, value8.Index + value8.Length);
 
                 // Map the whole value
-                String8 whole8 = new String8(buffer, 0, value8.Index + value8.Length + 1);
+                var whole8 = new String8(buffer, 0, value8.Index + value8.Length + 1);
 
                 // 'a' should always map to index 0
                 Assert.Equal(0, String8.Utf8ToUtf16(0, whole8));
@@ -108,7 +108,7 @@ namespace Microsoft.Strings.Interop
         {
             string text = "abc    def";
             byte[] buffer = null;
-            String8 value = String8.Convert(text, ref buffer);
+            var value = String8.Convert(text, ref buffer);
             Assert.Equal(0, value.CompareTo(text));
             Assert.True(value.Equals(text));
             Assert.True(value.Equals(value));
@@ -122,13 +122,13 @@ namespace Microsoft.Strings.Interop
             Assert.Equal(1, value.CompareTo(text));
             Assert.False(value.Equals(text));
 
-            String8 empty = String8.Convert(string.Empty, ref buffer);
+            var empty = String8.Convert(string.Empty, ref buffer);
             Assert.Equal(-1, empty.CompareTo(value));
             Assert.Equal(1, value.CompareTo(empty));
             Assert.False(value.Equals(empty));
 
             text = "def    abc";
-            String8 value2 = String8.Convert(text, ref buffer);
+            var value2 = String8.Convert(text, ref buffer);
             Assert.Equal(0, value.CompareTo(value2));
             Assert.True(value.Equals(value2));
 

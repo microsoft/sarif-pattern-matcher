@@ -11,7 +11,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/038.PostgreSqlCredentialsValidator
-    /// </summary
+    /// </summary>
     public class PostgreSqlCredentialsValidatorTests
     {
         private const ValidationState ExpectedValidationState = ValidationState.Unknown;

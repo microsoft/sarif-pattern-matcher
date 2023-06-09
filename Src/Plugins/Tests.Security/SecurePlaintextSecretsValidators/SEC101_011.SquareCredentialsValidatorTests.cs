@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/011.SquareCredentialsValidator
-    /// </summary
+    /// </summary>
     public class SquareCredentialsValidatorTests
     {
         [Fact]

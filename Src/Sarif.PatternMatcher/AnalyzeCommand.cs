@@ -57,7 +57,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 SearchDefinitions definitions =
                     JsonConvert.DeserializeObject<SearchDefinitions>(searchDefinitionsText);
 
-                // This would skip files that does not look like rules.
+                // This would skip files that do not look like rules.
                 if (definitions == null || definitions.Definitions == null)
                 {
                     continue;
@@ -73,7 +73,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     FileVersionInfo fvi = fileSystem.FileVersionInfoGetVersionInfo(Path.Combine(directory, definitions.ValidatorsAssemblyName));
 
                     name = $"{fvi?.CompanyName}/{fvi?.FileDescription}/{name}";
-                    // TBD add version details. Breaks test baselines currently.
+
+                    // TODO: add version details. Breaks test baselines currently. https://dev.azure.com/mseng/1ES/_workitems/edit/2066916
                     // semanticVersion = fvi?.ProductVersion;
                     // version = fvi?.FileVersion;
                 }
@@ -424,9 +425,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
             }
 
-            if (sniffing) { DriverEventSource.Log.ArtifactReserved1Start(SpamEventNames.PostSniff, filePath, data1: null, data2: null); }
+            if (sniffing)
+            {
+                DriverEventSource.Log.ArtifactReserved1Start(SpamEventNames.PostSniff, filePath, data1: null, data2: null);
+            }
+
             context = base.DetermineApplicabilityAndAnalyze(context, skimmers, disabledSkimmers);
-            if (sniffing) { DriverEventSource.Log.ArtifactReserved1Stop(SpamEventNames.PostSniff, filePath, data1: null, data2: null); }
+
+            if (sniffing)
+            {
+                DriverEventSource.Log.ArtifactReserved1Stop(SpamEventNames.PostSniff, filePath, data1: null, data2: null);
+            }
 
             ICollection<IList<Tuple<Result, int?>>> resultLists = ((CachingLogger)context.Logger).Results?.Values;
 

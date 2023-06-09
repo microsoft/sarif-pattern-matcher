@@ -125,6 +125,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                         {
                             rewritten.Add("True");
                         }
+
                         break;
                     }
 

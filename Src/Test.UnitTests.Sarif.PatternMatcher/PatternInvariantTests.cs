@@ -187,6 +187,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     {
                         invalidFilenames.Add(file.Name);
                     }
+
                     sb.Clear();
                 }
 
@@ -335,8 +336,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     if (test.Contains("Template")) { continue; }
 
                     // Skip SecurePlaintextSecretsPushProtectionTests file.
-                    if (test.Contains("SecurePlaintextSecrets")) { continue; }
-                    if (test.Contains("SecureMicrosoftOnlyPlaintextSecrets")) { continue; }
+                    if (test.Contains("SecurePlaintextSecrets"))
+                    {
+                        continue;
+                    }
+
+                    if (test.Contains("SecureMicrosoftOnlyPlaintextSecrets"))
+                    {
+                        continue;
+                    }
 
                     testsWithoutValidators.Add(test);
                 }
@@ -350,6 +358,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         string.Join($",{Environment.NewLine}  ", validatorsWithoutTests) +
                         $"{Environment.NewLine}");
             }
+
             if (testsWithoutValidators.Count > 0)
             {
                 outputmsg.Append("Unable to find validators for these tests: " +
@@ -374,6 +383,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     regexSet.Add(searchDefinition.FileNameAllowRegex);
                 }
+
                 if (!string.IsNullOrWhiteSpace(searchDefinition.FileNameDenyRegex))
                 {
                     regexSet.Add(searchDefinition.FileNameDenyRegex);
@@ -385,14 +395,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     {
                         regexSet.Add(matchExpression.FileNameAllowRegex);
                     }
+
                     if (!string.IsNullOrWhiteSpace(matchExpression.FileNameDenyRegex))
                     {
                         regexSet.Add(matchExpression.FileNameDenyRegex);
                     }
+
                     if (!string.IsNullOrWhiteSpace(matchExpression.ContentsRegex))
                     {
                         regexSet.Add(matchExpression.ContentsRegex);
                     }
+
                     if (matchExpression.IntrafileRegexes != null)
                     {
                         foreach (string intrafileregex in matchExpression.IntrafileRegexes)
@@ -404,6 +417,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         }
 
                     }
+
                     if (matchExpression.SingleLineRegexes != null)
                     {
                         foreach (string singleLineRegex in matchExpression.SingleLineRegexes)
@@ -416,6 +430,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     }
                 }
             }
+
             return regexSet;
         }
 

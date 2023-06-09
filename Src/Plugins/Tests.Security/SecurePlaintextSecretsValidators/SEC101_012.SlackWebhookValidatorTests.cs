@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/012.SlackWebhookValidator
-    /// </summary
+    /// </summary>
     public class SlackWebhookValidatorTests
     {
         [Fact]
@@ -110,6 +110,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedMessage}' but found '{message}'.");
                 }
+
                 mockHandler.Clear();
             }
 

@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/021.DropboxAppCredentialsValidator
-    /// </summary
+    /// </summary>
     public class DropboxAppCredentialsValidatorTests
     {
         [Fact]

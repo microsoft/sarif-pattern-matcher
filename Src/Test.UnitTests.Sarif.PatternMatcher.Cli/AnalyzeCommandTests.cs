@@ -426,11 +426,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
             mockFileSystem.Setup(x => x.FileReadAllText(It.IsAny<string>()))
                 .Returns<string>((path) =>
-                                    {
-                                        return path == scanTargetPath ?
-                                          fileContents :
-                                          definitionsText;
-                                    });
+                {
+                    return path == scanTargetPath ?
+                      fileContents :
+                      definitionsText;
+                });
 
             // Shared strings location and loading
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
@@ -701,7 +701,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             bool isDynamicAnalysis,
             StringBuilder stringBuilder)
         {
-            if (stringBuilder == null) { stringBuilder = new StringBuilder(); }
+            if (stringBuilder == null)
+            {
+                stringBuilder = new StringBuilder();
+            }
 
             string testScenarioMode = isDynamicAnalysis ?
                     "with dynamic validation enabled" :
@@ -737,6 +740,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             {
                 stringBuilder.AppendLine("asserted condition(s) failed:");
             }
+
             stringBuilder.AppendLine(data);
 
             return stringBuilder;
