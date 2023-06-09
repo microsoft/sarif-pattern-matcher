@@ -252,6 +252,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
+                case ValidationState.FalsePositiveDeterminedByLLM:
+                {
+                    level = FailureLevel.Note;
+                    validationPrefix = "an apparent ";
+                    validationSuffix = ", which was classified as a likely false positive by LLM analysis. Dynamic analysis was therefore skipped";
+
+                    break;
+                }
+
                 case ValidationState.Authorized:
                 {
                     level = FailureLevel.Error;

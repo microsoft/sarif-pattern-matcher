@@ -65,5 +65,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// The result should be reported as an error.
         /// </summary>
         Authorized,
+
+        /// <summary>
+        /// Pattern is a match, but has been determined to be a
+        /// false positive by a Large Language Model (ie. ChatGPT).
+        /// </summary>
+        FalsePositiveDeterminedByLLM,
     }
 }

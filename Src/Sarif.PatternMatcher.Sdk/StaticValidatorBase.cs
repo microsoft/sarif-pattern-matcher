@@ -119,8 +119,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         protected static bool AskChatGPTIfPassword(string text, string prompt = defaultPrompt)
         {
             var client = new OpenAIClient(new Uri(StaticValidatorBase.endpoint), new AzureKeyCredential(StaticValidatorBase.key));
+            string completePrompt = "";
 
-            string completePrompt = string.Format(prompt, text);
+            if (prompt == null)
+            {
+                prompt = default;
+            }
+
+            completePrompt = string.Format(prompt, text);
+
+            // How do I add temperature value to this call? TODO
             Response<Completions> completionsResponse = client.GetCompletions(StaticValidatorBase.engine, completePrompt);
             string completion = completionsResponse.Value.Choices[0].Text;
 
