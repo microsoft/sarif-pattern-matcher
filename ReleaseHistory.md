@@ -18,7 +18,9 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## v4.5.2 6/7/2023
+## v4.5.2 Unreleased
+- RRR: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
+- DEP: Remove `AWSSDK.IdentityManagement` from `Security`.
 - DEP: Code Cleanup using existing `.editorconfig` - Minimum changes made to suppress existing warnings for non-discussed guidelines. [#765](https://github.com/microsoft/sarif-pattern-matcher/pull/765)
 
 ## v4.5.1 5/31/2023
