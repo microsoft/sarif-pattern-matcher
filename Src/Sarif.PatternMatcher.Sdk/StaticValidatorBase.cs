@@ -6,6 +6,13 @@ using System.Collections.Generic;
 
 using Microsoft.RE2.Managed;
 
+using Azure;
+using Azure.AI.OpenAI;
+
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+
+using static System.Environment;
+
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public abstract class StaticValidatorBase : ValidatorBase
@@ -101,6 +108,28 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         protected virtual bool IsFalsePositiveOrBelongsToOtherSecurityModel(string secret)
         {
             return false;
+        }
+
+        private static readonly string endpoint = GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT", EnvironmentVariableTarget.User) ?? string.Empty;
+        private static readonly string key = GetEnvironmentVariable("AZURE_OPENAI_KEY", EnvironmentVariableTarget.User) ?? string.Empty;
+        private static readonly string engine = "text-davinci-003";
+        // We can pull the prompts from a config file or something
+        private const string defaultPrompt = "Is the following a password? \"{0}\". Please say Yes or No";
+
+        protected static bool AskChatGPTIfPassword(string text, string prompt = defaultPrompt)
+        {
+            var client = new OpenAIClient(new Uri(StaticValidatorBase.endpoint), new AzureKeyCredential(StaticValidatorBase.key));
+
+            string completePrompt = string.Format(prompt, text);
+            Response<Completions> completionsResponse = client.GetCompletions(StaticValidatorBase.engine, completePrompt);
+            string completion = completionsResponse.Value.Choices[0].Text;
+
+            return ParseChatGPTResposne(completion);
+        }
+
+        private static bool ParseChatGPTResposne(string response)
+        {
+            return response.ToLowerInvariant().Contains("yes");
         }
     }
 }
