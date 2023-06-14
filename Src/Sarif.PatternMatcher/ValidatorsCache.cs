@@ -215,7 +215,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             IEnumerable<ValidationResult> validationResults = staticValidator.IsValidStatic(groups, context.ObservedFingerprintCache);
-            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1StaticValidation, filePath, ruleId, ruleName, data1: null, data2: null);
 
             if (DriverEventSource.Log.IsEnabled())
             {
@@ -298,7 +297,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 resultsToSerialize.Add(toSerialize);
             }
 
-            return JsonConvert.SerializeObject(validationResults, s_settings);
+            return JsonConvert.SerializeObject(resultsToSerialize, s_settings);
         }
 
         private static ValidationResult PackageValidationResultForTelemetry(ValidationResult validationResult)
