@@ -19,8 +19,11 @@
 - UEE => Eliminate unhandled exceptions in engine.
 
 ## v4.5.2 Unreleased
+- RRR: Update `SEC101/003.GoogleApiKey` in `Security` validating Google API key using HTTP requests.
 - RRR: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
+- DEP: Remove `aliyun-net-sdk-lot.dll` file from `\refs` directory.
 - DEP: Remove `AWSSDK.IdentityManagement` from `Security`.
+- DEP: Remove `GoogleApi` Nuget package from `Security`.
 - DEP: Code Cleanup using existing `.editorconfig` - Minimum changes made to suppress existing warnings for non-discussed guidelines. [#765](https://github.com/microsoft/sarif-pattern-matcher/pull/765)
 
 ## v4.5.1 5/31/2023
