@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,8 +20,11 @@ namespace Microsoft.RE2.Managed
     {
         static Regex2Tests()
         {
-            // Ensure Test harness is running x64
-            Regex2.NativeLibraryFolderPath = @"runtimes\win-x64\native";
+            // Ensure Test harness is running x64.
+            string platform =
+                RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "win-x64" : "linux-x64";
+
+            Regex2.NativeLibraryFolderPath = @$"runtimes\{platform}\native";
         }
 
         [Fact]

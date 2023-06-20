@@ -18,23 +18,31 @@
   
   <ItemGroup>
     <!-- Copy native outputs to the correct platform-specific folder in the NuGet Package output -->
-    <Content Include="$(MSBuildThisFileDirectory)..\..\Bld\bin\$(Re2Configuration)\x86\RE2.Native.x86.dll" Pack="true" Link="runtimes/win-x86/native/RE2.Native.x86.dll">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\win-x86\native\RE2.Native.x86.dll" Pack="true" Link="runtimes/win-x86/native/RE2.Native.x86.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x86/native</PackagePath>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\Bld\bin\$(Re2Configuration)\x86\RE2.Native.x86.pdb" Pack="true" Link="runtimes/win-x86/native/RE2.Native.x86.pdb">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\win-x86\native\RE2.Native.x86.pdb" Pack="true" Link="runtimes/win-x86/native/RE2.Native.x86.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x86/native</PackagePath>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\Bld\bin\$(Re2Configuration)\x64\RE2.Native.x64.dll" Pack="true" Link="runtimes/win-x64/native/RE2.Native.x64.dll">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\win-x64\native\RE2.Native.x64.dll" Pack="true" Link="runtimes/win-x64/native/RE2.Native.x64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x64/native</PackagePath>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\Bld\bin\$(Re2Configuration)\x64\RE2.Native.x64.pdb" Pack="true" Link="runtimes/win-x64/native/RE2.Native.x64.pdb">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\win-x64\native\RE2.Native.x64.pdb" Pack="true" Link="runtimes/win-x64/native/RE2.Native.x64.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x64/native</PackagePath>
     </Content>
-    
+    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x64\native\libre2.a" Pack="true" Link="runtimes/linux-x64/native/libre2.a">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes/win-x64/native</PackagePath>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x86\native\libre2.a" Pack="true" Link="runtimes/linux-x86/native/libre2.a">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes/win-x64/native</PackagePath>
+    </Content>
+
     <None Include="RE2.Managed.targets" Pack="true" PackagePath="build\" />
     <None Include="RE2.LICENSE.txt" Pack="true" PackagePath="content\" />
   </ItemGroup>
