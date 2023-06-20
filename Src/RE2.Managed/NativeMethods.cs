@@ -16,8 +16,16 @@ namespace Microsoft.RE2.Managed
             string platform =
                 RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "win" : "linux";
 
+            if (platform == "linux")
+            {
+                return;
+            }
+
+            // Strictly speaking we don't need any platform-specific code here. I leave
+            // it just in case we find out that we *do* need to perform the Linux
+            // equivalent of LoadLibrary to get everything to work.
             string dllName = RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-                ? "libre2.s"
+                ? "libre2.so"
                 : Environment.Is64BitProcess ? "RE2.Native.x64.dll" : "RE2.Native.x86.dll";
 
             if (Regex2.NativeLibraryFolderPath != null)
@@ -141,27 +149,27 @@ namespace Microsoft.RE2.Managed
         private static class LinuxMethods
         {
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("libre2.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int Test();
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("libre2.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions, long maxMemoryInBytes);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("libre2.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern void ClearRegexes();
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("libre2.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int Matches(int regexIndex, String8Interop text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("libre2.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern bool MatchesCaptureGroups(int regexIndex, String8Interop text, MatchesCaptureGroupsOutput** matchesCaptureGroupsOutput);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("libre2.dll", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern bool MatchesCaptureGroupsDispose(MatchesCaptureGroupsOutput* matchesCaptureGroupsOutput);
         }
 
