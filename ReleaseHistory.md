@@ -20,8 +20,8 @@
 
 ## v4.5.2 Unreleased
 - DEP: Update SARIF SDK submodule from [dd8b7b8 to a7029a3](https://github.com/microsoft/sarif-sdk/compare/dd8b7b8..a7029a3). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/a7029a3/ReleaseHistory.md). SDK v4.2.0.
-- RRR: Update `SEC101/003.GoogleApiKey` in `Security` validating Google API key using HTTP requests.
-- RRR: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
+- DEP: Update `SEC101/003.GoogleApiKey` in `Security` validating Google API key using HTTP requests.
+- DEP: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
 - DEP: Remove `aliyun-net-sdk-lot.dll` file from `\refs` directory.
 - DEP: Remove `AWSSDK.IdentityManagement` from `Security`.
 - DEP: Remove `GoogleApi` Nuget package from `Security`.
