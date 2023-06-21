@@ -13,9 +13,23 @@ namespace Microsoft.RE2.Managed
     {
         static NativeMethods()
         {
+            string platform =
+                RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "win" : "linux";
+
+            if (platform == "linux")
+            {
+                return;
+            }
+
+            // Strictly speaking we don't need any platform-specific code here. I leave
+            // it just in case we find out that we *do* need to perform the Linux
+            // equivalent of LoadLibrary to get everything to work.
+            string dllName = RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? "libre2.so"
+                : Environment.Is64BitProcess ? "RE2.Native.x64.dll" : "RE2.Native.x86.dll";
+
             if (Regex2.NativeLibraryFolderPath != null)
             {
-                string dllName = Environment.Is64BitProcess ? "RE2.Native.x64.dll" : "RE2.Native.x86.dll";
                 string filePath = Path.Combine(Regex2.NativeLibraryFolderPath, dllName);
 
                 if (File.Exists(filePath))
@@ -23,12 +37,11 @@ namespace Microsoft.RE2.Managed
                     LoadLibrary(filePath);
                 }
             }
-            else
+            else if (platform == "win")
             {
                 string driverDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
                 // Load if next to this binary
-                string dllName = Environment.Is64BitProcess ? "RE2.Native.x64.dll" : "RE2.Native.x86.dll";
                 string dllAdjacent = Path.Combine(driverDirectory, dllName);
                 if (File.Exists(dllAdjacent))
                 {
@@ -36,7 +49,7 @@ namespace Microsoft.RE2.Managed
                 }
 
                 // Load if in runtimes subdirectory
-                string runtimeFolder = Environment.Is64BitProcess ? @"runtimes\win-x64\native" : @"runtimes\win-x86\native";
+                string runtimeFolder = Environment.Is64BitProcess ? @$"runtimes\{platform}-x64\native" : @$"runtimes\{platform}-x86\native";
                 string dllInRuntime = Path.Combine(driverDirectory, runtimeFolder, dllName);
                 if (File.Exists(dllInRuntime))
                 {
@@ -47,11 +60,21 @@ namespace Microsoft.RE2.Managed
 
         public static int Test()
         {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return LinuxMethods.Test();
+            }
+
             return Environment.Is64BitProcess ? NativeMethodsX64.Test() : NativeMethodsX86.Test();
         }
 
         public static int BuildRegex(String8Interop regex, int regexOptions, long maxMemoryInBytes)
         {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return LinuxMethods.BuildRegex(regex, regexOptions, maxMemoryInBytes);
+            }
+
             return Environment.Is64BitProcess
                 ? NativeMethodsX64.BuildRegex(regex, regexOptions, maxMemoryInBytes)
                 : NativeMethodsX86.BuildRegex(regex, regexOptions, maxMemoryInBytes);
@@ -59,7 +82,11 @@ namespace Microsoft.RE2.Managed
 
         public static void ClearRegexes()
         {
-            if (Environment.Is64BitProcess)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                LinuxMethods.ClearRegexes();
+            }
+            else if (Environment.Is64BitProcess)
             {
                 NativeMethodsX64.ClearRegexes();
             }
@@ -71,6 +98,11 @@ namespace Microsoft.RE2.Managed
 
         public static unsafe int Matches(int regexIndex, String8Interop text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds)
         {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return LinuxMethods.Matches(regexIndex, text, fromTextIndex, matches, matchesLength, timeoutMilliseconds);
+            }
+
             return Environment.Is64BitProcess
                 ? NativeMethodsX64.Matches(regexIndex, text, fromTextIndex, matches, matchesLength, timeoutMilliseconds)
                 : NativeMethodsX86.Matches(regexIndex, text, fromTextIndex, matches, matchesLength, timeoutMilliseconds);
@@ -78,7 +110,11 @@ namespace Microsoft.RE2.Managed
 
         public static unsafe void MatchesCaptureGroups(int regexIndex, String8Interop text, MatchesCaptureGroupsOutput** matchesCaptureGroupsOutput)
         {
-            if (Environment.Is64BitProcess)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                LinuxMethods.MatchesCaptureGroups(regexIndex, text, matchesCaptureGroupsOutput);
+            }
+            else if (Environment.Is64BitProcess)
             {
                 NativeMethodsX64.MatchesCaptureGroups(regexIndex, text, matchesCaptureGroupsOutput);
             }
@@ -90,7 +126,11 @@ namespace Microsoft.RE2.Managed
 
         public static unsafe void MatchesCaptureGroupsDispose(MatchesCaptureGroupsOutput* matchesCaptureGroupsOutput)
         {
-            if (Environment.Is64BitProcess)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                LinuxMethods.MatchesCaptureGroupsDispose(matchesCaptureGroupsOutput);
+            }
+            else if (Environment.Is64BitProcess)
             {
                 NativeMethodsX64.MatchesCaptureGroupsDispose(matchesCaptureGroupsOutput);
             }
@@ -105,6 +145,33 @@ namespace Microsoft.RE2.Managed
 
         [DllImport("kernel32.dll")]
         public static unsafe extern void FreeLibrary(IntPtr address);
+
+        private static class LinuxMethods
+        {
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            public static unsafe extern int Test();
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions, long maxMemoryInBytes);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            public static unsafe extern void ClearRegexes();
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            public static unsafe extern int Matches(int regexIndex, String8Interop text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            public static unsafe extern bool MatchesCaptureGroups(int regexIndex, String8Interop text, MatchesCaptureGroupsOutput** matchesCaptureGroupsOutput);
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            public static unsafe extern bool MatchesCaptureGroupsDispose(MatchesCaptureGroupsOutput* matchesCaptureGroupsOutput);
+        }
 
         private static class NativeMethodsX86
         {

@@ -65,10 +65,7 @@ If (Test-Path "..\bld") {
     rd /s /q ..\bld
 }
 
-if (-not $NoBuild) {
-    Write-Information "Building RE2.Native.sln (MSBuild)..."
-    MSBuild "$RepoRoot\Src\RE2.Native.sln" /p:Configuration=$Configuration /p:Platform="Any CPU"
-    
+if (-not $NoBuild) {    
     Write-Information "Building Sarif.Sdk"	
     & $RepoRoot\Src\sarif-sdk\BuildAndTest.cmd -NoBuild -NoTest -NoPublish -NoSigningDirectory -NoPackage -NoFormat
     if ($LASTEXITCODE -ne 0) {	
