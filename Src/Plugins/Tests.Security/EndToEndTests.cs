@@ -130,7 +130,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string filePath = Path.Combine(
                 ProductTestDataDirectory,
-                @"Inputs\",
+                @"Inputs",
                 parameter as string);
 
             IFileSystem fileSystem = FileSystem.Instance;
@@ -216,7 +216,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             //ProductTestDataDirectory.Should().Be("SSSSSSSS");
             Directory.Exists(ProductTestDataDirectory).Should().BeTrue();
 
-            string testsDirectory = Path.Combine(ProductTestDataDirectory, @"Inputs\");
+            string testsDirectory = Path.Combine(ProductTestDataDirectory, @"Inputs");
 
             var inputFiles = new List<string>();
             var expectedOutputResourceMap = new Dictionary<string, string>();
