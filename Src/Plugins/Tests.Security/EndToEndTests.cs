@@ -213,7 +213,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected void RunAllTests()
         {
-            //ProductTestDataDirectory.Should().Be("SSSSSSSS");
+            ProductTestDataDirectory.Should().Be("SSSSSSSS");
             Directory.Exists(ProductTestDataDirectory).Should().BeTrue();
 
             string testsDirectory = Path.Combine(ProductTestDataDirectory, @"Inputs\");
