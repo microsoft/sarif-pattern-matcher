@@ -200,7 +200,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         [Fact]
         public void AnalyzeCommand_ShouldProduceResultsForTargetsInFileSizeRange()
         {
-            string rootDirectory = @"e:\repros";
+            string rootDirectory = Path.Combine(Environment.CurrentDirectory, "e", "repros");
             string smallTargetPath = Path.Combine(rootDirectory, SmallTargetName);
             string largeTargetPath = Path.Combine(rootDirectory, LargeTargetName);
 
@@ -255,10 +255,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             int maxFileSizeInKilobytes = 1;
             int fileSizeInKilobytes = 2;
 
-            string rootDirectory = @"e:\repros";
+            string rootDirectory = Path.Combine(Environment.CurrentDirectory, "e", "repros");
             string smallTargetPath = Path.Combine(rootDirectory, SmallTargetName);
             string largeTargetPath = Path.Combine(rootDirectory, LargeTargetName);
-            string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
+            string searchDefinitionsPath = Path.Combine(Environment.CurrentDirectory, "c", $"{Guid.NewGuid()}.json");
 
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.DirectoryExists(rootDirectory)).Returns(true);
@@ -500,10 +500,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                        " secret2              \r\n" +
                                        "unused trailing space \r\n";
 
-            string rootDirectory = @"e:\repros";
+            string rootDirectory = Path.Combine(Environment.CurrentDirectory, "e", "repros");
             string smallTargetPath = Path.Combine(rootDirectory, SmallTargetName);
             string largeTargetPath = Path.Combine(rootDirectory, LargeTargetName);
-            string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
+            string searchDefinitionsPath = Path.Combine(Environment.CurrentDirectory, "c", $"{Guid.NewGuid()}.json");
 
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.DirectoryExists(rootDirectory)).Returns(true);
@@ -599,10 +599,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                                                 bool runDynamicValidation)
         {
             string sarifOutput;
-            string rootDirectory = @"e:\repros";
+            string rootDirectory = Path.Combine(Environment.CurrentDirectory, "e", "repros");
             string scanTargetName = SmallTargetName;
             string scanTargetPath = Path.Combine(rootDirectory, scanTargetName);
-            string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
+            string searchDefinitionsPath = Path.Combine(Environment.CurrentDirectory, "c", $"{Guid.NewGuid()}.json");
             string currentDirectory = Directory.GetCurrentDirectory();
             string dllLocation = Path.Combine(currentDirectory, "Test.UnitTests.Sarif.PatternMatcher.Cli.dll");
 

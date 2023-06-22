@@ -108,7 +108,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks
                     Tool.CreateFromAssemblyData(),
                     engine);
 
-            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
+            string scanTargetFileName = Path.Combine(Environment.CurrentDirectory, Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
 
             var target = new EnumeratedArtifact(this.fileSystemMock.Object)
