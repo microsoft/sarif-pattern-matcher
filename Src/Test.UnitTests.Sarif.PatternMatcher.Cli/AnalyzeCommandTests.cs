@@ -404,10 +404,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
         private SarifLog RunAnalyzeCommand(string definitionsText, string fileContents)
         {
-            string rootDirectory = @"e:\repros";
+            string rootDirectory = Path.Combine(Environment.CurrentDirectory, "e", "repros");
             string scanTargetName = SmallTargetName;
             string scanTargetPath = Path.Combine(rootDirectory, scanTargetName);
-            string searchDefinitionsPath = @$"c:\{Guid.NewGuid()}.json";
+            string searchDefinitionsPath = Path.Combine(Environment.CurrentDirectory, "c", $"{Guid.NewGuid()}.json");
 
 
             var fvi = FileVersionInfo.GetVersionInfo(this.GetType().Assembly.Location);
