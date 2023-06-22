@@ -21,7 +21,7 @@ jobs:
     displayName: Build and Test
     inputs:
       targetType: filePath
-      filePath: ./scripts/BuildAndTest.ps1
+      filePath: ./Scripts/BuildAndTest.ps1
   
   - task: PublishTestResults@2
     inputs:
