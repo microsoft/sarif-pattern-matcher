@@ -8,6 +8,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -55,7 +56,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.TestData.{TypeUnderTest}";
 
-        protected override string TestBinaryTestDataDirectory => Path.Combine(ThisAssembly.Location, @"..\..\..", "src", "Plugins", TestBinaryName, "TestData");
+        protected override string TestBinaryTestDataDirectory => Path.Combine(ThisAssembly.Location, @$"..{Path.PathSeparator}..{Path.PathSeparator}..", "src", "Plugins", TestBinaryName, "TestData");
 
         protected override string ProductTestDataDirectory => Path.Combine(TestBinaryTestDataDirectory, TypeUnderTest);
 
@@ -203,7 +204,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private string GetPluginDirectory()
         {
             string result = Path.Combine(ThisAssembly.Location,
-                                         @"..\..\..",
+                                         @$"..{Path.PathSeparator}..{Path.PathSeparator}..",
                                          PluginName,
                                          Framework);
 
