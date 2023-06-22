@@ -56,7 +56,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.TestData.{TypeUnderTest}";
 
-        protected override string TestBinaryTestDataDirectory => Path.Combine(ThisAssembly.Location, @$"..{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}..", "src", "Plugins", TestBinaryName, "TestData");
+        protected override string TestBinaryTestDataDirectory => Path.Combine(ThisAssembly.Location, @$"..{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}..", "Src", "Plugins", TestBinaryName, "TestData");
 
         protected override string ProductTestDataDirectory => Path.Combine(TestBinaryTestDataDirectory, TypeUnderTest);
 
@@ -213,7 +213,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected void RunAllTests()
         {
-            ProductTestDataDirectory.Should().Be("SSSSSSSS");
+            //ProductTestDataDirectory.Should().Be("SSSSSSSS");
             Directory.Exists(ProductTestDataDirectory).Should().BeTrue();
 
             string testsDirectory = Path.Combine(ProductTestDataDirectory, @"Inputs\");
