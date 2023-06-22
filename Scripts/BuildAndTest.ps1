@@ -65,12 +65,18 @@ If (Test-Path "..\bld") {
     rd /s /q ..\bld
 }
 
+Write-Information "RepoRoot1: $RepoRoot"
+
 if (-not $NoBuild) {    
     Write-Information "Building Sarif.Sdk"	
     & $RepoRoot\Src\sarif-sdk\scripts\BuildAndTest.ps1 -NoBuild -NoTest -NoPublish -NoSigningDirectory -NoPackage -NoFormat
     if ($LASTEXITCODE -ne 0) {	
         Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."	
     }    
+
+    Write-Information "RepoRoot2: $RepoRoot"
+    $RepoRoot = $(Resolve-Path $PSScriptRoot\..).Path
+    Write-Information "RepoRoot3: $RepoRoot"
 
     Write-Information "Building SarifPatternMatcher.sln (dotnet)..."
     dotnet build $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true
