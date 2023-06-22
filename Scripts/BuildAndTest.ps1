@@ -102,7 +102,7 @@ if (-not $NoTest) {
 
 if (-not $NoFormat) {
     dotnet tool update --global dotnet-format --version 4.1.131201
-    dotnet-format --folder --exclude .\src\sarif-sdk\
+    dotnet-format --folder --exclude .\Src\sarif-sdk\
 }
 
 Write-Information "$ScriptName SUCCEEDED."
