@@ -20,9 +20,11 @@
 
 ## v4.5.2 Unreleased
 - DEP: Update SARIF SDK submodule from [dd8b7b8 to a7029a3](https://github.com/microsoft/sarif-sdk/compare/dd8b7b8..a7029a3). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/a7029a3/ReleaseHistory.md). SDK v4.2.0.
+- DEP: Update `SEC101/003.GoogleApiKey` in `Security` validating Google API key using HTTP requests.
 - DEP: Update `SEC101/006.GitHubLegacyPat` in `Security` validating GitHub PAT using HTTP requests.
-- RRR: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
-- DEP: Remove `AWSSDK.IdentityManagement` from `Security`.
+- DEP: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
+- DEP: Remove `AWSSDK.IdentityManagement` Nuget package from `Security`.
+- DEP: Remove `GoogleApi` Nuget package from `Security`.
 
 ## v4.5.1 5/31/2023
 - DEP: Update SARIF SDK submodule from [441fa8b to dd8b7b8](https://github.com/microsoft/sarif-sdk/compare/441fa8b..dd8b7b8). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd8b7b8/ReleaseHistory.md). Additional eventing work.
