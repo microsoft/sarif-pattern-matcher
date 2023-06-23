@@ -16,7 +16,7 @@ namespace Microsoft.RE2.Managed
             string platform =
                 RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "win" : "linux";
 
-            bool isLinux = platform == "linux";
+            bool isWindows = platform == "win";
 
             // Strictly speaking we don't need any platform-specific code here. I leave
             // it just in case we find out that we *do* need to perform the Linux
@@ -31,10 +31,10 @@ namespace Microsoft.RE2.Managed
 
                 if (File.Exists(filePath))
                 {
-                    if (isLinux) { LoadLibrary(filePath); } else { LinuxMethods.dlopen(filePath, LinuxMethods.RTLD_NOW); }
+                    if (isWindows) { LoadLibrary(filePath); } else { LinuxMethods.dlopen(filePath, LinuxMethods.RTLD_NOW); }
                 }
             }
-            else if (platform == "win")
+            else
             {
                 string driverDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -42,7 +42,7 @@ namespace Microsoft.RE2.Managed
                 string dllAdjacent = Path.Combine(driverDirectory, dllName);
                 if (File.Exists(dllAdjacent))
                 {
-                    if (isLinux) { LoadLibrary(dllAdjacent); } else { LinuxMethods.dlopen(dllAdjacent, LinuxMethods.RTLD_NOW); }
+                    if (isWindows) { LoadLibrary(dllAdjacent); } else { LinuxMethods.dlopen(dllAdjacent, LinuxMethods.RTLD_NOW); }
                 }
 
                 // Load if in runtimes subdirectory
@@ -50,7 +50,7 @@ namespace Microsoft.RE2.Managed
                 string dllInRuntime = Path.Combine(driverDirectory, runtimeFolder, dllName);
                 if (File.Exists(dllInRuntime))
                 {
-                    if (isLinux) { LoadLibrary(dllInRuntime); } else { LinuxMethods.dlopen(dllInRuntime, LinuxMethods.RTLD_NOW); }
+                    if (isWindows) { LoadLibrary(dllInRuntime); } else { LinuxMethods.dlopen(dllInRuntime, LinuxMethods.RTLD_NOW); }
                 }
             }
         }
