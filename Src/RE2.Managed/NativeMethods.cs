@@ -152,27 +152,27 @@ namespace Microsoft.RE2.Managed
             public static unsafe extern IntPtr dlopen(string fileName, int flags);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("re2", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int Test();
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("re2", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int BuildRegex(String8Interop regex, int regexOptions, long maxMemoryInBytes);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("re2", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern void ClearRegexes();
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("re2", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int Matches(int regexIndex, String8Interop text, int fromTextIndex, Match2* matches, int matchesLength, int timeoutMilliseconds);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("re2", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern bool MatchesCaptureGroups(int regexIndex, String8Interop text, MatchesCaptureGroupsOutput** matchesCaptureGroupsOutput);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("re2", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern bool MatchesCaptureGroupsDispose(MatchesCaptureGroupsOutput* matchesCaptureGroupsOutput);
         }
 
