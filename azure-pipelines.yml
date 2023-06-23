@@ -17,6 +17,12 @@ jobs:
     vmImage: $(imageName)
 
   steps:
+  - bash: |
+    export LD_DEBUG=all
+    # Other steps in the pipeline
+    # Print the value of LD_DEBUG
+    echo $LD_DEBUG
+    
   - task: PowerShell@2
     displayName: Build and Test
     inputs:
