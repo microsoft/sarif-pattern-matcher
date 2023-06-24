@@ -17,14 +17,6 @@ jobs:
     vmImage: $(imageName)
 
   steps:
-  - task: Bash@3
-    displayName: LD_DEBUG
-    inputs:
-      targetType: 'inline'
-      script: |
-        export LD_DEBUG=all
-        echo $LD_DEBUG
-
   - task: PowerShell@2
     displayName: Build and Test
     inputs:
