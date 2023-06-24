@@ -67,10 +67,12 @@ If (Test-Path "..\bld") {
 
 if (-not $NoBuild) {    
     Write-Information "Building Sarif.Sdk"	
-    & $RepoRoot\Src\sarif-sdk\BuildAndTest.cmd -NoBuild -NoTest -NoPublish -NoSigningDirectory -NoPackage -NoFormat
+    & $RepoRoot\Src\sarif-sdk\scripts\BuildAndTest.ps1 -NoBuild -NoTest -NoPublish -NoSigningDirectory -NoPackage -NoFormat
     if ($LASTEXITCODE -ne 0) {	
         Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."	
-    }    
+    }
+
+    Root = $(Resolve-Path $PSScriptRoot\..).Path
 
     Write-Information "Building SarifPatternMatcher.sln (dotnet)..."
     dotnet build $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true
@@ -96,7 +98,7 @@ if (-not $NoTest) {
 
 if (-not $NoFormat) {
     dotnet tool update --global dotnet-format --version 4.1.131201
-    dotnet-format --folder --exclude .\src\sarif-sdk\
+    dotnet-format --folder --exclude .\Src\sarif-sdk\
 }
 
 Write-Information "$ScriptName SUCCEEDED."

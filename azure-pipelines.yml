@@ -1,25 +1,32 @@
 pr:
 - 'main'
 
-pool:
-  vmImage: 'windows-2022'
+jobs:
+- job: NET_pipeline
+  strategy:
+    matrix:
+      linux:
+        imageName: 'ubuntu-20.04'
+      mac:
+        imageName: 'macOS-latest'
+      windows:
+        imageName: 'windows-latest'
+    maxParallel: 4
 
-steps:
-- task: BatchScript@1
-  displayName: 'Run VsDevCmd.bat'
-  inputs:
-    filename: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat'
-    modifyEnvironment: true
+  pool: 
+    vmImage: $(imageName)
 
-- task: BatchScript@1
-  displayName: 'Run BuildAndTest.cmd'
-  inputs:
-    filename: 'BuildAndTest.cmd'
-    arguments: '-Configuration Release -EnableCoverage'
-
-- task: PublishTestResults@2
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
-
-- task: ComponentGovernanceComponentDetection@0
+  steps:
+  - task: PowerShell@2
+    displayName: Build and Test
+    inputs:
+      targetType: filePath
+      filePath: ./Scripts/BuildAndTest.ps1
+      arguments: '-Configuration Release -EnableCoverage'
+  
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: VSTest
+      testResultsFiles: '**/*.trx'
+  
+  - task: ComponentGovernanceComponentDetection@0

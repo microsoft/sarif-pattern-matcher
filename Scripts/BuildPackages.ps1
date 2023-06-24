@@ -25,7 +25,7 @@ function Exit-WithFailureMessage($scriptName, $message) {
     exit 1
 }
 
-dotnet pack "$RepoRoot\src\SarifPatternMatcher.sln" --no-build --configuration $Configuration --force 
+dotnet pack "$RepoRoot\Src\SarifPatternMatcher.sln" --no-build --configuration $Configuration --force 
 if ($LASTEXITCODE -ne 0) {
     Exit-WithFailureMessage $ScriptName "Pack of SarifPatternMatcher.sln failed."
 }

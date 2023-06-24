@@ -43,12 +43,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         public static ExecutionContext ContextSetup()
         {
             // no need to mock 
-            return new ExecutionContext { FunctionDirectory = Path.GetFullPath(@".\") };
+            return new ExecutionContext { FunctionDirectory = Path.GetFullPath("." + Path.DirectorySeparatorChar) };
         }
 
         public static string GetTestResourceContent(string fileName)
         {
-            string filePath = Path.Combine(@".\TestData\", fileName);
+            string filePath = Path.Combine(@"TestData", fileName);
             return File.ReadAllText(filePath);
         }
     }
