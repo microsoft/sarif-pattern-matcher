@@ -72,7 +72,7 @@ if (-not $NoBuild) {
         Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."	
     }
 
-    Root = $(Resolve-Path $PSScriptRoot\..).Path
+    $RepoRoot = $(Resolve-Path $PSScriptRoot\..).Path
 
     Write-Information "Building SarifPatternMatcher.sln (dotnet)..."
     dotnet build $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true

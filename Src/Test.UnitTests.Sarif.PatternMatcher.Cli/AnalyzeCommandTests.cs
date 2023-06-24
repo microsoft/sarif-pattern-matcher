@@ -259,7 +259,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             string rootDirectory = Path.Combine(Environment.CurrentDirectory, "e", "repros");
             string smallTargetPath = Path.Combine(rootDirectory, SmallTargetName);
             string largeTargetPath = Path.Combine(rootDirectory, LargeTargetName);
-            string searchDefinitionsPath = Path.Combine(Environment.CurrentDirectory, "c", $"{Guid.NewGuid()}.json");
+            string searchDefinitionsPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ?
+                                           @$"c:\{Guid.NewGuid()}.json" :
+                                           Path.Combine(Path.GetPathRoot(Environment.CurrentDirectory), $"{Guid.NewGuid()}.json");
 
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.DirectoryExists(rootDirectory)).Returns(true);
@@ -408,7 +410,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             string rootDirectory = Path.Combine(Environment.CurrentDirectory, "e", "repros");
             string scanTargetName = SmallTargetName;
             string scanTargetPath = Path.Combine(rootDirectory, scanTargetName);
-            string searchDefinitionsPath = Path.Combine(Environment.CurrentDirectory, "c", $"{Guid.NewGuid()}.json");
+            string searchDefinitionsPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ?
+                                           @$"c:\{Guid.NewGuid()}.json" :
+                                           Path.Combine(Path.GetPathRoot(Environment.CurrentDirectory), $"{Guid.NewGuid()}.json");
 
 
             var fvi = FileVersionInfo.GetVersionInfo(this.GetType().Assembly.Location);
@@ -504,7 +508,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             string rootDirectory = Path.Combine(Environment.CurrentDirectory, "e", "repros");
             string smallTargetPath = Path.Combine(rootDirectory, SmallTargetName);
             string largeTargetPath = Path.Combine(rootDirectory, LargeTargetName);
-            string searchDefinitionsPath = Path.Combine(Environment.CurrentDirectory, "c", $"{Guid.NewGuid()}.json");
+            string searchDefinitionsPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ?
+                                           @$"c:\{Guid.NewGuid()}.json" :
+                                           Path.Combine(Path.GetPathRoot(Environment.CurrentDirectory), $"{Guid.NewGuid()}.json");
 
             var mockFileSystem = new Mock<IFileSystem>();
             mockFileSystem.Setup(x => x.DirectoryExists(rootDirectory)).Returns(true);
