@@ -78,6 +78,11 @@ if (-not $NoBuild) {
     $RepoRoot = $(Resolve-Path $PSScriptRoot\..).Path
     Write-Information "RepoRoot3: $RepoRoot"
 
+
+    Write-Information "Building Native.sln (dotnet)..."
+    dotnet build $RepoRoot\Src\RE2.Native.sln -c $Configuration -p:Deterministic=true
+
+
     Write-Information "Building SarifPatternMatcher.sln (dotnet)..."
     dotnet build $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true
     if ($LASTEXITCODE -ne 0) {
