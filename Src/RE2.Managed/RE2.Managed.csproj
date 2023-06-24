@@ -34,43 +34,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x64/native</PackagePath>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x64\native\libre2.so" Pack="true" Link="runtimes/linux-x64/native/libre2.so">
+
+    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x64\native\libcre2.so" Pack="true" Link="runtimes/linux-x64/native/libcre2.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x64/native</PackagePath>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x64\native\libre2.so.11" Pack="true" Link="runtimes/linux-x64/native/libre2.so.11">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>runtimes/win-x64/native</PackagePath>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x64\native\libre2.so.11.0.0" Pack="true" Link="runtimes/linux-x64/native/libre2.so.11.0.0">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>runtimes/win-x64/native</PackagePath>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x86\native\libre2.so" Pack="true" Link="runtimes/linux-x86/native/libre2.so">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>runtimes/win-x86/native</PackagePath>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x86\native\libre2.so.11" Pack="true" Link="runtimes/linux-x86/native/libre2.so.11">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>runtimes/win-x86/native</PackagePath>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x86\native\libre2.so.11.0.0" Pack="true" Link="runtimes/linux-x86/native/libre2.so.11.0.0">
+
+    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x86\native\libcre2.so" Pack="true" Link="runtimes/linux-x86/native/libcre2.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x86/native</PackagePath>
     </Content>
     
-    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x64\native\libre2.so" Pack="true" Link="libre2.so">
+    <!--<Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x64\native\libcre2.so" Pack="true" Link="libcre2.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath></PackagePath>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x64\native\libre2.so.11" Pack="true" Link="libre2.so.11">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath></PackagePath>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x64\native\libre2.so.11.0.0" Pack="true" Link="libre2.so.11.0.0">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath></PackagePath>
-    </Content>
+    </Content>-->
     
     <None Include="RE2.Managed.targets" Pack="true" PackagePath="build\" />
     <None Include="RE2.LICENSE.txt" Pack="true" PackagePath="content\" />
