@@ -69,7 +69,8 @@ namespace Microsoft.RE2.Managed
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                return LinuxMethods.BuildRegex(regex, regexOptions, maxMemoryInBytes);
+                //return LinuxMethods.BuildRegex(regex, regexOptions, maxMemoryInBytes);
+                return 1;
             }
 
             return Environment.Is64BitProcess
