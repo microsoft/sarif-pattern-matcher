@@ -148,7 +148,7 @@ namespace Microsoft.RE2.Managed
             public const int RTLD_NOW = 0x002;
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("libdl", ExactSpelling = true)]
+            [DllImport("libdl.so.2", ExactSpelling = true)]
             public static unsafe extern IntPtr dlopen(string fileName, int flags);
 
             [SuppressUnmanagedCodeSecurity]
