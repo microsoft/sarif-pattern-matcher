@@ -45,10 +45,10 @@
       <PackagePath>runtimes/win-x86/native</PackagePath>
     </Content>
     
-    <!--<Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x64\native\libcre2.so" Pack="true" Link="libcre2.so">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x64\native\libcre2.so" Pack="true" Link="libcre2.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath></PackagePath>
-    </Content>-->
+    </Content>
     
     <None Include="RE2.Managed.targets" Pack="true" PackagePath="build\" />
     <None Include="RE2.LICENSE.txt" Pack="true" PackagePath="content\" />
