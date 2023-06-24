@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 
 using FluentAssertions;
@@ -602,7 +603,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             string rootDirectory = Path.Combine(Environment.CurrentDirectory, "e", "repros");
             string scanTargetName = SmallTargetName;
             string scanTargetPath = Path.Combine(rootDirectory, scanTargetName);
-            string searchDefinitionsPath = Path.Combine(Environment.CurrentDirectory, "c", $"{Guid.NewGuid()}.json");
+            string searchDefinitionsPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ?
+                                           @$"c:\{Guid.NewGuid()}.json" :
+                                           Path.Combine(Path.GetPathRoot(Environment.CurrentDirectory), $"{Guid.NewGuid()}.json");
             string currentDirectory = Directory.GetCurrentDirectory();
             string dllLocation = Path.Combine(currentDirectory, "Test.UnitTests.Sarif.PatternMatcher.Cli.dll");
 
