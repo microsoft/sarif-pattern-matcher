@@ -15,6 +15,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     public abstract class ValidatorBase
     {
+        public static IRegex RegexInstance { get; set; }
+
         public const string ScanIdentityHttpCustomHeaderKey =
             "Automation-Scan-Description";
 

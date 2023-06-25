@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 using Microsoft.RE2.Managed;
 using Microsoft.Strings.Interop;
@@ -29,11 +30,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public static ISet<Skimmer<AnalyzeContext>> CreateSkimmersFromDefinitionsFiles(IFileSystem fileSystem,
                                                                                        IEnumerable<string> searchDefinitionsPaths,
                                                                                        Tool tool,
-                                                                                       IRegex engine = null)
+                                                                                       IRegex engine)
         {
             tool.Extensions ??= new List<ToolComponent>();
-
-            engine ??= RE2Regex.Instance;
 
             var validators = new ValidatorsCache(validatorBinaryPaths: null, fileSystem);
 
@@ -368,6 +367,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             context = base.InitializeGlobalContextFromOptions(options, ref context);
 
             context.Retry = options.Retry != null ? options.Retry.Value : context.Retry;
+            context.RegexEngine = options.RegexEngine != 0 ? options.RegexEngine : context.RegexEngine;
             context.RedactSecrets = options.RedactSecrets != null ? options.RedactSecrets.Value : context.RedactSecrets;
             context.EnhancedReporting = options.EnhancedReporting != null ? options.EnhancedReporting.Value : context.EnhancedReporting;
             context.DynamicValidation = options.DynamicValidation != null ? options.DynamicValidation.Value : context.DynamicValidation;
@@ -379,6 +379,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     JsonConvert.DeserializeObject<List<VersionControlDetails>>(options.VersionControlProvenance);
             }
 
+            ValidatorBase.RegexInstance = GetRegexEngine(context.RegexEngine);
             context.PluginFilePaths = options.PluginFilePaths.Any() ? new StringSet(options.PluginFilePaths) : context.PluginFilePaths;
             return context;
         }
@@ -394,13 +395,37 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             if (context.PluginFilePaths?.Any() == true)
             {
-                foreach (Skimmer<AnalyzeContext> skimmer in CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.PluginFilePaths, Tool))
+                IRegex engine = GetRegexEngine(context.RegexEngine);
+                foreach (Skimmer<AnalyzeContext> skimmer in CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.PluginFilePaths, Tool, engine))
                 {
                     aggregatedSkimmers.Add(skimmer);
                 }
             }
 
             return aggregatedSkimmers;
+        }
+
+        private IRegex GetRegexEngine(RegexEngine regexEngine)
+        {
+            switch (regexEngine)
+            {
+                case RegexEngine.RE2:
+                {
+                    return RE2Regex.Instance;
+                }
+
+                case RegexEngine.DotNet:
+                {
+                    return DotNetRegex.Instance;
+                }
+
+                case RegexEngine.CachedDotNet:
+                {
+                    return CachedDotNetRegex.Instance;
+                }
+            }
+
+            throw new InvalidOperationException($"Unhandled regex engine value: {regexEngine}");
         }
 
         protected override AnalyzeContext DetermineApplicabilityAndAnalyze(AnalyzeContext context, IEnumerable<Skimmer<AnalyzeContext>> skimmers, ISet<string> disabledSkimmers)

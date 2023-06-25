@@ -36,6 +36,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public override bool AnalysisComplete { get; set; }
 
+        public RegexEngine RegexEngine
+        {
+            get => this.Policy.GetProperty(RegexEngineProperty);
+            set => this.Policy.SetProperty(RegexEngineProperty, value);
+        }
+
         public string SniffRegex
         {
             get => this.Policy.GetProperty(SniffRegexProperty);
@@ -103,6 +109,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             RollingHashMap?.Clear();
             RollingHashMap = null;
         }
+
+        public static PerLanguageOption<RegexEngine> RegexEngineProperty =>
+            new PerLanguageOption<RegexEngine>(
+                "CoreSettings", nameof(RegexEngine), defaultValue: () => RegexEngine.RE2,
+                "The pattern matching to use for scanning. One of RE2, DotNet, CachedDotNet or IronRE2.");
 
         public static PerLanguageOption<string> SniffRegexProperty =>
             new PerLanguageOption<string>(

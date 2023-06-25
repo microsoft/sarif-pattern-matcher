@@ -16,7 +16,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class AwsCredentialsValidator : DynamicValidatorBase
     {
-        internal static IRegex RegexEngine;
         internal DateTime TimeStamp;
         private const string UserPrefix = "User: ";
         private const string UserSuffix = " is not authorized";
@@ -24,9 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         public AwsCredentialsValidator()
         {
-            RegexEngine = RE2Regex.Instance;
-
-            RegexEngine.IsMatch(string.Empty, AwsUserExpression);
+            RegexInstance.IsMatch(string.Empty, AwsUserExpression);
 
             this.TimeStamp = DateTime.UtcNow;
         }
@@ -97,7 +94,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                         {
                             case "AccessDenied":
                             {
-                                FlexMatch match = RegexEngine.Match(errorMessage, AwsUserExpression);
+                                FlexMatch match = RegexInstance.Match(errorMessage, AwsUserExpression);
 
                                 // May return a message containing user id details such as:
                                 // User: arn:aws:iam::123456123456:user/example.com@@dead1234dead1234dead1234 is not

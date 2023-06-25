@@ -18,7 +18,10 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## v4.5.2 Unreleased
+## v4.5.4 6/25/2023
+- NEW: Allow for swapping regex engines (between `RE2`, `DotNet` and `CachedDotNet`) via `--engine` command-line argument and `RegexEngine` context property. [#776](https://github.com/microsoft/sarif-pattern-matcher/pull/776)
+
+## v4.5.2 6/14/2023
 - DEP: Update SARIF SDK submodule from [dd8b7b8 to a7029a3](https://github.com/microsoft/sarif-sdk/compare/dd8b7b8..a7029a3). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/a7029a3/ReleaseHistory.md). SDK v4.2.0.
 - DEP: Update `SEC101/003.GoogleApiKey` in `Security` validating Google API key using HTTP requests.
 - DEP: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
