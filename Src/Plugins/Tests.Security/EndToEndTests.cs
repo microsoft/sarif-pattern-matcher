@@ -37,7 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             ISet<Skimmer<AnalyzeContext>> skimmers =
                 AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem,
                                                                   new string[] { regexDefinitionsPath },
-                                                                  tool, 
+                                                                  tool,
                                                                   RE2Regex.Instance);
             return skimmers;
         }
