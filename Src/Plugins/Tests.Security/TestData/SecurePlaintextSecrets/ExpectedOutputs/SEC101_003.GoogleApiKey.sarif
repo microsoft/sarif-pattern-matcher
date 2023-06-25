@@ -9,6 +9,27 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
+          "rules": [
+            {
+              "id": "SEC101/003",
+              "name": "GoogleApiKey",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://support.google.com/googleapi/answer/6158862?hl=en",
+              "properties": {
+                "sarif/uiLabel": "Google API key"
+              }
+            }
+          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -17,27 +38,6 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
-            "rules": [
-              {
-                "id": "SEC101/003",
-                "name": "GoogleApiKey",
-                "fullDescription": {
-                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-                },
-                "messageStrings": {
-                  "NotApplicable_InvalidMetadata": {
-                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                  },
-                  "Default": {
-                    "text": "'{0}' is {1}{2}{3}{4}{5}."
-                  }
-                },
-                "helpUri": "https://support.google.com/googleapi/answer/6158862?hl=en",
-                "properties": {
-                  "sarif/uiLabel": "Google API key"
-                }
-              }
-            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -49,58 +49,59 @@
       },
       "invocations": [
         {
-          "executionSuccessful": true
-        }
-      ],
-      "results": [
-        {
-          "rule": {
-            "id": "SEC101/003",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…00dead",
-              "an apparent ",
-              "",
-              "Google API key",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
+          "toolExecutionNotifications": [
             {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_003.GoogleApiKey.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 40,
-                  "charOffset": 0,
-                  "charLength": 39,
-                  "snippet": {
-                    "text": "AIza0deadbeef00deadbeef00deadbeef00dead"
+              "locations": [
+                {
+                  "physicalLocation": {
+                    "artifactLocation": {
+                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_003.GoogleApiKey.txt",
+                      "uriBaseId": "SRC_ROOT"
+                    }
                   }
                 }
+              ],
+              "message": {
+                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_003.GoogleApiKey.txt' for check 'GoogleApiKey' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
+              },
+              "level": "error",
+              "exception": {
+                "kind": "NullReferenceException",
+                "message": "Object reference not set to an instance of an object.",
+                "stack": {
+                  "frames": [
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "innerExceptions": []
+              },
+              "descriptor": {
+                "id": "ERR998.ExceptionInAnalyze"
+              },
+              "associatedRule": {
+                "id": "SEC101/003",
+                "index": 0
               }
             }
           ],
-          "fingerprints": {
-            "secretHashSha256/v0": "68fcb0c4aa13dabd119dfe2adaf028d9addfe9f9ca4e4be9bd0b364882f29dc6",
-            "assetFingerprint/v0": "{\"platform\":\"Google\"}",
-            "validationFingerprintHashSha256/v0": "8bdc58a544a5b0d75ba5ff5d19e10fb001cb71064c3fccd7907253eb01768f1c",
-            "secretFingerprint/v0": "{\"secret\":\"AIza0deadbeef00deadbeef00deadbeef00dead\"}",
-            "validationFingerprint/v0": "{\"secret\":\"AIza0deadbeef00deadbeef00deadbeef00dead\"}"
-          },
-          "rank": 39.61
+          "executionSuccessful": false
         }
       ],
       "columnKind": "utf16CodeUnits"

@@ -9,6 +9,27 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
+          "rules": [
+            {
+              "id": "SEC101/012",
+              "name": "SlackWebhook",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://slack.com/help/articles/215770388-Create-and-regenerate-API-tokens",
+              "properties": {
+                "sarif/uiLabel": "Slack web hook"
+              }
+            }
+          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -17,27 +38,6 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
-            "rules": [
-              {
-                "id": "SEC101/012",
-                "name": "SlackWebhook",
-                "fullDescription": {
-                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-                },
-                "messageStrings": {
-                  "NotApplicable_InvalidMetadata": {
-                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                  },
-                  "Default": {
-                    "text": "'{0}' is {1}{2}{3}{4}{5}."
-                  }
-                },
-                "helpUri": "https://slack.com/help/articles/215770388-Create-and-regenerate-API-tokens",
-                "properties": {
-                  "sarif/uiLabel": "Slack web hook"
-                }
-              }
-            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -49,58 +49,59 @@
       },
       "invocations": [
         {
-          "executionSuccessful": true
-        }
-      ],
-      "results": [
-        {
-          "rule": {
-            "id": "SEC101/012",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…adbeef",
-              "an apparent ",
-              "",
-              "Slack web hook",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
+          "toolExecutionNotifications": [
             {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_012.SlackWebhook.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 46,
-                  "endLine": 1,
-                  "endColumn": 82,
-                  "charOffset": 45,
-                  "charLength": 36,
-                  "snippet": {
-                    "text": "B0123456789/deedbeefdeaffeeddeadbeef"
+              "locations": [
+                {
+                  "physicalLocation": {
+                    "artifactLocation": {
+                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_012.SlackWebhook.txt",
+                      "uriBaseId": "SRC_ROOT"
+                    }
                   }
                 }
+              ],
+              "message": {
+                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_012.SlackWebhook.txt' for check 'SlackWebhook' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
+              },
+              "level": "error",
+              "exception": {
+                "kind": "NullReferenceException",
+                "message": "Object reference not set to an instance of an object.",
+                "stack": {
+                  "frames": [
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "innerExceptions": []
+              },
+              "descriptor": {
+                "id": "ERR998.ExceptionInAnalyze"
+              },
+              "associatedRule": {
+                "id": "SEC101/012",
+                "index": 0
               }
             }
           ],
-          "fingerprints": {
-            "secretHashSha256/v0": "d693a51796332f66b5c623f099e3a6c65b49581051982e158dd81272d688bfbf",
-            "assetFingerprint/v0": "{\"id\":\"T01JYS3KLKU\",\"platform\":\"Slack\"}",
-            "validationFingerprintHashSha256/v0": "7287fd0b7057f4726d34ec2b6881a537ae271ac5152b31b6e127140d2b34009f",
-            "secretFingerprint/v0": "{\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}",
-            "validationFingerprint/v0": "{\"id\":\"T01JYS3KLKU\",\"secret\":\"B0123456789/deedbeefdeaffeeddeadbeef\"}"
-          },
-          "rank": 49.76
+          "executionSuccessful": false
         }
       ],
       "columnKind": "utf16CodeUnits"

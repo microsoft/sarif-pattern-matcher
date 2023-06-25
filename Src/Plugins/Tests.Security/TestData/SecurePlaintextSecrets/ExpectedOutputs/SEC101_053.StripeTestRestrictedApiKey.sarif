@@ -9,6 +9,27 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
+          "rules": [
+            {
+              "id": "SEC101/053",
+              "name": "StripeTestRestrictedApiKey",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://stripe.com/docs/keys",
+              "properties": {
+                "sarif/uiLabel": "Stripe test restricted API key"
+              }
+            }
+          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -17,27 +38,6 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
-            "rules": [
-              {
-                "id": "SEC101/053",
-                "name": "StripeTestRestrictedApiKey",
-                "fullDescription": {
-                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-                },
-                "messageStrings": {
-                  "NotApplicable_InvalidMetadata": {
-                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                  },
-                  "Default": {
-                    "text": "'{0}' is {1}{2}{3}{4}{5}."
-                  }
-                },
-                "helpUri": "https://stripe.com/docs/keys",
-                "properties": {
-                  "sarif/uiLabel": "Stripe test restricted API key"
-                }
-              }
-            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -49,156 +49,59 @@
       },
       "invocations": [
         {
-          "executionSuccessful": true
-        }
-      ],
-      "results": [
-        {
-          "rule": {
-            "id": "SEC101/053",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…0deadb",
-              "an apparent ",
-              "",
-              "Stripe test restricted API key",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
+          "toolExecutionNotifications": [
             {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_053.StripeTestRestrictedApiKey.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 2,
-                  "startColumn": 1,
-                  "endLine": 2,
-                  "endColumn": 33,
-                  "charOffset": 2,
-                  "charLength": 32,
-                  "snippet": {
-                    "text": "rk_test_0deadbeef0deadbeef0deadb"
+              "locations": [
+                {
+                  "physicalLocation": {
+                    "artifactLocation": {
+                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_053.StripeTestRestrictedApiKey.txt",
+                      "uriBaseId": "SRC_ROOT"
+                    }
                   }
                 }
+              ],
+              "message": {
+                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_053.StripeTestRestrictedApiKey.txt' for check 'StripeTestRestrictedApiKey' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
+              },
+              "level": "error",
+              "exception": {
+                "kind": "NullReferenceException",
+                "message": "Object reference not set to an instance of an object.",
+                "stack": {
+                  "frames": [
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "innerExceptions": []
+              },
+              "descriptor": {
+                "id": "ERR998.ExceptionInAnalyze"
+              },
+              "associatedRule": {
+                "id": "SEC101/053",
+                "index": 0
               }
             }
           ],
-          "fingerprints": {
-            "secretHashSha256/v0": "406e5e3d1700bf2646aa8cde101396d16d6412768ce5ec31f62ac25042cb081d",
-            "assetFingerprint/v0": "{\"platform\":\"Stripe\"}",
-            "validationFingerprintHashSha256/v0": "7528134de4b57f0d99b7d5334e91221dec4cf8a3b493856461582287f347054a",
-            "secretFingerprint/v0": "{\"secret\":\"rk_test_0deadbeef0deadbeef0deadb\"}",
-            "validationFingerprint/v0": "{\"secret\":\"rk_test_0deadbeef0deadbeef0deadb\"}"
-          },
-          "rank": 44.74
-        },
-        {
-          "rule": {
-            "id": "SEC101/053",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…deadbe",
-              "an apparent ",
-              "",
-              "Stripe test restricted API key",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_053.StripeTestRestrictedApiKey.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 4,
-                  "startColumn": 1,
-                  "endLine": 4,
-                  "endColumn": 43,
-                  "charOffset": 38,
-                  "charLength": 42,
-                  "snippet": {
-                    "text": "rk_test_0deadbeef0deadbeef0deadbeef0deadbe"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "secretHashSha256/v0": "ba3e5de6fa5e8ae0fb5491ec584d3b662aeb27a41b044d72b7f2a277a22d8ffb",
-            "assetFingerprint/v0": "{\"platform\":\"Stripe\"}",
-            "validationFingerprintHashSha256/v0": "de98553f5bcf33e4d5c576ec2f481b2b02753b11d80c149f292b8bb2413fc541",
-            "secretFingerprint/v0": "{\"secret\":\"rk_test_0deadbeef0deadbeef0deadbeef0deadbe\"}",
-            "validationFingerprint/v0": "{\"secret\":\"rk_test_0deadbeef0deadbeef0deadbeef0deadbe\"}"
-          },
-          "rank": 43.1
-        },
-        {
-          "rule": {
-            "id": "SEC101/053",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…ebeef0",
-              "an apparent ",
-              "",
-              "Stripe test restricted API key",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_053.StripeTestRestrictedApiKey.txt",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 1,
-                  "endLine": 6,
-                  "endColumn": 108,
-                  "charOffset": 84,
-                  "charLength": 107,
-                  "snippet": {
-                    "text": "rk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "secretHashSha256/v0": "bc3cf7f35418d4c1a4cc028695f846b1451b33bebbe2af14627ec7c198f49d37",
-            "assetFingerprint/v0": "{\"platform\":\"Stripe\"}",
-            "validationFingerprintHashSha256/v0": "a87e7193304c7a1bd05eecd34ec335f2b1bfb13866a380cfaeb87443458c9c3a",
-            "secretFingerprint/v0": "{\"secret\":\"rk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}",
-            "validationFingerprint/v0": "{\"secret\":\"rk_test_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}"
-          },
-          "rank": 38.57
+          "executionSuccessful": false
         }
       ],
       "columnKind": "utf16CodeUnits"

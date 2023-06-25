@@ -9,6 +9,27 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
+          "rules": [
+            {
+              "id": "SEC101/019",
+              "name": "PicaticApiKey",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://www.eventbrite.com/platform/api#/introduction/authentication",
+              "properties": {
+                "sarif/uiLabel": "Picatic API key"
+              }
+            }
+          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -17,27 +38,6 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
-            "rules": [
-              {
-                "id": "SEC101/019",
-                "name": "PicaticApiKey",
-                "fullDescription": {
-                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-                },
-                "messageStrings": {
-                  "NotApplicable_InvalidMetadata": {
-                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                  },
-                  "Default": {
-                    "text": "'{0}' is {1}{2}{3}{4}{5}."
-                  }
-                },
-                "helpUri": "https://www.eventbrite.com/platform/api#/introduction/authentication",
-                "properties": {
-                  "sarif/uiLabel": "Picatic API key"
-                }
-              }
-            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -49,107 +49,59 @@
       },
       "invocations": [
         {
-          "executionSuccessful": true
-        }
-      ],
-      "results": [
-        {
-          "rule": {
-            "id": "SEC101/019",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…678901",
-              "an apparent ",
-              "",
-              "Picatic API key",
-              "",
-              ""
-            ]
-          },
-          "locations": [
+          "toolExecutionNotifications": [
             {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_019.PicaticApiKey.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 41,
-                  "charOffset": 0,
-                  "charLength": 40,
-                  "snippet": {
-                    "text": "sk_test_01234567890123456789012345678901"
+              "locations": [
+                {
+                  "physicalLocation": {
+                    "artifactLocation": {
+                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_019.PicaticApiKey.ps1",
+                      "uriBaseId": "SRC_ROOT"
+                    }
                   }
                 }
+              ],
+              "message": {
+                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_019.PicaticApiKey.ps1' for check 'PicaticApiKey' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
+              },
+              "level": "error",
+              "exception": {
+                "kind": "NullReferenceException",
+                "message": "Object reference not set to an instance of an object.",
+                "stack": {
+                  "frames": [
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "innerExceptions": []
+              },
+              "descriptor": {
+                "id": "ERR998.ExceptionInAnalyze"
+              },
+              "associatedRule": {
+                "id": "SEC101/019",
+                "index": 0
               }
             }
           ],
-          "fingerprints": {
-            "secretHashSha256/v0": "2897bdfa034fb6d0656497700721f7b44631ce67ac67a62c35f78a585e4633bb",
-            "assetFingerprint/v0": "{\"platform\":\"Picatic\"}",
-            "validationFingerprintHashSha256/v0": "bae14235e6ed8fef26a1f39e50e679943db2cebd97202efd39a9fd058dcfe567",
-            "secretFingerprint/v0": "{\"secret\":\"sk_test_01234567890123456789012345678901\"}",
-            "validationFingerprint/v0": "{\"secret\":\"sk_test_01234567890123456789012345678901\"}"
-          },
-          "rank": 54.59
-        },
-        {
-          "rule": {
-            "id": "SEC101/019",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…678901",
-              "an apparent ",
-              "",
-              "Picatic API key",
-              "",
-              ""
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_019.PicaticApiKey.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 1,
-                  "endLine": 3,
-                  "endColumn": 41,
-                  "charOffset": 44,
-                  "charLength": 40,
-                  "snippet": {
-                    "text": "sk_live_01234567890123456789012345678901"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "secretHashSha256/v0": "4931f4421b7b38427b5bd7e5c4d51975286cbf23ee31d51eccf10ec03681841f",
-            "assetFingerprint/v0": "{\"platform\":\"Picatic\"}",
-            "validationFingerprintHashSha256/v0": "e0fa4eeaeb66eb00430c90237a416513520ee54b1a3c34b473e227fd65c76b91",
-            "secretFingerprint/v0": "{\"secret\":\"sk_live_01234567890123456789012345678901\"}",
-            "validationFingerprint/v0": "{\"secret\":\"sk_live_01234567890123456789012345678901\"}"
-          },
-          "rank": 56.01
+          "executionSuccessful": false
         }
       ],
       "columnKind": "utf16CodeUnits"

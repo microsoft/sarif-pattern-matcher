@@ -9,6 +9,30 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
+          "rules": [
+            {
+              "id": "SEC101/006",
+              "name": "GitHubLegacyPat",
+              "deprecatedNames": [
+                "GitHubPat"
+              ],
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/token-expiration-and-revocation",
+              "properties": {
+                "sarif/uiLabel": "Legacy format GitHub personal access token"
+              }
+            }
+          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -17,30 +41,6 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
-            "rules": [
-              {
-                "id": "SEC101/006",
-                "name": "GitHubLegacyPat",
-                "deprecatedNames": [
-                  "GitHubPat"
-                ],
-                "fullDescription": {
-                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-                },
-                "messageStrings": {
-                  "NotApplicable_InvalidMetadata": {
-                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                  },
-                  "Default": {
-                    "text": "'{0}' is {1}{2}{3}{4}{5}."
-                  }
-                },
-                "helpUri": "https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/token-expiration-and-revocation",
-                "properties": {
-                  "sarif/uiLabel": "Legacy format GitHub personal access token"
-                }
-              }
-            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -52,254 +52,59 @@
       },
       "invocations": [
         {
-          "executionSuccessful": true
-        }
-      ],
-      "results": [
-        {
-          "rule": {
-            "id": "SEC101/006",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…812843",
-              "an apparent ",
-              "",
-              "legacy format GitHub personal access token",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
+          "toolExecutionNotifications": [
             {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubLegacyPat.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 2,
-                  "endLine": 5,
-                  "endColumn": 42,
-                  "charOffset": 91,
-                  "charLength": 40,
-                  "snippet": {
-                    "text": "ff34885a8624460a855540c6592698d2f1812843"
+              "locations": [
+                {
+                  "physicalLocation": {
+                    "artifactLocation": {
+                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubLegacyPat.ps1",
+                      "uriBaseId": "SRC_ROOT"
+                    }
                   }
                 }
+              ],
+              "message": {
+                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_006.GitHubLegacyPat.ps1' for check 'GitHubLegacyPat' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
+              },
+              "level": "error",
+              "exception": {
+                "kind": "NullReferenceException",
+                "message": "Object reference not set to an instance of an object.",
+                "stack": {
+                  "frames": [
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "innerExceptions": []
+              },
+              "descriptor": {
+                "id": "ERR998.ExceptionInAnalyze"
+              },
+              "associatedRule": {
+                "id": "SEC101/006",
+                "index": 0
               }
             }
           ],
-          "fingerprints": {
-            "secretHashSha256/v0": "c4b0747a02caa79427319291dcbabb9492edc47f4557b7dd4b90aa3688d463c7",
-            "assetFingerprint/v0": "{\"platform\":\"GitHub\"}",
-            "validationFingerprintHashSha256/v0": "25799b447c11c0dec40e393f9b0349fbdf11bbb5bb8c2e6c698dbbd1bbe7cb7c",
-            "secretFingerprint/v0": "{\"secret\":\"ff34885a8624460a855540c6592698d2f1812843\"}",
-            "validationFingerprint/v0": "{\"secret\":\"ff34885a8624460a855540c6592698d2f1812843\"}"
-          },
-          "rank": 49.73
-        },
-        {
-          "rule": {
-            "id": "SEC101/006",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…812843",
-              "an apparent ",
-              "",
-              "legacy format GitHub personal access token",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubLegacyPat.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 10,
-                  "startColumn": 37,
-                  "endLine": 10,
-                  "endColumn": 77,
-                  "charOffset": 223,
-                  "charLength": 40,
-                  "snippet": {
-                    "text": "dead885a8624460a855540c6592698d2f1812843"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "secretHashSha256/v0": "d5c7b3b0f3200e6880d402d92c28711e48407172498a7337f17acfe24ce89c20",
-            "assetFingerprint/v0": "{\"platform\":\"GitHub\"}",
-            "validationFingerprintHashSha256/v0": "84c67c32a414e0b735e075eed493dacf7d8f87ea2eab7548c748132818acb099",
-            "secretFingerprint/v0": "{\"secret\":\"dead885a8624460a855540c6592698d2f1812843\"}",
-            "validationFingerprint/v0": "{\"secret\":\"dead885a8624460a855540c6592698d2f1812843\"}"
-          },
-          "rank": 50.75
-        },
-        {
-          "rule": {
-            "id": "SEC101/006",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…81dead",
-              "an apparent ",
-              "",
-              "legacy format GitHub personal access token",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubLegacyPat.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 14,
-                  "startColumn": 36,
-                  "endLine": 14,
-                  "endColumn": 76,
-                  "charOffset": 336,
-                  "charLength": 40,
-                  "snippet": {
-                    "text": "ff34885a8624460a855540c6592698d2f181dead"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "secretHashSha256/v0": "d5cbd2e8a520ca0a9c2d574b0fe507fe2cc95629fa4231332ee62155c36a85e4",
-            "assetFingerprint/v0": "{\"platform\":\"GitHub\"}",
-            "validationFingerprintHashSha256/v0": "60358100a680426014c92b68f1ccfea4e8a0366a96b4c28e97f092c829c925a5",
-            "secretFingerprint/v0": "{\"secret\":\"ff34885a8624460a855540c6592698d2f181dead\"}",
-            "validationFingerprint/v0": "{\"secret\":\"ff34885a8624460a855540c6592698d2f181dead\"}"
-          },
-          "rank": 51.69
-        },
-        {
-          "rule": {
-            "id": "SEC101/006",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…012345",
-              "an apparent ",
-              "",
-              "GitHub personal access token",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubLegacyPat.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 28,
-                  "startColumn": 1,
-                  "endLine": 28,
-                  "endColumn": 41,
-                  "charOffset": 964,
-                  "charLength": 40,
-                  "snippet": {
-                    "text": "ghp_000000000001234567890123456789012345"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "secretHashSha256/v0": "c4c316bbd7b3e6371738c3c194eae0f12c4b61c1f5d515918f5bf6173baf5b70",
-            "assetFingerprint/v0": "{\"platform\":\"GitHub\"}",
-            "validationFingerprintHashSha256/v0": "b31f373817a4e1e56764a9513910d05163718322bd384f472dc67854aa855cda",
-            "secretFingerprint/v0": "{\"secret\":\"ghp_000000000001234567890123456789012345\"}",
-            "validationFingerprint/v0": "{\"secret\":\"ghp_000000000001234567890123456789012345\"}"
-          },
-          "rank": 47.5
-        },
-        {
-          "rule": {
-            "id": "SEC101/006",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…012345",
-              "an apparent ",
-              "",
-              "GitHub personal access token",
-              "",
-              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_006.GitHubLegacyPat.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 31,
-                  "startColumn": 1,
-                  "endLine": 31,
-                  "endColumn": 41,
-                  "charOffset": 1025,
-                  "charLength": 40,
-                  "snippet": {
-                    "text": "ghr_111111111101234567890123456789012345"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "secretHashSha256/v0": "2352f12b978db1b73015033969923e1b69ec937926f44440cd40a639a8709e09",
-            "assetFingerprint/v0": "{\"platform\":\"GitHub\"}",
-            "validationFingerprintHashSha256/v0": "920386532da6dcd761a2e515339fd9b86c7512f7eabbaaa59034fff9dc71ac53",
-            "secretFingerprint/v0": "{\"secret\":\"ghr_111111111101234567890123456789012345\"}",
-            "validationFingerprint/v0": "{\"secret\":\"ghr_111111111101234567890123456789012345\"}"
-          },
-          "rank": 47.5
+          "executionSuccessful": false
         }
       ],
       "columnKind": "utf16CodeUnits"

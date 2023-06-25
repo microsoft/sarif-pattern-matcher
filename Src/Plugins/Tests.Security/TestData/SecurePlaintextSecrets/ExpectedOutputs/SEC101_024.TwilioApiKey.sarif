@@ -9,6 +9,27 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
+          "rules": [
+            {
+              "id": "SEC101/024",
+              "name": "TwilioApiKey",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://www.twilio.com/docs/usage/api/keys",
+              "properties": {
+                "sarif/uiLabel": "Twilio API Key"
+              }
+            }
+          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -17,27 +38,6 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
-            "rules": [
-              {
-                "id": "SEC101/024",
-                "name": "TwilioApiKey",
-                "fullDescription": {
-                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-                },
-                "messageStrings": {
-                  "NotApplicable_InvalidMetadata": {
-                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                  },
-                  "Default": {
-                    "text": "'{0}' is {1}{2}{3}{4}{5}."
-                  }
-                },
-                "helpUri": "https://www.twilio.com/docs/usage/api/keys",
-                "properties": {
-                  "sarif/uiLabel": "Twilio API Key"
-                }
-              }
-            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -49,107 +49,59 @@
       },
       "invocations": [
         {
-          "executionSuccessful": true
-        }
-      ],
-      "results": [
-        {
-          "rule": {
-            "id": "SEC101/024",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…678901",
-              "an apparent ",
-              "",
-              "Twilio API Key",
-              "",
-              ""
-            ]
-          },
-          "locations": [
+          "toolExecutionNotifications": [
             {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_024.TwilioApiKey.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 35,
-                  "charOffset": 0,
-                  "charLength": 34,
-                  "snippet": {
-                    "text": "SK11111111110123456789012345678901"
+              "locations": [
+                {
+                  "physicalLocation": {
+                    "artifactLocation": {
+                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_024.TwilioApiKey.ps1",
+                      "uriBaseId": "SRC_ROOT"
+                    }
                   }
                 }
+              ],
+              "message": {
+                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_024.TwilioApiKey.ps1' for check 'TwilioApiKey' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
+              },
+              "level": "error",
+              "exception": {
+                "kind": "NullReferenceException",
+                "message": "Object reference not set to an instance of an object.",
+                "stack": {
+                  "frames": [
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "innerExceptions": []
+              },
+              "descriptor": {
+                "id": "ERR998.ExceptionInAnalyze"
+              },
+              "associatedRule": {
+                "id": "SEC101/024",
+                "index": 0
               }
             }
           ],
-          "fingerprints": {
-            "secretHashSha256/v0": "668cc519a5b691ebab08acad42e25a02029257112dfc81af907524662b76146f",
-            "assetFingerprint/v0": "{\"platform\":\"Twilio\"}",
-            "validationFingerprintHashSha256/v0": "4089baba3337080da9ea52d6a99f31959752c1b6c43b8decc9cabf76753872fd",
-            "secretFingerprint/v0": "{\"secret\":\"SK11111111110123456789012345678901\"}",
-            "validationFingerprint/v0": "{\"secret\":\"SK11111111110123456789012345678901\"}"
-          },
-          "rank": 43.75
-        },
-        {
-          "rule": {
-            "id": "SEC101/024",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…678901",
-              "an apparent ",
-              "",
-              "Twilio API Key",
-              "",
-              ""
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_024.TwilioApiKey.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 2,
-                  "endLine": 3,
-                  "endColumn": 36,
-                  "charOffset": 39,
-                  "charLength": 34,
-                  "snippet": {
-                    "text": "SK22222222220123456789012345678901"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "secretHashSha256/v0": "a67283325f277a5597aa5f70e5568a176d9d085e5151ef4907259c39ad147d31",
-            "assetFingerprint/v0": "{\"platform\":\"Twilio\"}",
-            "validationFingerprintHashSha256/v0": "134a06770fee91ed61fa3b52a93f7c5309ebd6b0fdecea550ee3b90cd0f72bf5",
-            "secretFingerprint/v0": "{\"secret\":\"SK22222222220123456789012345678901\"}",
-            "validationFingerprint/v0": "{\"secret\":\"SK22222222220123456789012345678901\"}"
-          },
-          "rank": 44.72
+          "executionSuccessful": false
         }
       ],
       "columnKind": "utf16CodeUnits"

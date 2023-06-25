@@ -9,6 +9,27 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
+          "rules": [
+            {
+              "id": "SEC101/014",
+              "name": "FacebookAccessToken",
+              "fullDescription": {
+                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+              },
+              "messageStrings": {
+                "NotApplicable_InvalidMetadata": {
+                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                },
+                "Default": {
+                  "text": "'{0}' is {1}{2}{3}{4}{5}."
+                }
+              },
+              "helpUri": "https://developers.facebook.com/docs/facebook-login/access-tokens",
+              "properties": {
+                "sarif/uiLabel": "Facebook access token"
+              }
+            }
+          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -17,27 +38,6 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
-            "rules": [
-              {
-                "id": "SEC101/014",
-                "name": "FacebookAccessToken",
-                "fullDescription": {
-                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-                },
-                "messageStrings": {
-                  "NotApplicable_InvalidMetadata": {
-                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                  },
-                  "Default": {
-                    "text": "'{0}' is {1}{2}{3}{4}{5}."
-                  }
-                },
-                "helpUri": "https://developers.facebook.com/docs/facebook-login/access-tokens",
-                "properties": {
-                  "sarif/uiLabel": "Facebook access token"
-                }
-              }
-            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -49,107 +49,59 @@
       },
       "invocations": [
         {
-          "executionSuccessful": true
-        }
-      ],
-      "results": [
-        {
-          "rule": {
-            "id": "SEC101/014",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…111111",
-              "an apparent ",
-              "",
-              "Facebook access token",
-              "",
-              ""
-            ]
-          },
-          "locations": [
+          "toolExecutionNotifications": [
             {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_014.FacebookAccessToken.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 2,
-                  "endLine": 1,
-                  "endColumn": 30,
-                  "charOffset": 1,
-                  "charLength": 28,
-                  "snippet": {
-                    "text": "EAACEdEose0cBAtestjunk111111"
+              "locations": [
+                {
+                  "physicalLocation": {
+                    "artifactLocation": {
+                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_014.FacebookAccessToken.ps1",
+                      "uriBaseId": "SRC_ROOT"
+                    }
                   }
                 }
+              ],
+              "message": {
+                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_014.FacebookAccessToken.ps1' for check 'FacebookAccessToken' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
+              },
+              "level": "error",
+              "exception": {
+                "kind": "NullReferenceException",
+                "message": "Object reference not set to an instance of an object.",
+                "stack": {
+                  "frames": [
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "innerExceptions": []
+              },
+              "descriptor": {
+                "id": "ERR998.ExceptionInAnalyze"
+              },
+              "associatedRule": {
+                "id": "SEC101/014",
+                "index": 0
               }
             }
           ],
-          "fingerprints": {
-            "secretHashSha256/v0": "a9e57fe95cd1cce2bc5440ba090ae24fca3fcfa61969c6d4c2cf3e70f06a147d",
-            "assetFingerprint/v0": "{\"platform\":\"Facebook\"}",
-            "validationFingerprintHashSha256/v0": "edfa7f059db84fd0c3a1dbc8011f86849725f19c20f18bfb8e21a2cf690c5752",
-            "secretFingerprint/v0": "{\"secret\":\"EAACEdEose0cBAtestjunk111111\"}",
-            "validationFingerprint/v0": "{\"secret\":\"EAACEdEose0cBAtestjunk111111\"}"
-          },
-          "rank": 52.85
-        },
-        {
-          "rule": {
-            "id": "SEC101/014",
-            "index": 0,
-            "toolComponent": {
-              "index": 0
-            }
-          },
-          "message": {
-            "id": "Default",
-            "arguments": [
-              "…222222",
-              "an apparent ",
-              "",
-              "Facebook access token",
-              "",
-              ""
-            ]
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_014.FacebookAccessToken.ps1",
-                  "uriBaseId": "SRC_ROOT"
-                },
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 2,
-                  "endLine": 3,
-                  "endColumn": 32,
-                  "charOffset": 35,
-                  "charLength": 30,
-                  "snippet": {
-                    "text": "EAACEdEose0cBAtestjunk22222222"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "secretHashSha256/v0": "19f396ec3ab2b13e84b6d5274fe2922264a0d5eb15ce8c559ba9a5edb8e31447",
-            "assetFingerprint/v0": "{\"platform\":\"Facebook\"}",
-            "validationFingerprintHashSha256/v0": "f882ac7a29fbe83f340fb4040af4c2a19a2cc156aca6bbb95dc833142571916e",
-            "secretFingerprint/v0": "{\"secret\":\"EAACEdEose0cBAtestjunk22222222\"}",
-            "validationFingerprint/v0": "{\"secret\":\"EAACEdEose0cBAtestjunk22222222\"}"
-          },
-          "rank": 51.28
+          "executionSuccessful": false
         }
       ],
       "columnKind": "utf16CodeUnits"

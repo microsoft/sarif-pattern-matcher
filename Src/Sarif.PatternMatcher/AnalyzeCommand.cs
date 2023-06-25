@@ -379,6 +379,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     JsonConvert.DeserializeObject<List<VersionControlDetails>>(options.VersionControlProvenance);
             }
 
+            ValidatorBase.RegexInstance = GetRegexEngine(context.RegexEngine);
             context.PluginFilePaths = options.PluginFilePaths.Any() ? new StringSet(options.PluginFilePaths) : context.PluginFilePaths;
             return context;
         }
@@ -395,7 +396,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (context.PluginFilePaths?.Any() == true)
             {
                 IRegex engine = GetRegexEngine(context.RegexEngine);
-                ValidatorBase.RegexInstance = engine;
                 foreach (Skimmer<AnalyzeContext> skimmer in CreateSkimmersFromDefinitionsFiles(context.FileSystem, context.PluginFilePaths, Tool, engine))
                 {
                     aggregatedSkimmers.Add(skimmer);
