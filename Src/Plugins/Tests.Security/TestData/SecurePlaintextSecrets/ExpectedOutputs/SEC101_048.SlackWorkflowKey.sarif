@@ -9,27 +9,6 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
-          "rules": [
-            {
-              "id": "SEC101/048",
-              "name": "SlackWorkflowKey",
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Default": {
-                  "text": "'{0}' is {1}{2}{3}{4}{5}."
-                }
-              },
-              "helpUri": "https://github.com/microsoft/sarif-pattern-matcher",
-              "properties": {
-                "sarif/uiLabel": "Slack workflow key"
-              }
-            }
-          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -38,6 +17,27 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
+            "rules": [
+              {
+                "id": "SEC101/048",
+                "name": "SlackWorkflowKey",
+                "fullDescription": {
+                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+                },
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is {1}{2}{3}{4}{5}."
+                  }
+                },
+                "helpUri": "https://github.com/microsoft/sarif-pattern-matcher",
+                "properties": {
+                  "sarif/uiLabel": "Slack workflow key"
+                }
+              }
+            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -49,59 +49,58 @@
       },
       "invocations": [
         {
-          "toolExecutionNotifications": [
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "rule": {
+            "id": "SEC101/048",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "…89dead",
+              "an apparent ",
+              "",
+              "Slack workflow key",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
             {
-              "locations": [
-                {
-                  "physicalLocation": {
-                    "artifactLocation": {
-                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_048.SlackWorkflowKey.ps1",
-                      "uriBaseId": "SRC_ROOT"
-                    }
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_048.SlackWorkflowKey.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 46,
+                  "endLine": 1,
+                  "endColumn": 92,
+                  "charOffset": 45,
+                  "charLength": 46,
+                  "snippet": {
+                    "text": "0123456789/0123456789/01234567890123456789dead"
                   }
                 }
-              ],
-              "message": {
-                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_048.SlackWorkflowKey.ps1' for check 'SlackWorkflowKey' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
-              },
-              "level": "error",
-              "exception": {
-                "kind": "NullReferenceException",
-                "message": "Object reference not set to an instance of an object.",
-                "stack": {
-                  "frames": [
-                    {
-                      "location": {
-                        "logicalLocations": [
-                          {
-                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "location": {
-                        "logicalLocations": [
-                          {
-                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                },
-                "innerExceptions": []
-              },
-              "descriptor": {
-                "id": "ERR998.ExceptionInAnalyze"
-              },
-              "associatedRule": {
-                "id": "SEC101/048",
-                "index": 0
               }
             }
           ],
-          "executionSuccessful": false
+          "fingerprints": {
+            "secretHashSha256/v0": "98312e0f2d594fd4e3d71b7be906d302fcf64291f04ad62970864114a9076688",
+            "assetFingerprint/v0": "{\"id\":\"0123456789\",\"platform\":\"Slack\"}",
+            "validationFingerprintHashSha256/v0": "904b560d930b8b7497aefc45f1249618b2afd955d425163beef027b9cc42c096",
+            "secretFingerprint/v0": "{\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}",
+            "validationFingerprint/v0": "{\"id\":\"0123456789\",\"secret\":\"0123456789/0123456789/01234567890123456789dead\"}"
+          },
+          "rank": 52.82
         }
       ],
       "columnKind": "utf16CodeUnits"

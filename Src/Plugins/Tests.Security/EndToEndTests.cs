@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.CodeAnalysis.Sarif.Visitors;
 using Microsoft.CodeAnalysis.Sarif.Writers;
 using Microsoft.RE2.Managed;
@@ -175,6 +176,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 using (context)
                 {
+                    ValidatorBase.RegexInstance = RE2Regex.Instance;
                     AnalyzeCommand.AnalyzeTargetHelper(context, skimmers, disabledSkimmers);
                 }
             }

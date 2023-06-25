@@ -9,27 +9,6 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
-          "rules": [
-            {
-              "id": "SEC101/052",
-              "name": "StripeLiveRestrictedApiKey",
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Default": {
-                  "text": "'{0}' is {1}{2}{3}{4}{5}."
-                }
-              },
-              "helpUri": "https://stripe.com/docs/keys",
-              "properties": {
-                "sarif/uiLabel": "Stripe live restricted API key"
-              }
-            }
-          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -38,6 +17,27 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
+            "rules": [
+              {
+                "id": "SEC101/052",
+                "name": "StripeLiveRestrictedApiKey",
+                "fullDescription": {
+                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+                },
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is {1}{2}{3}{4}{5}."
+                  }
+                },
+                "helpUri": "https://stripe.com/docs/keys",
+                "properties": {
+                  "sarif/uiLabel": "Stripe live restricted API key"
+                }
+              }
+            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -49,59 +49,156 @@
       },
       "invocations": [
         {
-          "toolExecutionNotifications": [
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "rule": {
+            "id": "SEC101/052",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "…0deadb",
+              "an apparent ",
+              "",
+              "Stripe live restricted API key",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
             {
-              "locations": [
-                {
-                  "physicalLocation": {
-                    "artifactLocation": {
-                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_052.StripeLiveRestrictedApiKey.txt",
-                      "uriBaseId": "SRC_ROOT"
-                    }
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_052.StripeLiveRestrictedApiKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 1,
+                  "endLine": 2,
+                  "endColumn": 33,
+                  "charOffset": 2,
+                  "charLength": 32,
+                  "snippet": {
+                    "text": "rk_live_0deadbeef0deadbeef0deadb"
                   }
                 }
-              ],
-              "message": {
-                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_052.StripeLiveRestrictedApiKey.txt' for check 'StripeLiveRestrictedApiKey' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
-              },
-              "level": "error",
-              "exception": {
-                "kind": "NullReferenceException",
-                "message": "Object reference not set to an instance of an object.",
-                "stack": {
-                  "frames": [
-                    {
-                      "location": {
-                        "logicalLocations": [
-                          {
-                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "location": {
-                        "logicalLocations": [
-                          {
-                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                },
-                "innerExceptions": []
-              },
-              "descriptor": {
-                "id": "ERR998.ExceptionInAnalyze"
-              },
-              "associatedRule": {
-                "id": "SEC101/052",
-                "index": 0
               }
             }
           ],
-          "executionSuccessful": false
+          "fingerprints": {
+            "secretHashSha256/v0": "385d94951d94b02ca86369b0f696579f8a6e33f795a12a617c31991f9e5b6b96",
+            "assetFingerprint/v0": "{\"platform\":\"Stripe\"}",
+            "validationFingerprintHashSha256/v0": "6d735afa9f9e5e908a6de871230ebd8156585960dfac2837687c58107774a5d6",
+            "secretFingerprint/v0": "{\"secret\":\"rk_live_0deadbeef0deadbeef0deadb\"}",
+            "validationFingerprint/v0": "{\"secret\":\"rk_live_0deadbeef0deadbeef0deadb\"}"
+          },
+          "rank": 45.64
+        },
+        {
+          "rule": {
+            "id": "SEC101/052",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "…deadbe",
+              "an apparent ",
+              "",
+              "Stripe live restricted API key",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_052.StripeLiveRestrictedApiKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 4,
+                  "startColumn": 1,
+                  "endLine": 4,
+                  "endColumn": 43,
+                  "charOffset": 38,
+                  "charLength": 42,
+                  "snippet": {
+                    "text": "rk_live_0deadbeef0deadbeef0deadbeef0deadbe"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "secretHashSha256/v0": "9eb2eba720212fbf2a3a12b45506c4f385ede0e51cad652f34735393f1e360cc",
+            "assetFingerprint/v0": "{\"platform\":\"Stripe\"}",
+            "validationFingerprintHashSha256/v0": "f528f480513fd907b4838fef59a971e3105ab88d2e690f495fea08e9745e4674",
+            "secretFingerprint/v0": "{\"secret\":\"rk_live_0deadbeef0deadbeef0deadbeef0deadbe\"}",
+            "validationFingerprint/v0": "{\"secret\":\"rk_live_0deadbeef0deadbeef0deadbeef0deadbe\"}"
+          },
+          "rank": 43.78
+        },
+        {
+          "rule": {
+            "id": "SEC101/052",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "…ebeef0",
+              "an apparent ",
+              "",
+              "Stripe live restricted API key",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_052.StripeLiveRestrictedApiKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 1,
+                  "endLine": 6,
+                  "endColumn": 108,
+                  "charOffset": 84,
+                  "charLength": 107,
+                  "snippet": {
+                    "text": "rk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "secretHashSha256/v0": "a37d9511765efbca47c9786a4d016452cb15591182575b52ff82299c8b05c5e7",
+            "assetFingerprint/v0": "{\"platform\":\"Stripe\"}",
+            "validationFingerprintHashSha256/v0": "c8af64eada9c3168426ab7dc1ca7923d79c5a2adbf0119e0d30994af0ff48f4d",
+            "secretFingerprint/v0": "{\"secret\":\"rk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}",
+            "validationFingerprint/v0": "{\"secret\":\"rk_live_0deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef00deadebeef0\"}"
+          },
+          "rank": 38.84
         }
       ],
       "columnKind": "utf16CodeUnits"

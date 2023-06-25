@@ -9,27 +9,6 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
-          "rules": [
-            {
-              "id": "SEC101/020",
-              "name": "DropboxAccessToken",
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Default": {
-                  "text": "'{0}' is {1}{2}{3}{4}{5}."
-                }
-              },
-              "helpUri": "https://developers.dropbox.com/oauth-guide#implementing-oauth",
-              "properties": {
-                "sarif/uiLabel": "Dropbox access token"
-              }
-            }
-          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -38,6 +17,27 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
+            "rules": [
+              {
+                "id": "SEC101/020",
+                "name": "DropboxAccessToken",
+                "fullDescription": {
+                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+                },
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is {1}{2}{3}{4}{5}."
+                  }
+                },
+                "helpUri": "https://developers.dropbox.com/oauth-guide#implementing-oauth",
+                "properties": {
+                  "sarif/uiLabel": "Dropbox access token"
+                }
+              }
+            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -49,59 +49,107 @@
       },
       "invocations": [
         {
-          "toolExecutionNotifications": [
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "rule": {
+            "id": "SEC101/020",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "…4qPoZ4",
+              "an apparent ",
+              "",
+              "Dropbox access token",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
             {
-              "locations": [
-                {
-                  "physicalLocation": {
-                    "artifactLocation": {
-                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_020.DropboxAccessToken.ps1",
-                      "uriBaseId": "SRC_ROOT"
-                    }
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_020.DropboxAccessToken.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 10,
+                  "endLine": 2,
+                  "endColumn": 74,
+                  "charOffset": 26,
+                  "charLength": 64,
+                  "snippet": {
+                    "text": "3g2u1OFlqngAAAAAAAAAARsJBUfljyXkQImmVaieedYBk9VlSGxEP_N6V84qPoZ4"
                   }
                 }
-              ],
-              "message": {
-                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_020.DropboxAccessToken.ps1' for check 'DropboxAccessToken' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
-              },
-              "level": "error",
-              "exception": {
-                "kind": "NullReferenceException",
-                "message": "Object reference not set to an instance of an object.",
-                "stack": {
-                  "frames": [
-                    {
-                      "location": {
-                        "logicalLocations": [
-                          {
-                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "location": {
-                        "logicalLocations": [
-                          {
-                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                },
-                "innerExceptions": []
-              },
-              "descriptor": {
-                "id": "ERR998.ExceptionInAnalyze"
-              },
-              "associatedRule": {
-                "id": "SEC101/020",
-                "index": 0
               }
             }
           ],
-          "executionSuccessful": false
+          "fingerprints": {
+            "secretHashSha256/v0": "a82d89d49250a6b25fbeff9f6b3f75d1d8ba569d8a25c37b2c8815eca67a48c2",
+            "assetFingerprint/v0": "{\"platform\":\"Dropbox\"}",
+            "validationFingerprintHashSha256/v0": "a9601c8a48a47e520853a7c1cc8914755d21dc33d5709ac02055f86806900dd9",
+            "secretFingerprint/v0": "{\"secret\":\"3g2u1OFlqngAAAAAAAAAARsJBUfljyXkQImmVaieedYBk9VlSGxEP_N6V84qPoZ4\"}",
+            "validationFingerprint/v0": "{\"secret\":\"3g2u1OFlqngAAAAAAAAAARsJBUfljyXkQImmVaieedYBk9VlSGxEP_N6V84qPoZ4\"}"
+          },
+          "rank": 72.61
+        },
+        {
+          "rule": {
+            "id": "SEC101/020",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "…i3JMS8",
+              "an apparent ",
+              "",
+              "Dropbox access token",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_020.DropboxAccessToken.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 10,
+                  "endLine": 5,
+                  "endColumn": 148,
+                  "charOffset": 123,
+                  "charLength": 138,
+                  "snippet": {
+                    "text": "sl.AtS80GLHpwtH4xnmVKHE_odL4vp3m_3RVO_eH0Swdj3QkyFNBIV0kmb3jdDdzz-EwrZ9HiJO3gIKMCF3ovbf-MG6z5DVEFgfI8jzet2F5tze_bmdCeZJzsDPBKRSV9gxOi3JMS8"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "secretHashSha256/v0": "3240f5f9f1526cc5153221464f5042f1b434bb648922a14ba683e3482f696b88",
+            "assetFingerprint/v0": "{\"platform\":\"Dropbox\"}",
+            "validationFingerprintHashSha256/v0": "3d5664590399d57ecc016cbcb5e9a2eaaadf762d0365f8e9e9e84f36ba7a860c",
+            "secretFingerprint/v0": "{\"secret\":\"sl.AtS80GLHpwtH4xnmVKHE_odL4vp3m_3RVO_eH0Swdj3QkyFNBIV0kmb3jdDdzz-EwrZ9HiJO3gIKMCF3ovbf-MG6z5DVEFgfI8jzet2F5tze_bmdCeZJzsDPBKRSV9gxOi3JMS8\"}",
+            "validationFingerprint/v0": "{\"secret\":\"sl.AtS80GLHpwtH4xnmVKHE_odL4vp3m_3RVO_eH0Swdj3QkyFNBIV0kmb3jdDdzz-EwrZ9HiJO3gIKMCF3ovbf-MG6z5DVEFgfI8jzet2F5tze_bmdCeZJzsDPBKRSV9gxOi3JMS8\"}"
+          },
+          "rank": 79.21
         }
       ],
       "columnKind": "utf16CodeUnits"

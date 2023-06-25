@@ -9,27 +9,6 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
-          "rules": [
-            {
-              "id": "SEC101/045",
-              "name": "PostmanApiKey",
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Default": {
-                  "text": "'{0}' is {1}{2}{3}{4}{5}."
-                }
-              },
-              "helpUri": "https://learning.postman.com/docs/developer/intro-api/",
-              "properties": {
-                "sarif/uiLabel": "Postman API key"
-              }
-            }
-          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -38,6 +17,27 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
+            "rules": [
+              {
+                "id": "SEC101/045",
+                "name": "PostmanApiKey",
+                "fullDescription": {
+                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+                },
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is {1}{2}{3}{4}{5}."
+                  }
+                },
+                "helpUri": "https://learning.postman.com/docs/developer/intro-api/",
+                "properties": {
+                  "sarif/uiLabel": "Postman API key"
+                }
+              }
+            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -49,59 +49,58 @@
       },
       "invocations": [
         {
-          "toolExecutionNotifications": [
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "rule": {
+            "id": "SEC101/045",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "…ad1921",
+              "an apparent ",
+              "",
+              "Postman API key",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
             {
-              "locations": [
-                {
-                  "physicalLocation": {
-                    "artifactLocation": {
-                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostmanApiKey.ps1",
-                      "uriBaseId": "SRC_ROOT"
-                    }
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_045.PostmanApiKey.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 1,
+                  "endLine": 2,
+                  "endColumn": 65,
+                  "charOffset": 19,
+                  "charLength": 64,
+                  "snippet": {
+                    "text": "PMAK-dead0000dead11113c1e4064-92f00edbc2d214a356c39a3dd537ad1921"
                   }
                 }
-              ],
-              "message": {
-                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_045.PostmanApiKey.ps1' for check 'PostmanApiKey' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
-              },
-              "level": "error",
-              "exception": {
-                "kind": "NullReferenceException",
-                "message": "Object reference not set to an instance of an object.",
-                "stack": {
-                  "frames": [
-                    {
-                      "location": {
-                        "logicalLocations": [
-                          {
-                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "location": {
-                        "logicalLocations": [
-                          {
-                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                },
-                "innerExceptions": []
-              },
-              "descriptor": {
-                "id": "ERR998.ExceptionInAnalyze"
-              },
-              "associatedRule": {
-                "id": "SEC101/045",
-                "index": 0
               }
             }
           ],
-          "executionSuccessful": false
+          "fingerprints": {
+            "secretHashSha256/v0": "569865df0a806d56435d3db7b65e4ecb3993da5355a9af882ae0d8d14b6473b8",
+            "assetFingerprint/v0": "{\"platform\":\"Postman\"}",
+            "validationFingerprintHashSha256/v0": "c9b49e4731fb96dd02e603d3b7f02294d29d20bbbf1742a7d91dab621c2fb079",
+            "secretFingerprint/v0": "{\"secret\":\"PMAK-dead0000dead11113c1e4064-92f00edbc2d214a356c39a3dd537ad1921\"}",
+            "validationFingerprint/v0": "{\"secret\":\"PMAK-dead0000dead11113c1e4064-92f00edbc2d214a356c39a3dd537ad1921\"}"
+          },
+          "rank": 56.32
         }
       ],
       "columnKind": "utf16CodeUnits"

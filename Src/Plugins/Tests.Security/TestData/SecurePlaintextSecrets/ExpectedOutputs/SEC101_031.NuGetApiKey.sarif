@@ -9,27 +9,6 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
-          "rules": [
-            {
-              "id": "SEC101/031",
-              "name": "NuGetApiKey",
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Default": {
-                  "text": "'{0}' is {1}{2}{3}{4}{5}."
-                }
-              },
-              "helpUri": "https://aka.ms/1eslivesecrets/remediation#sec101031---nugetapikey",
-              "properties": {
-                "sarif/uiLabel": "NuGet API Key"
-              }
-            }
-          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -38,6 +17,27 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
+            "rules": [
+              {
+                "id": "SEC101/031",
+                "name": "NuGetApiKey",
+                "fullDescription": {
+                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+                },
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is {1}{2}{3}{4}{5}."
+                  }
+                },
+                "helpUri": "https://aka.ms/1eslivesecrets/remediation#sec101031---nugetapikey",
+                "properties": {
+                  "sarif/uiLabel": "NuGet API Key"
+                }
+              }
+            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -49,59 +49,58 @@
       },
       "invocations": [
         {
-          "toolExecutionNotifications": [
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "rule": {
+            "id": "SEC101/031",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "…0deada",
+              "an apparent ",
+              "",
+              "NuGet API Key",
+              "",
+              ""
+            ]
+          },
+          "locations": [
             {
-              "locations": [
-                {
-                  "physicalLocation": {
-                    "artifactLocation": {
-                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_031.NuGetApiKey.txt",
-                      "uriBaseId": "SRC_ROOT"
-                    }
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_031.NuGetApiKey.txt",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 47,
+                  "charOffset": 0,
+                  "charLength": 46,
+                  "snippet": {
+                    "text": "oy2adeadbeef0deadbeaf00deadbeefedeadbee50deada"
                   }
                 }
-              ],
-              "message": {
-                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_031.NuGetApiKey.txt' for check 'NuGetApiKey' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
-              },
-              "level": "error",
-              "exception": {
-                "kind": "NullReferenceException",
-                "message": "Object reference not set to an instance of an object.",
-                "stack": {
-                  "frames": [
-                    {
-                      "location": {
-                        "logicalLocations": [
-                          {
-                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "location": {
-                        "logicalLocations": [
-                          {
-                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                },
-                "innerExceptions": []
-              },
-              "descriptor": {
-                "id": "ERR998.ExceptionInAnalyze"
-              },
-              "associatedRule": {
-                "id": "SEC101/031",
-                "index": 0
               }
             }
           ],
-          "executionSuccessful": false
+          "fingerprints": {
+            "secretHashSha256/v0": "982fd661c4a76d11df2a7e296344f626cac35652cfcf061309768f2847b976c6",
+            "assetFingerprint/v0": "{\"platform\":\"NuGet\"}",
+            "validationFingerprintHashSha256/v0": "bffc0dfed763580a72800bf5c2fc1effa0de2b2ba6dfe7be28b0b23a09a7755a",
+            "secretFingerprint/v0": "{\"secret\":\"oy2adeadbeef0deadbeaf00deadbeefedeadbee50deada\"}",
+            "validationFingerprint/v0": "{\"secret\":\"oy2adeadbeef0deadbeaf00deadbeefedeadbee50deada\"}"
+          },
+          "rank": 39.75
         }
       ],
       "columnKind": "utf16CodeUnits"

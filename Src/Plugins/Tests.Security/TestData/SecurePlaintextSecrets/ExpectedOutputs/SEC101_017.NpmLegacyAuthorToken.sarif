@@ -9,30 +9,6 @@
           "organization": "Microsoft",
           "product": "Microsoft SARIF Pattern Matcher",
           "fullName": "Sarif.PatternMatcher ",
-          "rules": [
-            {
-              "id": "SEC101/017",
-              "name": "NpmLegacyAuthorToken",
-              "deprecatedNames": [
-                "NpmAuthorToken"
-              ],
-              "fullDescription": {
-                "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
-              },
-              "messageStrings": {
-                "NotApplicable_InvalidMetadata": {
-                  "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
-                },
-                "Default": {
-                  "text": "'{0}' is {1}{2}{3}{4}{5}."
-                }
-              },
-              "helpUri": "https://docs.npmjs.com/creating-and-viewing-access-tokens",
-              "properties": {
-                "sarif/uiLabel": "NPM legacy author token"
-              }
-            }
-          ],
           "properties": {
             "comments": "A general pattern matching engine that persist results to SARIF."
           }
@@ -41,6 +17,30 @@
           {
             "guid": "6e04e237-f14b-4ff9-9cd8-e037a10cb510",
             "name": "Microsoft/Security/DoNotExposePlaintextSecrets",
+            "rules": [
+              {
+                "id": "SEC101/017",
+                "name": "NpmLegacyAuthorToken",
+                "deprecatedNames": [
+                  "NpmAuthorToken"
+                ],
+                "fullDescription": {
+                  "text": "Do not expose plaintext (or base64-encoded plaintext) secrets in versioned engineering content."
+                },
+                "messageStrings": {
+                  "NotApplicable_InvalidMetadata": {
+                    "text": "'{0}' was not evaluated for check '{1}' because the analysis is not relevant for the following reason: {2}."
+                  },
+                  "Default": {
+                    "text": "'{0}' is {1}{2}{3}{4}{5}."
+                  }
+                },
+                "helpUri": "https://docs.npmjs.com/creating-and-viewing-access-tokens",
+                "properties": {
+                  "sarif/uiLabel": "NPM legacy author token"
+                }
+              }
+            ],
             "locations": [
               {
                 "uri": "SEC101.SecurePlaintextSecrets.json",
@@ -52,59 +52,107 @@
       },
       "invocations": [
         {
-          "toolExecutionNotifications": [
+          "executionSuccessful": true
+        }
+      ],
+      "results": [
+        {
+          "rule": {
+            "id": "SEC101/017",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "…6777ca",
+              "an apparent ",
+              "",
+              "NPM legacy author token",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
             {
-              "locations": [
-                {
-                  "physicalLocation": {
-                    "artifactLocation": {
-                      "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmLegacyAuthorToken.ps1",
-                      "uriBaseId": "SRC_ROOT"
-                    }
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmLegacyAuthorToken.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 7,
+                  "endLine": 1,
+                  "endColumn": 43,
+                  "charOffset": 6,
+                  "charLength": 36,
+                  "snippet": {
+                    "text": "338a0fd3-7378-4ce1-8432-bbfc0f6777ca"
                   }
                 }
-              ],
-              "message": {
-                "text": "An exception of type 'TargetInvocationException' was raised analyzing 'SEC101_017.NpmLegacyAuthorToken.ps1' for check 'NpmLegacyAuthorToken' (which has been disabled). The exception may have resulted from a problem related to parsing the analysis target, and not specific to the rule, however."
-              },
-              "level": "error",
-              "exception": {
-                "kind": "NullReferenceException",
-                "message": "Object reference not set to an instance of an object.",
-                "stack": {
-                  "frames": [
-                    {
-                      "location": {
-                        "logicalLocations": [
-                          {
-                            "fullyQualifiedName": "Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.AwsCredentialsValidator..ctor()"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "location": {
-                        "logicalLocations": [
-                          {
-                            "fullyQualifiedName": "System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)"
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                },
-                "innerExceptions": []
-              },
-              "descriptor": {
-                "id": "ERR998.ExceptionInAnalyze"
-              },
-              "associatedRule": {
-                "id": "SEC101/017",
-                "index": 0
               }
             }
           ],
-          "executionSuccessful": false
+          "fingerprints": {
+            "secretHashSha256/v0": "8353c03c8a8bb6f139a28a0eb0b6aa821c6e2d05607eac41285d834204f87b85",
+            "assetFingerprint/v0": "{\"platform\":\"Npm\"}",
+            "validationFingerprintHashSha256/v0": "748c862ce66f04dd431cef753972f4901ff7b960faea29c5a0df580abe855ca3",
+            "secretFingerprint/v0": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777ca\"}",
+            "validationFingerprint/v0": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777ca\"}"
+          },
+          "rank": 52.63
+        },
+        {
+          "rule": {
+            "id": "SEC101/017",
+            "index": 0,
+            "toolComponent": {
+              "index": 0
+            }
+          },
+          "message": {
+            "id": "Default",
+            "arguments": [
+              "…6777cb",
+              "an apparent ",
+              "",
+              "NPM legacy author token",
+              "",
+              " (no validation occurred as it was not enabled. Pass '--dynamic-validation' on the command-line to validate this match)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_017.NpmLegacyAuthorToken.ps1",
+                  "uriBaseId": "SRC_ROOT"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 6,
+                  "endLine": 3,
+                  "endColumn": 42,
+                  "charOffset": 52,
+                  "charLength": 36,
+                  "snippet": {
+                    "text": "338a0fd3-7378-4ce1-8432-bbfc0f6777cb"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "secretHashSha256/v0": "2fc4513ceeb418b38ca61fdc8e0d6a9a86b2df83921f05636a8c67e457d74ab6",
+            "assetFingerprint/v0": "{\"platform\":\"Npm\"}",
+            "validationFingerprintHashSha256/v0": "1336f4b9b15c79836867464c8d6448eaad30eacd48e0f513d9f9f97fe6280cc4",
+            "secretFingerprint/v0": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777cb\"}",
+            "validationFingerprint/v0": "{\"secret\":\"338a0fd3-7378-4ce1-8432-bbfc0f6777cb\"}"
+          },
+          "rank": 52.33
         }
       ],
       "columnKind": "utf16CodeUnits"

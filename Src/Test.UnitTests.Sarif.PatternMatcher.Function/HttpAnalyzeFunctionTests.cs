@@ -12,8 +12,10 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
+using Microsoft.RE2.Managed;
 
 using Test.UnitTest.Sarif.PatternMatcher.Function;
 
@@ -47,6 +49,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         [Fact]
         public async Task Function_HttpAnalyze_FileWithPAT_Should_Return_SarifLog()
         {
+            ValidatorBase.RegexInstance = RE2Regex.Instance;
             const string patTextFile = "SEC101_102.AdoPat.txt";
             IActionResult result = await HttpAnalyzeFunction.Analyze(
                 request: TestHelper.MockAnalyzeFunctionRequest(patTextFile, TestHelper.GetTestResourceContent(patTextFile)),
@@ -96,6 +99,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         [Fact]
         public async Task Function_HttpAnalyze_WithFileContent_Should_Return_DifferentResponses()
         {
+            ValidatorBase.RegexInstance = RE2Regex.Instance;
             const string patTextFile = "SEC101_005.SlackApiKey.py";
             string content = TestHelper.GetTestResourceContent(patTextFile);
             string[] lines = content.Split(Environment.NewLine);
