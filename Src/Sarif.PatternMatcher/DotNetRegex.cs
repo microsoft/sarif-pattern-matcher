@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Text.RegularExpressions;
 
 using Microsoft.RE2.Managed;
@@ -33,7 +34,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public FlexMatch Match(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
         {
             if (timeout == default) { timeout = DefaultTimeout; }
+            pattern = NormalizeGroupsPattern(pattern);
             return ToFlex(Regex.Match(input, pattern, options, timeout), captureGroup);
+        }
+
+        internal static string NormalizeGroupsPattern(string pattern)
+        {
+            if (pattern.IndexOf("?P<") != -1)
+            {
+                return pattern.Replace("?P<", "?<");
+            }
+
+            return pattern;
         }
 
         public IEnumerable<FlexMatch> Matches(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)
@@ -48,6 +60,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> matches, long maxMemoryInBytes = -1)
         {
             matches = new List<Dictionary<string, FlexMatch>>();
+            pattern = NormalizeGroupsPattern(pattern);
             var regex = new Regex(pattern);
 
             foreach (Match m in regex.Matches(text))

@@ -13,8 +13,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
     public class SqlCredentialsValidator : DynamicValidatorBase
     {
-        internal static IRegex RegexEngine;
-
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
         private static readonly List<string> AzureHosts = new List<string>
@@ -28,12 +26,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         public SqlCredentialsValidator()
         {
-            RegexEngine = RE2Regex.Instance;
-
             // We perform this work in order to force caching of these
             // expressions (an operation which otherwise can cause
             // threading problems).
-            RegexEngine.Match(string.Empty, ClientIPExpression);
+            RegexInstance.Match(string.Empty, ClientIPExpression);
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
@@ -155,7 +151,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             return ReturnUnknownHost(ref message, host);
                         }
 
-                        FlexMatch match = RegexEngine.Match(e.Message, ClientIPExpression);
+                        FlexMatch match = RegexInstance.Match(e.Message, ClientIPExpression);
                         if (match.Success)
                         {
                             message = match.Value;
