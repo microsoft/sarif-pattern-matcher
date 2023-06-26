@@ -16,10 +16,7 @@ namespace Microsoft.RE2.Managed
             string platform =
                 RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "win" : "linux";
 
-            if (platform == "linux")
-            {
-                return;
-            }
+            bool isWindows = platform == "win";
 
             // Strictly speaking we don't need any platform-specific code here. I leave
             // it just in case we find out that we *do* need to perform the Linux
@@ -34,10 +31,10 @@ namespace Microsoft.RE2.Managed
 
                 if (File.Exists(filePath))
                 {
-                    LoadLibrary(filePath);
+                    if (isWindows) { LoadLibrary(filePath); } else { LinuxMethods.dlopen(filePath, LinuxMethods.RTLD_NOW); }
                 }
             }
-            else if (platform == "win")
+            else
             {
                 string driverDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -45,7 +42,7 @@ namespace Microsoft.RE2.Managed
                 string dllAdjacent = Path.Combine(driverDirectory, dllName);
                 if (File.Exists(dllAdjacent))
                 {
-                    LoadLibrary(dllAdjacent);
+                    if (isWindows) { LoadLibrary(dllAdjacent); } else { LinuxMethods.dlopen(dllAdjacent, LinuxMethods.RTLD_NOW); }
                 }
 
                 // Load if in runtimes subdirectory
@@ -53,7 +50,7 @@ namespace Microsoft.RE2.Managed
                 string dllInRuntime = Path.Combine(driverDirectory, runtimeFolder, dllName);
                 if (File.Exists(dllInRuntime))
                 {
-                    LoadLibrary(dllInRuntime);
+                    if (isWindows) { LoadLibrary(dllInRuntime); } else { LinuxMethods.dlopen(dllInRuntime, LinuxMethods.RTLD_NOW); }
                 }
             }
         }
@@ -148,6 +145,12 @@ namespace Microsoft.RE2.Managed
 
         private static class LinuxMethods
         {
+            public const int RTLD_NOW = 0x002;
+
+            [SuppressUnmanagedCodeSecurity]
+            [DllImport("libdl", ExactSpelling = true)]
+            public static unsafe extern IntPtr dlopen(string fileName, int flags);
+
             [SuppressUnmanagedCodeSecurity]
             [DllImport("libre2.so", PreserveSig = true, CallingConvention = CallingConvention.Cdecl)]
             public static unsafe extern int Test();
