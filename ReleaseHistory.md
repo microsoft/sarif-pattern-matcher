@@ -24,7 +24,7 @@
 ## v4.5.2 6/14/2023
 - DEP: Update SARIF SDK submodule from [dd8b7b8 to a7029a3](https://github.com/microsoft/sarif-sdk/compare/dd8b7b8..a7029a3). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/a7029a3/ReleaseHistory.md). SDK v4.2.0.
 - DEP: Update `SEC101/003.GoogleApiKey` in `Security` validating Google API key using HTTP requests.
-- DEP: Update `SEC101/006.GitHubLegacyPat` in `Security` validating GitHub PAT using HTTP requests.
+- DEP: Update `SEC101/006.GitHubLegacyPat` in `Security` validating GitHub PAT using HTTP requests and remove the `Octokit.dll` from `refs` folder.
 - DEP: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
 - DEP: Remove `AWSSDK.IdentityManagement` Nuget package from `Security`.
 - DEP: Remove `GoogleApi` Nuget package from `Security`.
