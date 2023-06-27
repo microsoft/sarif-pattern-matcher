@@ -150,7 +150,11 @@ namespace Microsoft.RE2.Managed
                     int cIndex = regex.FindNamedCapture(namedCaptureGroup.Name);
                     match = capture[cIndex];
                     string groupValue = capture[cIndex].ExtractedText;
-                    current[namedCaptureGroup.Name] = ToFlex(match, text, ref lastUtf8Index, ref lastUtf16Index);
+
+                    if (!string.IsNullOrEmpty(groupValue))
+                    {
+                        current[namedCaptureGroup.Name] = ToFlex(match, text, ref lastUtf8Index, ref lastUtf16Index);
+                    }
                 }
 
                 groupedMatches.Add(current);
