@@ -573,6 +573,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 RE2Regex.Instance,
                 DotNetRegex.Instance,
                 CachedDotNetRegex.Instance,
+                IronRE2Regex.Instance,
             };
 
             foreach (IRegex regex in regexList)
@@ -588,7 +589,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 DotNetRegex.Instance,
                 CachedDotNetRegex.Instance,
-                RE2Regex.Instance
+                RE2Regex.Instance,
+                IronRE2Regex.Instance,
             };
 
             foreach (IRegex regex in regexList)
@@ -640,7 +642,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 mockFileSystem.Object,
                 new string[] { searchDefinitionsPath },
                 tool,
-                RE2Regex.Instance);
+                IronRE2Regex.Instance);
 
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";

@@ -46,6 +46,10 @@
     <None Include="RE2.Managed.targets" Pack="true" PackagePath="build\" />
     <None Include="RE2.LICENSE.txt" Pack="true" PackagePath="content\" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="IronRe2" Version="2.0.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Strings.Interop\Strings.Interop.csproj" />
