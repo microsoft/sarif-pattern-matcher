@@ -34,15 +34,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackagePath>runtimes/win-x64/native</PackagePath>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x64\native\libre2.so" Pack="true" Link="runtimes/linux-x64/native/libre2.so">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>runtimes/win-x64/native</PackagePath>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\refs\runtimes\linux-x86\native\libre2.so" Pack="true" Link="runtimes/linux-x86/native/libre2.so">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>runtimes/win-x64/native</PackagePath>
-    </Content>
-
     <None Include="RE2.Managed.targets" Pack="true" PackagePath="build\" />
     <None Include="RE2.LICENSE.txt" Pack="true" PackagePath="content\" />
   </ItemGroup>
