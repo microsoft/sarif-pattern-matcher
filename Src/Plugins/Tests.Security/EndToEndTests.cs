@@ -38,7 +38,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem,
                                                                   new string[] { regexDefinitionsPath },
                                                                   tool,
-                                                                  RE2Regex.Instance);
+                                                                  IronRE2Regex.Instance);
             return skimmers;
         }
 
@@ -176,7 +176,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 using (context)
                 {
-                    ValidatorBase.RegexInstance = RE2Regex.Instance;
+                    ValidatorBase.RegexInstance = IronRE2Regex.Instance;
                     AnalyzeCommand.AnalyzeTargetHelper(context, skimmers, disabledSkimmers);
                 }
             }

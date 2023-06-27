@@ -61,9 +61,6 @@
       <BuildOutputInPackage Include="Octokit.dll">
         <FinalOutputPath>..\..\..\refs\Octokit.dll</FinalOutputPath>
       </BuildOutputInPackage>
-      <BuildOutputInPackage Include="aliyun-net-sdk-Iot.dll">
-        <FinalOutputPath>..\..\..\refs\aliyun-net-sdk-Iot.dll</FinalOutputPath>
-      </BuildOutputInPackage>
     </ItemGroup>
   </Target>
 

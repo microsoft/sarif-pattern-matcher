@@ -31,7 +31,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string secret = "abc123";
             string fingerprintText = $"[id={id}][secret={secret}]";
 
-            ValidatorBase.RegexInstance = RE2Regex.Instance;
+            ValidatorBase.RegexInstance = IronRE2Regex.Instance;
             var awsCredentialsValidator = new AwsCredentialsValidator();
 
             using var requestWithToken = new HttpRequestMessage(HttpMethod.Post, uri);
