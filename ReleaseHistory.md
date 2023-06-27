@@ -21,7 +21,7 @@
 ## v4.5.5/26/2023
 - DEP: Update SARIF SDK submodule from [a7029a3 to b77e955](https://github.com/microsoft/sarif-sdk/compare/a7029a3..b77e955). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/b77e955/ReleaseHistory.md).
 - DEP: SARIF SDK update is for v4.2.1, resolves a key unhandled exception issue enumerating zip archives.
-- NEW: Provide `IronRE2` pattern matching `--engine` options.
+- NEW: Provide `IronRE2` pattern matching `--engine` options. [#778](https://github.com/microsoft/sarif-pattern-matcher/pull/778)
 
 ## v4.5.4 6/25/2023
 - NEW: Allow for swapping regex engines (between `RE2`, `DotNet` and `CachedDotNet`) via `--engine` command-line argument and `RegexEngine` context property. [#776](https://github.com/microsoft/sarif-pattern-matcher/pull/776)
