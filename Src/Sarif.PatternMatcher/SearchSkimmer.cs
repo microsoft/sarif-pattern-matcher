@@ -1244,10 +1244,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             var re2regex = _engine as RE2Regex;
 
-            long maxMemoryInKB =
-                context.MaxMemoryInKilobytes == -1
-                    ? context.MaxMemoryInKilobytes
-                    : 1024 * context.MaxMemoryInKilobytes;
+            long maxMemoryInBytes = 1024 * context.MaxMemoryInKilobytes;
 
             if (re2regex != null)
             {
@@ -1255,13 +1252,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                         searchText,
                                         out matches,
                                         ref context.TextToRE2DataMap,
-                                        maxMemoryInKB);
+                                        maxMemoryInBytes);
             }
 
             return _engine.Matches(contentsRegex,
                                    searchText,
                                    out matches,
-                                   maxMemoryInKB);
+                                   maxMemoryInBytes);
         }
 
         private void ConstructResultAndLogForContentsRegex(FlexMatch binary64DecodedMatch,

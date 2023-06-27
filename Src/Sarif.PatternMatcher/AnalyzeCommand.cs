@@ -423,6 +423,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 {
                     return CachedDotNetRegex.Instance;
                 }
+
+                case RegexEngine.IronRE2:
+                {
+                    return IronRE2Regex.Instance;
+                }
             }
 
             throw new InvalidOperationException($"Unhandled regex engine value: {regexEngine}");

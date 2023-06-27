@@ -302,7 +302,7 @@ namespace Microsoft.RE2.Managed
                             else
                             {
                                 // GetMapOfUtf8ToUtf16ByteIndices is an expensive call and now is only called
-                                // when absolutely neccessary.
+                                // when absolutely necessary.
                                 // Was previously called everytime, regardless of if there was a match or not.
 
                                 if (indexMap == null)

@@ -55,6 +55,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks
             AnalyzeCommand(RE2Regex.Instance);
         }
 
+        [Benchmark]
+        public void AnalyzeCommand_SimpleAnalysisIronRE2()
+        {
+            AnalyzeCommand(IronRE2Regex.Instance);
+        }
+
         private static SearchDefinitions CreateDefinitions(int count)
         {
             var searchDefinitions = new SearchDefinitions()

@@ -18,6 +18,11 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## v4.5.5/26/2023
+- DEP: Update SARIF SDK submodule from [a7029a3 to b77e955](https://github.com/microsoft/sarif-sdk/compare/a7029a3..b77e955). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/b77e955/ReleaseHistory.md).
+- DEP: SARIF SDK update is for v4.2.1, resolves a key unhandled exception issue enumerating zip archives.
+- NEW: Provide `IronRE2` pattern matching `--engine` options. [#778](https://github.com/microsoft/sarif-pattern-matcher/pull/778)
+
 ## v4.5.4 6/25/2023
 - NEW: Allow for swapping regex engines (between `RE2`, `DotNet` and `CachedDotNet`) via `--engine` command-line argument and `RegexEngine` context property. [#776](https://github.com/microsoft/sarif-pattern-matcher/pull/776)
 
@@ -26,8 +31,8 @@
 - DEP: Update `SEC101/003.GoogleApiKey` in `Security` validating Google API key using HTTP requests.
 - DEP: Update `SEC101/006.GitHubLegacyPat` in `Security` validating GitHub PAT using HTTP requests and remove the `Octokit.dll` from `refs` folder.
 - DEP: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
-- DEP: Remove `AWSSDK.IdentityManagement` Nuget package from `Security`.
-- DEP: Remove `GoogleApi` Nuget package from `Security`.
+- DEP: Remove `AWSSDK.IdentityManagement` from `Security`.
+- DEP: Remove `GoogleApi` NuGet package from `Security`.
 
 ## v4.5.1 5/31/2023
 - DEP: Update SARIF SDK submodule from [441fa8b to dd8b7b8](https://github.com/microsoft/sarif-sdk/compare/441fa8b..dd8b7b8). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd8b7b8/ReleaseHistory.md). Additional eventing work.

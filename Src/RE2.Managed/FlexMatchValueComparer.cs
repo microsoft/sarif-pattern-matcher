@@ -30,7 +30,7 @@ namespace Microsoft.RE2.Managed
                 return false;
             }
 
-            return left.Value.String == right.Value.String;
+            return left.Value?.String == right.Value?.String;
         }
 
         public int GetHashCode(FlexMatch obj)
