@@ -109,15 +109,7 @@ namespace Microsoft.RE2.Managed
 
             // Map the UTF-8 index to UTF-16
             int mappedIndex = String8.Utf8ToUtf16((int)match.Start, input, lastUtf8Index, lastUtf16Index);
-            lastUtf8Index = (int)match.Start;
-            lastUtf16Index = mappedIndex;
-
-            // Map the length to UTF-16
-            int mappedEnd = String8.Utf8ToUtf16((int)(match.Start + match.ExtractedText.Length), input, lastUtf8Index, lastUtf16Index);
-            int mappedLength = mappedEnd - mappedIndex;
-
-            // Return the UTF-16 indices but the UTF-8 derived value
-            return new FlexMatch() { Success = true, Index = mappedIndex, Length = mappedLength, Value = match.ExtractedText };
+            return new FlexMatch() { Success = true, Index = mappedIndex, Length = match.ExtractedText.Length, Value = match.ExtractedText };
         }
 
         public bool Matches(string pattern, string text, out List<Dictionary<string, FlexMatch>> groupedMatches, long maxMemoryInBytes = 256L * 1024L * 1024L)
