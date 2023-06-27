@@ -18,7 +18,7 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## v4.5.5 unreleased
+## v4.5.6 unreleased
 - FPC: Updated `SEC101/036.MySqlCredentials` and `SEC101/037.SqlCredentials` regular expression to exclude the text inside curly bracket for password detection. [#777](https://github.com/microsoft/sarif-pattern-matcher/pull/777)
 
 ## v4.5.4 6/25/2023
