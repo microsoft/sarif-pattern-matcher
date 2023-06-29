@@ -188,6 +188,53 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
+        [Fact]
+        public void AnalyzeCommand_TracesInMemoryLogger()
+        {
+            var testOutput = new StringBuilder();
+
+            foreach (DefaultTraces trace in new[] { DefaultTraces.ScanTime, DefaultTraces.RuleScanTime, DefaultTraces.PeakWorkingSet })
+            {
+                foreach (Uri uri in new[] { new Uri(@"c:\doesnotexist.txt"), new Uri(@"doesnotexist.txt", UriKind.Relative) })
+                {
+                    var command = new TestMultithreadedAnalyzeCommand();
+
+                    var options = new TestAnalyzeOptions
+                    {
+                        Trace = new[] { trace.ToString() },
+                    };
+
+                    var sarifOutput = new StringBuilder();
+                    using var writer = new StringWriter(sarifOutput);
+
+                    var logger = new TestLogger();
+
+                    var target = new EnumeratedArtifact(FileSystem.Instance)
+                    {
+                        Uri = uri,
+                        Contents = "Contents."
+                    };
+
+                    var context = new TestAnalysisContext
+                    {
+                        TargetsProvider = new ArtifactProvider(new[] { target }),
+                        FailureLevels = BaseLogger.ErrorWarningNote,
+                        ResultKinds = BaseLogger.Fail,
+                        Logger = logger,
+                    };
+
+                    int result = command.Run(options, ref context);
+                    
+                    if (!logger.NoNotificationsFired)
+                    {
+                        testOutput.AppendLine($"No notifications fired for trace {trace} and uri {uri}");
+                    }
+                }
+
+                testOutput.Length.Should().Be(0, $"test cases failed : {Environment.NewLine}{testOutput}");
+            }
+        }
+
         [Fact(Skip = "Recent file regions cache change broke this test.")]
         public void AnalyzeCommandBase_InMemoryAnalysisGeneratesHashes()
         {
