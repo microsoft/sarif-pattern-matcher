@@ -54,8 +54,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 
         /// <summary>
         /// Pattern is a match and the secret is invalid for all
-        /// all authorities configured for validation (e.g., it
-        /// is expired). The secret may be valid for an authority
+        /// authorities configured for validation (e.g., it is
+        /// expired). The secret may be valid for an authority
         /// that wasn't consulted.
         /// </summary>
         InvalidForConsultedAuthorities,
@@ -65,5 +65,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// The result should be reported as an error.
         /// </summary>
         Authorized,
+
+        /// <summary>
+        /// Pattern is a match, but has been determined to be a
+        /// false positive by Artificial Intelligence (ie. ChatGPT).
+        /// </summary>
+        FalsePositiveDeterminedByAI,
     }
 }
