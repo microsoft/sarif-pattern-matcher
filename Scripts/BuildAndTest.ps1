@@ -38,6 +38,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
+$NonWindowsOptions = @{}
 
 $ScriptName = $([io.Path]::GetFileNameWithoutExtension($PSCommandPath))
 $RepoRoot = $(Resolve-Path $PSScriptRoot\..).Path
@@ -86,8 +87,10 @@ if (-not $NoTest) {
     if (-not $EnableCoverage) {
         $CodeCoverageCommand = ""
     }
-
-    dotnet test $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration --logger trx --no-build $CodeCoverageCommand --settings $RepoRoot\Src\SarifPatternMatcher.runsettings /p:IncludeTestAssembly=false
+    if (-not $ENV:OS) {
+        $NonWindowsOptions = @{ "-filter" = "WindowsOnly!=true" }
+    }
+    dotnet test $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration --logger trx --no-build $CodeCoverageCommand --settings $RepoRoot\Src\SarifPatternMatcher.runsettings /p:IncludeTestAssembly=false @NonWindowsOptions
 
     if ($LASTEXITCODE -ne 0) {
         Exit-WithFailureMessage $ScriptName "Test of SarifPatternMatcher failed."
