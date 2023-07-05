@@ -39,6 +39,11 @@
     <ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
   </ItemGroup>
 
+  <Target Name="GetMyPackageFiles">
+    <ItemGroup>
+    </ItemGroup>
+  </Target>
+
   <ItemGroup>
     <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
