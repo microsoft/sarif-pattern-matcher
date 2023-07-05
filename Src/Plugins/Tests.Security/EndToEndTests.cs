@@ -207,7 +207,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         private string GetPluginDirectory()
         {
             string result = Path.Combine(ThisAssembly.Location,
-                                         @"..\..\..",
+                                         "..",
+                                         "..",
+                                         "..",
                                          PluginName,
                                          Framework);
 
