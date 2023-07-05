@@ -75,7 +75,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC104.Memory.Allocation_malloca.c",
+                  "uri": "Src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC104.Memory.Allocation_malloca.c",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

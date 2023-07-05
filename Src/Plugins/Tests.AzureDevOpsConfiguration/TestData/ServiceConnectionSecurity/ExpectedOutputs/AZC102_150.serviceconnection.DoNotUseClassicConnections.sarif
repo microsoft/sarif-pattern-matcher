@@ -91,7 +91,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
+                  "uri": "Src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -141,7 +141,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
+                  "uri": "Src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_150.serviceconnection.DoNotUseClassicConnections.json",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

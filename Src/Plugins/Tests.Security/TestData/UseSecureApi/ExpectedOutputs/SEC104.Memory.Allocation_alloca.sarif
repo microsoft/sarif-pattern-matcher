@@ -73,7 +73,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC104.Memory.Allocation_alloca.c",
+                  "uri": "Src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC104.Memory.Allocation_alloca.c",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -105,7 +105,7 @@
               "artifactChanges": [
                 {
                   "artifactLocation": {
-                    "uri": "src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC104.Memory.Allocation_alloca.c",
+                    "uri": "Src/Plugins/Tests.Security/TestData/UseSecureApi/Inputs/SEC104.Memory.Allocation_alloca.c",
                     "uriBaseId": "SRC_ROOT"
                   },
                   "replacements": [

@@ -79,7 +79,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.NpmIdentifiableAuthorToken.ps1",
+                  "uri": "Src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_050.NpmIdentifiableAuthorToken.ps1",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

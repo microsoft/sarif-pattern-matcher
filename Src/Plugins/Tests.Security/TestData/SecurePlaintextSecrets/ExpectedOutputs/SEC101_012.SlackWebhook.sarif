@@ -76,7 +76,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_012.SlackWebhook.txt",
+                  "uri": "Src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_012.SlackWebhook.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

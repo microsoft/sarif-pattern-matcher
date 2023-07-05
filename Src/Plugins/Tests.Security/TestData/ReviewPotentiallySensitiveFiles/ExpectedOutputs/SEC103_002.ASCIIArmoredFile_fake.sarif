@@ -67,7 +67,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103_002.ASCIIArmoredFile_fake.asc",
+                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103_002.ASCIIArmoredFile_fake.asc",
                   "uriBaseId": "SRC_ROOT"
                 }
               }

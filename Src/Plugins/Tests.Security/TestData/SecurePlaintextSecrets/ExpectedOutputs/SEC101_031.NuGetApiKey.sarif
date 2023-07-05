@@ -76,7 +76,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_031.NuGetApiKey.txt",
+                  "uri": "Src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_031.NuGetApiKey.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
