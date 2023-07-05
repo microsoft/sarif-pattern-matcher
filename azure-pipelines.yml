@@ -18,22 +18,22 @@ jobs:
 
   steps:
   - task: UseDotNet@2
-    displayName: .NET Core 3.1 runtime
+    displayName: .NET Core 3.1 sdk
     inputs:
       version: '3.1.x'
-      packageType: runtime
+      packageType: sdk
 
   - task: UseDotNet@2
-    displayName: .NET Core 7.0 runtime
+    displayName: .NET Core 7.0 sdk
     inputs:
       version: '7.0.x'
-      packageType: runtime
+      packageType: sdk
     
   - task: UseDotNet@2
-    displayName: .NET Core 6.0 runtime
+    displayName: .NET Core 6.0 sdk
     inputs:
       version: '6.0.x'
-      packageType: runtime
+      packageType: sdk
 
   - task: PowerShell@2
     displayName: Build and Test
