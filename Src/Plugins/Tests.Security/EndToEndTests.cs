@@ -58,7 +58,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.TestData.{TypeUnderTest}";
 
-        protected override string TestBinaryTestDataDirectory => Path.Combine(ProductRootDirectory, "Src", "Plugins", TestBinaryName, "TestData");
+        protected override string TestBinaryTestDataDirectory => Path.Combine(ThisAssembly.Location, "..", "..", "..", "..", "..", "..", "Src", "Plugins", TestBinaryName, "TestData");
 
         protected override string ProductTestDataDirectory => Path.Combine(TestBinaryTestDataDirectory, TypeUnderTest);
 
@@ -132,7 +132,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             string filePath = Path.Combine(
                 ProductTestDataDirectory,
-                @"Inputs\",
+                "Inputs",
                 parameter as string);
 
             IFileSystem fileSystem = FileSystem.Instance;
@@ -218,7 +218,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             Directory.Exists(ProductTestDataDirectory).Should().BeTrue();
 
-            string testsDirectory = Path.Combine(ProductTestDataDirectory, @"Inputs\");
+            string testsDirectory = Path.Combine(ProductTestDataDirectory, "Inputs");
 
             var inputFiles = new List<string>();
             var expectedOutputResourceMap = new Dictionary<string, string>();
