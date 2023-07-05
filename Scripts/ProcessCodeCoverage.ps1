@@ -1,6 +1,6 @@
 nuget install Microsoft.CodeCoverage -version 16.10.0
 
-$files = Get-ChildItem "bld\TestResults" -Filter "*.coverage" -Recurse
+$files = Get-ChildItem "Bld\TestResults" -Filter "*.coverage" -Recurse
 
 foreach ($file in $files)
 {

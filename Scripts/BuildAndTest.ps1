@@ -60,9 +60,9 @@ if (-not (Test-Path "$RepoRoot\Src\Sarif-Sdk")) {
     git submodule update
 }
 
-If (Test-Path "..\bld") {
+If (Test-Path "..\Bld") {
     Write-Information "Deleting old build..."
-    rd /s /q ..\bld
+    rd /s /q ..\Bld
 }
 
 if (-not $NoBuild) {    
