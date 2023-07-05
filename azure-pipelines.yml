@@ -24,17 +24,17 @@ jobs:
       packageType: runtime
 
   - task: UseDotNet@2
+    displayName: .NET Core 7.0 runtime
+    inputs:
+      version: '7.0.x'
+      packageType: runtime
+    
+  - task: UseDotNet@2
     displayName: .NET Core 6.0 runtime
     inputs:
       version: '6.0.x'
       packageType: runtime
 
-  - task: UseDotNet@2
-    displayName: .NET Core 7.0 runtime
-    inputs:
-      version: '7.0.x'
-      packageType: runtime
-  
   - task: PowerShell@2
     displayName: Build and Test
     inputs:
