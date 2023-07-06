@@ -40,7 +40,7 @@ jobs:
         inputs:
           targetType: filePath
           filePath: ./Scripts/BuildAndTest.ps1
-          arguments: "-Configuration Release -EnableCoverage"     
+          arguments: "-Configuration Release -EnableCoverage"
 
       - task: PublishTestResults@2
         inputs:
