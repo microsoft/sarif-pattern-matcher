@@ -18,7 +18,7 @@ steps:
     modifyEnvironment: true
 
 - task: BatchScript@1
-  displayName: 'Run   BuildAndTest.cmd'
+  displayName: 'Run    BuildAndTest.cmd'
   inputs:
     filename: 'BuildAndTest.cmd'
     arguments: '-Configuration Release -EnableCoverage'
