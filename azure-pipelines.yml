@@ -1,50 +1,50 @@
 pr:
-- 'main'
+  - "main"
 
 jobs:
-- job: NET_pipeline
-  strategy:
-    matrix:
-      linux:
-        imageName: 'ubuntu-20.04'
-      mac:
-        imageName: 'macOS-latest'
-      windows:
-        imageName: 'windows-latest'
-    maxParallel: 4
+  - job: NET_pipeline
+    strategy:
+      matrix:
+        linux:
+          imageName: "ubuntu-20.04"
+        mac:
+          imageName: "macOS-latest"
+        windows:
+          imageName: "windows-latest"
+      maxParallel: 4
 
-  pool: 
-    vmImage: $(imageName)
+    pool:
+      vmImage: $(imageName)
 
-  steps:
-  - task: UseDotNet@2
-    displayName: .NET Core 3.1 sdk
-    inputs:
-      version: '3.1.x'
-      packageType: sdk
+    steps:
+      - task: UseDotNet@2
+        displayName: .NET Core 3.1 sdk
+        inputs:
+          version: "3.1.x"
+          packageType: sdk
 
-  - task: UseDotNet@2
-    displayName: .NET Core 6.0 sdk
-    inputs:
-      version: '6.0.x'
-      packageType: sdk
+      - task: UseDotNet@2
+        displayName: .NET Core 6.0 sdk
+        inputs:
+          version: "6.0.x"
+          packageType: sdk
 
-  - task: UseDotNet@2
-    displayName: .NET Core 7.0 sdk
-    inputs:
-      version: '7.0.x'
-      packageType: sdk
+      - task: UseDotNet@2
+        displayName: .NET Core 7.0 sdk
+        inputs:
+          version: "7.0.x"
+          packageType: sdk
 
-  - task: PowerShell@2
-    displayName: Build and Test
-    inputs:
-      targetType: filePath
-      filePath: ./Scripts/BuildAndTest.ps1
-      arguments: '-Configuration Release -EnableCoverage'
-  
-  - task: PublishTestResults@2
-    inputs:
-      testRunner: VSTest
-      testResultsFiles: '**/*.trx'
-  
-  - task: ComponentGovernanceComponentDetection@0
+      - task: PowerShell@2
+        displayName: Build and Test
+        inputs:
+          targetType: filePath
+          filePath: ./Scripts/BuildAndTest.ps1
+          arguments: "-Configuration Release -EnableCoverage"
+
+      - task: PublishTestResults@2
+        inputs:
+          testRunner: VSTest
+          testResultsFiles: "**/*.trx"
+
+      - task: ComponentGovernanceComponentDetection@0
