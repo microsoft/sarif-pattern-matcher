@@ -19,6 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override string TypeUnderTest => "UseSecureApi";
 
         [Fact]
+        [Trait(TestTraits.WindowsOnly, "true")]
         public void UseSecureApi_EndToEndFunctionalTests()
             => RunAllTests();
     }

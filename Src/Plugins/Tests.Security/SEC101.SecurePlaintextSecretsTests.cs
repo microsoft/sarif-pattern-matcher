@@ -19,6 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override string TypeUnderTest => "SecurePlaintextSecrets";
 
         [Fact]
+        [Trait(TestTraits.WindowsOnly, "true")]
         public void SecurePlaintextSecrets_EndToEndFunctionalTests()
             => RunAllTests();
 
