@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 using Xunit;
 
@@ -37,6 +38,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Fact]
         public void PostgreSqlCredentialsValidator_DebugFingerprint()
         {
+            ValidatorBase.RegexInstance = IronRE2Regex.Instance;
             string fingerprintText = "[host=place.location.com][id=database][secret=password]";
             string message = "";
             ResultLevelKind resultLevelKind = default;
