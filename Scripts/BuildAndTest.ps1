@@ -63,7 +63,7 @@ if (-not (Test-Path "$RepoRoot\Src\Sarif-Sdk")) {
 
 If (Test-Path "..\Bld") {
     Write-Information "Deleting old build..."
-    rd /s /q ..\Bld
+    Remove-Item -Path ..\Bld -Recurse -Force -Confirm:$false
 }
 
 if (-not $NoBuild) {    
@@ -73,6 +73,8 @@ if (-not $NoBuild) {
         Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."	
     }    
 
+    $RepoRoot = $(Resolve-Path $PSScriptRoot\..).Path
+    
     Write-Information "Building SarifPatternMatcher.sln (dotnet)..."
     dotnet build $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true
     if ($LASTEXITCODE -ne 0) {
