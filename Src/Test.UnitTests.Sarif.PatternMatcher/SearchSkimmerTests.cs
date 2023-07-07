@@ -508,7 +508,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             definitions = AnalyzeCommand.PushInheritedData(definitions, sharedStrings: null);
 
             return new SearchSkimmer(
-                engine: engine ?? RE2Regex.Instance,
+                engine: engine ?? IronRE2Regex.Instance,
                 validators: validators,
                 definition: definitions.Definitions[0]);
         }
