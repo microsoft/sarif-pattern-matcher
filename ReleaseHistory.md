@@ -22,8 +22,13 @@
 - BRK: Re-enable `SEC101/047.CratesApiKey` as static analysis only. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
 - FPD: Removed dynamic analysis entirely for `SEC101/047.CratesApiKey` rule due to outdated validation always returning status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
 
-## v4.5.5/26/2023
-- DEP: Update SARIF SDK submodule from [a7029a3 to b77e955](https://github.com/microsoft/sarif-sdk/compare/a7029a3..b77e955). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/b77e955/ReleaseHistory.md).
+## v4.5.8 UNRELEASED
+- DEP: Update SARIF SDK submodule from [7e8def7 to dd3741f(https://github.com/microsoft/sarif-sdk/compare/7e8def7..dd3741f). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd3741f/ReleaseHistory.md).
+
+## v4.5.7 6/28/2023
+- DEP: Update SARIF SDK submodule from [a7029a3 to 7e8def7(https://github.com/microsoft/sarif-sdk/compare/a7029a3..7e8def7). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/7e8def7/ReleaseHistory.md).
+
+## v4.5.5 6/26/2023
 - DEP: SARIF SDK update is for v4.2.1, resolves a key unhandled exception issue enumerating zip archives.
 - NEW: Provide `IronRE2` pattern matching `--engine` options. [#778](https://github.com/microsoft/sarif-pattern-matcher/pull/778)
 
@@ -33,6 +38,7 @@
 ## v4.5.2 6/14/2023
 - DEP: Update SARIF SDK submodule from [dd8b7b8 to a7029a3](https://github.com/microsoft/sarif-sdk/compare/dd8b7b8..a7029a3). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/a7029a3/ReleaseHistory.md). SDK v4.2.0.
 - DEP: Update `SEC101/003.GoogleApiKey` in `Security` validating Google API key using HTTP requests.
+- DEP: Update `SEC101/006.GitHubLegacyPat` in `Security` validating GitHub PAT using HTTP requests and remove the `Octokit.dll` from `refs` folder.
 - DEP: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
 - DEP: Remove `AWSSDK.IdentityManagement` from `Security`.
 - DEP: Remove `GoogleApi` NuGet package from `Security`.

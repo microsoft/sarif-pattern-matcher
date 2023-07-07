@@ -40,12 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Octokit">
-      <HintPath>..\..\..\refs\Octokit.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -55,14 +49,6 @@
   <PropertyGroup>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);GetMyPackageFiles</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
-
-  <Target Name="GetMyPackageFiles">
-    <ItemGroup>
-      <BuildOutputInPackage Include="Octokit.dll">
-        <FinalOutputPath>..\..\..\refs\Octokit.dll</FinalOutputPath>
-      </BuildOutputInPackage>
-    </ItemGroup>
-  </Target>
 
   <Target Name="CopyingSecurityToSpam" AfterTargets="Build">
 
