@@ -19,6 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         protected override string TypeUnderTest => "ReviewPotentiallySensitiveFiles";
 
         [Fact]
+        [Trait(TestTraits.WindowsOnly, "true")]
         public void ReviewPotentiallySensitiveFiles_EndToEndFunctionalTests()
             => RunAllTests();
     }

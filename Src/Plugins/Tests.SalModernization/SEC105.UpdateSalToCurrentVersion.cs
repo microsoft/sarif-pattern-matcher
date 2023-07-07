@@ -19,6 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.SalModernization
         protected override string TypeUnderTest => "UpdateSalToCurrentVersion";
 
         [Fact]
+        [Trait(TestTraits.WindowsOnly, "true")]
         public void UpdateSalToCurrentVersion_EndToEndFunctionalTests()
             => RunAllTests();
     }
