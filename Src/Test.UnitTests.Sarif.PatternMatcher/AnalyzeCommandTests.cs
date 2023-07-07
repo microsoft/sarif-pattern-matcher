@@ -955,7 +955,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 PatternMatcher.AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(mockFileSystem.Object,
                                                                                  new string[] { searchDefinitionsPath },
                                                                                  run.Tool,
-                                                                                 RE2Regex.Instance);
+                                                                                 IronRE2Regex.Instance);
 
             string scanTargetFileName = $"C:\\{Guid.NewGuid()}.test";
             FlexString fileContents = $"{secretText}bar1{Environment.NewLine} {secretText}bar2 {Environment.NewLine}3{secretText}bar";
