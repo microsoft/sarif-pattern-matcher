@@ -19,8 +19,8 @@
 - UEE => Eliminate unhandled exceptions in engine.
 
 ## Unreleased
-- BRK: Re-enable `SEC101/047.CratesApiKey` as static analysis only.
-- FPD: Removed dynamic analysis entirely for `SEC101/047.CratesApiKey` rule due to outdated validation always returning status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys [#787]()
+- BRK: Re-enable `SEC101/047.CratesApiKey` as static analysis only. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
+- FPD: Removed dynamic analysis entirely for `SEC101/047.CratesApiKey` rule due to outdated validation always returning status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
 
 ## v4.5.5/26/2023
 - DEP: Update SARIF SDK submodule from [a7029a3 to b77e955](https://github.com/microsoft/sarif-sdk/compare/a7029a3..b77e955). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/b77e955/ReleaseHistory.md).
