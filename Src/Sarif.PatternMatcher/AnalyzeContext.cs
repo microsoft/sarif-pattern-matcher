@@ -113,7 +113,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public static PerLanguageOption<RegexEngine> RegexEngineProperty =>
             new PerLanguageOption<RegexEngine>(
-                "CoreSettings", nameof(RegexEngine), defaultValue: () => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? RegexEngine.RE2 : RegexEngine.IronRE2,
+                "CoreSettings", nameof(RegexEngine), defaultValue: () => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? RegexEngine.IronRE2 : RegexEngine.IronRE2,
                 "The pattern matching to use for scanning. One of RE2 (Windows default), DotNet, CachedDotNet or IronRE2 (Linux default).");
 
         public static PerLanguageOption<string> SniffRegexProperty =>
