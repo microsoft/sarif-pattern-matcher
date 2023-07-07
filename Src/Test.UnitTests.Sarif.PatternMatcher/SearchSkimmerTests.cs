@@ -128,6 +128,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void SearchSkimmer_DetectsFilePatternOnly()
         {
+            ValidatorBase.RegexInstance = IronRE2Regex.Instance;
             string fileExtension = Guid.NewGuid().ToString();
             MatchExpression expr = CreateFileDetectingMatchExpression(fileExtension: fileExtension);
             SearchDefinition definition = CreateDefaultSearchDefinition(expr);
