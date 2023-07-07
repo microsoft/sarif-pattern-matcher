@@ -759,7 +759,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         {
             string stringsLocation = this.GetType().Assembly.Location;
             stringsLocation = Path.GetDirectoryName(stringsLocation);
-            stringsLocation = Path.Combine(stringsLocation, "SharedStrings.Txt");
+            stringsLocation = Path.Combine(stringsLocation, "SharedStrings.txt");
             return File.ReadAllLines(stringsLocation);
         }
 
