@@ -58,7 +58,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override string TestLogResourceNameRoot => $"Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.TestData.{TypeUnderTest}";
 
-        protected override string TestBinaryTestDataDirectory => Path.Combine(ThisAssembly.Location, "..", "..", "..", "..", "..", "..", "Src", "Plugins", TestBinaryName, "TestData");
+        protected override string ProductRootDirectory => Path.Combine(ThisAssembly.Location, "..", "..", "..", "..", "..", "..");
+
+        protected override string TestBinaryTestDataDirectory => Path.Combine(ProductRootDirectory, "Src", "Plugins", TestBinaryName, "TestData");
 
         protected override string ProductTestDataDirectory => Path.Combine(TestBinaryTestDataDirectory, TypeUnderTest);
 
@@ -191,7 +193,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             var rebaseUriVisitor = new RebaseUriVisitor("EXTENSION_ROOT", new Uri(pluginRoot));
             rebaseUriVisitor.Visit(sarifLog);
 
-            string sourceRoot = GitHelper.Default.GetTopLevel(Path.GetDirectoryName(filePath)) + @"\";
+            string sourceRoot = ProductRootDirectory;
             rebaseUriVisitor = new RebaseUriVisitor("SRC_ROOT", new Uri(sourceRoot));
             rebaseUriVisitor.Visit(sarifLog);
 
