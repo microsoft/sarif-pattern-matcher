@@ -10,12 +10,14 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft.CodeAnalysis.Sarif;
 using Microsoft.Strings.Interop;
 
 using Xunit;
 
 namespace Microsoft.RE2.Managed
 {
+    [Trait(TestTraits.WindowsOnly, "true")]
     public class Regex2Tests
     {
         static Regex2Tests()

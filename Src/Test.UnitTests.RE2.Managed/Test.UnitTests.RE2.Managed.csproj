@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RE2.Managed\RE2.Managed.csproj" />
+    <ProjectReference Include="..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
   </ItemGroup>
 
   <ItemGroup>
