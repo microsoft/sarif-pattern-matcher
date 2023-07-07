@@ -68,7 +68,7 @@ If (Test-Path "..\Bld") {
 
 if (-not $NoBuild) {    
     Write-Information "Building Sarif.Sdk"	
-    & $RepoRoot\Src\sarif-sdk\BuildAndTest.cmd -NoBuild -NoTest -NoPublish -NoSigningDirectory -NoPackage -NoFormat
+    & $RepoRoot\Src\sarif-sdk\scripts\BuildAndTest.ps1 -NoBuild -NoTest -NoPublish -NoSigningDirectory -NoPackage -NoFormat
     if ($LASTEXITCODE -ne 0) {	
         Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."	
     }    

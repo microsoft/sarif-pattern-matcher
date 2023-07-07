@@ -189,7 +189,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
             SarifLog sarifLog = JsonConvert.DeserializeObject<SarifLog>(sb.ToString());
 
-            string pluginRoot = Path.GetDirectoryName(DefinitionsPath) + @"\";
+            string pluginRoot = PluginDirectory;
             var rebaseUriVisitor = new RebaseUriVisitor("EXTENSION_ROOT", new Uri(pluginRoot));
             rebaseUriVisitor.Visit(sarifLog);
 
