@@ -18,6 +18,10 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## Unreleased
+- BRK: Re-enable `SEC101/047.CratesApiKey` as static analysis only.
+- FPD: Removed dynamic analysis entirely for `SEC101/047.CratesApiKey` rule due to outdated validation always returning status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys [#787]()
+
 ## v4.5.5/26/2023
 - DEP: Update SARIF SDK submodule from [a7029a3 to b77e955](https://github.com/microsoft/sarif-sdk/compare/a7029a3..b77e955). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/b77e955/ReleaseHistory.md).
 - DEP: SARIF SDK update is for v4.2.1, resolves a key unhandled exception issue enumerating zip archives.
@@ -41,7 +45,7 @@
 - NEW: Added ETW event tracing support.
 
 ## v4.4.1 5/9/2023
-- BRK: Disable `SEC101/047.CratesApiKey`. Current dynamic validator returns status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API Keys
+- BRK: Disable `SEC101/047.CratesApiKey`. Current dynamic validator returns status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API Kkeys
 - NEW: Provide new `AnalyzeContext.SniffRegex` property that applies a pre-filter contents regex to all scan targets, when configured. https://github.com/microsoft/sarif-pattern-matcher/pull/756
 
 ## v4.3.10 04/19/2023
