@@ -68,6 +68,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Logger = inMemoryLogger,
                 SniffRegex = "Will fire", // Will match target contents above.
                 TargetsProvider = new ArtifactProvider(new[] { target }),
+                RegexEngine = RegexEngine.IronRE2
             };
 
             var command = new AnalyzeCommand();
@@ -84,6 +85,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Logger = inMemoryLogger,
                 SniffRegex = "Won't fire",
                 TargetsProvider = new ArtifactProvider(new[] { target }),
+                RegexEngine = RegexEngine.IronRE2
             };
 
             command = new AnalyzeCommand();
@@ -587,9 +589,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             var regexList = new List<IRegex>
             {
-                DotNetRegex.Instance,
-                CachedDotNetRegex.Instance,
-                RE2Regex.Instance,
+                //DotNetRegex.Instance,
+                //CachedDotNetRegex.Instance,
+                //RE2Regex.Instance,
                 IronRE2Regex.Instance,
             };
 
@@ -718,7 +720,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 mockFileSystem.Object,
                 new string[] { searchDefinitionsPath },
                 tool,
-                RE2Regex.Instance);
+                IronRE2Regex.Instance);
 
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
@@ -1080,7 +1082,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 mockFileSystem.Object,
                 new string[] { searchDefinitionsPath },
                 tool,
-                RE2Regex.Instance);
+                IronRE2Regex.Instance);
 
             string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
@@ -1139,6 +1141,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Logger = logger,
                 CurrentTarget = target,
                 DataToInsert = dataToInsert,
+                RegexEngine =  RegexEngine.IronRE2,
             };
 
             var disabledSkimmers = new HashSet<string>();

@@ -99,7 +99,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
         [Fact]
         public async Task Function_HttpAnalyze_WithFileContent_Should_Return_DifferentResponses()
         {
-            ValidatorBase.RegexInstance = RE2Regex.Instance;
+            ValidatorBase.RegexInstance = IronRE2Regex.Instance;
             const string patTextFile = "SEC101_005.SlackApiKey.py";
             string content = TestHelper.GetTestResourceContent(patTextFile);
             string[] lines = content.Split(Environment.NewLine);

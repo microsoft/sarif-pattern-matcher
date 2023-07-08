@@ -128,7 +128,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
             Program.ClearUnitTestData();
             Program.GlobalContext = new AnalyzeContext
             {
-                FileSystem = mockFileSystem.Object
+                FileSystem = mockFileSystem.Object,
+                RegexEngine = RegexEngine.IronRE2
             };
 
             string[] args = new[] { responseFilePath };
