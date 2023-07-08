@@ -51,6 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         [Fact]
+        [Trait(TestTraits.WindowsOnly, "true")]
         public void AnalyzeCommand_SniffRegex()
         {
             var inMemoryLogger = new MemoryStreamSarifLogger();
