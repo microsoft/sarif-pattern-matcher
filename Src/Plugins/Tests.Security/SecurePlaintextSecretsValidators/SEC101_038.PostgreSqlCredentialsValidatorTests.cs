@@ -36,6 +36,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         }
 
         [Fact]
+        [Trait(TestTraits.WindowsOnly, "true")]
         public void PostgreSqlCredentialsValidator_DebugFingerprint()
         {
             ValidatorBase.RegexInstance = IronRE2Regex.Instance;

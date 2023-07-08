@@ -47,6 +47,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         }
 
         [Fact]
+        [Trait("WindowsOnly", "true")]
         public void Program_ResponseFileWorks()
         {
             // Ensure that simple commands, such as help and version
@@ -61,6 +62,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         }
 
         [Fact]
+        [Trait("WindowsOnly", "true")]
         public void Program_ResponseFileHelpCommandWorksForAllVerbs()
         {
             // Crawl all types looking for command verbs and ensure that each one of
@@ -77,6 +79,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         }
 
         [Fact]
+        [Trait("WindowsOnly", "true")]
         public void Program_ResponseFileMultilineHelpCommandWorksForAllVerbs()
         {
             // Crawl all types looking for command verbs and ensure that each one of
