@@ -23,6 +23,7 @@ using Xunit;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
 {
+    [Trait("WindowsOnly", "true")]
     public class HttpAnalyzeFunctionTests
     {
         private readonly ILogger logger = new TestLogger();
