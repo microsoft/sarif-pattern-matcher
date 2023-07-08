@@ -58,7 +58,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var target = new EnumeratedArtifact(FileSystem.Instance)
             {
-                Uri = new Uri("c:\\FireOneError.txt", UriKind.Absolute),
+                Uri = new Uri(Path.Combine(Environment.CurrentDirectory, "c", "FireOneError.txt"), UriKind.Absolute),
                 Contents = $"Will fire a single error due to the file name. ",
             };
 
