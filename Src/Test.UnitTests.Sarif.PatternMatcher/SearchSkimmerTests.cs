@@ -388,7 +388,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             };
 
             var sb = new StringBuilder();
-            IRegex regexEngine = RE2Regex.Instance;
+            IRegex regexEngine = IronRE2Regex.Instance;
             foreach (string testCase in testCases)
             {
                 var searchDefinition = new SearchDefinition

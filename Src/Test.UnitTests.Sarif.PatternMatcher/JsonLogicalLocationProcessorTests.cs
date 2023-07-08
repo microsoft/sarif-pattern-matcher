@@ -37,7 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Test.Processors
         [Fact]
         public void JsonLogicalLocation_Basics()
         {
-            IRegex engine = RE2Regex.Instance;
+            IRegex engine = IronRE2Regex.Instance;
 
             // Property Name
             ResolveJsonLogicalPath(SampleJsonContent, "name", "stuff[0].name");

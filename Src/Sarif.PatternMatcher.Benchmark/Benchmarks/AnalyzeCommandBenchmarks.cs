@@ -52,7 +52,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks
         [Benchmark]
         public void AnalyzeCommand_SimpleAnalysisRegex2()
         {
-            AnalyzeCommand(RE2Regex.Instance);
+            AnalyzeCommand(IronRE2Regex.Instance);
         }
 
         [Benchmark]

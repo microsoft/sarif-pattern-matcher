@@ -572,9 +572,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             var regexList = new List<IRegex>
             {
-                RE2Regex.Instance,
-                DotNetRegex.Instance,
-                CachedDotNetRegex.Instance,
+                //RE2Regex.Instance,
+                //DotNetRegex.Instance,
+                //CachedDotNetRegex.Instance,
                 IronRE2Regex.Instance,
             };
 
@@ -1145,7 +1145,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             };
 
             var disabledSkimmers = new HashSet<string>();
-            ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmers(RE2Regex.Instance, run.Tool);
+            ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmers(IronRE2Regex.Instance, run.Tool);
             IEnumerable<Skimmer<AnalyzeContext>> applicableSkimmers = PatternMatcher.AnalyzeCommand.DetermineApplicabilityForTargetHelper(context, skimmers, disabledSkimmers);
 
             logger.AnalysisStarted();

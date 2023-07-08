@@ -54,7 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                 aggregatingLogger.AnalysisStarted();
                 ISet<Skimmer<AnalyzeContext>> skimmers =
-                    AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, options.PluginFilePaths, run.Tool, RE2Regex.Instance);
+                    AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, options.PluginFilePaths, run.Tool, IronRE2Regex.Instance);
 
                 var workers = new Task<bool>[options.Threads];
 
