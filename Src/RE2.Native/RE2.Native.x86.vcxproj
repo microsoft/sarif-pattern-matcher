@@ -27,8 +27,8 @@
     <TargetExt>.dll</TargetExt>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <OutDir>$(SolutionDir)..\Bld\bin\$(Configuration)\x86\</OutDir>
-    <IntDir>$(SolutionDir)..\Bld\bin\int\x86\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\bld\bin\$(Configuration)\x86\</OutDir>
+    <IntDir>$(SolutionDir)..\bld\bin\int\x86\$(Configuration)\</IntDir>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">

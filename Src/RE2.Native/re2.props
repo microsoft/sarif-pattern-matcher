@@ -31,7 +31,7 @@
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>re2;re2\re2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <OutputDirectory>$(MsBuildThisFileDirectory)..\Bld\bin\int\midl\</OutputDirectory>
+      <OutputDirectory>$(MsBuildThisFileDirectory)..\bld\bin\int\midl\</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
       <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
@@ -65,7 +65,7 @@
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>re2;re2\re2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <OutputDirectory>$(MsBuildThisFileDirectory)..\Bld\bin\int\midl\</OutputDirectory>
+      <OutputDirectory>$(MsBuildThisFileDirectory)..\bld\bin\int\midl\</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
       <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>

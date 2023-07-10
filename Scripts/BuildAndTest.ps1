@@ -61,9 +61,9 @@ if (-not (Test-Path "$RepoRoot\Src\Sarif-Sdk")) {
     git submodule update
 }
 
-If (Test-Path "..\Bld") {
+If (Test-Path "..\bld") {
     Write-Information "Deleting old build..."
-    Remove-Item -Path ..\Bld -Recurse -Force -Confirm:$false
+    Remove-Item -Path ..\bld -Recurse -Force -Confirm:$false
 }
 
 if (-not $NoBuild) {    

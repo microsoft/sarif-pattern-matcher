@@ -2,7 +2,7 @@
 <RunSettings>
   <RunConfiguration>
     <!--<MaxCpuCount>1</MaxCpuCount>-->
-    <ResultsDirectory>..\Bld\TestResults</ResultsDirectory>
+    <ResultsDirectory>..\bld\TestResults</ResultsDirectory>
   </RunConfiguration>
   <DataCollectionRunSettings>
     <DataCollectors>
