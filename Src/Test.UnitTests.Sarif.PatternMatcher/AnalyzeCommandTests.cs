@@ -647,7 +647,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 tool,
                 IronRE2Regex.Instance);
 
-            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
+            string scanTargetFileName = Path.Combine(Environment.CurrentDirectory, "C", Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
@@ -723,7 +723,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 tool,
                 IronRE2Regex.Instance);
 
-            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
+            string scanTargetFileName = Path.Combine(Environment.CurrentDirectory, "C", Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
@@ -1085,7 +1085,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 tool,
                 IronRE2Regex.Instance);
 
-            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
+            string scanTargetFileName = Path.Combine(Environment.CurrentDirectory, "C", Guid.NewGuid().ToString() + ".test");
             FlexString fileContents = "bar foo foo";
             FlexString fixedFileContents = "bar bar bar";
 
@@ -1228,7 +1228,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ISet<Skimmer<AnalyzeContext>> skimmers = CreateSkimmers(engine, tool);
 
             FlexString fileContents = "bar foo foo";
-            string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
+            string scanTargetFileName = Path.Combine(Environment.CurrentDirectory, "C", Guid.NewGuid().ToString() + ".test");
 
             var targetsProvider = new ArtifactProvider(new[] {
             new EnumeratedArtifact(FileSystem.Instance)
