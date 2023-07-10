@@ -68,7 +68,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103_024.MicrosoftSerializedCertificateStoreFile_default.sst",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103_024.MicrosoftSerializedCertificateStoreFile_default.sst",
                   "uriBaseId": "SRC_ROOT"
                 }
               }

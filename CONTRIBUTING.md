@@ -50,8 +50,8 @@ To build the solution you can:
 
 * Use Visual Studio:
 
-1. Open the solution `Src\RE2.Native.sln` and build.
-2. Open the solution `Src\SarifPatternMatcher.sln` and build.
+1. Open the solution `src\RE2.Native.sln` and build.
+2. Open the solution `src\SarifPatternMatcher.sln` and build.
 
 ## Troubleshooting First Commit
 If you are having trouble with your first commit or push to the GitHub, first please confirm with your repository admin to ensure you have write permissions. 

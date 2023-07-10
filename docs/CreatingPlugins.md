@@ -115,6 +115,6 @@ The `targets` file contains all the instructions to move files during installati
 
 For examples, check the public repository:
 
-- [txt file](https://github.com/microsoft/sarif-pattern-matcher/blob/main/Src/Plugins/Security/Security.SharedStrings.txt)
-- [json file](https://github.com/microsoft/sarif-pattern-matcher/blob/main/Src/Plugins/Security/SEC101.SecurePlaintextSecrets.json)
-- [targets file](https://github.com/microsoft/sarif-pattern-matcher/blob/main/Src/Plugins/Security/build/Sarif.PatternMatcher.Security.targets)
+- [txt file](https://github.com/microsoft/sarif-pattern-matcher/blob/main/src/Plugins/Security/Security.SharedStrings.txt)
+- [json file](https://github.com/microsoft/sarif-pattern-matcher/blob/main/src/Plugins/Security/SEC101.SecurePlaintextSecrets.json)
+- [targets file](https://github.com/microsoft/sarif-pattern-matcher/blob/main/src/Plugins/Security/build/Sarif.PatternMatcher.Security.targets)

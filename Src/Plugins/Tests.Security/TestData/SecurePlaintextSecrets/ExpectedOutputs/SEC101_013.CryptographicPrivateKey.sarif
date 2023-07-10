@@ -77,7 +77,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.CryptographicPrivateKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.CryptographicPrivateKey.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -126,7 +126,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.CryptographicPrivateKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_013.CryptographicPrivateKey.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

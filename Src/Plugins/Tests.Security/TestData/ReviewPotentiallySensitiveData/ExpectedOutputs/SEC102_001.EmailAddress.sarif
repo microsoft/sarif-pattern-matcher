@@ -71,7 +71,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -117,7 +117,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -163,7 +163,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -209,7 +209,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -255,7 +255,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -301,7 +301,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -347,7 +347,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -393,7 +393,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -439,7 +439,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -485,7 +485,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -531,7 +531,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -577,7 +577,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -623,7 +623,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -669,7 +669,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -715,7 +715,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -761,7 +761,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -807,7 +807,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -853,7 +853,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -899,7 +899,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -945,7 +945,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -991,7 +991,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1037,7 +1037,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1083,7 +1083,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1129,7 +1129,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1175,7 +1175,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1221,7 +1221,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1267,7 +1267,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1313,7 +1313,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1359,7 +1359,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1405,7 +1405,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1451,7 +1451,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1497,7 +1497,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1543,7 +1543,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -1589,7 +1589,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveData/Inputs/SEC102_001.EmailAddress.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

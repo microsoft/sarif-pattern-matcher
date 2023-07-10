@@ -56,7 +56,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_005.SlackTokens.py",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_005.SlackTokens.py",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

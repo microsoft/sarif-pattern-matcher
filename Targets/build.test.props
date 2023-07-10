@@ -7,6 +7,6 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <RunSettingsFilePath>$(MsBuildThisFileDirectory)..\Src\SarifPatternMatcher.runsettings</RunSettingsFilePath>
+    <RunSettingsFilePath>$(MsBuildThisFileDirectory)..\src\SarifPatternMatcher.runsettings</RunSettingsFilePath>
   </PropertyGroup>
 </Project>

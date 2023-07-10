@@ -76,7 +76,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_052.StripeLiveRestrictedApiKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_052.StripeLiveRestrictedApiKey.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -125,7 +125,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_052.StripeLiveRestrictedApiKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_052.StripeLiveRestrictedApiKey.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {
@@ -174,7 +174,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_052.StripeLiveRestrictedApiKey.txt",
+                  "uri": "src/Plugins/Tests.Security/TestData/SecurePlaintextSecrets/Inputs/SEC101_052.StripeLiveRestrictedApiKey.txt",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

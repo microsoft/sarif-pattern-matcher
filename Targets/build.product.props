@@ -38,16 +38,16 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)..\Src\.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)..\src\.ruleset</CodeAnalysisRuleSet>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="$(MSBuildThisFileDirectory)..\Src\stylecop.json">
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)..\src\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
 
-    <Compile Include="$(MSBuildThisFileDirectory)..\Src\Shared\CommonAssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\src\Shared\CommonAssemblyInfo.cs" />
   </ItemGroup>
 
   <ItemGroup Label="Common Packages">

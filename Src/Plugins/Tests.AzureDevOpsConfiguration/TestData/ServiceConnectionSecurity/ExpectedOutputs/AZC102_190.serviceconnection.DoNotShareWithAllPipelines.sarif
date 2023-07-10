@@ -74,7 +74,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_190.serviceconnection.DoNotShareWithAllPipelines.json",
+                  "uri": "src/Plugins/Tests.AzureDevOpsConfiguration/TestData/ServiceConnectionSecurity/Inputs/AZC102_190.serviceconnection.DoNotShareWithAllPipelines.json",
                   "uriBaseId": "SRC_ROOT"
                 },
                 "region": {

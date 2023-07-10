@@ -60,7 +60,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         protected override string ProductRootDirectory => Path.Combine(ThisAssembly.Location, "..", "..", "..", "..", "..", "..");
 
-        protected override string TestBinaryTestDataDirectory => Path.Combine(ProductRootDirectory, "Src", "Plugins", TestBinaryName, "TestData");
+        protected override string TestBinaryTestDataDirectory => Path.Combine(ProductRootDirectory, "src", "Plugins", TestBinaryName, "TestData");
 
         protected override string ProductTestDataDirectory => Path.Combine(TestBinaryTestDataDirectory, TypeUnderTest);
 

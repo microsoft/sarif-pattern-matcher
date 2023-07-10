@@ -49,13 +49,13 @@ function Exit-WithFailureMessage($scriptName, $message) {
     exit 1
 }
 
-if (-not (Test-Path "$RepoRoot\Src\RE2.Native\re2\re2")) {
+if (-not (Test-Path "$RepoRoot\src\RE2.Native\re2\re2")) {
     Write-Information "Retrieving RE2 submodule..."
     git submodule init
     git submodule update
 }
 
-if (-not (Test-Path "$RepoRoot\Src\Sarif-Sdk")) {
+if (-not (Test-Path "$RepoRoot\src\Sarif-Sdk")) {
     Write-Information "Retrieving Sarif-Sdk submodule..."
     git submodule init
     git submodule update
@@ -68,7 +68,7 @@ If (Test-Path "..\bld") {
 
 if (-not $NoBuild) {    
     Write-Information "Building Sarif.Sdk"	
-    & $RepoRoot\Src\sarif-sdk\scripts\BuildAndTest.ps1 -NoBuild -NoTest -NoPublish -NoSigningDirectory -NoPackage -NoFormat
+    & $RepoRoot\src\sarif-sdk\scripts\BuildAndTest.ps1 -NoBuild -NoTest -NoPublish -NoSigningDirectory -NoPackage -NoFormat
     if ($LASTEXITCODE -ne 0) {	
         Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."	
     }    
@@ -76,7 +76,7 @@ if (-not $NoBuild) {
     $RepoRoot = $(Resolve-Path $PSScriptRoot\..).Path
     
     Write-Information "Building SarifPatternMatcher.sln (dotnet)..."
-    dotnet build $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true
+    dotnet build $RepoRoot\src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true
     if ($LASTEXITCODE -ne 0) {
         Exit-WithFailureMessage $ScriptName "Build of SarifPatternMatcher failed."
     }
@@ -92,7 +92,7 @@ if (-not $NoTest) {
     if (-not $ENV:OS) {
         $NonWindowsOptions = @{ "-filter" = "WindowsOnly!=true" }
     }
-    dotnet test $RepoRoot\Src\SarifPatternMatcher.sln -c $Configuration --logger trx --no-build $CodeCoverageCommand --settings $RepoRoot\Src\SarifPatternMatcher.runsettings /p:IncludeTestAssembly=false @NonWindowsOptions
+    dotnet test $RepoRoot\src\SarifPatternMatcher.sln -c $Configuration --logger trx --no-build $CodeCoverageCommand --settings $RepoRoot\src\SarifPatternMatcher.runsettings /p:IncludeTestAssembly=false @NonWindowsOptions
 
     if ($LASTEXITCODE -ne 0) {
         Exit-WithFailureMessage $ScriptName "Test of SarifPatternMatcher failed."
@@ -101,7 +101,7 @@ if (-not $NoTest) {
 
 if (-not $NoFormat) {
     dotnet tool update --global dotnet-format --version 4.1.131201
-    dotnet-format --folder --exclude .\Src\sarif-sdk\
+    dotnet-format --folder --exclude .\src\sarif-sdk\
 }
 
 Write-Information "$ScriptName SUCCEEDED."

@@ -67,7 +67,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "Src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103_004.CertificateFile_der_encoded.cer",
+                  "uri": "src/Plugins/Tests.Security/TestData/ReviewPotentiallySensitiveFiles/Inputs/SEC103_004.CertificateFile_der_encoded.cer",
                   "uriBaseId": "SRC_ROOT"
                 }
               }
