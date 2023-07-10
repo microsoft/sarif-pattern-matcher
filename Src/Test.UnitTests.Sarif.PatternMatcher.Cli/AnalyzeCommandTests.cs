@@ -308,7 +308,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
 
         [Fact]
-        [Trait("WindowsOnly", "true")]
         public void AnalyzeCommand_FailureLevelShouldBeDefaultUnlessDynamicallyValidated()
         {
             var sb = new StringBuilder();
