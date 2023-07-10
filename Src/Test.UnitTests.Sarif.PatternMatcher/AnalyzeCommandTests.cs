@@ -275,7 +275,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        [Fact]
         [Fact(Skip = "Random fails.")]
         public void AnalyzeCommand_AnalyzeFromContext_CancelledExternallyMultithreaded()
         {
