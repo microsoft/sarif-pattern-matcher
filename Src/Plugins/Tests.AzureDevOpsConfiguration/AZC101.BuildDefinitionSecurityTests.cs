@@ -19,6 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfigu
         protected override string TypeUnderTest => "BuildDefinitionSecurity";
 
         [Fact]
+        [Trait(TestTraits.WindowsOnly, "true")]
         public void AzureDevOpsConfiguration_EndToEndFunctionalTests()
             => RunAllTests();
     }
