@@ -74,13 +74,13 @@
             }
           ],
           "fingerprints": {
-            "secretHashSha256/v0": "cd2099a31af74edb52f9e10e620289f310c43b5f3dcdb41ad30b8a0b2a4e14c6",
+            "secretHashSha256/v0": "731584c0c360c3be368abcdb3a5cce5fb3261b432a9f6c306a5688d79016b37e",
             "assetFingerprint/v0": "{}",
-            "validationFingerprintHashSha256/v0": "3091100e5f9225c2bf47cc2be58c2f19d305e63417d7e0205cfec5788b2c6138",
-            "secretFingerprint/v0": "{\"secret\":\"BE81853AB9435115A64B36C2A3E51B7561ED1DB28B44F945A095D78C751B1238\"}",
-            "validationFingerprint/v0": "{\"secret\":\"BE81853AB9435115A64B36C2A3E51B7561ED1DB28B44F945A095D78C751B1238\"}"
+            "validationFingerprintHashSha256/v0": "9221567fa17f88a25b9698caf2aea86196195f9285f32ed9d0b4638fb3acbbae",
+            "secretFingerprint/v0": "{\"secret\":\"6CD48BC899D27E776A861E5E99BD074C79E252ED75AE27A56E573A430576B093\"}",
+            "validationFingerprint/v0": "{\"secret\":\"6CD48BC899D27E776A861E5E99BD074C79E252ED75AE27A56E573A430576B093\"}"
           },
-          "rank": 54.24
+          "rank": 53.72
         }
       ],
       "columnKind": "utf16CodeUnits"
