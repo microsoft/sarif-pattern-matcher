@@ -64,6 +64,9 @@ if (-not $NoBuild) {
         Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."	
     }
 
+    # Reset the path from Sarif.Sdk back to SarifPatternMatcher.
+    $RepoRoot = $(Resolve-Path $PSScriptRoot\..).Path
+
     Write-Information "Building SarifPatternMatcher.sln (dotnet)..."
     dotnet build $RepoRoot\src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true
     if ($LASTEXITCODE -ne 0) {
