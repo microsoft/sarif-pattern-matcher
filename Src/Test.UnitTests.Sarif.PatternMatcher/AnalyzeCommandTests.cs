@@ -1142,7 +1142,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 Logger = logger,
                 CurrentTarget = target,
                 DataToInsert = dataToInsert,
-                RegexEngine =  RegexEngine.IronRE2,
+                RegexEngine = RegexEngine.IronRE2,
             };
 
             var disabledSkimmers = new HashSet<string>();
