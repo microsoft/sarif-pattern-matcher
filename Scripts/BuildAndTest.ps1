@@ -49,9 +49,9 @@ function Exit-WithFailureMessage($scriptName, $message) {
     exit 1
 }
 
-if (-not (Test-Path "$RepoRoot\src\RE2.Native\re2\re2")) {
+if (-not (Test-Path "$RepoRoot\src\RE2.Native\re2")) {
     Write-Information "Retrieving RE2 submodule..."
-    git submodule init 
+    git submodule init
     git submodule update
 }
 
