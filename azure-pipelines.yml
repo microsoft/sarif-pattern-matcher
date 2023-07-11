@@ -33,7 +33,7 @@ jobs:
         displayName: Build and Test
         inputs:
           targetType: filePath
-          filePath: ./Scripts/BuildAndTest.ps1
+          filePath: ./scripts/BuildAndTest.ps1
           arguments: "-Configuration Release -EnableCoverage"
 
       - task: PublishTestResults@2

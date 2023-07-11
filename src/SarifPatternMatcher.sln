@@ -36,11 +36,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{26CB
 		..\Targets\build.test.props = ..\Targets\build.test.props
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{04D51365-5125-4231-BE2A-C00016DA96C6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{04D51365-5125-4231-BE2A-C00016DA96C6}"
 	ProjectSection(SolutionItems) = preProject
-		..\Scripts\BuildAndTest.ps1 = ..\Scripts\BuildAndTest.ps1
-		..\Scripts\BuildPackages.ps1 = ..\Scripts\BuildPackages.ps1
-		..\Scripts\ProcessCodeCoverage.ps1 = ..\Scripts\ProcessCodeCoverage.ps1
+		..\scripts\BuildAndTest.ps1 = ..\scripts\BuildAndTest.ps1
+		..\scripts\BuildPackages.ps1 = ..\scripts\BuildPackages.ps1
+		..\scripts\ProcessCodeCoverage.ps1 = ..\scripts\ProcessCodeCoverage.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BB9FC0F2-57ED-498F-90B3-8819A9315779}"
