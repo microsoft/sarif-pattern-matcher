@@ -39,7 +39,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
         [Trait(TestTraits.WindowsOnly, "true")]
         public void PostgreSqlCredentialsValidator_DebugFingerprint()
         {
-            ValidatorBase.RegexInstance = IronRE2Regex.Instance;
             string fingerprintText = "[host=place.location.com][id=database][secret=password]";
             string message = "";
             ResultLevelKind resultLevelKind = default;
