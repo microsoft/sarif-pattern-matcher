@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{B599D6C7-9
 		..\version.json = ..\version.json
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{26CBD8AF-04D5-4E52-8FDE-134AE810BE88}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "targets", "targets", "{26CBD8AF-04D5-4E52-8FDE-134AE810BE88}"
 	ProjectSection(SolutionItems) = preProject
 		..\targets\build.app.props = ..\targets\build.app.props
 		..\targets\build.common.props = ..\targets\build.common.props
