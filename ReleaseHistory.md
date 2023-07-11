@@ -20,6 +20,7 @@
 
 ## v4.5.8 UNRELEASED
 - DEP: Update SARIF SDK submodule from [7e8def7 to dd3741f(https://github.com/microsoft/sarif-sdk/compare/7e8def7..dd3741f). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd3741f/ReleaseHistory.md).
+- NEW: Add Linux And macOS build pipeline, Rename folder `Src` to `src`, `Scripts` to `scripts`, `Targets` to `targets`. [#787](https://github.com/microsoft/sarif-pattern-matcher/pull/787)
 
 ## v4.5.7 6/28/2023
 - DEP: Update SARIF SDK submodule from [a7029a3 to 7e8def7(https://github.com/microsoft/sarif-sdk/compare/a7029a3..7e8def7). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/7e8def7/ReleaseHistory.md).
