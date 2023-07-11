@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
     <ProjectReference Include="..\Sarif.PatternMatcher.Cli\Sarif.PatternMatcher.Cli.csproj" />
   </ItemGroup>
 

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Plugins\Security\Security.csproj" />
+    <ProjectReference Include="..\sarif-sdk\src\Test.Utilities.Sarif\Test.Utilities.Sarif.csproj" />
     <ProjectReference Include="..\Sarif.PatternMatcher.Function\Sarif.PatternMatcher.Function.csproj" />
   </ItemGroup>
 

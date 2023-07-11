@@ -199,7 +199,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
         }
 
         [Fact]
-        [Trait("WindowsOnly", "true")]
+        [Trait(TestTraits.WindowsOnly, "true")]
         public void AnalyzeCommand_ShouldProduceResultsForTargetsInFileSizeRange()
         {
             string rootDirectory = Path.Combine(Environment.CurrentDirectory, "e", "repros");
@@ -308,7 +308,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
 
         [Fact]
-        [Trait("WindowsOnly", "true")]
+        [Trait(TestTraits.WindowsOnly, "true")]
         public void AnalyzeCommand_FailureLevelShouldBeDefaultUnlessDynamicallyValidated()
         {
             var sb = new StringBuilder();
