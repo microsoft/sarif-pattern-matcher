@@ -62,14 +62,10 @@ if (-not $NoBuild) {
     & $RepoRoot\src\sarif-sdk\scripts\BuildAndTest.ps1 -NoBuild -NoTest -NoPublish -NoSigningDirectory -NoPackage -NoFormat
     if ($LASTEXITCODE -ne 0) {	
         Exit-WithFailureMessage $ScriptName "Build of sarif.sdk failed."	
-    }    
+    }
 
-    Write-Information $RepoRoot
-    ls
     $RepoRoot = $(Resolve-Path $PSScriptRoot\..).Path
-    Write-Information $RepoRoot
-    ls
-    
+
     Write-Information "Building SarifPatternMatcher.sln (dotnet)..."
     dotnet build $RepoRoot\src\SarifPatternMatcher.sln -c $Configuration -p:Deterministic=true
     if ($LASTEXITCODE -ne 0) {
