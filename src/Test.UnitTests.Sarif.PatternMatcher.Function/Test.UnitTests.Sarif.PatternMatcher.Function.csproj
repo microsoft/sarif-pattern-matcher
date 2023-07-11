@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.app.props" />
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.test.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\targets\build.app.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\targets\build.test.props" />
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.9.0" />

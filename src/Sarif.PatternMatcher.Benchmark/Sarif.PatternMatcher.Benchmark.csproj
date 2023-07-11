@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.app.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\targets\build.app.props" />
   
   <PropertyGroup>
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Benchmark</RootNamespace>

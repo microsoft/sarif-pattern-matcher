@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.lib.props" />
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Targets\build.product.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\targets\build.lib.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\targets\build.product.props" />
 
   <PropertyGroup Label="AssemblyAttributes">
     <AssemblyTitle>Sarif Pattern Matcher Sdk</AssemblyTitle>

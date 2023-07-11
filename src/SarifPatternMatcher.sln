@@ -29,11 +29,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{B599D6C7-9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{26CBD8AF-04D5-4E52-8FDE-134AE810BE88}"
 	ProjectSection(SolutionItems) = preProject
-		..\Targets\build.app.props = ..\Targets\build.app.props
-		..\Targets\build.common.props = ..\Targets\build.common.props
-		..\Targets\build.lib.props = ..\Targets\build.lib.props
-		..\Targets\build.product.props = ..\Targets\build.product.props
-		..\Targets\build.test.props = ..\Targets\build.test.props
+		..\targets\build.app.props = ..\targets\build.app.props
+		..\targets\build.common.props = ..\targets\build.common.props
+		..\targets\build.lib.props = ..\targets\build.lib.props
+		..\targets\build.product.props = ..\targets\build.product.props
+		..\targets\build.test.props = ..\targets\build.test.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{04D51365-5125-4231-BE2A-C00016DA96C6}"

@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.common.props" />
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.product.props" />
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Targets\build.plugins.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\targets\build.common.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\targets\build.product.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\targets\build.plugins.props" />
 
   <PropertyGroup Label="AssemblyAttributes">
     <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
