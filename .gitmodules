@@ -1,6 +1,6 @@
 [submodule "Src/RE2.Native/re2"]
-	path = Src/RE2.Native/re2
+	path = re2
 	url = https://github.com/google/re2.git
 [submodule "Src/sarif-sdk"]
-	path = Src/sarif-sdk
+	path = sarif-sdk
 	url = https://github.com/microsoft/sarif-sdk
