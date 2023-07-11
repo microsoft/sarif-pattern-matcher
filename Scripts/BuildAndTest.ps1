@@ -49,20 +49,8 @@ function Exit-WithFailureMessage($scriptName, $message) {
     exit 1
 }
 
-Write-Information "Rgit submodule update --init --recursive..."
+Write-Information "Retrieving submodules..."
 git submodule update --init --recursive
-
-if (-not (Test-Path "$RepoRoot\src\RE2.Native\re2")) {
-    Write-Information "Retrieving RE2 submodule..."
-    git submodule init
-    git submodule update
-}
-
-if (-not (Test-Path "$RepoRoot\src\Sarif-Sdk")) {
-    Write-Information "Retrieving Sarif-Sdk submodule..."
-    git submodule init
-    git submodule update
-}
 
 If (Test-Path "..\bld") {
     Write-Information "Deleting old build..."
