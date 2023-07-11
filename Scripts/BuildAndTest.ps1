@@ -49,6 +49,9 @@ function Exit-WithFailureMessage($scriptName, $message) {
     exit 1
 }
 
+Write-Information "Rgit submodule update --init --recursive..."
+git submodule update --init --recursive
+
 if (-not (Test-Path "$RepoRoot\src\RE2.Native\re2")) {
     Write-Information "Retrieving RE2 submodule..."
     git submodule init
