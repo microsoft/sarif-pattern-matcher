@@ -18,12 +18,10 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## Unreleased
-- BRK: Re-enable `SEC101/047.CratesApiKey` as static analysis only. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
-- FPD: Removed dynamic analysis entirely for `SEC101/047.CratesApiKey` rule due to outdated validation always returning status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
-
 ## v4.5.8 UNRELEASED
 - DEP: Update SARIF SDK submodule from [7e8def7 to dd3741f(https://github.com/microsoft/sarif-sdk/compare/7e8def7..dd3741f). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd3741f/ReleaseHistory.md).
+- BRK: Re-enable `SEC101/047.CratesApiKey` as static analysis only. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
+- FPD: Removed dynamic analysis entirely for `SEC101/047.CratesApiKey` rule due to outdated validation always returning status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
 
 ## v4.5.7 6/28/2023
 - DEP: Update SARIF SDK submodule from [a7029a3 to 7e8def7(https://github.com/microsoft/sarif-sdk/compare/a7029a3..7e8def7). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/7e8def7/ReleaseHistory.md).
