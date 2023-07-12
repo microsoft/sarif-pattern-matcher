@@ -275,13 +275,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        [Fact(Skip = "Random fails.")]
+        [Fact]
         public void AnalyzeCommand_AnalyzeFromContext_CancelledExternallyMultithreaded()
         {
             CancelledExternallyHelper(iterations: 10, threads: 2);
         }
 
-        [Fact(Skip = "Random fails.")]
+        [Fact]
         public void AnalyzeCommand_AnalyzeFromContext_CancelledExternallySinglethreaded()
         {
             CancelledExternallyHelper(iterations: 10, threads: 1);
@@ -332,13 +332,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
         }
 
-        [Fact(Skip = "Random fails.")]
+        [Fact]
         public void AnalyzeCommand_AnalyzeFromContext_TimesOutMultithreaded()
         {
             TimesOutHelper(iterations: 10, threads: 2);
         }
 
-        [Fact(Skip = "Random fails.")]
+        [Fact]
         public void AnalyzeCommand_AnalyzeFromContext_TimesOutSinglethreaded()
         {
             TimesOutHelper(iterations: 10, threads: 1);
