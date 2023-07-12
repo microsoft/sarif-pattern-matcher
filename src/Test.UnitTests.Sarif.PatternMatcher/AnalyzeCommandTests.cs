@@ -7,6 +7,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -571,13 +572,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void AnalyzeCommand_SimpleAnalysis()
         {
-            var regexList = new List<IRegex>
+            List<IRegex> regexList;
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                //RE2Regex.Instance,
-                //DotNetRegex.Instance,
-                //CachedDotNetRegex.Instance,
-                IronRE2Regex.Instance,
-            };
+                regexList = new List<IRegex>
+                {
+                    RE2Regex.Instance,
+                    DotNetRegex.Instance,
+                    CachedDotNetRegex.Instance,
+                    IronRE2Regex.Instance,
+                };
+            }
+            else
+            {
+                regexList = new List<IRegex>
+                {
+                    IronRE2Regex.Instance,
+                };
+            }
 
             foreach (IRegex regex in regexList)
             {
@@ -588,13 +601,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void AnalyzeFileCommand_SimpleAnalysis()
         {
-            var regexList = new List<IRegex>
+            List<IRegex> regexList;
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                //DotNetRegex.Instance,
-                //CachedDotNetRegex.Instance,
-                //RE2Regex.Instance,
-                IronRE2Regex.Instance,
-            };
+                regexList = new List<IRegex>
+                {
+                    RE2Regex.Instance,
+                    DotNetRegex.Instance,
+                    CachedDotNetRegex.Instance,
+                    IronRE2Regex.Instance,
+                };
+            }
+            else
+            {
+                regexList = new List<IRegex>
+                {
+                    IronRE2Regex.Instance,
+                };
+            }
 
             foreach (IRegex regex in regexList)
             {
