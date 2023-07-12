@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
-using Microsoft.RE2.Managed;
 
 using Xunit;
 
