@@ -18,8 +18,10 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## v4.3.17 (dev branch) 7/18/2023
+- BRK: Disable `SEC101/047.CratesApiKey`. Current dynamic validator returns status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys
+
 ## v4.4.1 5/9/2023
-- BRK: Disable `SEC101/047.CratesApiKey`. Current dynamic validator returns status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API Keys
 - NEW: Provide new `AnalyzeContext.SniffRegex` property that applies a pre-filter contents regex to all scan targets, when configured. https://github.com/microsoft/sarif-pattern-matcher/pull/756
 
 ## v4.3.10 04/19/2023
