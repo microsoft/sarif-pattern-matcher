@@ -11,7 +11,7 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
-    public class CratesApiKeyValidator : DynamicValidatorBase
+    public class CratesApiKeyValidator : StaticValidatorBase
     {
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
@@ -32,50 +32,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             };
 
             return new[] { validationResult };
-        }
-
-        protected override ValidationState IsValidDynamicHelper(ref Fingerprint fingerprint,
-                                                                ref string message,
-                                                                IDictionary<string, string> options,
-                                                                ref ResultLevelKind resultLevelKind)
-        {
-            string secret = fingerprint.Secret;
-            string asset = secret.Truncate();
-
-            const string uri = "https://crates.io/api/v1/crates/sarif-pattern-matcher/owners";
-
-            try
-            {
-                HttpClient client = CreateOrRetrieveCachedHttpClient();
-
-                using var request = new HttpRequestMessage(HttpMethod.Delete, uri);
-                request.Headers.Add("Authorization", secret);
-
-                using HttpResponseMessage response = client.ReadResponseHeaders(request);
-
-                switch (response.StatusCode)
-                {
-                    case HttpStatusCode.OK:
-                    {
-                        return ValidationState.Authorized;
-                    }
-
-                    case HttpStatusCode.Forbidden:
-                    case HttpStatusCode.Unauthorized:
-                    {
-                        return ValidationState.Unauthorized;
-                    }
-
-                    default:
-                    {
-                        return ReturnUnexpectedResponseCode(ref message, response.StatusCode);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                return ReturnUnhandledException(ref message, e, asset);
-            }
         }
     }
 }
