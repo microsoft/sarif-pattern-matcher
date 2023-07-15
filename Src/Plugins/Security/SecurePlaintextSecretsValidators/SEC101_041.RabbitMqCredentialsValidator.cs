@@ -18,11 +18,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
         {
             if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
                 !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret) ||
-                !groups.TryGetNonEmptyValue("resource", out FlexMatch resource))
+                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
             {
                 return ValidationResult.CreateNoMatch();
             }
+
+            if (FilteringHelpers.PasswordIsInCommonVariableContext(secret.Value))
+            {
+                return ValidationResult.CreateNoMatch();
+            }
+
+            groups.TryGetValue("resource", out FlexMatch resource);
+            groups.TryGetValue("port", out FlexMatch port);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
 
@@ -32,8 +39,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 {
                     Id = id.Value,
                     Host = hostValue,
+                    Port = port?.Value,
                     Secret = secret.Value,
-                    Resource = resource.Value,
+                    Resource = resource?.Value,
                 },
             };
 
@@ -46,6 +54,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 ref ResultLevelKind resultLevelKind)
         {
             string host = fingerprint.Host;
+            string port = fingerprint.Port;
             string account = fingerprint.Id;
             string password = fingerprint.Secret;
             string resource = fingerprint.Resource;
@@ -54,6 +63,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             {
                 return ValidationState.Unknown;
             }
+
+            host += string.IsNullOrWhiteSpace(port) ? string.Empty : $":{port}";
 
             try
             {
