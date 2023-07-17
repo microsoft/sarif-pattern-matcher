@@ -96,7 +96,7 @@
   $SEC101/027.MailChimpApiKey=(?:[^0-9a-f]|^)(?P<secret>[0-9a-f]{32}-us[0-9]{12})
   $SEC101/029.AlibabaCloudAccessKey=(?:^|[^0-9A-Za-z])(?P<id>LTAI([0-9A-Za-z]{12}|[0-9A-Za-z]{20}))(?:[^0-9A-Za-z]|$)
   $SEC101/029.AlibabaCloudSecretKey=(?:^|[^0-9A-Za-z\-~_+/%\\])(?P<secret>[0-9A-Za-z]{30})(?:[^0-9A-Za-z\-~_+/=%\\]|$)
-  $SEC101/033.MongoDbCredentials=(?i)mongodb(?:[^:]{0,50})?:\/\/(?P<id>[0-9a-z]+):(?P<secret>[^@\s]{1,200})@(?P<host>[^\/;"<\s,]+)
+  $SEC101/033.MongoDbCredentials=(?i)mongodb(?P<schema>\+srv)?:\/\/(?P<id>[0-9a-z_-]+):(?P<secret>[^@\s]{1,200})@(?P<host>[^\/;"<\s,]+)(?P<options>/[0-9a-z?&@=_-]+)?
   $SEC101/035.CloudantCredentialsPython=(?si)cloudant\s*\(\s*"(?P<id>[\w-]+)"\s*\,\s*"(?P<secret>[\w]{64})"\s*\,\s*.{0,200}url=\s*"https:\/\/(?P<resource>[\w.-]+)\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsJson=(?si)apiKey"[^"]+"(?P<secret>[\w-]+)".{1,100}[^0-9a-z\.-](?P<id>[0-9a-z\.-]{32,44})\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
   $SEC101/035.CloudantCredentialsUrl=(?i)https:\/\/(?P<id>[^:]+):(?P<secret>[\w]{64}|[a-z]{24})@[\w-]+\.(?P<host>cloudantnosqldb\.appdomain\.cloud|cloudant\.com)
