@@ -20,6 +20,8 @@
 
 ## v4.5.8 UNRELEASED
 - DEP: Update SARIF SDK submodule from [7e8def7 to dd3741f(https://github.com/microsoft/sarif-sdk/compare/7e8def7..dd3741f). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd3741f/ReleaseHistory.md).
+- DEP: Upgrade `Microsoft.Security.Utilities` from 6.2.1 to 6.5.0. [#788](https://github.com/microsoft/sarif-pattern-matcher/pull/788)
+- FNC: Update `SEC101/041.RabbitMqCredentials` in `Security` to check loose credential combinations. [#788](https://github.com/microsoft/sarif-pattern-matcher/pull/788)
 
 ## v4.5.7 6/28/2023
 - DEP: Update SARIF SDK submodule from [a7029a3 to 7e8def7(https://github.com/microsoft/sarif-sdk/compare/a7029a3..7e8def7). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/7e8def7/ReleaseHistory.md).
