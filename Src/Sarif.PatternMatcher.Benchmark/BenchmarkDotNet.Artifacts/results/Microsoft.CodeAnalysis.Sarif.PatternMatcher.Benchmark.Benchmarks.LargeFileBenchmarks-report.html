@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks.LargeFileBenchmarks-20230715-131622</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.22621
+Intel Core i9-10980XE CPU 3.00GHz, 1 CPU, 36 logical and 18 physical cores
+  [Host]     : .NET Framework 4.8 (4.8.9166.0), X64 RyuJIT
+  DefaultJob : .NET Framework 4.8 (4.8.9166.0), X64 RyuJIT
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>                                  Method</th><th>scanTargetSizeInMegabytes</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Gen 0</th><th>Gen 1</th><th>Gen 2</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>AnalyzeCommand_SimpleAnalysisCachedDotNetRegex</td><td>10</td><td>257.6 ms</td><td>5.14 ms</td><td>5.50 ms</td><td>51000.0000</td><td>-</td><td>-</td><td>311.43 MB</td>
+</tr><tr><td>AnalyzeCommand_SimpleAnalysisRE2</td><td>10</td><td>248.8 ms</td><td>4.85 ms</td><td>4.54 ms</td><td>49000.0000</td><td>-</td><td>-</td><td>295.69 MB</td>
+</tr></tbody></table>
+</body>
+</html>
