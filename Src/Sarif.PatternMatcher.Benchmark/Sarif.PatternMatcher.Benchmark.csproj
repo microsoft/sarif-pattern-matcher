@@ -4,10 +4,14 @@
   
   <PropertyGroup>
     <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Benchmark</RootNamespace>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net462</TargetFramework>
+    <TargetFrameworks>net6.0;net462</TargetFrameworks>
   </PropertyGroup>
   
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="Moq" Version="4.18.4" />
   </ItemGroup>
   

@@ -3,15 +3,27 @@
 
 using BenchmarkDotNet.Running;
 
+using CommandLine;
+
+using IronRe2;
+
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks;
 
 namespace Sarif.PatternMatcher.Benchmark
 {
     internal static class Program
     {
-        private static void Main(string[] args)
-        {
-            BenchmarkRunner.Run<AnalyzeCommandBenchmarks>();
+        private static int Main(string[] args)
+        {           
+            return Parser.Default.ParseArguments<
+                SimpleOptions,
+                LargeFileOptions,
+                RegexOptions>(args)
+              .MapResult(
+                (SimpleOptions options) => new SimpleFileBenchmarks().Run(options),
+                (LargeFileOptions options) => new LargeFileBenchmarks().Run(options),
+                (RegexOptions options) => new RegexBenchmarks().Run(options),
+                _ => 1);            
         }
     }
 }
