@@ -16,13 +16,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
-                !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
-
+            groups.TryGetValue("id", out FlexMatch id);
+            groups.TryGetValue("host", out FlexMatch host);
+            groups.TryGetValue("secret", out FlexMatch secret);
             groups.TryGetValue("schema", out FlexMatch schema);
             groups.TryGetValue("options", out FlexMatch options);
 
@@ -34,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Host = host.Value,
                     Secret = secret.Value,
                     Scheme = schema?.Value,
-                    QueryString = options?.Value,
+                    Part = options?.Value,
                 },
             };
 
