@@ -16,20 +16,16 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
-                !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            groups.TryGetValue("id", out FlexMatch id);
+            groups.TryGetValue("host", out FlexMatch host);
+            groups.TryGetValue("secret", out FlexMatch secret);
+            groups.TryGetValue("resource", out FlexMatch resource);
+            groups.TryGetValue("port", out FlexMatch port);
 
             if (FilteringHelpers.PasswordIsInCommonVariableContext(secret.Value))
             {
                 return ValidationResult.CreateNoMatch();
             }
-
-            groups.TryGetValue("resource", out FlexMatch resource);
-            groups.TryGetValue("port", out FlexMatch port);
 
             string hostValue = FilteringHelpers.StandardizeLocalhostName(host.Value);
 
