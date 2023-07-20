@@ -5,15 +5,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class Base64EncodingMatch
     {
-        public int MinSourceLength { get; set; }
+        public int MinMatchLength { get; set; }
 
-        public int MaxSourceLength { get; set; }
+        public int MaxMatchLength { get; set; }
 
         public bool IsValid()
         {
-            return MinSourceLength > 0 &&
-                   MaxSourceLength > 0 &&
-                   MinSourceLength <= MaxSourceLength;
+            return MinMatchLength > 0 &&
+                   MaxMatchLength > 0 &&
+                   MinMatchLength <= MaxMatchLength;
         }
     }
 }

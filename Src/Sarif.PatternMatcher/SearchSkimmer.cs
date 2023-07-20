@@ -31,7 +31,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public readonly IList<MatchExpression> MatchExpressions;
 
         private const string DefaultHelpUri = "https://github.com/microsoft/sarif-pattern-matcher";
-        private const string Base64DecodingFormatString = "\\b(?i)[0-9a-z\\/+]{{{0},{1}}}[=]{{0,2}}";
+        private const string Base64DecodingFixLengthFormatString = "\\b(?i)[0-9a-z\\/+]{{{0}}}={{{1}}}";
+        private const string Base64DecodingVarLengthFormatString = "\\b(?i)[0-9a-z\\/+]{{{0},{1}}}={{0,2}}";
         private const string Base64DecodingRegex = "^(?i)(?:[0-9a-z\\/+]{4})*(?:[0-9a-z\\/+]{2}==|[0-9a-z\\/+]{3}=)?$";
 
         private static readonly Regex namedArgumentsRegex =
@@ -211,19 +212,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (matchExpression.Base64EncodingMatch?.IsValid() == true)
                 {
                     // Every 3 bytes of a base64-encoded string produces 4 bytes of data.
-                    int unpaddedMinLength = (int)Math.Ceiling(decimal.Divide(matchExpression.Base64EncodingMatch.MinSourceLength * 8M, 6M));
-                    int unpaddedMaxLength = (int)Math.Ceiling(decimal.Divide(matchExpression.Base64EncodingMatch.MaxSourceLength * 8M, 6M));
+                    int unpaddedMinLength = decimal.ToInt32(Math.Ceiling(decimal.Divide(matchExpression.Base64EncodingMatch.MinMatchLength * 8M, 6M)));
+                    int unpaddedMaxLength = decimal.ToInt32(Math.Ceiling(decimal.Divide(matchExpression.Base64EncodingMatch.MaxMatchLength * 8M, 6M)));
+                    bool isFixedLength = unpaddedMaxLength == unpaddedMinLength;
+                    int paddedLength = isFixedLength ?
+                        4 * decimal.ToInt32(Math.Ceiling(decimal.Divide(matchExpression.Base64EncodingMatch.MinMatchLength, 3M))) :
+                        0;
 
                     // Create proper regex for all strings matches base64 charset and length requirements
                     // But these strings may be not valid base64 strings since the padding length are vary
                     // for different length source string.
-                    string base64DecodingRegexText =
-                        string.Format(Base64DecodingFormatString, unpaddedMinLength, unpaddedMaxLength);
+                    string base64DecodingRegexText = isFixedLength ?
+                        string.Format(Base64DecodingFixLengthFormatString, unpaddedMinLength, paddedLength - unpaddedMinLength) :
+                        string.Format(Base64DecodingVarLengthFormatString, unpaddedMinLength, unpaddedMaxLength);
 
                     foreach (FlexMatch flexMatch in _engine.Matches(context.CurrentTarget.Contents, base64DecodingRegexText))
                     {
                         // Check if the matched string is valid base64 string.
-                        if (_engine.IsMatch(flexMatch.Value, Base64DecodingRegex))
+                        if (isFixedLength || _engine.IsMatch(flexMatch.Value, Base64DecodingRegex))
                         {
                             // This will run the match expression against the decoded content.
                             RunMatchExpression(binary64DecodedMatch: flexMatch,

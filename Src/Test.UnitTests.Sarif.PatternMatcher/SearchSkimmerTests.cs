@@ -25,13 +25,14 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string allowFileExtension = null)
         {
             const string guidRegexText = "(?i)[0-9a-f]{8}[-]?([0-9a-f]{4}[-]?){3}[0-9a-f]{12}";
+            const int guidStringLength = 36;
 
             return new MatchExpression
             {
                 Base64EncodingMatch = new Base64EncodingMatch
                 {
-                    MinSourceLength = Guid.NewGuid().ToString().Length,
-                    MaxSourceLength = Guid.NewGuid().ToString().Length
+                    MinMatchLength = guidStringLength,
+                    MaxMatchLength = guidStringLength,
                 },
                 ContentsRegex = guidRegexText,
                 FileNameDenyRegex = denyFileExtension != null ? $"(?i)\\.{denyFileExtension}$" : null,
@@ -605,32 +606,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     logger.Results[0].GetMessageText(skimmer).Should().StartWith("base64-encoded");
                 }
             }
-            /*
-            // Analyzing base64-encoded values with Base64EncodingSpec == null fails
-            definition.MatchExpressions[0].Base64EncodingMatch = null;
-
-            logger.Results.Clear();
-            skimmer = CreateSkimmer(definition);
-            skimmer.Analyze(context);
-
-            logger.Results.Count.Should().Be(0);
-
-            // Analyzing plaintext values with MatchLengthToDecode > 0 succeeds
-            context.CurrentTarget.Contents = scanTargetContents;
-
-            logger.Results.Clear();
-            skimmer = CreateSkimmer(definition);
-            skimmer.Analyze(context);
-
-            // But we should see a change in encoding information in message. Note
-            // that when emitting plaintext matches, we elide this information
-            // entirely (i.e., we only explicitly report 'base64-encoded' and
-            // report nothing for plaintext).
-            logger.Results.Count.Should().Be(1);
-            logger.Results[0].RuleId.Should().Be(definition.Id);
-            logger.Results[0].Level.Should().Be(definition.Level);
-            logger.Results[0].GetMessageText(skimmer).Should().Be($":{originalMessage}");
-            */
         }
 
         private static MatchExpression CreateMatchExpressionWithBase64EncodingMatch(
@@ -638,14 +613,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             int maxDecodedLength,
             string decodedPattern)
         {
-            const string guidRegexText = "\\[0-9A-Za-z]+\\b";
-
             return new MatchExpression
             {
                 Base64EncodingMatch = new Base64EncodingMatch
                 {
-                    MinSourceLength = minDecodedLength,
-                    MaxSourceLength = maxDecodedLength
+                    MinMatchLength = minDecodedLength,
+                    MaxMatchLength = maxDecodedLength
                 },
                 ContentsRegex = decodedPattern,
                 FileNameDenyRegex = null,
