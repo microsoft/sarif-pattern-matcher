@@ -20,6 +20,9 @@
 
 ## v4.5.8 UNRELEASED
 - DEP: Update SARIF SDK submodule from [7e8def7 to dd3741f(https://github.com/microsoft/sarif-sdk/compare/7e8def7..dd3741f). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd3741f/ReleaseHistory.md).
+- DEP: Upgrade `Microsoft.Security.Utilities` from 6.2.1 to 6.5.0. [#788](https://github.com/microsoft/sarif-pattern-matcher/pull/788)
+- FNC: Update `SEC101/041.RabbitMqCredentials` in `Security` to check loose credential combinations. [#788](https://github.com/microsoft/sarif-pattern-matcher/pull/788)
+- FPD: Removed dynamic analysis entirely for `SEC101/047.CratesApiKey` rule due to outdated validation always returning status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
 - NEW: Add Linux And macOS build pipeline, Rename folder `Src` to `src`, `Scripts` to `scripts`, `Targets` to `targets`. [#787](https://github.com/microsoft/sarif-pattern-matcher/pull/787)
 
 ## v4.5.7 6/28/2023
@@ -48,7 +51,7 @@
 - NEW: Added ETW event tracing support.
 
 ## v4.4.1 5/9/2023
-- BRK: Disable `SEC101/047.CratesApiKey`. Current dynamic validator returns status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API Keys
+- BRK: Disable `SEC101/047.CratesApiKey`. Current dynamic validator returns status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys
 - NEW: Provide new `AnalyzeContext.SniffRegex` property that applies a pre-filter contents regex to all scan targets, when configured. https://github.com/microsoft/sarif-pattern-matcher/pull/756
 
 ## v4.3.10 04/19/2023
