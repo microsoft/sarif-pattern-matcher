@@ -18,13 +18,17 @@ namespace Sarif.PatternMatcher.Benchmark
             return Parser.Default.ParseArguments<
                 SimpleOptions,
                 LargeFileOptions,
-                RegexOptions,
-                RegexManySignaturesOptions>(args)
+                SniffAdoPatOptions,
+                SniffFullOptions,
+                SniffSingleLiteralOptions,
+                RegexOptions>(args)
               .MapResult(
                 (SimpleOptions options) => new SimpleFileBenchmarks().Run(options),
                 (LargeFileOptions options) => new LargeFileBenchmarks().Run(options),
+                (SniffAdoPatOptions options) => new SniffAdoPatBenchmark(options).Run(),
+                (SniffFullOptions options) => new SniffFullBenchmark(options).Run(),
+                (SniffSingleLiteralOptions options) => new SniffSingleLiteralBenchmark(options).Run(),
                 (RegexOptions options) => new RegexBenchmarks().Run(options),
-                (RegexManySignaturesOptions options) => new RegexManySignaturesBenchmarks().Run(options),
                 _ => 1);
         }
     }

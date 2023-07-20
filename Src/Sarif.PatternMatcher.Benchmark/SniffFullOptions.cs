@@ -5,8 +5,8 @@ using CommandLine;
 
 namespace Sarif.PatternMatcher.Benchmark
 {
-    [Verb("regex-ms", HelpText = "Run 'RegexManySignatures' benchmark (low-level per-engine search + IndexOf comparison).")]
-    public class RegexManySignaturesOptions
+    [Verb("sniff-full", HelpText = "Run Sniff benchmark (low-level per-engine search + IndexOf comparison) for a the complete set of signatures.")]
+    public class SniffFullOptions : SniffOptions
     {
     }
 }
