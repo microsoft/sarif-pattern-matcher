@@ -98,7 +98,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks
             {
                 foreach (var file in Directory.EnumerateFiles(TargetsDirectory, "*.*", SearchOption.AllDirectories))
                 {
-                    TargetContents.Add(file, File.ReadAllText(file));
+                    if (!file.Contains(".git\\"))
+                    {
+                        TargetContents.Add(file, File.ReadAllText(file));
+                    }
                 }
             }
 
@@ -198,7 +201,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks
                     consecutiveChars++;
                     if (consecutiveChars >= AdoPatLength)
                     {
-                        return i - AdoPatLength;
+                        return i + 1 - AdoPatLength;
                     }
                 }
                 else
