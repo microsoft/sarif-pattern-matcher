@@ -14,16 +14,18 @@ namespace Sarif.PatternMatcher.Benchmark
     internal static class Program
     {
         private static int Main(string[] args)
-        {           
+        {
             return Parser.Default.ParseArguments<
                 SimpleOptions,
                 LargeFileOptions,
-                RegexOptions>(args)
+                RegexOptions,
+                RegexManySignaturesOptions>(args)
               .MapResult(
                 (SimpleOptions options) => new SimpleFileBenchmarks().Run(options),
                 (LargeFileOptions options) => new LargeFileBenchmarks().Run(options),
                 (RegexOptions options) => new RegexBenchmarks().Run(options),
-                _ => 1);            
+                (RegexManySignaturesOptions options) => new RegexManySignaturesBenchmarks().Run(options),
+                _ => 1);
         }
     }
 }
