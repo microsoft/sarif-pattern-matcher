@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
+    [ValidatorDescriptor("SEC101/003")]
     public class GoogleApiKeyValidator : DynamicValidatorBase
     {
         internal const string EndpointUriTemplate = "https://maps.googleapis.com/maps/api/directions/json?key={0}&origin=Seattle&destination=Redmond&units=metric&language=en&mode=driving";

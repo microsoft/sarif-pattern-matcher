@@ -6,9 +6,9 @@ using System;
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public class RuleDescriptorAttribute : Attribute
+    public class ValidatorDescriptorAttribute : Attribute
     {
-        public RuleDescriptorAttribute(string id)
+        public ValidatorDescriptorAttribute(string id)
         {
             Id = id;
         }

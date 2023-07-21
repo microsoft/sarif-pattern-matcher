@@ -9,7 +9,7 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
-    [RuleDescriptor(SpamTestRule.TestRuleId)]
+    [ValidatorDescriptor(SpamTestRule.TestRuleId)]
     public class TestRuleValidator : DynamicValidatorBase
     {
         public delegate IEnumerable<ValidationResult> IsValidStaticDelegate(IDictionary<string, FlexMatch> groups);

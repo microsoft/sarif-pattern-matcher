@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 using FluentAssertions;
 
@@ -16,6 +17,37 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatingVisitorTests
     {
+        //[Fact]
+        public void ValidatingVisitor_ApplyDescriptorAttributeToValidators()
+        {
+            string directory = $@"D:\src\spmi3\src\sarif-pattern-matcher\Src\Plugins\Security\";
+
+            foreach (string file in Directory.GetFiles(directory, "SEC10*.cs", SearchOption.AllDirectories))
+            {
+                InjectDescriptorAttributeIntoFile(file);
+            }
+        }
+
+        private void InjectDescriptorAttributeIntoFile(string file)
+        {
+            string ruleId = Path.GetFileName(file);
+            ruleId = ruleId.Substring(0, "SEC101_001".Length);
+            ruleId = ruleId.Replace("_", "/");
+
+            string fileContents = File.ReadAllText(file).Trim();
+            bool injected = false;
+            using var sw = new StreamWriter(file);
+            foreach (string line in fileContents.Split(Environment.NewLine))
+            {
+                if (line.StartsWith("    public class ") && !injected)
+                {
+                    sw.WriteLine($"    [ValidatorDescriptor(\"{ruleId}\")]");
+                    injected = true;
+                }
+                sw.WriteLine(line);
+            }
+        }
+
         [Fact]
         public void ValidatingVisitor_ShouldOverrideAssetFingerprint()
         {

@@ -13,6 +13,7 @@ using System.Text;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli.TestValidators;
 
 using Moq;
 
@@ -853,13 +854,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                             },
                             new MatchExpression()
                             {
-                                Id = "TEST001/002",
+                                Id = StaticValidatorExistsForMatchExpressionValidator.Id,
                                 Name ="StaticValidatorExistsForMatchExpression",
                                 ContentsRegex = "StaticValidatorExistsForMatchExpression",
                             },
                             new MatchExpression()
                             {
-                                Id = "TEST001/003",
+                                Id = StaticAndDynamicValidatorsExistForMatchExpressionValidator.Id,
                                 Name ="StaticAndDynamicValidatorsExistForMatchExpression",
                                 ContentsRegex = "StaticAndDynamicValidatorsExistForMatchExpression",
                             }

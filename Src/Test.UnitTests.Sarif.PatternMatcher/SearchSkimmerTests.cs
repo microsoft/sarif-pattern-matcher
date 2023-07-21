@@ -288,12 +288,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 CreateGuidDetectingMatchExpression(
                     allowFileExtension: scanTargetExtension);
 
-            expression.ContentsRegex = "TestRule";
+            expression.ContentsRegex = SpamTestRule.TestRuleId;
 
             SearchDefinition definition = CreateDefaultSearchDefinition(expression);
 
             // This Id will match us up with the TestRuleValidator type.
-            definition.Id = "TestRule";
+            definition.Id = SpamTestRule.TestRuleId;
             definition.Name = "TestRule";
 
             AnalyzeContext context =
@@ -350,12 +350,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 CreateGuidDetectingMatchExpression(
                     allowFileExtension: scanTargetExtension);
 
-            expression.ContentsRegex = "TestRule";
+            expression.ContentsRegex = SpamTestRule.TestRuleId;
 
             SearchDefinition definition = CreateDefaultSearchDefinition(expression);
 
             // This Id will match us up with the TestRuleValidator type.
-            definition.Id = "TestRule";
+            definition.Id = SpamTestRule.TestRuleId;
             definition.Name = "TestRule";
 
             AnalyzeContext context =

@@ -166,7 +166,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             pluginCanPerformDynamicAnalysis = false;
 
-            StaticValidatorBase staticValidator = GetValidationMethods(ruleName, ruleIdToMethodMap);
+            StaticValidatorBase staticValidator = GetValidationMethods(ruleId, ruleIdToMethodMap);
 
             if (staticValidator == null)
             {
@@ -428,17 +428,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private string GetRuleId(Type type)
         {
-            Type attributeType = typeof(RuleDescriptorAttribute);
-            Attribute attribute = type.GetCustomAttribute(attributeType);
-
-            MethodInfo mi = attributeType.GetMethod("get_Id",
-                                                    BindingFlags.Instance |
-                                                    BindingFlags.Public |
-                                                    BindingFlags.DeclaredOnly);
-
-            string ruleId = (string)mi.Invoke(attribute, Array.Empty<object>());
-
-            return ruleId;
+            ValidatorDescriptorAttribute attribute;
+            attribute = type.GetCustomAttribute<ValidatorDescriptorAttribute>();
+            return attribute?.Id;
         }
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
