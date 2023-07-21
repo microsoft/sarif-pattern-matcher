@@ -10,6 +10,7 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 
 using Moq;
+
 using Newtonsoft.Json;
 
 using Sarif.PatternMatcher.Benchmark;
@@ -132,7 +133,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks
 
             var analyzeCommand = new AnalyzeCommand(fileSystemMock.Object);
             int result = analyzeCommand.Run(options, ref context);
-            
+
             if (result != 0) { throw new InvalidOperationException(); }
         }
 

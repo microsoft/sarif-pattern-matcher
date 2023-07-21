@@ -9,7 +9,9 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 
 using Microsoft.Strings.Interop;
+
 using Moq;
+
 using Newtonsoft.Json;
 
 using Sarif.PatternMatcher.Benchmark;

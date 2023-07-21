@@ -25,7 +25,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Benchmark.Benchmarks
             else
             {
                 new RegexBenchmarks()
-                { 
+                {
                     findAllMatches = true,
                     targetContents = GenerateScanTarget(1)
                 }.Regex_IndexOf();
