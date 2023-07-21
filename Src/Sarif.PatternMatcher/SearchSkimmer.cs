@@ -991,8 +991,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (_validators != null && matchExpression.IsValidatorEnabled)
                 {
-                    string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
-                    IEnumerable<ValidationResult> validationResults = _validators.Validate(ruleName,
+                    IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Id,
                                                                                            context,
                                                                                            match,
                                                                                            out bool pluginSupportsDynamicValidation);

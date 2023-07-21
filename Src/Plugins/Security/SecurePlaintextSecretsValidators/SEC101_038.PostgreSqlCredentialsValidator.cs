@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -14,6 +14,7 @@ using Npgsql;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
+    [ValidatorDescriptor("SEC101/038")]
     public class PostgreSqlCredentialsValidator : DynamicValidatorBase
     {
         private const string PublicNetworkDisabled = "The public network access on this server is disabled";

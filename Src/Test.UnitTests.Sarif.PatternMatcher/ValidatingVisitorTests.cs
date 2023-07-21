@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 using FluentAssertions;
 
@@ -16,6 +17,37 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class ValidatingVisitorTests
     {
+        //[Fact]
+        public void ValidatingVisitor_ApplyDescriptorAttributeToValidators()
+        {
+            string directory = $@"D:\src\sarif-pattern-matcher\Src\Plugins\Security\";
+
+            foreach (string file in Directory.GetFiles(directory, "SEC10*.cs", SearchOption.AllDirectories))
+            {
+                InjectDescriptorAttributeIntoFile(file);
+            }
+        }
+
+        private void InjectDescriptorAttributeIntoFile(string file)
+        {
+            string ruleId = Path.GetFileName(file);
+            ruleId = ruleId.Substring(0, "SEC101_001".Length);
+            ruleId = ruleId.Replace("_", "/");
+
+            string fileContents = File.ReadAllText(file).Trim();
+            bool injected = false;
+            using var sw = new StreamWriter(file);
+            foreach (string line in fileContents.Split(Environment.NewLine))
+            {
+                if (line.StartsWith("    public class ") && !injected)
+                {
+                    sw.WriteLine($"    [ValidatorDescriptor(\"{ruleId}\")]");
+                    injected = true;
+                }
+                sw.WriteLine(line);
+            }
+        }
+
         [Fact]
         public void ValidatingVisitor_ShouldOverrideAssetFingerprint()
         {
@@ -44,52 +76,54 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             mockFileSystem.Setup(x => x.FileExists(validatorAssemblyPath)).Returns(true);
             mockFileSystem.Setup(x => x.AssemblyLoadFrom(validatorAssemblyPath)).Returns(this.GetType().Assembly);
 
-            var validators = new ValidatorsCache(
-                new string[] { validatorAssemblyPath },
-                fileSystem: mockFileSystem.Object);
-
-            var validatingVisitor = new ValidatingVisitor(validators);
-            validatingVisitor.VisitRun(new Run
+            foreach (string ruleName in new[] { "TestRule", Guid.NewGuid().ToString() })
             {
-                Tool = new Tool
+                var validators = new ValidatorsCache(new string[] { validatorAssemblyPath },
+                                                     fileSystem: mockFileSystem.Object);
+
+                var validatingVisitor = new ValidatingVisitor(validators);
+                validatingVisitor.VisitRun(new Run
                 {
-                    Driver = new ToolComponent
+                    Tool = new Tool
                     {
-                        Rules = new[]
+                        Driver = new ToolComponent
                         {
+                            Rules = new[]
+                            {
                             new ReportingDescriptor
                             {
-                                Id = "TestRule",
-                                Name = "TestRule"
+                                Id = SpamTestRule.TestRuleId,
+                                Name = ruleName
                             }
                         }
+                        }
                     }
-                }
-            });
+                });
 
-            var result = new Result
-            {
-                RuleId = "TestRule",
-                Fingerprints = new Dictionary<string, string>
+                var result = new Result
+                {
+                    RuleId = SpamTestRule.TestRuleId,
+                    Fingerprints = new Dictionary<string, string>
                 {
                     { SearchSkimmer.AssetFingerprintCurrent, original.GetAssetFingerprint() },
                     { SearchSkimmer.ValidationFingerprintCurrent, original.GetValidationFingerprint() },
                     { SearchSkimmer.SecretFingerprintCurrent, original.GetSecretFingerprint() },
                 },
-                Message = new Message
-                {
-                    Arguments = new List<string> { "", "", "", "", "", "" }
-                }
-            };
+                    Message = new Message
+                    {
+                        Arguments = new List<string> { "", "", "", "", "", "" }
+                    }
+                };
 
-            result = validatingVisitor.VisitResult(result);
+                result = validatingVisitor.VisitResult(result);
 
-            // AssetFingerprint should be updated.
-            result.Fingerprints[SearchSkimmer.AssetFingerprintCurrent].Should().Be(expected.GetAssetFingerprint());
+                // AssetFingerprint should be updated.
+                result.Fingerprints[SearchSkimmer.AssetFingerprintCurrent].Should().Be(expected.GetAssetFingerprint());
 
-            // ValidationFingerprint should be the same as original.
-            result.Fingerprints[SearchSkimmer.ValidationFingerprintCurrent].Should().Be(original.GetValidationFingerprint());
-            result.Fingerprints[SearchSkimmer.SecretFingerprintCurrent].Should().Be(original.GetSecretFingerprint());
+                // ValidationFingerprint should be the same as original.
+                result.Fingerprints[SearchSkimmer.ValidationFingerprintCurrent].Should().Be(original.GetValidationFingerprint());
+                result.Fingerprints[SearchSkimmer.SecretFingerprintCurrent].Should().Be(original.GetSecretFingerprint());
+            }
         }
 
         private static readonly ValidatingVisitorTestCase[] s_validatingVisitorTestCases = new[]

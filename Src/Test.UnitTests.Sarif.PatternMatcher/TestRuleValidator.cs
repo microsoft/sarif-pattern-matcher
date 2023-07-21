@@ -9,6 +9,7 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
+    [ValidatorDescriptor(SpamTestRule.TestRuleId)]
     public class TestRuleValidator : DynamicValidatorBase
     {
         public delegate IEnumerable<ValidationResult> IsValidStaticDelegate(IDictionary<string, FlexMatch> groups);
@@ -26,7 +27,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (OverrideIsValidStatic == null) { return null; }
+            if (OverrideIsValidStatic == null)
+            {
+                return null;
+            }
+
             return OverrideIsValidStatic(groups);
         }
 
@@ -35,7 +40,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                                 IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
-            if (OverrideIsValidDynamic == null) { return 0; }
+            if (OverrideIsValidDynamic == null)
+            {
+                return 0;
+            }
+
             return OverrideIsValidDynamic(ref fingerprint, ref message, options, ref resultLevelKind);
         }
     }

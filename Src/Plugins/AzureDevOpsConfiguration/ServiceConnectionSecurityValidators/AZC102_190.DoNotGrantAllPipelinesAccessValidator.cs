@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.AzureDevOpsConfiguration
 {
+    [ValidatorDescriptor("AZC102/190")]
     public class DoNotGrantAllPipelinesAccessValidator : DynamicValidatorBase
     {
         internal const string NotAuthorizedMessage = "Not able to access required ADO API to check.";
