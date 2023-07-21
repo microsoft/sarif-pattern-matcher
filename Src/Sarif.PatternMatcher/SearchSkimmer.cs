@@ -888,8 +888,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 string filePath = context.CurrentTarget.Uri.GetFilePath();
-                string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
-                IEnumerable<ValidationResult> validationResults = _validators.Validate(ruleName,
+                IEnumerable<ValidationResult> validationResults = _validators.Validate(matchExpression.Id,
                                                                                        context,
                                                                                        mergedGroups,
                                                                                        groups,
@@ -1204,8 +1203,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 groups["scanTargetFullPath"] = new FlexMatch() { Value = filePath };
-                string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
-                IEnumerable<ValidationResult> validationResults = _validators.Validate(ruleName,
+                IEnumerable<ValidationResult> validationResults = _validators.Validate(matchExpression.Id,
                                                                                        context,
                                                                                        groups,
                                                                                        out bool pluginSupportsDynamicValidation);

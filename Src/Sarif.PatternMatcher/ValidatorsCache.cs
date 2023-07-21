@@ -71,7 +71,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                   out pluginCanPerformDynamicAnalysis);
         }
 
-        public IEnumerable<ValidationResult> Validate(string ruleName,
+        public IEnumerable<ValidationResult> Validate(string ruleId,
                                                       AnalyzeContext context,
                                                       IDictionary<string, ISet<FlexMatch>> mergedGroups,
                                                       IList<IDictionary<string, FlexMatch>> combinations,
@@ -98,7 +98,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 }
 
                 foreach (ValidationResult result in ValidateHelper(RuleIdToValidationMethods,
-                                                                   ruleName,
+                                                                   ruleId,
                                                                    context,
                                                                    groups,
                                                                    out pluginCanPerformDynamicAnalysis))
