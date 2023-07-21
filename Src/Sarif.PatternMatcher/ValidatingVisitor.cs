@@ -39,14 +39,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             ReportingDescriptor rule = node.GetRule(_run);
 
             StaticValidatorBase staticValidator =
-                ValidatorsCache.GetValidationMethods(rule.Name, _validators.RuleNameToValidationMethods);
-
-            if (staticValidator == null)
-            {
-                string name = rule.Name.Replace("ConnectionString", "Credentials");
-                name = name.Replace("Secret", "Credentials");
-                staticValidator = ValidatorsCache.GetValidationMethods(name, _validators.RuleNameToValidationMethods);
-            }
+                ValidatorsCache.GetValidationMethods(rule.Id, _validators.RuleIdToValidationMethods);
 
             if (staticValidator is DynamicValidatorBase dynamicValidator)
             {

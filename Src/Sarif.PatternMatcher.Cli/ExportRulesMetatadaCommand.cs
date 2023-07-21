@@ -150,7 +150,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 
                             if (!string.IsNullOrEmpty(match.Name))
                             {
-                                staticValidator = ValidatorsCache.GetValidationMethods(match.Name, validators.RuleNameToValidationMethods);
+                                staticValidator = ValidatorsCache.GetValidationMethods(match.Name, validators.RuleIdToValidationMethods);
                             }
 
                             string deprecatedNameContent = hasOneOrMoreDeprecatedRuleNames ?

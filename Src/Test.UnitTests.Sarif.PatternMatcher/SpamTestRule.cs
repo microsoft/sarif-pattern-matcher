@@ -39,7 +39,7 @@ namespace Microsoft.CodeAnalysis.Sarif
             }
         }
 
-        private const string TestRuleId = "TEST1001";
+        internal const string TestRuleId = "TEST1001";
 
         protected override ResourceManager ResourceManager => SkimmerBaseTestResources.ResourceManager;
 

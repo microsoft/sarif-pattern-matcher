@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private static string assemblyBaseFolder;
         private readonly IFileSystem _fileSystem;
         private readonly Dictionary<string, Assembly> _resolvedNames;
-        private Dictionary<string, StaticValidatorBase> _ruleNameToValidationMethods;
+        private Dictionary<string, StaticValidatorBase> _rulIdToValidationMethods;
 
         public ValidatorsCache(IEnumerable<string> validatorBinaryPaths = null, IFileSystem fileSystem = null)
         {
@@ -38,36 +38,29 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public ISet<string> ValidatorPaths { get; }
 
-        public Dictionary<string, StaticValidatorBase> RuleNameToValidationMethods
+        public Dictionary<string, StaticValidatorBase> RuleIdToValidationMethods
         {
             get
             {
-                if (_ruleNameToValidationMethods == null)
+                if (_rulIdToValidationMethods == null)
                 {
                     lock (sync)
                     {
-                        if (_ruleNameToValidationMethods == null)
+                        if (_rulIdToValidationMethods == null)
                         {
-                            _ruleNameToValidationMethods ??= LoadValidationAssemblies(ValidatorPaths);
+                            _rulIdToValidationMethods ??= LoadValidationAssemblies(ValidatorPaths);
                         }
                     }
                 }
 
-                return _ruleNameToValidationMethods;
+                return _rulIdToValidationMethods;
             }
         }
 
-        public static StaticValidatorBase GetValidationMethods(string ruleName,
+        public static StaticValidatorBase GetValidationMethods(string ruleId,
                                                                Dictionary<string, StaticValidatorBase> ruleIdToMethodMap)
         {
-            if (ruleName.Contains("/"))
-            {
-                ruleName = ruleName.Substring(ruleName.IndexOf("/") + 1);
-            }
-
-            string validatorName = ruleName + "Validator";
-
-            ruleIdToMethodMap.TryGetValue(validatorName, out StaticValidatorBase validationMethods);
+            ruleIdToMethodMap.TryGetValue(ruleId, out StaticValidatorBase validationMethods);
             return validationMethods;
         }
 
@@ -77,7 +70,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                       IDictionary<string, FlexMatch> groups,
                                                       out bool pluginCanPerformDynamicAnalysis)
         {
-            return ValidateHelper(RuleNameToValidationMethods,
+            return ValidateHelper(RuleIdToValidationMethods,
                                   ruleId,
                                   ruleName,
                                   context,
@@ -112,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     groups[key] = flexMatchProperties[key];
                 }
 
-                foreach (ValidationResult result in ValidateHelper(RuleNameToValidationMethods,
+                foreach (ValidationResult result in ValidateHelper(RuleIdToValidationMethods,
                                                                    ruleId,
                                                                    ruleName,
                                                                    context,
@@ -410,22 +403,42 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             continue;
                         }
 
-                        if (type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(DynamicValidatorBase)))
-                        {
-                            ruleToMethodMap[typeName] = Activator.CreateInstance(type) as DynamicValidatorBase;
-                            continue;
-                        }
+                        string ruleId = GetRuleId(type);
 
-                        if (type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(StaticValidatorBase)))
+                        if (ruleId != null && type.IsClass && !type.IsAbstract)
                         {
-                            ruleToMethodMap[typeName] = Activator.CreateInstance(type) as StaticValidatorBase;
-                            continue;
+                            if (type.IsSubclassOf(typeof(DynamicValidatorBase)))
+                            {
+                                ruleToMethodMap[ruleId] = Activator.CreateInstance(type) as DynamicValidatorBase;
+                                continue;
+                            }
+
+                            if (type.IsSubclassOf(typeof(StaticValidatorBase)))
+                            {
+                                ruleToMethodMap[ruleId] = Activator.CreateInstance(type) as StaticValidatorBase;
+                                continue;
+                            }
                         }
                     }
                 }
             }
 
             return ruleToMethodMap;
+        }
+
+        private string GetRuleId(Type type)
+        {
+            Type attributeType = typeof(RuleDescriptorAttribute);
+            Attribute attribute = type.GetCustomAttribute(attributeType);
+
+            MethodInfo mi = attributeType.GetMethod("get_Id",
+                                                    BindingFlags.Instance |
+                                                    BindingFlags.Public |
+                                                    BindingFlags.DeclaredOnly);
+
+            string ruleId = (string)mi.Invoke(attribute, Array.Empty<object>());
+
+            return ruleId;
         }
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
