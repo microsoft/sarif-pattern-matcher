@@ -26,6 +26,7 @@ using Moq;
 using Newtonsoft.Json;
 
 using Xunit;
+using Xunit.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
@@ -48,6 +49,86 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             return result;
+        }
+
+        [Fact]
+        public void AnalyzeCommand_SniffLiterals()
+        {
+            string contentsRegex = "foo";
+
+            foreach (string sniffLiteral in new[] { "foo", "", $"{Guid.NewGuid()}", null })
+            {
+                var definitions = new SearchDefinitions()
+                {
+                    Definitions = new List<SearchDefinition>(new[]
+                    {
+                    new SearchDefinition()
+                    {
+                        Name = "MinimalRule", Id = "Test1002",
+                        Level = FailureLevel.Error, FileNameAllowRegex = "(?i)\\.test$",
+                        Message = "A problem occurred in '{0:scanTarget}'.",
+                        MatchExpressions = new List<MatchExpression>(new[]
+                        {
+                            new MatchExpression()
+                            {
+                                ContentsRegex = contentsRegex,
+                                SniffLiterals = new List<string>(new[] { sniffLiteral }),
+                                Message = "Custom message."
+                            }
+                        })
+                    }
+                })
+                };
+
+                string definitionsText = JsonConvert.SerializeObject(definitions);
+
+                string searchDefinitionsPath = Path.GetFullPath(Guid.NewGuid().ToString());
+
+                var disabledSkimmers = new HashSet<string>();
+                var testLogger = new TestLogger();
+
+                var mockFileSystem = new Mock<IFileSystem>();
+                mockFileSystem.Setup(x => x.FileExists(searchDefinitionsPath)).Returns(true);
+                mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
+
+                string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
+                FlexString fileContents = $"{Guid.NewGuid} {contentsRegex} {contentsRegex}";
+                FlexString fixedFileContents = $" {Guid.NewGuid} {Guid.NewGuid} {Guid.NewGuid} ";
+
+                var target = new EnumeratedArtifact(FileSystem.Instance)
+                {
+                    Uri = new Uri(scanTargetFileName, UriKind.RelativeOrAbsolute),
+                    Contents = fileContents,
+                };
+
+                var context = new AnalyzeContext()
+                {
+                    TargetsProvider = new ArtifactProvider(new[] { target }),
+                    Logger = testLogger,
+                };
+
+                var options = new AnalyzeOptions
+                {
+                    PluginFilePaths = new[] { searchDefinitionsPath }
+                };
+
+                var analyzeCommand = new AnalyzeCommand(fileSystem: mockFileSystem.Object);
+                int result = analyzeCommand.Run(options, ref context);
+                context.ValidateCommandExecution(result);
+
+                int resultCount = sniffLiteral != contentsRegex ? 0 : 2;
+
+                if (resultCount > 0)
+                {
+                    testLogger.Results.Should().NotBeNull();
+                    testLogger.Results.Count.Should().Be(resultCount);
+                }
+                else
+                {
+                    testLogger.Results.Should().BeNull();
+
+                }
+            }
         }
 
         [Fact]

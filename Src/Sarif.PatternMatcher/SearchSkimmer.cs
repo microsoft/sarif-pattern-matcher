@@ -761,7 +761,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 foreach (string sniffLiteral in matchExpression.SniffLiterals)
                 {
-                    if (context.CurrentTarget.Contents.IndexOf(sniffLiteral, StringComparison.Ordinal) >= 0)
+                    if (!string.IsNullOrEmpty(sniffLiteral) &&
+                        context.CurrentTarget.Contents.IndexOf(sniffLiteral, StringComparison.Ordinal) >= 0)
                     {
                         continueProcessing = true;
                         break;
