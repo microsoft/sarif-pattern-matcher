@@ -756,6 +756,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
+            bool continueProcessing = false;
+            if (matchExpression.SniffLiterals?.Count > 0)
+            {
+                foreach (string sniffLiteral in matchExpression.SniffLiterals)
+                {
+                    if (context.CurrentTarget.Contents.IndexOf(sniffLiteral, StringComparison.Ordinal) >= 0)
+                    {
+                        continueProcessing = true;
+                        break;
+                    }
+                }
+
+                if (!continueProcessing) { return; }
+            }
+
             bool isMalformed = true;
 
             bool singleIntraRegex =
