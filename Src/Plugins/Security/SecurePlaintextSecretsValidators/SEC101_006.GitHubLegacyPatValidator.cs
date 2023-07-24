@@ -3,13 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
-
-using Octokit;
-using Octokit.Internal;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
@@ -76,60 +73,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                                                                 IDictionary<string, string> options,
                                                                 ref ResultLevelKind resultLevelKind)
         {
-            string secret = fingerprint.Secret;
-            string asset = secret.Truncate();
+            HttpClient client = CreateOrRetrieveCachedHttpClient();
 
-            try
-            {
-                var credentials = new Credentials(secret);
-                var credentialsStore = new InMemoryCredentialStore(credentials);
-                var client = new GitHubClient(new ProductHeaderValue(ScanIdentityGuid), credentialsStore);
-
-                User user = client.User.Current().GetAwaiter().GetResult();
-                string id = fingerprint.Id = user.Login;
-                string name = user.Name;
-
-                if (!string.IsNullOrEmpty(user.Name))
-                {
-                    name = $" ({name})";
-                }
-
-                asset = $"{id}{name}";
-                message = $"the compromised GitHub account is '[{id}{name}](https://github.com/{id})'";
-
-                IReadOnlyList<Organization> orgs = client.Organization.GetAllForCurrent().GetAwaiter().GetResult();
-                string orgNames = string.Join(", ", orgs.Select(o => o.Login));
-
-                if (orgNames.Length == 0)
-                {
-                    orgNames = "[None]";
-                }
-                else
-                {
-                    fingerprint.Resource = orgNames;
-                }
-
-                message += $" which has access to the following orgs '{orgNames}'";
-
-                return ValidationState.Authorized;
-            }
-            catch (ForbiddenException)
-            {
-                // The token is valid but doesn't have sufficient scope to retrieve org data.
-                message += ". This token has insufficient permissions to retrieve organization data";
-                return ValidationState.Authorized;
-            }
-            catch (AuthorizationException)
-            {
-                message = "The provided secret is not authorized to access github.com";
-
-                // The token is either invalid or has been killed.
-                return ValidationState.Unauthorized;
-            }
-            catch (Exception e)
-            {
-                return ReturnUnhandledException(ref message, e, asset);
-            }
+            return new GitHubTokenValidationHelper().ValidateToken(client, ref fingerprint, ref message);
         }
     }
 }
