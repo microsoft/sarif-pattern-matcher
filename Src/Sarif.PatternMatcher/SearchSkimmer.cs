@@ -1055,7 +1055,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 string filePath = context.CurrentTarget.Uri.GetFilePath();
+                string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
                 IEnumerable<ValidationResult> validationResults = _validators.Validate(matchExpression.Id,
+                                                                                       ruleName,
                                                                                        context,
                                                                                        mergedGroups,
                                                                                        groups,
@@ -1173,7 +1175,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 if (_validators != null && matchExpression.IsValidatorEnabled)
                 {
+                    string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
                     IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Id,
+                                                                                           ruleName,
                                                                                            context,
                                                                                            match,
                                                                                            out bool pluginSupportsDynamicValidation);
@@ -1383,7 +1387,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (_validators != null && matchExpression.IsValidatorEnabled)
             {
                 groups["scanTargetFullPath"] = new FlexMatch() { Value = filePath };
+                string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
                 IEnumerable<ValidationResult> validationResults = _validators.Validate(matchExpression.Id,
+                                                                                       ruleName,
                                                                                        context,
                                                                                        groups,
                                                                                        out bool pluginSupportsDynamicValidation);

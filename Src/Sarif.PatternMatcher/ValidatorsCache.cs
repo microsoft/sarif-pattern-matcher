@@ -65,18 +65,21 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         }
 
         public IEnumerable<ValidationResult> Validate(string ruleId,
+                                                      string ruleName,
                                                       AnalyzeContext context,
                                                       IDictionary<string, FlexMatch> groups,
                                                       out bool pluginCanPerformDynamicAnalysis)
         {
             return ValidateHelper(RuleIdToValidationMethods,
                                   ruleId,
+                                  ruleName,
                                   context,
                                   groups,
                                   out pluginCanPerformDynamicAnalysis);
         }
 
         public IEnumerable<ValidationResult> Validate(string ruleId,
+                                                      string ruleName,
                                                       AnalyzeContext context,
                                                       IDictionary<string, ISet<FlexMatch>> mergedGroups,
                                                       IList<IDictionary<string, FlexMatch>> combinations,
@@ -104,6 +107,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 foreach (ValidationResult result in ValidateHelper(RuleIdToValidationMethods,
                                                                    ruleId,
+                                                                   ruleName,
                                                                    context,
                                                                    groups,
                                                                    out pluginCanPerformDynamicAnalysis))
@@ -155,6 +159,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         internal static IEnumerable<ValidationResult> ValidateHelper(Dictionary<string, StaticValidatorBase> ruleIdToMethodMap,
                                                                      string ruleId,
+                                                                     string ruleName,
                                                                      AnalyzeContext context,
                                                                      IDictionary<string, FlexMatch> groups,
                                                                      out bool pluginCanPerformDynamicAnalysis)
