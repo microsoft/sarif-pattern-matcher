@@ -51,7 +51,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         /// decoded string to the match expression. No base64-decoding
         /// occurs when this property is 0 or less.
         /// </summary>
-        public int MatchLengthToDecode { get; set; }
+        public Base64EncodingMatch Base64EncodingMatch { get; set; }
 
         public Dictionary<string, string> Properties { get; set; }
 

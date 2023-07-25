@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Text;
 
 using FluentAssertions;
@@ -11,7 +11,6 @@ using FluentAssertions;
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 using Moq;
 
@@ -26,10 +25,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             string allowFileExtension = null)
         {
             const string guidRegexText = "(?i)[0-9a-f]{8}[-]?([0-9a-f]{4}[-]?){3}[0-9a-f]{12}";
+            const int guidStringLength = 36;
 
             return new MatchExpression
             {
-                MatchLengthToDecode = Guid.NewGuid().ToString().Length,
+                Base64EncodingMatch = new Base64EncodingMatch
+                {
+                    MinMatchLength = guidStringLength,
+                    MaxMatchLength = guidStringLength,
+                },
                 ContentsRegex = guidRegexText,
                 FileNameDenyRegex = denyFileExtension != null ? $"(?i)\\.{denyFileExtension}$" : null,
                 FileNameAllowRegex = allowFileExtension != null ? $"(?i)\\.{allowFileExtension}$" : null,
@@ -99,8 +103,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             logger.Results[0].Level.Should().Be(definition.Level);
             logger.Results[0].GetMessageText(skimmer).Should().Be($"base64-encoded:{originalMessage}");
 
-            // Analyzing base64-encoded values with MatchLengthToDecode == 0 fails
-            definition.MatchExpressions[0].MatchLengthToDecode = 0;
+            // Analyzing base64-encoded values with Base64EncodingSpec == null fails
+            definition.MatchExpressions[0].Base64EncodingMatch = null;
 
             logger.Results.Clear();
             skimmer = CreateSkimmer(definition);
@@ -452,6 +456,175 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             Exception exception = Record.Exception(() => skimmer.Analyze(context));
             exception.Should().NotBeNull();
             exception.GetType().Should().Be(typeof(InvalidOperationException));
+        }
+
+        [Fact]
+        public void SearchSkimmer_DetectsBase64EncodingMatch()
+        {
+            var testCases = new[]
+            {
+                new
+                {
+                    Title = "Text matching base64 decoded length should be detected.",
+                    MinDecodedLen = 10,
+                    MaxDecodedLen = 20,
+                    DecodedPattern = "\\b[0-9A-Za-z]{12}\\b",
+                    PlainTexts = new[] { "Abcefg123456" },
+                    ScanTargetContents = "<xml>{0}</xml>",
+                    ExpectedTotalResultCount = 1,
+                    ExpectedBase64MatchCount = 1,
+                },
+                new
+                {
+                    Title = "Multiple texts match base64 decoded length should be all detected.",
+                    MinDecodedLen = 10,
+                    MaxDecodedLen = 20,
+                    DecodedPattern = "\\b[0-9]{10,20}\\b",
+                    PlainTexts = new[] { "1234567890", "098765432109876", "56481234875456213945"},
+                    ScanTargetContents = "{0}\r\n{1}\r\n{2}",
+                    ExpectedTotalResultCount = 3,
+                    ExpectedBase64MatchCount = 3,
+                },
+                new
+                {
+                    Title = "Text doesn't match decoded length shoud not be detected.",
+                    MinDecodedLen = 5,
+                    MaxDecodedLen = 10,
+                    DecodedPattern = "\\b[a-z]{5-10}\\b",
+                    PlainTexts = new[] { "abcdefghijklmnopqrstuvwxyz", },
+                    ScanTargetContents = "key : {0}",
+                    ExpectedTotalResultCount = 0,
+                    ExpectedBase64MatchCount = 0,
+                },
+                new
+                {
+                    Title = "Text matches base64 decoded length but doesn't match pattern should not be detected.",
+                    MinDecodedLen = 8,
+                    MaxDecodedLen = 10,
+                    DecodedPattern = "\\b[0-9]{8,10}\\b",
+                    PlainTexts = new[] { "abcdefghij" },
+                    ScanTargetContents = "\"value\":\"{0}\"",
+                    ExpectedTotalResultCount = 0,
+                    ExpectedBase64MatchCount = 0,
+                },
+                new
+                {
+                    Title = "Mixed texts match base64 decoded length and plain text match pattern should be all detected.",
+                    MinDecodedLen = 10,
+                    MaxDecodedLen = 10,
+                    DecodedPattern = "\\b[0-9]{10}\\b",
+                    PlainTexts = new[] { "abcdefghij", "1234567890" },
+                    ScanTargetContents = "{0}\r\n{1}\r\n1111111111",
+                    ExpectedTotalResultCount = 2,
+                    ExpectedBase64MatchCount = 1,
+                },
+                new
+                {
+                    Title = "Invalid Base64EncodingMatch: MinSourceLength is 0.",
+                    MinDecodedLen = 0,
+                    MaxDecodedLen = 10,
+                    DecodedPattern = "\\b[0-9]{10}\\b",
+                    PlainTexts = new[] { "1234567890" },
+                    ScanTargetContents = "{0}",
+                    ExpectedTotalResultCount = 0,
+                    ExpectedBase64MatchCount = 0,
+                },
+                new
+                {
+                    Title = "Invalid Base64EncodingMatch: MaxSourceLength is 0.",
+                    MinDecodedLen = 0,
+                    MaxDecodedLen = 0,
+                    DecodedPattern = "\\b[0-9]{10}\\b",
+                    PlainTexts = new[] { "1234567890" },
+                    ScanTargetContents = "{0}",
+                    ExpectedTotalResultCount = 0,
+                    ExpectedBase64MatchCount = 0,
+                },
+                new
+                {
+                    Title = "Invalid Base64EncodingMatch: MinSourceLength < MaxSourceLength.",
+                    MinDecodedLen = 10,
+                    MaxDecodedLen = 5,
+                    DecodedPattern = "\\b[0-9]{10}\\b",
+                    PlainTexts = new[] { "1234567890" },
+                    ScanTargetContents = "{0}",
+                    ExpectedTotalResultCount = 0,
+                    ExpectedBase64MatchCount = 0,
+                },
+            };
+
+            foreach (var testCase in testCases)
+            {
+                string[] encodedTexts = testCase.PlainTexts.Select(text => Convert.ToBase64String(Encoding.UTF8.GetBytes(text))).ToArray();
+                string scanTargetContents = string.Format(testCase.ScanTargetContents, encodedTexts);
+
+                MatchExpression expr = CreateMatchExpressionWithBase64EncodingMatch(
+                                       testCase.MinDecodedLen,
+                                       testCase.MaxDecodedLen,
+                                       testCase.DecodedPattern);
+                SearchDefinition definition = CreateDefaultSearchDefinition(expr);
+
+                // We inject the well-known encoding name that reports with
+                // 'plaintext' or 'base64-encoded' depending on how a match
+                // was made.
+                definition.Message = $"{{0:encoding}}";
+
+                var mockFileSystem = new Mock<IFileSystem>();
+                mockFileSystem.Setup(x => x.FileInfoLength(It.IsAny<string>())).Returns(10);
+
+                var logger = new TestLogger();
+
+                var target = new EnumeratedArtifact(FileSystem.Instance)
+                {
+                    Uri = new Uri($"file:///c:/{definition.Name}.{definition.FileNameAllowRegex}"),
+                    Contents = scanTargetContents,
+                };
+
+                var context = new AnalyzeContext
+                {
+                    CurrentTarget = target,
+                    FileSystem = mockFileSystem.Object,
+                    Logger = logger,
+                };
+
+                SearchSkimmer skimmer = CreateSkimmer(definition);
+                skimmer.Analyze(context);
+
+                // assert
+                if (testCase.ExpectedTotalResultCount == 0)
+                {
+                    logger.Results.Should().BeNull();
+                }
+                else
+                {
+                    logger.Results.Count.Should().Be(testCase.ExpectedTotalResultCount);
+                }
+
+                for (int i = 0; i < testCase.ExpectedBase64MatchCount; i++)
+                {
+                    logger.Results[0].RuleId.Should().Be(definition.Id);
+                    logger.Results[0].Level.Should().Be(definition.Level);
+                    logger.Results[0].GetMessageText(skimmer).Should().StartWith("base64-encoded");
+                }
+            }
+        }
+
+        private static MatchExpression CreateMatchExpressionWithBase64EncodingMatch(
+            int minDecodedLength,
+            int maxDecodedLength,
+            string decodedPattern)
+        {
+            return new MatchExpression
+            {
+                Base64EncodingMatch = new Base64EncodingMatch
+                {
+                    MinMatchLength = minDecodedLength,
+                    MaxMatchLength = maxDecodedLength
+                },
+                ContentsRegex = decodedPattern,
+                FileNameDenyRegex = null,
+                FileNameAllowRegex = null,
+            };
         }
 
         private AnalyzeContext CreateGuidMatchingSkimmer(
