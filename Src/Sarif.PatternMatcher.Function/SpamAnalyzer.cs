@@ -9,6 +9,7 @@ using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Writers;
+using Microsoft.RE2.Managed;
 
 using Newtonsoft.Json;
 
@@ -36,7 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Function
                 // lives alongside the JSON. For a JSON file named PlaintextSecrets.json, the
                 // corresponding validations assembly is named PlaintextSecrets.dll (i.e., only the
                 // extension name changes from .json to .dll).
-                Skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, regexDefinitions, s_tool);
+                Skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, regexDefinitions, s_tool, RE2Regex.Instance);
             }
 
             var sb = new StringBuilder();

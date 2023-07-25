@@ -23,11 +23,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public bool? DynamicValidation { get; set; }
 
         [Option(
-            "deny-regex",
-            HelpText = "A regular expression used to suppress scanning for any file or directory path that matches the regex.")]
-        public string FileNameDenyRegex { get; set; }
-
-        [Option(
             "disable-dynamic-validation-caching",
             HelpText = "Disable caching from dynamic validation.")]
         public bool? DisableDynamicValidationCaching { get; set; }
@@ -52,5 +47,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             "redact-secrets",
             HelpText = "Redact sensitive credential components from log files.")]
         public bool? RedactSecrets { get; set; }
+
+        [Option(
+            "engine",
+            HelpText = "The pattern matching engine to use for analysis. One of RE2, DotNet, or CachedDotNet.")]
+        public RegexEngine RegexEngine { get; set; }
     }
 }

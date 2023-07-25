@@ -12,7 +12,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/013.CryptographicPrivateKeyValidator
-    /// </summary
+    /// </summary>
     public class CryptographicPrivateKeyValidatorTests
     {
         // copied from https://github.com/nodejs/node/blob/master/src/node_root_certs.h,

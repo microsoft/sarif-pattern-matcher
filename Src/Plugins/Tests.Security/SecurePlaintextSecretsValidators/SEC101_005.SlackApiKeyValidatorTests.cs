@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/005.SlackApiKeyValidator
-    /// </summary
+    /// </summary>
     public class SlackApiKeyValidatorTests
     {
         [Fact]
@@ -177,6 +177,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                 {
                     sb.AppendLine($"The test case '{testCase.Title}' was expecting '{testCase.ExpectedMessage}' but found '{message}'.");
                 }
+
                 mockHandler.Clear();
             }
 

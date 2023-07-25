@@ -6,9 +6,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
+using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.RE2.Managed;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
@@ -186,7 +191,25 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             context.ObservedFingerprintCache ??= new HashSet<string>();
+
+            string filePath = context.CurrentTarget?.Uri.GetFilePath();
+            string data1, data2;
+
+            if (DriverEventSource.Log.IsEnabled())
+            {
+                data1 = $"ObservedFingerPrintCache contains {context.ObservedFingerprintCache.Count} item(s)";
+                data2 = PackageGroupsForTelemetry(groups);
+                DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase1StaticValidation, filePath, ruleId, ruleName, data1, data2);
+            }
+
             IEnumerable<ValidationResult> validationResults = staticValidator.IsValidStatic(groups, context.ObservedFingerprintCache);
+
+            if (DriverEventSource.Log.IsEnabled())
+            {
+                data1 = $"{validationResults.Count()}";
+                data2 = PackageValidationResultsForTelemetry(validationResults);
+                DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1StaticValidation, filePath, ruleId, ruleName, data1, data2);
+            }
 
             // An 'ExtensibleStaticValidatorBase' is a rule that extends DynamicValidatorBase
             // strictly so that other rules can use it as a base type and add dynamic
@@ -209,19 +232,107 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             string message = validationResult.Message;
                             IDictionary<string, string> stringGroups = groups.ToStringDictionary();
                             Fingerprint fingerprint = validationResult.Fingerprint;
+
+                            if (DriverEventSource.Log.IsEnabled())
+                            {
+                                ValidationResult toSerialize = PackageValidationResultForTelemetry(validationResult);
+                                data1 = JsonConvert.SerializeObject(toSerialize);
+                                DriverEventSource.Log.RuleReserved1Start(SpamEventNames.Phase2DynamicValidation, filePath, ruleId, ruleName, data1, data2: null);
+                            }
+
                             validationResult.ValidationState = dynamicValidator.IsValidDynamic(ref fingerprint,
                                                                                                ref message,
                                                                                                stringGroups,
                                                                                                ref resultLevelKind);
+
                             validationResult.Message = message;
                             validationResult.Fingerprint = fingerprint;
                             validationResult.ResultLevelKind = resultLevelKind;
+
+                            if (DriverEventSource.Log.IsEnabled())
+                            {
+                                ValidationResult toSerialize = PackageValidationResultForTelemetry(validationResult);
+                                data1 = JsonConvert.SerializeObject(toSerialize);
+                                DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.Phase2DynamicValidation, filePath, ruleId, ruleName, data1, data2: null);
+                            }
                         }
                     }
                 }
             }
 
             return validationResults;
+        }
+
+        [ThreadStatic]
+        private static StringBuilder s_sb;
+
+        private static readonly JsonSerializerSettings s_settings = new()
+        {
+            ContractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy(),
+            },
+            Formatting = Formatting.None,
+        };
+
+        private static string PackageValidationResultsForTelemetry(IEnumerable<ValidationResult> validationResults)
+        {
+            var resultsToSerialize = new List<ValidationResult>();
+
+            foreach (ValidationResult validationResult in validationResults)
+            {
+                ValidationResult toSerialize = PackageValidationResultForTelemetry(validationResult);
+                resultsToSerialize.Add(toSerialize);
+            }
+
+            return JsonConvert.SerializeObject(resultsToSerialize, s_settings);
+        }
+
+        private static ValidationResult PackageValidationResultForTelemetry(ValidationResult validationResult)
+        {
+            var resultToSerialize = new ValidationResult()
+            {
+                Message = validationResult.Message,
+                RegionFlexMatch = validationResult.RegionFlexMatch,
+                ResultLevelKind = validationResult.ResultLevelKind,
+                ValidationState = validationResult.ValidationState,
+            };
+
+            Fingerprint fingerprint = validationResult.Fingerprint;
+            string secret = fingerprint.Secret;
+            resultToSerialize.RawSecretHashSha256 = secret != null ? HashUtilities.ComputeStringSha256Hash(secret) : null;
+            fingerprint.Secret = null;
+            resultToSerialize.Fingerprint = fingerprint;
+            return resultToSerialize;
+        }
+
+        private static string PackageGroupsForTelemetry(IDictionary<string, FlexMatch> groups)
+        {
+            s_sb ??= new StringBuilder();
+            s_sb.Clear();
+            s_sb.Append('{');
+
+            groups.TryGetValue("secret", out FlexMatch secret);
+
+            if (!string.IsNullOrEmpty(secret?.Value.String))
+            {
+                string rawSecretHashSha256 = HashUtilities.ComputeStringSha256Hash(secret.Value);
+                s_sb.Append(@$"""rawSecretHashSha256"":""{rawSecretHashSha256}""");
+            }
+
+            foreach (string key in groups.Keys)
+            {
+                if (key.Equals("0") || key.Equals("secret") || key.Equals("scanTargetFullPath"))
+                {
+                    continue;
+                }
+
+                FlexMatch value = groups[key];
+                s_sb.Append(@$"{(s_sb.Length > 1 ? "," : string.Empty)}""{key}"":""{value}""");
+            }
+
+            s_sb.Append('}');
+            return s_sb.ToString();
         }
 
         private static IList<IDictionary<string, FlexMatch>> GetCombinations(IDictionary<string, ISet<FlexMatch>> mergedGroups,
@@ -324,56 +435,60 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             // We will only attempt to resolve an assembly a single time
             // to avoid re-entrance in cases where our logic below fails
             string assemblyName = args.Name.Split(',')[0];
-            if (this._resolvedNames.TryGetValue(assemblyName, out resolved))
-            {
-                return resolved;
-            }
 
-            AppDomain currentDomain = AppDomain.CurrentDomain;
-            Assembly[] assemblies = currentDomain.GetAssemblies();
-            foreach (Assembly assembly in assemblies)
+            lock (sync)
             {
-                if (assembly.FullName.Split(',')[0] == assemblyName)
+                if (_resolvedNames.TryGetValue(assemblyName, out resolved))
                 {
-                    return assembly;
+                    return resolved;
                 }
-            }
 
-            assemblyBaseFolder ??= Environment.CurrentDirectory;
-
-            if (assemblyBaseFolder.EndsWith("analyze\\..\\bin"))
-            {
-                assemblyBaseFolder = assemblyBaseFolder.Replace("analyze\\..\\bin", string.Empty);
-            }
-
-            string presumedAssemblyPath = Path.Combine(assemblyBaseFolder, Path.GetFileName(assemblyName));
-
-            if (!presumedAssemblyPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase) &&
-                !presumedAssemblyPath.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
-            {
-                presumedAssemblyPath += ".dll";
-
-                if (!File.Exists(presumedAssemblyPath))
+                AppDomain currentDomain = AppDomain.CurrentDomain;
+                Assembly[] assemblies = currentDomain.GetAssemblies();
+                foreach (Assembly assembly in assemblies)
                 {
-                    // Strip .dll and give .exe a whirl
-                    presumedAssemblyPath = Path.Combine(assemblyBaseFolder, assemblyName) + ".exe";
+                    if (assembly.FullName.Split(',')[0] == assemblyName)
+                    {
+                        return assembly;
+                    }
                 }
-            }
 
-            if (File.Exists(presumedAssemblyPath))
-            {
-                try
+                assemblyBaseFolder ??= Environment.CurrentDirectory;
+
+                if (assemblyBaseFolder.EndsWith("analyze\\..\\bin"))
                 {
-                    // If we use Assembly.LoadFrom, a FileLoadException
-                    // saying that it could not load the file.
-                    resolved = Assembly.Load(_fileSystem.FileReadAllBytes(presumedAssemblyPath));
-
-                    this._resolvedNames[assemblyName] = resolved;
+                    assemblyBaseFolder = assemblyBaseFolder.Replace("analyze\\..\\bin", string.Empty);
                 }
-                catch (IOException) { }
-                catch (TypeLoadException) { }
-                catch (BadImageFormatException) { }
-                catch (UnauthorizedAccessException) { }
+
+                string presumedAssemblyPath = Path.Combine(assemblyBaseFolder, Path.GetFileName(assemblyName));
+
+                if (!presumedAssemblyPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase) &&
+                    !presumedAssemblyPath.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+                {
+                    presumedAssemblyPath += ".dll";
+
+                    if (!File.Exists(presumedAssemblyPath))
+                    {
+                        // Strip .dll and give .exe a whirl
+                        presumedAssemblyPath = Path.Combine(assemblyBaseFolder, assemblyName) + ".exe";
+                    }
+                }
+
+                if (File.Exists(presumedAssemblyPath))
+                {
+                    try
+                    {
+                        // If we use Assembly.LoadFrom, a FileLoadException
+                        // saying that it could not load the file.
+                        resolved = Assembly.Load(_fileSystem.FileReadAllBytes(presumedAssemblyPath));
+
+                        _resolvedNames[assemblyName] = resolved;
+                    }
+                    catch (IOException) { }
+                    catch (TypeLoadException) { }
+                    catch (BadImageFormatException) { }
+                    catch (UnauthorizedAccessException) { }
+                }
             }
 
             return resolved;

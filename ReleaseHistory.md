@@ -18,10 +18,40 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
-## v4.3.17 (dev branch) 7/18/2023
-- BRK: Disable `SEC101/047.CratesApiKey`. Current dynamic validator returns status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys
+## v4.5.8 UNRELEASED
+- DEP: Update SARIF SDK submodule from [7e8def7 to dd3741f(https://github.com/microsoft/sarif-sdk/compare/7e8def7..dd3741f). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd3741f/ReleaseHistory.md).
+- DEP: Upgrade `Microsoft.Security.Utilities` from 6.2.1 to 6.5.0. [#788](https://github.com/microsoft/sarif-pattern-matcher/pull/788)
+- BRK: Replaced `MatchLengthToDecode` property of `MatchExpression` with new `Base64EncodingMatch` class to support detecting Base64 string from strings of specific length range. [#790](https://github.com/microsoft/sarif-pattern-matcher/pull/790)
+- FNC: Update `SEC101/041.RabbitMqCredentials` in `Security` to check loose credential combinations. [#788](https://github.com/microsoft/sarif-pattern-matcher/pull/788)
+- FPD: Removed dynamic analysis entirely for `SEC101/047.CratesApiKey` rule due to outdated validation always returning status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
+
+## v4.5.7 6/28/2023
+- DEP: Update SARIF SDK submodule from [a7029a3 to 7e8def7(https://github.com/microsoft/sarif-sdk/compare/a7029a3..7e8def7). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/7e8def7/ReleaseHistory.md).
+
+## v4.5.5 6/26/2023
+- DEP: SARIF SDK update is for v4.2.1, resolves a key unhandled exception issue enumerating zip archives.
+- NEW: Provide `IronRE2` pattern matching `--engine` options. [#778](https://github.com/microsoft/sarif-pattern-matcher/pull/778)
+
+## v4.5.4 6/25/2023
+- NEW: Allow for swapping regex engines (between `RE2`, `DotNet` and `CachedDotNet`) via `--engine` command-line argument and `RegexEngine` context property. [#776](https://github.com/microsoft/sarif-pattern-matcher/pull/776)
+
+## v4.5.2 6/14/2023
+- DEP: Update SARIF SDK submodule from [dd8b7b8 to a7029a3](https://github.com/microsoft/sarif-sdk/compare/dd8b7b8..a7029a3). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/a7029a3/ReleaseHistory.md). SDK v4.2.0.
+- DEP: Update `SEC101/003.GoogleApiKey` in `Security` validating Google API key using HTTP requests.
+- DEP: Update `SEC101/006.GitHubLegacyPat` in `Security` validating GitHub PAT using HTTP requests and remove the `Octokit.dll` from `refs` folder.
+- DEP: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
+- DEP: Remove `AWSSDK.IdentityManagement` from `Security`.
+- DEP: Remove `GoogleApi` NuGet package from `Security`.
+
+## v4.5.1 5/31/2023
+- DEP: Update SARIF SDK submodule from [441fa8b to dd8b7b8](https://github.com/microsoft/sarif-sdk/compare/441fa8b..dd8b7b8). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd8b7b8/ReleaseHistory.md). Additional eventing work.
+
+## v4.5.0 5/16/2023
+- DEP: Update SARIF SDK submodule from [51ae42 to 441fa8b](https://github.com/microsoft/sarif-sdk/compare/51ae42..441fa8b). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/441fa8b/ReleaseHistory.md). Adds version control provenance.
+- NEW: Added ETW event tracing support.
 
 ## v4.4.1 5/9/2023
+- BRK: Disable `SEC101/047.CratesApiKey`. Current dynamic validator returns status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys
 - NEW: Provide new `AnalyzeContext.SniffRegex` property that applies a pre-filter contents regex to all scan targets, when configured. https://github.com/microsoft/sarif-pattern-matcher/pull/756
 
 ## v4.3.10 04/19/2023

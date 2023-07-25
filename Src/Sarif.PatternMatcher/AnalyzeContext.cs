@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
+#pragma warning disable SA1117 // Parameters should be on same line or separate line.
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.Strings.Interop;
@@ -11,12 +12,17 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeContext : AnalyzeContextBase
     {
+        public static long FilesFilteredBySniffRegex;
+
         public AnalyzeContext()
         {
             // Any file is a candidate for regex-driven search.
             // The actual applicability of a file for a specific
             // search definition is governed by its name/extension.
             IsValidAnalysisTarget = true;
+
+            // Here is our default name/extension filter.
+            GlobalFilePathDenyRegex = "(?i)\\.(?:bmp|dll|exe|gif|jpe?g|lock|pack|png|psd|tar\\.gz|tiff?|ttf|xcf|zip)$";
         }
 
         public bool RedactSecrets
@@ -30,6 +36,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         public IDictionary<int, string> RollingHashMap { get; set; }
 
         public override bool AnalysisComplete { get; set; }
+
+        public RegexEngine RegexEngine
+        {
+            get => this.Policy.GetProperty(RegexEngineProperty);
+            set => this.Policy.SetProperty(RegexEngineProperty, value);
+        }
 
         public string SniffRegex
         {
@@ -47,12 +59,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             get => this.Policy.GetProperty(MaxMemoryInKilobytesProperty);
             set => this.Policy.SetProperty(MaxMemoryInKilobytesProperty, value >= 0 ? value : MaxFileSizeInKilobytesProperty.DefaultValue());
-        }
-
-        public string GlobalFileDenyRegex
-        {
-            get => this.Policy.GetProperty(GlobalFileDenyRegexProperty);
-            set => this.Policy.SetProperty(GlobalFileDenyRegexProperty, value);
         }
 
         public bool DisableDynamicValidationCaching
@@ -105,6 +111,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             RollingHashMap = null;
         }
 
+        public static PerLanguageOption<RegexEngine> RegexEngineProperty =>
+            new PerLanguageOption<RegexEngine>(
+                "CoreSettings", nameof(RegexEngine), defaultValue: () => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? RegexEngine.RE2 : RegexEngine.IronRE2,
+                "The pattern matching to use for scanning. One of RE2 (Windows default), DotNet, CachedDotNet or IronRE2 (Linux default).");
+
         public static PerLanguageOption<string> SniffRegexProperty =>
             new PerLanguageOption<string>(
                 "CoreSettings", nameof(SniffRegex), defaultValue: () => string.Empty,
@@ -142,10 +153,5 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 "An upper bound on the size of the RE2 DFA cache. When the cache size exceeds this " +
                 "limit RE2 will fallback to an alternate (much less performant) search mechanism. " +
                 "Negative values will be discarded in favor of the default of 5096 KB.");
-
-        public static PerLanguageOption<string> GlobalFileDenyRegexProperty { get; } =
-                    new PerLanguageOption<string>(
-                        "CoreSettings", nameof(GlobalFileDenyRegex), defaultValue: () => string.Empty,
-                        "An optional regex that can be used to filter unwanted files or directories from analysis.");
     }
 }

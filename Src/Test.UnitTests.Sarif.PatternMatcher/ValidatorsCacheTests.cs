@@ -86,7 +86,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             foreach (string key in input.Keys)
             {
-                count = count * input[key].Count;
+                count *= input[key].Count;
             }
 
             return count;

@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/001.HttpAuthorizationRequestHeaderValidator
-    /// </summary
+    /// </summary>
     public class HttpAuthorizationRequestHeaderValidatorTests
     {
         private const string TestScheme = "http";

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli.DatabaseReaders;
 using Microsoft.CodeAnalysis.Sarif.Writers;
+using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
 {
@@ -52,7 +53,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 aggregatingLogger.Loggers.Add(sarifLogger);
 
                 aggregatingLogger.AnalysisStarted();
-                ISet<Skimmer<AnalyzeContext>> skimmers = AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, options.PluginFilePaths, run.Tool);
+                ISet<Skimmer<AnalyzeContext>> skimmers =
+                    AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(FileSystem, options.PluginFilePaths, run.Tool, RE2Regex.Instance);
 
                 var workers = new Task<bool>[options.Threads];
 

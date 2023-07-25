@@ -14,8 +14,10 @@ using System.Threading.Tasks;
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
+using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
 using Microsoft.CodeAnalysis.Sarif.Visitors;
 using Microsoft.CodeAnalysis.Sarif.Writers;
+using Microsoft.RE2.Managed;
 
 using Newtonsoft.Json;
 
@@ -35,7 +37,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             ISet<Skimmer<AnalyzeContext>> skimmers =
                 AnalyzeCommand.CreateSkimmersFromDefinitionsFiles(fileSystem,
                                                                   new string[] { regexDefinitionsPath },
-                                                                  tool);
+                                                                  tool,
+                                                                  IronRE2Regex.Instance);
             return skimmers;
         }
 
@@ -173,6 +176,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
                 using (context)
                 {
+                    ValidatorBase.RegexInstance = IronRE2Regex.Instance;
                     AnalyzeCommand.AnalyzeTargetHelper(context, skimmers, disabledSkimmers);
                 }
             }

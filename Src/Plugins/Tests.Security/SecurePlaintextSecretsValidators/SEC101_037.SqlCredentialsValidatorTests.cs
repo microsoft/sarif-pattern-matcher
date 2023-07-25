@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
+using Microsoft.RE2.Managed;
 
 using Xunit;
 
@@ -11,7 +12,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/037.SqlCredentialsValidator
-    /// </summary
+    /// </summary>
     public class SqlCredentialsValidatorTests
     {
         [Fact]
@@ -23,6 +24,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             var fingerprint = new Fingerprint(fingerprintText);
             var keyValuePairs = new Dictionary<string, string>();
 
+            ValidatorBase.RegexInstance = IronRE2Regex.Instance;
             var sqlCredentialsValidator = new SqlCredentialsValidator();
             ValidationState actualValidationState = sqlCredentialsValidator.IsValidDynamic(ref fingerprint,
                                                                                            ref message,

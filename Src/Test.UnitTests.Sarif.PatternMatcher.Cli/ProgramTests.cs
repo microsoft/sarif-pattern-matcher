@@ -105,8 +105,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                 "analyze-database",
                 "export-rules",
                 "export-search-definitions",
-                "import-analyze",
-                "stress",
+                "import-analyze"
             };
 
             actual.Should().BeEquivalentTo(expected);

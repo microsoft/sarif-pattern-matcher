@@ -33,10 +33,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         private static ConcurrentDictionary<Tuple<string, RegexOptions>, Regex> RegexCache { get; }
 
-        public static Regex GetOrCreateRegex(string expression, RegexOptions options)
+        public static Regex GetOrCreateRegex(string pattern, RegexOptions options)
         {
-            var key = Tuple.Create(expression, options);
-            return RegexCache.GetOrAdd(key, _ => new Regex(expression, options | RegexOptions.Compiled));
+            pattern = DotNetRegex.NormalizeGroupsPattern(pattern);
+            var key = Tuple.Create(pattern, options);
+            return RegexCache.GetOrAdd(key, _ => new Regex(pattern, options | RegexOptions.Compiled));
         }
 
         public bool IsMatch(FlexString input, string pattern, RegexOptions options = RegexOptions.None, TimeSpan timeout = default, string captureGroup = null)

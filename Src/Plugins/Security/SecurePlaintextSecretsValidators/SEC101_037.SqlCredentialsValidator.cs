@@ -14,8 +14,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     [ValidatorDescriptor("SEC101/037")]
     public class SqlCredentialsValidator : DynamicValidatorBase
     {
-        internal static IRegex RegexEngine;
-
         private const string ClientIPExpression = @"Client with IP address '[^']+' is not allowed to access the server.";
 
         private static readonly List<string> AzureHosts = new List<string>
@@ -29,23 +27,18 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 
         public SqlCredentialsValidator()
         {
-            RegexEngine = RE2Regex.Instance;
-
             // We perform this work in order to force caching of these
             // expressions (an operation which otherwise can cause
             // threading problems).
-            RegexEngine.Match(string.Empty, ClientIPExpression);
+            RegexInstance.Match(string.Empty, ClientIPExpression);
         }
 
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            if (!groups.TryGetNonEmptyValue("id", out FlexMatch id) ||
-                !groups.TryGetNonEmptyValue("host", out FlexMatch host) ||
-                !groups.TryGetNonEmptyValue("secret", out FlexMatch secret) ||
-                !groups.TryGetNonEmptyValue("resource", out FlexMatch resource))
-            {
-                return ValidationResult.CreateNoMatch();
-            }
+            FlexMatch id = groups[nameof(id)];
+            FlexMatch host = groups[nameof(host)];
+            FlexMatch secret = groups[nameof(secret)];
+            FlexMatch resource = groups[nameof(resource)];
 
             if (id.Length > 128 ||
                 host.Length > 128 ||
@@ -159,7 +152,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                             return ReturnUnknownHost(ref message, host);
                         }
 
-                        FlexMatch match = RegexEngine.Match(e.Message, ClientIPExpression);
+                        FlexMatch match = RegexInstance.Match(e.Message, ClientIPExpression);
                         if (match.Success)
                         {
                             message = match.Value;

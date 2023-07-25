@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
 {
     /// <summary>
     /// Testing SEC101/018.TwilioCredentialsValidator
-    /// </summary
+    /// </summary>
     public class TwilioCredentialsValidatorTests
     {
         [Fact]

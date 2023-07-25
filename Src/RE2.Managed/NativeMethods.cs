@@ -13,9 +13,10 @@ namespace Microsoft.RE2.Managed
     {
         static NativeMethods()
         {
+            string dllName = Environment.Is64BitProcess ? "RE2.Native.x64.dll" : "RE2.Native.x86.dll";
+
             if (Regex2.NativeLibraryFolderPath != null)
             {
-                string dllName = Environment.Is64BitProcess ? "RE2.Native.x64.dll" : "RE2.Native.x86.dll";
                 string filePath = Path.Combine(Regex2.NativeLibraryFolderPath, dllName);
 
                 if (File.Exists(filePath))
@@ -28,7 +29,6 @@ namespace Microsoft.RE2.Managed
                 string driverDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
                 // Load if next to this binary
-                string dllName = Environment.Is64BitProcess ? "RE2.Native.x64.dll" : "RE2.Native.x86.dll";
                 string dllAdjacent = Path.Combine(driverDirectory, dllName);
                 if (File.Exists(dllAdjacent))
                 {
@@ -36,7 +36,7 @@ namespace Microsoft.RE2.Managed
                 }
 
                 // Load if in runtimes subdirectory
-                string runtimeFolder = Environment.Is64BitProcess ? @"runtimes\win-x64\native" : @"runtimes\win-x86\native";
+                string runtimeFolder = Environment.Is64BitProcess ? @$"runtimes\win-x64\native" : @$"runtimes\win-x86\native";
                 string dllInRuntime = Path.Combine(driverDirectory, runtimeFolder, dllName);
                 if (File.Exists(dllInRuntime))
                 {
