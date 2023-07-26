@@ -23,7 +23,7 @@
 - DEP: Upgrade `Microsoft.Security.Utilities` from 6.2.1 to 6.5.0. [#788](https://github.com/microsoft/sarif-pattern-matcher/pull/788)
 - BRK: Replaced `MatchLengthToDecode` property of `MatchExpression` with new `Base64EncodingMatch` class to support detecting Base64 string from strings of specific length range. [#790](https://github.com/microsoft/sarif-pattern-matcher/pull/790)
 - FNC: Update `SEC101/041.RabbitMqCredentials` in `Security` to check loose credential combinations. [#788](https://github.com/microsoft/sarif-pattern-matcher/pull/788)
-- FND: Update dynamic analysis for `SEC101/044.NpmCredentials` to report credentials as unknown for generic uri.
+- FND: Update dynamic analysis for `SEC101/044.NpmCredentials` to report credentials as unknown for generic uri. [#797](https://github.com/microsoft/sarif-pattern-matcher/pull/797)
 - FPD: Removed dynamic analysis entirely for `SEC101/047.CratesApiKey` rule due to outdated validation always returning status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
 
 ## v4.5.7 6/28/2023
