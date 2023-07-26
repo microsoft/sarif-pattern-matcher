@@ -101,7 +101,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     responseWithNoCredentials.StatusCode == HttpStatusCode.NotFound ||
                     responseWithNoCredentials.StatusCode == HttpStatusCode.NonAuthoritativeInformation)
                 {
-                    return ValidationState.NoMatch;
+                    message = $"The Uri {uri} is generic, no way to validate teh credential with for account {id}";
+
+                    return ValidationState.Unknown;
                 }
 
                 string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
