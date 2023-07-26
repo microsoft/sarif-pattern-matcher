@@ -30,6 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string secret = "secret";
             string uri = $"https://{host}";
             using var requestWithNoCredentials = new HttpRequestMessage(HttpMethod.Get, uri);
+            const string unknownMessage = "The Uri https://host is generic, no way to validate teh credential with for account id";
 
             string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
 
@@ -58,24 +59,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
                     Title = "Endpoint does not require credential (OK status code)",
                     HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
                     HttpResponseMessages = new List<HttpResponseMessage>{ HttpMockHelper.OKResponse },
-                    ExpectedMessage = string.Empty,
-                    ExpectedValidationState = ValidationState.NoMatch,
+                    ExpectedMessage = unknownMessage,
+                    ExpectedValidationState = ValidationState.Unknown,
                 },
                 new HttpMockTestCase
                 {
                     Title = "Endpoint does not require credential (NotFound status code)",
                     HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
                     HttpResponseMessages = new List<HttpResponseMessage>{ HttpMockHelper.NotFoundResponse },
-                    ExpectedMessage = string.Empty,
-                    ExpectedValidationState = ValidationState.NoMatch,
+                    ExpectedMessage = unknownMessage,
+                    ExpectedValidationState = ValidationState.Unknown,
                 },
                 new HttpMockTestCase
                 {
                     Title = "Endpoint does not require credential (NonAuthoritativeInformation status code)",
                     HttpRequestMessages = new List<HttpRequestMessage>{ requestWithNoCredentials },
                     HttpResponseMessages = new List<HttpResponseMessage>{ HttpMockHelper.NonAuthoritativeInformationResponse },
-                    ExpectedMessage = string.Empty,
-                    ExpectedValidationState = ValidationState.NoMatch,
+                    ExpectedMessage = unknownMessage,
+                    ExpectedValidationState = ValidationState.Unknown,
                 },
                 new HttpMockTestCase
                 {
