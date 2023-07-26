@@ -18,6 +18,9 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## v4.3.18 (dev branch) 7/26/2023
+- BRK: Add a descriptor that tags a rule with its stable Id. Update validator retrieval logic to operate against stable rule Id rather than rule name.
+
 ## v4.3.17 (dev branch) 7/18/2023
 - BRK: Disable `SEC101/047.CratesApiKey`. Current dynamic validator returns status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys
 
