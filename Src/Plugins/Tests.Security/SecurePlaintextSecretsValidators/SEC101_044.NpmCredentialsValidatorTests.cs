@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Validator
             const string secret = "secret";
             string uri = $"https://{host}";
             using var requestWithNoCredentials = new HttpRequestMessage(HttpMethod.Get, uri);
-            const string unknownMessage = "The Uri https://host is generic, no way to validate teh credential with for account id";
+            const string unknownMessage = "The Uri https://host is generic, no way to validate the credential with for account id";
 
             string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", id, secret)));
 
