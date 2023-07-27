@@ -101,7 +101,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     responseWithNoCredentials.StatusCode == HttpStatusCode.NotFound ||
                     responseWithNoCredentials.StatusCode == HttpStatusCode.NonAuthoritativeInformation)
                 {
-                    message = $"The Uri {uri} is generic, no way to validate the credential with for account {id}";
+                    message = $"There is no way to validate the credential against the Uri {uri} for account {id}";
 
                     return ValidationState.Unknown;
                 }
