@@ -757,17 +757,40 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         private void RunMatchExpression(FlexMatch binary64DecodedMatch, AnalyzeContext context, MatchExpression matchExpression)
         {
             bool continueProcessing = false;
-            if (matchExpression.SniffLiterals?.Count > 0)
+            if (context.EnableSniffLiterals && matchExpression.SniffLiterals?.Count > 0)
             {
+                DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase0Sniff,
+                                                        context.CurrentTarget.Uri.GetFilePath(),
+                                                        matchExpression.Id,
+                                                        $"{matchExpression.Name}/{matchExpression.Index}",
+                                                        data1: null,
+                                                        data2: null);
+
                 foreach (string sniffLiteral in matchExpression.SniffLiterals)
                 {
-                    if (!string.IsNullOrEmpty(sniffLiteral) &&
-                        context.CurrentTarget.Contents.IndexOf(sniffLiteral, StringComparison.Ordinal) >= 0)
+                    if (!string.IsNullOrEmpty(sniffLiteral))
                     {
-                        continueProcessing = true;
-                        break;
+                        if (context.MatchedSniffLiterals.TryGetValue(sniffLiteral, out continueProcessing))
+                        {
+                            break;
+                        }
+
+                        continueProcessing = context.CurrentTarget.Contents.IndexOf(sniffLiteral, StringComparison.Ordinal) >= 0;
+                        context.MatchedSniffLiterals[sniffLiteral] = continueProcessing;
+
+                        if (continueProcessing)
+                        {
+                            break;
+                        }
                     }
                 }
+
+                DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Sniff,
+                                                        context.CurrentTarget.Uri.GetFilePath(),
+                                                        matchExpression.Id,
+                                                        $"{matchExpression.Name}/{matchExpression.Index}",
+                                                        data1: null,
+                                                        data2: null);
 
                 if (!continueProcessing) { return; }
             }
@@ -834,7 +857,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             var mergedGroups = new Dictionary<string, ISet<FlexMatch>>();
 
-            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase0Regex,
+            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase1Regex,
                                                     filePath,
                                                     matchExpression.Id,
                                                     $"{matchExpression.Name}/{matchExpression.Index}",
@@ -865,7 +888,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     }
 
                     sb?.Append(@$"{(sb.Length > 0 ? ", " : string.Empty)}{regex}");
-                    DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+                    DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1Regex,
                                                             filePath,
                                                             matchExpression.Id,
                                                             $"{matchExpression.Name}/{matchExpression.Index}",
@@ -878,7 +901,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 MergeDictionary(matches, mergedGroups);
             }
 
-            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1Regex,
                                                     filePath,
                                                     matchExpression.Id,
                                                     $"{matchExpression.Name}/{matchExpression.Index}",
@@ -925,7 +948,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             string filePath = context.CurrentTarget.Uri.GetFilePath();
 
-            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase0Regex,
+            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase1Regex,
                                                      filePath,
                                                      matchExpression.Id,
                                                      $"{matchExpression.Name}/{matchExpression.Index}",
@@ -937,7 +960,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                         out List<Dictionary<string, FlexMatch>> singleLineMatches,
                         context))
             {
-                DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+                DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1Regex,
                                                         filePath,
                                                         matchExpression.Id,
                                                         $"{matchExpression.Name}/{matchExpression.Index}",
@@ -946,7 +969,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 return;
             }
 
-            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1Regex,
                                                     filePath,
                                                     matchExpression.Id,
                                                     $"{matchExpression.Name}/{matchExpression.Index}",
@@ -969,7 +992,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     sb.Clear();
                 }
 
-                DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase0Regex,
+                DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase1Regex,
                                                          filePath,
                                                          matchExpression.Id,
                                                          $"{matchExpression.Name}/{matchExpression.Index}",
@@ -1010,7 +1033,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     }
 
                     sb?.Append(@$"{(sb.Length > 0 ? ", " : string.Empty)}{regex}");
-                    DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+                    DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1Regex,
                                                             filePath,
                                                             matchExpression.Id,
                                                             $"{matchExpression.Name}/{matchExpression.Index}",
@@ -1036,7 +1059,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 sb?.Append(@$"{(sb.Length > 0 ? ", " : string.Empty)}{regex}");
             }
 
-            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1Regex,
                                         filePath,
                                         matchExpression.Id,
                                         $"{matchExpression.Name}/{matchExpression.Index}",
@@ -1128,7 +1151,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                                    ? Decode(binary64DecodedMatch.Value).String
                                                    : context.CurrentTarget.Contents;
 
-            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase0Regex,
+            DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase1Regex,
                                                      filePath,
                                                      matchExpression.Id,
                                                      $"{matchExpression.Name}/{matchExpression.Index}",
@@ -1143,7 +1166,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                                    out List<Dictionary<string, FlexMatch>> matches,
                                    context);
 
-            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase0Regex,
+            DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1Regex,
                                                     filePath,
                                                     matchExpression.Id,
                                                     $"{matchExpression.Name}/{matchExpression.Index}",
