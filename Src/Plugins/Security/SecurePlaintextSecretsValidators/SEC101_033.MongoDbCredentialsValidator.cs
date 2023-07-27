@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Host = host.Value,
                     Secret = secret.Value,
                     Scheme = schema?.Value,
-                    Part = options?.Value,
+                    QueryString = options?.Value,
                 },
             };
 
