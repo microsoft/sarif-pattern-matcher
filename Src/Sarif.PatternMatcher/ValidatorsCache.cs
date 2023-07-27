@@ -182,7 +182,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // analysis that is simply looking for specific file kinds.
                 if (validationResult.Fingerprint == default && context.CurrentTarget.Uri.IsAbsoluteUri)
                 {
-                    string secret = HashUtilities.ComputeSha256Hash(context.CurrentTarget.Uri.GetFilePath());
+                    string secret = HashUtilities.ComputeSha256Hash(context.CurrentTarget.Uri.GetFilePath(), context.FileSystem);
 
                     // If we have no static analysis validator, the file itself
                     // is the sensitive asset, and so we will use the hash as the id.
@@ -204,7 +204,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 data1 = $"ObservedFingerPrintCache contains {context.ObservedFingerprintCache.Count} item(s)";
                 data2 = PackageGroupsForTelemetry(groups);
-                DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase1StaticValidation, filePath, ruleId, ruleName, data1, data2);
+                DriverEventSource.Log.RuleReserved1Start(SpamEventNames.RunRulePhase2StaticValidation, filePath, ruleId, ruleName, data1, data2);
             }
 
             IEnumerable<ValidationResult> validationResults = staticValidator.IsValidStatic(groups, context.ObservedFingerprintCache);
@@ -213,7 +213,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 data1 = $"{validationResults.Count()}";
                 data2 = PackageValidationResultsForTelemetry(validationResults);
-                DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase1StaticValidation, filePath, ruleId, ruleName, data1, data2);
+                DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.RunRulePhase2StaticValidation, filePath, ruleId, ruleName, data1, data2);
             }
 
             // An 'ExtensibleStaticValidatorBase' is a rule that extends DynamicValidatorBase
@@ -242,7 +242,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             {
                                 ValidationResult toSerialize = PackageValidationResultForTelemetry(validationResult);
                                 data1 = JsonConvert.SerializeObject(toSerialize);
-                                DriverEventSource.Log.RuleReserved1Start(SpamEventNames.Phase2DynamicValidation, filePath, ruleId, ruleName, data1, data2: null);
+                                DriverEventSource.Log.RuleReserved1Start(SpamEventNames.Phase3DynamicValidation, filePath, ruleId, ruleName, data1, data2: null);
                             }
 
                             validationResult.ValidationState = dynamicValidator.IsValidDynamic(ref fingerprint,
@@ -258,7 +258,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                             {
                                 ValidationResult toSerialize = PackageValidationResultForTelemetry(validationResult);
                                 data1 = JsonConvert.SerializeObject(toSerialize);
-                                DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.Phase2DynamicValidation, filePath, ruleId, ruleName, data1, data2: null);
+                                DriverEventSource.Log.RuleReserved1Stop(SpamEventNames.Phase3DynamicValidation, filePath, ruleId, ruleName, data1, data2: null);
                             }
                         }
                     }
