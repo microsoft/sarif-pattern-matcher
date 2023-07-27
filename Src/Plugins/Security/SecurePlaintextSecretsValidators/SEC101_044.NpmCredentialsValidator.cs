@@ -23,11 +23,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                 return ValidationResult.CreateNoMatch();
             }
 
-            if (!secret.Value.ToString().ContainsDigitAndLetter())
-            {
-                return ValidationResult.CreateNoMatch();
-            }
-
             groups.TryGetNonEmptyValue("id", out FlexMatch id);
             string user = id?.Value, password = secret.Value;
 
