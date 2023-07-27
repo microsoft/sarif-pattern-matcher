@@ -94,7 +94,7 @@ namespace Microsoft.RE2.Managed
             int lastUtf16Index = 0;
 
             int index = 0;
-            while (index < input.String8.Array.Length)
+            while (index < input.String8.Array?.Length == true)
             {
                 Match match = regex.Find(input.String8.Array, index);
                 if (!match.Matched) { yield break; }
@@ -125,7 +125,7 @@ namespace Microsoft.RE2.Managed
 
             int index = 0;
 
-            while (index < string8.Array.Length)
+            while (index < string8.Array?.Length == true)
             {
                 Captures capture = regex.Captures(string8.Array, index);
                 if (!capture.Matched) { break; }
