@@ -129,9 +129,14 @@
   $SEC101/038.PostgreSqlCredentialsAdoSecret=(?i)(?:password|pwd)\s*=\s*(?P<secret>[^,;"'<\s]{8,128})(?:[,;"'<\s]|$)
   $SEC101/038.PostgreSqlCredentialsAdoResource=(?i)(?:database|db|dbname)\s*=\s*(?P<resource>[^,;"'=|&\]\[><\s]+)(?:[,;"'=|&\]\[><\s]|$)
 
-  $SEC101/041.RabbitMqCredentials=(?i)amqps?:\/\/(?P<id>[^:"]+):(?P<secret>[^@\s]+)@(?P<host>[\w_\-\:]+)\/(?P<resource>[\w]+)(?:[^0-9a-z]|$)
+  $SEC101/041.RabbitMqCredentials=(?i)amqps?:\/\/(?P<id>[^:"]+):(?P<secret>[^@\s]+)@(?P<host>[\w_-]+)(?::?(?P<port>[0-9]{4,5}))?\/(?P<resource>[\w]+)?(?:[^0-9a-z]|$)
+  $SEC101/041.RabbitMqCredentialsHost=(?i)rabbitmq[-_\s]?host[\s,:='"]+(?:value?[\s,:='"]+)?(?P<host>[.\w_-]+)
+  $SEC101/041.RabbitMqCredentialsPort=(?i)rabbitmq[-_\s]?port[\s,:='"]+(?:value?[\s,:='"]+)?(?P<port>[0-9]{4,5})(?:[^0-9]|$)
+  $SEC101/041.RabbitMqCredentialsUser=(?i)rabbitmq[-_\s]?user(?:name)?[\s,:='"]+(?:value?[\s,:='"]+)?(?P<id>[0-9a-z._-]+)(?:[^0-9a-z._-]|$)
+  $SEC101/041.RabbitMqCredentialsPassword=(?i)rabbitmq[-_\s]?password[\s,:='"]+(?:value?[\s,:='"]+)?(?P<secret>[^,:='"]+)(?:[,:='"]|$)
+  $SEC101/041.RabbitMqCredentialsVirtualHost=(?i)rabbitmq[-_\s]?v(irtual)?host[\s,:='"]+(?:value?[\s,:='"]+)?(?P<resource>[^;,"<'\s]+)(?:[;,"<'\s]|$)
   $SEC101/043.NuGetPackageSourceCredentialsXml=(?i)(?P<host><\s*packageSources\s*>(?s).{0,500}?(?-s)<\\?\/packageSources\s*>)(?s).{0,200}?(?-s)[^\/](?P<secret><\s*packageSourceCredentials\s*>(?s).{0,500}?(?-s)<\\?\/packageSourceCredentials\s*>)
-   
+ 
   $SEC101/044.NpmCredentialsRegistry=(?i)(registry\s*=\s*|-r\s+)https:\/\/(?P<host>\S+)(?:\s|$)
   $SEC101/044.NpmCredentialsAuth=(?i)_auth(Token)?\s*=\s*(?P<secret>[0-9A-Za-z\/+]+[=]{0,2})(?:[^0-9A-Za-z\/+]|$)
   $SEC101/044.NpmCredentialsUser=(?i)(?:(?:email|user(name)?)\s*=\s*|-u\s+)(?-i)(?P<id>\S+)(?:\s|$)
