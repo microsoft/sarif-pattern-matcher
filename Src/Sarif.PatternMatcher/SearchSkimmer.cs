@@ -768,20 +768,23 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
                 foreach (string sniffLiteral in matchExpression.SniffLiterals)
                 {
-                    if (!string.IsNullOrEmpty(sniffLiteral))
+                    if (string.IsNullOrEmpty(sniffLiteral))
                     {
-                        if (context.MatchedSniffLiterals.TryGetValue(sniffLiteral, out continueProcessing))
-                        {
-                            break;
-                        }
+                        continueProcessing = true;
+                        break;
+                    }
 
-                        continueProcessing = context.CurrentTarget.Contents.IndexOf(sniffLiteral, StringComparison.Ordinal) >= 0;
-                        context.MatchedSniffLiterals[sniffLiteral] = continueProcessing;
+                    if (context.MatchedSniffLiterals.TryGetValue(sniffLiteral, out continueProcessing))
+                    {
+                        break;
+                    }
 
-                        if (continueProcessing)
-                        {
-                            break;
-                        }
+                    continueProcessing = context.CurrentTarget.Contents.IndexOf(sniffLiteral, StringComparison.Ordinal) >= 0;
+                    context.MatchedSniffLiterals[sniffLiteral] = continueProcessing;
+
+                    if (continueProcessing)
+                    {
+                        break;
                     }
                 }
 

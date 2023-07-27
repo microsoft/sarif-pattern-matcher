@@ -189,7 +189,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 // analysis that is simply looking for specific file kinds.
                 if (validationResult.Fingerprint == default && context.CurrentTarget.Uri.IsAbsoluteUri)
                 {
-                    string secret = HashUtilities.ComputeSha256Hash(context.CurrentTarget.Uri.GetFilePath());
+                    string secret = HashUtilities.ComputeSha256Hash(context.CurrentTarget.Uri.GetFilePath(), context.FileSystem);
 
                     // If we have no static analysis validator, the file itself
                     // is the sensitive asset, and so we will use the hash as the id.

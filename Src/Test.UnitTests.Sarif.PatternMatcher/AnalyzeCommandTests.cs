@@ -54,11 +54,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         [Fact]
         public void AnalyzeCommand_SniffLiterals()
         {
-            string contentsRegex = "foo";
+            string contents = "foo";
+            string contentsRegex = $"(?P<secret>{contents})";
 
             foreach (bool enableSniffLiterals in new[] { true, false })
             {
-                foreach (string sniffLiteral in new[] { "foo", "", $"{Guid.NewGuid()}", null })
+                string sniffThatFilters = $"{Guid.NewGuid()}";
+                foreach (string sniffLiteral in new[] { "foo", "", sniffThatFilters, null })
                 {
                     var definitions = new SearchDefinitions()
                     {
@@ -94,8 +96,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     mockFileSystem.Setup(x => x.FileReadAllText(searchDefinitionsPath)).Returns(definitionsText);
 
                     string scanTargetFileName = Path.Combine(@"C:\", Guid.NewGuid().ToString() + ".test");
-                    FlexString fileContents = $"{Guid.NewGuid} {contentsRegex} {contentsRegex}";
+                    FlexString fileContents = $"{Guid.NewGuid} {contents} {contents}";
                     FlexString fixedFileContents = $" {Guid.NewGuid} {Guid.NewGuid} {Guid.NewGuid} ";
+
+                    var stream = new MemoryStream(Encoding.Unicode.GetBytes(fileContents));
+                    stream.Position = 0;
+                    mockFileSystem.Setup(x => x.FileOpenRead(scanTargetFileName)).Returns(stream);
 
                     var target = new EnumeratedArtifact(FileSystem.Instance)
                     {
@@ -119,7 +125,9 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     int result = analyzeCommand.Run(options, ref context);
                     context.ValidateCommandExecution(result);
 
-                    int resultCount = sniffLiteral != contentsRegex ? 0 : 2;
+                    int resultCount = !enableSniffLiterals
+                        ? 2
+                        : sniffLiteral == sniffThatFilters ? 0 : 2;
 
                     if (resultCount > 0 || !enableSniffLiterals)
                     {
