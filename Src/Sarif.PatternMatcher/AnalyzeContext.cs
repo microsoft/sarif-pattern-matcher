@@ -23,6 +23,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
             // Here is our default name/extension filter.
             GlobalFilePathDenyRegex = "(?i)\\.(?:bmp|dll|exe|gif|jpe?g|lock|pack|png|psd|tar\\.gz|tiff?|ttf|xcf|zip)$";
+
+            MatchedSniffLiterals = new Dictionary<string, bool>();
         }
 
         public bool RedactSecrets
@@ -30,6 +32,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             get => this.Policy.GetProperty(RedactSecretsProperty);
             set => this.Policy.SetProperty(RedactSecretsProperty, value);
         }
+
+        public IDictionary<string, bool> MatchedSniffLiterals { get; set; }
 
         public IEnumerable<Skimmer<AnalyzeContext>> Skimmers { get; set; }
 
@@ -71,6 +75,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
         {
             get => this.Policy.GetProperty(EnhancedReportingProperty);
             set => this.Policy.SetProperty(EnhancedReportingProperty, value);
+        }
+
+        public bool EnableSniffLiterals
+        {
+            get => this.Policy.GetProperty(EnableSniffLiteralsProperty);
+            set => this.Policy.SetProperty(EnableSniffLiteralsProperty, value);
         }
 
         public bool Retry
@@ -126,6 +136,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             new PerLanguageOption<bool>(
                 "CoreSettings", nameof(EnhancedReporting), defaultValue: () => false,
                 "Specifies whether to enhance findings with asset ownership details.");
+
+        public static PerLanguageOption<bool> EnableSniffLiteralsProperty =>
+            new PerLanguageOption<bool>(
+                "CoreSettings", nameof(EnableSniffLiterals), defaultValue: () => true,
+                "Specifies whether to enable IndexOf and other high-performance pre-checks before invoking regex engines.");
 
         public static PerLanguageOption<bool> DisableDynamicValidationCachingProperty =>
             new PerLanguageOption<bool>(

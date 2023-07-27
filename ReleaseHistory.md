@@ -24,6 +24,7 @@
 - BRK: Replaced `MatchLengthToDecode` property of `MatchExpression` with new `Base64EncodingMatch` class to support detecting Base64 string from strings of specific length range. [#790](https://github.com/microsoft/sarif-pattern-matcher/pull/790)
 - FNC: Update `SEC101/041.RabbitMqCredentials` in `Security` to check loose credential combinations. [#788](https://github.com/microsoft/sarif-pattern-matcher/pull/788)
 - FPD: Removed dynamic analysis entirely for `SEC101/047.CratesApiKey` rule due to outdated validation always returning status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
+- NEW: Add pre-regex file `sniff` to decide whether to run match expressions.
 
 ## v4.5.7 6/28/2023
 - DEP: Update SARIF SDK submodule from [a7029a3 to 7e8def7(https://github.com/microsoft/sarif-sdk/compare/a7029a3..7e8def7). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/7e8def7/ReleaseHistory.md).
