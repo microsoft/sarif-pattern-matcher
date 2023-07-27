@@ -48,5 +48,24 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security.Utilities
 
             return true;
         }
+
+        public static bool PasswordIsInCommonVariableContext(string secret)
+        {
+            var passwordContextList = new List<Tuple<string, string>>
+            {
+                new Tuple<string, string>("{", "}"),
+                new Tuple<string, string>("$(", ")"),
+            };
+
+            foreach (Tuple<string, string> tuplePair in passwordContextList)
+            {
+                if (secret.StartsWith(tuplePair.Item1))
+                {
+                    return secret.EndsWith(tuplePair.Item2);
+                }
+            }
+
+            return false;
+        }
     }
 }
