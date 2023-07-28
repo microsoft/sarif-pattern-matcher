@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public sealed class SpamEventNames
@@ -14,21 +12,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 
         public const string RunRule = nameof(RunRule);
 
-        public const string Phase0Regex = "Phase0-Regex";
-        public const string Phase1StaticValidation = "Phase1-StaticValidation";
-        public const string Phase2DynamicValidation = "Phase2-DynamicValidation";
+        public const string Phase0Sniff = "Phase0-Sniff";
+        public const string Phase1Regex = "Phase1-Regex";
+        public const string Phase2StaticValidation = "Phase2-StaticValidation";
+        public const string Phase3DynamicValidation = "Phase3-DynamicValidation";
 
-        public const string RunRulePhase0Regex = $"{RunRule}/{Phase0Regex}";
-        public const string RunRulePhase0RegexStop = $"{RunRulePhase0Regex}/Stop";
-        public const string RunRulePhase0RegexStart = $"{RunRulePhase0Regex}/Start";
-
-        public const string RunRulePhase1StaticValidation = $"{RunRule}/{Phase1StaticValidation}";
-        public const string RunRulePhase1StaticValidationStop = $"{RunRulePhase1StaticValidation}/Stop";
-        public const string RunRulePhase1StaticValidationStart = $"{RunRulePhase1StaticValidation}/Start";
-
-        public const string RunRulePhase2DynamicValidation = $"{RunRule}/{Phase2DynamicValidation}";
-        public const string RunRulePhase2DynamicValidationStop = $"{RunRulePhase2DynamicValidation}/Stop";
-        public const string RunRulePhase2DynamicValidationStart = $"{RunRulePhase2DynamicValidation}/Start";
+        public const string RunRulePhase0Sniff = $"{RunRule}/{Phase0Sniff}";
+        public const string RunRulePhase1Regex = $"{RunRule}/{Phase1Regex}";
+        public const string RunRulePhase2StaticValidation = $"{RunRule}/{Phase2StaticValidation}";
+        public const string RunRulePhase3DynamicValidation = $"{RunRule}/{Phase3DynamicValidation}";
 
         // Reasons for various filtering conditions.
         public const string ContentsSniffNoMatch = nameof(ContentsSniffNoMatch);

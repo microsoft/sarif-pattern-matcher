@@ -380,7 +380,6 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             }
 
             ValidatorBase.RegexInstance = GetRegexEngine(context.RegexEngine);
-            context.PluginFilePaths = options.PluginFilePaths.Any() ? new StringSet(options.PluginFilePaths) : context.PluginFilePaths;
             return context;
         }
 
