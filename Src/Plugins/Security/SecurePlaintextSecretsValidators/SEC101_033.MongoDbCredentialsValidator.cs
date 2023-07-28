@@ -16,10 +16,10 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
     {
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
-            groups.TryGetValue("id", out FlexMatch id);
-            groups.TryGetValue("host", out FlexMatch host);
-            groups.TryGetValue("secret", out FlexMatch secret);
-            groups.TryGetValue("schema", out FlexMatch schema);
+            FlexMatch id = groups["id"];
+            FlexMatch host = groups["host"];
+            FlexMatch secret = groups["secret"];
+            FlexMatch protocol = groups["protocol"];
             groups.TryGetValue("options", out FlexMatch options);
 
             var validationResult = new ValidationResult
@@ -29,7 +29,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
                     Id = id.Value,
                     Host = host.Value,
                     Secret = secret.Value,
-                    Scheme = schema?.Value,
+                    Scheme = protocol.Value,
                     QueryString = options?.Value,
                 },
             };
@@ -45,12 +45,12 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
             string id = fingerprint.Id;
             string host = fingerprint.Host;
             string password = fingerprint.Secret;
-            string scheme = fingerprint.Scheme;
+            string protocol = fingerprint.Scheme;
             string queryString = fingerprint.QueryString;
 
             try
             {
-                string connectionString = $"mongodb{scheme}://{id}:{password}@{host}";
+                string connectionString = $"{protocol}://{id}:{password}@{host}";
 
                 string timeoutOption = "serverSelectionTimeoutMS=3000&connectTimeoutMS=3000&socketTimeoutMS=3000";
 
