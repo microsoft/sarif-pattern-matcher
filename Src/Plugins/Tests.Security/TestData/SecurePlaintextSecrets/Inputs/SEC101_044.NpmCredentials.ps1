@@ -39,22 +39,21 @@ username=user3
 ************************************************************
 ************************************************************
 
-# invalid password example
-registry=https://registry.npmjs.org
-always-auth=true
-username=user2
-_password=invalid_password1
-
-************************************************************
-************************************************************
-************************************************************
-************************************************************
-
-# invalid password example (password should have a number)
 registry=https://registry.npmjs.org
 always-auth=true
 _password=passwordwithoutnumbers
 username=user3
+
+
+************************************************************
+************************************************************
+************************************************************
+************************************************************
+
+registry=https://registry.npmjs.org
+always-auth=true
+username=user2
+_password=valid_password1
 
 ************************************************************
 ************************************************************
@@ -69,5 +68,4 @@ npm login -r https://registry.npmjs.org -u user4 -p deadcGFzc3dvcmQy
 ************************************************************
 ************************************************************
 
-# invalid password example as command line
 npm login -r https://registry.npmjs.org -u user5 -p passwordwithoutnumbers

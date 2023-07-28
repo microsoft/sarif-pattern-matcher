@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
+    [ValidatorDescriptor("SEC101/004")]
     public class FacebookAppCredentialsValidator : DynamicValidatorBase
     {
         internal const string AccountInformationUri = "https://graph.facebook.com/{0}?access_token={1}";

@@ -1098,7 +1098,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 string filePath = context.CurrentTarget.Uri.GetFilePath();
                 string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
-                IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Id,
+                IEnumerable<ValidationResult> validationResults = _validators.Validate(matchExpression.Id,
                                                                                        ruleName,
                                                                                        context,
                                                                                        mergedGroups,
@@ -1218,7 +1218,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                 if (_validators != null && matchExpression.IsValidatorEnabled)
                 {
                     string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
-                    IEnumerable<ValidationResult> validationResults = _validators.Validate(this.Id,
+                    IEnumerable<ValidationResult> validationResults = _validators.Validate(reportingDescriptor.Id,
                                                                                            ruleName,
                                                                                            context,
                                                                                            match,
@@ -1430,7 +1430,7 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             {
                 groups["scanTargetFullPath"] = new FlexMatch() { Value = filePath };
                 string ruleName = matchExpression.Name ?? reportingDescriptor.Name;
-                IEnumerable<ValidationResult> validationResults = _validators.Validate(this.Id,
+                IEnumerable<ValidationResult> validationResults = _validators.Validate(matchExpression.Id,
                                                                                        ruleName,
                                                                                        context,
                                                                                        groups,

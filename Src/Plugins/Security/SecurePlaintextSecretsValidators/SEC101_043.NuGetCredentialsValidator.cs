@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -16,6 +16,7 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
+    [ValidatorDescriptor("SEC101/043")]
     public class NuGetCredentialsValidator : DynamicValidatorBase
     {
         internal const string RandomGuid = "05C89BF5-9DF2-4F8C-8F93-FF3EF66E643D";

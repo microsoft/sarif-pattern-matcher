@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -15,6 +15,7 @@ using Org.BouncyCastle.Bcpg.OpenPgp;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
+    [ValidatorDescriptor("SEC101/013")]
     public class CryptographicPrivateKeyValidator : StaticValidatorBase
     {
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -13,6 +13,7 @@ using MySqlConnector;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Plugins.Security
 {
+    [ValidatorDescriptor("SEC101/036")]
     public class MySqlCredentialsValidator : DynamicValidatorBase
     {
         private static readonly HashSet<string> HostsToExclude = new HashSet<string>
