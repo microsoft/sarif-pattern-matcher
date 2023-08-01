@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\targets\build.app.props" />
+  
+  <PropertyGroup>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Benchmark</RootNamespace>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+    <PackageReference Include="Moq" Version="4.18.4" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
+    
+    <Compile Include="$(MSBuildThisFileDirectory)..\Test.UnitTests.Sarif.PatternMatcher\TestAnalyzeCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\Test.UnitTests.Sarif.PatternMatcher\TestLogger.cs" />
+  </ItemGroup>
+
+</Project>
