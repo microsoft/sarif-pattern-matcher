@@ -392,6 +392,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
                     break;
                 }
 
+                case ValidationState.TruePositiveDeterminedByML:
+                {
+                    level = FailureLevel.Error;
+
+                    validationPrefix = "a valid ";
+                    validationSuffix = ", the likelihood of validity was determined by a machine learning model.";
+                    break;
+                }
+
                 default:
                 {
                     throw new InvalidOperationException($"Unrecognized validation value '{state}'.");

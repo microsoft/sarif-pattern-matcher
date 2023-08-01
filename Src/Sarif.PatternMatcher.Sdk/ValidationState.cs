@@ -65,5 +65,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
         /// The result should be reported as an error.
         /// </summary>
         Authorized,
+
+        /// <summary>
+        /// Pattern is a match and the secret is valid
+        /// per a trained machine learning model.
+        /// </summary>
+        TruePositiveDeterminedByML,
     }
 }

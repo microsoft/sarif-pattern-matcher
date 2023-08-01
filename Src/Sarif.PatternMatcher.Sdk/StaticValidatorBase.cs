@@ -3,8 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 using Microsoft.RE2.Managed;
+
+using static System.Collections.Specialized.BitVector32;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
 {
@@ -89,6 +97,59 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk
             };
 
             return new[] { validationResult };
+        }
+
+        /// <summary>
+        /// Leverages a machine learning model to determine whether a secret is valid.
+        /// </summary>
+        /// <param name="secret">Target secret whose validity needs to be determined.</param>
+        /// <param name="modelPath">Path to the trained ONNX model.</param>
+        /// <param name="characterMapPath">Path to the character-to-integer generated during model training.</param>
+        /// <param name="dimension">Dimension of the vector into which the input string is embedded.</param>
+        /// <param name="threshold">The value above which the prediction is deemed to be in the positive class.</param>
+        /// <returns>TRUE if the predicted probability exceeds the threshold, FALSE otherwise.</returns>
+        protected virtual bool IsValidMLHelper(string secret, string modelPath, string characterMapPath, int dimension = 32, double threshold = 0.5)
+        {
+            string json = File.ReadAllText(characterMapPath);
+            Dictionary<string, int> characterMap = JsonSerializer.Deserialize<Dictionary<string, int>>(json);
+
+            var session = new InferenceSession(modelPath);
+
+            // vectorize the secret
+            int idx = 0;
+            int[] vector = new int[dimension];
+
+            if (secret.Length >= 7 && secret.Length <= dimension)
+            {
+                while (idx < secret.Length && idx < dimension)
+                {
+                    vector[idx] = characterMap.ContainsKey(secret[idx].ToString()) ? characterMap[secret[idx].ToString()] : 1;
+                    idx++;
+                }
+            }
+
+            while (idx < dimension)
+            {
+                vector[idx] = 0;
+                idx++;
+            }
+
+            // create input tensor
+            var inputTensor = new DenseTensor<int>(vector, new int[] { 1, dimension });
+            var input = new List<NamedOnnxValue> { NamedOnnxValue.CreateFromTensor<int>("input", inputTensor) };
+
+            // perform inference and gather the prediction probability
+            IDisposableReadOnlyCollection<DisposableNamedOnnxValue> output = session.Run(input);
+            float[] predictionProbability = output.First().AsTensor<float>().ToArray();
+
+            if (predictionProbability[0] > threshold)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
