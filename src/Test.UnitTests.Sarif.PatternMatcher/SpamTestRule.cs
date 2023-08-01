@@ -8,14 +8,12 @@ using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Threading;
-using System.Threading.Tasks;
 
 using FluentAssertions;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.Driver.Sdk;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher;
-using Microsoft.CodeAnalysis.Test.Utilities.Sarif;
 
 namespace Microsoft.CodeAnalysis.Sarif
 {
@@ -39,7 +37,7 @@ namespace Microsoft.CodeAnalysis.Sarif
             }
         }
 
-        private const string TestRuleId = "TEST1001";
+        internal const string TestRuleId = "TEST1001";
 
         protected override ResourceManager ResourceManager => SkimmerBaseTestResources.ResourceManager;
 

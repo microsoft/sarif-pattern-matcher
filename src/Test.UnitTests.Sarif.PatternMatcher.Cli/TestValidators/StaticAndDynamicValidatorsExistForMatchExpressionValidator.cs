@@ -8,8 +8,11 @@ using Microsoft.RE2.Managed;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli.TestValidators
 {
+    [ValidatorDescriptor(Id)]
     internal class StaticAndDynamicValidatorsExistForMatchExpressionValidator : DynamicValidatorBase
     {
+        internal const string Id = "TEST001/003";
+
         protected override IEnumerable<ValidationResult> IsValidStaticHelper(IDictionary<string, FlexMatch> groups)
         {
             string secret = groups["0"].Value;

@@ -11,6 +11,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
     {
         public IList<RegexMetadata> RegexMetadata { get; set; }
 
+        public List<string> SniffLiterals { get; set; }
+
         public IList<string> IntrafileRegexes { get; set; }
 
         public IList<string> SingleLineRegexes { get; set; }

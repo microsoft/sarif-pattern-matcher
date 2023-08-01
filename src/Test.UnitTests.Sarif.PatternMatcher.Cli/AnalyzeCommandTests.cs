@@ -634,6 +634,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                       definitionsText;
                 });
 
+            mockFileSystem.Setup(x => x.FileOpenRead(scanTargetPath)).Returns(new MemoryStream(Encoding.Unicode.GetBytes(fileContents)));
+
             // Shared strings location and loading
             mockFileSystem.Setup(x => x.FileReadAllLines(It.IsAny<string>()))
                 .Returns<string>((path) => { return GetSharedStrings(); });
