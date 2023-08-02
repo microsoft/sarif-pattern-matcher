@@ -158,9 +158,15 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                 $" | {match.DeprecatedName ?? "-"}" :
                                 string.Empty;
 
-                            Type validatorType = staticValidator.GetType();
-                            MethodInfo mi = validatorType.GetMethod("get_DynamicAnalysisImplemented");
-                            bool implementsValidation = (bool)mi.Invoke(staticValidator, new object[] { });
+
+                            bool implementsValidation = false;
+
+                            if (staticValidator is DynamicValidatorBase)
+                            {
+                                Type validatorType = staticValidator.GetType();
+                                MethodInfo mi = validatorType.GetMethod("get_DynamicAnalysisImplemented");
+                                implementsValidation = (bool)mi.Invoke(staticValidator, new object[] { });
+                            }
 
                             builder.AppendLine($"{match.Id} | " +
                                                $"{match.Name} | " +
