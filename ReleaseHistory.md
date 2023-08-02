@@ -24,7 +24,9 @@
 ## v4.6.0 7/27/2023
 - DEP: Update SARIF SDK submodule from [7e8def7 to dd3741f(https://github.com/microsoft/sarif-sdk/compare/7e8def7..dd3741f). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd3741f/ReleaseHistory.md).
 - DEP: Upgrade `Microsoft.Security.Utilities` from 6.2.1 to 6.5.0. [#788](https://github.com/microsoft/sarif-pattern-matcher/pull/788)
+- DEP: Add package `MongoDB.Driver` 2.20.0. [#789](https://github.com/microsoft/sarif-pattern-matcher/pull/789)
 - BRK: Replaced `MatchLengthToDecode` property of `MatchExpression` with new `Base64EncodingMatch` class to support detecting Base64 string from strings of specific length range. [#790](https://github.com/microsoft/sarif-pattern-matcher/pull/790)
+- BRK: Re-enable `SEC101/033.MongoDbCredentials` in `Security`. [#789](https://github.com/microsoft/sarif-pattern-matcher/pull/789)
 - FNC: Update `SEC101/041.RabbitMqCredentials` in `Security` to check loose credential combinations. [#788](https://github.com/microsoft/sarif-pattern-matcher/pull/788)
 - FND: Remove the secret format assumption that it must contain both digits and letters in static validation for rule `SEC101/044.NpmCredentials` in `Security`. [#799](https://github.com/microsoft/sarif-pattern-matcher/pull/799)
 - FPD: Removed dynamic analysis entirely for `SEC101/047.CratesApiKey` rule due to outdated validation always returning status code 200 to all tokens. No API endpoint seems to return different status codes to distinguish between valid and invalid API keys. [#786](https://github.com/microsoft/sarif-pattern-matcher/pull/786)
