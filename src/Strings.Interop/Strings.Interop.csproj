@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\targets\build.lib.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\targets\build.product.props" />
+  <PropertyGroup Label="AssemblyAttributes">
+    <AssemblyTitle>String8 Library</AssemblyTitle>
+    <Description>Specialized types for seamless handling of UTF8 and UTF16 strings.</Description>
+    <RootNamespace>Microsoft.Strings.Interop</RootNamespace>
+    <Product>Microsoft Strings Interop</Product>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>
