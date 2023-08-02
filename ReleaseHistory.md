@@ -18,6 +18,9 @@
 - UER => Eliminate unhandled exceptions in rule.
 - UEE => Eliminate unhandled exceptions in engine.
 
+## UNRELEASED
+- NEW: Add Linux And macOS build pipeline, Rename folder `Src` to `src`, `Scripts` to `scripts`, `Targets` to `targets`. [#787](https://github.com/microsoft/sarif-pattern-matcher/pull/787)
+
 ## v4.6.0 7/27/2023
 - DEP: Update SARIF SDK submodule from [7e8def7 to dd3741f(https://github.com/microsoft/sarif-sdk/compare/7e8def7..dd3741f). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd3741f/ReleaseHistory.md).
 - DEP: Upgrade `Microsoft.Security.Utilities` from 6.2.1 to 6.5.0. [#788](https://github.com/microsoft/sarif-pattern-matcher/pull/788)

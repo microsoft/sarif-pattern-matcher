@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\targets\build.common.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\targets\build.product.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\targets\build.plugins.props" />
+
+  <PropertyGroup Label="AssemblyAttributes">
+    <TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RootNamespace>$(RootNamespaceBase).Sarif.PatternMatcher.Plugins.Security</RootNamespace>
+    <PackageId>Sarif.PatternMatcher.Security</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="build\Sarif.PatternMatcher.Security.targets">
+      <PackagePath>build\</PackagePath>
+    </Content>
+    <Content Include="Security.SharedStrings.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BouncyCastle.Cryptography" Version="2.2.1" />
+    <PackageReference Include="Microsoft.Security.Utilities" Version="1.4.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.20.0" />
+    <PackageReference Include="MySqlConnector" Version="1.2.1" />
+    <PackageReference Include="Npgsql" Version="5.0.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Text.Json" Version="5.0.1" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Sarif.PatternMatcher.Sdk\Sarif.PatternMatcher.Sdk.csproj" />
+  </ItemGroup>
+
+  <Target Name="GetMyPackageFiles">
+    <ItemGroup>
+    </ItemGroup>
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);GetMyPackageFiles</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
+  <Target Name="CopyingSecurityToSpam" AfterTargets="Build">
+
+    <ItemGroup>
+      <SecurityFile Include="$(OutputPath)Security.dll" />
+      <SpamFiles Include="$(MSBuildThisFileDirectory)*.json" />
+      <SdkFile Include="$(OutputPath)Sarif.PatternMatcher.Sdk.dll" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(SdkFile)" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" ContinueOnError="true" />
+    <Copy SourceFiles="@(SpamFiles)" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(SecurityFile)" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" ContinueOnError="true" />
+    <Copy SourceFiles="Security.SharedStrings.txt" DestinationFolder="$(SolutionDir).spam\Security\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+  </Target>
+</Project>
