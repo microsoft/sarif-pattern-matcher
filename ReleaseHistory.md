@@ -20,8 +20,9 @@
 
 ## v4.5.2 Unreleased
 - DEP: Update SARIF SDK submodule from [dd8b7b8 to a7029a3](https://github.com/microsoft/sarif-sdk/compare/dd8b7b8..a7029a3). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/a7029a3/ReleaseHistory.md). SDK v4.2.0.
-- RRR: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
 - DEP: Remove `AWSSDK.IdentityManagement` from `Security`.
+- RRR: Update `SEC101/008.AwsCredentials` in `Security` validating AWS credentials using HTTP requests.
+- BUG: Fix logic in `export-rules` to correctly determine whether dynamic validation is implemented. [#804](https://github.com/microsoft/sarif-pattern-matcher/pull/804)
 
 ## v4.5.1 5/31/2023
 - DEP: Update SARIF SDK submodule from [441fa8b to dd8b7b8](https://github.com/microsoft/sarif-sdk/compare/441fa8b..dd8b7b8). [Full SARIF SDK release history](https://github.com/microsoft/sarif-sdk/blob/dd8b7b8/ReleaseHistory.md). Additional eventing work.
