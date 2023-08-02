@@ -28,13 +28,19 @@
     <ProjectReference Include="..\sarif-sdk\src\Sarif.Multitool.Library\Sarif.Multitool.Library.csproj" />
     <ProjectReference Include="..\Sarif.PatternMatcher\Sarif.PatternMatcher.csproj" />
   </ItemGroup>
-
+  
   <PropertyGroup>
    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   </PropertyGroup>
 
 <Target Name="GetMyPackageFiles">
 </Target>
+
+<ItemGroup>
+  <None Update="..\..\Configurations\security-oss.xml">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
 
   <ItemGroup>
     <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1">
