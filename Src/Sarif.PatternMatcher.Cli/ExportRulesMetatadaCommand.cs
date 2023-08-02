@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
@@ -157,9 +158,13 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher.Cli
                                 $" | {match.DeprecatedName ?? "-"}" :
                                 string.Empty;
 
+                            Type validatorType = staticValidator.GetType();
+                            MethodInfo mi = validatorType.GetMethod("get_DynamicAnalysisImplemented");
+                            bool implementsValidation = (bool)mi.Invoke(staticValidator, new object[] { });
+
                             builder.AppendLine($"{match.Id} | " +
                                                $"{match.Name} | " +
-                                               $"{(staticValidator is DynamicValidatorBase ? "Y" : "-")}" +
+                                               $"{(implementsValidation ? "Y" : "-")}" +
                                                deprecatedNameContent);
 
                             hash.Add(key);
