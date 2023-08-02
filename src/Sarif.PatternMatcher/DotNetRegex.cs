@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO.IsolatedStorage;
 using System.Text.RegularExpressions;
 
 using Microsoft.RE2.Managed;

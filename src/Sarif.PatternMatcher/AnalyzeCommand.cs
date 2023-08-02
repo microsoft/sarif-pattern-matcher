@@ -6,7 +6,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
+using System.Text;
 using System.Threading;
+using System.Xml;
 
 using Microsoft.CodeAnalysis.Sarif.Driver;
 using Microsoft.CodeAnalysis.Sarif.PatternMatcher.Sdk;
@@ -20,6 +24,8 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {
     public class AnalyzeCommand : MultithreadedAnalyzeCommandBase<AnalyzeContext, AnalyzeOptions>
     {
+        private ResourceManager _resourceManager;
+
         public AnalyzeCommand(IFileSystem fileSystem = null)
             : base(fileSystem)
         {
@@ -179,6 +185,11 @@ namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
             if (!string.IsNullOrWhiteSpace(context.SniffRegex))
             {
                 Console.WriteLine($"{AnalyzeContext.FilesFilteredBySniffRegex} file(s) were skipped due to not matching global sniff regex.");
+            }
+
+            if (!string.IsNullOrEmpty(context.OutputConfigurationFilePath))
+            {
+                context.Policy.SaveToXml(context.OutputConfigurationFilePath);
             }
         }
 

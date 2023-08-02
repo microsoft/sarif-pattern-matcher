@@ -27,7 +27,6 @@ using Moq;
 using Newtonsoft.Json;
 
 using Xunit;
-using Xunit.Sdk;
 
 namespace Microsoft.CodeAnalysis.Sarif.PatternMatcher
 {

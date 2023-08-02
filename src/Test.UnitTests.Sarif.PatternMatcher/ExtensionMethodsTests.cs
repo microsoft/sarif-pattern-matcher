@@ -6,9 +6,6 @@ using System.Collections.Generic;
 using FluentAssertions;
 
 using Microsoft.RE2.Managed;
-using Microsoft.Strings.Interop;
-
-using Mono.Cecil.Rocks;
 
 using Xunit;
 
