@@ -56,10 +56,10 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
     --dynamic-validation
 ~~~
 
-*NOTE*: For explanations on the arguments in this command-line, navigate to the `spam.exe` build directory and run the following command:
+*NOTE*: For explanations on the arguments in this command-line, navigate to the `Sarif.PatternMatcher.Cli.exe` build directory and run the following command:
 
 ~~~
-spam.exe help analyze
+Sarif.PatternMatcher.Cli.exe help analyze
 ~~~
 
 4. Open the SLN file at `.\src\SarifPatternMatcher.sln`.
