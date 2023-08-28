@@ -48,18 +48,18 @@ Additional setup guidance can be found in the [Contributing.md](https://github.c
 3. Create a response file (e.g., in a file named `d:\testFiles\SpamArguments.rsp`) that contains the following analysis arguments (it is fine for a response file to break its arguments across multiple lines, just as they are here). Note that in this example `d:\src\sarif-pattern-matcher\` refers to the root of the `sarif-pattern-enlistment`. Also note that the .rsp file should NOT be in a directory that contians '/n', '/t', or '/r' (a newline, tab, or carriage return character). This will cause incorrect behavior when parsing the path name and won't allow launching of the debugging session. The output location referenced here directs SARIF log file output to a special directory that the VS SARIF viewer extension watches. VS will automatically load and display any SARIF results written to this special location (i.e., a directory named `\.sarif\` that exists alongside the current VS solution file).
 
 ~~~
-    --search-definitions "..\..\Security\netstandard2.1\SEC101.SecurePlaintextSecrets.json" 
-    --output d:\src\sarif-pattern-matcher\src\.sarif\out.sarif
-    --force --pretty-print
     d:\testFiles\repro.txt 
+    --plugin "..\..\Security\netstandard2.1\SEC101.SecurePlaintextSecrets.json" 
+    --output d:\src\sarif-pattern-matcher\src\.sarif\out.sarif
+    --log ForceOverwrite
     --level Error;Warning;Note
     --dynamic-validation
 ~~~
 
-*NOTE*: For explanations on the arguments in this command-line, navigate to the `spam.exe` build directory and run the following command:
+*NOTE*: For explanations on the arguments in this command-line, navigate to the `Sarif.PatternMatcher.Cli.exe` build directory and run the following command:
 
 ~~~
-spam.exe help analyze
+Sarif.PatternMatcher.Cli.exe help analyze
 ~~~
 
 4. Open the SLN file at `.\src\SarifPatternMatcher.sln`.

@@ -53,33 +53,33 @@ If you see that structure, copy the dll files from the `lib` folder to the `cont
 The following command will analyze a folder using one json file, filtering some results and outputting to a file:
 
 ```bash
-spam analyze c:\path-to-analyze\ --recurse --output c:\analysis.sarif --force --level "Error;Warning" --kind "Fail" --search-definitions PATH\SEC101.SecurePlaintextSecrets.json
+spam analyze c:\path-to-analyze\ --recurse --output c:\analysis.sarif --log ForceOverwrite --level "Error;Warning" --kind "Fail" --plugin PATH\SEC101.SecurePlaintextSecrets.json
 ```
 
 - `analyze` the path `c:\path-to-analyze\` in recursive mode, which means that it will fetch all files and folders.
 - `--output` the result of the analysis in the `c:"\analysis.sarif`.
-- `--force` replace the file if exists.
+- `--log ForceOverwrite` replace the file if exists.
 - `--level` filter the results using `resultLevel` with `Error` or `Warning`.
 - `--kind` filter the results using `resultKind` with `Fail`.
-- `--search-definitions` will use the following rules to analyze.
+- `--plugin` will use the following rules to analyze.
 
 The following command will analyze a folder using two json files, filtering some results, file size and path based on a regex. Also, it will execute the dynamic validation:
 
 ```bash
-spam analyze c:\path-to-analyze\ --recurse --deny-regex "\\\.git\\\\" --output c:\temp\spam.sarif --force --level "Error;Note" --kind "Fail" --file-size 2048 --dynamic-validation --threads 8 --insert "RegionSnippets;ContextRegionSnippets" --search-definitions PATH\SEC101.SecurePlaintextSecrets.json;PATH\SEC101.SomeRule.json
+spam analyze c:\path-to-analyze\ --recurse --deny-regex "\\\.git\\\\" --output c:\temp\spam.sarif --log ForceOverwrite --level "Error;Note" --kind "Fail" --file-size 2048 --dynamic-validation --threads 8 --insert "RegionSnippets;ContextRegionSnippets" --plugin PATH\SEC101.SecurePlaintextSecrets.json;PATH\SEC101.SomeRule.json
 ```
 
 - `analyze` the path `c:\path-to-analyze\` in recursive mode, which means that it will fetch all files and folders.
 - `--deny-regex` filter out files that matches the regex.
 - `--output` the result of the analysis in the `c:"\analysis.sarif`.
-- `--force` replace the file if exists.
+- `--log ForceOverwrite` replace the file if exists.
 - `--level` filter the results using `resultLevel` with `Error` or `Note`.
 - `--kind` filter the results using `resultKind` with `Fail`.
 - `--max-file-size X` filters out files with size larger that X KB. The default value is 1024 KB.
 - `--dynamic-validation` if a result is found, it will trigger a second step to validate dynamically the result (if the rule implements it).
 - `--threads X` it will create X threads to parallelize the work. The default value is `Environment.ProcessorCount`.
 - `--insert` if supplied, it will add more information to the output SARIF file.
-- `--search-definitions` will use the following rules to analyze.
+- `--plugin` will use the following rules to analyze.
 
 Obs.:
 - `--level` can be `Error`, `Warning`, `Note`, or `None`. The full definition can be found in the [SARIF specification](https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html#_Toc34317648).
@@ -90,7 +90,7 @@ Obs.:
 The following command will analyze a database using one json file, filtering some results and outputting to a file:
 
 ```bash
-spam analyze-database c:\temp\ --connection "Some connection string" --data-type SqlLite --target "SELECT * FROM some_database" --identity Id --output c:\analysis.sarif --force --level "Error;Warning" --kind "Fail" --search-definitions PATH\SEC101.SecurePlaintextSecrets.json
+spam analyze-database c:\temp\ --connection "Some connection string" --data-type SqlLite --target "SELECT * FROM some_database" --identity Id --output c:\analysis.sarif --log ForceOverwrite --level "Error;Warning" --kind "Fail" --plugin PATH\SEC101.SecurePlaintextSecrets.json
 ```
 
 - `analyze-database` the database from the target.
@@ -99,10 +99,10 @@ spam analyze-database c:\temp\ --connection "Some connection string" --data-type
 - `--target` the query that will return rows to be analyze.
 - `--identity` the identity column.
 - `--output` the result of the analysis in the `c:"\analysis.sarif`.
-- `--force` replace the file if exists.
+- `--log ForceOverwrite` replace the file if exists.
 - `--level` filter the results using `resultLevel` with `Error` or `Warning`.
 - `--kind` filter the results using `resultKind` with `Fail`.
-- `--search-definitions` will use the following rules to analyze.
+- `--plugin` will use the following rules to analyze.
 
 Obs.: the first argument is a path that won't be used.
 
